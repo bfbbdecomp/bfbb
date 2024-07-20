@@ -1,8 +1,10 @@
+#include "zFX.h"
 #include <types.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include "iAnim.h"
 #include "iMath.h"
 #include "iSnd.h"
 
@@ -10,6 +12,7 @@
 #include "xEnt.h"
 #include "xEntBoulder.h"
 #include "xEvent.h"
+#include "xJaw.h"
 #include "xMath.h"
 #include "xMathInlines.h"
 #include "xMemMgr.h"
@@ -22,6 +25,8 @@
 
 #include "zBase.h"
 #include "zCamera.h"
+#include "zEntButton.h"
+#include "zEntDestructObj.h"
 #include "zEntPlayer.h"
 #include "zEntPlayerOOBState.h"
 #include "zEntTeleportBox.h"
@@ -35,8 +40,10 @@
 #include "zNPCTypeTiki.h"
 #include "zNPCMessenger.h"
 #include "zParPTank.h"
+#include "zPlatform.h"
 #include "zRumble.h"
 #include "zSaveLoad.h"
+#include "zSurface.h"
 #include "zThrown.h"
 
 static F32 sHackStuckTimer;
@@ -68,7 +75,7 @@ static S32 sPlayerAttackInAir;
 
 #define MAX_DELAYED_SOUNDS 8
 static zDelayedStreamSound sDelayedSound[MAX_DELAYED_SOUNDS];
-static zPlayerSndTimer sPlayerStreamSndTimer[ePlayerStreamSnd_Total];
+static zPlayerSndTimer sPlayerStreamSndTimer[ePlayerStreamSnd_Total] = {};
 
 F32 startJump;
 F32 startDouble;
@@ -112,6 +119,25 @@ static F32 sHitchAngle;
 static F32 sSwingTimeElapsed;
 static S32 sLassoCamLinger;
 
+static S32 sGooKnockedToSafety;
+static F32 sGooKnockedTimer;
+xEntBoulder* boulderVehicle;
+static F32 bvTimeToIdle;
+static S32 boulderRollShouldEnd;
+static S32 boulderRollShouldStart;
+static zParEmitter* sEmitSpinBubbles;
+static zParEmitter* sEmitSundae;
+static zParEmitter* sEmitStankBreath;
+static class xModelTag sStankTag[3];
+
+static RpAtomic* sReticleModel;
+static F32 sReticleRot;
+static F32 sReticleAlpha;
+static xMat4x3 sReticleMat;
+static S32 sTypeOfTarget;
+static F32 sTimeToRetarget;
+class xEnt* gReticleTarget;
+
 // This struct was anonymous in the dwarf but it seemed to do better with codegen to name it
 // so I can hold a pointer to it and access the members that way.
 static const struct sock
@@ -132,6 +158,9 @@ static const struct sock
 
 static F32 update_dt = 1.0f / 60.0f;
 static F32 last_update_dt = 1.0f / 60.0f;
+static xVec3 update_motion;
+static xVec3 req_motion;
+static xVec3 precollide_motion;
 
 xMat4x3 gPlayerAbsMat;
 
@@ -173,6 +202,14 @@ static U32 sShouldBubbleBowl;
 static F32 sBubbleBowlTimer;
 static U32 sSpatulaGrabbed;
 S32 gWaitingToAutoSave;
+
+static enum {
+    WallJumpResult_NoJump,
+    WallJumpResult_Jump,
+} sWallJumpResult;
+static class xVec3 sWallNormal;
+static class zSurfaceProps* sWallCollisionSurface;
+static float sTongueDblSpeedMult;
 
 static void PlayerSwingUpdate(xEnt* ent, F32 mag, F32 angle, F32 dt);
 
@@ -2055,10 +2092,136 @@ static U32 StopLCopterCB(xAnimTransition*, xAnimSingle*, void* data)
     return 0;
 }
 
+// Equivalent: static initializer scheduling (probably sda relocations?)
+static void DoWallJumpCheck()
+{
+    sWallJumpResult = WallJumpResult_NoJump;
+    xEnt* ent = &globals.player.ent;
+
+    static F32 sAtdist = 0.65f;
+    static F32 sSweptrad = 0.4f;
+    static F32 sVerticalCos = 0.2588f;
+
+    xVec3 start;
+    start.x = ent->model->Mat->pos.x;
+    start.y = ent->model->Mat->pos.y + ent->bound.cyl.r;
+    start.z = ent->model->Mat->pos.z;
+
+    // hack: compiler isn't calling operator=
+    xVec3 end;
+    end.operator=(start);
+    end.x += ent->model->Mat->at.x * sAtdist;
+    end.z += ent->model->Mat->at.z * sAtdist;
+
+    xSweptSphere sws;
+    xSweptSpherePrepare(&sws, &start, &end, sSweptrad);
+
+    if (xSweptSphereToScene(&sws, globals.sceneCur, ent, 0x16))
+    {
+        xSweptSphereGetResults(&sws);
+
+        xSurface* surf;
+        if (sws.optr && sws.mptr)
+        {
+            surf = sws.mptr->Surf;
+        }
+        else
+        {
+            surf = zSurfaceGetSurface(sws.oid);
+        }
+
+        if (!surf)
+        {
+            return;
+        }
+
+        zSurfaceProps* surfaceProperties = (zSurfaceProps*)surf->moprops;
+
+        if (!(surfaceProperties->asset->phys_flags & 0x20))
+        {
+            return;
+        }
+
+        if (xabs(sws.worldNormal.y) < sVerticalCos)
+        {
+            if (xVec3Dot(&sws.worldNormal, &sws.worldPolynorm) > 0.999f)
+            {
+                sWallNormal = sws.worldNormal;
+                sWallJumpResult = WallJumpResult_Jump;
+                sWallCollisionSurface = surfaceProperties;
+            }
+        }
+    }
+}
+
+static U32 WallJumpLaunchCheck(class xAnimTransition*, class xAnimSingle*, void*)
+{
+    if (globals.player.ControlOff || !(globals.pad0->pressed & XPAD_BUTTON_X) ||
+        !globals.player.IsJumping || globals.player.s->Wall.PeakHeight <= 0.0f)
+    {
+        return false;
+    }
+    return sWallJumpResult == WallJumpResult_Jump;
+}
+
+static U32 WallJumpLaunchCallback(class xAnimTransition*, class xAnimSingle*, void*)
+{
+    globals.player.WallJumpState = k_WALLJUMP_LAUNCH;
+    zCameraEnableWallJump(&globals.camera, sWallNormal);
+    sWallJumpResult = WallJumpResult_NoJump;
+    return 0;
+}
+
+static float CalcJumpImpulse(zJumpParam*, const zPlayerSettings*);
+
+// Really strange non-matches here, seem unlike most things in this TU. Look equivalent though?
+static U32 WallJumpCallback(class xAnimTransition*, class xAnimSingle*, void*)
+{
+    zJumpParam wallParam = globals.player.s->Wall;
+    wallParam.PeakHeight *= sWallCollisionSurface->asset->walljump_scale_y;
+
+    CalcJumpImpulse(&wallParam, NULL);
+    zEntPlayerJumpStart(&globals.player.ent, &wallParam);
+    zEntPlayer_SNDPlay(ePlayerSnd_Jump, 0.0f);
+
+    xEntFrame* frame = globals.player.ent.frame;
+    // Really weird reordering of these instructions
+    globals.player.WallJumpState = k_WALLJUMP_FLIGHT;
+    globals.player.IsDJumping = 0;
+
+    xVec3* velocity = &globals.player.ent.frame->vel;
+    velocity->x = 0.0f;
+    velocity->z = 0.0f;
+
+    xVec3 u;
+    xVec3SMul(&u, &sWallNormal,
+              globals.player.s->WallJumpVelocity * sWallCollisionSurface->asset->walljump_scale_xz);
+    xVec3Add(velocity, velocity, &u);
+    xVec3Copy(&frame->dvel, &g_O3);
+    xVec3Copy(&frame->oldvel, velocity);
+    xMat3x3LookAt((xMat3x3*)globals.player.ent.model->Mat, &sWallNormal, &g_O3);
+    xVec3Copy(&frame->dpos, &g_O3);
+
+    frame->drot.angle = 0.0f;
+    xVec3Copy(&frame->oldmat.pos, &frame->mat.pos);
+
+    return 0;
+}
+
+static U32 WallJumpFlightLandCheck(class xAnimTransition*, class xAnimSingle*, void*)
+{
+    return sWallJumpResult == WallJumpResult_Jump;
+}
+
 static U32 WallJumpFlightLandCallback(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     globals.player.WallJumpState = k_WALLJUMP_LAND;
     return 0;
+}
+
+static U32 WallJumpLandFlightCheck(class xAnimTransition*, class xAnimSingle*, void*)
+{
+    return sWallJumpResult != WallJumpResult_Jump;
 }
 
 static U32 WallJumpLandFlightCallback(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
@@ -2073,11 +2236,840 @@ static U32 JumpCheck(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
             (globals.pad0->pressed & XPAD_BUTTON_X));
 }
 
+static void zEntPlayerJumpAddDriver(xEnt* ent);
+static U32 JumpCB(class xAnimTransition*, class xAnimSingle*, void*)
+{
+    if (globals.player.cheat_mode)
+    {
+        return 0;
+    }
+
+    zEntPlayerJumpStart(&globals.player.ent, &globals.player.s->Jump);
+    zEntPlayerJumpAddDriver(&globals.player.ent);
+    zEntPlayer_SNDStop(ePlayerSnd_SlipLoop);
+    zEntPlayer_SNDPlay(ePlayerSnd_Jump, 0.0f);
+    startDouble = globals.player.ent.frame->mat.pos.y;
+    startJump = startDouble;
+    globals.player.CanJump = 0;
+    globals.player.IsJumping = 1;
+
+    return 0;
+}
+
+static U32 JumpApexCheck(xAnimTransition*, xAnimSingle* anim, void*)
+{
+    return globals.player.ent.model == globals.player.model_sandy && anim->State &&
+                   anim->State->Name &&
+                   (strcmp(anim->State->Name, "DJumpStart01") == 0 ||
+                    strcmp(anim->State->Name, "DJumpLift01") == 0) ?
+               (globals.player.ent.frame->vel.y <= 5.0f) :
+               (globals.player.ent.frame->vel.y <= 0.001f);
+}
+
+static U32 BounceCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return globals.player.Bounced == 1;
+}
+
+// Equivalent: sda relocation scheduling + regswap
+static U32 BounceCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    zCameraSetBbounce(true);
+    globals.player.Bounced = 0;
+    globals.player.Jump_CanDouble = 1;
+    globals.player.Jump_CanFloat = 1;
+    sLassoInfo->canCopter = 1;
+
+    return 0;
+}
+
 static U32 BounceStopLCopterCB(xAnimTransition* tran, xAnimSingle* anim, void* param_3)
 {
     StopLCopterCB(tran, anim, param_3);
     BounceCB(tran, anim, param_3);
     return 0;
+}
+
+static U32 DblJumpCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    if (globals.player.s->Double.PeakHeight <= 0.0f)
+    {
+        return 0;
+    }
+
+    if (globals.player.ControlOff || !(globals.pad0->pressed & XPAD_BUTTON_X) ||
+        !globals.player.Jump_CanDouble)
+    {
+        return 0;
+    }
+
+    zEntPlayer_SNDPlay(ePlayerSnd_DoubleJump, 0.0f);
+
+    return sWallJumpResult != WallJumpResult_Jump;
+}
+
+// Equivalent: regswaps and a sda relocation scheduling meme, may be cause some/all the swaps
+static U32 DblJumpCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    if (globals.player.cheat_mode)
+    {
+        return 0;
+    }
+
+    zEntPlayerJumpStart(&globals.player.ent, &globals.player.s->Double);
+    globals.player.Jump_CanDouble = 0;
+    startDouble = globals.player.ent.frame->mat.pos.y;
+    globals.player.IsDJumping = 1;
+    globals.player.Bounced = 0;
+    sLasso->flags = NULL;
+
+    if (tslide_inair_tmr)
+    {
+        // load order swap
+        F32 dirx = update_motion.x;
+        F32 dirz = update_motion.z;
+        F32 dbldirx = SQR(dirx);
+        F32 dbldirz = SQR(dirz);
+
+        F32 speed;
+        F32 dblspeed;
+        F32 len2 = dbldirx + dbldirz;
+        if (xabs(len2 - 1.0f) <= 0.00001f)
+        {
+            dirx = update_motion.x;
+            speed = 1.0f;
+        }
+        else if (xabs(len2) <= 0.00001f)
+        {
+            dirx = 0.0f;
+            dirz = 0.0f;
+            speed = 0.0f;
+        }
+        else
+        {
+            speed = xsqrt(dbldirx + dbldirz);
+            dirx = update_motion.x * (1.0f / speed);
+            dirz = update_motion.z * (1.0f / speed);
+        }
+
+        F32 len_inv = speed / update_dt;
+        if (globals.player.g.SlideVelDblBoost *
+                (dirx * globals.player.SlideTrackDir.x + dirz * globals.player.SlideTrackDir.z) >
+            len_inv)
+        {
+            globals.player.ent.frame->vel.x += dirx * len_inv;
+            globals.player.ent.frame->vel.z += dirz * len_inv;
+            tslide_dbl_tmr = update_dt;
+        }
+    }
+    return 0;
+}
+
+// equivalent: sda relocation optimization
+static U32 TongueDblJumpCB(xAnimTransition* tran, xAnimSingle* anim, void* data)
+{
+    DblJumpCB(tran, anim, data);
+    sTongueDblSpeedMult =
+        (1.1f * (2.0f * anim->State->Data->Duration - anim->Time)) / anim->State->Data->Duration;
+    anim->CurrentSpeed *= sTongueDblSpeedMult;
+    return 0;
+}
+
+static U32 TongueDblSpinCB(xAnimTransition*, xAnimSingle* anim, void*)
+{
+    anim->CurrentSpeed *= sTongueDblSpeedMult;
+    return 0;
+}
+
+static U32 FallCheck(xAnimTransition*, xAnimSingle* anim, void*)
+{
+    return !((anim && anim->State &&
+              (strcmp(anim->State->Name, "LCopter01") == 0 ||
+               strcmp(anim->State->Name, "LCopterHeadUp01") == 0)) &&
+             (globals.player.ControlOff == 0 && (globals.pad0->on & XPAD_BUTTON_X) &&
+              sLassoInfo->copterTime > 0.0f)) &&
+           globals.player.JumpState != 0 && globals.player.JumpState != 1;
+}
+
+static U32 BoulderRollMoveCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return bvTimeToIdle > 0.0f && boulderVehicle;
+}
+
+static U32 BoulderRollIdleCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return bvTimeToIdle <= 0.0f && boulderVehicle;
+}
+
+static U32 BoulderRollCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return boulderRollShouldStart && boulderVehicle;
+}
+
+static U32 BoulderRollWindupCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    zEntPlayer_SNDPlay(ePlayerSnd_BoulderStart, 0.0f);
+    zEntPlayer_SNDPlayStreamRandom(ePlayerStreamSnd_SpongeBallComment1,
+                                   ePlayerStreamSnd_SpongeBallComment3, 0.2f);
+    zEntPlayer_SNDStop(ePlayerSnd_SlipLoop);
+    return 0;
+}
+
+static void zEntPlayer_BoulderVehicleUpdate(xEnt* ent, xScene* sc, F32 dt);
+static void zEntPlayer_BoulderVehicleMove(xEnt*, xScene*, F32, xEntFrame* frame);
+static void zEntPlayer_BoulderVehicleRender(xEnt*);
+
+static U32 BoulderRollCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    xEntHide(&globals.player.ent);
+    xEntBoulder_Reset(boulderVehicle, globals.sceneCur);
+    xVec3Copy((xVec3*)&boulderVehicle->model->Mat->pos,
+              (xVec3*)&globals.player.ent.model->Mat->pos);
+
+    boulderVehicle->model->Mat->pos.y += boulderVehicle->bound.sph.r;
+    xVec3SubFrom((xVec3*)&boulderVehicle->model->Mat->pos,
+                 (xVec3*)&boulderVehicle->model->Data->boundingSphere.center);
+
+    globals.player.ent.update = zEntPlayer_BoulderVehicleUpdate;
+    globals.player.ent.move = zEntPlayer_BoulderVehicleMove;
+    globals.player.ent.render = zEntPlayer_BoulderVehicleRender;
+    boulderVehicle->vel.y = 0.0f;
+    boulderVehicle->vel.x = globals.player.PredictCurrDir.x * globals.player.PredictCurrVel;
+    boulderVehicle->vel.z = globals.player.PredictCurrDir.z * globals.player.PredictCurrVel;
+    boulderVehicle->rotVec.x = boulderVehicle->vel.z;
+    boulderVehicle->rotVec.y = 0.0f;
+    boulderVehicle->rotVec.z = -boulderVehicle->vel.x;
+
+    xVec3Normalize(&boulderVehicle->rotVec, &boulderVehicle->rotVec);
+    boulderVehicle->angVel = xVec3Length(&boulderVehicle->vel) / boulderVehicle->bound.sph.r;
+
+    xVec3Copy((xVec3*)&boulderVehicle->model->Mat->right,
+              (xVec3*)&globals.player.ent.model->Mat->right);
+    xVec3Copy((xVec3*)&boulderVehicle->model->Mat->at, (xVec3*)&globals.player.ent.model->Mat->at);
+    xVec3Copy((xVec3*)&boulderVehicle->model->Mat->up, (xVec3*)&globals.player.ent.model->Mat->up);
+
+    xParEmitterCustomSettings info;
+    if (gPTankDisable)
+    {
+        info.custom_flags = 0x35e;
+        xVec3Copy(&info.pos, (xVec3*)&boulderVehicle->model->Mat->pos);
+        xVec3Copy(&info.vel, (xVec3*)&boulderVehicle->vel);
+
+        if (xVec3Normalize(&info.vel, &info.vel) < 0.00001f)
+        {
+            info.vel.x = 0.0f;
+            info.vel.y = 3.0f;
+            info.vel.z = 0.0f;
+        }
+        else
+        {
+            xVec3SMulBy(&info.vel, 3.0f);
+        }
+
+        info.vel_angle_variation = DEG2RAD(270);
+        info.rate.set(3000.0f, 3000.0f, 1.0f, 0.0f);
+        info.life.set(0.75f, 0.75f, 1.0f, 0.0f);
+        info.size_birth.set(0.25f, 0.25f, 1.0f, 0.0f);
+        info.size_death.set(0.5f, 0.5f, 1.0f, 0.0f);
+
+        xParEmitterEmitCustom(sEmitSpinBubbles, update_dt, &info);
+        xVec3AddScaled(&info.pos, &boulderVehicle->vel, 10.0f * update_dt);
+        xParEmitterEmitCustom(sEmitSpinBubbles, update_dt, &info);
+    }
+    else
+    {
+        zFX_SpawnBubbleHit((xVec3*)&boulderVehicle->model->Mat->pos, 50);
+    }
+
+    boulderRollShouldEnd = 0;
+    zEntEvent(&globals.player.ent, eEventSpongeballOn);
+    xEntBeginUpdate(boulderVehicle, globals.sceneCur, 0.00001f);
+    xEntEndUpdate(boulderVehicle, globals.sceneCur, 0.00001f);
+    xEntBoulder_RealBUpdate(boulderVehicle, &boulderVehicle->frame->mat.pos);
+    boulderVehicle->lightKit = globals.player.ent.lightKit;
+    boulderVehicle->model->LightKit = globals.player.ent.lightKit;
+
+    return 0;
+}
+
+static U32 BoulderRollDoneCheck()
+{
+    if (globals.sceneCur->sceneID == 'PG12')
+    {
+        return 0;
+    }
+
+    return !globals.player.ControlOff &&
+               (globals.pad0->pressed &
+                (XPAD_BUTTON_TRIANGLE | XPAD_BUTTON_SQUARE | XPAD_BUTTON_O | XPAD_BUTTON_X)) ||
+           boulderRollShouldEnd;
+}
+
+static void zEntPlayer_Update(xEnt* ent, xScene* sc, F32 dt);
+static void zEntPlayer_Move(xEnt*, xScene*, F32, xEntFrame* frame);
+static void zEntPlayer_Render(xEnt*);
+
+// Equivalent: sda relocation and some float thing before info.rate.set
+static U32 BoulderRollDoneCB()
+{
+    xEntShow(&globals.player.ent);
+    zEntPlayer_SNDPlay(ePlayerSnd_BoulderEnd, 0.0f);
+
+    xParEmitterCustomSettings info;
+    if (gPTankDisable)
+    {
+        info.custom_flags = 0x35e;
+        xVec3Copy(&info.pos, (xVec3*)&boulderVehicle->model->Mat->pos);
+        xVec3Copy(&info.vel, (xVec3*)&boulderVehicle->vel);
+
+        if (xVec3Normalize(&info.vel, &info.vel) < 0.00001f)
+        {
+            info.vel.x = 0.0f;
+            info.vel.y = 3.0f;
+            info.vel.z = 0.0f;
+        }
+        else
+        {
+            xVec3SMulBy(&info.vel, 3.0f);
+        }
+
+        info.vel_angle_variation = DEG2RAD(270);
+        info.rate.set(3000.0f, 3000.0f, 1.0f, 0.0f);
+        info.life.set(0.75f, 0.75f, 1.0f, 0.0f);
+        info.size_birth.set(0.25f, 0.25f, 1.0f, 0.0f);
+        info.size_death.set(0.5f, 0.5f, 1.0f, 0.0f);
+
+        xParEmitterEmitCustom(sEmitSpinBubbles, update_dt, &info);
+        xVec3AddScaled(&info.pos, &boulderVehicle->vel, 10.0f * update_dt);
+        xParEmitterEmitCustom(sEmitSpinBubbles, update_dt, &info);
+    }
+    else
+    {
+        zFX_SpawnBubbleHit((xVec3*)&boulderVehicle->model->Mat->pos, 50);
+    }
+
+    globals.player.ent.update = zEntPlayer_Update;
+    globals.player.ent.move = zEntPlayer_Move;
+    globals.player.ent.render = zEntPlayer_Render;
+
+    xEntBoulder_Kill(boulderVehicle);
+    boulderRollShouldStart = 0;
+
+    zEntEvent(&globals.player.ent, eEventSpongeballOff);
+    idle_tmr = 0.0f;
+
+    return 0;
+}
+
+static U32 SlideTrackCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return globals.player.SlideTrackSliding & 1;
+}
+
+static U32 SlideTrackCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    sLasso->flags = 0;
+    globals.player.SlideTrackLean = 0.0f;
+
+    if (globals.player.Health != 0 && sPlayerSndID[gCurrentPlayer][ePlayerSnd_SlideLoop] == 0)
+    {
+        zEntPlayer_SNDPlay(ePlayerSnd_SlideLoop, 0.0f);
+    }
+
+    if (gCurrentPlayer == eCurrentPlayerSandy)
+    {
+        globals.player.Jump_CanDouble = 1;
+    }
+
+    zEntPlayerKillCarry();
+    zEntPlayer_SNDStop(ePlayerSnd_SlipLoop);
+
+    return 0;
+}
+
+static U32 NoslideTrackCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    idle_tmr = 0.0f;
+    return 0;
+}
+
+static U32 NoslideTrackCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return (globals.player.SlideTrackSliding & 1) == 0 && globals.player.JumpState == 0;
+}
+
+static U32 TrackFallCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return (globals.player.SlideTrackSliding & 1) == 0 && globals.player.JumpState != 0;
+}
+
+static U32 TrackFallCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    globals.player.JumpState = 2;
+    globals.player.CanJump = 1;
+    return 0;
+}
+
+static U32 TrackPrefallJumpCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return globals.player.CanJump && !globals.player.ControlOff &&
+           globals.pad0->pressed & XPAD_BUTTON_X && tslide_inair_tmr != 0.0f &&
+           tslide_inair_tmr < 0.25f;
+}
+
+static U32 LedgeGrabCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return globals.player.s->ledge.tmr == -1.0f;
+}
+
+static U32 LedgeGrabCB(xAnimTransition*, xAnimSingle*, void* object)
+{
+    zEntPlayer_SNDStop(ePlayerSnd_Heli);
+    globals.player.s->ledge.tmr = 0.00001f;
+    // FIXME: figure out the type of object (local variable missing from dwarf)
+    globals.player.s->ledge.startrot = *(*((F32**)object + 0x48 / 4) + 0xb8 / 4);
+
+    F32 endrot = globals.player.s->ledge.endrot;
+    F32 startrot = globals.player.s->ledge.startrot;
+    if (startrot > endrot + PI)
+    {
+        globals.player.s->ledge.startrot -= 2 * PI;
+    }
+    else if (startrot < endrot - PI)
+    {
+        globals.player.s->ledge.startrot += 2 * PI;
+    }
+
+    sLasso->flags = 0;
+    xCameraDoCollisions(0, 2);
+    return 0;
+}
+
+// Equivalent: sda relocation scheduling
+static U32 LedgeFinishCB(xAnimTransition*, xAnimSingle*, void* object)
+{
+    idle_tmr = 0.0f;
+    globals.player.JumpState = 1;
+    globals.player.JumpTimer = 0.0f;
+    xCameraDoCollisions(1, 2);
+    return 0;
+}
+
+static U32 PatrickGrabCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return sGrabFound != 0;
+}
+
+static U32 PatrickGrabFailed(xAnimTransition*, xAnimSingle*, void*)
+{
+    return sGrabFailed != 0;
+}
+
+static U32 PatrickGrabKill(xAnimTransition*, xAnimSingle*, void*)
+{
+    return globals.player.carry.grabbed == NULL;
+}
+
+static U32 PatrickGrabThrow(xAnimTransition*, xAnimSingle*, void*)
+{
+    if (globals.player.cheat_mode)
+    {
+        return 0;
+    }
+
+    return !globals.player.ControlOff && globals.pad0->pressed & XPAD_BUTTON_O;
+}
+
+static U32 PatrickAttackCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    if (globals.player.cheat_mode || zEntTeleportBox_playerIn())
+    {
+        return 0;
+    }
+
+    return !globals.player.ControlOff && globals.pad0->pressed & XPAD_BUTTON_TRIANGLE;
+}
+
+static U32 PatrickStunCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return !globals.player.ControlOff && globals.pad0->pressed & XPAD_BUTTON_O;
+}
+
+// Equivalent: scheduling
+static U32 PatrickMeleeCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    globals.player.DoMeleeCheck = 1;
+    zEntPlayer_SNDPlay(ePlayerSnd_BellyMelee, 0.0f);
+    return 0;
+}
+
+static U32 PatrickGrabCB(xAnimTransition* tran, xAnimSingle*, void*)
+{
+    zEntPlayer_SNDPlay(ePlayerSnd_Lift1, 0.0f);
+    if ((xrand() & 3) == 3)
+    {
+        zEntPlayer_SNDPlayStream(ePlayerStreamSnd_Lift1);
+    }
+
+    globals.player.carry.grabbed = sGrabFound;
+    globals.player.carry.grabTarget = 1;
+    globals.player.carry.grabYclear = 0;
+
+    if (sGrabFound->baseType == eBaseTypeBoulder)
+    {
+        globals.player.carry.targetRot =
+            xatan2(sGrabFound->bound.sph.center.x - globals.player.ent.frame->mat.pos.x,
+                   sGrabFound->bound.sph.center.z - globals.player.ent.frame->mat.pos.z);
+    }
+    else
+    {
+        globals.player.carry.targetRot =
+            xatan2(sGrabFound->model->Mat->pos.x - globals.player.ent.frame->mat.pos.x,
+                   sGrabFound->model->Mat->pos.z - globals.player.ent.frame->mat.pos.z);
+    }
+
+    globals.player.carry.grabLerpLast = 0.0f;
+
+    xAnimState* stat =
+        xAnimTableGetState(globals.player.ent.model->Anim->Table, "Carry_PickupItem");
+    if (stat)
+    {
+        xVec3 tmptran;
+        xQuat tmpquat;
+        iAnimEval(stat->Data->RawData[0], 1.0 / 30.0f, 1, &tmptran, &tmpquat);
+
+        xMat4x3 objMat;
+        xQuatToMat(&tmpquat, &objMat);
+        xMat4x3 targetMat;
+        objMat.pos = tmptran;
+        xMat3x3Rot(&targetMat, &g_Y3, globals.player.carry.targetRot);
+        targetMat.pos = globals.player.ent.frame->mat.pos;
+
+        xMat4x3Mul(&objMat, &objMat, &targetMat);
+
+        if (globals.player.carry.grabbed->baseType == '/')
+        {
+            globals.player.carry.grabOffset.x = objMat.pos.x - sGrabFound->bound.sph.center.x;
+            globals.player.carry.grabOffset.y =
+                sGrabFound->bound.sph.r + (objMat.pos.y - sGrabFound->bound.sph.center.y);
+            globals.player.carry.grabOffset.z = objMat.pos.z - sGrabFound->bound.sph.center.z;
+        }
+        else
+        {
+            globals.player.carry.grabOffset.x = objMat.pos.x - sGrabFound->model->Mat->pos.x;
+            globals.player.carry.grabOffset.y = objMat.pos.y - sGrabFound->model->Mat->pos.y;
+            globals.player.carry.grabOffset.z = objMat.pos.z - sGrabFound->model->Mat->pos.z;
+        }
+    }
+    else
+    {
+        globals.player.carry.grabOffset.x = 0.0f;
+        globals.player.carry.grabOffset.y = 0.0f;
+        globals.player.carry.grabOffset.z = 0.0f;
+    }
+
+    xMat3x3Rot(&globals.player.carry.spin, &g_Y3, -globals.player.carry.targetRot);
+    xMat3x3Mul(&globals.player.carry.spin, (xMat3x3*)sGrabFound->model->Mat,
+               &globals.player.carry.spin);
+    xVec3Init(&globals.player.carry.spin.pos, 0.0f, 0.0f, 0.0f);
+
+    sGrabFound->chkby &= ~XENT_COLLTYPE_PLYR;
+
+    zThrown_AddFruit(sGrabFound);
+
+    if (sGrabFound->baseType == eBaseTypeNPC)
+    {
+        ((zNPCCommon*)sGrabFound)->SetCarryState(zNPCCARRY_PICKUP);
+    }
+
+    return 0;
+}
+
+namespace
+{
+    static struct foo
+    {
+        S32 anim;
+        U32 sndid;
+        void* data;
+        F32 time;
+    } player_talk;
+
+    static U32 TalkCheck(xAnimTransition* anim, xAnimSingle*, void*)
+    {
+        return anim->UserFlags == player_talk.anim;
+    }
+
+    static U32 TalkDoneCheck(xAnimTransition* anim, xAnimSingle*, void*)
+    {
+        return anim->UserFlags != player_talk.anim;
+    }
+
+    static void speak_update(F32 dt)
+    {
+        if (player_talk.anim == -1)
+        {
+            return;
+        }
+
+        if (player_talk.time < 0.2f || xSndIsPlaying(player_talk.sndid) != 0)
+        {
+            player_talk.time += dt;
+            float jawval = xJaw_EvalData(player_talk.data, player_talk.time);
+            globals.player.ent.model->Anim->Single->BilinearLerp[0] = jawval;
+        }
+        else
+        {
+            zEntPlayerSpeakStop();
+        }
+    }
+} // namespace
+
+// WIP, not equivalent
+void zEntPlayerSpeakStart(U32 sndid, U32, S32 anim)
+{
+    zEntPlayerSpeakStop();
+
+    player_talk.data = xJaw_FindData(sndid);
+    if (player_talk.data)
+    {
+        player_talk.sndid = sndid;
+        player_talk.time = 0.0f;
+        if (anim < 0 || anim >= globals.player.s->talk_anims)
+        {
+            // wtf is happening here
+            U8 filter_size = globals.player.s->talk_filter_size;
+            U32 which = (xrand() >> 13); // / filter_size;
+            player_talk.anim = globals.player.s->talk_filter[which % filter_size];
+        }
+        else
+        {
+            player_talk.anim = anim;
+        }
+    }
+}
+
+// Equiavlent: sda scheduling reorder
+void zEntPlayerSpeakStop()
+{
+    player_talk.anim = -1;
+    globals.player.ent.model->Anim->Single->BilinearLerp[0] = 0.0f;
+}
+
+// Close, some float mismatches + regswaps
+static xEnt* GetPatrickTarget(xEnt* ent)
+{
+    xEnt* result = NULL;
+    zPlatform* plat =
+        ent->collis->colls[0].flags & 1 ? (zPlatform*)ent->collis->colls[0].optr : NULL;
+
+    if (plat && plat->baseType == eBaseTypePlatform && plat->plat_flags & 2)
+    {
+        xCollis* coll;
+        xVec3 relpos;
+        xMat4x3Tolocal(&relpos, (xMat4x3*)plat->model->Mat, (xVec3*)&ent->model->Mat->pos);
+
+        relpos.z -= 2.0f;
+        if (SQR(relpos.x) + SQR(relpos.z))
+        {
+            xVec3 worldpos;
+            worldpos.x = 0.0f;
+            worldpos.y = 1.23f;
+            worldpos.z = -2.0f;
+            xMat4x3Toworld(&worldpos, (xMat4x3*)plat->model->Mat, &worldpos);
+
+            if (ent->model->Mat->at.x * (worldpos.x - ent->model->Mat->pos.x) +
+                    ent->model->Mat->at.z * (worldpos.z - ent->model->Mat->pos.z) >
+                0.0f)
+            {
+                globals.player.carry.targetRot =
+                    xatan2(worldpos.x - globals.player.ent.frame->mat.pos.x,
+                           worldpos.z - globals.player.ent.frame->mat.pos.z);
+                globals.player.carry.throwTargetRotRate =
+                    globals.player.carry.targetRot - ent->frame->rot.angle;
+                CLAMP_ANGLE(globals.player.carry.throwTargetRotRate);
+                globals.player.carry.throwTargetRotRate /= 0.2f;
+                return plat;
+            }
+        }
+    }
+
+    F32 bestTargetDot = -1.0f;
+    xVec3* bestTargetPos;
+    zScene* zsc = globals.sceneCur;
+    S32 grabbedIsFruit = zThrown_IsFruit(globals.player.carry.grabbed, NULL);
+    for (U32 i = 0; i < zsc->num_ents; i++)
+    {
+        xEnt* tgtent = zsc->ents[i];
+        if (tgtent == globals.player.carry.grabbed || (tgtent->flags & 1) == 0)
+        {
+            continue;
+        }
+        F32 maxHeight = globals.player.carry.throwMaxHeight;
+
+        if (tgtent->baseType == eBaseTypeStatic)
+        {
+            if (!grabbedIsFruit || !(tgtent->moreFlags & 0x8))
+            {
+                continue;
+            }
+            if (zThrown_IsFruit(tgtent, NULL) == 0)
+            {
+                continue;
+            }
+            maxHeight = globals.player.carry.throwMaxStack;
+        }
+        else if (tgtent->baseType == eBaseTypeDestructObj)
+        {
+            if (((zEntDestructObj*)globals.player.carry.grabbed)->throw_target == 0)
+            {
+                continue;
+            }
+        }
+        else if (tgtent->baseType == eBaseTypeNPC)
+        {
+            // FIXME: This comparison looks like a fakematch
+            U32 t = ((xNPCBasic*)globals.player.carry.grabbed)->SelfType();
+            if (t - NPC_TYPE_JELLYPINK <= 2 || t == NPC_TYPE_MIMEFISH)
+            {
+                continue;
+            }
+        }
+        else if (tgtent->baseType == eBaseTypeButton)
+        {
+            if (zThrown_IsFruit(globals.player.carry.grabbed, NULL))
+            {
+                if ((((_zEntButton*)tgtent)->basset->buttonActFlags & (0x10000 | 0x80)) == 0)
+                {
+                    continue;
+                }
+            }
+            else if (globals.player.carry.grabbed->baseType == eBaseTypeNPC &&
+                     ((xNPCBasic*)globals.player.carry.grabbed)->SelfType() == NPC_TYPE_TIKI_STONE)
+            {
+                if ((((_zEntButton*)tgtent)->basset->buttonActFlags & (0x2000 | 0x40)) == 0)
+                {
+                    continue;
+                }
+            }
+            else
+            {
+                if ((((_zEntButton*)tgtent)->basset->buttonActFlags & 0x40) == 0)
+                {
+                    continue;
+                }
+            }
+        }
+        else
+        {
+            continue;
+        }
+
+        F32 dx = tgtent->model->Mat->pos.x - ent->model->Mat->pos.x;
+        F32 dy = tgtent->model->Mat->pos.y - ent->model->Mat->pos.y;
+        F32 dz = tgtent->model->Mat->pos.z - ent->model->Mat->pos.z;
+        if (SQR(dx) + SQR(dz) >= SQR(globals.player.carry.throwMaxDist) ||
+            dy <= globals.player.carry.throwMinHeight || dy >= maxHeight ||
+            SQR(dx) + SQR(dz) <= SQR(globals.player.carry.throwMinDist))
+        {
+            continue;
+        }
+
+        // cos of angle between (dx, 0, dz) and at (at should already be normalized)
+        F32 ddot =
+            (dx * ent->model->Mat->at.x + dz * ent->model->Mat->at.z) / xsqrt(SQR(dx) + SQR(dz));
+
+        if (ddot < globals.player.carry.throwMaxCosAngle)
+        {
+            continue;
+        }
+
+        if (bestTargetDot != -1.0f)
+        {
+            if (tgtent->model->Mat->pos.y > bestTargetPos->y)
+            {
+                if (ddot + 0.05f < bestTargetDot)
+                {
+                    continue;
+                }
+            }
+            else
+            {
+                if (ddot - 0.05f < bestTargetDot)
+                {
+                    continue;
+                }
+            }
+        }
+        result = tgtent;
+
+        globals.player.carry.targetRot =
+            xatan2(tgtent->model->Mat->pos.x - globals.player.ent.frame->mat.pos.x,
+                   tgtent->model->Mat->pos.z - globals.player.ent.frame->mat.pos.z);
+
+        globals.player.carry.throwTargetRotRate =
+            globals.player.carry.targetRot - ent->frame->rot.angle;
+
+        CLAMP_ANGLE(globals.player.carry.throwTargetRotRate);
+
+        globals.player.carry.throwTargetRotRate /= 0.2f;
+        bestTargetPos = (xVec3*)&tgtent->model->Mat->pos;
+        bestTargetDot = ddot;
+    }
+    return result;
+}
+
+static U32 PatrickGrabThrowCB(xAnimTransition*, xAnimSingle*, void* object)
+{
+    zEntPlayer_SNDPlay(ePlayerSnd_Throw, 0.0f);
+    zEnt* ent = (zEnt*)object;
+    if (gReticleTarget && sTypeOfTarget == 3)
+    {
+        globals.player.carry.throwTarget = gReticleTarget;
+    }
+    else
+    {
+        globals.player.carry.throwTarget = GetPatrickTarget(ent);
+    }
+
+    globals.player.carry.flyingToTarget = NULL;
+    if (globals.player.carry.grabbed && globals.player.carry.grabbed->baseType == eBaseTypeNPC)
+    {
+        ((zNPCCommon*)globals.player.carry.grabbed)->SetCarryState(zNPCCARRY_THROW);
+    }
+
+    return 0;
+}
+
+static class zNPCLassoInfo* sCurrentNPCInfo;
+void zEntPlayer_LassoNotify(en_LASSO_EVENT event)
+{
+    switch (event)
+    {
+    case LASS_EVNT_GRABEND:
+        zLasso_SetGuide(sCurrentNPCInfo->lassoee, sCurrentNPCInfo->holdGuideAnim);
+        break;
+    case LASS_EVNT_ABORT:
+        globals.player.lassoInfo.lasso.flags = 0;
+        globals.player.lassoInfo.target = NULL;
+        break;
+    }
+}
+
+static unsigned int sShouldMelee;
+static U32 MeleeCheck(xAnimTransition*, xAnimSingle* anim, void*)
+{
+    if (!sShouldMelee)
+    {
+        return 0;
+    }
+
+    if (strcmp(anim->State->Name, "DJumpApex01") == 0 && anim->Time < 0.3f)
+    {
+        return 0;
+    }
+
+    return 1;
 }
 
 static U32 LassoStartCheck(xAnimTransition*, xAnimSingle*, void*)
@@ -2122,6 +3114,376 @@ static U32 LassoDestroyCheck(xAnimTransition*, xAnimSingle*, void*)
 
 static U32 LassoReyankCheck(xAnimTransition*, xAnimSingle*, void*)
 {
+    return 0;
+}
+
+static U32 LassoFailIdleSlipCheck(xAnimTransition* tran, xAnimSingle* anim, void* data)
+{
+    return !sLassoInfo->target && IdleSlipCheck(tran, anim, data);
+}
+
+static U32 LassoFailIdleCheck(xAnimTransition* tran, xAnimSingle* anim, void* data)
+{
+    return !sLassoInfo->target && IdleCheck(tran, anim, data);
+}
+
+static U32 LassoFailWalkCheck(xAnimTransition* tran, xAnimSingle* anim, void* data)
+{
+    return !sLassoInfo->target && WalkCheck(tran, anim, data);
+}
+
+static U32 LassoFailRunCheck(xAnimTransition* tran, xAnimSingle* anim, void* data)
+{
+    return !sLassoInfo->target && RunAnyCheck(tran, anim, data);
+}
+
+static U32 LassoFailRunOutOfWorldCheck(xAnimTransition* tran, xAnimSingle* anim, void* data)
+{
+    return !sLassoInfo->target && RunOutOfWorldCheck(tran, anim, data);
+}
+
+static U32 LassoFailRunSlipCheck(xAnimTransition* tran, xAnimSingle* anim, void* data)
+{
+    return !sLassoInfo->target && RunSlipCheck(tran, anim, data);
+}
+
+// Equivalent: sda relocation scheduling
+static U32 JumpMeleeCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    zEntPlayer_SNDPlay(ePlayerSnd_Kick, 0.0f);
+    if ((xrand() & 3) == 3)
+    {
+        zEntPlayer_SNDPlayStreamRandom(ePlayerStreamSnd_KickComment1, ePlayerStreamSnd_KickComment3,
+                                       0.0f);
+    }
+
+    globals.player.ent.frame->vel.y *= 0.8f;
+    sShouldMelee = 0;
+    sPlayerAttackInAir++;
+    return 0;
+}
+
+// Equivalent: sda relocation scheduling
+static U32 MeleeCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    zEntPlayer_SNDPlay(ePlayerSnd_Chop, 0.0f);
+    if ((xrand() & 3) == 3)
+    {
+        zEntPlayer_SNDPlayStreamRandom(ePlayerStreamSnd_ChopComment1, ePlayerStreamSnd_ChopComment3,
+                                       0.0f);
+    }
+
+    sLassoInfo->target = NULL;
+    sShouldMelee = 0;
+    sPlayerAttackInAir++;
+    return 0;
+}
+
+static U32 LassoStartCB(xAnimTransition*, xAnimSingle*, void* object)
+{
+    zEntPlayer_SNDPlay(ePlayerSnd_Heli, 0.0f);
+    sLassoInfo->swingTarget = NULL;
+
+    xEnt* ent = (xEnt*)object;
+    zNPCCommon* npc = (zNPCCommon*)sLassoInfo->target;
+    if (sLassoInfo->target->baseType == eBaseTypeNPC && (npc->SelfType() & 0xffffff00) != 'NTT\0')
+    {
+        sLassoInfo->targetGuide = 1;
+        sCurrentNPCInfo = npc->GimmeLassInfo();
+        npc->LassoNotify(LASS_EVNT_BEGIN);
+        zLasso_SetGuide(npc, sCurrentNPCInfo->grabGuideAnim);
+    }
+    else
+    {
+        sLassoInfo->targetGuide = NULL;
+    }
+
+    zLasso_InitTimer(sLasso, 0.125f);
+    sLasso->flags = 0x12c3;
+    sLasso->tgRadius = 1.25f;
+
+    xVec3AddScaled(&sLasso->crCenter, (xVec3*)&ent->model->Mat->up, 0.5f);
+    sLassoInfo->lassoRot =
+        xatan2(sLassoInfo->target->model->Mat->pos.x - globals.player.ent.frame->mat.pos.x,
+               sLassoInfo->target->model->Mat->pos.z - globals.player.ent.frame->mat.pos.z);
+
+    return 0;
+}
+
+// Equivalent
+static U32 LassoThrowCB(xAnimTransition*, xAnimSingle*, void* object)
+{
+    xEnt* ent = (xEnt*)object;
+
+    zEntPlayer_SNDStop(ePlayerSnd_Heli);
+    zLasso_ResetTimer(sLasso, 0.4f);
+
+    sLasso->flags = 0x11;
+    sLasso->tgRadius = 0.75f * sLasso->crRadius;
+
+    xVec3SMul(&sLasso->tgNormal, (xVec3*)&ent->model->Mat->at, -sLassoInfo->dist);
+    // Result is being subtracted from original instead of negated and added
+    sLasso->tgNormal.y += -(4.0f * sLassoInfo->dist - 5.0f);
+    xVec3Normalize(&sLasso->tgNormal, &sLasso->tgNormal);
+    xVec3Copy(&sLasso->tgCenter, &sLasso->stCenter);
+    xVec3AddScaled(&sLasso->tgCenter, (xVec3*)&ent->model->Mat->at, 0.5f * -sLassoInfo->dist);
+
+    sLasso->tgCenter.y += 0.7f * sLassoInfo->dist + 0.3f;
+
+    return 0;
+}
+
+// Equivalent
+static U32 LassoFlyCB(xAnimTransition*, xAnimSingle*, void* object)
+{
+    xEnt* ent = (xEnt*)object;
+
+    zEntPlayer_SNDPlay(ePlayerSnd_LassoThrow, 0.0f);
+    zLasso_ResetTimer(sLasso, 0.4f * sLassoInfo->dist);
+
+    if (sLassoInfo->targetGuide == 0)
+    {
+        sLasso->flags = 1;
+        xVec3Copy(&sLasso->tgCenter, xBoundCenter(&sLassoInfo->target->bound));
+        xVec3AddScaled(&sLasso->tgCenter, (xVec3*)&ent->model->Mat->at,
+                       sLassoInfo->target->model->Data->boundingSphere.radius * sLassoInfo->dist);
+        xVec3AddScaled(&sLasso->tgCenter, (xVec3*)&ent->model->Mat->up,
+                       sLassoInfo->target->model->Data->boundingSphere.radius * sLassoInfo->dist);
+        sLasso->tgRadius = 1.5f * sLassoInfo->target->model->Data->boundingSphere.radius;
+
+        xVec3SMul(&sLasso->tgNormal, (xVec3*)&ent->model->Mat->at, 1.0f);
+        // Result is being subtracted from original instead of negated and added
+        sLasso->tgNormal.y += -(4.0f * sLassoInfo->dist - 5.0f);
+        xVec3Normalize(&sLasso->tgNormal, &sLasso->tgNormal);
+    }
+    else
+    {
+        sLasso->flags = 1;
+        zLasso_InterpToGuide(sLasso);
+    }
+
+    sLasso->tgSlack = 0.5f;
+    return 0;
+}
+
+static U32 LassoDestroyCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    zEntPlayer_SNDPlay(ePlayerSnd_LassoYank, 0.17f);
+    zEntPlayer_SNDPlayStreamRandom(ePlayerStreamSnd_RopingComment1, ePlayerStreamSnd_RopingComment3,
+                                   0.133f);
+
+    if (sLassoInfo->targetGuide == 0)
+    {
+        zLasso_ResetTimer(sLasso, 0.5f);
+        sLassoInfo->destroy = 1;
+        sLasso->flags = 0x521;
+
+        xVec3Copy(&sLasso->tgCenter, xBoundCenter(&sLassoInfo->target->bound));
+        sLasso->tgRadius = 0.75f * sLassoInfo->target->model->Data->boundingSphere.radius;
+        xVec3Init(&sLasso->tgNormal, 0.0f, 1.0f, 0.0f);
+        return 0;
+    }
+    else
+    {
+        sLassoInfo->zeroAnim = sLassoInfo->target->model->Anim->Single->State;
+        ((zNPCCommon*)sLassoInfo->target)->LassoNotify(LASS_EVNT_GRABSTART);
+        sLasso->flags = 0x4c01;
+        return 0;
+    }
+}
+
+static U32 LassoYankCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    zEntPlayer_SNDPlay(ePlayerSnd_LassoYank, 0.17f);
+    zEntPlayer_SNDPlayStreamRandom(ePlayerStreamSnd_RopingComment1, ePlayerStreamSnd_RopingComment3,
+                                   0.133f);
+
+    if (sLassoInfo->targetGuide && sLassoInfo->target)
+    {
+        ((zNPCCommon*)sLassoInfo->target)->LassoNotify(LASS_EVNT_YANK);
+    }
+
+    return 0;
+}
+
+// Equivalent: sda relocation scheduling
+static U32 MeleeStopCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    idle_tmr = 0.0f;
+
+    if (globals.player.SundaeTimer < 0.0f)
+    {
+        globals.player.SpeedMult = 1.0f;
+    }
+    else
+    {
+        globals.player.SpeedMult = globals.player.g.SundaeMult;
+    }
+
+    sShouldMelee = 0;
+    return 0;
+}
+
+static U32 SpatulaMeleeStopCB(xAnimTransition* tran, xAnimSingle* anim, void* data)
+{
+    MeleeStopCB(tran, anim, data);
+    SpatulaGrabCB(tran, anim, data);
+    return 0;
+}
+
+// Equivalent: sda relocation scheduling
+static U32 LassoStopCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    idle_tmr = 0.0f;
+    sLasso->flags = 0;
+
+    if (sLassoInfo->targetGuide)
+    {
+        if (sLassoInfo->target)
+        {
+            ((zNPCCommon*)sLassoInfo->target)->LassoNotify(LASS_EVNT_YANK);
+        }
+    }
+    else if (sLassoInfo->destroy && sLassoInfo->target)
+    {
+        zEntEvent(sLassoInfo->target, eEventHit);
+    }
+
+    sLassoInfo->destroy = 0;
+    sLassoInfo->target = NULL;
+    zLasso_SetGuide(NULL, NULL);
+    zRumbleStart(SDR_LassoDestroy);
+    return 0;
+}
+
+static U32 LassoSwingGroundedBeginCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    if (globals.sceneCur->sceneID == 'B201' && globals.player.JumpState == 0)
+    {
+        sLassoInfo->swingTarget = NULL;
+        gReticleTarget = NULL;
+        sTypeOfTarget = 0;
+    }
+
+    return sLassoInfo->swingTarget && globals.player.JumpState == 0;
+}
+
+static U32 LassoSwingBeginCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return sLassoInfo->swingTarget && globals.player.JumpState != 0;
+}
+
+static U32 LassoSwingReleaseCheck(xAnimTransition*, xAnimSingle*, void*)
+{
+    return (!globals.player.ControlOff && (globals.pad0->pressed & XPAD_BUTTON_X) &&
+            sSwingTimeElapsed > 0.5f) ||
+           sLassoInfo->swingTarget == NULL || !(sLassoInfo->swingTarget->flags & 1);
+}
+
+static U32 LassoSwingBeginCB(xAnimTransition*, xAnimSingle*, void* object)
+{
+    xEnt* ent = (xEnt*)object;
+
+    sLassoInfo->target = NULL;
+    gReticleTarget = NULL;
+
+    if (sLasso->flags & 1)
+    {
+        sLasso->flags = 1;
+        zLasso_ResetTimer(sLasso, 0.133f);
+        xVec3Copy(&sLasso->tgCenter, &sLasso->stCenter);
+    }
+    else
+    {
+        sLasso->flags = 0x1043;
+        zLasso_InitTimer(sLasso, 0.133f);
+        xVec3Copy(&sLasso->stNormal, (xVec3*)&ent->model->Mat->right);
+        zEntPlayer_SNDPlay(ePlayerSnd_Heli, 0.0f);
+    }
+
+    sLasso->tgSlack = 0.5f;
+    sLasso->tgRadius = sLassoInfo->swingTarget->model->Data->boundingSphere.radius;
+    xVec3Copy(&sLasso->tgNormal, (xVec3*)&ent->model->Mat->right);
+    xVec3Copy(&globals.player.HangVel, (xVec3*)&ent->frame->vel);
+    sSwingTimeElapsed = 0.0f;
+
+    zCameraSetBbounce(false);
+    zCameraSetLongbounce(false);
+    zCameraSetHighbounce(false);
+    return 0;
+}
+
+static U32 LassoSwingGroundedBeginCB(xAnimTransition* tran, xAnimSingle* anim, void* object)
+{
+    xEnt* ent = (xEnt*)object;
+    JumpCB(tran, anim, object);
+
+    ent->frame->vel.y *= 0.5f;
+    LassoSwingBeginCB(tran, anim, object);
+    return 0;
+}
+
+static U32 LassoSwingTossCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    zEntPlayer_SNDStop(ePlayerSnd_Heli);
+    zEntPlayer_SNDPlay(ePlayerSnd_LassoThrow, 0.0f);
+
+    sLasso->flags = 1;
+    zLasso_ResetTimer(sLasso, 0.117f);
+    xVec3Copy(&sLasso->tgCenter, xBoundCenter(&sLassoInfo->swingTarget->bound));
+    xVec3AddScaled(&sLasso->tgCenter, (xVec3*)&sLassoInfo->swingTarget->model->Mat->up, -0.6f);
+    xVec3Copy(&sLasso->tgNormal, (xVec3*)&sLassoInfo->swingTarget->model->Mat->up);
+
+    if (xVec3Dot(&sLasso->tgNormal, &sLasso->stNormal) < 0.0f)
+    {
+        xVec3Inv(&sLasso->tgNormal, &sLasso->tgNormal);
+    }
+
+    sLasso->tgRadius = 0.1f;
+    return 0;
+}
+
+static U32 LassoSwingCB(xAnimTransition*, xAnimSingle* anim, void*)
+{
+    sLasso->flags = 0xc21;
+    zLasso_ResetTimer(sLasso, 0.0f);
+
+    anim->BilinearLerp[0] = 1.0f;
+    anim->Blend->BilinearLerp[0] = 1.0f;
+
+    zCameraEnableLassoCam();
+    zCameraSetLassoCamFactor(1.0f);
+    return 0;
+}
+
+// Equivalent: sda/float scheduling crap
+static U32 LassoSwingGroundedCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    zEntPlayer_SNDStop(ePlayerSnd_Heli);
+    idle_tmr = 0.0f;
+    sTimeToRetarget = 0.5f;
+    sLassoInfo->swingTarget = NULL;
+    sLasso->flags = 0;
+    sLassoCamLinger = 1;
+
+    return 0;
+}
+
+// Really odd scheduling. Maybe equivalent?
+static U32 LassoSwingReleaseCB(xAnimTransition* tran, xAnimSingle* anim, void* object)
+{
+    zEntPlayer_SNDStop(ePlayerSnd_Heli);
+    idle_tmr = 0.0f;
+    sTimeToRetarget = 0.5f;
+    sLassoInfo->canCopter = 1;
+    globals.player.Jump_CanDouble = 1;
+    globals.player.IsDJumping = 0;
+    sLassoCamLinger = 1;
+    sLassoInfo->swingTarget = NULL;
+    sLasso->flags = 0;
+
+    JumpCB(tran, anim, object);
+
     return 0;
 }
 
@@ -2369,8 +3731,10 @@ void zEntPlayer_GiveLevelPickupCurrentLevel(S32 quantity)
     }
 }
 
-static void _SetupRumble(_tagePlayerSnd, _tagRumbleType, float)
+static void _SetupRumble(_tagePlayerSnd player_snd, _tagRumbleType type, float time)
 {
+    sPlayerRumbleType[player_snd] = type;
+    sPlayerRumbleTime[player_snd] = time;
 }
 
 // Close. missing redundant float loads, maybe equivalent.
@@ -3302,7 +4666,7 @@ void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 
 // TODO: Move these to their headers
 
-WEAK U8 xSndIsPlaying(U32 assetID)
+WEAK U32 xSndIsPlaying(U32 assetID)
 {
     return iSndIsPlaying(assetID);
 }

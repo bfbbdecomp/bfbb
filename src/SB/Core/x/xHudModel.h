@@ -10,7 +10,10 @@ namespace xhud
     {
         U32 model;
 
-        char* type_name();
+        static const char* type_name()
+        {
+            return "hud:model";
+        }
     };
 
     struct model_widget : widget
@@ -18,7 +21,17 @@ namespace xhud
         U32 mid;
         xModelInstance* model;
 
+        model_widget(const model_asset&);
+
         static void load(xBase& data, xDynAsset& asset, size_t);
+
+        void destruct();
+
+        virtual void destroy();
+        virtual U32 type() const;
+        virtual bool is(U32 id) const;
+        virtual void update(F32 dt);
+        virtual void render();
     };
 } // namespace xhud
 

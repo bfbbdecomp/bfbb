@@ -67,12 +67,12 @@ void zThrownCollide_DestructObj(zThrownStruct* thrown, xEntCollis* collis, F32* 
                                 F32* friction);
 void zThrownCollide_BSandyHead(zThrownStruct* thrown, xEntCollis* collis, F32* bounce,
                                F32* friction);
-void zThrownCollide_Tiki(zThrownStruct* thrown, xEntCollis* collis, F32* bounce,
-                         F32* friction);
+void zThrownCollide_Tiki(zThrownStruct* thrown, xEntCollis* collis, F32* bounce, F32* friction);
+void zThrown_AddFruit(xEnt* ent);
 S32 zThrown_IsFruit(xEnt* ent, F32* stackHeight);
 void checkAgainstButtons(xEnt* ent);
 xBase* zThrown_ButtonIteratorCB(xBase* b, zScene* scn, void* user);
-void xDrawSphere(xSphere* s, U32 unk);
+void xDrawSphere(const xSphere* s, U32 unk);
 S32 zThrown_KillFruit(xEnt* ent);
 void zThrown_LaunchDir(xEnt* ent, xVec3* dir);
 

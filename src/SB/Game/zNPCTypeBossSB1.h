@@ -17,12 +17,15 @@ struct zNPCB_SB1 : zNPCBoss
     zEnt* m_bodyColl; // 0x458
     zEnt* m_armTgt[2]; // 0x45C
     xFXRing* m_stompRing[16]; // 0x464
-    U8 attacking; // 0x4A4
+    bool attacking; // 0x4A4 needs to be a bool to match some instructions
     F32 attack_delay; // 0x4A8
 
     zNPCB_SB1(S32 myType);
     void Init(xEntAsset*);
+    void SelfSetup();
     void Reset();
+    U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* goal);
+    void Process(xScene* xscn, F32 dt);
     void NewTime(xScene* xscn, F32 dt);
     F32 AttackTimeLeft();
     void HoldUpDude();
@@ -74,6 +77,8 @@ struct zNPCGoalBossSB1Smash : zNPCGoalCommon
     }
 
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Exit(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* ctxt, xScene* scene);
 };
 
 struct zNPCGoalBossSB1Deflate : zNPCGoalCommon
@@ -91,6 +96,8 @@ struct zNPCGoalBossSB1Deflate : zNPCGoalCommon
     }
 
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Exit(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, float dt, void* ctxt, xScene* scene);
 };
 
 #endif

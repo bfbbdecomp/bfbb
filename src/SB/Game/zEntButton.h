@@ -31,11 +31,18 @@ struct _zEntButton : zEnt
 };
 
 void zEntButton_Init(void* ent, void* asset);
+void zEntButton_Init(_zEntButton* ent, xEntAsset* asset);
+void zEntButton_Move(_zEntButton* ent, xScene* sc, F32 dt, xEntFrame* frame);
 void zEntButton_Setup(_zEntButton* ent, xScene* sc);
 void zEntButton_Save(_zEntButton* ent, xSerial* s);
 void zEntButton_Load(_zEntButton* ent, xSerial* s);
 void zEntButton_Reset(_zEntButton* ent, xScene* sc);
+void zEntButton_Update(_zEntButton* ent, xScene* sc, F32 dt);
+void zEntButton_Render(_zEntButton* ent);
+void zEntButton_SetReady(_zEntButton* ent);
+void zEntButton_Press(_zEntButton* ent);
 void zEntButton_Press(_zEntButton* ent, U32 mask);
+void zEntButton_Hold(_zEntButton* ent, U32 mask);
 void zEntButton_SceneUpdate(F32 dt);
 
 #endif

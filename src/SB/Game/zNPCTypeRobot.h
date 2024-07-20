@@ -252,6 +252,62 @@ struct zNPCChuck : zNPCRobot
     xVec3 dir_attack;
 
     zNPCChuck(S32 myType);
+    //    0x00000000; // 0x0
+    //    0x00000000; // 0x4
+    /*
+    Init(xEntAsset*); // 0x8 zNPCChuck
+    PostInit(); // 0xC xNPCBasic
+    Setup(); // 0x10 zNPCCommon
+    PostSetup(); // 0x14 xNPCBasic
+    Reset(); // 0x18 zNPCChuck
+    Process(xScene*, float); // 0x1C zNPCRobot
+    BUpdate(xVec3*); // 0x20 zNPCCommon
+    NewTime(xScene*, float); // 0x24 zNPCRobot
+    Move(xScene*, float, xEntFrame*); // 0x28 zNPCCommon
+    SysEvent(xBase*, xBase*, unsigned int, const float*, xBase*, int*); // 0x2C zNPCRobot
+    Render(); // 0x30 xNPCBasic
+    Save(xSerial*) const; // 0x34 xNPCBasic
+    Load(xSerial*); // 0x38 xNPCBasic
+    CollideReview(); // 0x3C zNPCRobot
+    ColChkFlags() const; // 0x40 zNPCRobot
+    ColPenFlags() const; // 0x44 zNPCRobot
+    ColChkByFlags() const; // 0x48 zNPCRobot
+    ColPenByFlags() const; // 0x4C zNPCRobot
+    PhysicsFlags() const; // 0x50 zNPCRobot
+    Destroy(); // 0x54 zNPCCommon
+    NPCMessage(NPCMsg*); // 0x58 zNPCRobot
+    RenderExtra(); // 0x5C zNPCCommon
+    RenderExtraPostParticles(); // 0x60 zNPCCommon
+    ParseINI(); // 0x64 zNPCChuck
+    ParseLinks(); // 0x68 zNPCCommon
+    ParseProps(); // 0x6C zNPCCommon
+    SelfSetup(); // 0x70 zNPCChuck
+    SelfDestroy(); // 0x74 zNPCCommon
+    IsHealthy(); // 0x78 zNPCRobot
+    IsAlive(); // 0x7C zNPCRobot
+    Damage(en_NPC_DAMAGE_TYPE, xBase*, const xVec3*); // 0x80 zNPCCommon
+    Respawn(const xVec3*, zMovePoint*, zMovePoint*); // 0x84 zNPCCommon
+    DuploOwner(zNPCCommon*); // 0x88 zNPCRobot
+    DuploNotice(en_SM_NOTICES, void*); // 0x8C zNPCCommon
+    CanRope(); // 0x90 zNPCCommon
+    LassoNotify(en_LASSO_EVENT); // 0x94 zNPCRobot
+    SetCarryState(en_NPC_CARRY_STATE); // 0x98 zNPCRobot
+    Stun(float); // 0x9C zNPCRobot
+    SpeakBegin(); // 0xA0 zNPCCommon
+    SpeakEnd(); // 0xA4 zNPCCommon
+    SpeakStart(unsigned int, unsigned int, int); // 0xA8 zNPCCommon
+    SpeakStop(); // 0xAC zNPCCommon
+    AnimPick(int, en_NPC_GOAL_SPOT, xGoal*); // 0xB0 zNPCChuck
+    GetParm(en_npcparm, void*); // 0xB4 zNPCCommon
+    GetParmDefault(en_npcparm, void*); // 0xB8 zNPCCommon
+    GenShadCacheRad(); // 0xBC zNPCRobot
+    PRIV_GetDriverData(); // 0xC0 zNPCRobot
+    PRIV_GetLassoData(); // 0xC4 zNPCRobot
+    LassoSetup(); // 0xC8 zNPCRobot
+    RoboHandleMail(NPCMsg*); // 0xCC zNPCRobot
+    IsDying(); // 0xD0 zNPCRobot
+    LassoModelIndex(int*, int*); // 0xD4 zNPCChuck
+    */
 };
 
 enum en_tubestat

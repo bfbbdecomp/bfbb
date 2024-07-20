@@ -5,7 +5,7 @@
   },
   "[cpp]": {
     "files.encoding": "utf8",
-    "editor.defaultFormatter": "ms-vscode.cpptools"
+    "editor.defaultFormatter": "xaver.clang-format"
   },
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"

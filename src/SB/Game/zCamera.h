@@ -63,6 +63,7 @@ void zCameraDisableLassoCam();
 void zCameraEnableLassoCam();
 void zCameraSetLassoCamFactor(F32 new_factor);
 F32 zCameraGetLassoCamFactor();
+void zCameraEnableWallJump(xCamera* cam, const xVec3& collNormal);
 S32 zCameraGetConvers();
 void zCameraTranslate(xCamera* cam, F32 x, F32 y, F32 z);
 void zCameraDisableWallJump(xCamera* cam);
