@@ -2,6 +2,7 @@
 #define ZSURFACE_H
 
 #include "xBase.h"
+#include "xCollide.h"
 #include "xMath3.h"
 #include "xSurface.h"
 
@@ -121,7 +122,7 @@ struct xScene;
 void zSurfaceRegisterMapper(U32 assetId);
 void zSurfaceExit();
 xSurface* zSurfaceGetSurface(U32 mat_id);
-// xSurface* zSurfaceGetSurface(const xCollis* coll);
+xSurface* zSurfaceGetSurface(const xCollis* coll);
 U32 zSurfaceGetStandOn(const xSurface* surf);
 void zSurfaceSave(xSurface* ent, xSerial* s);
 void zSurfaceLoad(xSurface* ent, xSerial* s);

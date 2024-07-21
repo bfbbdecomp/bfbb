@@ -75,8 +75,15 @@ struct zNPCGoalLoopAnim : zNPCGoalCommon
     U32 origAnimFlags;
     U32 animWeMolested;
 
-    // void* __ct(S32 myType);
+    zNPCGoalLoopAnim(S32 myType) : zNPCGoalCommon(myType)
+    {
+        SetFlags(1 << 1);
+    }
+
     void LoopCountSet(S32 unk); // return type might be wrong
+
+    virtual S32 Enter(F32 dt, void* updCtxt);
+    virtual S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
 };
 
 struct zNPCGoalTaunt : zNPCGoalLoopAnim
@@ -194,8 +201,13 @@ struct zNPCGoalPushAnim : zNPCGoalCommon
     S32 flg_pushanim;
     F32 lastAnimTime;
 
-    // void* __ct(S32 myType);
-    S32 Enter(F32 dt, void* updCtxt);
+    zNPCGoalPushAnim(S32 myType) : zNPCGoalCommon(myType)
+    {
+        SetFlags((1 << 2) | (1 << 1));
+    }
+
+    virtual S32 Enter(F32 dt, void* updCtxt);
+    virtual S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
 };
 
 struct zNPCGoalAttackFodder;
