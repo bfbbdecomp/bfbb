@@ -27,12 +27,14 @@ struct xShadowCache
 
 void xShadowInit();
 void xShadowRender(xVec3* center, F32 radius, F32 max_dist);
-void xShadowRenderWorld(xVec3* center, F32 radius, F32 max_dist);
 S32 SetupShadow();
 void xShadowSetWorld(RpWorld* world);
 void xShadowSetLight(xVec3* target_pos, xVec3* in_vec, F32 value);
 U32 xShadowCameraCreate();
 void xShadowCameraUpdate(void* model, void(*renderCB)(void*), xVec3* center, F32 radius, S32 shadowMode);
+void xShadowRenderWorld(xVec3* center, F32 radius, F32 max_dist);
+void modelRenderCB(void* model);
+U32 xShadowReceiveShadowSetup(xEnt* ent);
 
 void ShadowCameraUpdate(RwCamera* camera, void* model, void(*renderCB)(void*), xVec3* center, F32 radius, S32 shadowMode);
 RwCamera* ShadowCameraSetSpherePersp(RwCamera* camera, RwV3d* center, F32 radius);
