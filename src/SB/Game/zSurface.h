@@ -2,6 +2,7 @@
 #define ZSURFACE_H
 
 #include "xBase.h"
+#include "xCollide.h"
 #include "xMath3.h"
 #include "xSurface.h"
 

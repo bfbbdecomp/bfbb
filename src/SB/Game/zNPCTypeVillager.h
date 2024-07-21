@@ -22,6 +22,8 @@ struct zNPCVillager : zNPCCommon
     S32 current_talk_anim;
 
     zNPCVillager(S32 myType);
+
+    void FindMyConverse();
     U8 ColPenByFlags() const;
     U8 ColChkByFlags() const;
     F32 GenShadCacheRad();

@@ -7,6 +7,7 @@
 #include "xEntDrive.h"
 #include "xBehaveMgr.h"
 #include "xEnt.h"
+#include "xSFX.h"
 
 #include "zNPCSndTable.h"
 #include "zNPCSpawner.h"
@@ -408,6 +409,7 @@ struct zNPCCommon : xNPCBasic
     xAnimState* AnimCurState();
     U32 AnimCurStateID();
     void GiveReward();
+    S32 SndPlayFromSFX(xSFX* sfx, U32* sid_played);
     S32 SndPlayRandom(en_NPC_SOUND sndtype);
     S32 SndChanIsBusy(S32 flg_chan);
     S32 LassoUseGuides(S32 idx_grabmdl, S32 idx_holdmdl);

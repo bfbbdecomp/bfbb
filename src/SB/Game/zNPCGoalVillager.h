@@ -12,6 +12,9 @@ struct zNPCGoalCheer : zNPCGoalLoopAnim
     {
         SetFlags(1 << 1);
     }
+
+    virtual S32 Enter(F32 dt, void* updCtxt);
+    virtual S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
 };
 
 struct zNPCGoalHurt : zNPCGoalPushAnim
@@ -22,6 +25,9 @@ struct zNPCGoalHurt : zNPCGoalPushAnim
     }
 
     void ChkRewardCheat();
+
+    virtual S32 Enter(F32 dt, void* updCtxt);
+    virtual S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
 };
 
 // FIXME: Put this in somewhere.
@@ -39,7 +45,11 @@ struct zNPCGoalPlayerNear : zNPCGoalCommon
         SetFlags((1 << 3) | (1 << 2));
     }
 
+    void ChkCheatMedic();
     void DoCheatPanHandle();
+    void ChkCheatDogTrix(S32* goal, en_trantype* trantype);
+
+    virtual S32 NPCMessage(NPCMsg* mail);
 };
 
 struct zNPCGoalTalk : zNPCGoalCommon
@@ -58,6 +68,12 @@ struct zNPCGoalTalk : zNPCGoalCommon
     {
         SetFlags(1 << 1);
     }
+
+    void StartSFX(xSFX* sfx);
+
+    virtual S32 Enter(F32 dt, void* updCtxt);
+    virtual S32 Exit(F32 dt, void* updCtxt);
+    virtual S32 NPCMessage(NPCMsg* mail);
 };
 
 struct zNPCGoalChatter : zNPCGoalCommon
@@ -81,6 +97,10 @@ struct zNPCGoalSpeak : zNPCGoalCommon
     zNPCGoalSpeak(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    virtual S32 Enter(F32 dt, void* updCtxt);
+    virtual S32 Exit(F32 dt, void* updCtxt);
+    virtual S32 NPCMessage(NPCMsg* mail);
 };
 
 struct zNPCGoalBalloon : zNPCGoalCommon
@@ -136,6 +156,7 @@ struct zNPCGoalBoyWeep : zNPCGoalCommon
 
     virtual S32 Enter(F32 dt, void* updCtxt);
     virtual S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
+    virtual S32 NPCMessage(NPCMsg* mail);
 };
 
 struct zNPCGoalBoySwim : zNPCGoalCommon
