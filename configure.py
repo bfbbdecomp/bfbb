@@ -418,7 +418,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zNPCGoalCommon.cpp"), # wrong function order
             Object(NonMatching, "SB/Game/zNPCGoalStd.cpp"),
             Object(NonMatching, "SB/Game/zNPCGoalRobo.cpp"),
-            Object(NonMatching, "SB/Game/zNPCGoalTiki.cpp"),
+            Object(Matching, "SB/Game/zNPCGoalTiki.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zNPCMessenger.cpp"),
             Object(NonMatching, "SB/Game/zNPCMgr.cpp"),
             Object(Matching, "SB/Game/zNPCTypes.cpp"),

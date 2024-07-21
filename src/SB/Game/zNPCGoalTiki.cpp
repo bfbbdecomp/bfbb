@@ -7,11 +7,6 @@
 #include "xEvent.h"
 #include "zNPCTypes.h"
 
-extern F32 _836_0;
-extern F32 _837_3;
-extern F32 _862_2;
-extern F32 _863_1;
-
 xFactoryInst* GOALCreate_Tiki(S32 who, RyzMemGrow* grow, void*)
 {
     xGoal* goal;
@@ -64,11 +59,11 @@ S32 zNPCGoalTikiIdle::Enter(F32, void*)
 
     if (tiki->SelfType() == NPC_TYPE_TIKI_THUNDER)
     {
-        tmr_wait = _836_0;
+        tmr_wait = 0.1f;
     }
     else if (!tiki->nav_dest)
     {
-        tmr_wait = _837_3;
+        tmr_wait = 2.0f;
     }
     else
     {
@@ -112,10 +107,10 @@ S32 zNPCGoalTikiCount::Enter(F32, void*)
 {
     zNPCTiki* tiki = (zNPCTiki*)GetOwner();
 
-    tmr_count = _862_2;
+    tmr_count = 3.0f;
     beingCarried = 0;
 
-    tiki->t1 = _863_1;
+    tiki->t1 = 0.0f;
 
     return 0;
 }
