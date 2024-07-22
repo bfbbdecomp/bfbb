@@ -67,17 +67,25 @@ jobs:
           name: ${{ matrix.version }}_maps
           path: build/${{ matrix.version }}/**/*.MAP
 
-      - name: Generate Progress Report
+      - name: Generate Progress Reports
         if: github.ref == 'refs/heads/main'
         run: |
           ./objdiff-cli report generate -o progress.json
+          git log -1 --pretty='{"id": "%H", "email": "%ae", "time": "%ad", "message": "%s"}' --date=format:"%Y-%m-%dT%H:%M:%S" > progress-commit.json
+          git checkout HEAD~1
+          rm -rf ./build/
+          ninja all_source
+          ./objdiff-cli report generate -o previous.json
 
-      - name: Save Artifact
+      - name: Save Progress Artifacts
         if: github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v4
         with:
           name: progress
-          path: progress.json
+          path: |
+            progress.json
+            previous.json
+            progress-commit.json
 
   website:
     runs-on: ubuntu-latest
@@ -89,7 +97,7 @@ jobs:
         with:
           repository: bfbbdecomp/website
 
-      - name: Download artifact
+      - name: Download Progress Artifacts
         uses: actions/download-artifact@v4
         with:
           name: progress
