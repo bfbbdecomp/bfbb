@@ -103,8 +103,9 @@ struct xPsyche : RyzMemData
     void ImmTranOff();
     S32 ImmTranIsOn();
     S32 HasGoal(S32 goal);
-    S32 GIDOfPending() const;
+    xGoal* GetCurGoal() const;
     S32 GIDOfActive() const;
+    S32 GIDOfPending() const;
     S32 Timestep(F32 dt, void* updCtxt);
     xGoal* FindGoal(S32 gid);
     S32 GoalSet(S32 gid, S32 r5);

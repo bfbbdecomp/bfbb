@@ -15,7 +15,10 @@ struct zNPCGoalCommon : xGoal
     S32 flg_info : 16; // 0x48
     S32 flg_user : 16; // 0x4a
 
-    zNPCGoalCommon(S32 goalID);
+    zNPCGoalCommon(S32 goalID) : xGoal(goalID)
+    {
+        flg_npcgauto |= ~(1 << 3);
+    }
 
     U32 DoAutoAnim(en_NPC_GOAL_SPOT gspot, S32 forceRestart);
     U32 DoExplicitAnim(U32 anid, S32 forceRestart);
