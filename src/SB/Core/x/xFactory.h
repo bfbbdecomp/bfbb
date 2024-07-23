@@ -12,8 +12,16 @@ struct xFactoryInst : RyzMemData
     xFactoryInst* nextprod;
     xFactoryInst* prevprod;
 
-    xFactoryInst();
-    ~xFactoryInst();
+    xFactoryInst()
+    {
+        itemType = 0;
+        prevprod = NULL;
+        nextprod = NULL;
+    }
+
+    ~xFactoryInst()
+    {
+    }
 };
 
 typedef xFactoryInst* (*XGOFTypeInfoCreator)(S32, RyzMemGrow*, void*);

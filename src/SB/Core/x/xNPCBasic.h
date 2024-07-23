@@ -21,6 +21,7 @@ enum en_npcdcat
     eNPCDCAT_Zero,
     eNPCDCAT_Seven = 7,
     eNPCDCAT_Eight = 8,
+    eNPCDCAT_Eleven = 11,
 };
 
 struct xNPCBasic : xEnt, xFactoryInst
@@ -61,7 +62,15 @@ struct xNPCBasic : xEnt, xFactoryInst
     xNPCBasic(S32);
 
     S32 SelfType() const;
-    void RestoreColFlags();
+    void RestoreColFlags()
+    {
+        flags2.flg_colCheck = ColChkFlags();
+        flags2.flg_penCheck = ColPenFlags();
+        chkby = ColChkByFlags();
+        penby = ColPenByFlags();
+        pflags = PhysicsFlags();
+        colFreq = -1;
+    }
 
     void DBG_PStatClear();
     void DBG_PStatCont(en_npcperf stat);
@@ -81,19 +90,38 @@ struct xNPCBasic : xEnt, xFactoryInst
     virtual void NewTime(xScene* xscn, F32 dt);
     virtual void Move(xScene* xscn, F32 dt, xEntFrame* frm);
     virtual S32 SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
-                           xBase* toParamWidget, S32* handled);
+                         xBase* toParamWidget, S32* handled);
     virtual void Render();
     virtual void Save(xSerial*) const;
     virtual void Load(xSerial*);
     virtual void CollideReview();
 
     /* These most likely return a combination of XENT_COLLTYPE_* values */
-    virtual U8 ColChkFlags() const;
-    virtual U8 ColPenFlags() const;
-    virtual U8 ColChkByFlags() const;
-    virtual U8 ColPenByFlags() const;
+    virtual U8 ColChkFlags() const
+    {
+        return 0;
+    }
 
-    virtual U8 PhysicsFlags() const;
+    virtual U8 ColPenFlags() const
+    {
+        return 0;
+    }
+
+    virtual U8 ColChkByFlags() const
+    {
+        return 0;
+    }
+
+    virtual U8 ColPenByFlags() const
+    {
+        return 0;
+    }
+
+    virtual U8 PhysicsFlags() const
+    {
+        return 0;
+    }
+
     virtual void Destroy();
 };
 

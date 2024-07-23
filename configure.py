@@ -416,7 +416,7 @@ config.libs = [
             Object(NonMatching, "SB/Core/gc/ngcrad3d.c"),
             Object(Matching, "SB/Game/zNPCGoals.cpp"),
             Object(NonMatching, "SB/Game/zNPCGoalCommon.cpp"), # wrong function order
-            Object(NonMatching, "SB/Game/zNPCGoalStd.cpp"),
+            Object(NonMatching, "SB/Game/zNPCGoalStd.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zNPCGoalRobo.cpp"),
             Object(Matching, "SB/Game/zNPCGoalTiki.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zNPCMessenger.cpp"),

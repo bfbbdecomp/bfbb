@@ -179,8 +179,8 @@ struct zNPCSettings : xDynAsset
 {
     en_npcbtyp basisType;
     S8 allowDetect;
-    S8 allowPatrol;
-    S8 allowWander;
+    U8 allowPatrol;
+    U8 allowWander;
     S8 reduceCollide;
     S8 useNavSplines;
     S8 pad[3];
@@ -402,10 +402,12 @@ struct zNPCCommon : xNPCBasic
     F32 AnimDuration(xAnimState* ast);
     bool IsMountableType(en_ZBASETYPE type);
     void MvptReset(zMovePoint* nav_goto);
+    S32 MvptCycle();
     void ModelScaleSet(F32 x, F32 y, F32 z);
     void ModelScaleSet(F32 unk);
     void ModelScaleSet(const xVec3* vec);
     S32 AnimStart(U32 animID, S32 forceRestart);
+    xAnimState* AnimFindState(U32 animID);
     xAnimState* AnimCurState();
     U32 AnimCurStateID();
     void GiveReward();

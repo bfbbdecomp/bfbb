@@ -9,6 +9,12 @@ template <class T> struct xListItem
     T* next;
     T* prev;
 
+    xListItem() {
+        flg_travFilter = 0;
+        prev = NULL;
+        next = NULL;
+    }
+
     T* Next();
     void Insert(T* list);
     T* RemHead(T** listhead);
