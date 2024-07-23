@@ -89,6 +89,8 @@ jobs:
 
   website:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     needs: build
     if: github.ref == 'refs/heads/main'
     steps:
@@ -118,3 +120,20 @@ jobs:
           folder: dist # The folder the action should deploy.
           clean: true
           single-commit: true
+
+      - name: Commit Changes
+        continue-on-error: true
+        run: |
+          git status
+          git pull
+          git config --global user.name "BFBB Actions Bot"
+          git config --global user.email "actions@github.com"
+          git add .
+          git commit -m "automated commit cache update"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          repository: bfbbdecomp/website
+          branch: ${{ github.ref }}
