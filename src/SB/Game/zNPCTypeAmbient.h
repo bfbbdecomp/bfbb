@@ -20,6 +20,7 @@ struct zNPCAmbient : zNPCCommon
     virtual U8 ColChkByFlags() const;
     virtual U8 ColPenByFlags() const;
     virtual U8 PhysicsFlags();
+    S32 AmbiHandleMail(NPCMsg*);
 };
 
 struct zNPCJelly : zNPCAmbient

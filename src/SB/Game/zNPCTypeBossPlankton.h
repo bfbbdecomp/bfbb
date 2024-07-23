@@ -109,6 +109,9 @@ struct zNPCBPlankton : zNPCBoss
     void render_debug();
     void update_animation(float);
     S32 IsAlive();
+    U8 ColPenFlags() const;
+    U8 ColChkFlags() const;
+    U8 ColChkByFlags() const;
 };
 
 struct zNPCGoalBPlanktonIdle : zNPCGoalCommon
@@ -161,6 +164,7 @@ struct zNPCGoalBPlanktonTaunt : zNPCGoalCommon
     zNPCBPlankton& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
+    S32 Process(en_trantype*, float, void*, xScene*);
 };
 
 struct zNPCGoalBPlanktonMove : zNPCGoalCommon
@@ -168,6 +172,7 @@ struct zNPCGoalBPlanktonMove : zNPCGoalCommon
     zNPCBPlankton& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
+    S32 Process(en_trantype*, float, void*, xScene*);
 };
 
 struct zNPCGoalBPlanktonStun : zNPCGoalCommon
@@ -213,6 +218,7 @@ struct zNPCGoalBPlanktonWall : zNPCGoalCommon
     zNPCBPlankton& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
+    S32 Process(en_trantype*, float, void*, xScene*);
 };
 
 struct zNPCGoalBPlanktonMissle : zNPCGoalCommon
@@ -220,6 +226,7 @@ struct zNPCGoalBPlanktonMissle : zNPCGoalCommon
     zNPCBPlankton& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
+    S32 Process(en_trantype*, float, void*, xScene*);
 };
 
 struct zNPCGoalBPlanktonBomb : zNPCGoalCommon
@@ -227,6 +234,7 @@ struct zNPCGoalBPlanktonBomb : zNPCGoalCommon
     zNPCBPlankton& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
+    S32 Process(en_trantype*, float, void*, xScene*);
 };
 
 #endif

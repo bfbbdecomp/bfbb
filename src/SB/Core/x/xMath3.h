@@ -121,6 +121,7 @@ void xMat3x3Scale(xMat3x3* m, const xVec3* s);
 void xMat3x3ScaleC(xMat3x3* m, F32 x, F32 y, F32 z);
 void xMat3x3RMulRotY(xMat3x3* o, const xMat3x3* m, F32 t);
 void xMat3x3Mul(xMat3x3* o, const xMat3x3* a, const xMat3x3* b);
+void xMat3x3SMul(xMat3x3*, const xMat3x3*, F32);
 void xBoxFromLine(xBox& box, const xLine3& line);
 void xBoxFromRay(xBox& box, const xRay3& ray);
 void xMat3x3Identity(xMat3x3* matrix);

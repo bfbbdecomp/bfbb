@@ -140,6 +140,11 @@ struct zNPCDutchman : zNPCSubBoss
     void render_debug();
     void update_animation(float);
     void add_splash(const xVec3&, float);
+    U8 PhysicsFlags() const;
+    U8 ColPenByFlags() const;
+    U8 ColChkByFlags() const;
+    U8 ColPenFlags() const;
+    U8 ColChkFlags() const;
 };
 
 struct zNPCGoalDutchmanNil : zNPCGoalCommon

@@ -30,6 +30,31 @@ void ZNPC_Tiki_Startup()
     }
 }
 
+U8 zNPCTiki::ColPenByFlags() const
+{
+    return 24;
+}
+
+U8 zNPCTiki::PhysicsFlags() const
+{
+    return 0;
+}
+
+U8 zNPCTiki::ColChkByFlags() const
+{
+    return 24;
+}
+
+U8 zNPCTiki::ColPenFlags() const
+{
+    return 0;
+}
+
+U8 zNPCTiki::ColChkFlags() const
+{
+    return 0;
+}
+
 void ZNPC_Tiki_Shutdown()
 {
 }

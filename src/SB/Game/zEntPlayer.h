@@ -388,6 +388,7 @@ void zEntPlayer_ShadowModelDisable();
 void zEntPlayerJumpStart(class xEnt* ent, class zJumpParam* jump);
 
 void zEntPlayer_setBoulderMode(U32 mode);
+void zEntPlayer_GiveHealth(S32);
 void zEntPlayer_GiveSpatula(S32);
 void zEntPlayer_GivePatsSocksCurrentLevel(S32 quantity);
 

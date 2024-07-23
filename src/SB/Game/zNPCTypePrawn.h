@@ -134,6 +134,10 @@ struct zNPCPrawn : zNPCSubBoss
     zNPCPrawn(S32 myType);
     void render_debug();
     void update_particles(float);
+    U8 PhysicsFlags() const;
+    U8 ColPenByFlags() const;
+    U8 ColChkByFlags() const;
+    U8 ColPenFlags() const;
 };
 
 struct zNPCGoalPrawnIdle : zNPCGoalCommon

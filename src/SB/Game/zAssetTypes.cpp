@@ -6,6 +6,7 @@
 #include <types.h>
 #include <rwcore.h>
 #include <rpworld.h>
+#include <xAnim.h>
 
 extern xJSPHeader* sTempJSP;
 extern xJSPHeader sDummyEmptyJSP;
@@ -66,4 +67,9 @@ void* JSP_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsiz
 
 void Anim_Unload(void*, U32)
 {
+}
+
+U8 dummyEffectCB(U32, xAnimActiveEffect*, xAnimSingle*, void*)
+{
+    return 0;
 }
