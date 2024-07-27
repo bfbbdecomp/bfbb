@@ -133,7 +133,7 @@ struct zPlatFMRunTime
 
 struct zPlatform : zEnt
 {
-    xPlatformAsset* passet;
+    xPlatformAsset* passet; // 0xD4
     xEntMotion motion;
     U16 state;
     U16 plat_flags;
@@ -169,6 +169,6 @@ void zPlatform_Save(zPlatform* ent, xSerial* s);
 void zPlatform_Load(zPlatform* ent, xSerial* s);
 void zPlatform_Reset(zPlatform* plat, xScene* sc);
 U32 zPlatform_PaddleCollide(xCollis* coll, const xVec3* hitsource, const xVec3* hitvel,
-                               U32 worldSpaceNorm);
+                            U32 worldSpaceNorm);
 
 #endif

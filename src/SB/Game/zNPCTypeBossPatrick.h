@@ -82,7 +82,7 @@ struct zNPCBPatrick : zNPCBoss
     xEnt* fudgeHandle; // offset 0x1584, size 0x4
     zParEmitter* fudgeEmitter; // offset 0x1588, size 0x4
     zParEmitter* steamEmitter; // offset 0x158C, size 0x4
-    bossPatBox box[3][8]; // offset 0x1590, size 0x1E0
+    bossPatBox box[4][6]; // offset 0x1590, size 0x1E0
     bossPatBox backBox; // offset 0x1770, size 0x14
     zShrapnelAsset* boxBreak; // offset 0x1784, size 0x4
     zShrapnelAsset* boxSplash; // offset 0x1788, size 0x4
@@ -138,7 +138,7 @@ struct zNPCBPatrick : zNPCBoss
     void playSplat(xVec3* pos);
     U32 canSpawnChucks();
     void gotoRound(S32 num);
-    void ConveyorTimeLeft(zPlatform* platform, xVec3* vec_unk); // Not in PS2 DWARF
+    F32 ConveyorTimeLeft(zPlatform* platform, xVec3* vec_unk); // Not in PS2 DWARF
     void ParabolaHitsConveyors(xParabola* parabola, xCollis* collis_unk);
     void bossPatBoxCheckCollide(bossPatBox* bx); // Not in PS2 DWARF
     void bossPatBoxUpdate(bossPatBox* bx, F32 dt);
@@ -206,13 +206,16 @@ struct zNPCGoalBossPatRun : zNPCGoalCommon
 
 struct zNPCGoalBossPatSmack : zNPCGoalCommon
 {
-    F32 timeInGoal;
-    U32 stage;
-    F32 globNum;
+    F32 timeInGoal; // 0x4c
+    U32 stage; // 0x50
+    F32 globNum; // 0x54
 
     zNPCGoalBossPatSmack(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    S32 Enter(F32 dt, void* unk);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
 };
 
 struct zNPCGoalBossPatFreeze : zNPCGoalCommon

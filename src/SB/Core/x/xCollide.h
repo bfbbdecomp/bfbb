@@ -1,6 +1,7 @@
 #ifndef XCOLLIDE_H
 #define XCOLLIDE_H
 
+#include "xEnv.h"
 #include "xModel.h"
 #include "xQuickCull.h"
 #include "iMath3.h"
@@ -18,7 +19,7 @@ struct xCollis
     U32 oid;
     void* optr;
     xModelInstance* mptr;
-    F32 dist;
+    F32 dist; // 0x30
     xVec3 norm;
     xVec3 tohit;
     xVec3 depen;
@@ -109,6 +110,10 @@ bool xSphereHitsVCylinder(const xVec3& sc, F32 sr, const xVec3& cc, F32 cr, F32 
 bool xSphereHitsVCircle(const xSphere& s, const xVec3& c, F32 r);
 bool xSphereHitsVCircle(const xVec3& sc, F32 sr, const xVec3& cc, F32 cr);
 U32 xSphereHitsModel(const xSphere* b, const xModelInstance* m, xCollis* coll);
+
+S32 xParabolaHitsEnv(xParabola* p, xEnv* env, xCollis* colls);
+void xParabolaEvalPos(const xParabola*, xVec3*, F32);
+void xParabolaEvalVel(const xParabola*, xVec3*, F32);
 
 void xVec3AddScaled(xVec3*, const xVec3*, F32);
 

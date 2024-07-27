@@ -67,11 +67,13 @@ S32 xGridRemove(xGridBound* gridb);
 xGridBound** xGridGetCell(xGrid* grid, const xEnt* ent, S32& grx, S32& grz);
 void xGridGetCell(xGrid* grid, F32 posx, F32 posy, F32 posz, S32& grx, S32& grz);
 xGridBound* xGridIterFirstCell(xGrid* grid, S32 grx, S32 grz, xGridIterator& iter);
-xGridBound* xGridIterFirstCell(xGrid* grid, F32 posx, F32, F32 posz, S32& grx,
-                               S32& grz, xGridIterator& it);
+xGridBound* xGridIterFirstCell(xGrid* grid, F32 posx, F32, F32 posz, S32& grx, S32& grz,
+                               xGridIterator& it);
 xGridBound* xGridIterFirstCell(xGridBound** head, xGridIterator& it);
 xGridBound* xGridIterNextCell(xGridIterator& it);
 void xGridIterClose(xGridIterator& it);
 void xGridCheckPosition(xGrid* grid, xVec3* pos, xQCData* qcd, GridEntCallback hitCB, void* cbdata);
+S32 xGridEntIsTooBig(xGrid* grid, const xEnt* ent);
+S32 xGridAdd(xGrid* grid, xEnt* ent);
 
 #endif

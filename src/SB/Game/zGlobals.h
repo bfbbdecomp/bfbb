@@ -219,13 +219,13 @@ struct zPlayerGlobals
     xVec3 AutoMoveTarget;
     xBase* AutoMoveObject;
     zEnt* Diggable;
-    F32 DigTimer;
+    F32 DigTimer; // 0x17AC
     zPlayerCarryInfo carry;
     zPlayerLassoInfo lassoInfo;
     xModelTag BubbleWandTag[2];
-    xModelInstance* model_wand;
+    xModelInstance* model_wand; // 0x19E0
     xEntBoulder* bubblebowl;
-    F32 bbowlInitVel;
+    F32 bbowlInitVel; // 0x19E8
     zEntHangable* HangFound;
     zEntHangable* HangEnt;
     zEntHangable* HangEntLast;
@@ -317,7 +317,7 @@ struct zGlobals : xGlobals
     zPlayerGlobals player;
     zAssetPickupTable* pickupTable; // 0x1FB8
     zCutsceneMgr* cmgr; // 0x1FBC
-    zScene* sceneCur;
+    zScene* sceneCur; // 0x1FC0
     zScene* scenePreload;
 };
 

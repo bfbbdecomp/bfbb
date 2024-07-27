@@ -3,6 +3,7 @@
 
 #include "iModel.h"
 
+#include "xCollide.h"
 #include "xMath.h"
 #include "xMath3.h"
 #include "xstransvc.h"
@@ -13,6 +14,7 @@
 #include "zEntSimpleObj.h"
 #include "zEntDestructObj.h"
 #include "zGlobals.h"
+#include "zGrid.h"
 #include "zNPCTypeBossPatrick.h"
 #include "zRenderState.h"
 #include "zNPCGoals.h"
@@ -128,6 +130,10 @@ static tweak_callback newsfish_cb;
 static tweak_callback recenter_cb;
 
 void test(S32)
+{
+}
+
+static void GetBonePos(xVec3* result, xMat4x3* matArray, S32 index, xVec3* offset)
 {
 }
 
@@ -737,12 +743,89 @@ void zNPCBPatrick_GameIsPaused(zScene* scn)
     }
 }
 
+// 42%
 void zNPCBPatrick::RenderGlobs()
 {
     /*
         class xMat4x3 globMat; // r29+0xB0
         signed int i; // r29+0xA0
     */
+    xMat4x3 globMat;
+    S32 i;
+
+    iModelSetMaterialAlpha(this->spitModel, 215);
+    iModelMaterialMul(this->spitModel, f832, f831, f832);
+
+    iModelSetMaterialAlpha(this->splatModel, 215);
+    iModelMaterialMul(this->splatModel, f832, f831, f832);
+
+    for (i = 0; i < 50; i++)
+    {
+        bossPatGlob* glob = &this->glob[i];
+        if (glob->flags & 1)
+        {
+            if (glob->flags & 4)
+            {
+                xVec3Copy(&globMat.pos, &glob->path.initPos);
+                xVec3Copy(&glob->lastPos, &globMat.pos);
+                xVec3Init(&globMat.at, f832, f831, f832);
+                globMat.right.x = -glob->path.initVel.x;
+                globMat.right.y = f832;
+                globMat.right.z = -glob->path.initVel.z;
+
+                F32 dVar5 = xVec3Length(&globMat.up);
+
+                if (dVar5 >= f1668)
+                {
+                    xVec3SMulBy(&globMat.up, f831 / dVar5);
+                }
+
+                xVec3Cross(&globMat.pos, &globMat.up, &globMat.right);
+                xMat3x3SMul(&globMat, &globMat, f891);
+
+                if (!iModelCull(this->splatModel, (RwMatrix*)&globMat))
+                {
+                    iModelRender(this->splatModel, (RwMatrix*)&globMat);
+                }
+            }
+            else
+            {
+                xParabolaEvalPos(&glob->path, &globMat.pos, glob->t);
+
+                if (this->gooHeight < globMat.pos.y)
+                {
+                    xVec3Copy(&glob->lastPos, &globMat.pos);
+                    xParabolaEvalVel(&glob->path, &globMat.right, glob->t);
+
+                    F32 dVar5 = xVec3Length(&globMat.up);
+
+                    if (dVar5 > f1668)
+                    {
+                        xVec3SMulBy(&globMat.up, f831 / dVar5);
+                        globMat.right.x = globMat.up.x;
+                        globMat.right.y = f832;
+                        globMat.right.z = -globMat.up.y;
+                    }
+                    else
+                    {
+                        xVec3Init(&globMat.up, f832, f870, f832);
+                        xVec3Init(&globMat.right, f831, f832, f832);
+                    }
+
+                    xVec3Cross(&globMat.pos, &globMat.up, &globMat.right);
+                    xMat3x3SMul(&globMat, &globMat, f891);
+
+                    if (!iModelCull(this->spitModel, (RwMatrix*)&globMat))
+                    {
+                        iModelRender(this->spitModel, (RwMatrix*)&globMat);
+                    }
+                }
+            }
+        }
+    }
+
+    iModelResetMaterial(this->spitModel);
+    iModelResetMaterial(this->splatModel);
 }
 
 void zNPCBPatrick::RenderFrozenPlayer()
@@ -819,6 +902,20 @@ void zNPCBPatrick::RenderExtra()
 void zNPCBPatrick::NewTime(xScene* xscn, F32 dt)
 {
     // signed int i; // r20
+
+    for (S32 i = 0; i < 4; i++)
+    {
+        if (sBoundRadius[i] > f832)
+        {
+            GetBonePos(&this->boundList[i]->bound.box.center, (xMat4x3*)&this->model->Mat,
+                       sBone[sBoundBone[i]], &sBoneOffset[i]);
+
+            xQuickCullForBound(&this->boundList[i]->bound.qcd, &this->boundList[i]->bound);
+            zGridUpdateEnt(this->boundList[i]);
+        }
+    }
+
+    zNPCCommon::NewTime(xscn, dt);
 }
 
 S32 zNPCBPatrick::nextGoal()
@@ -963,9 +1060,28 @@ void zNPCBPatrick::gotoRound(S32 num)
     }
 }
 
-// return type probably wrong. not in PS2 dwarf
-void zNPCBPatrick::ConveyorTimeLeft(zPlatform* platform, xVec3* vec_unk)
+// I think xPlatformAsset type might not be correct
+// WIP
+F32 zNPCBPatrick::ConveyorTimeLeft(zPlatform* platform, xVec3* vec_unk)
 {
+    xVec3 output;
+
+    F32 fVar1;
+
+    if (platform->passet->pad > f832)
+    {
+        fVar1 = platform->bound.box.center.x;
+    }
+    else
+    {
+        fVar1 = platform->bound.box.center.y;
+    }
+
+    xVec3Sub(&output, vec_unk, &platform->bound.box.center);
+    F32 dVar3 = xVec3Dot(&output, &platform->bound.box.center);
+    F32 dVar4 = xVec3Length2(&platform->bound.box.center);
+
+    return fVar1 - dVar3 / dVar4 / platform->passet->pad;
 }
 
 void zNPCBPatrick::ParabolaHitsConveyors(xParabola* path, xCollis* colls)
@@ -996,18 +1112,99 @@ void zNPCBPatrick::bossPatBoxUpdate(bossPatBox* bx, F32 dt)
 
 static S32 idleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 {
+    zNPCGoalBossPatIdle* idle = (zNPCGoalBossPatIdle*)rawgoal;
+    zNPCBPatrick* pat = (zNPCBPatrick*)idle->GetOwner();
+    S32 nextgoal = 0;
+
+    if (globals.player.ControlOff & 0xffffbaff)
+    {
+        return 0;
+    }
+
+    if (pat->bossFlags & 2)
+    {
+        *trantype = GOAL_TRAN_SET;
+        nextgoal = NPC_GOAL_BOSSPATTAUNT;
+    }
+    else if (idle->timeInGoal > f1676 && idle->timeInGoal > f891)
+    {
+        nextgoal = pat->nextGoal();
+        *trantype = GOAL_TRAN_SET;
+    }
+
+    return nextgoal;
 }
 
 static S32 tauntCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 {
+    zNPCGoalBossPatTaunt* taunt = (zNPCGoalBossPatTaunt*)rawgoal;
+    zNPCBPatrick* pat = (zNPCBPatrick*)taunt->GetOwner();
+    S32 nextgoal = 0;
+
+    if (globals.player.ControlOff & 0xffffbaff)
+    {
+        *trantype = GOAL_TRAN_SET;
+        return NPC_GOAL_BOSSPATIDLE;
+    }
+
+    if (pat->AnimTimeRemain(NULL) < f2280 * dt)
+    {
+        pat->bossFlags &= 0xfffffffd;
+        nextgoal = pat->nextGoal();
+        *trantype = GOAL_TRAN_SET;
+    }
+
+    return nextgoal;
 }
 
 static S32 hitCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 {
+    zNPCGoalBossPatHit* hit = (zNPCGoalBossPatHit*)rawgoal;
+    zNPCBPatrick* pat = (zNPCBPatrick*)hit->GetOwner();
+    S32 nextgoal = 0;
+
+    if (globals.player.ControlOff & 0xffffbaff)
+    {
+        *trantype = GOAL_TRAN_SET;
+        return NPC_GOAL_BOSSPATIDLE;
+    }
+
+    if (pat->AnimTimeRemain(NULL) < f2280 * dt)
+    {
+        if (pat->round == 2)
+        {
+            nextgoal = NPC_GOAL_BOSSPATFUDGE;
+            *trantype = GOAL_TRAN_SET;
+        }
+        else
+        {
+            nextgoal = pat->nextGoal();
+            *trantype = GOAL_TRAN_SET;
+        }
+    }
+
+    return nextgoal;
 }
 
 static S32 spitCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 {
+    zNPCGoalBossPatSpit* spit = (zNPCGoalBossPatSpit*)rawgoal;
+    zNPCBPatrick* pat = (zNPCBPatrick*)spit->GetOwner();
+    S32 nextgoal = 0;
+
+    if (globals.player.ControlOff & 0xffffbaff)
+    {
+        *trantype = GOAL_TRAN_SET;
+        return NPC_GOAL_BOSSPATIDLE;
+    }
+
+    if ((spit->stage == 1 || spit->stage == 2) && pat->AnimTimeRemain(NULL) < f2280 * dt)
+    {
+        nextgoal = pat->nextGoal();
+        *trantype = GOAL_TRAN_SET;
+    }
+
+    return nextgoal;
 }
 
 static S32 runCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
@@ -1032,18 +1229,136 @@ static S32 runCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 
 static S32 smackCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 {
+    zNPCBPatrick* pat = (zNPCBPatrick*)rawgoal->GetOwner();
+    S32 nextgoal = 0;
+
+    if (globals.player.ControlOff & 0xffffbaff)
+    {
+        *trantype = GOAL_TRAN_SET;
+        return NPC_GOAL_BOSSPATIDLE;
+    }
+
+    if (pat->AnimTimeRemain(NULL) < f2280 * dt)
+    {
+        nextgoal = pat->nextGoal();
+        *trantype = GOAL_TRAN_SET;
+    }
+
+    return nextgoal;
 }
 
 static S32 freezeCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 {
+    zNPCBPatrick* pat = (zNPCBPatrick*)rawgoal->GetOwner();
+    S32 nextgoal = 0;
+
+    if (globals.player.ControlOff & 0xffffbaff)
+    {
+        *trantype = GOAL_TRAN_SET;
+        return NPC_GOAL_BOSSPATIDLE;
+    }
+
+    if (pat->AnimTimeRemain(NULL) < f2280 * dt)
+    {
+        nextgoal = pat->nextGoal();
+        *trantype = GOAL_TRAN_SET;
+    }
+
+    return nextgoal;
 }
 
 static S32 spawnCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 {
+    zNPCGoalBossPatSpawn* spawn = (zNPCGoalBossPatSpawn*)rawgoal;
+    zNPCBPatrick* pat = (zNPCBPatrick*)rawgoal->GetOwner();
+    S32 nextgoal = 0;
+
+    if (globals.player.ControlOff & 0xffffbaff)
+    {
+        *trantype = GOAL_TRAN_SET;
+        return NPC_GOAL_BOSSPATIDLE;
+    }
+
+    if (spawn->stage == 3 && pat->AnimTimeRemain(NULL) < f2280 * dt)
+    {
+        nextgoal = pat->nextGoal();
+        *trantype = GOAL_TRAN_SET;
+    }
+
+    return nextgoal;
 }
 
+// This function was a PITA to match
 static S32 spinCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 {
+    zNPCGoalBossPatSpin* spin = (zNPCGoalBossPatSpin*)rawgoal;
+    zNPCBPatrick* pat = (zNPCBPatrick*)rawgoal->GetOwner();
+    S32 nextgoal = 0;
+
+    if (globals.player.ControlOff & 0xffffbaff)
+    {
+        *trantype = GOAL_TRAN_SET;
+        return NPC_GOAL_BOSSPATIDLE;
+    }
+
+    if (spin->stage == 6)
+    {
+        if (pat->AnimTimeRemain(NULL) < f2280 * dt)
+        {
+            nextgoal = pat->nextGoal();
+            *trantype = GOAL_TRAN_SET;
+        }
+    }
+    else if (spin->stage == 2 && pat->bossFlags & 2)
+    {
+        if (pat->AnimTimeRemain(NULL) < f2280 * dt)
+        {
+            nextgoal = NPC_GOAL_BOSSPATTAUNT;
+            *trantype = GOAL_TRAN_SET;
+        }
+    }
+    else if (pat->bossFlags & 4 && pat->bossFlags & 8)
+    {
+        pat->hitPoints--;
+        zEntEvent(pat, pat, 471);
+        *trantype = GOAL_TRAN_SET;
+        nextgoal = NPC_GOAL_BOSSPATHIT;
+
+        if (!(pat->nfFlags & 0x800))
+        {
+            pat->newsfish->SpeakStart(sNFComment[35].soundID, 0, -1);
+            pat->nfFlags |= 0x800;
+        }
+        else if (pat->numMissesInARow > 5)
+        {
+            pat->newsfish->SpeakStart(sNFComment[29].soundID, 0, -1);
+            pat->numMissesInARow = 0;
+        }
+        else if (pat->numPCHitsInARow > 2 || (pat->numPCHitsInARow == 2 && (xrand() & 0x80)))
+        {
+            pat->newsfish->SpeakStart(sNFComment[28].soundID, 0, -1);
+        }
+        else
+        {
+            U32 picker = xrand();
+
+            if (!(picker & 0x300))
+            {
+                if (picker & 0x40)
+                {
+                    pat->newsfish->SpeakStart(sNFComment[35].soundID, 0, -1);
+                }
+                else
+                {
+                    pat->newsfish->SpeakStart(sNFComment[36].soundID, 0, -1);
+                }
+            }
+        }
+
+        pat->numPCHitsInARow = 0;
+    }
+
+    return nextgoal;
 }
 
 static S32 fudgeCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
@@ -1125,21 +1440,126 @@ static S32 Pat_FaceTarget(zNPCBPatrick* pat, const xVec3* target, F32 turn_rate,
     return retval;
 }
 
+/*
+    I think the multi-dimensional box array might be changed
+    between PS2 and gamecube.
+    When we use the PS2 dwarf: bossPatBox box[3][8]; 3 * 8 = 24
+        1. the compiler generates addi r3, r3, 0x78 for the loop, which is incorrect
+        2. The hardcoded loop values are both 4 and 6, and 4 * 6 = 24.
+    I think it's supposed to be bossPatBox box[4][6] instead.
+    because the two issues above are resolved and things make more sense this way
+    and the box arrays still take up the same size.
+*/
 void zNPCBPatrick::hiddenByCutscene()
 {
-    /*
-        signed int i; // r17
-        class bossPatBox * bx; // r2
-        class bossPatBox * bx; // r2
-    */
+    for (S32 i = 0; i < 2; i++)
+    {
+        this->underwear[i]->state = this->underwear[i]->state & ~0x3F | 1;
+        zEntEvent(this->underwear[i], 0x55);
+        this->underwear[i]->timer = f832;
+    }
+
+    switch (this->round)
+    {
+    case 1:
+    {
+        zEntPlayer_SNDStop(ePlayerSnd_Heli);
+        globals.player.lassoInfo.swingTarget = NULL;
+        gCurrentPlayer = eCurrentPlayerSpongeBob;
+
+        for (S32 i = 0; i < 4; i++)
+        {
+            for (S32 j = 0; j < 6; j++)
+            {
+                bossPatBox* bx = &this->box[i][j];
+                bx->velocity = f832;
+                bx->flags = 0;
+                bx->pos = f1141 + bx->minY;
+            }
+        }
+
+        this->backBox.velocity = f832;
+        this->backBox.flags = 0;
+        this->backBox.pos = f1141 + this->backBox.minY;
+
+        break;
+    }
+    case 2:
+    {
+        gCurrentPlayer = eCurrentPlayerSandy;
+        zEntEvent(this->safeGroundPortal, 0x10);
+        xEntShow(this->fudgeHandle);
+        break;
+    }
+    case 3:
+    {
+        zEntPlayer_SNDStop(ePlayerSnd_Heli);
+        globals.player.lassoInfo.swingTarget = NULL;
+        gCurrentPlayer = eCurrentPlayerSpongeBob;
+        zEntEvent(this->safeGroundPortal, 0x10);
+
+        for (S32 i = 0; i < 4; i++)
+        {
+            for (S32 j = 0; j < 6; j++)
+            {
+                bossPatBox* bx = &this->box[i][j];
+                bx->velocity = f832;
+                bx->flags = 0;
+                bx->pos = f1141 + bx->minY;
+            }
+        }
+
+        this->backBox.velocity = f832;
+        this->backBox.flags = 0;
+        this->backBox.pos = f1141 + this->backBox.minY;
+
+        xEntHide(this->fudgeHandle);
+
+        break;
+    }
+    case 4:
+    {
+        gCurrentPlayer = eCurrentPlayerSpongeBob;
+        zEntEvent(this->safeGroundPortal, 0x10);
+        break;
+    }
+    }
 }
 
 void zNPCBPatrick_AddBoundEntsToGrid(zScene* scn)
 {
-    /*
-        signed int i; // r17
-        class xEnt * ent; // r18
-    */
+    if (sOthersHaventBeenAdded)
+    {
+        sOthersHaventBeenAdded = false;
+
+        for (S32 i = 0; i < 4; i++)
+        {
+            xEnt* ent = sPat_Ptr->boundList[i];
+
+            if (xGridEntIsTooBig(&colls_grid, ent))
+            {
+                xGridAdd(&colls_oso_grid, ent);
+
+                if (xGridEntIsTooBig(&colls_oso_grid, ent))
+                {
+                    ent->gridb.oversize = 2;
+                }
+                else
+                {
+                    ent->gridb.oversize = 1;
+                }
+            }
+            else
+            {
+                xGridAdd(&colls_grid, ent);
+                ent->gridb.oversize = 0;
+            }
+        }
+    }
+    else
+    {
+        sPat_Ptr = NULL;
+    }
 }
 
 S32 zNPCGoalBossPatIdle::Enter(F32 dt, void* unk)
@@ -1191,6 +1611,138 @@ S32 zNPCGoalBossPatRun::Exit(F32 dt, void* unk)
     return xGoal::Exit(dt, unk);
 }
 
+S32 zNPCGoalBossPatSmack::Enter(F32 dt, void* unk)
+{
+    zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
+
+    this->timeInGoal = f832;
+    this->globNum = f832;
+
+    pat->bossFlags |= 0x20;
+    pat->numMissesInARow++;
+
+    return zNPCGoalCommon::Enter(dt, unk);
+}
+
+S32 zNPCGoalBossPatSmack::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    /*
+        signed int i; // r19
+        class zNPCBPatrick * pat; // r18
+        signed int playSmack; // r16
+        class xVec3 offset; // r29+0x110
+        class xVec3 cone; // r29+0x100
+        signed int numGlobs; // r17
+        class xCollis colls; // r29+0xB0
+    */
+    xVec3 offset;
+    xVec3 cone;
+    xCollis colls;
+
+    zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
+
+    S32 playSmack = 0;
+
+    if (this->timeInGoal <= f1675)
+    {
+        playSmack = 1;
+    }
+
+    this->timeInGoal += dt;
+
+    Pat_FaceTarget(pat, (xVec3*)&globals.player.ent.model->Mat->pos, f1673, dt);
+
+    if ((this->timeInGoal > f1675) && this->timeInGoal < f831)
+    {
+        xVec3Init(&offset, f832, f832, f832);
+        GetBonePos(&cone, (xMat4x3*)pat->model->Mat, sBone[9], &offset);
+
+        if (playSmack)
+        {
+            xSndPlay3D(xStrHash("b201_rp_smack"), f1671, f832, 0, 0, &cone, f1142, f1659,
+                       SND_CAT_GAME, f832);
+        }
+
+        S32 numGlobs = 0x4330;
+        // F32 rand = xurand();
+
+        // lines 114-170 (objdiff) are super confusing for me
+        F32 f1 = xurand();
+        F32 f0 = f1046;
+        F32 f2 = f1056;
+
+        f1 = f0 + f1;
+
+        f0 = this->globNum;
+        f1 = f2 * f1;
+        f0 = dt * f1 + f0;
+        this->globNum = f0;
+        // A * C + B
+
+        f2 = this->globNum;
+        f1 = f875;
+
+        numGlobs = this->globNum;
+
+        // this->globNum = f1056 * (f1046 * xurand()) + this->globNum;
+
+        for (S32 i = 0; i < numGlobs; i++)
+        {
+            bossPatGlob* glob = pat->getNextFreeGlob();
+            glob->t = f832;
+            glob->path.gravity = f832;
+            glob->path.maxTime = f1678 * xurand() + f831;
+            glob->path.gravity = f1055;
+
+            xVec3Copy(&glob->path.initPos, &cone);
+            xVec3Copy(&glob->lastPos, &glob->path.initPos);
+            xVec3Copy(&glob->path.initPos, (xVec3*)&pat->model->Mat->at);
+
+            xVec3AddScaled(&glob->path.initPos, (xVec3*)&pat->model->Mat->right,
+                           f1676 * xurand() - f1046);
+
+            glob->path.initPos.x *= f1049 * (xurand() + f891);
+            glob->path.initPos.y *= f1670 * (xurand() + f891);
+            glob->path.initPos.z *= f1049 * (xurand() + f891);
+
+            xParabolaHitsEnv(&glob->path, globals.sceneCur->env, &colls);
+
+            if (colls.flags & 1)
+            {
+                glob->path.maxTime = colls.dist;
+                xVec3Copy(&glob->norm, &cone);
+                glob->flags |= 2;
+            }
+
+            colls.flags &= 0xfffffffe;
+
+            pat->ParabolaHitsConveyors(&glob->path, &colls);
+
+            if (colls.flags & 1)
+            {
+                glob->path.maxTime = colls.dist;
+                glob->flags |= 2;
+
+                if (colls.tohit.x < f1679 && colls.tohit.x > f1680 && colls.tohit.z > f1681)
+                {
+                    glob->flags |= 8;
+                    xVec3Init(&glob->norm, f832, f831, f832);
+                    glob->conv = (zPlatform*)colls.optr;
+
+                    xVec3SMul(&glob->convVel, (xVec3*)&glob->conv->bound.mat->right,
+                              glob->conv->passet->cb.speed);
+                }
+                else
+                {
+                    xVec3Init(&glob->norm, f832, f870, f832);
+                }
+            }
+        }
+    }
+
+    return xGoal::Process(trantype, dt, updCtxt, xscn);
+}
+
 void StartFreezeBreath()
 {
     zNPCBPatrick* pat = sPat_Ptr;
@@ -1202,6 +1754,31 @@ void StartFreezeBreath()
 
     pat->numParticles = 0;
     pat->particleTimer = f832;
+}
+
+void EmitFreezeBreath(xVec3* pos, xVec3* vel, F32 dt, F32 elapsed, F32 total)
+{
+    zNPCBPatrick* pat = sPat_Ptr;
+
+    xVec3Copy(&pat->freezeBreathSetting.vel, vel);
+    xVec3Copy(&pat->freezeBreathSetting.pos, pos);
+
+    F32 x = pat->freezeBreathSetting.vel.x;
+    F32 z = pat->freezeBreathSetting.vel.z;
+    F32 dVar6 = xsqrt(x * x + z * z);
+    pat->freezeBreathSetting.vel.y = f2596 * dVar6;
+
+    dVar6 = xVec3Length(&pat->freezeBreathSetting.vel);
+    xVec3SMulBy(&pat->freezeBreathSetting.vel, f2597 / dVar6);
+
+    pat->lastEmitted =
+        xParEmitterEmitCustom(pat->freezeBreathEmitter, dt, &pat->freezeBreathSetting);
+
+    if (pat->numParticles < 4 && (elapsed / total) > pat->numParticles / f1051 && pat->lastEmitted)
+    {
+        pat->parList[pat->numParticles] = pat->lastEmitted;
+        pat->numParticles++;
+    }
 }
 
 void StopFreezeBreath()
