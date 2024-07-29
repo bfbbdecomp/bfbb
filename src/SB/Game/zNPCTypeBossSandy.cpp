@@ -199,6 +199,31 @@ void zNPCBSandy_BossDamageEffect_Init()
     }
 }
 
+static void GetBonePos(xVec3* result, xMat4x3* matArray, S32 index, xVec3* offset)
+{
+    xMat4x3 tmpMat;
+
+    if (index == 0)
+    {
+        xMat3x3RMulVec(result, matArray, offset);
+        xVec3AddTo(result, &matArray->pos);
+    }
+    else
+    {
+        xMat4x3Mul(&tmpMat, &matArray[index], matArray);
+
+        if (offset)
+        {
+            xMat3x3RMulVec(result, &tmpMat, offset);
+            xVec3AddTo(result, &tmpMat.pos);
+        }
+        else
+        {
+            xVec3Copy(result, &tmpMat.pos);
+        }
+    }
+}
+
 void zNPCBSandy::hiddenByCutscene()
 {
     for (S32 i = 0; i < 3; i++)

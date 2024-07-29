@@ -166,6 +166,9 @@ struct zNPCGoalBossPatTaunt : zNPCGoalCommon
     zNPCGoalBossPatTaunt(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    S32 Enter(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* ctxt, xScene* scene);
 };
 
 struct zNPCGoalBossPatHit : zNPCGoalCommon
@@ -176,6 +179,8 @@ struct zNPCGoalBossPatHit : zNPCGoalCommon
     zNPCGoalBossPatHit(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    S32 Enter(F32 dt, void* updCtxt);
 };
 
 struct zNPCGoalBossPatSpit : zNPCGoalCommon
@@ -187,6 +192,8 @@ struct zNPCGoalBossPatSpit : zNPCGoalCommon
     zNPCGoalBossPatSpit(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    S32 Enter(F32 dt, void* updCtxt);
 };
 
 struct zNPCGoalBossPatRun : zNPCGoalCommon
@@ -227,6 +234,7 @@ struct zNPCGoalBossPatFreeze : zNPCGoalCommon
     zNPCGoalBossPatFreeze(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+    S32 Enter(float, void*);
 };
 
 struct zNPCGoalBossPatSpawn : zNPCGoalCommon
@@ -237,6 +245,8 @@ struct zNPCGoalBossPatSpawn : zNPCGoalCommon
     zNPCGoalBossPatSpawn(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    S32 Enter(F32 dt, void* updCtxt);
 };
 
 struct zNPCGoalBossPatSpin : zNPCGoalCommon
@@ -253,6 +263,8 @@ struct zNPCGoalBossPatSpin : zNPCGoalCommon
     zNPCGoalBossPatSpin(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    S32 Exit(F32 dt, void* updCtxt);
 };
 
 struct zNPCGoalBossPatFudge : zNPCGoalCommon
@@ -266,6 +278,8 @@ struct zNPCGoalBossPatFudge : zNPCGoalCommon
     zNPCGoalBossPatFudge(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    S32 Enter(F32 dt, void* updCtxt);
 };
 
 void zNPCBPatrick_AddBoundEntsToGrid(zScene*);
