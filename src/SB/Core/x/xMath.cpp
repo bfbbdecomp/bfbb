@@ -5,13 +5,6 @@
 
 #include "xMathInlines.h"
 
-extern F32 lbl_803CCE0C; // 0.5f
-extern F32 lbl_803CCE14; // 2.0f
-extern F32 lbl_803CCE18; // 0.0f
-extern F32 lbl_803CCE54; // 3.1415927f
-extern F32 lbl_803CCE5C; // 6.2831855f
-extern F32 lbl_803CCE60; // -3.1415927f
-
 extern S32 xmath_inited;
 extern S32 xmath_exited;
 extern volatile U32 rndseed; // made this volatile so xrand() matches
@@ -49,14 +42,11 @@ U32 xrand()
     return rndseed;
 }
 
-#ifdef NON_MATCHING
 F32 xurand()
 {
     return xrand() * 2.3283064e-10f;
 }
-#endif
 
-#ifdef NON_MATCHING
 U32 xMathSolveQuadratic(F32 a, F32 b, F32 c, F32* x1, F32* x2)
 {
     F32 d;
@@ -107,32 +97,32 @@ U32 xMathSolveQuadratic(F32 a, F32 b, F32 c, F32* x1, F32* x2)
 
     return 2;
 }
-#endif
 
 F32 xAngleClamp(F32 a)
 {
-    F32 b;
+    F32 rad360 = 2 * PI;
+    F32 rem = xfmod(a, rad360);
 
-    b = xfmod(a, lbl_803CCE5C);
-
-    if (b < lbl_803CCE18)
+    if (rem < 0.0f)
     {
-        return b + lbl_803CCE5C;
+        return rem + rad360;
     }
 
-    return b;
+    return rem;
 }
 
 F32 xAngleClampFast(F32 a)
 {
-    if (a < lbl_803CCE18)
+    F32 rad360 = (2 * PI);
+    
+    if (a < 0.0f)
     {
-        return a + lbl_803CCE5C;
+        return a + rad360;
     }
 
-    if (a >= lbl_803CCE5C)
+    if (a >= rad360)
     {
-        return a - lbl_803CCE5C;
+        return a - rad360;
     }
 
     return a;
@@ -140,36 +130,30 @@ F32 xAngleClampFast(F32 a)
 
 F32 xDangleClamp(F32 a)
 {
-    F32 b;
-
-    b = xfmod(a, lbl_803CCE5C);
-
-    if (b >= lbl_803CCE54)
+    F32 rad360 = 2 * PI;
+    F32 rem = xfmod(a, rad360);
+    
+    if (rem >= PI)
     {
-        return b - lbl_803CCE5C;
+        return rem - rad360;
     }
 
-    if (b < lbl_803CCE60)
+    if (rem < -PI)
     {
-        return b + lbl_803CCE5C;
+        return rem + rad360;
     }
 
-    return b;
+    return rem;
 }
 
-#ifdef NON_MATCHING
 F32 xAccelMoveTime(F32 dx, F32 a, F32, F32 maxv)
 {
-    //F32 time;
-    //F32 atime;
-    //F32 adist;
+    float time = a;
+    float atime = maxv / time;
+    dx *= 0.5f;
+    float adist = 0.5f * time * atime * atime;
 
-    float f5 = maxv / a;
-    float f1 = dx * lbl_803CCE0C;
-    float f0 = f5 * (lbl_803CCE0C * a * f5);
+    dx = (adist < dx) ? xsqrt(2.0f * dx / time) : (atime + (dx - adist) / maxv);
 
-    f1 = (f0 < f1) ? xsqrt(lbl_803CCE14 * f1 / a) : (f5 + (f1 - f0) / maxv);
-
-    return lbl_803CCE14 * f1;
+    return 2.0f * dx;
 }
-#endif
