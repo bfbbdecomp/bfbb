@@ -98,6 +98,19 @@ U32 xMathSolveQuadratic(F32 a, F32 b, F32 c, F32* x1, F32* x2)
     return 2;
 }
 
+F32 xAngleClamp(F32 a)
+{
+    F32 rad360 = 2 * PI;
+    F32 rem = xfmod(a, rad360);
+
+    if (rem < 0.0f)
+    {
+        return rem + rad360;
+    }
+
+    return rem;
+}
+
 F32 xAngleClampFast(F32 a)
 {
     F32 rad360 = (2 * PI);
