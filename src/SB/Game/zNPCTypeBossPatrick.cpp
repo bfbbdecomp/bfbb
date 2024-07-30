@@ -1809,6 +1809,26 @@ S32 zNPCGoalBossPatHit::Enter(F32 dt, void* updCtxt)
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
+S32 zNPCGoalBossPatHit::Process(en_trantype* trantype, F32 dt, void* ctxt, xScene* scene)
+{
+    zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
+    this->timeInGoal += dt;
+    Pat_FaceTarget(pat, (xVec3*)&globals.player.ent.model->Mat->pos, f1673, dt);
+    return xGoal::Process(trantype, dt, ctxt, scene);
+}
+
+S32 zNPCGoalBossPatHit::Exit(F32 dt, void* updCtxt)
+{
+    zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
+
+    sPat_Ptr->boundList[0]->chkby |= 0x10;
+    sPat_Ptr->boundList[1]->chkby |= 0x10;
+    sPat_Ptr->boundList[2]->chkby |= 0x10;
+    sPat_Ptr->boundList[3]->chkby |= 0x10;
+
+    return xGoal::Exit(dt, updCtxt);
+}
+
 S32 zNPCGoalBossPatSpit::Enter(F32 dt, void* updCtxt)
 {
     zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
@@ -1821,6 +1841,146 @@ S32 zNPCGoalBossPatSpit::Enter(F32 dt, void* updCtxt)
     pat->numMissesInARow++;
 
     return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBossPatSpit::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    xVec3 futurePos;
+    xVec3 offset;
+    xVec3 upperLip;
+    xVec3 lowerLip;
+    xVec3 lowerLipRight;
+    xCollis colls;
+
+    zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
+    this->timeInGoal += dt;
+
+    S32 bVar5 = (this->timeLeftToSpit < f832) ? 0 : 1;
+
+    F32 leadTime = f831;
+
+    switch (this->stage)
+    {
+    case 0:
+    {
+        leadTime = leadTime + f2512 + pat->AnimTimeRemain(NULL);
+
+        if (pat->AnimTimeRemain(NULL) < f2280 * dt)
+        {
+            this->stage = 1;
+            this->timeLeftToSpit = f2512;
+            this->DoAutoAnim(NPC_GSPOT_START, 0);
+            this->timeInGoal = f832;
+        }
+
+        break;
+    }
+    case 1:
+    {
+        this->timeLeftToSpit -= dt;
+
+        if (this->timeLeftToSpit >= f832)
+        {
+            leadTime += this->timeLeftToSpit;
+        }
+
+        break;
+    }
+    case 2:
+    {
+        this->timeLeftToSpit -= dt;
+
+        if (this->timeLeftToSpit >= f832)
+        {
+            leadTime += this->timeLeftToSpit;
+        }
+
+        break;
+    }
+    }
+
+    zEntPlayer_PredictPos(&futurePos, leadTime, f831, true);
+    Pat_FaceTarget(pat, &futurePos, f1673, dt);
+
+    if (bVar5 && this->timeLeftToSpit < f832)
+    {
+        bossPatGlob* glob = pat->getNextFreeGlob();
+        glob->t = f832;
+        glob->path.minTime = f832;
+        leadTime = xurand();
+        glob->path.maxTime = f1678 * leadTime + f831;
+        glob->path.gravity = f1055;
+
+        xVec3Init(&offset, f832, f832, f832);
+        GetBonePos(&upperLip, (xMat4x3*)pat->model->Mat, sBone[1], &offset);
+        GetBonePos(&lowerLip, (xMat4x3*)pat->model->Mat, sBone[2], &offset);
+
+        xVec3Init(&offset, f831, f832, f832);
+        GetBonePos(&lowerLipRight, (xMat4x3*)pat->model->Mat, sBone[2], &offset);
+        xVec3SubFrom(&lowerLipRight, &lowerLip);
+        xVec3Normalize(&lowerLipRight, &lowerLipRight);
+        xVec3SMul(&glob->path.initPos, &upperLip, f1046);
+        xVec3Copy(&glob->lastPos, &glob->path.initPos);
+        xVec3AddScaled(&glob->path.initPos, &lowerLip, f1046);
+
+        // TODO
+        // Note: Changing (f831 +) to (f831 *)
+        // changes fadds to fmuls, but fmuls is optimized out by the compiler...
+        // because f831 = 1.0f and it's pointless to multiply something by 1.
+        // I substituted what should be 1.0f for 1.00001f
+        // I wonder how the fmuls was generated if the float value is supposed to be 1.0f??
+        glob->path.initVel.x = 1.00001f * (futurePos.x - glob->path.initPos.x);
+        glob->path.initVel.z = 1.00001f * (futurePos.z - glob->path.initPos.z);
+        glob->path.initVel.y =
+            f1046 * glob->path.gravity + 1.00001f * (futurePos.y - glob->path.initPos.y);
+
+        leadTime = xVec3Dot(&lowerLipRight, &glob->path.initVel);
+        xVec3AddScaled(&glob->path.initVel, &lowerLipRight, -leadTime);
+        xParabolaHitsEnv(&glob->path, globals.sceneCur->env, &colls);
+
+        if (colls.flags & 1)
+        {
+            glob->path.maxTime = colls.dist; // TODO: not sure if right
+            xVec3Copy(&glob->norm, &colls.norm);
+            glob->flags |= 2;
+        }
+
+        colls.flags &= 0xfffffffe; // TODO: clean this up
+
+        pat->ParabolaHitsConveyors(&glob->path, &colls);
+
+        if (colls.flags & 1)
+        {
+            glob->path.maxTime = colls.dist;
+            glob->flags |= 2;
+
+            if (colls.tohit.x < f1679 && colls.tohit.x > f1680 && colls.tohit.z > f1681)
+            {
+                glob->flags |= 8;
+                xVec3Init(&glob->norm, f832, f831, f832);
+                glob->conv = (zPlatform*)colls.optr;
+                xVec3SMul(&glob->convVel, &glob->conv->bound.mat->right,
+                          glob->conv->passet->cb.speed);
+            }
+            else
+            {
+                xVec3Init(&glob->norm, f832, f870, f832);
+            }
+        }
+
+        if (xrand() & 0x20000)
+        {
+            xSndPlay3D(xStrHash("b201_rp_spit"), f1671, f832, 0, 0, &glob->path.initPos, f1142,
+                       f1659, SND_CAT_GAME, f832);
+        }
+        else
+        {
+            xSndPlay3D(xStrHash("b201_rp_spitalt"), f1671, f832, 0, 0, &glob->path.initPos, f1142,
+                       f1659, SND_CAT_GAME, f832);
+        }
+    }
+
+    return xGoal::Process(trantype, dt, updCtxt, xscn);
 }
 
 S32 zNPCGoalBossPatRun::Enter(F32 dt, void* unk)
@@ -2052,6 +2212,59 @@ S32 zNPCGoalBossPatFreeze::Enter(F32 dt, void* updCtxt)
                f832);
 
     return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBossPatFreeze::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    xVec3 offset;
+    xVec3 lip;
+    xVec3 pos;
+    xVec3 vel;
+
+    zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
+
+    S32 playFreeze = 0;
+
+    if (this->timeInGoal < f1663)
+    {
+        playFreeze = 1;
+    }
+
+    this->timeInGoal += dt;
+
+    Pat_FaceTarget(pat, (xVec3*)&globals.player.ent.model->Mat->pos, f2629, dt);
+
+    // TODO: fix this comparison
+    if (this->timeInGoal > f1663)
+    {
+        if (this->timeInGoal < f2630)
+        {
+            if (playFreeze)
+            {
+                xSndPlay3D(xStrHash("b201_rp_exhale"), f1671, f832, 0, 0, pat, f1142, f1659,
+                           SND_CAT_GAME, f832);
+            }
+
+            xVec3Init(&offset, f832, f832, f832);
+            GetBonePos(&pos, (xMat4x3*)pat->model->Mat, sBone[2], &offset);
+            GetBonePos(&lip, (xMat4x3*)pat->model->Mat, sBone[1], &offset);
+            xVec3AddTo(&pos, &lip);
+            xVec3SMulBy(&pos, f1046);
+            xVec3Init(&offset, f832, f832, f831);
+            GetBonePos(&vel, (xMat4x3*)pat->model->Mat, sBone[1], &offset);
+            xVec3SubFrom(&vel, &pos);
+            EmitFreezeBreath(&pos, &vel, dt, this->timeInGoal - f1663, f1046);
+        }
+        else
+        {
+            if (pat->numParticles < 4)
+            {
+                StopFreezeBreath();
+            }
+        }
+    }
+
+    return xGoal::Process(trantype, dt, updCtxt, xscn);
 }
 
 S32 zNPCGoalBossPatSpawn::Enter(F32 dt, void* updCtxt)

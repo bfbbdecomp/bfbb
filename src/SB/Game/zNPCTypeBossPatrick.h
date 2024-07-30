@@ -181,6 +181,8 @@ struct zNPCGoalBossPatHit : zNPCGoalCommon
     }
 
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* ctxt, xScene* scene);
+    S32 Exit(F32 dt, void* updCtxt);
 };
 
 struct zNPCGoalBossPatSpit : zNPCGoalCommon
@@ -194,6 +196,7 @@ struct zNPCGoalBossPatSpit : zNPCGoalCommon
     }
 
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
 };
 
 struct zNPCGoalBossPatRun : zNPCGoalCommon
@@ -234,7 +237,9 @@ struct zNPCGoalBossPatFreeze : zNPCGoalCommon
     zNPCGoalBossPatFreeze(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
     S32 Enter(float, void*);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
 };
 
 struct zNPCGoalBossPatSpawn : zNPCGoalCommon

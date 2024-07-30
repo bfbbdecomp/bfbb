@@ -424,5 +424,6 @@ S32 load_talk_filter(U8* filter, xModelAssetParam* params, U32 params_size, S32 
 S32 zEntPlayer_DamageNPCKnockBack(xBase* src, U32 damage, xVec3* npcPos);
 
 S32 zEntPlayer_DamageNPCKnockBack(xBase* src, U32 damage, xVec3* npcPos);
+void zEntPlayer_PredictPos(xVec3* pos, F32 timeIntoFuture, F32 leadFactor, S32 useTurn);
 
 #endif
