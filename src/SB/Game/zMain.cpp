@@ -1,3 +1,4 @@
+#include "zEntPlayer.h"
 #include "zGlobals.h"
 #include "zMain.h"
 
@@ -27,4 +28,9 @@ void zMainInitGlobals()
 void zMainMemLvlChkCB()
 {
     zSceneMemLvlChkCB();
-} 
+}
+
+void zLedgeAdjust(zLedgeGrabParams* params)
+{
+    params->animGrab *= (1.0f/30);
+}
