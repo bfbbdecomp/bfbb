@@ -18,7 +18,7 @@ void zMainOutputMgrSetup()
 
 void zMainInitGlobals()
 {
-    memset(&globals, 0, 0x1fc8);
+    memset(&globals, 0, sizeof(zGlobals));
     globals.sceneFirst = 1;
     iTime tim = iTimeGet();
     iTimeDiffSec(tim);
