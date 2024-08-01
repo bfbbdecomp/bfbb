@@ -101,6 +101,30 @@
 #define f2885 12.5f
 #define f2994 7.5f
 
+#define ANIM_IDLE01 1
+#define ANIM_IDLE02 2
+#define ANIM_TAUNT01 3
+#define ANIM_RUN01 4
+#define ANIM_MELEE01 6
+#define ANIM_HIT01 7
+#define ANIM_HIT02 8
+#define ANIM_GETUP01 9
+#define ANIM_FREEZE01 28
+#define ANIM_FUDGEJUMP01 29
+#define ANIM_FUDGEBLOW01 30
+#define ANIM_FUDGEDONE01 31
+#define ANIM_LICK01 32
+#define ANIM_SPIT01 33
+#define ANIM_SPIT02 34
+#define ANIM_SPAWN01 35
+#define ANIM_SPINBEGIN01 36
+#define ANIM_SPINNING01 37
+#define ANIM_SPINSTOP01 38
+#define ANIM_DIZZY01 10
+#define ANIM_DIZZYFALL01 39
+#define ANIM_DIZZYSIT01 40
+#define ANIM_UNKNOWN 0
+
 static unsigned char sUseBossCam;
 static unsigned char sWasUsingBossCam;
 static unsigned char sOthersHaventBeenAdded;
@@ -124,13 +148,135 @@ static S32 sBone[10];
 static S32 sBoundBone[4];
 static F32 sBoundRadius[4];
 static xVec3 sBoneOffset[4];
-static newsfishSound sNFComment[37];
+
+static newsfishSound sNFComment[37] = {
+    { "FAB1036" }, // 0
+    { "FAB1042" }, // 1
+    { "FAB1046" }, // 2
+    { "FAB1047" }, // 3
+    { "FAB1049" }, // 4
+    { "FAB1050" }, // 5
+    { "FAB1034" }, // 6
+    { "FAB1035" }, // 7
+    { "FAB1040" }, // 8
+    { "FAB1053" }, // 9
+    { "FAB1055" }, // 10
+    { "FAB1056" }, // 11
+    { "FAB1033" }, // 12
+    { "FAB1037" }, // 13
+    { "FAB1052" }, // 14
+    { "FAB1039_a" }, // 15
+    { "FAB1039_b" }, // 16
+    { "FAB1039_c" }, // 17
+    { "FAB1041_a" }, // 18
+    { "FAB1041_b" }, // 19
+    { "FAB1038" }, // 20
+    { "FAB1051" }, // 21
+    { "FAB1054" }, // 22
+    { "FAB1006" }, // 23
+    { "FAB1007" }, // 24
+    { "FAB1008" }, // 25
+    { "FAB1009" }, // 26
+    { "FAB1012" }, // 27
+    { "FAB1013" }, // 28
+    { "FAB1014" }, // 29
+    { "FAB1016" }, // 30
+    { "FAB1028" }, // 31
+    { "FAB1064" }, // 32
+    { "FAB1065" }, // 33
+    { "FAB1067" }, // 34
+    { "FAB1081_a" }, // 35
+    { "FAB1081_b" }, // 36
+};
+
 static U32 sCurrNFSound;
 static tweak_callback newsfish_cb;
 static tweak_callback recenter_cb;
 
 void test(S32)
 {
+}
+
+xAnimTable* ZNPC_AnimTable_BossPatrick()
+{
+    // clang-format off
+    S32 ourAnims[23] = {
+        ANIM_IDLE01,
+        ANIM_IDLE02,
+        ANIM_TAUNT01,
+        ANIM_RUN01,
+        ANIM_MELEE01,
+        ANIM_HIT01,
+        ANIM_HIT02,
+        ANIM_GETUP01,
+        ANIM_FREEZE01,
+        ANIM_FUDGEJUMP01,
+        ANIM_FUDGEBLOW01,
+        ANIM_FUDGEDONE01,
+        ANIM_LICK01,
+        ANIM_SPIT01,
+        ANIM_SPIT02,
+        ANIM_SPAWN01,
+        ANIM_SPINBEGIN01,
+        ANIM_SPINNING01,
+        ANIM_SPINSTOP01,
+        ANIM_DIZZY01,
+        ANIM_DIZZYFALL01,
+        ANIM_DIZZYSIT01,
+        ANIM_UNKNOWN,
+    };
+    // clang-format on
+
+    xAnimTable* table = xAnimTableNew("zNPCBPatrick", NULL, 0);
+
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_IDLE01], 0x10, 0, f831, NULL, NULL, f832, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_IDLE02], 0x10, 0, f831, NULL, NULL, f832, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_TAUNT01], 0x10, 0, f831, NULL, NULL, f832, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_RUN01], 0x10, 0x40, f831, NULL, NULL, f832, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_MELEE01], 0x10, 0, f831, NULL, NULL, f832, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_HIT01], 0x10, 0, f831, NULL, NULL, f832, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_HIT02], 0x10, 0, f831, NULL, NULL, f832, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_GETUP01], 0x10, 0, f831, NULL, NULL, f832, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_FREEZE01], 0x10, 0, f831, NULL, NULL, f832, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_FUDGEJUMP01], 0x10, 0, f831, NULL, NULL, f832,
+                       NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_FUDGEBLOW01], 0x10, 0, f831, NULL, NULL, f832,
+                       NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_FUDGEDONE01], 0x10, 0, f831, NULL, NULL, f832,
+                       NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_LICK01], 0x10, 0, f831, NULL, NULL, f832, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_SPIT01], 0x10, 0, f831, NULL, NULL, f832, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_SPIT02], 0x10, 0, f831, NULL, NULL, f832, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_SPAWN01], 0x10, 0, f831, NULL, NULL, f832, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_SPINBEGIN01], 0x10, 0, f831, NULL, NULL, f832,
+                       NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_SPINNING01], 0x10, 0, f831, NULL, NULL, f832,
+                       NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_SPINSTOP01], 0x10, 0, f831, NULL, NULL, f832,
+                       NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_DIZZY01], 0x10, 0, f831, NULL, NULL, f832, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_DIZZYFALL01], 0x10, 0, f831, NULL, NULL, f832,
+                       NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_DIZZYSIT01], 0x10, 0, f831, NULL, NULL, f832,
+                       NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+
+    NPCC_BuildStandardAnimTran(table, g_strz_bossanim, ourAnims, 1, f833);
+
+    return table;
 }
 
 static void UpdatePatrickBossCam(zNPCBPatrick* pat, F32 dt)
@@ -204,6 +350,8 @@ static void Pat_ResetGlobalStuff()
 {
 }
 
+S32 BoundEventCB(xBase*, xBase*, U32, const F32*, xBase*);
+
 void zNPCBPatrick::Init(xEntAsset* asset)
 {
     /*
@@ -211,6 +359,79 @@ void zNPCBPatrick::Init(xEntAsset* asset)
         class xEnt * ent; // r19
         class RwTexture * tempTexture; // r2
     */
+
+    zNPCCommon::Init(asset);
+
+    sPat_Ptr = this;
+
+    this->round = 1;
+    this->firstTimeR1Csn = 1;
+    Pat_ResetGlobalStuff();
+    this->boundList = (xEnt**)xMemAlloc(gActiveHeap, 0x10, 0);
+
+    for (S32 i = 0; i < 4; i++)
+    {
+        this->boundList[i] = (xEnt*)xMemAlloc(gActiveHeap, 0xd0, 0);
+        xEnt* ent = this->boundList[i];
+
+        ent->id = i;
+        ent->eventFunc = BoundEventCB;
+        ent->driver = this;
+        ent->baseType = eBaseTypeDynamic; // 0xc
+
+        ent->collType = XENT_COLLTYPE_STAT; // 2
+        ent->chkby = XENT_COLLTYPE_PLYR; // 0x10
+        ent->penby = XENT_COLLTYPE_PLYR; // 0x10
+
+        ent->baseFlags |= 0x21;
+        ent->moreFlags = 0x10;
+        ent->flags = this->flags;
+
+        ent->model = this->model;
+
+        ent->update = NULL;
+        ent->bupdate = NULL;
+        ent->render = NULL;
+        ent->transl = NULL;
+
+        ent->subType = 0;
+        ent->collModel = NULL;
+        ent->lightKit = NULL;
+
+        ent->pflags = 0;
+        ent->move = NULL;
+        ent->frame = NULL;
+        ent->collis = NULL;
+        ent->ffx = NULL;
+        ent->num_ffx = 0;
+        ent->anim_coll = NULL;
+
+        xGridBoundInit(&ent->gridb, &ent->id);
+        ent->collLev = 1;
+        ent->bound.cyl.r = sBoundRadius[0];
+        GetBonePos(&this->boundList[i]->bound.mat->pos, (xMat4x3*)this->model->Mat,
+                   sBone[sBoundBone[i]], sBoneOffset);
+        xQuickCullForBound(&this->boundList[i]->bound.qcd, &this->boundList[i]->bound);
+    }
+
+    sOthersHaventBeenAdded = true;
+    this->freezeBreathSetting.custom_flags = 0x300;
+
+    RwTexture* tempTexture = (RwTexture*)xSTFindAsset(xStrHash("ice_wave"), NULL);
+
+    if (tempTexture)
+    {
+        this->iceWaveRaster = tempTexture->raster;
+    }
+    else
+    {
+        this->iceWaveRaster = NULL;
+    }
+
+    for (S32 i = 0; i < 37; i++)
+    {
+        sNFComment[i].soundID = xStrHash(sNFComment[i].soundName);
+    }
 }
 
 void on_change_newsfish(const tweak_info&)
@@ -379,8 +600,8 @@ void zNPCBPatrick::Setup()
 
     this->bossCam.init();
     this->bossCam.add_tweaks("NPC|zNPCBPatrick|Boss Cam|");
-    xDebugAddTweak("NPC|zNPCBPatrick|Boss Cam|Recenter", "*", (tweak_callback*)&recenter_cb,
-                   (void*)0x0, 0);
+    xDebugAddTweak("NPC|zNPCBPatrick|Boss Cam|Recenter", "*", (tweak_callback*)&recenter_cb, NULL,
+                   0);
 
     zNPCCommon::Setup();
 }
@@ -540,21 +761,20 @@ void zNPCBPatrick::Reset()
     varYVel = f832;
 
     xDebugAddTweak("NPC|zNPCBPatrick|globs|minYVel", &minYVel, f1143, f1144, (tweak_callback*)0x0,
-                   (void*)0x0, 0);
+                   NULL, 0);
     xDebugAddTweak("NPC|zNPCBPatrick|globs|varYVel", &varYVel, f1143, f1144, (tweak_callback*)0x0,
-                   (void*)0x0, 0);
+                   NULL, 0);
     xDebugAddTweak("NPC|zNPCBPatrick|globs|minHMul", (float*)&minHMul, f1143, f1144,
-                   (tweak_callback*)0x0, (void*)0x0, 0);
+                   (tweak_callback*)0x0, NULL, 0);
     xDebugAddTweak("NPC|zNPCBPatrick|globs|varHMul", &varHMul, f1143, f1144, (tweak_callback*)0x0,
-                   (void*)0x0, 0);
+                   NULL, 0);
     xDebugAddTweak("NPC|zNPCBPatrick|globs|minT", (float*)&minT, f1143, f1144, (tweak_callback*)0x0,
-                   (void*)0x0, 0);
+                   NULL, 0);
     xDebugAddTweak("NPC|zNPCBPatrick|globs|varT", (float*)&varT, f1143, f1144, (tweak_callback*)0x0,
-                   (void*)0x0, 0);
-    xDebugAddTweak("NPC|zNPCBPatrick|Newsfish", "Speak", (tweak_callback*)&newsfish_cb, (void*)0x0,
-                   0);
+                   NULL, 0);
+    xDebugAddTweak("NPC|zNPCBPatrick|Newsfish", "Speak", (tweak_callback*)&newsfish_cb, NULL, 0);
     xDebugAddTweak("NPC|zNPCBPatrick|NewsfishComment", &sCurrNFSound, 0, 0x24, (tweak_callback*)0x0,
-                   (void*)0x0, 0);
+                   NULL, 0);
 }
 
 void zNPCBPatrick::Destroy()
@@ -1033,9 +1253,47 @@ bossPatGlob* zNPCBPatrick::getNextFreeGlob()
     return glob;
 }
 
+// 95% match, string offsets are just incorrect for now.
+// Should fix itself when strings are all correct.
 void zNPCBPatrick::playSplat(xVec3* pos)
 {
-    // float picker; // r2
+    if (this->splatTimer > f1664)
+    {
+        this->splatTimer = f832;
+
+        F32 picker = xurand() * f2077;
+
+        if (picker < f831)
+        {
+            xSndPlay3D(xStrHash("b201_rp_spin_spurt1"), f2078, f832, 0, 0, pos, f891, f1659,
+                       SND_CAT_GAME, f832);
+        }
+        else if (picker < f891)
+        {
+            xSndPlay3D(xStrHash("b201_rp_spin_spurt2"), f2078, f832, 0, 0, pos, f891, f1659,
+                       SND_CAT_GAME, f832);
+        }
+        else if (picker < f1051)
+        {
+            xSndPlay3D(xStrHash("b201_rp_spin_spurt3"), f2078, f832, 0, 0, pos, f891, f1659,
+                       SND_CAT_GAME, f832);
+        }
+        else if (picker < f1670)
+        {
+            xSndPlay3D(xStrHash("b201_rp_spin_spurt4"), f2078, f832, 0, 0, pos, f891, f1659,
+                       SND_CAT_GAME, f832);
+        }
+        else if (picker < f1049)
+        {
+            xSndPlay3D(xStrHash("b201_rp_spin_spurt5"), f2078, f832, 0, 0, pos, f891, f1659,
+                       SND_CAT_GAME, f832);
+        }
+        else
+        {
+            xSndPlay3D(xStrHash("b201_rp_spin_spurt6"), f2078, f832, 0, 0, pos, f891, f1659,
+                       SND_CAT_GAME, f832);
+        }
+    }
 }
 
 U32 zNPCBPatrick::canSpawnChucks()
@@ -1168,6 +1426,22 @@ void zNPCBPatrick::ParabolaHitsConveyors(xParabola* path, xCollis* colls)
         float dispX; // r11
         float dispZ; // r8
     */
+
+    F32 t[2];
+
+    for (S32 i = 0; i < 7; i++)
+    {
+        // This code is a mess, don't feel like working on this fn right now.
+        zPlatform* pzVar4 = this->conveyorBelt[i];
+        xVec3* pxVar3 = &pzVar4->bound.box.center;
+        F32 dVar7 = f1046 - path->gravity;
+        F32 dVar8 = path->initVel.y;
+        test(dVar8);
+
+        for (S32 j = 0; j < 2; j++)
+        {
+        }
+    }
 }
 
 // not in PS2 dwarf
@@ -1863,7 +2137,7 @@ S32 zNPCGoalBossPatSpit::Process(en_trantype* trantype, F32 dt, void* updCtxt, x
     {
     case 0:
     {
-        leadTime = leadTime + f2512 + pat->AnimTimeRemain(NULL);
+        leadTime += f2512 + pat->AnimTimeRemain(NULL);
 
         if (pat->AnimTimeRemain(NULL) < f2280 * dt)
         {
@@ -1923,16 +2197,12 @@ S32 zNPCGoalBossPatSpit::Process(en_trantype* trantype, F32 dt, void* updCtxt, x
         xVec3Copy(&glob->lastPos, &glob->path.initPos);
         xVec3AddScaled(&glob->path.initPos, &lowerLip, f1046);
 
-        // TODO
-        // Note: Changing (f831 +) to (f831 *)
-        // changes fadds to fmuls, but fmuls is optimized out by the compiler...
-        // because f831 = 1.0f and it's pointless to multiply something by 1.
-        // I substituted what should be 1.0f for 1.00001f
-        // I wonder how the fmuls was generated if the float value is supposed to be 1.0f??
-        glob->path.initVel.x = 1.00001f * (futurePos.x - glob->path.initPos.x);
-        glob->path.initVel.z = 1.00001f * (futurePos.z - glob->path.initPos.z);
+        F32 t = f831;
+
+        glob->path.initVel.x = t * (futurePos.x - glob->path.initPos.x);
+        glob->path.initVel.z = t * (futurePos.z - glob->path.initPos.z);
         glob->path.initVel.y =
-            f1046 * glob->path.gravity + 1.00001f * (futurePos.y - glob->path.initPos.y);
+            f1046 * glob->path.gravity + t * (futurePos.y - glob->path.initPos.y);
 
         leadTime = xVec3Dot(&lowerLipRight, &glob->path.initVel);
         xVec3AddScaled(&glob->path.initVel, &lowerLipRight, -leadTime);
@@ -2234,8 +2504,7 @@ S32 zNPCGoalBossPatFreeze::Process(en_trantype* trantype, F32 dt, void* updCtxt,
 
     Pat_FaceTarget(pat, (xVec3*)&globals.player.ent.model->Mat->pos, f2629, dt);
 
-    // TODO: fix this comparison
-    if (this->timeInGoal > f1663)
+    if (!(this->timeInGoal < f1663))
     {
         if (this->timeInGoal < f2630)
         {
@@ -2276,6 +2545,60 @@ S32 zNPCGoalBossPatSpawn::Enter(F32 dt, void* updCtxt)
     pat->bossFlags |= 0x20;
 
     return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBossPatSpawn::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    xVec3 offset;
+    xVec3 spawnPos;
+
+    zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
+
+    this->timeInGoal += dt;
+
+    Pat_FaceTarget(pat, (xVec3*)&globals.player.ent.model->Mat->pos, f2629, dt);
+
+    F32 animTime = pat->model->Anim->Single->Time;
+
+    if (this->stage == 2 && animTime < f2630)
+    {
+        this->stage = 1;
+    }
+
+    if (this->stage == 1 && animTime > 2630)
+    {
+        S32 i;
+
+        this->stage = 3;
+
+        for (i = 0; i < 3; i++)
+        {
+            if (pat->chuckFlags[i] & 1)
+            {
+                break;
+            }
+        }
+
+        pat->chuckFlags[i] &= 0xfffffffe;
+        xVec3Init(&offset, f832, f832, f832);
+        GetBonePos(&spawnPos, (xMat4x3*)pat->model->Mat, sBone[9], &offset);
+        pat->chuckList[i]->Respawn(&spawnPos, pat->chuckMovePoint[i], NULL);
+
+        for (i = 0; i < 3; i++)
+        {
+            if (pat->chuckFlags[i] & 1)
+            {
+                break;
+            }
+        }
+
+        if (i < 3)
+        {
+            this->stage = 2;
+        }
+    }
+
+    return xGoal::Process(trantype, dt, updCtxt, xscn);
 }
 
 S32 zNPCGoalBossPatSpin::Exit(F32 dt, void* updCtxt)

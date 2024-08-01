@@ -111,7 +111,7 @@ bool xSphereHitsVCircle(const xSphere& s, const xVec3& c, F32 r);
 bool xSphereHitsVCircle(const xVec3& sc, F32 sr, const xVec3& cc, F32 cr);
 U32 xSphereHitsModel(const xSphere* b, const xModelInstance* m, xCollis* coll);
 
-S32 xParabolaHitsEnv(xParabola* p, xEnv* env, xCollis* colls);
+S32 xParabolaHitsEnv(xParabola* p, const xEnv* env, xCollis* colls);
 void xParabolaEvalPos(const xParabola*, xVec3*, F32);
 void xParabolaEvalVel(const xParabola*, xVec3*, F32);
 

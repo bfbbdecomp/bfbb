@@ -97,7 +97,7 @@ static U32 sSB1_deflated[2];
 xAnimTable* ZNPC_AnimTable_BossSB1()
 {
     // clang-format off
-    int ourAnims[11] = {
+    S32 ourAnims[11] = {
         Idle01,
         Idle02,
         Taunt01,
