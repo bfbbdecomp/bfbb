@@ -35,7 +35,7 @@ struct xNPCBasic : xEnt, xFactoryInst
     {
         S32 flg_basenpc : 16;
         S32 inUpdate : 8;
-        U32 flg_upward : 8;
+        S32 flg_upward : 8;
     } flags1;
 
     // Offset: 0xE8

@@ -453,9 +453,9 @@ xPsyche* xGoal::GetPsyche() const
     return psyche;
 }
 
-xVec3* zNPCCommon::XZVecToPlayer(xVec3* unk1, F32* unk2)
+void zNPCCommon::XZVecToPlayer(xVec3* unk1, F32* unk2)
 {
-    return zNPCCommon::XZVecToPos(unk1, xEntGetPos(&globals.player.ent), unk2);
+    XZVecToPos(unk1, xEntGetPos(&globals.player.ent), unk2);
 }
 
 RwMatrix* zNPCCommon::BoneMat(S32 unk) const
@@ -468,8 +468,7 @@ RwV3d* zNPCCommon::BonePos(S32 unk) const
     return &this->model->Mat[unk].pos;
 }
 
-// Return type is probably wrong
-S32 zNPCCommon::XYZDstSqToPlayer(xVec3* unk)
+F32 zNPCCommon::XYZDstSqToPlayer(xVec3* unk)
 {
     return XYZDstSqToPos(xEntGetPos(&globals.player.ent), unk);
 }

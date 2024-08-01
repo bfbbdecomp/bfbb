@@ -9,8 +9,18 @@
 
 struct zMovePoint : xMovePoint
 {
-    F32 RadiusZone();
-    F32 Delay();
+    F32 RadiusZone()
+    {
+        return asset->zoneRadius;
+    }
+    F32 Delay()
+    {
+        return asset->delay;
+    }
+    xVec3* PosGet()
+    {
+        return pos;
+    }
     U32 NumNodes();
     U8 IsOn();
 };

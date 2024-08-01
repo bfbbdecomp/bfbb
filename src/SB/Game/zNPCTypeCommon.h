@@ -399,6 +399,7 @@ struct zNPCCommon : xNPCBasic
     U32 DBG_InstName(); // return type might be wrong
     xAnimTable* AnimGetTable();
     F32 AnimTimeRemain(xAnimState* ast);
+    F32 AnimTimeCurrent();
     F32 AnimDuration(xAnimState* ast);
     bool IsMountableType(en_ZBASETYPE type);
     void MvptReset(zMovePoint* nav_goto);
@@ -436,10 +437,24 @@ struct zNPCCommon : xNPCBasic
     xVec3* Pos();
     RwMatrix* BoneMat(S32 unk) const;
     RwV3d* BonePos(S32 unk) const;
-    xVec3* XZVecToPlayer(xVec3* unk1, F32* unk2); // might have wrong return type
-    xVec3* XZVecToPos(xVec3* unk1, const xVec3* unk2, F32* unk3); // ? return type
-    S32 XYZDstSqToPlayer(xVec3* unk); // return type is probably wrong
-    S32 XYZDstSqToPos(xVec3* unk1, xVec3* unk2);
+    void XZVecToPlayer(xVec3* unk1, F32* unk2);
+    F32 XZDstSqToPos(const xVec3* unk1, xVec3* unk2, F32* unk3);
+    void XZVecToPos(xVec3* unk1, const xVec3* unk2, F32* unk3);
+    void XYZVecToPos(xVec3* dest, xVec3* unk2)
+    {
+        xVec3Sub(dest, unk2, Pos());
+    }
+    F32 XYZDstSqToPlayer(xVec3* unk);
+    F32 XYZDstSqToPos(xVec3* unk1, xVec3* dest)
+    {
+        xVec3 dest_vec;
+        if (dest == NULL)
+        {
+            dest = &dest_vec;
+        }
+        XYZVecToPos(dest, unk1);
+        return xVec3Length2(dest);
+    }
     void WonderOfTalking(S32 inprogress, xBase* owner);
     // return type is probably wrong
     S32 SomethingWonderful();
