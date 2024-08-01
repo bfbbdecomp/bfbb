@@ -159,7 +159,7 @@ S32 zNPCGoalLoopAnim::Enter(F32 dt, void* updCtxt)
     flg_info = 0;
     lastAnimTime = -1.0f;
 
-    return zNPCGoalLoopAnim::Enter(dt, updCtxt);
+    return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
 S32 zNPCGoalLoopAnim::Exit(F32 dt, void* updCtxt)
@@ -377,7 +377,7 @@ S32 zNPCGoalIdle::Resume(F32 dt, void* updCtxt)
         npc->pflags &= (U8) ~((1 << 3) | (1 << 2) | (1 << 1) | (1 << 0));
     }
 
-    return xGoal::Resume(dt, updCtxt);
+    return zNPCGoalCommon::Resume(dt, updCtxt);
 }
 
 S32 zNPCGoalIdle::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene)
@@ -500,7 +500,7 @@ S32 zNPCGoalPatrol::Resume(F32 dt, void* updCtxt)
         flg_patrol &= ~(1 << 2);
     }
 
-    return xGoal::Resume(dt, updCtxt);
+    return zNPCGoalCommon::Resume(dt, updCtxt);
 }
 
 S32 zNPCGoalPatrol::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene)
@@ -722,7 +722,7 @@ S32 zNPCGoalWander::Enter(F32 dt, void* updCtxt)
     F32 dst = 0.75f * rad_wand;
     xVec3Copy(&dir_cur, &pos_home);
 
-    xVec3AddScaled(&dir_cur, NPCC_rightDir(npc), dst * xurand());
+    xVec3AddScaled(&dir_cur, NPCC_faceDir(npc), dst * xurand());
     dst *= 0.25f;
     xVec3AddScaled(&dir_cur, NPCC_rightDir(npc), dst * (2.0f * (xurand() - 0.5f)));
 
