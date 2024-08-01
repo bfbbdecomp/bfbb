@@ -492,7 +492,7 @@ S32 zNPCGoalBoyRide::NPCMessage(NPCMsg* mail)
     return handled;
 }
 
-// Equivalent(???)
+// Equivalent: fnmsubs register order
 S32 zNPCGoalBoyFall::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene)
 {
     S32 nextgoal = 0;
@@ -518,10 +518,8 @@ S32 zNPCGoalBoyFall::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScen
         return nextgoal;
     }
 
-    F32 fVar2 = -(dt * 10.0f - npc->frame->vel.y);
-    npc->frame->vel.y = (fVar2 > -4.0f) ? fVar2 : -4.0f;
-
-    npc->colFreq = (npc->colFreq < 0) ? npc->colFreq : 0;
+    npc->frame->vel.y = MAX(npc->frame->vel.y - dt * 10.0f, -4.0f);
+    npc->colFreq = MIN(npc->colFreq, 0);
 
     return xGoal::Process(trantype, dt, updCtxt, NULL);
 }
