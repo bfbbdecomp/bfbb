@@ -161,7 +161,10 @@ struct xGoal : xListItem<xGoal>, xFactoryInst
         return this->goalID;
     }
 
-    void SetFlags(S32 flags);
+    void SetFlags(S32 flags)
+    {
+        flg_able = flags;
+    }
     void AddFlags(S32 flags);
     xPsyche* GetPsyche() const;
     void SetCallbacks(xGoalProcessCallback process, xGoalChkRuleCallback chkRule,
