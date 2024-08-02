@@ -257,10 +257,10 @@ struct zNPCGoalBossPatSpawn : zNPCGoalCommon
 
 struct zNPCGoalBossPatSpin : zNPCGoalCommon
 {
-    F32 timeInGoal;
-    U32 stage;
-    F32 numGlobs;
-    xVec3 vel;
+    F32 timeInGoal; // 0x4C
+    U32 stage; // 0x50
+    F32 numGlobs; // 0x54
+    xVec3 vel; // 0x58
     xVec3 pole[4];
     S32 currPole;
     U32 spinSndID;
@@ -270,6 +270,8 @@ struct zNPCGoalBossPatSpin : zNPCGoalCommon
     {
     }
 
+    S32 Enter(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* ctxt, xScene* scene);
     S32 Exit(F32 dt, void* updCtxt);
 };
 

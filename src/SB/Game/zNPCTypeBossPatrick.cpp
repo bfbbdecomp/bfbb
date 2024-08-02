@@ -150,44 +150,83 @@ static F32 sBoundRadius[4];
 static xVec3 sBoneOffset[4];
 
 static newsfishSound sNFComment[37] = {
-    { "FAB1036" }, // 0
-    { "FAB1042" }, // 1
-    { "FAB1046" }, // 2
-    { "FAB1047" }, // 3
-    { "FAB1049" }, // 4
-    { "FAB1050" }, // 5
-    { "FAB1034" }, // 6
-    { "FAB1035" }, // 7
-    { "FAB1040" }, // 8
-    { "FAB1053" }, // 9
-    { "FAB1055" }, // 10
-    { "FAB1056" }, // 11
-    { "FAB1033" }, // 12
-    { "FAB1037" }, // 13
-    { "FAB1052" }, // 14
-    { "FAB1039_a" }, // 15
-    { "FAB1039_b" }, // 16
-    { "FAB1039_c" }, // 17
-    { "FAB1041_a" }, // 18
-    { "FAB1041_b" }, // 19
-    { "FAB1038" }, // 20
-    { "FAB1051" }, // 21
-    { "FAB1054" }, // 22
-    { "FAB1006" }, // 23
-    { "FAB1007" }, // 24
-    { "FAB1008" }, // 25
-    { "FAB1009" }, // 26
-    { "FAB1012" }, // 27
-    { "FAB1013" }, // 28
-    { "FAB1014" }, // 29
-    { "FAB1016" }, // 30
-    { "FAB1028" }, // 31
-    { "FAB1064" }, // 32
-    { "FAB1065" }, // 33
-    { "FAB1067" }, // 34
-    { "FAB1081_a" }, // 35
-    { "FAB1081_b" }, // 36
+    { "FAB1036" }, // 0 Look at that! The robot's made himself dizzy!
+    { "FAB1042" }, // 1 Sandy will become a Banana Split after another one of those!
+    { "FAB1046" }, // 2 That hot goo could melt anything!
+    { "FAB1047" }, // 3 What is Sandy going to do to get SpongeBob unfrozen?!
+    { "FAB1049" }, // 4 One more douse with that stuff and SpongeBob will be back in the ring!
+    { "FAB1050" }, // 5 That does it! SpongeBob is back in the fight!
+    { "FAB1034" }, // 6 AND SpongeBob gets a frigid reception from the robot!
+    { "FAB1035" }, // 7 SpongeBob better stay FAR way from the robot's cold clutches!
+    { "FAB1040" }, // 8 This boy must be SMOKING at the lanes!
+    { "FAB1053" }, // 9 I see a prime bowling moment right here!
+    { "FAB1055" }, // 10 NICE Seven-Ten Split by SpongeBob!
+    { "FAB1056" }, // 11 THAT'S IT! That's the match! SpongeBob is STILL Champion!
+    { "FAB1033" }, // 12 Ooh SpongeBob's been Ice-Creamed!
+    { "FAB1037" }, // 13 Looks like SpongeBob has an opportunity here!
+    { "FAB1052" }, // 14 There's another opportunity for SpongeBob!
+    { "FAB1039 a" }, // 15 Strike!
+    { "FAB1039 b" }, // 16 Strike!
+    { "FAB1039 c" }, // 17 Strike!
+    { "FAB1041 a" }, // 18 And the robot is DOWN!
+    { "FAB1041 b" }, // 19 AND the robot is down!
+    { "FAB1038" }, // 20 I'm no Einstein but I'm sure that note on the robot's back means SOMETHING!
+    { "FAB1051" }, // 21 Do-si-do and around you go!
+    { "FAB1054" }, // 22 Ooh and the robot is down!
+    { "FAB1006" }, // 23 OOH! That's gotta sting!
+    { "FAB1007" }, // 24 OW! I guess SpongeBob won't be winning THAT way!
+    { "FAB1008" }, // 25 The robot's just too big for a direct attack like that!
+    { "FAB1009" }, // 26 Looks like the robot's left itself vulnerable!
+    { "FAB1012" }, // 27 Great barrier reef!
+    { "FAB1013" }, // 28 Now the ROBOT'S taking a beating out there!
+    { "FAB1014" }, // 29 The robot better change tactics and fast!
+    { "FAB1016" }, // 30 Ooh! Close Encounters of the Painful Kind!
+    { "FAB1028" }, // 31 There's the robot's vulnerability! Let's see if SpongeBob goes for it!
+    { "FAB1064" }, // 32 Yikes! Looks like SpongeBob's in for a rough ride!
+    { "FAB1065" }, // 33 Ooh! That was a doozy!
+    { "FAB1067" }, // 34 Looks like SpongeBob may have a moment to act here!
+    { "FAB1081 a" }, // 35 That's the ticket!
+    { "FAB1081 b" }, // 36 That's the ticket!
 };
+
+// Give friendly names to news fish comment indicies
+#define NF_ROBOT_MADE_HIMSELF_DIZZY 0
+#define NF_SANDY_BECOME_BANANA_SPLIT 1
+#define NF_HOT_GOO_COULD_MELT_ANYTHING 2
+#define NF_SANDY_GET_SB_UNFROZEN 3
+#define NF_ONE_MORE_DOUSE_WITH_THAT_STUFF 4
+#define NF_SB_BACK_IN_FIGHT 5
+#define NF_SB_FRIGID_RECEPTION 6
+#define NF_SB_STAY_FAR_AWAY_FROM_CLUTCHES 7
+#define NF_MUST_BE_SMOKING_AT_LANES 8
+#define NF_PRIME_BOWLING_MOMENT 9
+#define NF_NICE_7_10_SPLIT_BY_SB 10
+#define NF_SB_STILL_CHAMPION 11
+#define NF_SB_HAS_BEEN_ICE_CREAMED 12
+#define NF_SB_HAS_OPPORTUNITY 13
+#define NF_ANOTHER_OPPORTUNITY_FOR_SB 14
+#define NF_STRIKE_A 15
+#define NF_STRIKE_B 16
+#define NF_STRIKE_C 17
+#define NF_AND_ROBOT_IS_DOWN_A 18
+#define NF_AND_ROBOT_IS_DOWN_B 19
+#define NF_NOTE_ON_ROBOT_BACK_MEANS_SOMETHING 20
+#define NF_DOSIDO_AROUND_YOU_GO 21
+#define NF_OOH_ROBOT_IS_DOWN 22
+#define NF_THATS_GOTTA_STING 23
+#define NF_SB_WONT_WIN_THAT_WAY 24
+#define NF_ROBOT_TOO_BIG_DIRECT_ATTACK 25
+#define NF_ROBOT_LEFT_SELF_VULNERABLE 26
+#define NF_GREAT_BARRIER_REEF 27
+#define NF_ROBOT_TAKING_BEATING 28
+#define NF_CHANGE_TACTICS_FAST 29
+#define NF_CLOSE_ENCOUNTERS_PAINFUL_KIND 30
+#define NF_ROBOT_VULN_WILL_SB_GO_FOR_IT 31
+#define NF_SB_IN_FOR_ROUGH_RIDE 32
+#define NF_THAT_WAS_A_DOOZY 33
+#define NF_SB_HAS_MOMENT_TO_ACT 34
+#define NF_THATS_THE_TICKET_A 35
+#define NF_THATS_THE_TICKET_B 36
 
 static U32 sCurrNFSound;
 static tweak_callback newsfish_cb;
@@ -992,22 +1031,24 @@ void zNPCBPatrick::Damage(en_NPC_DAMAGE_TYPE dmg_type, xBase* who, const xVec3* 
             {
                 if (xrand() & 0x80 && this->round != 2)
                 {
-                    this->newsfish->SpeakStart(sNFComment[24].soundID, 0, -1);
+                    this->newsfish->SpeakStart(sNFComment[NF_SB_WONT_WIN_THAT_WAY].soundID, 0, -1);
                 }
                 else
                 {
-                    this->newsfish->SpeakStart(sNFComment[25].soundID, 0, -1);
+                    this->newsfish->SpeakStart(sNFComment[NF_ROBOT_TOO_BIG_DIRECT_ATTACK].soundID,
+                                               0, -1);
                 }
             }
             else
             {
                 if (this->round != 2)
                 {
-                    this->newsfish->SpeakStart(sNFComment[24].soundID, 0, -1);
+                    this->newsfish->SpeakStart(sNFComment[NF_SB_WONT_WIN_THAT_WAY].soundID, 0, -1);
                 }
                 else
                 {
-                    this->newsfish->SpeakStart(sNFComment[25].soundID, 0, -1);
+                    this->newsfish->SpeakStart(sNFComment[NF_ROBOT_TOO_BIG_DIRECT_ATTACK].soundID,
+                                               0, -1);
                 }
 
                 this->nfFlags |= 4;
@@ -1768,17 +1809,17 @@ static S32 spinCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 
         if (!(pat->nfFlags & 0x800))
         {
-            pat->newsfish->SpeakStart(sNFComment[35].soundID, 0, -1);
+            pat->newsfish->SpeakStart(sNFComment[NF_THATS_THE_TICKET_A].soundID, 0, -1);
             pat->nfFlags |= 0x800;
         }
         else if (pat->numMissesInARow > 5)
         {
-            pat->newsfish->SpeakStart(sNFComment[29].soundID, 0, -1);
+            pat->newsfish->SpeakStart(sNFComment[NF_CHANGE_TACTICS_FAST].soundID, 0, -1);
             pat->numMissesInARow = 0;
         }
         else if (pat->numPCHitsInARow > 2 || (pat->numPCHitsInARow == 2 && (xrand() & 0x80)))
         {
-            pat->newsfish->SpeakStart(sNFComment[28].soundID, 0, -1);
+            pat->newsfish->SpeakStart(sNFComment[NF_ROBOT_TAKING_BEATING].soundID, 0, -1);
         }
         else
         {
@@ -1788,11 +1829,11 @@ static S32 spinCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
             {
                 if (picker & 0x40)
                 {
-                    pat->newsfish->SpeakStart(sNFComment[35].soundID, 0, -1);
+                    pat->newsfish->SpeakStart(sNFComment[NF_THATS_THE_TICKET_A].soundID, 0, -1);
                 }
                 else
                 {
-                    pat->newsfish->SpeakStart(sNFComment[36].soundID, 0, -1);
+                    pat->newsfish->SpeakStart(sNFComment[NF_THATS_THE_TICKET_B].soundID, 0, -1);
                 }
             }
         }
@@ -2599,6 +2640,131 @@ S32 zNPCGoalBossPatSpawn::Process(en_trantype* trantype, F32 dt, void* updCtxt, 
     }
 
     return xGoal::Process(trantype, dt, updCtxt, xscn);
+}
+
+S32 zNPCGoalBossPatSpin::Enter(F32 dt, void* updCtxt)
+{
+    /*
+        class zNPCBPatrick * pat; // r18
+        class xVec3 offset; // r29+0xA0
+        class xVec3 back; // r29+0x90
+        class xVec3 center; // r29+0x80
+        class xVec3 cone; // r29+0x70
+        float param1; // r29+0xB0
+        float param2; // r1
+        float det; // r1
+        signed int i; // r17
+        float a; // r8
+        float b; // r5
+    */
+
+    xVec3 offset;
+    xVec3 back;
+    xVec3 center;
+    xVec3 cone;
+    xVec3 unk;
+
+    zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
+
+    this->stage = 0;
+
+    xSndPlay3D(xStrHash("b201_rp_spin_start"), f1671, f832, 0, 0, pat, f1142, f1659, SND_CAT_GAME,
+               f832);
+
+    pat->bossFlags &= 0xfffffffd;
+
+    xVec3SMul(&this->vel, (xVec3*)&pat->model->Mat->right, f1053);
+    this->vel.y = f832;
+
+    if (this->vel.x<f1670&& this->vel.x> f2696)
+    {
+        this->vel.x = f1670;
+    }
+    if (this->vel.z<f1670&& this->vel.z> f2696)
+    {
+        this->vel.z = f1670;
+    }
+
+    F32 dVar7 = xVec3Length(&this->vel);
+    xVec3SMulBy(&this->vel, f1053 / dVar7);
+
+    this->timeInGoal = f832;
+    pat->bossFlags &= 0xffffffdf;
+
+    xVec3Init(&offset, f832, f832, f832);
+    GetBonePos(&center, (xMat4x3*)pat->model->Mat, sBone[0], &offset);
+    GetBonePos(&cone, (xMat4x3*)pat->model->Mat, sBone[3], &offset);
+    offset.z = f870;
+    GetBonePos(&back, (xMat4x3*)pat->model->Mat, sBone[0], &offset);
+    xVec3SubFrom(&back, &center);
+    back.y = f832;
+    xVec3Normalize(&back, &back);
+
+    F32 dVar9 = back.x * back.x + back.z * back.z;
+    F32 dVar8 = f891 * (cone.x * back.x + cone.z * back.z);
+    F32 dVar5 = f832;
+    F32 fVar1 = (dVar8 * dVar8 - ((f1670 * dVar9) * ((cone.x * cone.x + cone.z * cone.z) - f2697)));
+    dVar7 = dVar5;
+
+    if (dVar5 >= fVar1)
+    {
+        dVar7 = xsqrt(fVar1);
+        dVar5 = (-dVar8 - dVar7) / (f891 * dVar9);
+        dVar7 = (-dVar8 + dVar7) / (f891 * dVar9);
+    }
+    else
+    {
+        dVar7 = dVar5;
+    }
+
+    if (dVar7 > dVar5)
+    {
+        dVar7 = dVar5;
+    }
+
+    xVec3Copy(&this->pole[0], &cone);
+    xVec3AddScaled(&this->pole[0], &back, dVar7);
+
+    this->pole[0].y = f832;
+    xVec3Init(&unk, this->pole[0].z, f832, -this->pole[0].x);
+
+    U32 uVar3 = 1;
+    for (S32 i = 0; i < 4; i++)
+    {
+        fVar1 = f1666 * uVar3++ * 1664;
+        dVar5 = fVar1;
+        dVar7 = icos(fVar1);
+        xVec3SMul(&this->pole[i], &this->pole[i], dVar7);
+        dVar7 = isin(dVar5);
+        xVec3AddScaled(&this->pole[i], &unk, dVar7);
+    }
+
+    this->currPole = 0;
+    pat->numMissesInARow++;
+
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBossPatSpin::Process(en_trantype* trantype, F32 dt, void* ctxt, xScene* scene)
+{
+    /*
+        class zNPCBPatrick * pat; // r16
+        class xVec3 awayFromPlayer; // r29+0x190
+        class xVec3 offset; // r29+0x180
+        class xVec3 center; // r29+0x170
+        class xVec3 cone; // r29+0x160
+        class xVec3 back; // r29+0x150
+        float passedPole; // r23
+        float ang; // r29+0x1A0
+        class xMat3x3 rotMat; // r29+0x120
+        class xCollis colls; // r29+0xD0
+        signed int turning; // r18
+        unsigned int picker; // r2
+    */
+    zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
+    this->timeInGoal += dt;
+    Pat_FaceTarget(pat, (xVec3*)&globals.player.ent.model->Mat->pos, f1673, dt);
+    return xGoal::Process(trantype, dt, ctxt, scene);
 }
 
 S32 zNPCGoalBossPatSpin::Exit(F32 dt, void* updCtxt)
