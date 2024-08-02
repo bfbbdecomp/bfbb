@@ -110,6 +110,8 @@ jobs:
           dotnet-version: "8.x.x"
 
       - name: Build Website
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         run: |
           python build.py
 
