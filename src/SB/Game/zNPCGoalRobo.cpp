@@ -12,6 +12,190 @@
 
 F32 f_0 = 0.0f; // needed at file level to change scheduling for
 
+xFactoryInst* GOALCreate_Robotic(S32 who, RyzMemGrow* grow, void*)
+{
+    xGoal* goal = NULL; // r16
+    switch (who)
+    {
+    case 0x4e475230:
+        goal = new (who, grow) zNPCGoalNotice(who);
+        break;
+    case 0x4e475231:
+        goal = new (who, grow) zNPCGoalTaunt(who);
+        break;
+    case 0x4e475232:
+        goal = new (who, grow) zNPCGoalEvade(who);
+        break;
+    case 0x4e475233:
+        goal = new (who, grow) zNPCGoalGoHome(who);
+        break;
+    case 0x4e475234:
+        goal = new (who, grow) zNPCGoalChase(who);
+        break;
+    case 0x4e475235:
+        goal = new (who, grow) zNPCGoalAlert(who);
+        break;
+    case 0x4e475236:
+        goal = new (who, grow) zNPCGoalAlertFodder(who);
+        break;
+    case 0x4e475237:
+        goal = new (who, grow) zNPCGoalAlertFodBomb(who);
+        break;
+    case 0x4e475238:
+        goal = new (who, grow) zNPCGoalAlertChomper(who);
+        break;
+    case 0x4e475239:
+        goal = new (who, grow) zNPCGoalAlertFodBzzt(who);
+        break;
+    case 0x4e47523a:
+        goal = new (who, grow) zNPCGoalAlertHammer(who);
+        break;
+    case 0x4e47523b:
+        goal = new (who, grow) zNPCGoalAlertTarTar(who);
+        break;
+    case 0x4e47523c:
+        goal = new (who, grow) zNPCGoalAlertGlove(who);
+        break;
+    case 0x4e47523d:
+        goal = new (who, grow) zNPCGoalAlertMonsoon(who);
+        break;
+    case 0x4e47523e:
+        goal = new (who, grow) zNPCGoalAlertSleepy(who);
+        break;
+    case 0x4e47523f:
+        goal = new (who, grow) zNPCGoalAlertArf(who);
+        break;
+    case 0x4e475240:
+        goal = new (who, grow) zNPCGoalAlertPuppy(who);
+        break;
+    case 0x4e475241:
+        goal = new (who, grow) zNPCGoalAlertChuck(who);
+        break;
+    case 0x4e475242:
+        goal = new (who, grow) zNPCGoalAlertTubelet(who);
+        break;
+    case 0x4e475243:
+        goal = new (who, grow) zNPCGoalAlertSlick(who);
+        break;
+    case 0x4e475244:
+        goal = new (who, grow) zNPCGoalAttackCQC(who);
+        break;
+    case 0x4e475245:
+        goal = new (who, grow) zNPCGoalAttackFodder(who);
+        break;
+    case 0x4e475246:
+        goal = new (who, grow) zNPCGoalAttackChomper(who);
+        break;
+    case 0x4e475247:
+        goal = new (who, grow) zNPCGoalAttackHammer(who);
+        break;
+    case 0x4e475248:
+        goal = new (who, grow) zNPCGoalAttackTarTar(who);
+        break;
+    case 0x4e475249:
+        goal = new (who, grow) zNPCGoalAttackMonsoon(who);
+        break;
+    case 0x4e47524a:
+        goal = new (who, grow) zNPCGoalAttackArf(who);
+        break;
+    case 0x4e47524b:
+        goal = new (who, grow) zNPCGoalAttackArfMelee(who);
+        break;
+    case 0x4e47524c:
+        goal = new (who, grow) zNPCGoalAttackChuck(who);
+        break;
+    case 0x4e47524d:
+        goal = new (who, grow) zNPCGoalAttackSlick(who);
+        break;
+    case 0x4e47524e:
+        goal = new (who, grow) zNPCGoalLassoBase(who);
+        break;
+    case 0x4e47524f:
+        goal = new (who, grow) zNPCGoalLassoGrab(who);
+        break;
+    case 0x4e475250:
+        goal = new (who, grow) zNPCGoalLassoThrow(who);
+        break;
+    case 0x4e475251:
+        goal = new (who, grow) zNPCGoalEvilPat(who);
+        break;
+    case 0x4e475252:
+        goal = new (who, grow) zNPCGoalStunned(who);
+        break;
+    case 0x4e475253:
+        goal = new (who, grow) zNPCGoalPatCarry(who);
+        break;
+    case 0x4e475254:
+        goal = new (who, grow) zNPCGoalPatThrow(who);
+        break;
+    case 0x4e475255:
+        goal = new (who, grow) zNPCGoalDogLaunch(who);
+        break;
+    case 0x4e475256:
+        goal = new (who, grow) zNPCGoalDogBark(who);
+        break;
+    case 0x4e475257:
+        goal = new (who, grow) zNPCGoalDogDash(who);
+        break;
+    case 0x4e475258:
+        goal = new (who, grow) zNPCGoalDogPounce(who);
+        break;
+    case 0x4e475259:
+        goal = new (who, grow) zNPCGoalTeleport(who);
+        break;
+    case 0x4e47525a:
+        goal = new (who, grow) zNPCGoalHokeyPokey(who);
+        break;
+    case 0x4e47525b:
+        goal = new (who, grow) zNPCGoalDamage(who);
+        break;
+    case 0x4e47525c:
+        goal = new (who, grow) zNPCGoalWound(who);
+        break;
+    case 0x4e47525d:
+        goal = new (who, grow) zNPCGoalBashed(who);
+        break;
+    case 0x4e47525e:
+        goal = new (who, grow) zNPCGoalKnock(who);
+        break;
+    case 0x4e47525f:
+        goal = new (who, grow) zNPCGoalAfterlife(who);
+        break;
+    case 0x4e475260:
+        goal = new (who, grow) zNPCGoalRespawn(who);
+        break;
+    case 0x4e475261:
+        goal = new (who, grow) zNPCGoalDeflate(who);
+        break;
+    case 0x4e475262:
+        goal = new (who, grow) zNPCGoalTubePal(who);
+        break;
+    case 0x4e475263:
+        goal = new (who, grow) zNPCGoalTubeDuckling(who);
+        break;
+    case 0x4e475264:
+        goal = new (who, grow) zNPCGoalTubeAttack(who);
+        break;
+    case 0x4e475265:
+        goal = new (who, grow) zNPCGoalTubeLasso(who);
+        break;
+    case 0x4e475267:
+        goal = new (who, grow) zNPCGoalTubeBirth(who);
+        break;
+    case 0x4e475269:
+        goal = new (who, grow) zNPCGoalTubeBonked(who);
+        break;
+    case 0x4e47526a:
+        goal = new (who, grow) zNPCGoalTubeDying(who);
+        break;
+    case 0x4e47526b:
+        goal = new (who, grow) zNPCGoalTubeDead(who);
+        break;
+    }
+
+    return goal;
+}
+
 S32 zNPCGoalAlertFodder::Enter(F32 dt, void* updCtxt)
 {
     flg_attack = 0;

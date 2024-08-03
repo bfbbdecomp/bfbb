@@ -354,12 +354,12 @@ struct zPlayerCarryInfo
 
 struct zPlayerLassoInfo
 {
-    xEnt* target;
+    xEnt* target; // 0x1880 in globals
     F32 dist;
     U8 destroy;
     U8 targetGuide;
     F32 lassoRot;
-    xEnt* swingTarget;
+    xEnt* swingTarget; // 0x1890
     xEnt* releasedSwing;
     F32 copterTime;
     S32 canCopter;

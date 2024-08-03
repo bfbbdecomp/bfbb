@@ -4,6 +4,37 @@
 #include "zNPCGoalCommon.h"
 #include "zNPCHazard.h"
 
+enum en_alertmony
+{
+    MONSOON_ALERT_NOTICE = 0,
+    MONSOON_ALERT_BEGIN = 1,
+    MONSOON_ALERT_ARENA = 2,
+    MONSOON_ALERT_READY = 3,
+    MONSOON_ALERT_SPITCLOUD = 4,
+    MONSOON_ALERT_NOMORE = 5,
+    MONSOON_ALERT_FORCE = 2147483647,
+};
+
+enum en_alertham
+{
+    HAMMER_ALERT_NOTICE = 0,
+    HAMMER_ALERT_BEGIN = 1,
+    HAMMER_ALERT_CHASE = 2,
+    HAMMER_ALERT_WHAM = 3,
+    HAMMER_ALERT_EVADE = 4,
+    HAMMER_ALERT_NOMORE = 5,
+    HAMMER_ALERT_FORCE = 2147483647,
+};
+
+enum en_alertbomb
+{
+    FODBOMB_ALERT_NOTICE = 0,
+    FODBOMB_ALERT_SONAR = 1,
+    FODBOMB_ALERT_TERMINAL = 2,
+    FODBOMB_ALERT_NOMORE = 3,
+    FODBOMB_ALERT_FORCE = 2147483647,
+};
+
 enum en_alertbzzt
 {
     FODBZZT_ALERT_NOTICE,
@@ -236,6 +267,62 @@ protected:
     ~zNPCGoalDead();
 };
 
+class zNPCGoalAttackChuck : public zNPCGoalPushAnim
+{
+    // total size: 0x58
+public:
+    zNPCGoalAttackChuck(S32);
+    S32 idx_launch; // offset 0x54, size 0x4
+};
+
+class zNPCGoalLassoBase : public zNPCGoalCommon
+{
+    // total size: 0x4C
+public:
+    zNPCGoalLassoBase(S32);
+};
+
+class zNPCGoalLassoGrab : public zNPCGoalCommon
+{
+    // total size: 0x4C
+public:
+    zNPCGoalLassoGrab(S32);
+};
+
+class zNPCGoalLassoThrow : public zNPCGoalCommon
+{
+    // total size: 0x58
+public:
+    zNPCGoalLassoThrow(S32);
+    S32 flg_throw; // offset 0x4C, size 0x4
+    S32 floorBounce; // offset 0x50, size 0x4
+    F32 tmr_colDelay; // offset 0x54, size 0x4
+};
+
+class zNPCGoalAttackSlick : public zNPCGoalLoopAnim
+{
+    // total size: 0x70
+public:
+    zNPCGoalAttackSlick(S32);
+    S32 idx_launch; // offset 0x6C, size 0x4
+};
+
+class zNPCGoalAttackArfMelee : public zNPCGoalPushAnim
+{
+    // total size: 0x64
+public:
+    zNPCGoalAttackArfMelee(S32);
+    U32 streakID[4]; // offset 0x54, size 0x10
+};
+
+class zNPCGoalAttackArf : public zNPCGoalPushAnim
+{
+    // total size: 0x58
+public:
+    zNPCGoalAttackArf(S32);
+    S32 flg_attack; // offset 0x54, size 0x4
+};
+
 struct zNPCGoalLimbo : zNPCGoalDead
 {
     zNPCGoalLimbo(S32 goalID) : zNPCGoalDead(goalID)
@@ -293,14 +380,115 @@ struct zNPCGoalDEVHero : zNPCGoalCommon
     virtual S32 NPCMessage(NPCMsg* mail);
 };
 
+class zNPCGoalEvilPat : public zNPCGoalCommon
+{
+    // total size: 0x4C
+public:
+    zNPCGoalEvilPat(S32);
+};
+
+class zNPCGoalPatCarry : public zNPCGoalCommon
+{
+    // total size: 0x4C
+public:
+    zNPCGoalPatCarry(S32);
+};
+
+class zNPCGoalStunned : public zNPCGoalCommon
+{
+    // total size: 0x4C
+public:
+    zNPCGoalStunned(S32);
+};
+
+class zNPCGoalEvade : public zNPCGoalCommon
+{
+public:
+    zNPCGoalEvade(S32);
+    S32 flg_evade; // offset 0x4C, size 0x4
+};
+
+class zNPCGoalGoHome : public zNPCGoalCommon
+{
+public:
+    zNPCGoalGoHome(S32);
+};
+
+enum en_slepatak
+{
+    SLEEP_ATAK_REACT = 0,
+    SLEEP_ATAK_ZAP = 1,
+    SLEEP_ATAK_LAUGH = 2,
+    SLEEP_ATAK_NOMORE = 3,
+    SLEEP_ATAK_FORCE = 2147483647,
+};
+
+enum en_alertarf
+{
+    ARF_ALERT_REACT = 0,
+    ARF_ALERT_READY = 1,
+    ARF_ALERT_TELEPORT = 2,
+    ARF_ALERT_NOMORE = 3,
+    ARF_ALERT_FORCE = 2147483647,
+};
+
+class zNPCGoalAlertArf : public zNPCGoalCommon
+{
+    // total size: 0x54
+public:
+    zNPCGoalAlertArf(S32);
+    en_alertarf alertarf; // offset 0x4C, size 0x4
+    F32 tmr_reload; // offset 0x50, size 0x4
+};
+
+enum en_alertpuppy
+{
+    PUPPY_ALERT_YAPPY = 0,
+    PUPPY_ALERT_CHASE = 1,
+    PUPPY_ALERT_ATTAAAAACK = 2,
+    PUPPY_ALERT_DISAPPEAR = 3,
+    PUPPY_ALERT_NOMORE = 4,
+    PUPPY_ALERT_FORCE = 2147483647,
+};
+
+class zNPCGoalAlertPuppy : public zNPCGoalCommon
+{
+    // total size: 0x50
+public:
+    zNPCGoalAlertPuppy(S32);
+    enum en_alertpuppy alertpup; // offset 0x4C, size 0x4
+};
+
+class zNPCGoalAlertSleepy : public zNPCGoalCommon
+{
+    // total size: 0x64
+public:
+    zNPCGoalAlertSleepy(S32);
+    xVec3 dir_attack; // offset 0x4C, size 0xC
+    S32 flg_attack; // offset 0x58, size 0x4
+    en_slepatak sleepattack; // offset 0x5C, size 0x4
+    F32 tmr_minAttack; // offset 0x60, size 0x4
+};
+
+class zNPCGoalChase : public zNPCGoalCommon
+{
+    // total size: 0x50
+public:
+    zNPCGoalChase(S32);
+    S32 flg_chase; // offset 0x4C, size 0x4
+};
+
 struct zNPCGoalTaunt : zNPCGoalLoopAnim
 {
+    zNPCGoalTaunt(S32);
     S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
     S32 Enter(F32 dt, void* updCtxt);
 };
 
 struct zNPCGoalPatThrow : zNPCGoalCommon
 {
+    zNPCGoalPatThrow(S32);
+
     S32 Enter(F32 dt, void* updCtxt);
     U8 CollReview(void*);
 };
@@ -318,6 +506,15 @@ enum en_alertchuk
     CHUCK_ALERT_FORCE = 0x7fffffff
 };
 
+class zNPCGoalAttackCQC : public zNPCGoalPushAnim
+{
+    // total size: 0x64
+public:
+    zNPCGoalAttackCQC(S32);
+    xVec3 dir_attack; // offset 0x54, size 0xC
+    S32 flg_attack; // offset 0x60, size 0x4
+};
+
 struct zNPCGoalAlertSlick : zNPCGoalCommon
 {
     S32 flg_alert;
@@ -325,12 +522,24 @@ struct zNPCGoalAlertSlick : zNPCGoalCommon
     F32 tmr_reload;
     xVec3 pos_corner;
 
+    zNPCGoalAlertSlick(S32);
     void MoveCorner(F32 dt);
     void GetInArena(F32 dt);
     S32 NPCMessage(NPCMsg* mail);
     S32 Process(en_trantype* trantype, F32 dt, void* updCtxt);
     S32 Resume(F32 dt, void* updCtxt);
     S32 Enter(F32 dt, void* updCtxt);
+};
+
+class zNPCGoalAlertTubelet : public zNPCGoalCommon
+{
+    // total size: 0x5C
+public:
+    zNPCGoalAlertTubelet(S32);
+    S32 flg_attack; // offset 0x4C, size 0x4
+    S32 cnt_nextlos; // offset 0x50, size 0x4
+    F32 len_laser; // offset 0x54, size 0x4
+    S32 pete_attack_last; // offset 0x58, size 0x4
 };
 
 struct zNPCGoalAlertChuck : zNPCGoalCommon
@@ -343,11 +552,39 @@ struct zNPCGoalAlertChuck : zNPCGoalCommon
     xVec3 dir_zoom;
     F32 dst_zoom;
 
+    zNPCGoalAlertChuck(S32);
     S32 ZoomMove(F32 dt);
     void GetInArena(F32 dt);
     S32 Process(en_trantype* trantype, F32 dt, void* updCtxt);
     S32 Resume(F32 dt, void* updCtxt);
     S32 Enter(F32 dt, void* updCtxt);
+};
+
+class zNPCGoalAlertMonsoon : public zNPCGoalCommon
+{
+    // total size: 0x70
+public:
+    zNPCGoalAlertMonsoon(S32);
+    xVec3 dir_attack; // offset 0x4C, size 0xC
+    S32 flg_attack; // offset 0x58, size 0x4
+    en_alertmony alertmony; // offset 0x5C, size 0x4
+    F32 tmr_reload; // offset 0x60, size 0x4
+    xVec3 pos_corner; // offset 0x64, size 0xC
+};
+
+class zNPCGoalAlertGlove : public zNPCGoalCommon
+{
+    // total size: 0x84
+public:
+    zNPCGoalAlertGlove(S32);
+    F32 tmr_attack; // offset 0x4C, size 0x4
+    F32 tmr_minAttack; // offset 0x50, size 0x4
+    xVec3 pos_began; // offset 0x54, size 0xC
+    xVec3 pos_end; // offset 0x60, size 0xC
+    xVec3 dir_axis; // offset 0x6C, size 0xC
+    F32 dst_extend; // offset 0x78, size 0x4
+    S32 goback; // offset 0x7C, size 0x4
+    S32 cnt_nextemit; // offset 0x80, size 0x4
 };
 
 struct zNPCGoalAlertTarTar : zNPCGoalCommon
@@ -357,6 +594,7 @@ struct zNPCGoalAlertTarTar : zNPCGoalCommon
     en_hoppy hoppy;
     F32 tmr_reload;
 
+    zNPCGoalAlertTarTar(S32);
     void GetInArena(F32 dt);
     S32 HoppyUpdate(en_trantype* trantype, F32 dt);
     S32 NPCMessage(NPCMsg* mail);
@@ -371,6 +609,7 @@ struct zNPCGoalAlertChomper : zNPCGoalCommon
     xVec3 pos_evade;
     F32 tmr_evade;
 
+    zNPCGoalAlertChomper(S32);
     S32 CheckSpot();
     S32 MoveEvadePos(xVec3* pos, F32 dt);
     S32 CalcEvadePos(xVec3* pos);
@@ -378,6 +617,16 @@ struct zNPCGoalAlertChomper : zNPCGoalCommon
     void CirclePlayer(F32 dt);
     S32 Process(en_trantype* trantype, F32 dt, void* updCtxt);
     S32 Enter(F32 dt, void* updCtxt);
+};
+
+class zNPCGoalAlertHammer : public zNPCGoalCommon
+{
+    // total size: 0x58
+public:
+    zNPCGoalAlertHammer(S32);
+    S32 flg_attack; // offset 0x4C, size 0x4
+    en_alertham alertham; // offset 0x50, size 0x4
+    F32 tmr_alertham; // offset 0x54, size 0x4
 };
 
 struct zNPCGoalAlertFodBzzt : zNPCGoalCommon
@@ -392,6 +641,7 @@ struct zNPCGoalAlertFodBzzt : zNPCGoalCommon
     RwRGBA rgba_deathRay;
     S32 cnt_inContact;
 
+    zNPCGoalAlertFodBzzt(S32);
     void DeathRayRender();
     void DeathRayUpdate(F32 dt);
     void OrbitPlayer(F32 dt);
@@ -413,6 +663,41 @@ struct CattleNotify : HAZNotify
     S32 Notify(en_haznote note);
 };
 
+class zNPCGoalAttackMonsoon : public zNPCGoalPushAnim
+{
+    // total size: 0x58
+public:
+    zNPCGoalAttackMonsoon(S32);
+    S32 idx_launch; // offset 0x54, size 0x4
+};
+
+class zNPCGoalAttackTarTar : public zNPCGoalPushAnim
+{
+    // total size: 0x68
+public:
+    zNPCGoalAttackTarTar(S32);
+    S32 flg_attack; // offset 0x54, size 0x4
+    S32 idx_launch; // offset 0x58, size 0x4
+    xVec3 pos_aimbase; // offset 0x5C, size 0xC
+};
+
+class zNPCGoalAttackHammer : public zNPCGoalPushAnim
+{
+    // total size: 0x78
+public:
+    zNPCGoalAttackHammer(S32);
+    S32 flg_attack; // offset 0x54, size 0x4
+    xVec3 pos_lastVert; // offset 0x58, size 0xC
+    xVec3 pos_oldVert; // offset 0x64, size 0xC
+    U32 streakID[2]; // offset 0x70, size 0x8
+};
+class zNPCGoalAttackChomper : public zNPCGoalPushAnim
+{
+    // total size: 0x54
+public:
+    zNPCGoalAttackChomper(S32);
+};
+
 struct zNPCGoalAttackFodder : zNPCGoalPushAnim
 {
     xVec3 dir_attack;
@@ -420,18 +705,39 @@ struct zNPCGoalAttackFodder : zNPCGoalPushAnim
     CattleNotify cbNotify;
     NPCHazard* haz_cattle; // 0x6C
 
+    zNPCGoalAttackFodder(S32);
     S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
     S32 Exit(F32 dt, void* updCtxt);
     S32 Enter(F32 dt, void* updCtxt);
     S32 SyncCattleProd();
 };
 
+class zNPCGoalAlert : public zNPCGoalCommon
+{
+    // total size: 0x50
+public:
+    zNPCGoalAlert(S32);
+    S32 flg_alert; // offset 0x4C, size 0x4
+};
+
+class zNPCGoalAlertFodBomb : public zNPCGoalCommon
+{
+    // total size: 0x5C
+public:
+    zNPCGoalAlertFodBomb(S32);
+    S32 flg_attack; // offset 0x4C, size 0x4
+    en_alertbomb alertbomb; // offset 0x50, size 0x4
+    F32 tmr_nextping; // offset 0x54, size 0x4
+    F32 tmr_countdown; // offset 0x58, size 0x4
+};
+
 class zNPCGoalAlertFodder : public zNPCGoalCommon
 {
 public:
-    signed int flg_attack; // offset 0x4C, size 0x4
-    enum en_alertfod alertfod; // offset 0x50, size 0x4
-    float tmr_alertfod; // offset 0x54, size 0x4
+    zNPCGoalAlertFodder(S32);
+    S32 flg_attack; // offset 0x4C, size 0x4
+    en_alertfod alertfod; // offset 0x50, size 0x4
+    F32 tmr_alertfod; // offset 0x54, size 0x4
 
     void MoveEvade(F32 dt);
     void GetInArena(F32 dt);
@@ -449,6 +755,7 @@ struct zNPCGoalDogLaunch : zNPCGoalCommon
     xParabola parabinfo;
     F32 tmr_remain;
 
+    zNPCGoalDogLaunch(S32);
     void BubTrailCone(xVec3* pos, S32 num, xVec3* pos_rand, xVec3* vel_rand, xMat3x3* mat);
     S32 BallisticUpdate(F32 dt);
     void PreCollide();
@@ -457,6 +764,218 @@ struct zNPCGoalDogLaunch : zNPCGoalCommon
     U8 CollReview(void*);
     void SilentSwimout(xVec3* unk1, xVec3* unk2, zMovePoint* unk3);
     void ViciousAttack(xVec3* unk1, xVec3* unk2, zMovePoint* unk3, S32 unk4);
+};
+
+class zNPCGoalDogBark : public zNPCGoalLoopAnim
+{
+    // total size: 0x6C
+public:
+    zNPCGoalDogBark(S32);
+};
+
+class zNPCGoalDamage : public zNPCGoalCommon
+{
+    // total size: 0x50
+public:
+    zNPCGoalDamage(S32);
+    S32 flg_howtodie; // offset 0x4C, size 0x4
+};
+
+class zNPCGoalBashed : public zNPCGoalLoopAnim
+{
+    // total size: 0x6C
+public:
+    zNPCGoalBashed(S32);
+};
+
+class zNPCGoalAfterlife : public zNPCGoalDead
+{
+    // total size: 0x54
+public:
+    zNPCGoalAfterlife(S32);
+};
+
+class NPCBullseye
+{
+    // total size: 0x10
+public:
+    xVec3 pos; // offset 0x0, size 0xC
+    F32 spd; // offset 0xC, size 0x4
+};
+
+enum en_marystat
+{
+    TUBE_MARY_WAIT = 0,
+    TUBE_MARY_ANGRY = 1,
+    TUBE_MARY_COOLOFF = 2,
+    TUBE_MARY_NOMORE = 3,
+    TUBE_MARY_FORCE = 2147483647,
+};
+
+class zNPCGoalTubeLasso : public zNPCGoalCommon
+{
+    // total size: 0x4C
+public:
+    zNPCGoalTubeLasso(S32);
+};
+
+class zNPCGoalTubeDead : public zNPCGoalDead
+{
+    // total size: 0x54
+public:
+    zNPCGoalTubeDead(S32);
+};
+
+class zNPCGoalTubeDying : public zNPCGoalCommon
+{
+    // total size: 0x6C
+public:
+    zNPCGoalTubeDying(S32);
+    S32 flg_tubedying; // offset 0x4C, size 0x4
+    F32 spd_gothatway; // offset 0x50, size 0x4
+    S32 cnt_loop; // offset 0x54, size 0x4
+    F32 hyt_was; // offset 0x58, size 0x4
+    F32 scl_shrink; // offset 0x5C, size 0x4
+    xVec3 pos_lassoDeath; // offset 0x60, size 0xC
+};
+
+class zNPCGoalTubeBonked : public zNPCGoalCommon
+{
+    // total size: 0x60
+public:
+    zNPCGoalTubeBonked(S32);
+    F32 tmr_recover; // offset 0x4C, size 0x4
+    F32 ang_spinrate; // offset 0x50, size 0x4
+    xVec3 vec_offsetPete; // offset 0x54, size 0xC
+};
+
+class zNPCGoalTubeBirth : public zNPCGoalCommon
+{
+public:
+    zNPCGoalTubeBirth(S32);
+    // total size: 0x4C
+};
+
+class zNPCGoalTubeAttack : public zNPCGoalCommon
+{
+    // total size: 0x84
+public:
+    zNPCGoalTubeAttack(S32);
+    S32 flg_attack; // offset 0x4C, size 0x4
+    union
+    {
+        class
+        {
+            // total size: 0x8
+        public:
+            en_marystat marystat; // offset 0x0, size 0x4
+            F32 ang_spinrate; // offset 0x4, size 0x4
+        } mary; // offset 0x50, size 0x8
+        class
+        {
+            // total size: 0x34
+        public:
+            S32 flg_paul; // offset 0x0, size 0x4
+            S32 cnt_nextlos; // offset 0x4, size 0x4
+            F32 len_laser; // offset 0x8, size 0x4
+            xVec3 pos_laserSource; // offset 0xC, size 0xC
+            xVec3 pos_laserTarget; // offset 0x18, size 0xC
+            NPCBullseye bullseye; // offset 0x24, size 0x10
+        } paul; // offset 0x50, size 0x34
+    };
+};
+
+class zNPCGoalTubeDuckling : public zNPCGoalCommon
+{
+    // total size: 0x70
+public:
+    zNPCGoalTubeDuckling(S32);
+    S32 flg_duckling; // offset 0x4C, size 0x4
+    F32 tmr_running; // offset 0x50, size 0x4
+    F32 tmr_hoverCycle; // offset 0x54, size 0x4
+    F32 dst_visacard; // offset 0x58, size 0x4
+    xVec3 dir_visacard; // offset 0x5C, size 0xC
+    F32 tmr_outward; // offset 0x68, size 0x4
+    F32 dst_preOrbit; // offset 0x6C, size 0x4
+};
+
+class zNPCGoalTubePal : public zNPCGoalCommon
+{
+    // total size: 0x4C
+public:
+    zNPCGoalTubePal(S32);
+};
+
+class zNPCGoalDeflate : public zNPCGoalCommon
+{
+    // total size: 0x58
+public:
+    zNPCGoalDeflate(S32);
+    F32 spd_gothatway; // offset 0x4C, size 0x4
+    S32 cnt_loop; // offset 0x50, size 0x4
+    F32 scl_shrink; // offset 0x54, size 0x4
+};
+
+class zNPCGoalRespawn : public zNPCGoalCommon
+{
+    // total size: 0x64
+public:
+    zNPCGoalRespawn(S32);
+    F32 tmr_respawn; // offset 0x4C, size 0x4
+    F32 tmr_robobits; // offset 0x50, size 0x4
+    S32 cnt_ring; // offset 0x54, size 0x4
+    xVec3 pos_poofHere; // offset 0x58, size 0xC
+};
+
+class zNPCGoalKnock : public zNPCGoalCommon
+{
+    // total size: 0x64
+public:
+    zNPCGoalKnock(S32);
+    S32 flg_knock; // offset 0x4C, size 0x4
+    xVec3 pos_bumper; // offset 0x50, size 0xC
+    S32 floorBounce; // offset 0x5C, size 0x4
+    U32 streakID; // offset 0x60, size 0x4
+};
+
+class zNPCGoalWound : public zNPCGoalPushAnim
+{
+    // total size: 0x64
+public:
+    zNPCGoalWound(S32);
+    xVec3 dir_fling; // offset 0x54, size 0xC
+    S32 flg_knock; // offset 0x60, size 0x4
+};
+
+class zNPCGoalHokeyPokey : public zNPCGoalLoopAnim
+{
+    // total size: 0x74
+public:
+    zNPCGoalHokeyPokey(S32);
+    S32 flg_hokey; // offset 0x6C, size 0x4
+    F32 ang_spinrate; // offset 0x70, size 0x4
+};
+
+class zNPCGoalTeleport : public zNPCGoalCommon
+{
+    // total size: 0x50
+public:
+    zNPCGoalTeleport(S32);
+    F32 tmr_countdown; // offset 0x4C, size 0x4
+};
+
+class zNPCGoalDogPounce : public zNPCGoalPushAnim
+{
+    // total size: 0x54
+public:
+    zNPCGoalDogPounce(S32);
+};
+
+class zNPCGoalDogDash : public zNPCGoalLoopAnim
+{
+    // total size: 0x6C
+public:
+    zNPCGoalDogDash(S32);
 };
 
 xFactoryInst* GOALCreate_Standard(S32 who, RyzMemGrow* grow, void*);
