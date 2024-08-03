@@ -156,31 +156,21 @@ void ztaskbox::initiate()
     }
 }
 
-#if 0
-// Need to figure out how to set up the comparisons.
 void ztaskbox::succeed()
 {
-    state_enum state = this->state;
     if (state == STATE_BEGIN || state == STATE_DESCRIPTION || state == STATE_REMINDER)
     {
         set_state(STATE_SUCCESS);
     }
 }
 
-#endif
-
-#if 0
-// Need to figure out how to set up the comparisons. The setup should be identical to the succeed function.
 void ztaskbox::fail()
 {
-    state_enum state = this->state;
     if (state == STATE_BEGIN || state == STATE_DESCRIPTION || state == STATE_REMINDER)
     {
-        set_state(STATE_FAIL);
+        set_state(STATE_FAILURE);
     }
 }
-
-#endif
 
 #if 0
 // Why does the compiler add a random compare at the end????
@@ -238,14 +228,10 @@ void ztaskbox::on_talk_start()
 
 #endif
 
-#if 0
-// This one just doesn't feel like working.
 void ztaskbox::talk_callback::on_start()
 {
     this->task->on_talk_start();
 }
-
-#endif
 
 void ztaskbox::talk_callback::on_stop()
 {
