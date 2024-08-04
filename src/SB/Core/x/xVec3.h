@@ -36,6 +36,7 @@ struct xVec3
     F32 length2() const;
     xVec3& invert();
     F32 dot(const xVec3& c) const;
+    xVec3& normalize();
 };
 
 F32 xVec3Normalize(xVec3* o, const xVec3* v);

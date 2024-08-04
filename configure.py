@@ -493,7 +493,7 @@ config.libs = [
             Object(NonMatching, "SB/Core/x/xPtankPool.cpp"),
             Object(NonMatching, "SB/Core/gc/iTRC.cpp"),
             Object(NonMatching, "SB/Game/zNPCSupplement.cpp"),
-            Object(NonMatching, "SB/Game/zNPCGlyph.cpp"),
+            Object(NonMatching, "SB/Game/zNPCGlyph.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zNPCHazard.cpp"),
             Object(NonMatching, "SB/Game/zNPCGoalAmbient.cpp"),
             Object(NonMatching, "SB/Game/zNPCFXCinematic.cpp"),

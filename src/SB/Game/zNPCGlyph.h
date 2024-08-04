@@ -30,21 +30,39 @@ struct NPCGlyph
     xVec3 scl_glyph;
     F32 tmr_glyph;
 
-    void Timestep(F32 dt);
-    void RotAddDelta(xMat3x3* mat_rot);
-    void VelSet_Shiny();
-    void RotSet(xVec3* ang, S32 doautospin);
-    void ScaleSet(xVec3* scale);
-    void PosSet(xVec3* pos);
-    void Discard();
-    void Enable(S32 ison);
+    NPCGlyph()
+    {
+    }
+    NPCGlyph(en_npcglyph gtyp)
+    {
+        typ_glyph = gtyp;
+    }
+
     void Reset();
+    void Init(en_npcglyph gtyp, RpAtomic* model_data);
+    void Kill();
+    void Render();
+    void Enable(S32 ison);
+    void Discard();
+    void PosSet(xVec3* pos);
+    void VelSet(xVec3* vel);
+    void ScaleSet(xVec3* scale);
+    void RotSet(xVec3* ang, S32 doautospin);
+    void RotSet(xMat3x3* mat_rot, S32 doautospin);
+    void VelSet_Shiny();
+    void RotAddDelta(xMat3x3* mat_rot);
+    void Timestep(F32 dt);
 };
 
-void zNPCCommon_Glyphs_RenderAll(S32 doOpaqueStuff);
 void zNPCGlyph_Startup();
 void zNPCGlyph_Shutdown();
+void zNPCGlyph_ScenePrepare();
+void zNPCGlyph_SceneFinish();
 void zNPCGlyph_SceneReset();
 void zNPCGlyph_ScenePostInit();
+void zNPCGlyph_Timestep(F32 dt);
+S32 zNPCGlyph_TypeToList(en_npcglyph gtyp, NPCGlyph** glist);
+void zNPCCommon_Glyphs_RenderAll(S32 doOpaqueStuff);
+NPCGlyph* GLYF_Acquire(en_npcglyph gtyp);
 
 #endif

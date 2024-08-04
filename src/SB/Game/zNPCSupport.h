@@ -47,5 +47,6 @@ xVec3* NPCC_rightDir(xEnt* ent);
 xVec3* NPCC_faceDir(xEnt* ent);
 void NPCC_ang_toXZDir(F32 angle, xVec3* dir);
 F32 NPCC_aimVary(xVec3* dir_aim, xVec3* pos_src, xVec3* pos_tgt, F32 dst_vary, S32 flg_vary, xVec3* pos_aimPoint);
+F32 NPCC_ds2_toCam(const xVec3* pos_from, xVec3* delta);
 
 #endif

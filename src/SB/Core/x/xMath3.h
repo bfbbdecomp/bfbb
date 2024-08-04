@@ -81,6 +81,7 @@ extern xVec3 g_X3;
 extern xVec3 g_Y3;
 extern xVec3 g_Z3;
 extern xMat4x3 g_I3;
+extern xVec3 g_Onez;
 
 // For some reason, this function is copied across 29 object files...
 //   and each instance of this function has a LOCAL symbol (see symbols.txt)
