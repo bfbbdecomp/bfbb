@@ -27,8 +27,10 @@ struct _tagTRCPadInfo : _tagiTRCPadInfo
     _tagTRCState state;
 };
 
-_tagTRCPadInfo gTrcPad[4];
+_tagTRCPadInfo gTrcPad[];
+_tagTRCState gTrcDisk[];
 
+void xTRCInit();
 void xTRCPad(S32 pad_id, _tagTRCState state);
 void xTRCRender();
 void xTRCReset();
