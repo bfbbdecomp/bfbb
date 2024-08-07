@@ -3631,6 +3631,64 @@ S32 zEntPlayer_Damage(xBase* src, U32 damage, const xVec3* knockback)
     return true;
 }
 
+S32 zEntPlayer_MoveInfo()
+{
+    U32 flags = 0;
+    U32 userFlags1e = globals.player.ent.model->Anim->Single->State->UserFlags & 0x1e;
+    const char* animName = globals.player.ent.model->Anim->Single->State->Name;
+
+    if (userFlags1e == 0 || globals.player.ent.model->Anim->Single->State->UserFlags & 1)
+    {
+        flags |= 1;
+    }
+
+    if (userFlags1e == 4)
+    {
+        flags |= 2;
+    }
+
+    if ((userFlags1e == 6) || (userFlags1e == 8))
+    {
+        flags |= 4;
+    }
+
+    if (globals.player.IsBubbleSpinning || strcmp(animName,"Bspin01") == 0)
+    {
+        flags |= 0x20;
+    }
+
+    if (strcmp(animName,"BbashStart01") == 0)
+    {
+        flags |= 8;
+    }
+
+    if 
+	(
+        (strcmp(animName,"BbounceStrike01") == 0) ||
+        (strcmp(animName,"BbounceStart01") == 0) ||
+        (strcmp(animName,"BbounceAttack01") == 0))
+    {
+        flags |= 0x10;
+    }
+
+    if (userFlags1e == 0xe)
+    {
+        flags |= 0x10;
+    }
+
+    if (userFlags1e == 0xc)
+    {
+        flags |= 0x20;
+    }
+
+    if (userFlags1e == 2 || flags & 1 || flags & 2)
+    {
+        flags |= 0x40;
+    }
+
+    return flags;
+}
+
 void zEntPlayer_GiveHealth(S32 quantity)
 {
     if (quantity < 0 && -quantity > (S32)globals.player.Health)
