@@ -397,6 +397,8 @@ void zEntPlayer_LoadCheckPoint();
 void zEntPlayer_MinimalRender(zEnt* ent);
 U8 zEntPlayer_MinimalUpdate(xEnt* ent, xScene* sc, F32 dt, xVec3& drive_motion);
 
+S32 zEntPlayer_MoveInfo();
+
 void zEntPlayer_SNDPlay(_tagePlayerSnd player_snd, F32 delay);
 void zEntPlayer_SNDPlayStream(_tagePlayerStreamSnd player_snd);
 void zEntPlayer_SNDPlayStream(_tagePlayerStreamSnd player_snd, U32 flags);
