@@ -4759,6 +4759,228 @@ void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
     o->z = z;
 }
 
+xAnimTable* zSandy_AnimTable()
+{
+	xAnimTable *animTable = xAnimTableNew("Sandy", NULL, 0);
+	
+    xAnimTableNewState(animTable, "Idle01",               0x10, 0x0001, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "Idle01b",              0x10, 0x0001, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "Idle01c",              0x10, 0x0001, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "Idle02",               0x10, 0x0001, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "Idle04",               0x10, 0x0001, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "Idle05",               0x10, 0x0001, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "Inactive_sleep",       0x20, 0x0001, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "SlipIdle01",           0x10, 0x0001, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "Inactive01",           0x20, 0x0001, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "Inactive02",           0x20, 0x0001, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "Hit01",                0x20, 0x0001, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "Defeat01",             0x00, 0x0480, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "Defeat02",             0x00, 0x0480, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "Defeat03",             0x00, 0x0480, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "Defeat04",             0x00, 0x0480, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "DefeatGoo",            0x00, 0x0480, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "Walk01",               0x10, 0x0044, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "Run01",                0x10, 0x0046, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "RunOutOfWorld01",      0x10, 0x0046, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "SlipRun01",            0x10, 0x0046, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "JumpStart01",          0x20, 0x000A, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "JumpLift01",           0x20, 0x000A, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "JumpApex01",           0x20, 0x000A, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "Fall01",               0x10, 0x000A, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "Land01",               0x20, 0x0000, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "LandRun01",            0x20, 0x0006, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "BounceStart01",        0x20, 0x000A, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "BounceLift01",         0x10, 0x000A, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "BounceApex01",         0x20, 0x000A, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "DJumpApex01",          0x20, 0x000A, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "FallHigh01",           0x10, 0x000A, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "LandHigh01",           0x20, 0x0000, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "LCopterHeadUp01",      0x20, 0x000A, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "LCopter01",            0x10, 0x000A, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "LedgeGrab01",          0x20, 0x0080, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "TailSlide01",          0x10, 0x1840, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "TailSlideJumpStart01", 0x20, 0x100a, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "TailSlideJumpApex01",  0x20, 0x100a, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "TailSlideFall01",      0x10, 0x100a, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "TailSlideLand01",      0x20, 0x100a, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "TailSlideDJumpApex01", 0x20, 0x100a, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "Talk04",               0x10, 0x0001, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "Talk03",               0x10, 0x0001, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "Talk02",               0x10, 0x0001, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "Talk01",               0x10, 0x0001, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "LassoSwingCatch01",    0x20, 0x0000, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "LassoSwingCatch02",    0x20, 0x0000, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "LassoSwing",           0x10, 0x0040, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "LassoSwingRelease",    0x20, 0x0000, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "SpatulaGrab01",        0x20, 0x0080, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "JumpMelee01",          0x20, 0x000A, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "Melee01",              0x20, 0x000A, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "LassoWindup",          0x20, 0x0080, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "LassoThrow",           0x20, 0x0080, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "LassoFly",             0x10, 0x0080, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "LassoDestroy",         0x20, 0x0080, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "LassoAboutToDestroy",  0x10, 0x0080, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "LassoEnemyRope",       0x20, 0x0000, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "LassoEnemyFight",      0x10, 0x0000, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "LassoEnemyWin",        0x20, 0x0000, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "LassoEnemyLose",       0x20, 0x0000, 1.0, NULL, NULL, 0.0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+	
+    xAnimTableNewTransition(animTable, "LandRun01", "Run01", NULL, NULL, 0x10, 0, 0.0, 0.0, 0, 0, 0.1, NULL);
+	
+    xAnimTableNewTransition(animTable, "Idle01b Idle01c Idle02 Idle04 Idle05 Inactive_sleep Inactive01 Inactive02 Land01 LandHigh01", "Idle01", NULL, IdleCB, 0x10, 0, 0.0, 0.0, 0, 0, 0.1, NULL);
+    xAnimTableNewTransition(animTable, "Idle01 Idle01b Idle01c Idle02 Idle04 Idle05 SlipIdle01 Inactive01 Inactive02 Inactive_sleep Walk01 LandRun01 Run01 SlipRun01", "LassoSwingCatch01", LassoSwingGroundedBeginCheck, LassoSwingGroundedBeginCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "JumpStart01 JumpApex01 Fall01 DJumpStart01 DJumpApex01 TailSlideJumpStart01 TailSlideJumpApex01 TailSlideFall01 TailSlideDJumpApex01 LCopter01 LCopterHeadUp01 BounceStart01 BounceLift01 BounceApex01", "LassoSwingCatch01", LassoSwingBeginCheck, LassoSwingBeginCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+	
+    xAnimTableNewTransition(animTable, "LassoSwingCatch01", "LassoSwingCatch02", NULL, LassoSwingTossCB, 0x10, 0, 0.0, 0.0, 0, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "LassoSwingCatch02",        "LassoSwing", NULL,     LassoSwingCB, 0x10, 0, 0.0, 0.0, 0, 0, 0.15, NULL);
+	
+    xAnimTableNewTransition(animTable, "LassoSwingCatch01 LassoSwingCatch02 LassoSwing", "SlipIdle01",            IdleSlipCheck, LassoSwingGroundedCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "LassoSwingCatch01 LassoSwingCatch02 LassoSwing", "Idle01",                    IdleCheck, LassoSwingGroundedCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "LassoSwingCatch01 LassoSwingCatch02 LassoSwing", "Walk01",                    WalkCheck, LassoSwingGroundedCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "LassoSwingCatch01 LassoSwingCatch02 LassoSwing", "Run01",                   RunAnyCheck, LassoSwingGroundedCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "LassoSwingCatch01 LassoSwingCatch02 LassoSwing", "RunOutOfWorld01",  RunOutOfWorldCheck, LassoSwingGroundedCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "LassoSwingCatch01 LassoSwingCatch02 LassoSwing", "SlipRun01",              RunSlipCheck, LassoSwingGroundedCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "LassoSwingCatch01 LassoSwingCatch02 LassoSwing", "Fall01",       LassoSwingReleaseCheck,  LassoSwingReleaseCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+	
+    xAnimTableNewTransition(animTable, "LassoWindup", "LassoThrow", NULL,  LassoThrowCB, 0x10, 0, 0.0, 0.0, 0, 0, 0.0, NULL);
+    xAnimTableNewTransition(animTable, "LassoThrow",  "LassoFly",   NULL,    LassoFlyCB, 0x10, 0, 0.0, 0.0, 0, 0, 0.0, NULL);
+	
+    xAnimTableNewTransition(animTable, "LassoEnemyRope", "LassoEnemyFight", NULL, NULL, 0x10, 0, 0.0, 0.0, 0, 0, 0.0, NULL);
+									   
+    xAnimTableNewTransition(animTable, "Melee01 JumpMelee01", "SlipIdle01",           IdleSlipCheck, MeleeStopCB, 0x10, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Melee01 JumpMelee01", "Idle01",                   IdleCheck, MeleeStopCB, 0x10, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Melee01 JumpMelee01", "Walk01",                   WalkCheck, MeleeStopCB, 0x10, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Melee01 JumpMelee01", "Run01",                  RunAnyCheck, MeleeStopCB, 0x10, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Melee01 JumpMelee01", "RunOutOfWorld01", RunOutOfWorldCheck, MeleeStopCB, 0x10, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Melee01 JumpMelee01", "SlipRun01",             RunSlipCheck, MeleeStopCB, 0x10, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+	
+    xAnimTableNewTransition(animTable, "JumpMelee01", "Fall01", NULL, NULL, 0x10, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+									   
+    xAnimTableNewTransition(animTable, "Idle01 Idle01b Idle01c Idle02 Idle04 Idle05 Inactive_sleep SlipIdle01 Inactive01 Inactive02 Walk01 Run01 Land01 LandRun01 ", "SpatulaGrab01", SpatulaGrabCheck, SpatulaGrabCB, 0, 0, 0.0, 0.0, 5, 0, 0.15, NULL);
+									   
+    xAnimTableNewTransition(animTable, "Melee01", "SpatulaGrab01", SpatulaGrabCheck, SpatulaMeleeStopCB, 0x00, 0, 0.0, 0.0, 5, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "SpatulaGrab01",  "Idle01",             NULL,  SpatulaGrabStopCB, 0x10, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+									   
+    xAnimTableNewTransition(animTable, "LassoEnemyWin LassoEnemyLose LassoDestroy", "SlipIdle01",           IdleSlipCheck,  LassoStopCB, 0x10, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "LassoEnemyWin LassoEnemyLose LassoDestroy", "Idle01",                   IdleCheck,  LassoStopCB, 0x10, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "LassoEnemyWin LassoEnemyLose LassoDestroy", "Walk01",                   WalkCheck,  LassoStopCB, 0x10, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "LassoEnemyWin LassoEnemyLose LassoDestroy", "Run01",                  RunAnyCheck,  LassoStopCB, 0x10, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "LassoEnemyWin LassoEnemyLose LassoDestroy", "RunOutOfWorld01", RunOutOfWorldCheck,  LassoStopCB, 0x10, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "LassoEnemyWin LassoEnemyLose LassoDestroy", "SlipRun01",             RunSlipCheck,  LassoStopCB, 0x10, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+									   
+    xAnimTableNewTransition(animTable, "DJumpApex01", "Fall01",     NULL, NULL, 0x10, 0, 0.0, 0.0, 0, 0, 0.20, NULL);
+    xAnimTableNewTransition(animTable, "JumpApex01",  "Fall01",     NULL, NULL, 0x10, 0, 0.0, 0.0, 0, 0, 0.08,  NULL);
+    xAnimTableNewTransition(animTable, "JumpStart01", "JumpApex01", NULL, NULL, 0x10, 0, 0.0, 0.0, 0, 0, 0.08,  NULL);
+									   
+    xAnimTableNewTransition(animTable, "Idle01 SlipIdle01 Walk01 Run01 RunOutOfWorld01 SlipRun01 Land01 LandHigh01 LandRun01 JumpStart01 JumpApex01 DJumpApex01 Fall01", "BounceStart01", BounceCheck, BounceCB, 0, 0, 0.0, 0.0, 0x0f, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "LCopterHeadUp01 LCopter01", "BounceStart01",   BounceCheck, BounceStopLCopterCB, 0x00, 0, 0.0, 0.0, 0x0f, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "BounceStart01",              "BounceLift01",          NULL,                NULL, 0x10, 0, 0.0, 0.0, 0x00, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "BounceLift01",               "BounceApex01", JumpApexCheck,                NULL, 0x00, 0, 0.0, 0.0, 0x01, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "BounceApex01",                     "Fall01",          NULL,                NULL, 0x10, 0, 0.0, 0.0, 0x00, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Idle01 Idle01b Idle01c Idle02 Idle04 Idle05 SlipIdle01 Inactive01 Inactive02 Inactive_sleep Walk01 LandRun01 Run01 SlipRun01", "LassoWindup", LassoStartCheck, LassoStartCB, 0, 0, 0.0, 0.0, 2, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "JumpStart01 JumpLift01 JumpApex01 DJumpApex01 Fall01 BounceStart01 BounceLift01 BounceApex01", "JumpMelee01", MeleeCheck, JumpMeleeCB, 0, 0, 0.0, 0.0, 2, 0, 0.06, NULL);
+    xAnimTableNewTransition(animTable, "DJumpApex01", "JumpMelee01", MeleeCheck, JumpMeleeCB, 0, 0, 0.0, 0.0,2, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Idle01 Idle01b Idle01c Idle02 Idle04 Idle05 SlipIdle01 Inactive01 Inactive02 Inactive_sleep Walk01 LandRun01 Land01 Run01 SlipRun01", "Melee01",           MeleeCheck,     MeleeCB, 0, 0, 0.0, 0.0, 2, 0, 0.00, NULL);
+    xAnimTableNewTransition(animTable, "LassoWindup LassoThrow LassoFly LassoDestroy LassoAboutToDestroy LassoEnemyRope LassoEnemyFight LassoEnemyWin LassoEnemyLose",         "Idle01", LassoLostTargetCheck, LassoStopCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    
+	xAnimTableNewTransition(animTable, "LassoFly", "LassoDestroy",                 LassoStraightToDestroyCheck, LassoDestroyCB, 0, 0, 0.0, 0.0, 0, 0, 0.08, NULL);
+    xAnimTableNewTransition(animTable, "LassoDestroy", "LassoDestroy",                        LassoReyankCheck,    LassoYankCB, 0, 0, 0.0, 0.0, 0, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "LassoFly", "LassoAboutToDestroy",             LassoAboutToDestroyCheck, LassoDestroyCB, 0, 0, 0.0, 0.0, 0, 0, 0.08, NULL);
+    xAnimTableNewTransition(animTable, "LassoAboutToDestroy", "LassoDestroy",                LassoDestroyCheck,    LassoYankCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "LassoAboutToDestroy", "SlipIdle01",             LassoFailIdleSlipCheck,    LassoStopCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "LassoAboutToDestroy", "Idle01",                     LassoFailIdleCheck,    LassoStopCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "LassoAboutToDestroy", "Walk01",                     LassoFailWalkCheck,    LassoStopCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "LassoAboutToDestroy", "Run01",                       LassoFailRunCheck,    LassoStopCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "LassoAboutToDestroy", "RunOutOfWorld01",   LassoFailRunOutOfWorldCheck,    LassoStopCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "LassoAboutToDestroy", "SlipRun01",               LassoFailRunSlipCheck,    LassoStopCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+									   
+    xAnimTableNewTransition(animTable, "LCopter01 LCopterHeadUp01", "SlipIdle01",           IdleSlipCheck, StopLCopterCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "LCopter01 LCopterHeadUp01", "Idle01",                   IdleCheck, StopLCopterCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "LCopter01 LCopterHeadUp01", "Walk01",                   WalkCheck, StopLCopterCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "LCopter01 LCopterHeadUp01", "Run01",                  RunAnyCheck, StopLCopterCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "LCopter01 LCopterHeadUp01", "RunOutOfWorld01", RunOutOfWorldCheck, StopLCopterCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "LCopter01 LCopterHeadUp01", "SlipRun01",             RunSlipCheck, StopLCopterCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+									   
+    xAnimTableNewTransition(animTable, "Walk01 Run01 RunOutOfWorld01 LandRun01 Idle01 SlipRun01", "SlipIdle01", IdleSlipCheck, IdleCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Walk01 Run01 RunOutOfWorld01 LandRun01 SlipIdle01 SlipRun01", "Idle01", IdleCheck,     IdleCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+									   
+    xAnimTableNewTransition(animTable, "Idle01 Idle01b Idle01c Idle02 Idle04 Idle05 SlipIdle01 Inactive01 Inactive02 Inactive_sleep Run01 RunOutOfWorld01 SlipRun01 LandRun01 Land01 LandHigh01",   "Walk01",          WalkCheck, NULL, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Idle01 Idle01b Idle01c Idle02 Idle04 Idle05 SlipIdle01 Inactive01 Inactive02 Inactive_sleep RunOutOfWorld01 SlipRun01 Walk01 Land01 LandHigh01",             "Run01",        RunAnyCheck, NULL, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Idle01 Idle01b Idle01c Idle02 Idle04 Idle05 SlipIdle01 Inactive01 Inactive02 Inactive_sleep Run01 SlipRun01 Walk01 Land01 LandHigh01",             "RunOutOfWorld01", RunOutOfWorldCheck, NULL, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Idle01 Idle01b Idle01c Idle02 Idle04 Idle05 SlipIdle01 Inactive01 Inactive02 Inactive_sleep Run01 RunOutOfWorld01 Walk01 Land01 LandHigh01",             "SlipRun01",       RunSlipCheck, NULL, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+									   
+    xAnimTableNewTransition(animTable, "Idle01 Idle01b Idle01c Idle02 Idle04 Idle05 SlipIdle01 Inactive01 Inactive02 Inactive_sleep Walk01 LandRun01 Run01 RunOutOfWorld01 SlipRun01 Land01 LandHigh01", "JumpStart01", JumpCheck, JumpCB, 0, 0, 0.0, 0.0, 0x0A, 0, 0.0, NULL);
+									   
+    xAnimTableNewTransition(animTable, "JumpStart01", "JumpApex01", JumpApexCheck, NULL, 0, 0, 0.0, 0.0, 1, 0, 0.1, NULL);
+    xAnimTableNewTransition(animTable, "JumpStart01 JumpApex01 Fall01 BounceStart01 BounceLift01 BounceApex01", "DJumpApex01", DblJumpCheck, DblJumpCB, 0, 0, 0.0, 0.0, 0x0A, 0, 0.1, NULL);
+    xAnimTableNewTransition(animTable, "LCopter01 LCopterHeadUp01", "Fall01", FallCheck, StopLCopterCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Idle01 Idle01b Idle01c Idle02 Idle04 Idle05 SlipIdle01 Inactive01 Inactive02 Inactive_sleep Walk01 LandRun01 RunOutOfWorld01 Run01 SlipRun01 Land01 LandHigh01", "Fall01", FallCheck, NULL, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    
+	xAnimTableNewTransition(animTable, "JumpApex01 DJumpApex01 Fall01", "Land01",             LandCheck, SandyLandCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "JumpApex01 DJumpApex01 Fall01", "SlipIdle01", LandSlipIdleCheck, SandyLandCB, 0, 0, 0.0, 0.0, 2, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "JumpApex01 DJumpApex01 Fall01", "LandRun01",      LandFastCheck, SandyLandCB, 0, 0, 0.0, 0.0, 3, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "JumpApex01 DJumpApex01 Fall01", "Walk01",         LandWalkCheck, SandyLandCB, 0, 0, 0.0, 0.0, 3, 0, 0.15, NULL);
+	xAnimTableNewTransition(animTable, "JumpApex01 DJumpApex01 Fall01", "SlipRun01",   LandSlipRunCheck, SandyLandCB, 0, 0, 0.0, 0.0, 4, 0, 0.15, NULL);
+	
+    xAnimTableNewTransition(animTable, "Fall01 DJumpApex01 TailSlideFall01 TailSlideDJumpApex01", "LCopterHeadUp01", LCopterCheck, LCopterCB, 0, 0, 0.0, 0.0, 8, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "LCopterHeadUp01", "LCopter01", NULL, NULL, 0x10, 0, 0.0, 0.0, 0, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "JumpStart01 JumpLift01 JumpApex01 Fall01 DJumpApex01 TailSlideJumpStart01 TailSlideJumpApex01 TailSlideFall01 TailSlideDJumpApex01 LCopter01 LCopterHeadUp01", "LedgeGrab01", LedgeGrabCheck, LedgeGrabCB, 0, 0, 0.0, 0.0, 0x0B, 0, 0.1, NULL);
+    xAnimTableNewTransition(animTable, "LedgeGrab01", "Idle01", NULL,LedgeFinishCB, 0x10, 0, 0.0, 0.0, 0, 0, 0.1, NULL);
+    xAnimTableNewTransition(animTable, "Idle01 Idle01b Idle01c Idle02 Idle04 Idle05 SlipIdle01 Inactive01 Inactive02 Inactive_sleep Walk01 LandRun01 Run01 RunOutOfWorld01 SlipRun01 JumpLift01 JumpApex01 Fall01 Land01 DJumpApex01 FallHigh01 LandHigh01 LCopter01 LCopterHeadUp01", "TailSlide01", SlideTrackCheck, SlideTrackCB, 0, 0, 0.0, 0.0, 9, 0, 0.15, NULL);
+    
+	xAnimTableNewTransition(animTable, "TailSlide01",                                                           "Idle01",  NoslideTrackCheck, NoslideTrackCB, 0x00, 0, 0.0, 0.0, 0x09, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "TailSlide01",                                                   "TailSlideFall01", TrackFallCheck,       TrackFallCB, 0x00, 0, 0.0, 0.0, 0x09, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "TailSlideDJumpApex01",                                          "TailSlideFall01", NULL,                        NULL, 0x10, 0, 0.0, 0.0, 0x00, 0, 0.20, NULL);
+    xAnimTableNewTransition(animTable, "TailSlideJumpApex01",                                           "TailSlideFall01", NULL,                        NULL, 0x10, 0, 0.0, 0.0, 0x00, 0, 0.08, NULL);
+    xAnimTableNewTransition(animTable, "TailSlideLand01",                                                   "TailSlide01", NULL,                        NULL, 0x10, 0, 0.0, 0.0, 0x00, 0, 0.08, NULL);
+    xAnimTableNewTransition(animTable, "TailSlideJumpStart01",                                      "TailSlideJumpApex01", NULL,                        NULL, 0x10, 0, 0.0, 0.0, 0x00, 0, 0.08, NULL);
+    xAnimTableNewTransition(animTable, "TailSlide01 TailSlideLand01",                              "TailSlideJumpStart01", JumpCheck,                 JumpCB, 0x00, 0, 0.0, 0.0, 0x0A, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "TailSlideJumpStart01 TailSlideJumpApex01 TailSlideFall01", "TailSlideJumpStart01", TrackPrefallJumpCheck,     JumpCB, 0x00, 0, 0.0, 0.0, 0x0F, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "TailSlideJumpStart01",                                      "TailSlideJumpApex01", JumpApexCheck,               NULL, 0x00, 0, 0.0, 0.0, 0x01, 0, 0.10, NULL);
+    xAnimTableNewTransition(animTable, "TailSlideJumpStart01 TailSlideJumpApex01 TailSlideFall01", "TailSlideDJumpApex01", DblJumpCheck,           DblJumpCB, 0x00, 0, 0.0, 0.0, 0x0A, 0, 0.10, NULL);
+									   
+    xAnimTableNewTransition(animTable, "TailSlideJumpStart01 TailSlideJumpApex01 TailSlideDJumpApex01 TailSlideFall01", "TailSlideLand01",      LandTrackCheck,   SlideTrackCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "TailSlideJumpStart01 TailSlideJumpApex01 TailSlideDJumpApex01 TailSlideFall01", "Land01",             LandNoTrackCheck, NoslideTrackCB, 0, 0, 0.0, 0.0, 1, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "TailSlideJumpStart01 TailSlideJumpApex01 TailSlideDJumpApex01 TailSlideFall01", "LandRun01",      LandNoTrackFastCheck, NoslideTrackCB, 0, 0, 0.0, 0.0, 3, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "TailSlideJumpStart01 TailSlideJumpApex01 TailSlideDJumpApex01 TailSlideFall01", "Walk01",         LandNoTrackWalkCheck, NoslideTrackCB, 0, 0, 0.0, 0.0, 3, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "TailSlideJumpStart01 TailSlideJumpApex01 TailSlideDJumpApex01 TailSlideFall01", "SlipIdle01", LandNoTrackSlipIdleCheck, NoslideTrackCB, 0, 0, 0.0, 0.0, 4, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "TailSlideJumpStart01 TailSlideJumpApex01 TailSlideDJumpApex01 TailSlideFall01", "SlipRun01",   LandNoTrackSlipRunCheck, NoslideTrackCB, 0, 0, 0.0, 0.0, 4, 0, 0.15, NULL);
+									   
+	xAnimTableNewTransition(animTable, "Idle01 Idle01b Idle01c Idle02 Idle04 Idle05 SlipIdle01 Inactive01 Inactive02 Inactive_sleep Walk01 LandRun01 Run01 RunOutOfWorld01 SlipRun01 JumpLift01 JumpApex01 Fall01 Land01 DJumpApex01 FallHigh01 LandHigh01 LCopter01 LCopterHeadUp01 TailSlide01 TailSlideJumpStart01 TailSlideJumpApex01 TailSlideDJumpApex01 TailSlideFall01 TailSlideLand01", "Defeat01", Defeated01Check, DefeatedCB, 0, 4, 0.0, 0.0, 0x09, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Idle01 Idle01b Idle01c Idle02 Idle04 Idle05 SlipIdle01 Inactive01 Inactive02 Inactive_sleep Walk01 LandRun01 Run01 RunOutOfWorld01 SlipRun01 JumpLift01 JumpApex01 Fall01 Land01 DJumpApex01 FallHigh01 LandHigh01 LCopter01 LCopterHeadUp01 TailSlide01 TailSlideJumpStart01 TailSlideJumpApex01 TailSlideDJumpApex01 TailSlideFall01 TailSlideLand01", "Defeat02", Defeated02Check, DefeatedCB, 0, 4, 0.0, 0.0, 0x09, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Idle01 Idle01b Idle01c Idle02 Idle04 Idle05 SlipIdle01 Inactive01 Inactive02 Inactive_sleep Walk01 LandRun01 Run01 RunOutOfWorld01 SlipRun01 JumpLift01 JumpApex01 Fall01 Land01 DJumpApex01 FallHigh01 LandHigh01 LCopter01 LCopterHeadUp01 TailSlide01 TailSlideJumpStart01 TailSlideJumpApex01 TailSlideDJumpApex01 TailSlideFall01 TailSlideLand01", "Defeat03", Defeated03Check, DefeatedCB, 0, 4, 0.0, 0.0, 0x09, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Idle01 Idle01b Idle01c Idle02 Idle04 Idle05 SlipIdle01 Inactive01 Inactive02 Inactive_sleep Walk01 LandRun01 Run01 RunOutOfWorld01 SlipRun01 JumpLift01 JumpApex01 Fall01 Land01 DJumpApex01 FallHigh01 LandHigh01 LCopter01 LCopterHeadUp01 TailSlide01 TailSlideJumpStart01 TailSlideJumpApex01 TailSlideDJumpApex01 TailSlideFall01 TailSlideLand01", "Defeat04", Defeated04Check, DefeatedCB, 0, 4, 0.0, 0.0, 0x09, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Idle01 Idle01b Idle01c Idle02 Idle04 Idle05 SlipIdle01 Inactive01 Inactive02 Inactive_sleep Walk01 LandRun01 Run01 RunOutOfWorld01 SlipRun01 JumpLift01 JumpApex01 Fall01 Land01 DJumpApex01 FallHigh01 LandHigh01 LCopter01 LCopterHeadUp01 TailSlide01 TailSlideJumpStart01 TailSlideJumpApex01 TailSlideDJumpApex01 TailSlideFall01 TailSlideLand01", "DefeatGoo",       GooCheck, GooDeathCB, 0, 0, 0.0, 0.0, 0x1e, 0, 0.15, NULL);
+									   
+	xAnimTableNewTransition(animTable, "Idle01 Idle01b Idle01c Idle02 Idle04 Idle05 SlipIdle01 Inactive_sleep Inactive01 Inactive02 ", "Talk01", TalkCheck, NULL, 0, 0, 0.0, 0.0, 0x14, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Idle01 Idle01b Idle01c Idle02 Idle04 Idle05 SlipIdle01 Inactive_sleep Inactive01 Inactive02 ", "Talk02", TalkCheck, NULL, 0, 1, 0.0, 0.0, 0x14, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Idle01 Idle01b Idle01c Idle02 Idle04 Idle05 SlipIdle01 Inactive_sleep Inactive01 Inactive02 ", "Talk03", TalkCheck, NULL, 0, 2, 0.0, 0.0, 0x14, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Idle01 Idle01b Idle01c Idle02 Idle04 Idle05 SlipIdle01 Inactive_sleep Inactive01 Inactive02 ", "Talk04", TalkCheck, NULL, 0, 3, 0.0, 0.0, 0x14, 0, 0.15, NULL);
+									   
+	xAnimTableNewTransition(animTable, "Talk01",     "Idle01",                TalkDoneCheck,      IdleCB, 0x00, 0x00000, 0.0, 0.0, 0x14, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Talk02",     "Idle01",                TalkDoneCheck,      IdleCB, 0x00, 0x00001, 0.0, 0.0, 0x14, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Talk03",     "Idle01",                TalkDoneCheck,      IdleCB, 0x00, 0x00002, 0.0, 0.0, 0x14, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Talk04",     "Idle01",                TalkDoneCheck,      IdleCB, 0x00, 0x00003, 0.0, 0.0, 0x14, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Idle01",     "Idle01b",               InactiveCheck,  InactiveCB, 0x00, 0x80000, 0.0, 0.0, 0x01, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Idle01",     "Idle01c",               InactiveCheck,  InactiveCB, 0x00, 0x80001, 0.0, 0.0, 0x01, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Idle01",     "Idle02",                InactiveCheck,  InactiveCB, 0x00, 0x80002, 0.0, 0.0, 0x01, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Idle01",     "Idle04",                InactiveCheck,  InactiveCB, 0x00, 0x80003, 0.0, 0.0, 0x01, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Idle01",     "Idle05",                InactiveCheck,  InactiveCB, 0x00, 0x80004, 0.0, 0.0, 0x01, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Idle01",     "Inactive_sleep",        InactiveCheck,  InactiveCB, 0x00, 0x80005, 0.0, 0.0, 0x01, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Idle01",     "Inactive01",            InactiveCheck,  InactiveCB, 0x00, 0x80006, 0.0, 0.0, 0x01, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Idle01",     "Inactive02",            InactiveCheck,  InactiveCB, 0x00, 0x80007, 0.0, 0.0, 0x01, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Idle01b",    "Idle01",        InactiveFinishedCheck,      IdleCB, 0x00, 0x00000, 0.0, 0.0, 0x00, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Idle01c",    "Idle01",        InactiveFinishedCheck,      IdleCB, 0x00, 0x00000, 0.0, 0.0, 0x00, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Idle02",     "Idle01",        InactiveFinishedCheck,      IdleCB, 0x00, 0x00000, 0.0, 0.0, 0x00, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Idle04",     "Idle01",        InactiveFinishedCheck,      IdleCB, 0x00, 0x00000, 0.0, 0.0, 0x00, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Idle05",     "Idle01",        InactiveFinishedCheck,      IdleCB, 0x00, 0x00000, 0.0, 0.0, 0x00, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Inactive01", "Idle01",                         NULL,      IdleCB, 0x10, 0x00000, 0.0, 0.0, 0x00, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Inactive02", "Idle01",                         NULL,      IdleCB, 0x10, 0x00000, 0.0, 0.0, 0x00, 0, 0.15, NULL);
+    xAnimTableNewTransition(animTable, "Hit01",      "Idle01",                         NULL,      IdleCB, 0x10, 0x00000, 0.0, 0.0, 0x00, 0, 0.15, NULL);
+	
+	return animTable;
+}
+
 xAnimTable* zSpongeBobTongue_AnimTable()
 {
     xAnimTable* animTable = xAnimTableNew("SBTongue", NULL, 0);
