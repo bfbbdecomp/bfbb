@@ -377,6 +377,11 @@ void zEntPlayer_Load(xEnt*, xSerial*);
 S32 zEntPlayer_Damage(xBase* src, U32 damage);
 S32 zEntPlayer_Damage(xBase* src, U32 damage, const xVec3* knockback);
 
+xAnimTable* zSandy_AnimTable();
+xAnimTable* zPatrick_AnimTable();
+xAnimTable* zEntPlayer_AnimTable();
+xAnimTable* zSpongeBobTongue_AnimTable();
+
 void zEntPlayerExit(xEnt*);
 void zEntPlayerPreReset();
 void zEntPlayerReset(xEnt* ent);
