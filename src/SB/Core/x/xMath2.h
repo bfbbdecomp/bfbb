@@ -41,9 +41,13 @@ struct xVec2
     }
     xVec2& assign(F32 x, F32 y);
     F32 length() const;
+    F32 normal() const;
+    xVec2& normalize();
+    F32 dot(const xVec2&) const;
 
     xVec2& operator=(F32);
     xVec2 operator*(F32) const;
+    xVec2 operator/=(F32);
     xVec2& operator+=(const xVec2&);
     xVec2& operator*=(F32);
 };
