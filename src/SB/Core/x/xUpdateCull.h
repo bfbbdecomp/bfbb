@@ -54,5 +54,6 @@ xUpdateCullMgr* xUpdateCull_Init(void** ent, U32 entCount, xGroup** group, U32 g
 void xUpdateCull_Update(xUpdateCullMgr* m, U32 percent_update);
 void xUpdateCull_SetCB(xUpdateCullMgr* m, void* entity, xUpdateCullEntCallback cb, void* cbdata);
 void xUpdateCull_Reset(xUpdateCullMgr* m);
+void xUpdateCull_MakeActive(xUpdateCullMgr* m, xUpdateCullEnt* e);
 
 #endif
