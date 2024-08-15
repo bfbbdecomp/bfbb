@@ -87,6 +87,104 @@ void xCollideInit(xScene* sc)
     iCollideInit(sc);
 }
 
+U32 xBoxHitsSphere(const xBox* a, const xSphere* b, xCollis* coll)
+{
+    U32 uVar1;
+
+    xIsect isx;
+
+    iBoxIsectSphere(a, b, &isx);
+
+    if (!(isx.penned <= 0.0f))
+    {
+        uVar1 = 0;
+        coll->flags &= 0xfffffffe;
+    }
+    else
+    {
+        if (isx.contained <= 0.0f)
+        {
+            coll->flags |= 0x10;
+        }
+        coll->dist = isx.dist;
+        if (coll->flags & 0x0400)
+        {
+            xVec3Copy(&coll->tohit, &isx.norm);
+        }
+        if ((coll->flags & 0x800) != 0)
+        {
+            if (isx.dist == 0.0f)
+            {
+                xVec3Copy(&coll->depen, &g_O3);
+            }
+            else
+            {
+                xVec3SMul(&coll->depen, &isx.norm, isx.penned / isx.dist);
+            }
+        }
+        if ((coll->flags & 0x1200) != 0)
+        {
+            xVec3Normalize(&coll->hdng, &isx.norm);
+        }
+        if ((coll->flags & 0x200) != 0)
+        {
+            xVec3Inv(&coll->norm, &coll->hdng);
+        }
+        uVar1 = 1;
+        coll->flags |= 1;
+    }
+    return uVar1;
+}
+
+U32 xSphereHitsBox(const xSphere* a, const xBox* b, xCollis* coll)
+{
+    U32 uVar1;
+
+    xIsect isx;
+
+    iBoxIsectSphere(b, a, &isx);
+
+    if (!(isx.penned <= 0.0f))
+    {
+        uVar1 = 0;
+        coll->flags &= 0xfffffffe;
+    }
+    else
+    {
+        if (isx.contained <= 0.0f)
+        {
+            coll->flags |= 0x10;
+        }
+        coll->dist = isx.dist;
+        if (coll->flags & 0x0400)
+        {
+            xVec3Copy(&coll->tohit, &isx.norm);
+        }
+        if ((coll->flags & 0x800) != 0)
+        {
+            if (isx.dist == 0.0f)
+            {
+                xVec3Copy(&coll->depen, &g_O3);
+            }
+            else
+            {
+                xVec3SMul(&coll->depen, &isx.norm, isx.penned / isx.dist);
+            }
+        }
+        if ((coll->flags & 0x1200) != 0)
+        {
+            xVec3Normalize(&coll->hdng, &isx.norm);
+        }
+        if ((coll->flags & 0x200) != 0)
+        {
+            xVec3Inv(&coll->norm, &coll->hdng);
+        }
+        uVar1 = 1;
+        coll->flags |= 1;
+    }
+    return uVar1;
+}
+
 U32 xSphereHitsSphere(const xSphere* a, const xSphere* b, xCollis* coll)
 {
     U32 uVar1;
