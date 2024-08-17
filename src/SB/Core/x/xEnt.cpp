@@ -35,9 +35,6 @@ extern F32 _1187; // 0.0017683882f
 extern F32 _1229; // 10.0f
 extern F32 _1300; // 0.69999999f
 extern F32 _1435; // 0.5f
-extern F32 _1436; // 0.63f
-extern F32 _1437; // 30.0f
-extern F32 _1438; // 0.0000099999997f
 extern F32 _1541; // 0.78539819f
 extern F64 _1593; // 4.503601774854144e15f
 extern F32 _1724; // 0.167f
@@ -46,8 +43,6 @@ extern F32 _1818; // 1.0471976f
 extern F32 _1819; // 0.001f
 extern F32 _1820; // 0.64999998f
 extern F32 _1821; // 1.5f
-
-extern xVec3 _1405_0; // { 0, 0, 0 }
 
 extern const char _stringBase0_4[];
 
@@ -231,76 +226,68 @@ static void hack_receive_shadow(xEnt* ent)
 }
 #endif
 
-#ifndef NON_MATCHING
-void xEntAddShadowRecFlag(xEnt* ent);
-#else
 static void xEntAddShadowRecFlag(xEnt* ent)
 {
-    // non-matching: asm jumptable needs to be removed.
-    // also some other things are wrong, not sure why
-
-    switch (ent->baseType)
+    switch (ent->baseType - 6)
     {
-    case eBaseTypeTrigger:
-    case eBaseTypeVillain:
-    case eBaseTypePlayer:
-    case eBaseTypePickup:
-    case eBaseTypePlatform:
-    case eBaseTypeCamera:
-    case eBaseTypeDoor:
-    case eBaseTypeSavePoint:
-    case eBaseTypeItem:
-    case eBaseTypeStatic:
-    case eBaseTypeDynamic:
-    case eBaseTypeMovePoint:
-    case eBaseTypeTimer:
-    case eBaseTypeBubble:
-    case eBaseTypePortal:
-    case eBaseTypeGroup:
-    case eBaseTypeSFX:
-    case eBaseTypeFFX:
-    case eBaseTypeCounter:
-    case eBaseTypeHangable:
-    case eBaseTypeButton:
-    case eBaseTypeProjectile:
-    case eBaseTypeSurface:
-    case eBaseTypeDestructObj:
-    case eBaseTypeGust:
-    case eBaseTypeVolume:
-    case eBaseTypeDispatcher:
-    case eBaseTypeCond:
-    case eBaseTypeUI:
-    case eBaseTypeUIFont:
-    case eBaseTypeProjectileType:
-    case eBaseTypeLobMaster:
-    case eBaseTypeFog:
-    case eBaseTypeParticleEmitter:
-    case eBaseTypeParticleSystem:
-    case eBaseTypeCutsceneMgr:
-    default:
-    {
-        ent->baseFlags &= ~0x10;
-        break;
-    }
-    case eBaseTypeUnknown:
-    case eBaseTypeEnv:
-    case eBaseTypePendulum:
-    case eBaseTypeVFX:
-    case eBaseTypeLight:
-    case eBaseTypeEGenerator:
-    {
-        if (ent->model->PipeFlags & 0x0000ff00)
+        case eBaseTypeUnknown:
+        case eBaseTypeEnv:
+        case eBaseTypePendulum:
+        case eBaseTypeVFX:
+        case eBaseTypeLight:
+        case eBaseTypeEGenerator:
         {
-            ent->baseFlags &= ~0x10;
+            if (ent->model->PipeFlags & 0x0000ff00)
+            {
+                ent->baseFlags &= 0xffef;
+            }
+            break;
         }
-
-        break;
-    }
+        case eBaseTypeTrigger:
+        case eBaseTypeVillain:
+        case eBaseTypePlayer:
+        case eBaseTypePickup:
+        case eBaseTypePlatform:
+        case eBaseTypeCamera:
+        case eBaseTypeDoor:
+        case eBaseTypeSavePoint:
+        case eBaseTypeItem:
+        case eBaseTypeStatic:
+        case eBaseTypeDynamic:
+        case eBaseTypeMovePoint:
+        case eBaseTypeTimer:
+        case eBaseTypeBubble:
+        case eBaseTypePortal:
+        case eBaseTypeGroup:
+        case eBaseTypeSFX:
+        case eBaseTypeFFX:
+        case eBaseTypeCounter:
+        case eBaseTypeHangable:
+        case eBaseTypeButton:
+        case eBaseTypeProjectile:
+        case eBaseTypeSurface:
+        case eBaseTypeDestructObj:
+        case eBaseTypeGust:
+        case eBaseTypeVolume:
+        case eBaseTypeDispatcher:
+        case eBaseTypeCond:
+        case eBaseTypeUI:
+        case eBaseTypeUIFont:
+        case eBaseTypeProjectileType:
+        case eBaseTypeLobMaster:
+        case eBaseTypeFog:
+        case eBaseTypeParticleEmitter:
+        case eBaseTypeParticleSystem:
+        case eBaseTypeCutsceneMgr:
+        default:
+        {
+            ent->baseFlags &= 0xffef;
+            break;
+        }
     }
 
     hack_receive_shadow(ent);
 }
-#endif
 
 #ifdef NON_MATCHING
 void xEntInit(xEnt* ent, xEntAsset* asset)
@@ -1237,17 +1224,7 @@ namespace
 
 void xEntApplyPhysics(xEnt* ent, xScene* sc, F32 dt)
 {
-    // i'm surprised this function matches lol
-    // this beginning part eventually needs to be replaced with:
-    // xVec3 dposvel = { 0, 0, 0 };
-
-    xVec3 dposvel;
-    U32* temp1 = (U32*)&dposvel;
-    U32* temp2 = (U32*)&_1405_0;
-
-    temp1[0] = temp2[0];
-    temp1[1] = temp2[1];
-    temp1[2] = temp2[2];
+    xVec3 dposvel = { 0, 0, 0 };
 
     if (ent->pflags & 0x4 && sc->flags & 0x1)
     {
@@ -1256,32 +1233,32 @@ void xEntApplyPhysics(xEnt* ent, xScene* sc, F32 dt)
 
     if (ent->pflags & 0x10 && sc->flags & 0x2)
     {
-        F32 tfric = -(sc->friction * dt - _780);
+        F32 tfric = -(sc->friction * dt - 1.0f);
         xVec3SMulBy(&ent->frame->vel, tfric);
     }
 
     if (ent->pflags & 0x8 && sc->flags & 0x4)
     {
-        F32 tdrag = -(sc->drag * dt - _780);
+        F32 tdrag = -(sc->drag * dt - 1.0f);
         xVec3SMulBy(&ent->frame->vel, tdrag);
     }
 
     xVec3Add(&dposvel, &ent->frame->vel, &ent->frame->oldvel);
-    xVec3SMulBy(&dposvel, _1435 * dt);
+    xVec3SMulBy(&dposvel, 0.5f * dt);
 
-    if (dposvel.y < _942)
+    if (dposvel.y < 0.0f)
     {
         F32 dposXZ = xsqrt(SQR(dposvel.x) + SQR(dposvel.z));
-        F32 scaleXZ = (dposXZ > _1438) ? ((_1436 * (_1437 * dt)) / dposXZ) : _942;
-        F32 scaleY = (_1436 * (_1437 * dt)) / (F32)iabs(dposvel.y);
+        F32 scaleXZ = (dposXZ > 0.00001f) ? ((0.63f * (30.0f * dt)) / dposXZ) : 0.0f;
+        F32 scaleY = (0.63f * (30.0f * dt)) / (F32)iabs(dposvel.y);
 
-        if (scaleXZ < _780)
+        if (scaleXZ < 1.0f)
         {
             dposvel.x *= scaleXZ;
             dposvel.z *= scaleXZ;
         }
 
-        if (scaleY < *(const F32*)&_780) // this forces _780 to be reloaded
+        if (scaleY < 1.0f)
         {
             dposvel.y *= scaleY;
         }
@@ -1290,7 +1267,6 @@ void xEntApplyPhysics(xEnt* ent, xScene* sc, F32 dt)
     xEntAddToPos(ent, &dposvel);
 }
 
-#ifdef NON_MATCHING
 void xEntCollide(xEnt* ent, xScene* sc, F32 dt)
 {
     if (ent->model)
@@ -1327,14 +1303,14 @@ void xEntCollide(xEnt* ent, xScene* sc, F32 dt)
             }
             else
             {
-                h_dot_n = _1300;
+                h_dot_n = 0.7f;
             }
 
             if (ent->pflags & 0x80 && coll->flags & 0x1)
             {
                 F32 depen_len = xVec3Dot(&coll->hdng, &coll->norm);
 
-                if (depen_len > _942)
+                if (depen_len > 0.0f)
                 {
                     xVec3Inv(&coll->norm, &coll->norm);
                     depen_len = -depen_len;
@@ -1342,16 +1318,15 @@ void xEntCollide(xEnt* ent, xScene* sc, F32 dt)
 
                 depen_len = depen_len * coll->dist + h_dot_n;
 
-                if (depen_len < _942 || depen_len > h_dot_n)
+                if (depen_len < 0.0f || depen_len > h_dot_n)
                 {
-                    // non-matching: _942 is not reloaded
-                    depen_len = CLAMP(depen_len, _942, h_dot_n);
+                    depen_len = CLAMP(depen_len, 0.0f, h_dot_n);
                 }
 
                 xVec3SMul(&coll->depen, &coll->norm, depen_len);
             }
 
-            if (ent->frame->vel.y <= _942)
+            if (ent->frame->vel.y <= 0.0f)
             {
                 xEntCollideFloor(ent, sc, dt);
             }
@@ -1365,7 +1340,6 @@ void xEntCollide(xEnt* ent, xScene* sc, F32 dt)
         }
     }
 }
-#endif
 
 void xEntBeginCollide(xEnt* ent, xScene*, F32)
 {
@@ -1444,10 +1418,19 @@ static void xEntCollCheckOneGrid(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xSce
         cell = xGridIterNextCell(it);
     }
 
-    // non-matching: int to float conversion
+    // non-matching: float scheduling
 
-    F32 clcenterx = (_1435 * grid->csizex) + (grid->csizex * px + grid->minx);
-    F32 clcenterz = (_1435 * grid->csizez) + (grid->csizez * pz + grid->minz);
+    F32 halfsizez = (grid->csizez * 0.5f);
+    F32 halfsizex = (grid->csizex * 0.5f);
+
+    F32 clcenterx = grid->csizex * px;
+    F32 clcenterz = grid->csizez * pz;
+
+    clcenterx += grid->minx;
+    clcenterx += halfsizex;
+
+    clcenterz += halfsizez;
+    clcenterz += grid->minz;
 
     extern S32 k_1552;
 
@@ -1478,8 +1461,8 @@ static void xEntCollCheckOneGrid(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xSce
 
     for (S32 i = 0; i < 3; i++)
     {
-        S32 _x = px + offs_1551[k_1552][i][0];
-        S32 _z = pz + offs_1551[k_1552][i][1];
+        S32 _x = px + offs_1551[k_1552][i][1];
+        S32 _z = pz + offs_1551[k_1552][i][0];
 
         cell = xGridIterFirstCell(grid, _x, _z, it);
 
@@ -1861,7 +1844,7 @@ void xEntCollideWalls(xEnt* p, xScene* sc, F32 dt)
     }
     else
     {
-        sbr = _1300;
+        sbr = 0.7f;
     }
 
     if (p->collis->pen & 0x8)
@@ -1878,9 +1861,9 @@ void xEntCollideWalls(xEnt* p, xScene* sc, F32 dt)
                 ((p->collis->depenq) ? p->collis->depenq(p, cent, sc, dt, coll) :
                                        cent->penby & p->collType))
             {
-                if (_942 != coll->depen.x || _942 != coll->depen.z)
+                if (0.0f != coll->depen.x || 0.0f != coll->depen.z)
                 {
-                    coll->depen.y = *(const F32*)&_942;
+                    coll->depen.y = 0.0f;
                 }
 
                 xEntAddToPos(p, &coll->depen);
