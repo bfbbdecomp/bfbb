@@ -181,11 +181,12 @@ void ZNPC_Destroy_Boss(xFactoryInst* inst)
     delete inst;
 }
 
+#ifdef NON_MATCHING
 xAnimTable* ZNPC_AnimTable_BossSBobbyArm()
 {
     xAnimTable* table;
 
-    S32 ourAnims[2] = { 1, 0 };
+    S32 ourAnims[2] = { 0, 1 };
 
     // Nearly identical, save for a redundant r5 load being skipped.
     table = xAnimTableNew("zNPCBBobbyArm", NULL, ourAnims[0]);
@@ -198,6 +199,7 @@ xAnimTable* ZNPC_AnimTable_BossSBobbyArm()
 
     return table;
 }
+#endif
 
 void BOSS_InitEffects();
 
