@@ -184,17 +184,18 @@ void ZNPC_Destroy_Boss(xFactoryInst* inst)
 #ifdef NON_MATCHING
 xAnimTable* ZNPC_AnimTable_BossSBobbyArm()
 {
-    // non-matching: surprisingly the floats in this function are fine
-    // r4 and r5 is swapped for some reason during the ourAnims assignment
     xAnimTable* table;
-    S32 ourAnims[2] = { 1, 0 };
 
-    table = xAnimTableNew("zNPCBBobbyArm", NULL, 0);
+    S32 ourAnims[2] = { 0, 1 };
+
+    // Nearly identical, save for a redundant r5 load being skipped.
+    table = xAnimTableNew("zNPCBBobbyArm", NULL, ourAnims[0]);
+
 
     xAnimTableNewState(table, g_strz_bossanim[1], 0x10, 0, _920_2, NULL, NULL, _921_2, NULL, NULL,
                        xAnimDefaultBeforeEnter, NULL, NULL);
 
-    NPCC_BuildStandardAnimTran(table, (char**)g_strz_bossanim, ourAnims, 1, _922_0);
+    NPCC_BuildStandardAnimTran(table, (char**)g_strz_bossanim, &ourAnims[0], 1, _922_0);
 
     return table;
 }

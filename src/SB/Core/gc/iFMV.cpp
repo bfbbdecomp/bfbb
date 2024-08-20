@@ -18,8 +18,6 @@ void iFMVfree(void* mem)
     RwFree(mem);
 }
 
-#ifdef NON_MATCHING
-// For some reason, the check for frame_num is always optimized to true.
 U32 iFMVPlay(char* filename, U32 buttons, F32 time, bool skippable, bool lockController)
 {
     if (filename == NULL)
@@ -29,15 +27,13 @@ U32 iFMVPlay(char* filename, U32 buttons, F32 time, bool skippable, bool lockCon
     else
     {
         frame_num = 0;
-        while (frame_num >= 0)
+        while ((S32)frame_num >= 0)
         {
             PlayFMV(filename, buttons, time);
         }
         return 0;
     }
 }
-
-#endif
 
 static void Setup_surface_array()
 {

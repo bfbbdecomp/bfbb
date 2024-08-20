@@ -162,15 +162,13 @@ S32 zGameIsPaused()
     return 0;
 }
 
-#ifdef NON_MATCHING
-S32 zGameLoopContinue()
+iTime t1;
+
+static S32 zGameLoopContinue()
 {
     if (gGameMode == eGameMode_Game)
     {
-        if (((gGameState == 1) || (gGameState == 3)) || (gGameState == 4))
-        {
-            return 1;
-        }
+        return gGameState == 1 || gGameState == 3 || gGameState == 4;
     }
     else
     {
@@ -179,12 +177,11 @@ S32 zGameLoopContinue()
             gGameWhereAmI = eGameWhere_SaveLoop;
             zSaveLoad_SaveLoop();
             sTimeLast = iTimeGet();
+            t1 = iTimeGet();
         }
-        return 1;
     }
-    return 0;
+    return 1;
 }
-#endif
 
 S32 zGameOkToPause()
 {
