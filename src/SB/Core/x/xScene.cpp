@@ -286,8 +286,6 @@ void ProjectTriangle(xVec3* param_1, xVec3* param_2, float* param_3, float* para
     return;
 }
 
-#ifdef NON_MATCHING
-// Float memes
 void ProjectBox(xVec3* param_1, xBox* param_2, float* param_3, float* param_4)
 {
     F32 fVar7 = lbl_803CCF78 * (param_1->x * ((param_2->upper).x + (param_2->lower).x) +
@@ -299,7 +297,6 @@ void ProjectBox(xVec3* param_1, xBox* param_2, float* param_3, float* param_4)
     *param_3 = fVar7 - fVar1;
     *param_4 = fVar7 + fVar1;
 }
-#endif
 
 static RpCollisionTriangle* nearestFloorCB(RpIntersection*, RpCollisionTriangle* collTriangle,
                                            F32, void* data);

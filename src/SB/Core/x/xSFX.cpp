@@ -13,23 +13,26 @@ void xSFXEnvironmentalStreamSceneExit(void)
     memset(&s_managedEnvSFX, 0, 4);
 }
 
-#ifdef NON_MATCHING
 S32 xSFXWillSendDone(xSFX* param_1)
 {
-    if (param_1->linkCount != 0)
+    S32 iLink = param_1->linkCount;
+
+    if ((U32)iLink != 0)
     {
-        for (int i = 0; i < param_1->linkCount; i++)
+        xLinkAsset* pLink = param_1->link;
+
+        for (; iLink > 0; iLink--)
         {
-            if ((&param_1->link[i])->srcEvent == 0xbf)
+            if (pLink->srcEvent == 0xbf)
             {
                 return 1;
             }
+            pLink++;
         }
     }
 
     return 0;
 }
-#endif
 
 void xSFXInit(void* t, void* asset)
 
