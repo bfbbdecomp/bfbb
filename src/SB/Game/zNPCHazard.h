@@ -23,6 +23,7 @@ struct UVAModelInfo
     void Clear();
     void UVVelSet(float, float);
     S32 GetUV(RwTexCoords*& coords, S32& numVertices, RpAtomic* model);
+    void SetColor(iColor_tag);
 };
 
 struct NPCHazard;
@@ -137,7 +138,6 @@ struct HAZTarTar : HAZCollide
     F32 spd_lob;
     xVec3 pos_tgt;
     U32 streakID;
-    U32 pad; // This is needed to ensure the correct size!
 };
 
 struct HAZCatProd : HAZBall
@@ -231,9 +231,9 @@ struct NPCHazard
     void ColResp_Default(xSweptSphere* swdata, F32 tym_inFuture);
     void CollideResponse(xSweptSphere* swdata, F32 tym_inFuture);
     void Upd_Patriot(F32);
-    RwV3d* At();
-    RwV3d* Right();
-    RwV3d* Up();
+    RwV3d* At() const;
+    RwV3d* Right() const;
+    RwV3d* Up() const;
     void Discard();
 };
 
