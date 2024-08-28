@@ -296,17 +296,17 @@ S32 UVAModelInfo::GetUV(RwTexCoords*& coords, S32& numVertices, RpAtomic* model)
 
 #endif
 
-RwV3d* NPCHazard::At()
+RwV3d* NPCHazard::At() const
 {
     return &this->mdl_hazard->Mat->at;
 }
 
-RwV3d* NPCHazard::Right()
+RwV3d* NPCHazard::Right() const
 {
     return &this->mdl_hazard->Mat->right;
 }
 
-RwV3d* NPCHazard::Up()
+RwV3d* NPCHazard::Up() const
 {
     return &this->mdl_hazard->Mat->up;
 }
@@ -323,4 +323,22 @@ NPCHazard::NPCHazard(en_npchaz haztype)
 F32 xVec2Length2(const xVec2* v)
 {
     return xVec2Dot(v, v);
+}
+
+void UVAModelInfo::SetColor(iColor_tag color)
+{
+    RpGeometry* geo = model->geometry;
+
+    RwRGBA col;
+    col.red   = color.r;
+    col.green = color.g;
+    col.blue  = color.b;
+    col.alpha = color.a;
+
+    int numMats = model->geometry->matList.numMaterials;
+
+    for (int i = 0; i < numMats; i++)
+    {
+        geo->matList.materials[i]->color = col;
+    }
 }
