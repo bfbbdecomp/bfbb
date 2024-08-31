@@ -172,8 +172,6 @@ void ztaskbox::fail()
     }
 }
 
-#if 0
-// Why does the compiler add a random compare at the end????
 void ztaskbox::complete()
 {
     if (this->flag.enabled)
@@ -182,10 +180,14 @@ void ztaskbox::complete()
         this->flag.enabled = false;
         zEntEvent(this, this, eEventTaskBox_OnComplete);
         this->current = (ztaskbox*)zSceneFindObject(this->asset->next_task);
+
+        // Bruh
+        if (this->current != NULL)
+        {
+            return;
+        }
     }
 }
-
-#endif
 
 void ztaskbox::set_callback(callback* cb)
 {
