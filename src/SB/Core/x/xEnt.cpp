@@ -1581,9 +1581,8 @@ xEnt* xEntCollCheckOneEntNoDepen(xEnt* ent, xScene* sc, void* data)
                 xVec3Add(&tmp.sph.center, upper, lower);
                 xVec3SMulBy(&tmp.sph.center, 0.5f);
 
-                F32 rsum = upper->x + upper->y + upper->z - lower->x - lower->y - lower->z;
-
-                tmp.sph.r = 0.167f * rsum;
+                tmp.sph.r =
+                    0.167f * (upper->x + upper->y + upper->z - lower->x - lower->y - lower->z);
 
                 // none of the code above is used for anything... maybe debug stuff
 
@@ -1616,12 +1615,12 @@ xEnt* xEntCollCheckOneEntNoDepen(xEnt* ent, xScene* sc, void* data)
             if (ent->pflags & 0x20 && ent->bound.type == XBOUND_TYPE_SPHERE &&
                 p->bound.type == XBOUND_TYPE_SPHERE && coll->hdng.y < -0.866025f)
             {
+                F32 rsum = p->bound.sph.r + ent->bound.sph.r;
                 F32 dx = p->bound.sph.center.x - ent->bound.sph.center.x;
                 F32 dy = p->bound.sph.center.y - ent->bound.sph.center.y;
                 F32 dz = p->bound.sph.center.z - ent->bound.sph.center.z;
 
-                // non-matching: can't seem to generate a fmsubs here
-                F32 hsqr = SQR(p->bound.sph.r + ent->bound.sph.r) - (SQR(dx) + SQR(dz));
+                F32 hsqr = SQR(rsum) - (SQR(dx) + SQR(dz));
 
                 if (hsqr >= 0.0f)
                 {
