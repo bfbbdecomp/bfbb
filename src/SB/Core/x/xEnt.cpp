@@ -24,16 +24,10 @@
 
 #include <string.h>
 
-extern const char _stringBase0_4[];
-
-extern F32 nsn_angle;
-extern F32 sEntityTimePassed;
-extern xBox all_ents_box;
-extern S32 all_ents_box_init;
-extern S32 setMaterialTextureRestore;
-extern S32 sSetPipeline;
-extern RxPipeline* oldPipe;
-extern S32 xent_entent;
+static F32 nsn_angle = DEG2RAD(30);
+static F32 sEntityTimePassed;
+static xBox all_ents_box;
+static S32 all_ents_box_init;
 
 namespace
 {
@@ -159,38 +153,24 @@ void xEntAddHittableFlag(xEnt* ent)
     }
 }
 
-#ifndef NON_MATCHING
-void hack_receive_shadow(xEnt* ent);
-#else
+static const char* __deadstripped()
+{
+    return "";
+}
+
 static void hack_receive_shadow(xEnt* ent)
 {
-    extern volatile signed char init_856; // todo: static
-    extern U32 receive_models_855[15]; // todo: static
+    static U32 receive_models[15] = {
+        xStrHash("db03_path_a"), xStrHash("db03_path_b"), xStrHash("db03_path_c"),
+        xStrHash("db03_path_d"), xStrHash("db03_path_e"), xStrHash("db03_path_f"),
+        xStrHash("db03_path_g"), xStrHash("db03_path_h"), xStrHash("db03_path_i"),
+        xStrHash("db03_path_j"), xStrHash("db03_path_k"), xStrHash("db03_path_l"),
+        xStrHash("db03_path_m"), // No db03_path_n, odd
+        xStrHash("db03_path_o"), xStrHash("db03_path_p"),
+    };
 
-    if (!init_856)
-    {
-        receive_models_855[0] = xStrHash(&_stringBase0_4[0x1]);
-        receive_models_855[1] = xStrHash(&_stringBase0_4[0xD]);
-        receive_models_855[2] = xStrHash(&_stringBase0_4[0x19]);
-        receive_models_855[3] = xStrHash(&_stringBase0_4[0x25]);
-        receive_models_855[4] = xStrHash(&_stringBase0_4[0x31]);
-        receive_models_855[5] = xStrHash(&_stringBase0_4[0x3D]);
-        receive_models_855[6] = xStrHash(&_stringBase0_4[0x49]);
-        receive_models_855[7] = xStrHash(&_stringBase0_4[0x55]);
-        receive_models_855[8] = xStrHash(&_stringBase0_4[0x61]);
-        receive_models_855[9] = xStrHash(&_stringBase0_4[0x6D]);
-        receive_models_855[10] = xStrHash(&_stringBase0_4[0x79]);
-        receive_models_855[11] = xStrHash(&_stringBase0_4[0x85]);
-        receive_models_855[12] = xStrHash(&_stringBase0_4[0x91]);
-        receive_models_855[13] = xStrHash(&_stringBase0_4[0x9D]);
-        receive_models_855[14] = xStrHash(&_stringBase0_4[0xA9]);
-
-        // non-matching: init_856 is assigned too early
-        init_856 = 1;
-    }
-
-    U32* end = receive_models_855 + sizeof(receive_models_855) / sizeof(U32);
-    U32* cur = receive_models_855;
+    U32* end = receive_models + sizeof(receive_models) / sizeof(U32);
+    U32* cur = receive_models;
 
     while (cur != end)
     {
@@ -204,7 +184,16 @@ static void hack_receive_shadow(xEnt* ent)
         cur++;
     }
 }
-#endif
+
+static const char* __deadstripped2()
+{
+    return "%s.DFF\0"
+           "%s.SKA\0"
+           "ent-table\0"
+           "idle\0"
+           "anim-file\0"
+           "anim-table";
+}
 
 static void xEntAddShadowRecFlag(xEnt* ent)
 {
@@ -781,6 +770,10 @@ void xEntSetupPipeline(xModelInstance* model)
 {
     xEntSetupPipeline(model->Surf, model->Data);
 }
+
+static S32 setMaterialTextureRestore;
+S32 sSetPipeline;
+static RxPipeline* oldPipe;
 
 void xEntSetupPipeline(xSurface* surf, RpAtomic* model)
 {
@@ -1404,37 +1397,42 @@ static void xEntCollCheckOneGrid(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xSce
     clcenterz += halfsizez;
     clcenterz += grid->minz;
 
-    extern S32 k_1552;
+    static S32 k;
 
     if (r26->x < clcenterx)
     {
         if (r26->z < clcenterz)
         {
-            k_1552 = 0;
+            k = 0;
         }
         else
         {
-            k_1552 = 1;
+            k = 1;
         }
     }
     else
     {
         if (r26->z < clcenterz)
         {
-            k_1552 = 3;
+            k = 3;
         }
         else
         {
-            k_1552 = 2;
+            k = 2;
         }
     }
 
-    extern S32 offs_1551[4][3][2];
+    static S32 offs[4][3][2] = {
+        { { -1, 0 }, { -1, -1 }, { 0, -1 } },
+        { { 0, -1 }, { 1, -1 }, { 1, 0 } },
+        { { 1, 0 }, { 1, 1 }, { 0, 1 } },
+        { { 0, 1 }, { -1, 1 }, { -1, 0 } },
+    };
 
     for (S32 i = 0; i < 3; i++)
     {
-        S32 _x = px + offs_1551[k_1552][i][1];
-        S32 _z = pz + offs_1551[k_1552][i][0];
+        S32 _x = px + offs[k][i][1];
+        S32 _z = pz + offs[k][i][0];
 
         cell = xGridIterFirstCell(grid, _x, _z, it);
 
@@ -1510,6 +1508,7 @@ void xEntCollCheckNPCs(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xScene*, void*
     p->collis->npc_eidx = p->collis->idx;
 }
 
+static S32 xent_entent;
 xEnt* xEntCollCheckOneEntNoDepen(xEnt* ent, xScene* sc, void* data)
 {
     xent_entent = 1;
@@ -1699,7 +1698,7 @@ void xEntCollideFloor(xEnt* p, xScene* sc, F32 dt)
 
             if (mf->dist < ml->dist)
             {
-                if (mf->hdng.y < -icos(PI/3) &&
+                if (mf->hdng.y < -icos(PI / 3) &&
                     (mf->norm.y > icos(nsn_angle) ||
                      p->frame->oldmat.pos.y > dt * (sc->gravity * dt) + p->frame->mat.pos.y))
                 {
