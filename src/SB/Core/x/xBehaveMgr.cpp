@@ -8,7 +8,6 @@
 extern S32 g_modinit_xBehaveMgr;
 extern xBehaveMgr* g_behavmgr;
 
-#ifdef NON_MATCHING
 void xBehaveMgr_Startup()
 {
     if (g_modinit_xBehaveMgr++ == 0)
@@ -17,7 +16,6 @@ void xBehaveMgr_Startup()
         g_behavmgr->Startup(0xfa, 0xfa);
     }
 }
-#endif
 
 #if 0
 void xBehaveMgr_Shutdown()

@@ -26,7 +26,6 @@ void zActionLineInit()
     }
 }
 
-// Equivalent. Compiler is optimizing out the reduntant float load.
 void zActionLineUpdate(F32 seconds)
 {
     for (S32 i = 0; i < 8; i++)

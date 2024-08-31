@@ -43,20 +43,22 @@ void Recurse_TranslateStack(xEnt* ent, xVec3* delta)
     sDebugDepth--;
 }
 
-#if 0
-// WIP.
 void zThrown_PatrickLauncher(xEnt* ent, xEnt* launcher)
 {
-    for (U32 i = 0; i < zThrownCount; i++)
+    int i = 0;
+
+    for (; i < zThrownCount; i++)
     {
         if (ent == zThrownList[i].ent)
-        {
-            zThrownList[i].patLauncher = launcher;
-        }
+            break;
+    }
+
+    if (i != zThrownCount)
+    {
+        zThrownStruct* listInd = &zThrownList[i];
+        listInd->patLauncher = launcher;
     }
 }
-
-#endif
 
 void zThrownCollide_ThrowFreeze(zThrownStruct* thrown, xEntCollis* collis, float* bounce,
                                 float* friction)
@@ -117,22 +119,17 @@ S32 zThrown_IsFruit(xEnt* ent, F32* stackHeight)
 
 #endif
 
-#if 0
-// Random OR added in.
 void checkAgainstButtons(xEnt* ent)
 {
-    xVec3* d = xBoundCenter(&ent->bound);
     struct
     {
         xVec3 center;
         F32 unk;
     } data;
-    xVec3Copy(&data.center, d);
-    data.unk = _842;
+    xVec3Copy(&data.center, xBoundCenter(&ent->bound));
+    data.unk = 0.5f;
     zSceneForAllBase(zThrown_ButtonIteratorCB, 0x18, (void*)&data);
 }
-
-#endif
 
 void xDrawSphere(const xSphere*, U32)
 {

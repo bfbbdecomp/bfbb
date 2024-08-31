@@ -1,5 +1,7 @@
 #include "iSnd.h"
 
+#include "intrin.h"
+
 #include <types.h>
 
 #include "dolphin/dolphin.h"
@@ -40,23 +42,22 @@ void iSndInitSceneLoaded()
 {
 }
 
-#ifdef NON_MATCHING
 U32 iVolFromX(F32 param1)
 {
-    float f = MAX(param1, _1263);
+    float f = MAX(param1, 1e-20f);
 
-    S32 i = _1262 * xlog(f);
-    i = (i & i >> 0x1f);
-    if (i < -0x388)
+    S32 i = 43.43f * xlog(f);
+    S32 comp = i & (i >> 0x1f);
+
+    if (comp < -0x388)
     {
         return -0x388;
     }
     else
     {
-        return (i & i >> 0x1f);
+        return i & (i >> 0x3f);
     }
 }
-#endif
 
 void iSndVolUpdate(xSndVoiceInfo* info, vinfo* vinfo)
 {
@@ -122,12 +123,11 @@ void iSndWaitForDeadSounds()
 }
 #endif
 
-//
 void iSndSuspendCD(U32)
 {
 }
 
-void iSndMessWithEA(sDSPADPCM* param1) //sDSPADPCM*
+void iSndMessWithEA(sDSPADPCM* param1)
 {
     if (param1 != NULL)
     {
@@ -135,15 +135,18 @@ void iSndMessWithEA(sDSPADPCM* param1) //sDSPADPCM*
     }
 }
 
-#if 0
 U32 SampleToNybbleAddress(U32 sample)
 {
-    U32 i = sample * 0x124924925U >> 0x20;
-    i = i & 0xfffffff0;
-    i = i + sample % 0xe + 2;
-    return i;
+    U32 a = __mulhwu(0x24924925, sample);
+    U32 b = (sample - a) >> 1;
+
+    a = b + a;
+    b = (a >> 3);
+    a = (a << 1) & 0xfffffff0;
+    a = a + (sample - (b * 0xe)) + 2;
+
+    return a;
 }
-#endif
 
 void sndloadcb(tag_xFile* tag)
 {

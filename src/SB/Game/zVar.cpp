@@ -567,29 +567,30 @@ U32 zVarEntryCB_SndMode(void* arg)
     return gSnd.stereo;
 }
 
-#if 0
-// Can't get the fp register assignment right for these regardless of what
-// order I put the three expressions in.
-extern F64 volumeMod1;
-extern F64 volumeMod2;
-
 U32 zVarEntryCB_SndMusicVol(void* arg)
 {
-    return volumeMod2 + gSnd.categoryVolFader[2] * volumeMod1;
+    F64 f0 = 10.0;
+    F64 f1 = 0.5;
+    F64 f2 = gSnd.categoryVolFader[2];
+
+    f2 *= f1;
+    f2 = f0 + f2;
+
+    return f2;
 }
 
 U32 zVarEntryCB_SndFXVol(void* arg)
 {
-    return volumeMod2 + gSnd.categoryVolFader[0] * volumeMod1;
-}
-#endif
+    F64 f0 = 10.0;
+    F64 f1 = 0.5;
+    F64 f2 = gSnd.categoryVolFader[0];
 
-#if 0
-// The branching in this function is totally stupid, no idea how to untangle
-// what they originally wrote here because the code makes no sense. I think
-// that it might be trying to return the number of save games which aren't
-// empty, but is had a bug where one of the calls is xSGGameIsEmpty(NULL, 0)
-// instead of xSGGameIsEmpty(NULL, 2) thanks to a copy-paste error.
+    f2 *= f1;
+    f2 = f0 + f2;
+
+    return f2;
+}
+
 U32 zVarEntryCB_MCAvailable(void* arg)
 {
     if (xSGGameIsEmpty(NULL, 0) == 1)
@@ -598,33 +599,25 @@ U32 zVarEntryCB_MCAvailable(void* arg)
         {
             return 0;
         }
-        else if (xSGGameIsEmpty(NULL, 1) == 0)
-        {
-            return 0;
-        }
-        else
+        if (xSGGameIsEmpty(NULL, 1) == 0)
         {
             return 2;
         }
     }
-    else if (xSGGameIsEmpty(NULL, 0))
+    else if (xSGGameIsEmpty(NULL, 0) == 0)
     {
-        return 0;
+        if (xSGGameIsEmpty(NULL, 1) == 1)
+        {
+            return 1;
+        }
+        if (xSGGameIsEmpty(NULL, 1) == 0)
+        {
+            return 3;
+        }
     }
-    else if (xSGGameIsEmpty(NULL, 1))
-    {
-        return 1;
-    }
-    else if (xSGGameIsEmpty(NULL, 1))
-    {
-        return 0;
-    }
-    else
-    {
-        return 3;
-    }
+
+    return 0;
 }
-#endif
 
 U32 zVarEntryCB_VibrationOn(void* arg)
 {
@@ -633,7 +626,7 @@ U32 zVarEntryCB_VibrationOn(void* arg)
     return globals.option_vibration & 0x1;
 }
 
-S32 zVarEntryCB_CurrentSceneLetter()
+S32 zVarEntryCB_CurrentSceneLetter(void*)
 {
     char buffer[16];
     sprintf(buffer, &zVar_strings[0x10] /*"%s"*/, xUtil_idtag2string(globals.sceneCur->sceneID, 0));
@@ -655,7 +648,7 @@ S32 zVarEntryCB_CurrentSceneLetter()
     return (mostSignificantChar - 'A') + 1;
 }
 
-S32 zVarEntryCB_CurrentRoom()
+S32 zVarEntryCB_CurrentRoom(void*)
 {
     char buffer[16];
     sprintf(buffer, &zVar_strings[0x10] /*"%s"*/, xUtil_idtag2string(globals.sceneCur->sceneID, 0));
