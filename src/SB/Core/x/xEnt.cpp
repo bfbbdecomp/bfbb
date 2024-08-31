@@ -258,7 +258,6 @@ static void xEntAddShadowRecFlag(xEnt* ent)
     hack_receive_shadow(ent);
 }
 
-#ifdef NON_MATCHING
 void xEntInit(xEnt* ent, xEntAsset* asset)
 {
     xBaseInit(ent, asset);
@@ -303,9 +302,7 @@ void xEntInit(xEnt* ent, xEntAsset* asset)
         iBoxBoundVec(&all_ents_box, &all_ents_box, &asset->pos);
     }
 }
-#endif
 
-#ifdef NON_MATCHING
 void xEntInitForType(xEnt* ent)
 {
     ent->update = xEntUpdate;
@@ -374,7 +371,6 @@ void xEntInitForType(xEnt* ent)
     // non-matching: instruction order in epilogue :|
     // no idea how to fix that
 }
-#endif
 
 namespace
 {
@@ -1508,7 +1504,7 @@ void xEntCollCheckNPCs(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xScene*, void*
     p->collis->npc_eidx = p->collis->idx;
 }
 
-static S32 xent_entent;
+S32 xent_entent = 0;
 xEnt* xEntCollCheckOneEntNoDepen(xEnt* ent, xScene* sc, void* data)
 {
     xent_entent = 1;
@@ -1939,8 +1935,7 @@ void xEntAnimateCollision(xEnt& ent, bool on)
     }
 }
 
-#ifdef NON_MATCHING
-bool xEntValidType(U8 type)
+U8 xEntValidType(U8 type)
 {
     // I have no idea how to match this lol
 
@@ -1954,7 +1949,6 @@ bool xEntValidType(U8 type)
             type == eBaseTypeNPC || type == eBaseTypeBoulder || type == eBaseTypeTeleportBox ||
             type == eBaseTypeZipLine);
 }
-#endif
 
 void xEntReposition(xEnt& ent, const xMat4x3& mat)
 {

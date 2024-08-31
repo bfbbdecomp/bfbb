@@ -208,6 +208,8 @@ struct xEntShadow
     F32 radius[2];
 };
 
+extern S32 xent_entent;
+
 xMat4x3* xEntGetFrame(const xEnt* ent);
 void xEntEnable(xEnt* ent);
 xVec3* xEntGetCenter(const xEnt* ent);
@@ -217,7 +219,7 @@ void xEntHide(xEnt* ent);
 void xEntShow(xEnt* ent);
 void xEntInitShadow(xEnt& ent, xEntShadow& shadow);
 void xEntReposition(xEnt& ent, const xMat4x3& mat);
-bool xEntValidType(U8 type);
+U8 xEntValidType(U8 type);
 void xEntAnimateCollision(xEnt& ent, bool on);
 xBox* xEntGetAllEntsBox();
 void xEntSetNostepNormAngle(F32 angle);
