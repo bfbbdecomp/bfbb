@@ -24,26 +24,6 @@
 
 #include <string.h>
 
-extern F32 _780; // 1.0f
-extern F32 _781_0; // 3.0f
-extern F32 _942; // 0.0f
-extern F32 _950; // -1.0f
-extern F32 _951; // 9.9999997e37f
-extern F32 _1095; // 255.0f
-extern F64 _1097; // 4.503599627370496e15f
-extern F32 _1187; // 0.0017683882f
-extern F32 _1229; // 10.0f
-extern F32 _1300; // 0.69999999f
-extern F32 _1435; // 0.5f
-extern F32 _1541; // 0.78539819f
-extern F64 _1593; // 4.503601774854144e15f
-extern F32 _1724; // 0.167f
-extern F32 _1725; // -0.86602497f
-extern F32 _1818; // 1.0471976f
-extern F32 _1819; // 0.001f
-extern F32 _1820; // 0.64999998f
-extern F32 _1821; // 1.5f
-
 extern const char _stringBase0_4[];
 
 extern F32 nsn_angle;
@@ -109,12 +89,12 @@ namespace
                         max_size = size.z;
                     }
 
-                    max_size += _780;
+                    max_size += 1.0f;
 
                     box.upper += max_size;
                     box.lower -= max_size;
 
-                    model.Data->boundingSphere.radius *= _781_0;
+                    model.Data->boundingSphere.radius *= 3.0f;
                 }
                 }
             }
@@ -230,60 +210,60 @@ static void xEntAddShadowRecFlag(xEnt* ent)
 {
     switch (ent->baseType - 6)
     {
-        case eBaseTypeUnknown:
-        case eBaseTypeEnv:
-        case eBaseTypePendulum:
-        case eBaseTypeVFX:
-        case eBaseTypeLight:
-        case eBaseTypeEGenerator:
-        {
-            if (ent->model->PipeFlags & 0x0000ff00)
-            {
-                ent->baseFlags &= 0xffef;
-            }
-            break;
-        }
-        case eBaseTypeTrigger:
-        case eBaseTypeVillain:
-        case eBaseTypePlayer:
-        case eBaseTypePickup:
-        case eBaseTypePlatform:
-        case eBaseTypeCamera:
-        case eBaseTypeDoor:
-        case eBaseTypeSavePoint:
-        case eBaseTypeItem:
-        case eBaseTypeStatic:
-        case eBaseTypeDynamic:
-        case eBaseTypeMovePoint:
-        case eBaseTypeTimer:
-        case eBaseTypeBubble:
-        case eBaseTypePortal:
-        case eBaseTypeGroup:
-        case eBaseTypeSFX:
-        case eBaseTypeFFX:
-        case eBaseTypeCounter:
-        case eBaseTypeHangable:
-        case eBaseTypeButton:
-        case eBaseTypeProjectile:
-        case eBaseTypeSurface:
-        case eBaseTypeDestructObj:
-        case eBaseTypeGust:
-        case eBaseTypeVolume:
-        case eBaseTypeDispatcher:
-        case eBaseTypeCond:
-        case eBaseTypeUI:
-        case eBaseTypeUIFont:
-        case eBaseTypeProjectileType:
-        case eBaseTypeLobMaster:
-        case eBaseTypeFog:
-        case eBaseTypeParticleEmitter:
-        case eBaseTypeParticleSystem:
-        case eBaseTypeCutsceneMgr:
-        default:
+    case eBaseTypeUnknown:
+    case eBaseTypeEnv:
+    case eBaseTypePendulum:
+    case eBaseTypeVFX:
+    case eBaseTypeLight:
+    case eBaseTypeEGenerator:
+    {
+        if (ent->model->PipeFlags & 0x0000ff00)
         {
             ent->baseFlags &= 0xffef;
-            break;
         }
+        break;
+    }
+    case eBaseTypeTrigger:
+    case eBaseTypeVillain:
+    case eBaseTypePlayer:
+    case eBaseTypePickup:
+    case eBaseTypePlatform:
+    case eBaseTypeCamera:
+    case eBaseTypeDoor:
+    case eBaseTypeSavePoint:
+    case eBaseTypeItem:
+    case eBaseTypeStatic:
+    case eBaseTypeDynamic:
+    case eBaseTypeMovePoint:
+    case eBaseTypeTimer:
+    case eBaseTypeBubble:
+    case eBaseTypePortal:
+    case eBaseTypeGroup:
+    case eBaseTypeSFX:
+    case eBaseTypeFFX:
+    case eBaseTypeCounter:
+    case eBaseTypeHangable:
+    case eBaseTypeButton:
+    case eBaseTypeProjectile:
+    case eBaseTypeSurface:
+    case eBaseTypeDestructObj:
+    case eBaseTypeGust:
+    case eBaseTypeVolume:
+    case eBaseTypeDispatcher:
+    case eBaseTypeCond:
+    case eBaseTypeUI:
+    case eBaseTypeUIFont:
+    case eBaseTypeProjectileType:
+    case eBaseTypeLobMaster:
+    case eBaseTypeFog:
+    case eBaseTypeParticleEmitter:
+    case eBaseTypeParticleSystem:
+    case eBaseTypeCutsceneMgr:
+    default:
+    {
+        ent->baseFlags &= 0xffef;
+        break;
+    }
     }
 
     hack_receive_shadow(ent);
@@ -423,7 +403,7 @@ namespace
         }
         case XBOUND_TYPE_OBB:
         {
-            if (_942 == bound.mat->up.x && _942 == bound.mat->up.z)
+            if (0.0f == bound.mat->up.x && 0.0f == bound.mat->up.z)
             {
                 return bound.box.center.y -
                        (bound.mat->up.y * bound.box.box.lower.y + bound.mat->pos.y);
@@ -439,7 +419,7 @@ namespace
         case XBOUND_TYPE_CYL:
         default:
         {
-            return _942;
+            return 0.0f;
         }
         }
     }
@@ -455,8 +435,8 @@ namespace
         xVec3* r30 = xBoundCenter(&ent.bound);
 
         ray.origin = *r30;
-        ray.dir.assign(_942, _950, _942);
-        ray.min_t = _942;
+        ray.dir.assign(0.0f, -1.0f, 0.0f);
+        ray.min_t = 0.0f;
         ray.max_t = max_dist + f31;
         ray.flags = 0xC00;
 
@@ -464,9 +444,9 @@ namespace
         old_bound_radius = ent.bound.sph.r;
 
         ent.bound.type = XBOUND_TYPE_SPHERE;
-        ent.bound.sph.r = _942;
+        ent.bound.sph.r = 0.0f;
 
-        r30->y = _951;
+        r30->y = FLOAT_MAX;
 
         coll.flags = 0x100;
 
@@ -560,7 +540,7 @@ namespace
         xVec3 loc;
         xEnt* hit;
 
-        if (!(dist <= _942) && collide_downward(loc, hit, sc, ent, dist))
+        if (!(dist <= 0.0f) && collide_downward(loc, hit, sc, ent, dist))
         {
             ent.frame->mat.pos.y = loc.y;
             stop_stacked_entity(ent);
@@ -688,7 +668,6 @@ void xEntLoad(xEnt* ent, xSerial* s)
     }
 }
 
-#ifdef NON_MATCHING
 void xEntReset(xEnt* ent)
 {
     xMat4x3 frame;
@@ -735,11 +714,10 @@ void xEntReset(xEnt* ent)
             minst->GreenMultiplier = ent->asset->greenMult;
             minst->BlueMultiplier = ent->asset->blueMult;
 
-            // non-matching: int-to-float conversion pattern, can't do much about this atm
             minst->Alpha = minst->Data->geometry->matList.materials[0]->color.alpha / 255.0f;
-            minst->Scale.x = _942;
-            minst->Scale.y = _942;
-            minst->Scale.z = _942;
+            minst->Scale.x = 0.0f;
+            minst->Scale.y = 0.0f;
+            minst->Scale.z = 0.0f;
 
             minst = minst->Next;
         }
@@ -757,7 +735,7 @@ void xEntReset(xEnt* ent)
         xVec3Copy(&ent->frame->oldvel, &g_O3);
         xVec3Copy(&ent->frame->rot.axis, &ent->asset->ang);
 
-        ent->frame->rot.angle = _942;
+        ent->frame->rot.angle = 0.0f;
 
         xRotCopy(&ent->frame->oldrot, &ent->frame->rot);
     }
@@ -774,7 +752,6 @@ void xEntReset(xEnt* ent)
         setup_stacked_entity(*ent);
     }
 }
-#endif
 
 xModelInstance* xEntLoadModel(xEnt* ent, RpAtomic* imodel)
 {
@@ -872,8 +849,8 @@ void xEntSetupPipeline(xSurface* surf, RpAtomic* model)
                 xFXanimUV2PSetTranslation(&pp->uvfx[1].trans);
                 xFXanimUVSetScale(&pp->uvfx[0].scale);
                 xFXanimUV2PSetScale(&pp->uvfx[1].scale);
-                xFXanimUVSetAngle(_1187 * pp->uvfx[0].rot);
-                xFXanimUV2PSetAngle(_1187 * pp->uvfx[1].rot);
+                xFXanimUVSetAngle(RAD2DEG(PI * 0.9824379f / 100000) * pp->uvfx[0].rot);
+                xFXanimUV2PSetAngle(RAD2DEG(PI * 0.9824379f / 100000) * pp->uvfx[1].rot);
             }
 
             if (sSetPipeline)
@@ -905,7 +882,6 @@ void xEntRestorePipeline(xSurface*, RpAtomic* model)
     }
 }
 
-#ifdef NON_MATCHING
 void xEntRender(xEnt* ent)
 {
     S32 shadowOutside;
@@ -924,10 +900,10 @@ void xEntRender(xEnt* ent)
         if (ent->baseType == eBaseTypePlayer ||
             (ent->baseType == eBaseTypeNPC && !(ent->flags & 0x40)))
         {
-            // non-matching: _1229 is loaded too early
+            // non-matching: 10.0f is loaded too early
 
             shadVec.x = ent->model->Mat->pos.x;
-            shadVec.y = ent->model->Mat->pos.y - _1229;
+            shadVec.y = ent->model->Mat->pos.y - 10.0f;
             shadVec.z = ent->model->Mat->pos.z;
 
             if (iModelCullPlusShadow(ent->model->Data, ent->model->Mat, &shadVec, &shadowOutside))
@@ -964,7 +940,6 @@ void xEntRender(xEnt* ent)
         }
     }
 }
-#endif
 
 void xEntUpdate(xEnt* ent, xScene* sc, F32 dt)
 {
@@ -1063,8 +1038,8 @@ void xEntDefaultBoundUpdate(xEnt* ent, xVec3* pos)
     {
         xVec3Copy(&bound->sph.center, pos);
 
-        bound->sph.center.y += _1300;
-        bound->sph.r = _1300;
+        bound->sph.center.y += 0.7f;
+        bound->sph.r = 0.7f;
     }
 
     xBoundUpdate(bound);
@@ -1358,7 +1333,7 @@ void xEntBeginCollide(xEnt* ent, xScene*, F32)
         coll->flags = 0x1F00;
         coll->optr = NULL;
         coll->mptr = NULL;
-        coll->dist = _951;
+        coll->dist = FLOAT_MAX;
     }
 
     ent->collis->idx = 6;
@@ -1392,13 +1367,10 @@ void xEntCollCheckEnv(xEnt* p, xScene* sc)
 
     ncolls = 18 - p->collis->idx;
 
-    p->collis->idx += (U8)iSphereHitsEnv3(&p->bound.sph, sc->env, coll, ncolls, _1541);
+    p->collis->idx += (U8)iSphereHitsEnv3(&p->bound.sph, sc->env, coll, ncolls, 0.78539819f);
     p->collis->env_eidx = p->collis->idx;
 }
 
-#ifndef NON_MATCHING
-void xEntCollCheckOneGrid(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xScene*, void*), xGrid* grid);
-#else
 static void xEntCollCheckOneGrid(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xScene*, void*),
                                  xGrid* grid)
 {
@@ -1489,7 +1461,6 @@ static void xEntCollCheckOneGrid(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xSce
         cell = xGridIterNextCell(it);
     }
 }
-#endif
 
 void xEntCollCheckByGrid(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xScene*, void*))
 {
@@ -1539,7 +1510,6 @@ void xEntCollCheckNPCs(xEnt* p, xScene* sc, xEnt* (*hitIt)(xEnt*, xScene*, void*
     p->collis->npc_eidx = p->collis->idx;
 }
 
-#ifdef NON_MATCHING
 xEnt* xEntCollCheckOneEntNoDepen(xEnt* ent, xScene* sc, void* data)
 {
     xent_entent = 1;
@@ -1600,7 +1570,7 @@ xEnt* xEntCollCheckOneEntNoDepen(xEnt* ent, xScene* sc, void* data)
             {
                 xModelInstance* r4 = (ent->collModel) ? ent->collModel : ent->model;
                 ncolls = 15 - p->collis->idx;
-                idx = iSphereHitsModel3(&p->bound.sph, r4, coll, ncolls, _1541);
+                idx = iSphereHitsModel3(&p->bound.sph, r4, coll, ncolls, 0.78539819f);
             }
             else if (p->bound.type == XBOUND_TYPE_BOX)
             {
@@ -1610,17 +1580,17 @@ xEnt* xEntCollCheckOneEntNoDepen(xEnt* ent, xScene* sc, void* data)
                 tmp.type = XBOUND_TYPE_SPHERE;
 
                 xVec3Add(&tmp.sph.center, upper, lower);
-                xVec3SMulBy(&tmp.sph.center, _1435);
+                xVec3SMulBy(&tmp.sph.center, 0.5f);
 
                 F32 rsum = upper->x + upper->y + upper->z - lower->x - lower->y - lower->z;
 
-                tmp.sph.r = _1724 * rsum;
+                tmp.sph.r = 0.167f * rsum;
 
                 // none of the code above is used for anything... maybe debug stuff
 
                 xModelInstance* r4 = (ent->collModel) ? ent->collModel : ent->model;
                 ncolls = 15 - p->collis->idx;
-                idx = iSphereHitsModel3(&p->bound.sph, r4, coll, ncolls, _1541);
+                idx = iSphereHitsModel3(&p->bound.sph, r4, coll, ncolls, 0.78539819f);
             }
 
             // idx might be undefined here...!
@@ -1645,7 +1615,7 @@ xEnt* xEntCollCheckOneEntNoDepen(xEnt* ent, xScene* sc, void* data)
             p->collis->idx++;
 
             if (ent->pflags & 0x20 && ent->bound.type == XBOUND_TYPE_SPHERE &&
-                p->bound.type == XBOUND_TYPE_SPHERE && coll->hdng.y < _1725)
+                p->bound.type == XBOUND_TYPE_SPHERE && coll->hdng.y < -0.866025f)
             {
                 F32 dx = p->bound.sph.center.x - ent->bound.sph.center.x;
                 F32 dy = p->bound.sph.center.y - ent->bound.sph.center.y;
@@ -1654,15 +1624,15 @@ xEnt* xEntCollCheckOneEntNoDepen(xEnt* ent, xScene* sc, void* data)
                 // non-matching: can't seem to generate a fmsubs here
                 F32 hsqr = SQR(p->bound.sph.r + ent->bound.sph.r) - (SQR(dx) + SQR(dz));
 
-                if (hsqr >= _942)
+                if (hsqr >= 0.0f)
                 {
-                    coll->depen.x = _942;
+                    coll->depen.x = 0.0f;
                     coll->depen.y = xsqrt(hsqr) - dy;
-                    coll->depen.z = _942;
-                    coll->dist = _1300 - coll->depen.y;
-                    coll->hdng.x = _942;
-                    coll->hdng.y = _950;
-                    coll->hdng.z = _942;
+                    coll->depen.z = 0.0f;
+                    coll->dist = 0.7f - coll->depen.y;
+                    coll->hdng.x = 0.0f;
+                    coll->hdng.y = -1.0f;
+                    coll->hdng.z = 0.0f;
                 }
             }
         }
@@ -1671,7 +1641,6 @@ xEnt* xEntCollCheckOneEntNoDepen(xEnt* ent, xScene* sc, void* data)
     xent_entent = 0;
     return ent;
 }
-#endif
 
 void xEntCollideFloor(xEnt* p, xScene* sc, F32 dt)
 {
@@ -1689,13 +1658,13 @@ void xEntCollideFloor(xEnt* p, xScene* sc, F32 dt)
     }
     else
     {
-        sbr = _1300;
+        sbr = 0.7f;
     }
 
     xVec3Copy(&motion, &p->frame->mat.pos);
     xVec3SubFrom(&motion, &p->frame->oldmat.pos);
 
-    motion.y = _942;
+    motion.y = 0.0f;
     mlen = xVec3Length(&motion);
 
     for (idx = 6; idx < p->collis->idx; idx++)
@@ -1709,7 +1678,7 @@ void xEntCollideFloor(xEnt* p, xScene* sc, F32 dt)
             if (fent)
             {
                 if ((fent->collType == XENT_COLLTYPE_DYN || fent->collType == XENT_COLLTYPE_STAT) ||
-                    (fent->pflags & 0x20 && _942 == mf->hdng.x && _942 == mf->hdng.z))
+                    (fent->pflags & 0x20 && 0.0f == mf->hdng.x && 0.0f == mf->hdng.z))
                 {
                     if (!((p->collis->depenq) ?
                               p->collis->depenq(p, fent, sc, dt, mf) :
@@ -1730,14 +1699,14 @@ void xEntCollideFloor(xEnt* p, xScene* sc, F32 dt)
 
             if (mf->dist < ml->dist)
             {
-                if (mf->hdng.y < -icos(_1818) &&
+                if (mf->hdng.y < -icos(PI/3) &&
                     (mf->norm.y > icos(nsn_angle) ||
                      p->frame->oldmat.pos.y > dt * (sc->gravity * dt) + p->frame->mat.pos.y))
                 {
                     ml = mf;
                     stepping = 0;
                 }
-                else if (mlen > _1819 && mf->hdng.y < _1820 / sbr - _780 &&
+                else if (mlen > 0.001f && mf->hdng.y < 0.65f / sbr - 1.0f &&
                          mf->norm.y > icos(nsn_angle))
                 {
                     stepping = 1;
@@ -1760,7 +1729,7 @@ void xEntCollideFloor(xEnt* p, xScene* sc, F32 dt)
 
             if (stepping)
             {
-                p->frame->mat.pos.y += _1821 * dt;
+                p->frame->mat.pos.y += 1.5f * dt;
                 p->frame->mat.pos.x += ml->depen.x;
                 p->frame->mat.pos.z += ml->depen.z;
             }
@@ -1769,7 +1738,7 @@ void xEntCollideFloor(xEnt* p, xScene* sc, F32 dt)
                 p->frame->mat.pos.y += ml->depen.y;
             }
 
-            p->frame->vel.y = _942;
+            p->frame->vel.y = 0.0f;
         }
     }
 }
@@ -1787,7 +1756,7 @@ void xEntCollideCeiling(xEnt* p, xScene* sc, F32 dt)
     }
     else
     {
-        sbr = _1300;
+        sbr = 0.7f;
     }
 
     for (idx = 6; idx < p->collis->idx; idx++)
@@ -1809,7 +1778,7 @@ void xEntCollideCeiling(xEnt* p, xScene* sc, F32 dt)
             continue;
         }
 
-        if (mf->hdng.y > icos(_1541) && mf->dist < ml->dist)
+        if (mf->hdng.y > icos(0.78539819f) && mf->dist < ml->dist)
         {
             ml = mf;
         }
@@ -1826,7 +1795,7 @@ void xEntCollideCeiling(xEnt* p, xScene* sc, F32 dt)
         if (ceil_dist < sbr)
         {
             p->frame->mat.pos.y -= sbr - ceil_dist;
-            p->frame->vel.y = _942;
+            p->frame->vel.y = 0.0f;
         }
     }
 }
@@ -1887,7 +1856,7 @@ void xEntCollideWalls(xEnt* p, xScene* sc, F32 dt)
                 ((p->collis->depenq) ? p->collis->depenq(p, cent, sc, dt, coll) :
                                        cent->penby & p->collType))
             {
-                coll->depen.y = _942;
+                coll->depen.y = 0.0f;
 
                 xEntAddToPos(p, &coll->depen);
             }
@@ -1910,7 +1879,7 @@ void xEntCollideWalls(xEnt* p, xScene* sc, F32 dt)
                 ((p->collis->depenq) ? p->collis->depenq(p, cent, sc, dt, coll) :
                                        cent->penby & p->collType))
             {
-                coll->depen.y = _942;
+                coll->depen.y = 0.0f;
 
                 xEntAddToPos(p, &coll->depen);
             }
@@ -1931,7 +1900,7 @@ void xEntCollideWalls(xEnt* p, xScene* sc, F32 dt)
 
             if (!(coll->flags & 0x2) && coll->dist < sbr)
             {
-                coll->depen.y = _942;
+                coll->depen.y = 0.0f;
 
                 xEntAddToPos(p, &coll->depen);
             }
@@ -2018,12 +1987,12 @@ void xEntInitShadow(xEnt& ent, xEntShadow& shadow)
 {
     ent.entShadow = &shadow;
 
-    shadow.vec.assign(_942, _780, _942);
+    shadow.vec.assign(0.0f, 1.0f, 0.0f);
     shadow.pos = ent.asset->pos;
     shadow.shadowModel = NULL;
-    shadow.dst_cast = _950;
-    shadow.radius[0] = _950;
-    shadow.radius[1] = _950;
+    shadow.dst_cast = -1.0f;
+    shadow.radius[0] = -1.0f;
+    shadow.radius[1] = -1.0f;
 }
 
 xVec3& xVec3::operator-=(F32 f)
