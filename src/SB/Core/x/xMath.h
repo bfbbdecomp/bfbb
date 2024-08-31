@@ -27,6 +27,8 @@
 #define DEG2RAD(x) ((PI) * (x) / (ONEEIGHTY))
 #define RAD2DEG(x) ((ONEEIGHTY) * (x) / (PI))
 
+#define FLOAT_MAX 1e38f
+
 struct xFuncPiece
 {
     F32 coef[5];

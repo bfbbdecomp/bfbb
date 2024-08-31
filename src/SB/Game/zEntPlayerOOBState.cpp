@@ -55,8 +55,8 @@ float oob_state::oob_timer()
 
 void oob_state::in_state_type::start()
 {
-    shared.reset_time = 1e38;
-    shared.out_time = 1e38;
+    shared.reset_time = FLOAT_MAX;
+    shared.out_time = FLOAT_MAX;
     shared.control = 0;
 };
 
