@@ -47,7 +47,7 @@ U32 iVolFromX(F32 param1)
     float f = MAX(param1, 1e-20f);
 
     S32 i = 43.43f * xlog(f);
-    S32 comp = i & (i >> 0x1f);
+    S32 comp = MIN(i, 0);
 
     if (comp < -0x388)
     {
@@ -55,7 +55,7 @@ U32 iVolFromX(F32 param1)
     }
     else
     {
-        return i & (i >> 0x3f);
+        return MIN(i, 0);
     }
 }
 
