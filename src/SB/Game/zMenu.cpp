@@ -250,17 +250,13 @@ U32 zMenuLoop()
 
         if (globals.sceneCur->pendingPortal)
         {
-            // NOTE (Square): The original compiler emitted a seemingly redundant clrlwi r0,r5,24
-            // instruction before storing src[0] in tgt[3]. This is confusing because the
-            // upper 24 bits should already be zero. There may be a different way of doing
-            // this byte swap.
             char* src = (char*)&globals.sceneCur->pendingPortal->passet->sceneID;
             char* tgt = (char*)&s;
             tgt[0] = src[3];
             tgt[1] = src[2];
             tgt[2] = src[1];
             tgt[3] = src[0];
-            if (src[0] < '0' || src[0] > '9')
+            if (tgt[3] < '0' || tgt[3] > '9')
             {
                 memcpy(tgt, src, sizeof(U32));
             }

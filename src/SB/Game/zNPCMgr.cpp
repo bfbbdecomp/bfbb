@@ -34,7 +34,6 @@ void zNPCMgr_Startup()
 
 #endif
 
-#if 0
 // Doesn't set r4 to 1 before calling the delete operator...
 void zNPCMgr_Shutdown()
 {
@@ -52,8 +51,6 @@ void zNPCMgr_Shutdown()
         xBehaveMgr_Shutdown();
     }
 }
-
-#endif
 
 void zNPCMgr_scenePrepare(S32 npccnt)
 {
@@ -131,30 +128,30 @@ void zNPCMgr::ScenePrepare(S32 npccnt)
 
 #endif
 
-#if 0
-// Yeah good luck getting it to spit out an li instead of doing a shift.
 S32 zNPCMgr_OrdComp_npcid(void* vkey, void* vitem)
 {
-    U32 key = *(U32*)vkey;
-    U32 item = *(U32*)vitem;
+    S32 rc;
+    U32 item;
+    U32 key;
+
+    key = *(U32*)vkey;
+    item = *(U32*)vitem;
     if (key < item)
     {
-        return -1;
+        rc = -1;
+    }
+    else if (key > item)
+    {
+        rc = 1;
     }
     else
     {
-        if (key > item)
-        {
-            return 1;
-        }
-        else
-        {
-            return 0;
-        }
+        rc = 0;
     }
+
+    return rc;
 }
 
-#endif
 
 zNPCMgr::zNPCMgr()
 {

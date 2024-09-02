@@ -72,7 +72,6 @@ void ZNPC_Destroy_Duplotron(xFactoryInst* inst)
     delete inst;
 }
 
-#if 0
 // 100% match that needs the full vtable to be filled out
 // because it induces vtable generation
 void zNPCDuplotron::SelfSetup()
@@ -86,7 +85,6 @@ void zNPCDuplotron::SelfSetup()
     psy->BrainEnd();
     psy->SetSafety(0x4E474430);
 }
-#endif
 
 #if 0
 // non-matching: scheduling?

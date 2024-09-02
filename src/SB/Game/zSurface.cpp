@@ -7,6 +7,8 @@
 #include <types.h>
 #include <string.h>
 
+#include "xMath.h"
+
 extern volatile S32 sMapperCount;
 extern zMaterialMapAsset* sMapper[1];
 
@@ -137,18 +139,14 @@ U8 zSurfaceOutOfBounds(const xSurface& s)
     return 0;
 }
 
-#if 0
-// Float issues
 F32 zSurfaceGetSlideStartAngle(const xSurface* surf)
 {
     if (surf->moprops)
     {
-        return (lbl_803CDEE0 * ((zSurfaceProps*)surf->moprops)->asset->sld_start - lbl_803CDEE4) /
-               lbl_803CDEF0;
+        return ((((zSurfaceProps*)surf->moprops)->asset->sld_start) * PI) / 176.0f;
     }
-    return lbl_803CDEE8;
+    return PI / 9;
 }
-#endif
 
 U32 zSurfaceGetMatchOrient(const xSurface* surf)
 {

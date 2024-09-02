@@ -37,7 +37,6 @@ S32 iSGShutdown()
     return 1;
 }
 
-#if 0
 // WIP
 char* iSGMakeName(en_NAMEGEN_TYPE type, const char* base, S32 idx)
 {
@@ -74,7 +73,6 @@ char* iSGMakeName(en_NAMEGEN_TYPE type, const char* base, S32 idx)
 
     return use_buf;
 }
-#endif
 
 #if 0
 // Struct definition is screwed up.
