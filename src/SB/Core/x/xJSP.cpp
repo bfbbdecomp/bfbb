@@ -21,26 +21,16 @@ RpAtomic* CountAtomicCB(RpAtomic* atomic, U32* param_2)
     return atomic;
 }
 
-#if 0
-RpMesh* AddMeshCB(RpMesh* mesh, RpMeshHeader* header, RwV3d** param_3)
+static RpMesh* AddMeshCB(RpMesh* mesh, RpMeshHeader* header, void* param_3)
 {
-    U32 i = 0;
-    S32 counter = 0;
-
-    // the loop looks accurate, but it seems like
-    // the original function uses much more of the stack?
-    while (i < mesh->numIndices)
+    for (int i = 0; i < mesh->numIndices; i++)
     {
-        **param_3 = sCurrVert[*mesh->indices + counter];
-
-        counter = counter + 2;
-        i = i + 1;
-        *param_3 = *param_3 + 1;
+        **(RwV3d**)(param_3) = sCurrVert[mesh->indices[i]];
+        *((S32*)(param_3)) += sizeof(RwV3d);
     }
 
     return mesh;
 }
-#endif
 
 #if 0
 // ¯\_(ツ)_/¯

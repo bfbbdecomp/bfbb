@@ -36,15 +36,11 @@ void zLightOn(_zLight* zl, S32 on)
     }
 }
 
-#if 0
-// WIP.
-F32 leGetRandom()
+static F32 leGetRandom()
 {
-    U32 rnd = rand();
-    return ((float)(rnd & 0xffff) - lbl_803CDB68) / lbl_803CDB60;
+    F32 ret = (U16)rand() / (F32)0xffff;
+    return ret;
 }
-
-#endif
 
 void zLightEffectInitStrobe(_zLight* zlight)
 {

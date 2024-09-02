@@ -11,7 +11,7 @@ typedef void (*lightInitFunc)(_zLight*);
 
 void zLightEffectSet(_zLight* zlight, S32 idx);
 void zLightOn(_zLight* zl, S32 on);
-F32 leGetRandom();
+static F32 leGetRandom();
 void zLightEffectInitStrobe(_zLight* zlight);
 void zLightEffectInitDim(_zLight* zlight);
 void zLightEffectInitHalfDim(_zLight* zlight);

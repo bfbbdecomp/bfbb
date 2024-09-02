@@ -104,21 +104,17 @@ S32 iScrFxMotionBlurOpen(RwCamera* camera)
     return 0;
 }
 
-#if 0
-// Something strange going one here.
 S32 iScrFxCameraDestroyed(RwCamera* pCamera)
 {
     GCMB_KillFrameBufferCopy();
-    bool ret = sMBD.motionBlurFrontBuffer != NULL;
-    if (ret)
+    if (sMBD.motionBlurFrontBuffer != NULL)
     {
         RwRasterDestroy(sMBD.motionBlurFrontBuffer);
         sMBD.motionBlurFrontBuffer = NULL;
+        return 1;
     }
-    return ret;
+    return 0;
 }
-
-#endif
 
 #if 0
 // WIP.
