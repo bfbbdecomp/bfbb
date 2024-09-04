@@ -236,8 +236,29 @@ void PADReset(u32 mask);
 void AXQuit();
 void AXFreeVoice(_AXVPB*);
 void OSSetSoundMode(u32 mode);
-s32 CARDProbeEx(s32, s32*, s32*);
 void VIWaitForRetrace();
+
+#define CARD_RESULT_UNLOCKED 1
+#define CARD_RESULT_READY 0
+#define CARD_RESULT_BUSY -1
+#define CARD_RESULT_WRONGDEVICE -2
+#define CARD_RESULT_NOCARD -3
+#define CARD_RESULT_NOFILE -4
+#define CARD_RESULT_IOERROR -5
+#define CARD_RESULT_BROKEN -6
+#define CARD_RESULT_EXIST -7
+#define CARD_RESULT_NOENT -8
+#define CARD_RESULT_INSSPACE -9
+#define CARD_RESULT_NOPERM -10
+#define CARD_RESULT_LIMIT -11
+#define CARD_RESULT_NAMETOOLONG -12
+#define CARD_RESULT_ENCODING -13
+#define CARD_RESULT_CANCELED -14
+#define CARD_RESULT_FATAL_ERROR -128
+
+void CARDInit(void);
+s32 CARDUnmount(s32 chan);
+s32 CARDProbeEx(s32 chan, s32* memSize, s32* sectorSize);
 
 #ifdef __cplusplus
 }
