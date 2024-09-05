@@ -3,28 +3,7 @@
 
 #include <types.h>
 
-struct sceMcStDateTime
-{
-    U8 Resv2;
-    U8 Sec;
-    U8 Min;
-    U8 Hour;
-    U8 Day;
-    U8 Month;
-    U16 Year;
-};
-
-struct sceMcTblGetDir
-{
-    sceMcStDateTime _Create;
-    sceMcStDateTime _Modify;
-    U32 FileSizeByte;
-    U16 AttrFile;
-    U16 Reserve1;
-    U32 Reserve2;
-    U32 PdaAplNo;
-    U8 EntryName[32];
-};
+#include <dolphin.h>
 
 enum en_ISG_IOMODE
 {
@@ -131,7 +110,15 @@ public:
 struct st_ISG_MEMCARD_DATA
 {
     S32 unk_0;
-    S32 unk_pad[75];
+    S32 unk_4;
+    S32 sectorSize;
+    CARDFileInfo unk_c;
+    CARDStat unk_20;
+    S32 unk_pad5[4];
+    CARDFileInfo unk_9c;
+    CARDStat unk_b0;
+    S32 unk_pad6[4];
+    S32 unk_12c;
 };
 
 #define ISG_NUM_SLOTS 2

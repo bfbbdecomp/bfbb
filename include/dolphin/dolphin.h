@@ -167,26 +167,25 @@ typedef struct OSContext
     f64 psf[32];
 } OSContext;
 
-
 #define PAD_MAX_CONTROLLERS 4
 
-#define PAD_BUTTON_LEFT  0x0001
+#define PAD_BUTTON_LEFT 0x0001
 #define PAD_BUTTON_RIGHT 0x0002
-#define PAD_BUTTON_DOWN  0x0004
-#define PAD_BUTTON_UP    0x0008
-#define PAD_TRIGGER_Z    0x0010
-#define PAD_TRIGGER_R    0x0020
-#define PAD_TRIGGER_L    0x0040
-#define PAD_BUTTON_A     0x0100
-#define PAD_BUTTON_B     0x0200
-#define PAD_BUTTON_X     0x0400
-#define PAD_BUTTON_Y     0x0800
+#define PAD_BUTTON_DOWN 0x0004
+#define PAD_BUTTON_UP 0x0008
+#define PAD_TRIGGER_Z 0x0010
+#define PAD_TRIGGER_R 0x0020
+#define PAD_TRIGGER_L 0x0040
+#define PAD_BUTTON_A 0x0100
+#define PAD_BUTTON_B 0x0200
+#define PAD_BUTTON_X 0x0400
+#define PAD_BUTTON_Y 0x0800
 #define PAD_BUTTON_START 0x1000
 
-#define PAD_ERR_NONE           0
+#define PAD_ERR_NONE 0
 #define PAD_ERR_NO_CONTROLLER -1
-#define PAD_ERR_NOT_READY     -2
-#define PAD_ERR_TRANSFER      -3
+#define PAD_ERR_NOT_READY -2
+#define PAD_ERR_TRANSFER -3
 
 typedef struct PADStatus
 {
@@ -238,6 +237,19 @@ void AXFreeVoice(_AXVPB*);
 void OSSetSoundMode(u32 mode);
 void VIWaitForRetrace();
 
+#define CARD_FILENAME_MAX 32
+#define CARD_MAX_FILE 127
+#define CARD_ICON_MAX 8
+
+typedef struct CARDFileInfo
+{
+    /*0x00*/ s32 chan;
+    /*0x04*/ s32 fileNo;
+    /*0x08*/ s32 offset;
+    /*0x0C*/ s32 length;
+    /*0x10*/ u16 iBlock;
+} CARDFileInfo;
+
 #define CARD_RESULT_UNLOCKED 1
 #define CARD_RESULT_READY 0
 #define CARD_RESULT_BUSY -1
@@ -256,9 +268,37 @@ void VIWaitForRetrace();
 #define CARD_RESULT_CANCELED -14
 #define CARD_RESULT_FATAL_ERROR -128
 
+// CARDBios.h
 void CARDInit(void);
-s32 CARDUnmount(s32 chan);
+s32 CARDFreeBlocks(s32 chan, s32* byteNotUsed, s32* filesNotUsed);
+s32 CARDGetEncoding(s32 chan, u16* encode);
+s32 CARDGetSectorSize(s32 chan, u32* size);
+// CARDMount.h
 s32 CARDProbeEx(s32 chan, s32* memSize, s32* sectorSize);
+s32 CARDUnmount(s32 chan);
+// CARDCheck.h
+s32 CARDCheckEx(s32 chan, s32* xferBytes);
+// CARDStat.h
+typedef struct CARDStat
+{
+    /*0x00*/ char fileName[CARD_FILENAME_MAX];
+    /*0x20*/ u32 length;
+    /*0x24*/ u32 time;
+    /*0x28*/ u8 gameName[4];
+    /*0x2C*/ u8 company[2];
+    /*0x2E*/ u8 bannerFormat;
+    /*0x30*/ u32 iconAddr;
+    /*0x34*/ u16 iconFormat;
+    /*0x36*/ u16 iconSpeed;
+    /*0x38*/ u32 commentAddr;
+    /*0x3C*/ u32 offsetBanner;
+    /*0x40*/ u32 offsetBannerTlut;
+    /*0x44*/ u32 offsetIcon[CARD_ICON_MAX];
+    /*0x64*/ u32 offsetIconTlut;
+    /*0x68*/ u32 offsetData;
+} CARDStat;
+// CARDRead.h
+s32 CARDRead(struct CARDFileInfo* fileInfo, void* buf, s32 length, s32 offset);
 
 #ifdef __cplusplus
 }
