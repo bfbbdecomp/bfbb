@@ -92,7 +92,8 @@ namespace
         {
             for (long i = namelen - 1; i >= 0; i--)
             {
-                if ((char)name[i] < '0' || (char)name[i] > '9')
+                U8 c = (U8)(name[i]);
+                if (c < '0' || c > '9')
                 {
                     size = i + 1;
 
@@ -226,59 +227,48 @@ extern F32 blues_scale[6];
 
 namespace
 {
-
-#ifndef NON_MATCHING
-    void play_sound(z_disco_floor& df);
-#else
     void play_sound(z_disco_floor& df)
     {
         xVec3 var_48;
 
         xVec3Sub(&var_48, &df.bound.center, (xVec3*)&globals.player.ent.model->Mat->pos);
 
-        // non-matching: regalloc
-        if (xVec3Length2(&var_48) < SQR(df.bound.r) * SQR(_908))
+        if (xVec3Length2(&var_48) < SQR(df.bound.r) * SQR(1.5f) * SQR(1.5f))
         {
             df.curr_note++;
 
             if (df.curr_note >= 5)
             {
-                df.curr_note = _909_1 * -xurand() - _909_1;
+                df.curr_note = 5.0f * -xurand() - 5.0f;
             }
 
-            F32 pitch, pitch_offset;
+            F32 pitch = (df.curr_note >= 0) ? close_encounters[df.curr_note] : blues_scale[(S32)(6.0f * xurand() - 0.01f)];
+            F32 pitch_offset = pitch;
 
-            if (df.curr_note >= 0)
+            if (df.transition_delay < 0.05f)
             {
-                pitch = close_encounters[df.curr_note];
+                pitch_offset += 17.0f;
+            }
+            else if (df.transition_delay > 1.0f)
+            {
+                pitch_offset += -10.0f;
             }
             else
             {
-                pitch = blues_scale[(S32)(_910 * xurand() - _911_1)];
+                F32 tmp = (df.transition_delay - 0.05f);
+                tmp /= 0.95f;
+                tmp = (1.0f - tmp) * 27.0f;
+                tmp += -10.0f;
+
+                pitch_offset += tmp;
             }
 
-            if (df.transition_delay < _912)
-            {
-                pitch_offset = pitch + _913_0;
-            }
-            else if (df.transition_delay > _710_2)
-            {
-                pitch_offset = pitch + _914_0;
-            }
-            else
-            {
-                // non-matching: fmadds
-                pitch_offset =
-                    pitch + _916_0 * (_710_2 - (df.transition_delay - _912) / _915) + _914_0;
-            }
+            xSndPlay3D(xStrHash(_stringBase0_89 + 5), 0.231f, pitch_offset, 0, 0, &df.bound.center,
+                       0.75f * df.bound.r, 1.5f * df.bound.r, SND_CAT_GAME, 0.0f);
 
-            xSndPlay3D(xStrHash(_stringBase0_89 + 5), _917_1, pitch_offset, 0, 0, &df.bound.center,
-                       _918_1 * df.bound.r, _908 * df.bound.r, SND_CAT_GAME, _919_1);
-
-            df.sound_delay = _919_1;
+            df.sound_delay = 0.0f;
         }
     }
-#endif
 
     size_t state_byte_size(size_t mask_size);
 
@@ -627,7 +617,6 @@ void z_disco_floor::init(void* ent, void* asset)
     ((z_disco_floor*)ent)->load(*(z_disco_floor_asset*)asset);
 }
 
-#ifdef NON_MATCHING
 void z_disco_floor::load(z_disco_floor_asset& asset)
 {
     xBaseInit(this, &asset);
@@ -636,12 +625,12 @@ void z_disco_floor::load(z_disco_floor_asset& asset)
     this->asset = &asset;
     eventFunc = event_handler;
 
-    if (linkCount)
+    if (linkCount != 0)
     {
         link = (xLinkAsset*)(&asset + 1);
     }
 
-    char* data = (char*)((xBaseAsset*)this + 1);
+    char* data = (char*)(&asset.flags);
 
     prefix[0] = data + asset.prefix_offset.off;
     prefix[1] = data + asset.prefix_offset.transition;
@@ -659,31 +648,28 @@ void z_disco_floor::load(z_disco_floor_asset& asset)
     active_state_mask = (U8*)xMemAllocSize(state_byte_size(asset.state_mask_size));
     next_state_mask = (U8*)xMemAllocSize(state_byte_size(asset.state_mask_size));
 
-    if (asset.interval.transition < _919_1)
+    if (asset.interval.transition < 0.0f)
     {
-        asset.interval.transition = _1129;
+        asset.interval.transition = 0.25f;
     }
 
-    if (asset.interval.state < _919_1)
+    if (asset.interval.state < 0.0f)
     {
-        asset.interval.state = _710_2;
+        asset.interval.state = 1.0f;
     }
 
     flag.enabled = (asset.flags & 0x2) && (tiles_size != 0);
 
-    sound_delay = _919_1;
+    sound_delay = 0.0f;
 
-    // non-matching: _909_1 is saved in extra register
-    curr_note = _909_1 * -xurand() - _909_1;
+    curr_note = 5.0f * -xurand() - 5.0f;
 }
-#endif
 
 namespace
 {
     void add_tweaks(z_disco_floor&);
 }
 
-#ifdef NON_MATCHING
 void z_disco_floor::setup()
 {
     current_disco_floor = id;
@@ -725,24 +711,12 @@ void z_disco_floor::setup()
         }
     }
 
-    S32 i;
-    U32 j = 0x10;
-
-    // non-matching: j keeps getting reloaded
-
-    for (i = 0; i < tiles_size; i++)
+    for (S32 i = 0; i < 3; i++)
     {
-        tiles[0][i].ent->sflags = j;
-    }
-
-    for (i = 0; i < tiles_size; i++)
-    {
-        tiles[1][i].ent->sflags = j;
-    }
-
-    for (i = 0; i < tiles_size; i++)
-    {
-        tiles[2][i].ent->sflags = j;
+        for (U32 j = 0; j < tiles_size; j++)
+        {
+            tiles[i][j].ent->sflags = 0x10;
+        }
     }
 
     refresh_spheres();
@@ -751,7 +725,6 @@ void z_disco_floor::setup()
     reset();
     add_tweaks(*this);
 }
-#endif
 
 namespace
 {
@@ -935,26 +908,22 @@ void z_disco_floor::refresh_spheres()
     }
 }
 
-#ifdef NON_MATCHING
 void z_disco_floor::update_pulse(F32 dt)
 {
-    pulse_time += _1174_0 * dt;
+    pulse_time += (2 * PI) * dt;
     pulse_time = xrmod(pulse_time);
 
-    // non-matching: _1270_1 is saved in extra register
+    F32 f2 = 0.5f * isin(pulse_time) + 0.5f;
 
-    F32 f2 = _1270_1 * isin(pulse_time) + _1270_1;
+    pulse_glow[0] = 0.1f * f2 + 0.1f;
+    pulse_glow[0] *= glow_fade;
 
-    pulse_glow[0] = _1260_1 * f2 + _1260_1;
-    pulse_glow[0] += glow_fade;
+    pulse_glow[1] = 0.2f * f2 + 0.2f;
+    pulse_glow[1] *= glow_fade;
 
-    pulse_glow[1] = _1271_0 * f2 + _1271_0;
-    pulse_glow[1] += glow_fade;
-
-    pulse_glow[2] = _1273_0 * f2 + _1272;
-    pulse_glow[2] += glow_fade;
+    pulse_glow[2] = 0.3f * f2 + 0.2f;
+    pulse_glow[2] *= glow_fade;
 }
-#endif
 
 void z_disco_floor::refresh_cull_dist()
 {
