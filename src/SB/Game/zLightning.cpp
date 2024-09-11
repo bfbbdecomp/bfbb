@@ -7,7 +7,7 @@
 #include <rwcore.h>
 
 extern _tagLightningAdd gLightningTweakAddInfo;
-extern zLightning* sLightning[12];
+extern zLightning* sLightning[0x30];
 extern RwRaster* sLightningRaster;
 extern xVec3 sTweakStart;
 extern xVec3 sTweakEnd;
@@ -63,7 +63,7 @@ void zLightningRender()
     }
     RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
     RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDONE);
-    for (S32 i = 0; i < (S32)sizeof(sLightning); i++)
+    for (S32 i = 0; i < (S32)(sizeof(sLightning) / sizeof(zLightning*)); i++)
     {
         if (sLightning[i] != NULL && (sLightning[i]->flags & 0x41) == 0x41)
         {
@@ -91,7 +91,7 @@ void zLightningKill(zLightning* l)
 
 static zLightning* FindFreeLightning()
 {
-    for (int i = 0; i != sizeof(sLightning); i++)
+    for (int i = 0; i != (sizeof(sLightning) / sizeof(zLightning*)); i++)
     {
         if (sLightning[i] != NULL)
         {
