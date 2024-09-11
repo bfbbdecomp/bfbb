@@ -14,6 +14,10 @@ extern xVec3 sTweakEnd;
 
 extern char stringBase0[];
 
+void xDebugAddTweak(const char*, F32*, F32, F32, const tweak_callback*, void*, U32)
+{
+}
+
 void lightningTweakChangeType(const tweak_info& t)
 {
     // "Lightning|\x01Type Info"
@@ -115,10 +119,6 @@ void xDebugAddTweak(const char*, S16*, S16, S16, const tweak_callback*, void*, U
 }
 
 void xDebugAddTweak(const char*, U8*, U8, U8, const tweak_callback*, void*, U32)
-{
-}
-
-void xDebugAddTweak(const char*, F32*, F32, F32, const tweak_callback*, void*, U32)
 {
 }
 

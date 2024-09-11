@@ -108,8 +108,6 @@ void xDebugAddSelectTweak(char* name, U32* param_2, char** param_3, U32* param_4
                           tweak_callback* callback, void* param_7, U32 param_8);
 void xDebugAddTweak(char* name, S16* property, S16 param_3, S16 param_4, tweak_callback* callback,
                     void* param_6, U32 param_7);
-void xDebugAddTweak(char* name, F32* property, F32 param_3, F32 param_4, tweak_callback* callback,
-                    void* param_6, U32 param_7);
 
 void zLightningInit();
 void zLightningUpdate(F32 seconds);
