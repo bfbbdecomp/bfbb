@@ -91,7 +91,6 @@ struct zLightning
 void lightningTweakChangeType(tweak_info& t);
 void lightningTweakStart(tweak_info& t);
 void zLightningInit();
-zLightning* FindFreeLightning();
 zLightning* zLightningAdd(_tagLightningAdd* add);
 void UpdateLightning(zLightning* l, F32 seconds);
 void zLightningUpdate(F32 seconds);
@@ -108,6 +107,8 @@ void xDebugAddFlagTweak(char* name, U32* property, U32 param_3, tweak_callback* 
 void xDebugAddSelectTweak(char* name, U32* param_2, char** param_3, U32* param_4, U32 param_5,
                           tweak_callback* callback, void* param_7, U32 param_8);
 void xDebugAddTweak(char* name, S16* property, S16 param_3, S16 param_4, tweak_callback* callback,
+                    void* param_6, U32 param_7);
+void xDebugAddTweak(char* name, F32* property, F32 param_3, F32 param_4, tweak_callback* callback,
                     void* param_6, U32 param_7);
 
 void zLightningInit();
