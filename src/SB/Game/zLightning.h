@@ -91,7 +91,6 @@ struct zLightning
 void lightningTweakChangeType(tweak_info& t);
 void lightningTweakStart(tweak_info& t);
 void zLightningInit();
-zLightning* FindFreeLightning();
 zLightning* zLightningAdd(_tagLightningAdd* add);
 void UpdateLightning(zLightning* l, F32 seconds);
 void zLightningUpdate(F32 seconds);
