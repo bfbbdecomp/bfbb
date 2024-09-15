@@ -114,8 +114,6 @@ void zMusicInit()
     volume_reset();
 }
 
-// WIP.
-#ifdef NON_MATCHING
 // Correct, but won't work due to the switch case jump table (messes with offsets)
 S32 getCurrLevelMusicEnum()
 {
@@ -183,7 +181,6 @@ S32 getCurrLevelMusicEnum()
 
     return snd_enum;
 }
-#endif
 
 #if 0
 // Probably floating point memes idk

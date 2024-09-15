@@ -68,6 +68,42 @@ void xMovePointSplineDestroy(xMovePoint* m)
     }
 }
 
+void xMovePointSplineSetup(xMovePoint* m)
+{
+    xMovePoint* w0, *w1, *w2, *w3;
+    xVec3 points[2];
+    xVec3 p1, p2;
+
+    if (m->asset->bezIndex != 1) return;
+    if (m->spl) return;
+
+    w0 = m->prev;
+    w1 = m;
+    w2 = m->nodes[0];
+
+    points[0] = *w0->pos;
+    if (w2->asset->bezIndex > 0)
+    {
+        w3 = w2->nodes[0];
+        p1 = *w1->pos;
+        p2 = *w2->pos;
+        points[1] = *w3->pos;
+    }
+    else
+    {
+        p1.x = (1/3.f) * w0->pos->x + (2/3.f) * w1->pos->x;
+        p1.y = (1/3.f) * w0->pos->y + (2/3.f) * w1->pos->y;
+        p1.z = (1/3.f) * w0->pos->z + (2/3.f) * w1->pos->z;
+        p2.x = (2/3.f) * w1->pos->x + (1/3.f) * w2->pos->x;
+        p2.y = (2/3.f) * w1->pos->y + (1/3.f) * w2->pos->y;
+        p2.z = (2/3.f) * w1->pos->z + (1/3.f) * w2->pos->z;
+        points[1] = *w2->pos;
+    }
+
+    m->spl = xSpline3_Bezier(points, NULL, 2, 0, &p1, &p2);
+    xSpline3_ArcInit(m->spl, 20);
+}
+
 #if 0
 // If you uncomment the numPoints variable then this function is a perfect match
 // minus ordering. In the original assembly some variable fetches are lifted to
@@ -138,7 +174,7 @@ F32 xMovePointGetNext(xMovePoint* m, xMovePoint* prev, xMovePoint** next, xVec3*
 }
 #endif
 
-xVec3* xMovePointGetPos(xMovePoint* m)
+xVec3* xMovePointGetPos(const xMovePoint* m)
 {
     return m->pos;
 }

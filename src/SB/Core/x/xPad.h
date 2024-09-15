@@ -108,4 +108,6 @@ void xPadDestroyRumbleChain(_tagxPad* pad);
 void xPadDestroyRumbleChain(S32 idx);
 S32 xPadAddRumble(S32 idx, _tagRumbleType type, F32 time, S32 replace, U32 fxflags);
 
+void xPadAnalogIsDigital(F32, F32);
+
 #endif

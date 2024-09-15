@@ -54,6 +54,38 @@ void xPadRumbleEnable(S32 idx, S32 enable)
     }
 }
 
+void xPadAnalogIsDigital(S32 idx, S32 enable)
+{
+    if (idx != 0)
+        return;
+
+    _tagxPad* pad = &mPad[idx];
+
+    if (enable)
+    {
+        pad->flags |= 0x10;
+    }
+    else
+    {
+        pad->flags &= ~0x10;
+    }
+
+    if (pad->al2d_timer >= 0.35f)
+    {
+        pad->al2d_timer = 0.35f;
+    }
+
+    if (pad->ar2d_timer >= 0.35f)
+    {
+        pad->ar2d_timer = 0.35f;
+    }
+
+    if (pad->d_timer >= 0.35f)
+    {
+        pad->d_timer = 0.35f;
+    }
+}
+
 void xPadKill()
 {
     iPadKill();

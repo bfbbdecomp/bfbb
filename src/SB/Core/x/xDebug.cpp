@@ -1,18 +1,20 @@
 #include "xDebug.h"
+#include "xFont.h"
+
+#include "iColor.h"
 
 #include <types.h>
 
 U32 gFrameCount;
 
-extern F32 _781; // 0.0020833334f.
-extern F32 _783; // 0.0015625f.
+// Remaining weak definitions will match once referenced e.g. iColor_tag::operator=
 
 void xprintf(const char* msg, ...)
 {
     // Redacted. :}
 }
 
-S32 xDebugModeAdd(char* mode, void(*debugFunc))
+S32 xDebugModeAdd(const char* mode, void(*debugFunc)())
 {
     // Redacted. :}
     return -1;
@@ -45,10 +47,10 @@ void xtextbox::render(bool cache) const
 
 F32 NSCREENY(F32 scale)
 {
-    return _781 * scale;
+    return (1.0f / 480) * scale;
 }
 
 F32 NSCREENX(F32 scale)
 {
-    return _783 * scale;
+    return (1.0f / 640) * scale;
 }
