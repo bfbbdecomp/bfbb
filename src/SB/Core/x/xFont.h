@@ -32,6 +32,23 @@ struct xfont
     void irender(const char* text, F32 x, F32 y) const;
     void irender(const char* text, size_t text_size, F32 x, F32 y) const;
     void render(const char* text, F32 x, F32 y) const;
+
+    xfont& operator=(const xfont& rhs)
+    {
+        id = rhs.id;
+        width = rhs.width;
+        height = rhs.height;
+        space = rhs.space;
+
+        *(U32*)(&color) = *(U32*)(&rhs.color);
+
+        *(U32*)(&clip.x) = *(U32*)(&rhs.clip.x);
+        *(U32*)(&clip.y) = *(U32*)(&rhs.clip.y);
+        *(U32*)(&clip.w) = *(U32*)(&rhs.clip.w);
+        *(U32*)(&clip.h) = *(U32*)(&rhs.clip.h);
+
+        return *this;
+    }
 };
 
 struct xtextbox

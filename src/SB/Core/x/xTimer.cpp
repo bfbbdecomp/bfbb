@@ -34,6 +34,22 @@ void xTimerInit(void* b, void* tasset)
     xTimerInit((xBase*)b, (xTimerAsset*)tasset);
 }
 
+void xTimerSave(xTimer* ent, xSerial* s)
+{
+    xBaseSave(ent, s);
+
+    s->Write(ent->state);
+    s->Write(ent->secondsLeft);
+}
+
+void xTimerLoad(xTimer* ent, xSerial* s)
+{
+    xBaseLoad(ent, s);
+
+    s->Read(&ent->state);
+    s->Read(&ent->secondsLeft);
+}
+
 S32 xTimer_ObjIDIsPauseTimer(U32 id)
 {
     if (id == 0xCB3F6340) return TRUE;
