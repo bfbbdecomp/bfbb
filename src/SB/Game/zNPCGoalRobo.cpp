@@ -1,4 +1,5 @@
 #include "xVec3.h"
+#include "xMath.h"
 #include "xMath3.h"
 #include "zNPCGoalRobo.h"
 #include "zNPCTypeRobot.h"
@@ -369,6 +370,21 @@ void zNPCGoalAlertFodder::GetInArena(F32 dt)
     npc->ThrottleApply(dt, &dir, 0);
 }
 
+int zNPCGoalAttackFodder::CattleNotify::Notify(en_haznote hazNote, NPCHazard* haz)
+{
+    switch (hazNote)
+    {
+        case HAZ_NOTE_DISCARD:
+        case HAZ_NOTE_ABORT:
+            goal->haz_cattle = NULL;
+            break;
+        case HAZ_NOTE_HITPLAYER:
+            goal->flg_attack |= 3;
+            break;
+    }
+    return 0;
+}
+
 S32 zNPCGoalAttackFodder::Enter(F32 dt, void* updCtxt)
 {
     zNPCRobot* npc = (zNPCRobot*)this->psyche->clt_owner;
@@ -478,6 +494,20 @@ void zNPCGoalAlertFodBzzt::GetInArena(F32 dt)
 
     npc->ThrottleAdjust(dt, 6.0f, -1.0f);
     npc->ThrottleApply(dt, &dir, 0);
+}
+
+void zNPCGoalAlertFodBzzt::ToggleOrbit()
+{
+    if (flg_alert & 1)
+    {
+        flg_alert &= -2;
+        flg_alert |= 2;
+    }
+    else
+    {
+        flg_alert |= 1;
+        flg_alert &= -3;
+    }
 }
 
 void zNPCGoalAlertChomper::GetInArena(F32 dt)
@@ -711,8 +741,7 @@ S32 NPCArena::IncludesPlayer(F32 rad_thresh, xVec3* vec)
 
 S32 NPCArena::IsReady()
 {
-    // TODO: not matching, not sure what this is
-    return this->rad_arena == 1.0f; // @1130 check this float value
+    return rad_arena > 1.0f;
 }
 
 void NPCBattle::LeaveBattle(zNPCRobot*)
@@ -754,4 +783,116 @@ void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
     o->x = x;
     o->y = y;
     o->z = z;
+}
+
+S32 zNPCGoalDogPounce::NPCMessage(NPCMsg* mail)
+{
+    S32 ret = 0;
+    switch (mail->msgid)
+    {
+        case NPC_MID_DAMAGE:
+            flg_user = 1;
+            break;
+        default:
+            ret = 0;
+            break;
+    }
+    return ret;
+}
+
+S32 zNPCGoalDogPounce::Enter(F32 dt, void* updCtxt)
+{
+    flg_user = 0;
+    return zNPCGoalPushAnim::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalDogPounce::Exit(F32 dt, void* updCtxt)
+{
+    if (flg_user == 0)
+    {
+        Detonate();
+    }
+    return zNPCGoalPushAnim::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalDogBark::Enter(F32 dt, void* updCtxt)
+{
+    zNPCGoalLoopAnim::LoopCountSet(1);
+    return zNPCGoalLoopAnim::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalDogDash::Enter(F32 dt, void* updCtxt)
+{
+    zNPCGoalLoopAnim::LoopCountSet(1);
+    return zNPCGoalLoopAnim::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalAttackTarTar::Enter(F32 dt, void* updCtxt)
+{
+    ((zNPCCommon*)(psyche->clt_owner))->VelStop();
+
+    flg_pushanim |= 2;
+    idx_launch = 1;
+    flg_attack = 0;
+    xVec3Copy(&pos_aimbase, &g_O3);
+
+    return zNPCGoalPushAnim::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalAttackChomper::Enter(F32 dt, void* updCtxt)
+{
+    zNPCCommon* com = ((zNPCCommon*)(psyche->clt_owner));
+    com->VelStop();
+    com->SndPlayRandom(NPC_STYP_ATTACK);
+
+    return zNPCGoalPushAnim::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalEvilPat::Enter(F32 dt, void* updCtxt)
+{
+    zNPCCommon* com = ((zNPCCommon*)(psyche->clt_owner));
+
+    S32 typ = com->SelfType();
+
+    if ((typ - 'NT\0\0') == 'R3')
+    {
+        com->flg_vuln |= 0x80000000;
+    }
+
+    GlyphStart();
+
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalEvilPat::Exit(F32 dt, void* updCtxt)
+{
+    zNPCCommon* com = ((zNPCCommon*)(psyche->clt_owner));
+
+    S32 typ = com->SelfType();
+
+    if ((typ - 'NT\0\0') == 'R3')
+    {
+        com->flg_vuln &= 0x7FFFFFFF;
+    }
+
+    *(F32*)(&com->snd_queue[6].flg_snd) = -1.0f;
+
+    GlyphStop();
+
+    return xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalEvilPat::NPCMessage(NPCMsg* mail)
+{
+    zNPCRobot* npc = ((zNPCRobot*)(psyche->clt_owner)); // Var
+    switch (mail->msgid)
+    {
+        case NPC_MID_STUN:
+        F32 stuntime = mail->stundata.tym_stuntime;
+        F32 blah = (xurand() - 0.5f);
+        blah = 0.25f * blah;
+        *(F32*)(&npc->snd_queue[6].flg_snd) = stuntime + (stuntime * blah);
+        return 1;
+    }
+    return 0;
 }

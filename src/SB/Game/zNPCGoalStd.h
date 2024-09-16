@@ -385,6 +385,11 @@ class zNPCGoalEvilPat : public zNPCGoalCommon
     // total size: 0x4C
 public:
     zNPCGoalEvilPat(S32);
+    S32 Enter(F32 dt, void* updCtxt);
+    S32 Exit(F32 dt, void* updCtxt);
+    F32 GlyphStart();
+    F32 GlyphStop();
+    S32 NPCMessage(NPCMsg* mail);
 };
 
 class zNPCGoalPatCarry : public zNPCGoalCommon
@@ -651,17 +656,10 @@ struct zNPCGoalAlertFodBzzt : zNPCGoalCommon
     S32 Exit();
     S32 Enter(F32 dt, void* updCtxt);
     void GetInArena(F32 dt);
+    void ToggleOrbit();
 };
 
 struct zNPCGoalAttackFodder;
-
-struct CattleNotify : HAZNotify
-{
-    zNPCGoalAttackFodder* goal;
-
-    CattleNotify(S32 myType);
-    S32 Notify(en_haznote note);
-};
 
 class zNPCGoalAttackMonsoon : public zNPCGoalPushAnim
 {
@@ -676,6 +674,7 @@ class zNPCGoalAttackTarTar : public zNPCGoalPushAnim
     // total size: 0x68
 public:
     zNPCGoalAttackTarTar(S32);
+    S32 Enter(F32 dt, void* updCtxt);
     S32 flg_attack; // offset 0x54, size 0x4
     S32 idx_launch; // offset 0x58, size 0x4
     xVec3 pos_aimbase; // offset 0x5C, size 0xC
@@ -691,15 +690,25 @@ public:
     xVec3 pos_oldVert; // offset 0x64, size 0xC
     U32 streakID[2]; // offset 0x70, size 0x8
 };
+
 class zNPCGoalAttackChomper : public zNPCGoalPushAnim
 {
     // total size: 0x54
 public:
     zNPCGoalAttackChomper(S32);
+    S32 Enter(F32 dt, void* updCtxt);
 };
 
 struct zNPCGoalAttackFodder : zNPCGoalPushAnim
 {
+    struct CattleNotify : HAZNotify
+    {
+        zNPCGoalAttackFodder* goal;
+
+        CattleNotify(S32 myType);
+        S32 Notify(en_haznote note, NPCHazard*);
+    };
+
     xVec3 dir_attack;
     S32 flg_attack;
     CattleNotify cbNotify;
@@ -771,6 +780,8 @@ class zNPCGoalDogBark : public zNPCGoalLoopAnim
     // total size: 0x6C
 public:
     zNPCGoalDogBark(S32);
+
+    S32 Enter(F32 dt, void* updCtxt);
 };
 
 class zNPCGoalDamage : public zNPCGoalCommon
@@ -969,6 +980,10 @@ class zNPCGoalDogPounce : public zNPCGoalPushAnim
     // total size: 0x54
 public:
     zNPCGoalDogPounce(S32);
+    S32 NPCMessage(NPCMsg* mail);
+    S32 Enter(F32 dt, void* updCtxt);
+    S32 Exit(F32 dt, void* updCtxt);
+    void Detonate();
 };
 
 class zNPCGoalDogDash : public zNPCGoalLoopAnim
@@ -976,6 +991,7 @@ class zNPCGoalDogDash : public zNPCGoalLoopAnim
     // total size: 0x6C
 public:
     zNPCGoalDogDash(S32);
+    S32 Enter(F32 dt, void* updCtxt);
 };
 
 xFactoryInst* GOALCreate_Standard(S32 who, RyzMemGrow* grow, void*);
