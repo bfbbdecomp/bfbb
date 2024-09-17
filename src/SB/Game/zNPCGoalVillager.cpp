@@ -531,15 +531,19 @@ S32 zNPCGoalBoyWeep::Enter(F32 dt, void* updCtxt)
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
-// Equivalent: branching weirdness
 S32 zNPCGoalBoyWeep::NPCMessage(NPCMsg* mail)
 {
-    if (mail->msgid == NPC_MID_DAMAGE && mail->infotype == NPC_MDAT_DAMAGE &&
-        mail->dmgdata.dmg_type == DMGTYP_SIDE)
+    switch (mail->msgid)
     {
-        ang_spinrate += 16.0f;
-        zNPCBalloonBoy* npc = (zNPCBalloonBoy*)psyche->clt_owner;
-        npc->SndPlayRandom(NPC_STYP_EXCLAIM);
+    case NPC_MID_DAMAGE:
+        if (mail->infotype == NPC_MDAT_DAMAGE && mail->dmgdata.dmg_type == DMGTYP_SIDE)
+        {
+            ang_spinrate += 16.0f;
+            zNPCBalloonBoy* npc = (zNPCBalloonBoy*)psyche->clt_owner;
+            npc->SndPlayRandom(NPC_STYP_EXCLAIM);
+        }
+        break;
     }
+
     return 0;
 }
