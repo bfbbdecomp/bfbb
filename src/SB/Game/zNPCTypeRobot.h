@@ -178,6 +178,7 @@ struct zNPCFodBzzt : zNPCRobot
 
     zNPCFodBzzt(S32 myType);
     zNPCLassoInfo* PRIV_GetLassoData();
+    void DiscoReset();
 };
 
 struct zNPCChomper : zNPCRobot

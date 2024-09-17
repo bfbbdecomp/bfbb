@@ -10,8 +10,8 @@
 #include "zNPCGoalStd.h"
 #include "zNPCSupport.h"
 #include "zNPCGoals.h"
-
-F32 f_0 = 0.0f; // needed at file level to change scheduling for
+#include "zGameExtras.h"
+#include "zNPCSupport.h"
 
 xFactoryInst* GOALCreate_Robotic(S32 who, RyzMemGrow* grow, void*)
 {
@@ -200,7 +200,7 @@ xFactoryInst* GOALCreate_Robotic(S32 who, RyzMemGrow* grow, void*)
 S32 zNPCGoalAlertFodder::Enter(F32 dt, void* updCtxt)
 {
     flg_attack = 0;
-    tmr_alertfod = f_0; // need non-const float to get scheduling right
+    tmr_alertfod = 0.0f; // need non-const float to get scheduling right
     alertfod = FODDER_ALERT_NOTICE;
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
@@ -830,12 +830,10 @@ S32 zNPCGoalDogDash::Enter(F32 dt, void* updCtxt)
 S32 zNPCGoalAttackTarTar::Enter(F32 dt, void* updCtxt)
 {
     ((zNPCCommon*)(psyche->clt_owner))->VelStop();
-
     flg_pushanim |= 2;
     idx_launch = 1;
     flg_attack = 0;
     xVec3Copy(&pos_aimbase, &g_O3);
-
     return zNPCGoalPushAnim::Enter(dt, updCtxt);
 }
 
@@ -884,7 +882,7 @@ S32 zNPCGoalEvilPat::Exit(F32 dt, void* updCtxt)
 
 S32 zNPCGoalEvilPat::NPCMessage(NPCMsg* mail)
 {
-    zNPCRobot* npc = ((zNPCRobot*)(psyche->clt_owner)); // Var
+    zNPCRobot* npc = ((zNPCRobot*)(psyche->clt_owner));
     switch (mail->msgid)
     {
         case NPC_MID_STUN:
@@ -893,6 +891,236 @@ S32 zNPCGoalEvilPat::NPCMessage(NPCMsg* mail)
         blah = 0.25f * blah;
         *(F32*)(&npc->snd_queue[6].flg_snd) = stuntime + (stuntime * blah);
         return 1;
+    }
+    return 0;
+}
+
+S32 zNPCGoalEvilPat::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene)
+{
+    U32 nextgoal;
+
+    zNPCRobot* npc = ((zNPCRobot*)(psyche->clt_owner));
+
+    if (npc->tmr_stunned < 0.0f)
+    {
+        *trantype = GOAL_TRAN_SET;
+        nextgoal = 'NGR4';
+    }
+    else
+    {
+        *trantype = GOAL_TRAN_PUSH;
+        nextgoal = 'NGRa';
+    }
+
+    return (*trantype != GOAL_TRAN_NONE) ? nextgoal : xGoal::Process(trantype, dt, updCtxt, scene);
+}
+
+S32 zNPCGoalTaunt::Enter(F32 dt, void* updCtxt)
+{
+    zNPCCommon* npc = ((zNPCCommon*)(psyche->clt_owner));
+    npc->SndPlayRandom(NPC_STYP_LAUGH);
+    zNPCGoalLoopAnim::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalAttackArfMelee::Enter(F32 dt, void* updCtxt)
+{
+    zNPCCommon* npc = ((zNPCCommon*)(psyche->clt_owner));
+    FXStreakPrep();
+    npc->SndPlayRandom(NPC_STYP_PUNCH);
+    zNPCGoalPushAnim::Enter(dt, updCtxt);
+}
+
+void zNPCGoalAttackHammer::ModifyAnimSpeed()
+{
+    zNPCCommon* npc = ((zNPCCommon*)(psyche->clt_owner));
+    F32 speed = 1.5f;
+    U32 cheats = zGameExtras_CheatFlags();
+    if ((cheats & 0x800))
+    {
+        speed = 2.5f;
+    }
+    xAnimSingle* anim = npc->AnimCurSingle();
+    anim->CurrentSpeed = speed;
+}
+
+S32 zNPCGoalEvade::Enter(F32 dt, void* updCtxt)
+{
+    flg_evade = 0;
+
+    if (xrand() & 0x00800000)
+    {
+        flg_evade |= 1;
+    }
+    else
+    {
+        flg_evade |= 2;
+    }
+
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalHokeyPokey::Enter(F32 dt, void* updCtxt)
+{
+    zNPCFodBzzt* bzzt = ((zNPCFodBzzt*)(psyche->clt_owner));
+    flg_hokey = (xrand() >> 0x17) & 1;
+    flg_hokey |= 2;
+    ang_spinrate = 0.0f;
+    bzzt->DiscoReset();
+    return zNPCGoalLoopAnim::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalTubeBirth::Enter(F32 dt, void* updCtxt)
+{
+    zNPCTubeSlave* npc = ((zNPCTubeSlave*)(psyche->clt_owner));
+    npc->hitpoints = npc->cfg_npc->pts_damage;
+    npc->VelStop();
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalAttackMonsoon::Enter(F32 dt, void* updCtxt)
+{
+    idx_launch = 0;
+    flg_pushanim |= 2;
+    return zNPCGoalPushAnim::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalAlertArf::Enter(F32 dt, void* updCtxt)
+{
+    alertarf = ARF_ALERT_READY;
+    tmr_reload = -1.0f;
+    flg_user = 1;
+
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalAlertHammer::Enter(F32 dt, void* updCtxt)
+{
+    flg_attack = 0;
+    alertham = HAMMER_ALERT_NOTICE;
+
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalAlertChuck::Enter(F32 dt, void* updCtxt)
+{
+    zNPCCommon* npc = ((zNPCCommon*)(psyche->clt_owner));
+    alertchuk = CHUCK_ALERT_NOTICE;
+    npc->VelStop();
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalAlertChomper::Enter(F32 dt, void* updCtxt)
+{
+    zNPCCommon* npc = ((zNPCCommon*)(psyche->clt_owner));
+    alertchomp = CHOMPER_ALERT_NOTICE;
+    npc->VelStop();
+    pos_evade = g_O3;
+    tmr_evade = -1.0f;
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalTubeLasso::Enter(F32 dt, void* updCtxt)
+{
+    zNPCCommon* npc = ((zNPCCommon*)(psyche->clt_owner));
+    npc->VelStop();
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalAlertSlick::Resume(F32 dt, void* updCtxt)
+{
+    zNPCCommon* npc = ((zNPCCommon*)(psyche->clt_owner));
+    npc->VelStop();
+    flg_info |= 2;
+    return zNPCGoalCommon::Resume(dt, updCtxt);
+}
+
+S32 zNPCGoalAlertTubelet::Enter(F32 dt, void* updCtxt)
+{
+    zNPCTubeSlave* npc = ((zNPCTubeSlave*)(psyche->clt_owner));
+    npc->tubespot = ROBO_TUBE_MARY;
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalAlertTubelet::Exit(F32 dt, void* updCtxt)
+{
+    zNPCTubelet* npc = ((zNPCTubelet*)(psyche->clt_owner));
+    zNPC_SNDStop(eNPCSnd_TubeAttack);
+    npc->pete_attack_last = 0;
+    return xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalAlertTubelet::Resume(F32 dt, void* updCtxt)
+{
+    zNPCTubelet* npc = ((zNPCTubelet*)(psyche->clt_owner));
+    npc->tubestat = TUBE_STAT_ATTACK;
+    return zNPCGoalCommon::Resume(dt, updCtxt);
+}
+
+S32 zNPCGoalAlertPuppy::Resume(F32 dt, void* updCtxt)
+{
+    zNPCChomper* npc = ((zNPCChomper*)(psyche->clt_owner));
+    flg_info |= 2;
+    return zNPCGoalCommon::Resume(dt, updCtxt);
+}
+
+S32 zNPCGoalAlertChuck::Resume(F32 dt, void* updCtxt)
+{
+    zNPCChuck* npc = ((zNPCChuck*)(psyche->clt_owner));
+    flg_info |= 2;
+    return zNPCGoalCommon::Resume(dt, updCtxt);
+}
+
+S32 zNPCGoalAlertMonsoon::Resume(F32 dt, void* updCtxt)
+{
+    alertmony = MONSOON_ALERT_BEGIN;
+    flg_attack = 0;
+    return zNPCGoalCommon::Resume(dt, updCtxt);
+}
+
+S32 zNPCGoalAlertFodBomb::Resume(F32 dt, void* updCtxt)
+{
+    flg_info |= 2;
+    return zNPCGoalCommon::Resume(dt, updCtxt);
+}
+
+S32 zNPCGoalAttackArfMelee::Exit(F32 dt, void* updCtxt)
+{
+    FXStreakDone();
+    return zNPCGoalPushAnim::Exit(dt, updCtxt);
+}
+
+void zNPCGoalAttackArfMelee::FXStreakDone()
+{
+    for (S32 i = 0; i < (S32)(sizeof(this->streakID) / sizeof(U32)); i++)
+    {
+        xFXStreakStop(streakID[i]);
+        streakID[i] = 0xDEAD;
+    }
+}
+
+void zNPCGoalTubeAttack::AttackDataReset()
+{
+    zNPCTubelet* npc = ((zNPCTubelet*)(psyche->clt_owner));
+    flg_attack = 0;
+    if (npc->tubestat == TUBE_STAT_ATTACK)
+    {
+        mary.marystat = TUBE_MARY_WAIT;
+        mary.ang_spinrate = 0.0;
+    }
+    else
+    {
+        paul.flg_paul = 1;
+        paul.cnt_nextlos = -1;
+        paul.len_laser = 10.0f;
+    }
+}
+
+S32 zNPCGoalWound::NPCMessage(NPCMsg* msg)
+{
+    switch (msg->msgid)
+    {
+        case NPC_MID_DAMAGE:
+            return 1;
     }
     return 0;
 }

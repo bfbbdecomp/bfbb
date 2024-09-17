@@ -410,6 +410,7 @@ struct zNPCCommon : xNPCBasic
     S32 AnimStart(U32 animID, S32 forceRestart);
     xAnimState* AnimFindState(U32 animID);
     xAnimState* AnimCurState();
+    xAnimSingle* AnimCurSingle();
     U32 AnimCurStateID();
     void GiveReward();
     S32 SndPlayFromSFX(xSFX* sfx, U32* sid_played);
