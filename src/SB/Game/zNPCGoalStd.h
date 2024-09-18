@@ -410,6 +410,7 @@ class zNPCGoalStunned : public zNPCGoalCommon
     // total size: 0x4C
 public:
     zNPCGoalStunned(S32);
+    S32 InputInfo(NPCStunInfo* info);
     S32 Enter(F32 dt, void* updCtxt);
 };
 
@@ -451,6 +452,7 @@ class zNPCGoalAlertArf : public zNPCGoalCommon
 public:
     zNPCGoalAlertArf(S32);
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Resume(F32 dt, void* updCtxt);
     en_alertarf alertarf; // offset 0x4C, size 0x4
     F32 tmr_reload; // offset 0x50, size 0x4
 };
@@ -953,6 +955,7 @@ class zNPCGoalRespawn : public zNPCGoalCommon
     // total size: 0x64
 public:
     zNPCGoalRespawn(S32);
+    S32 InputInfo(NPCSpawnInfo* info);
     F32 tmr_respawn; // offset 0x4C, size 0x4
     F32 tmr_robobits; // offset 0x50, size 0x4
     S32 cnt_ring; // offset 0x54, size 0x4

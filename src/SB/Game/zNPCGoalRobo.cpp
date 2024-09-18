@@ -12,6 +12,9 @@
 #include "zNPCGoals.h"
 #include "zGameExtras.h"
 #include "zNPCSupport.h"
+#include "zNPCTypeBoss.h"
+
+#include "zNPCMgr.h"
 
 xFactoryInst* GOALCreate_Robotic(S32 who, RyzMemGrow* grow, void*)
 {
@@ -200,7 +203,7 @@ xFactoryInst* GOALCreate_Robotic(S32 who, RyzMemGrow* grow, void*)
 S32 zNPCGoalAlertFodder::Enter(F32 dt, void* updCtxt)
 {
     flg_attack = 0;
-    tmr_alertfod = 0.0f; // need non-const float to get scheduling right
+    tmr_alertfod = 0.0f;
     alertfod = FODDER_ALERT_NOTICE;
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
@@ -977,6 +980,14 @@ S32 zNPCGoalTubeBirth::Enter(F32 dt, void* updCtxt)
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
+S32 zNPCGoalAlertTarTar::Resume(F32 dt, void* updCtxt)
+{
+    zNPCTarTar* npc = ((zNPCTarTar*)(psyche->clt_owner));
+    npc->VelStop();
+    flg_info |= 2;
+    return zNPCGoalCommon::Resume(dt, updCtxt);
+}
+
 S32 zNPCGoalAttackMonsoon::Enter(F32 dt, void* updCtxt)
 {
     idx_launch = 0;
@@ -1063,6 +1074,14 @@ S32 zNPCGoalAlertPuppy::Resume(F32 dt, void* updCtxt)
     return zNPCGoalCommon::Resume(dt, updCtxt);
 }
 
+S32 zNPCGoalAlertArf::Resume(F32 dt, void* updCtxt)
+{
+    zNPCArfArf* npc = ((zNPCArfArf*)(psyche->clt_owner));
+    flg_info |= 2;
+    flg_user = 1;
+    return zNPCGoalCommon::Resume(dt, updCtxt);
+}
+
 S32 zNPCGoalAlertChuck::Resume(F32 dt, void* updCtxt)
 {
     zNPCChuck* npc = ((zNPCChuck*)(psyche->clt_owner));
@@ -1123,4 +1142,45 @@ S32 zNPCGoalWound::NPCMessage(NPCMsg* msg)
             return 1;
     }
     return 0;
+}
+
+S32 zNPCGoalRespawn::InputInfo(NPCSpawnInfo* info)
+{
+    zNPCRobot* npc = ((zNPCRobot*)(psyche->clt_owner));
+
+    flg_info = 0x10;
+    xVec3Copy(&pos_poofHere, &info->pos_spawn);
+
+    if (info->nav_spawnReference != NULL)
+    {
+        npc->nav_curr = info->nav_spawnReference;
+    }
+    else
+    {
+        npc->nav_curr = info->nav_firstMovepoint;
+    }
+
+    npc->nav_dest = info->nav_firstMovepoint;
+    return flg_info;
+}
+
+S32 zNPCGoalStunned::InputInfo(NPCStunInfo* info)
+{
+    zNPCRobot* npc = ((zNPCRobot*)(psyche->clt_owner));
+    flg_info = 0x10;
+    F32 stunTime = npc->tmr_stunned;
+    F32 infoStun = info->tym_stuntime;
+    stunTime = (stunTime > infoStun) ? stunTime : infoStun;
+    npc->tmr_stunned = stunTime;
+    return flg_info;
+}
+
+F32 zNPCGoalEvilPat::GlyphStop()
+{
+    zNPCRobot* npc = ((zNPCRobot*)(psyche->clt_owner));
+    if (npc->glyf_stun != NULL)
+    {
+        npc->glyf_stun->Discard();
+    }
+    npc->glyf_stun = NULL;
 }
