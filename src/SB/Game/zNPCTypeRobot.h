@@ -27,6 +27,7 @@ struct NPCArena
     F32 DstSqFromHome(xVec3* pos, xVec3* delt);
     F32 PctFromHome(xVec3* pos);
     S32 IncludesPos(xVec3* pos, F32 rad_thresh, xVec3* vec);
+    void IncludesNPC(zNPCCommon*, float, xVec3*);
     F32 Radius(F32 unk);
     xVec3* Pos();
     S32 IncludesPlayer(F32 rad_thresh, xVec3* vec);
@@ -44,6 +45,7 @@ struct NPCLaser
 
     void ColorSet(const RwRGBA*, const RwRGBA*);
     U32 TextureGet();
+    static void Render(xVec3&, xVec3&);
 };
 
 struct NPCBattle
@@ -171,6 +173,8 @@ struct zNPCFodBomb : zNPCRobot
 
 struct zNPCFodBzzt : zNPCRobot
 {
+    volatile static S32 cnt_alerthokey;
+
     RwRGBA rgba_discoLight;
     F32 tmr_discoLight;
     xVec3 pos_discoLight;
@@ -359,6 +363,8 @@ enum en_tubespot
 
 struct zNPCTubeSlave : zNPCRobot
 {
+    static NPCLaser laser;
+
     en_tubespot tubespot;
     zNPCTubelet* tub_pete;
 

@@ -6,7 +6,10 @@
 class zNPCGoalNotice : public zNPCGoalPushAnim
 {
 public:
-    zNPCGoalNotice(S32);
+    zNPCGoalNotice(S32 id) : zNPCGoalPushAnim(id)
+    {
+        SetFlags(2);
+    }
 };
 
 void ROBO_PrepRoboCop();
