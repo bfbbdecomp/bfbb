@@ -672,6 +672,24 @@ S32 zNPCGoalAttackArfMelee::FXStreakPrep()
     }
 }
 
+S32 zNPCGoalAttackArf::SetAttackMode(S32 a, S32 b)
+{
+    flg_attack &= 0xfffffff8;
+    if (a != 0)
+    {
+        flg_attack |= 2;
+        if (b != 0)
+        {
+            flg_attack |= 4;
+        }
+    }
+    else
+    {
+        flg_attack |= 1;
+    }
+    flg_info |= 0x10;
+}
+
 S32 zNPCGoalAttackFodder::Exit(F32 dt, void* updCtxt)
 {
     if (this->haz_cattle)
@@ -1447,6 +1465,20 @@ S32 zNPCGoalAlertTubelet::Exit(F32 dt, void* updCtxt)
     zNPCTubelet* npc = ((zNPCTubelet*)(psyche->clt_owner));
     zNPC_SNDStop(eNPCSnd_TubeAttack);
     npc->pete_attack_last = 0;
+    return xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalKnock::Exit(F32 dt, void* updCtxt)
+{
+    zNPCCommon* npc = ((zNPCCommon*)(psyche->clt_owner));
+    npc->VelStop();
+    StreakDone();
+
+    if (!(flg_knock & 4))
+    {
+        npc->pflags &= 0xfb;
+    }
+
     return xGoal::Exit(dt, updCtxt);
 }
 

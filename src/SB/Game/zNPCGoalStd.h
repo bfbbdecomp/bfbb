@@ -360,6 +360,7 @@ public:
 
     S32 LaunchBone(F32 dt, S32 param_2);
     S32 Exit(F32 dt, void* updCtxt);
+    S32 SetAttackMode(S32 a, S32 b);
     S32 flg_attack; // offset 0x54, size 0x4
 };
 
@@ -1221,6 +1222,7 @@ public:
 
     void StreakDone();
     S32 StreakPrep();
+    S32 Exit(F32 dt, void* updCtxt);
     S32 flg_knock; // offset 0x4C, size 0x4
     xVec3 pos_bumper; // offset 0x50, size 0xC
     S32 floorBounce; // offset 0x5C, size 0x4
