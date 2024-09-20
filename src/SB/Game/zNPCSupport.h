@@ -15,6 +15,16 @@ enum en_npctgt
     NPC_TGT_FORCEINT = 0x7fffffff
 };
 
+enum _tageNPCSnd
+{
+    eNPCSnd_GloveAttack,
+    eNPCSnd_SleepyAttack,
+    eNPCSnd_TubeAttack,
+    eNPCSnd_FodBzztAttack,
+    eNPCSnd_JellyfishAttack,
+    eNPCSnd_Total
+};
+
 struct NPCTarget
 {
     en_npctgt typ_target;
@@ -48,5 +58,7 @@ xVec3* NPCC_faceDir(xEnt* ent);
 void NPCC_ang_toXZDir(F32 angle, xVec3* dir);
 F32 NPCC_aimVary(xVec3* dir_aim, xVec3* pos_src, xVec3* pos_tgt, F32 dst_vary, S32 flg_vary, xVec3* pos_aimPoint);
 F32 NPCC_ds2_toCam(const xVec3* pos_from, xVec3* delta);
+void zNPC_SNDStop(_tageNPCSnd snd);
+void zNPC_SNDPlay3D(_tageNPCSnd snd, xEnt*);
 
 #endif

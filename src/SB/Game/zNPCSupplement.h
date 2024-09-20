@@ -116,6 +116,7 @@ void NPCC_ShadowCacheReset();
 void NPAR_Timestep(F32 dt);
 void NPCC_MakeStreakInfo(en_npcstreak styp, StreakInfo* info);
 void xFXStreakStart(en_npcstreak* styp);
+S32 NPCC_StreakCreate(en_npcstreak styp);
 void UpdateAndRender(NPARMgmt param_1, F32 dt);
 F32 BOWL3(F32 param_1);
 F32 QUB(F32 param_1);

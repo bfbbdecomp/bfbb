@@ -109,6 +109,7 @@ void xFXFireworksUpdate(F32 dt);
 void xFXStreakInit();
 void xFXStreakUpdate(F32 dt);
 void xFXStreakRender();
+void xFXStreakStop(U32);
 void xFXShineInit();
 void xFXShineUpdate(F32 dt);
 void xFXShineRender();
