@@ -25,9 +25,22 @@ struct xShadowCache
     xShadowPoly poly[256];
 };
 
-void xShadow_ListAdd(xEnt* ent);
+void xShadowInit();
+void xShadowRender(xVec3* center, F32 radius, F32 max_dist);
+S32 SetupShadow();
 void xShadowSetWorld(RpWorld* world);
-void xShadowSetLight(xVec3* param1, xVec3* param2, F32 param3);
+void xShadowSetLight(xVec3* target_pos, xVec3* in_vec, F32 value);
+U32 xShadowCameraCreate();
+void xShadowCameraUpdate(void* model, void(*renderCB)(void*), xVec3* center, F32 radius, S32 shadowMode);
+void xShadowRenderWorld(xVec3* center, F32 radius, F32 max_dist);
+void modelRenderCB(void* model);
+U32 xShadowReceiveShadowSetup(xEnt* ent);
+
+void ShadowCameraUpdate(RwCamera* camera, void* model, void(*renderCB)(void*), xVec3* center, F32 radius, S32 shadowMode);
+RwCamera* ShadowCameraSetSpherePersp(RwCamera* camera, RwV3d* center, F32 radius);
+RwCamera* ShadowCameraCreatePersp(S32 value); // TODO: better param name
+RwRaster* ShadowRasterCreate(S32 value); // TODO: better param name
+void xShadow_ListAdd(xEnt* ent);
 void xShadowManager_Init(S32 numEnts);
 void xShadowManager_Reset();
 void xShadowManager_Render();
