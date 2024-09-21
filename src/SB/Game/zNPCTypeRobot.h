@@ -50,7 +50,10 @@ struct NPCBattle
 {
     zNPCRobot* members[5];
     void JoinBattle(zNPCRobot*);
-    void LeaveBattle(zNPCRobot*);
+    void LeaveBattle(zNPCRobot*)
+    {
+
+    }
 };
 
 struct zNPCRobot : zNPCCommon

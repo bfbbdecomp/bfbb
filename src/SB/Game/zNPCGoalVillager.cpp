@@ -492,7 +492,6 @@ S32 zNPCGoalBoyRide::NPCMessage(NPCMsg* mail)
     return handled;
 }
 
-// Equivalent: fnmsubs register order
 S32 zNPCGoalBoyFall::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene)
 {
     S32 nextgoal = 0;
@@ -518,11 +517,99 @@ S32 zNPCGoalBoyFall::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScen
         return nextgoal;
     }
 
-    npc->frame->vel.y = MAX(npc->frame->vel.y - dt * 10.0f, -4.0f);
+    // Needs to be declared separately; otherwise, f31 and f2 will be swapped in fnmsubs.
+    F32 f2 = 10.0f;
+
+    npc->frame->vel.y = MAX(-((dt * f2) - npc->frame->vel.y), -4.0f);
     npc->colFreq = MIN(npc->colFreq, 0);
 
     return xGoal::Process(trantype, dt, updCtxt, NULL);
 }
+
+U8 zNPCGoalBoyFall::CollReview(void* param)
+{
+    zNPCBalloonBoy* npc = (zNPCBalloonBoy*)psyche->clt_owner;
+    U8 ret = 0;
+    if (hitGround != 0)
+    {
+        ret = 0;
+    }
+    else
+    {
+        xCollis* xcollis = &npc->collis->colls[0];
+        if (xcollis->flags & 1)
+        {
+            zSurfaceGetSurface(xcollis);
+            F32 depth = 0.0f;
+            if (xcollis->optr == NULL)
+            {
+                hitGround = 1;
+            }
+            else if (zGooIs((xEnt*)xcollis->optr, depth, 0) != 0)
+            {
+                hitGround = 2;
+            }
+            else
+            {
+                hitGround = 1;
+            }
+            zNPCGoalCommon::DoAutoAnim(NPC_GSPOT_ALTA, 0);
+            ret = 1;
+        }
+    }
+    return ret;
+}
+
+// WIP
+#if 0
+S32 zNPCGoalBoyWeep::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene*)
+{
+    zNPCBalloonBoy* npc = (zNPCBalloonBoy*)psyche->clt_owner;
+
+    float fVar2 = 0.0f;
+
+    S32 iVar4 = (S32)0;
+
+    if (tmr_weep < 0.0f)
+    {
+      *trantype = GOAL_TRAN_SET;
+      iVar4 = NPC_GOAL_IDLE;
+    }
+
+    if (iVar4 != 0)
+    {
+        trantype = (en_trantype*)(iVar4);
+    }
+    else
+    {
+        fVar2 = MIN(ang_spinrate, 150.0f);
+        if
+        (
+        (0.0f > fVar2)
+        )
+        {
+            fVar2 = MIN(ang_spinrate, 150.0f);
+        }
+
+        if (fVar2 < 0.2f)
+        {
+            ang_spinrate = fVar2;
+        }
+        else
+        {
+          ang_spinrate *= 0.985f;
+          npc->frame->drot.angle = dt * ang_spinrate * -1.0f;
+          npc->frame->mode |= 0x20;
+        }
+
+    tmr_weep = MAX(-1.0f, tmr_weep - dt);
+
+
+  iVar4 = xGoal::Process(trantype, dt, updCtxt, NULL);
+  }
+  return;
+}
+#endif
 
 S32 zNPCGoalBoyWeep::Enter(F32 dt, void* updCtxt)
 {

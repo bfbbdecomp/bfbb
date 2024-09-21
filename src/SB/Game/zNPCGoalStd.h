@@ -526,7 +526,7 @@ struct zNPCGoalAlertSlick : zNPCGoalCommon
     void MoveCorner(F32 dt);
     void GetInArena(F32 dt);
     S32 NPCMessage(NPCMsg* mail);
-    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
     S32 Resume(F32 dt, void* updCtxt);
     S32 Enter(F32 dt, void* updCtxt);
 };

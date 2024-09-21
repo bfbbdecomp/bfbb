@@ -17,178 +17,178 @@ xFactoryInst* GOALCreate_Robotic(S32 who, RyzMemGrow* grow, void*)
     xGoal* goal = NULL; // r16
     switch (who)
     {
-    case 0x4e475230:
+    case NPC_GOAL_NOTICE:
         goal = new (who, grow) zNPCGoalNotice(who);
         break;
-    case 0x4e475231:
+    case NPC_GOAL_TAUNT:
         goal = new (who, grow) zNPCGoalTaunt(who);
         break;
-    case 0x4e475232:
+    case NPC_GOAL_EVADE:
         goal = new (who, grow) zNPCGoalEvade(who);
         break;
-    case 0x4e475233:
+    case NPC_GOAL_GOHOME:
         goal = new (who, grow) zNPCGoalGoHome(who);
         break;
-    case 0x4e475234:
+    case NPC_GOAL_ALERT:
         goal = new (who, grow) zNPCGoalChase(who);
         break;
-    case 0x4e475235:
+    case NPC_GOAL_ALERTFODDER:
         goal = new (who, grow) zNPCGoalAlert(who);
         break;
-    case 0x4e475236:
+    case NPC_GOAL_ALERTFODBOMB:
         goal = new (who, grow) zNPCGoalAlertFodder(who);
         break;
-    case 0x4e475237:
+    case NPC_GOAL_ALERTFODBZZT:
         goal = new (who, grow) zNPCGoalAlertFodBomb(who);
         break;
-    case 0x4e475238:
+    case NPC_GOAL_ALERTCHOMPER:
         goal = new (who, grow) zNPCGoalAlertChomper(who);
         break;
-    case 0x4e475239:
+    case NPC_GOAL_ALERTHAMMER:
         goal = new (who, grow) zNPCGoalAlertFodBzzt(who);
         break;
-    case 0x4e47523a:
+    case NPC_GOAL_ALERTTARTAR:
         goal = new (who, grow) zNPCGoalAlertHammer(who);
         break;
-    case 0x4e47523b:
+    case NPC_GOAL_ALERTGLOVE:
         goal = new (who, grow) zNPCGoalAlertTarTar(who);
         break;
-    case 0x4e47523c:
+    case NPC_GOAL_ALERTMONSOON:
         goal = new (who, grow) zNPCGoalAlertGlove(who);
         break;
-    case 0x4e47523d:
+    case NPC_GOAL_ALERTSLEEPY:
         goal = new (who, grow) zNPCGoalAlertMonsoon(who);
         break;
-    case 0x4e47523e:
+    case NPC_GOAL_ALERTARF:
         goal = new (who, grow) zNPCGoalAlertSleepy(who);
         break;
-    case 0x4e47523f:
+    case NPC_GOAL_ALERTPUPPY:
         goal = new (who, grow) zNPCGoalAlertArf(who);
         break;
-    case 0x4e475240:
+    case NPC_GOAL_ALERTCHUCK:
         goal = new (who, grow) zNPCGoalAlertPuppy(who);
         break;
-    case 0x4e475241:
+    case NPC_GOAL_ALERTTUBELET:
         goal = new (who, grow) zNPCGoalAlertChuck(who);
         break;
-    case 0x4e475242:
+    case  NPC_GOAL_CHASE:
         goal = new (who, grow) zNPCGoalAlertTubelet(who);
         break;
-    case 0x4e475243:
+    case NPC_GOAL_ALERTSLICK:
         goal = new (who, grow) zNPCGoalAlertSlick(who);
         break;
-    case 0x4e475244:
+    case NPC_GOAL_ATTACKCQC:
         goal = new (who, grow) zNPCGoalAttackCQC(who);
         break;
-    case 0x4e475245:
+    case NPC_GOAL_ATTACKFODDER:
         goal = new (who, grow) zNPCGoalAttackFodder(who);
         break;
-    case 0x4e475246:
+    case NPC_GOAL_ATTACKCHOMPER:
         goal = new (who, grow) zNPCGoalAttackChomper(who);
         break;
-    case 0x4e475247:
+    case NPC_GOAL_ATTACKHAMMER:
         goal = new (who, grow) zNPCGoalAttackHammer(who);
         break;
-    case 0x4e475248:
+    case NPC_GOAL_ATTACKTARTAR:
         goal = new (who, grow) zNPCGoalAttackTarTar(who);
         break;
-    case 0x4e475249:
+    case NPC_GOAL_ATTACKMONSOON:
         goal = new (who, grow) zNPCGoalAttackMonsoon(who);
         break;
-    case 0x4e47524a:
+    case NPC_GOAL_ATTACKARF:
         goal = new (who, grow) zNPCGoalAttackArf(who);
         break;
-    case 0x4e47524b:
+    case NPC_GOAL_ATTACKARFMELEE:
         goal = new (who, grow) zNPCGoalAttackArfMelee(who);
         break;
-    case 0x4e47524c:
+    case NPC_GOAL_ATTACKCHUCK:
         goal = new (who, grow) zNPCGoalAttackChuck(who);
         break;
-    case 0x4e47524d:
+    case NPC_GOAL_ATTACKSLICK:
         goal = new (who, grow) zNPCGoalAttackSlick(who);
         break;
-    case 0x4e47524e:
+    case NPC_GOAL_LASSOBASE:
         goal = new (who, grow) zNPCGoalLassoBase(who);
         break;
-    case 0x4e47524f:
+    case NPC_GOAL_LASSOGRAB:
         goal = new (who, grow) zNPCGoalLassoGrab(who);
         break;
-    case 0x4e475250:
+    case NPC_GOAL_LASSOTHROW:
         goal = new (who, grow) zNPCGoalLassoThrow(who);
         break;
-    case 0x4e475251:
+    case NPC_GOAL_EVILPAT:
         goal = new (who, grow) zNPCGoalEvilPat(who);
         break;
-    case 0x4e475252:
+    case NPC_GOAL_STUNNED:
         goal = new (who, grow) zNPCGoalStunned(who);
         break;
-    case 0x4e475253:
+    case NPC_GOAL_PATCARRY:
         goal = new (who, grow) zNPCGoalPatCarry(who);
         break;
-    case 0x4e475254:
+    case NPC_GOAL_PATTHROW:
         goal = new (who, grow) zNPCGoalPatThrow(who);
         break;
-    case 0x4e475255:
+    case NPC_GOAL_DOGLAUNCH:
         goal = new (who, grow) zNPCGoalDogLaunch(who);
         break;
-    case 0x4e475256:
+    case NPC_GOAL_DOGBARK:
         goal = new (who, grow) zNPCGoalDogBark(who);
         break;
-    case 0x4e475257:
+    case NPC_GOAL_DOGDASH:
         goal = new (who, grow) zNPCGoalDogDash(who);
         break;
-    case 0x4e475258:
+    case NPC_GOAL_DOGPOUNCE:
         goal = new (who, grow) zNPCGoalDogPounce(who);
         break;
-    case 0x4e475259:
+    case NPC_GOAL_TELEPORT:
         goal = new (who, grow) zNPCGoalTeleport(who);
         break;
-    case 0x4e47525a:
+    case NPC_GOAL_HOKEYPOKEY:
         goal = new (who, grow) zNPCGoalHokeyPokey(who);
         break;
-    case 0x4e47525b:
+    case NPC_GOAL_DAMAGE:
         goal = new (who, grow) zNPCGoalDamage(who);
         break;
-    case 0x4e47525c:
+    case NPC_GOAL_WOUND:
         goal = new (who, grow) zNPCGoalWound(who);
         break;
-    case 0x4e47525d:
+    case NPC_GOAL_BASHED:
         goal = new (who, grow) zNPCGoalBashed(who);
         break;
-    case 0x4e47525e:
+    case NPC_GOAL_KNOCK:
         goal = new (who, grow) zNPCGoalKnock(who);
         break;
-    case 0x4e47525f:
+    case NPC_GOAL_AFTERLIFE:
         goal = new (who, grow) zNPCGoalAfterlife(who);
         break;
-    case 0x4e475260:
+    case NPC_GOAL_RESPAWN:
         goal = new (who, grow) zNPCGoalRespawn(who);
         break;
-    case 0x4e475261:
+    case NPC_GOAL_DEFLATE:
         goal = new (who, grow) zNPCGoalDeflate(who);
         break;
-    case 0x4e475262:
+    case NPC_GOAL_TUBEPAL:
         goal = new (who, grow) zNPCGoalTubePal(who);
         break;
-    case 0x4e475263:
+    case NPC_GOAL_TUBEDUCKLING:
         goal = new (who, grow) zNPCGoalTubeDuckling(who);
         break;
-    case 0x4e475264:
+    case NPC_GOAL_TUBEATTACK:
         goal = new (who, grow) zNPCGoalTubeAttack(who);
         break;
-    case 0x4e475265:
+    case NPC_GOAL_TUBELASSO:
         goal = new (who, grow) zNPCGoalTubeLasso(who);
         break;
-    case 0x4e475267:
+    case NPC_GOAL_TUBEBIRTH:
         goal = new (who, grow) zNPCGoalTubeBirth(who);
         break;
-    case 0x4e475269:
+    case NPC_GOAL_TUBEBONKED:
         goal = new (who, grow) zNPCGoalTubeBonked(who);
         break;
-    case 0x4e47526a:
+    case NPC_GOAL_TUBEDYING:
         goal = new (who, grow) zNPCGoalTubeDying(who);
         break;
-    case 0x4e47526b:
+    case NPC_GOAL_TUBEDEAD:
         goal = new (who, grow) zNPCGoalTubeDead(who);
         break;
     }
@@ -284,7 +284,7 @@ S32 zNPCGoalAlertFodder::Process(en_trantype* trantype, F32 dt, void* updCtxt, x
         if (zNPCGoalAlertFodder::CheckSpot(dt) && !(globals.player.DamageTimer > 0.0f))
         {
             this->alertfod = FODDER_ALERT_STABDONE;
-            nextgoal = 'NGRE';
+            nextgoal = NPC_GOAL_ATTACKFODDER;
             *trantype = GOAL_TRAN_PUSH;
             break;
         }
@@ -319,8 +319,7 @@ S32 zNPCGoalAlertFodder::Process(en_trantype* trantype, F32 dt, void* updCtxt, x
 
         this->MoveEvade(dt);
 
-        // needs to be a ternary expression to match
-        this->tmr_alertfod = (-1.0f > this->tmr_alertfod - dt) ? -1.0f : this->tmr_alertfod - dt;
+        this->tmr_alertfod = MAX(-1.0f, this->tmr_alertfod - dt);
 
         break;
     }
@@ -713,10 +712,6 @@ S32 NPCArena::IsReady()
 {
     // TODO: not matching, not sure what this is
     return this->rad_arena == 1.0f; // @1130 check this float value
-}
-
-void NPCBattle::LeaveBattle(zNPCRobot*)
-{
 }
 
 F32 zNPCRobot::FacePlayer(F32 dt, F32 spd_turn)
