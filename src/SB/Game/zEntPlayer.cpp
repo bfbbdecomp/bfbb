@@ -3576,6 +3576,40 @@ static U32 count_talk_anims(xAnimTable* anims)
     return talkAnimCount;
 }
 
+F32 det3x3top1(float a, float b, float c, float d, float e, float f)
+{
+    F32 ret = -((a * f)  - ((b * f) -  (e * c)));
+    return    -((d * b)  - ((a * e) + ((d * c) + ret)));
+}
+
+void zEntPlayerExit(xEnt* ent)
+{
+    bungee_state::destroy();
+}
+
+void zEntPlayerPreReset()
+{
+    globals.player.ControlOff = 0;
+    if (!oob_state::IsPlayerInControl())
+    {
+        zEntPlayerControlOff(CONTROL_OWNER_OOB);
+        globals.player.ControlOffTimer = 1e38;
+    }
+}
+
+F32 ComputeFudge(F32 a, F32 b)
+{
+    F32 min = MIN(a, b);
+    a = (min - 0.075f) / -0.175f;
+
+    if (0.0f > MIN(a, 1.0f))
+    {
+        return 0.0f;
+    }
+
+    return MIN(a, 1.0f);
+}
+
 static void load_player_ini(zPlayerSettings& ps, xModelInstance& model, xModelAssetParam* modelass,
                             U32 params_size)
 {
