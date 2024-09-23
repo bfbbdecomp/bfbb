@@ -19,7 +19,7 @@ static void Setup_surface_array();
 void Decompress_frame(HBINK bnk, HRAD3DIMAGE rad_image, S64 flags);
 
 void arammalloc(size_t size);
-void aramfree(void* mem);
+static void aramfree(void* mem);
 void PlayFMV(char* filename, size_t buttons, F32 time);
 
 #endif
