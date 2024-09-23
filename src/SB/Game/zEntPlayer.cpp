@@ -3576,6 +3576,60 @@ static U32 count_talk_anims(xAnimTable* anims)
     return talkAnimCount;
 }
 
+U8 BubbleBounceContrails(xAnimSingle* anim)
+{
+    S32 ret = 0;
+    xAnimState* state = anim->State;
+    if
+    (
+
+        ((strcmp(state->Name, "BbounceStart01") == 0) && (anim->Time >= 0.9f))
+        ||
+        (strcmp(state->Name, "BbounceAttack01") == 0)
+    )
+    {
+        ret = 1;
+    }
+    return ret;
+}
+
+U8 BubbleBashContrails(xAnimSingle* anim)
+{
+    S32 ret = 0;
+    xAnimState* state = anim->State;
+    if
+    (
+        ((strcmp(state->Name, "BbashStart01") == 0) && (anim->Time >= 0.6f))
+        ||
+        (strcmp(state->Name, "BbashAttack01") == 0) ||
+        (strcmp(state->Name, "BbashMiss01") == 0) &&
+        (anim->Time <= 0.125f)
+    )
+    {
+        ret = 1;
+    }
+    return ret;
+}
+
+U8 StunBubbleTrail(xAnimSingle* anim)
+{
+    S32 ret = 0;
+    xAnimState* state = anim->State;
+    if
+    (
+        (strcmp(state->Name, "StunFall") == 0)
+        ||
+        (
+        (strcmp(state->Name, "StunJump") == 0) &&
+        (anim->Time >= 0.6f) && (anim->Time <= 1.0f)
+        )
+    )
+    {
+        ret = 1;
+    }
+    return ret;
+}
+  
 F32 det3x3top1(float a, float b, float c, float d, float e, float f)
 {
     F32 ret = -((a * f)  - ((b * f) -  (e * c)));
