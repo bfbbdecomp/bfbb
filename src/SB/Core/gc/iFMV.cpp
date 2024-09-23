@@ -64,13 +64,12 @@ void arammalloc(size_t size)
     ARAlloc(size);
 }
 
-#ifdef NON_MATCHING
 // Something weird is going on here...
-void aramfree(void* mem)
+static void aramfree(void* mem)
 {
-    ARFree(mem);
+    void* vol;
+    ARFree(&vol);
 }
-#endif
 
 #if 0
 // WIP.
