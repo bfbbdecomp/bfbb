@@ -228,7 +228,7 @@ void zLightAddLocalEnv()
             iLight* light = &zlight->light;
             iLightEnv(light, 1);
             light->hw->inWorld.prev = gLightWorld->directionalLightList.link.prev;
-            light->hw->inWorld.next = gLightWorld->directionalLightList.link.next;
+            light->hw->inWorld.next = &gLightWorld->directionalLightList.link;
             gLightWorld->directionalLightList.link.prev->next = &light->hw->inWorld;
             gLightWorld->directionalLightList.link.prev = &light->hw->inWorld;
 

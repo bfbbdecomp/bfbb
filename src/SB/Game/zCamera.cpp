@@ -205,7 +205,6 @@ F32 EaseInOut(F32 param)
     return param * (param * (zCamera_f_2_0 - zCamera_f_1_5 * param) + zCamera_f_0_5);
 }
 
-#if 0
 void zCameraConversUpdate(xCamera* cam, F32 dt)
 {
     if (zcam_dest == NULL)
@@ -213,15 +212,13 @@ void zCameraConversUpdate(xCamera* cam, F32 dt)
         return;
     }
 
-    // zcam_tmr should use f2 instead of f1
-    if (zcam_tmr <= zCamera_f_0_0)
+    if (zcam_tmr <= 0.0f)
     {
-        zcam_tmr = zCamera_f_0_0;
+        zcam_tmr = 0.0f;
         return;
     }
 
-    // zCamera_f_1_0 should use f1 instead of f2
-    if ((dt / zcam_tmr) > zCamera_f_1_0)
+    if ((dt / zcam_tmr) > 1.0f)
     {
         cam->mat.right = zcam_dest->right;
         cam->mat.up = zcam_dest->up;
@@ -232,9 +229,9 @@ void zCameraConversUpdate(xCamera* cam, F32 dt)
     }
     else
     {
-        F32 ease1 = EaseInOut(zCamera_f_1_0 - (zcam_tmr / zcam_ttm));
-        F32 ease2 = EaseInOut(zCamera_f_1_0 - (zcam_tmr - dt) / zcam_ttm);
-        F32 t = (ease2 - ease1) / (zCamera_f_1_0 - ease1);
+        F32 ease1 = EaseInOut(1.0f - (zcam_tmr / zcam_ttm));
+        F32 ease2 = EaseInOut(1.0f - (zcam_tmr - dt) / zcam_ttm);
+        F32 t = (ease2 - ease1) / (1.0f - ease1);
 
         xQuat tOld;
         xQuat tNew;
@@ -247,7 +244,6 @@ void zCameraConversUpdate(xCamera* cam, F32 dt)
 
     zcam_tmr = zcam_tmr - dt;
 }
-#endif
 
 F32 TranSpeed(zFlyKey keys[])
 {
@@ -308,7 +304,6 @@ void zCameraFlyStart(U32 assetID)
 }
 #endif
 
-#if 0
 void zCameraFreeLookSetGoals(xCamera* cam, F32 pitch_s, F32& dgoal, F32& hgoal,
                              F32& pitch_goal, F32& lktm, F32 dt)
 {
@@ -408,20 +403,18 @@ void zCameraFreeLookSetGoals(xCamera* cam, F32 pitch_s, F32& dgoal, F32& hgoal,
         pitch_goal = -pitch_s * (zcam_above_pitch - p) + p;
     }
 
-    // f0 and f1 should be swapped from here
-    if (lktm > zCamera_f_0_1)
+    if (lktm > 0.1f)
     {
         lktm -= dt;
-        if (lktm < zCamera_f_0_1)
+        if (lktm < 0.1f)
         {
-            lktm = zCamera_f_0_1;
+            lktm = 0.1f;
         }
         return;
     }
 
-    lktm = zCamera_f_0_1;
+    lktm = 0.1f;
 }
-#endif
 
 void zCameraSetBbounce(S32 bbouncing)
 {
