@@ -3136,12 +3136,11 @@ namespace
 
 namespace
 {
-#if 0
     xVec2 get_texture_size(RwRaster& raster)
     {
-        // todo: uses int-to-float conversion
+        xVec2 vec = { raster.width / 640.0f, raster.height / 480.0f };
+        return vec;
     }
-#endif
 
     void reset_tag_tex(xtextbox::jot&, const xtextbox&, const xtextbox&, const xtextbox::split_tag&)
     {

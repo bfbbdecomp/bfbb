@@ -25,6 +25,8 @@ extern void* MemoryFunctions[4];
 extern U16 last_error;
 extern OSContext* last_context;
 
+extern char stringBase0[];
+
 void** psGetMemoryFunctions()
 {
     return MemoryFunctions;
@@ -39,8 +41,6 @@ U16 my_dsc(U16 dsc)
 {
     return dsc;
 }
-
-//
 
 void MemoryProtectionErrorHandler(U16 last, OSContext* ctx, U64 unk1, U64 unk2)
 {
@@ -68,7 +68,13 @@ void TRCInit()
 
 #endif
 
-/*
+S32 RenderWareExit()
+{
+    RwEngineStop();
+    RwEngineClose();
+    return RwEngineTerm();
+}
+
 void iSystemExit()
 {
     xDebugExit();
@@ -79,14 +85,12 @@ void iSystemExit()
     iFileExit();
     iTimeExit();
     xMemExit();
-}
-*/
-
-S32 RenderWareExit()
-{
-    RwEngineStop();
-    RwEngineClose();
-    return RwEngineTerm();
+    OSPanic
+    (
+        stringBase0 + 0x113, // "iSystem.cpp"
+        0x21d,
+        stringBase0 + 0x144 // "(With apologies to Jim Morrison) This the end, my only friend, The End."
+    );
 }
 
 void null_func()
@@ -135,11 +139,7 @@ void _rwDolphinHeapFree(void* __ptr)
     }
     if (__ptr != NULL)
     {
-        // TODO: clear this up
-        // some number is compared against 0xbeef in the assembly.
-        // 0xbeef was probably a hardcoded constant Heavy iron used.
-        // if (*(U32*)((S32)__ptr + -4) + 0x2153 == 0xbeef)
-        if (*(S32*)((S32)__ptr + -4) == -0x21524111)
+        if ( *(S32*)((S32)__ptr - 4) == 0xDEADBEEF )
         {
             free((void*)((S32)__ptr - 32));
         }
