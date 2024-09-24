@@ -4,15 +4,9 @@
 #include <types.h>
 #include <string.h>
 
-extern xLightKit* gLastLightKit;
-extern S32 iModelHack_DisablePrelight;
+S32 iModelHack_DisablePrelight;
+xLightKit* gLastLightKit;
 
-#if 0
-F32 MAX_COLOR = 1.0f;
-#endif
-
-#ifdef NON_MATCHING
-// Will match once able to use float literals
 xLightKit* xLightKit_Prepare(void* data)
 {
     xLightKit* lkit = (xLightKit*)data;
@@ -27,8 +21,8 @@ xLightKit* xLightKit_Prepare(void* data)
         }
 
         // If any of the colors is greater than 1.0, normalize back to 0-1
-        if (currlight->color.red > MAX_COLOR || currlight->color.green > MAX_COLOR ||
-            currlight->color.blue > MAX_COLOR)
+        if (currlight->color.red > 1.0f || currlight->color.green > 1.0f ||
+            currlight->color.blue > 1.0f)
         {
             F32 s;
             s = MAX(MAX(currlight->color.red, currlight->color.green), currlight->color.blue);
@@ -93,7 +87,6 @@ xLightKit* xLightKit_Prepare(void* data)
 
     return (xLightKit*)data;
 }
-#endif
 
 void xLightKit_Enable(xLightKit* lkit, RpWorld* world)
 {

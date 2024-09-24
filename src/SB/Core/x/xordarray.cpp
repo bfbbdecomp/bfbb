@@ -6,8 +6,6 @@
 extern F32 lbl_803CCEE8; // 0.95f
 extern F32 lbl_803CCEF0; // 176f
 
-#if 0
-// Can't figure out how to match the bottom part due to the weird float stuff going on.
 void XOrdInit(st_XORDEREDARRAY* array, S32 size, S32 tempAlloc)
 {
     U32 cnt = 1;
@@ -21,7 +19,7 @@ void XOrdInit(st_XORDEREDARRAY* array, S32 size, S32 tempAlloc)
     }
     else
     {
-        array->list = (void**)xMemAlloc(cnt << 2);
+        array->list = (void**)xMemAlloc(gActiveHeap, cnt << 2, 0);
     }
     array->cnt = 0;
     array->max = cnt;
@@ -32,8 +30,6 @@ void XOrdInit(st_XORDEREDARRAY* array, S32 size, S32 tempAlloc)
         array->warnlvl = cnt & ~((S32)cnt >> 0x1f);
     }
 }
-
-#endif
 
 void XOrdReset(st_XORDEREDARRAY* array)
 {
@@ -89,8 +85,8 @@ void XOrdInsert(st_XORDEREDARRAY* array, void* elt, XOrdCompareCallback compare)
 
 #endif
 
-#if 0
-// WIP. The comparisons are probably wrong.
+
+
 void* XOrdRemove(st_XORDEREDARRAY* array, void* elt, S32 index)
 {
     if (elt == NULL)
@@ -99,41 +95,44 @@ void* XOrdRemove(st_XORDEREDARRAY* array, void* elt, S32 index)
         {
             return NULL;
         }
-        else if (index >= array->max)
+        if (index >= array->max)
         {
             return NULL;
         }
     }
-    if (index >= 0)
+
+    if ((index >= 0) && (index < array->max))
     {
-        if (index < array->max)
+        elt = array->list[index];
+    }
+    else if (elt != NULL)
+    {
+        index = -1;
+        int iVar4 = 0;
+        for (int i = array->cnt; i > 0; i--)
         {
-            elt = array->list[index]
-        }
-        else
-        {
-            if (elt != NULL)
+            if (array->list[iVar4] == elt)
             {
-                // LOOP.
+                index = iVar4;
+                break;
             }
-            else
-            {
-                if (index < 0)
-                {
-                    return NULL;
-                }
-                else
-                {
-                    // ANOTHER LOOP :>
-                    return elt;
-                }
-            }
+            iVar4++;
         }
     }
-    return NULL;
-}
 
-#endif
+    if (index < 0)
+    {
+        return NULL;
+    }
+
+    array->cnt--;
+    for (; index < array->cnt; index++)
+    {
+        array->list[index] = array->list[index + 1];
+    }
+
+    return elt;
+}
 
 #if 0
 S32 XOrdLookup(st_XORDEREDARRAY* array, const void* key, XOrdTestCallback test)
