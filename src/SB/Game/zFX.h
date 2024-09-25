@@ -152,7 +152,7 @@ void reset_poppers();
 
 void reset_entrails();
 
-void init_poppers();
+static void init_poppers();
 
 void update_poppers(F32 dt);
 

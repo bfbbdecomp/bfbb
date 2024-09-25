@@ -88,25 +88,21 @@ void zFXGoo_SceneEnter()
     goo_timer_textbox = (ztextbox*)zSceneFindObject(gameID);
 }
 
-#if 0
 void zFXGoo_SceneReset()
 {
-    // This almost matches, only two instructions are flipped.
-    // otherwise, its perfect.
     S32 i;
     zFXGooInstance* goo = zFXGooInstances;
 
-    for (i = 0; i < 24; i++)
+    for (i = 0; i < 24;)
     {
         if (goo->state != zFXGooStateInactive)
         {
             goo->state = zFXGooStateNormal;
         }
+        i++;
         goo++;
     }
 }
-
-#endif
 
 void zFXGoo_SceneExit()
 {
@@ -128,15 +124,16 @@ void zFXUpdate(F32 dt)
     xFXUpdate(dt);
 }
 
-#if 0
-// Idk what the name of the other function is.
+namespace
+{
+    void add_popper_tweaks() { }
+}
+
 void init_poppers()
 {
     reset_poppers();
-    add_popper_tweaks__17 @unnamed @zFX_cpp @Fv();
+    add_popper_tweaks();
 }
-
-#endif
 
 void xDebugAddTweak(const char* unk1, const char* unk2, const tweak_callback* unk3, void* unk4,
                     U32 unk5)

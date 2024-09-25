@@ -219,16 +219,13 @@ bool ztaskbox::exists(state_enum stage)
     return state != STATE_BEGIN && xSTFindAsset(state, NULL);
 }
 
-#if 0
 void ztaskbox::on_talk_start()
 {
     if (this->cb != NULL)
     {
-        // SOMETHING.
+        cb->on_talk_start();
     }
 }
-
-#endif
 
 void ztaskbox::talk_callback::on_start()
 {

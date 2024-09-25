@@ -312,35 +312,37 @@ void xSndSetExternalCallback(void (*callback)(U32))
 }
 
 #if 0
-// Subtle issue with the register use in the setup of the loop
-U8 xSndStreamReady(U32 owner)
+U32 xSndStreamReady(U32 owner)
 {
-    for (xSndVoiceInfo* voice = gSnd.voice; voice != gSnd.voice + 6; voice++)
+    xSndVoiceInfo* begin = gSnd.voice;
+    xSndVoiceInfo* end = begin + 6;
+
+    for (xSndVoiceInfo* v = begin; v != end; v++)
     {
-        if (voice->lock_owner == owner)
+        if (v->lock_owner == owner)
         {
-            return !(voice->flags & 1);
+            return (v->flags & 1) >> 5; // Missing cntlzw instruction.
         }
     }
+
     return 0;
 }
 #endif
 
-#if 0
-// Same issue as xSndStreamReady
 void xSndStreamUnlock(U32 owner)
 {
-    xSndVoiceInfo* voice = gSnd.voice;
-    for (; voice != gSnd.voice + 6; voice++)
+    xSndVoiceInfo* begin = gSnd.voice;
+    xSndVoiceInfo* end = begin + 6;
+
+    for (xSndVoiceInfo* v = begin; v != end; v++)
     {
-        if (voice->lock_owner == owner)
+        if (v->lock_owner == owner)
         {
-            voice->lock_owner = 0;
+            v->lock_owner = 0;
             return;
         }
     }
 }
-#endif
 
 #if 0
 U32 xSndCategoryGetsEffects(sound_category category)
