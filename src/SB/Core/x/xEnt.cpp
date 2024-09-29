@@ -128,7 +128,7 @@ void xEntAddHittableFlag(xEnt* ent)
 {
     if (ent->baseType == eBaseTypeNPC || ent->baseType == eBaseTypeDestructObj ||
         ent->baseType == eBaseTypeButton || ent->baseType == eBaseTypeBoulder ||
-        (ent->baseType == eBaseTypePlatform && ent->subType == ZPLATFROM_SUBTYPE_PADDLE))
+        (ent->baseType == eBaseTypePlatform && ent->subType == ZPLATFORM_SUBTYPE_PADDLE))
     {
         ent->moreFlags |= 0x10;
     }
