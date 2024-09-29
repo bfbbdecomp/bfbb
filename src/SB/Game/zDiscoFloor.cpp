@@ -2,6 +2,7 @@
 
 #include "zSurface.h"
 #include "zGlobals.h"
+#include "zGrid.h"
 #include "zRenderState.h"
 #include "zEntSimpleObj.h"
 #include "zLOD.h"
@@ -163,9 +164,38 @@ namespace
         }
     }
 
-    U32 get_tile(const U8*, size_t);
+    U32 get_tile(const U8* a, size_t b)
+    {
+        static S8 init;
+        static volatile S32 bit_index;
+        static S32 r;
 
-    void set_tile(U8*, size_t, U32);
+        U32 uVar1 = a[(b >> 2) & 0x1fffffff] >> ((b & 3) << 1) & 3;
+        if (uVar1 == 2)
+        {
+            if (init == 0)
+            {
+                bit_index = 0x20;
+                init = 1;
+            }
+            bit_index++;
+            if (bit_index >= 0x20)
+            {
+                bit_index = 0;
+                r = xrand();
+            }
+            uVar1 = r & 1 << bit_index;
+            uVar1 = (-uVar1 | uVar1) >> 0x1f;
+        }
+        return uVar1;
+    }
+
+    void set_tile(U8* r3, size_t r4, U32 r5)
+    {
+        U32 uVar1 = (r4 >> 2) & 0x1fffffff;
+        int iVar2 = (r4 & 3) << 1;
+        r3[uVar1] = r3[uVar1] & ~(3 << iVar2) | (r5 << iVar2);
+    }
 
     void translate_mask(U8* r3, const U8* r4, size_t r5)
     {
@@ -417,7 +447,7 @@ namespace
         RpAtomicRender(atomic);
     }
 
-    void render_model(xModelInstance* model, const xSphere& sph, F32 y_offset)
+    void render_model(xModelInstance* model, xSphere& sph, F32 y_offset)
     {
         RpAtomic* atomic = model->Data;
 
