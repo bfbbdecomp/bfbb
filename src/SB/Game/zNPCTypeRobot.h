@@ -161,6 +161,7 @@ struct zNPCFodder : zNPCRobot
     void Init(xEntAsset* asset);
     zNPCLassoInfo* PRIV_GetLassoData();
     void LassoModelIndex(S32* idxgrab, S32* idxhold);
+    void Reset();
 };
 
 struct zNPCFodBomb : zNPCRobot
@@ -169,6 +170,9 @@ struct zNPCFodBomb : zNPCRobot
 
     zNPCFodBomb(S32 myType);
     zNPCLassoInfo* PRIV_GetLassoData();
+    void Reset();
+    void Init(xEntAsset*);
+    void ParseINI();
 };
 
 struct zNPCFodBzzt : zNPCRobot
@@ -182,7 +186,9 @@ struct zNPCFodBzzt : zNPCRobot
 
     zNPCFodBzzt(S32 myType);
     zNPCLassoInfo* PRIV_GetLassoData();
+    void Reset();
     void DiscoReset();
+    void ParseINI();
 };
 
 struct zNPCChomper : zNPCRobot
@@ -192,37 +198,53 @@ struct zNPCChomper : zNPCRobot
 
     zNPCChomper(S32 myType);
     zNPCLassoInfo* PRIV_GetLassoData();
+    void Reset();
+    void ParseINI();
 };
 
 struct zNPCCritter : zNPCRobot
 {
     zNPCCritter(S32 myType);
     zNPCLassoInfo* PRIV_GetLassoData();
+    void Reset();
+    void Init(xEntAsset*);
 };
 
 struct zNPCHammer : zNPCRobot
 {
     zNPCHammer(S32 myType);
+    void Init(xEntAsset*);
+    void Reset();
+    void ParseINI();
 };
 
 struct zNPCTarTar : zNPCRobot
 {
     zNPCTarTar(S32 myType);
+    void Reset();
+    void Init(xEntAsset*);
+    void ParseINI();
 };
 
 struct zNPCGlove : zNPCRobot
 {
     zNPCGlove(S32 myType);
+    void Init(xEntAsset*);
+    void ParseINI();
 };
 
 struct zNPCMonsoon : zNPCRobot
 {
     zNPCMonsoon(S32 myType);
     U8 FoulWeather(float);
+    void Reset();
+    void ParseINI();
 };
 
 struct zNPCSleepy : zNPCRobot
 {
+    static S8 init;
+
     S32 flg_sleepy;
     NPCHazard* haz_patriot;
     F32 tmr_nextPatriot;
@@ -232,6 +254,9 @@ struct zNPCSleepy : zNPCRobot
     F32 cnt_grpzeez;
 
     zNPCSleepy(S32 myType);
+    void Reset();
+    void ParseINI();
+    U32 AnimPick(int, en_NPC_GOAL_SPOT, xGoal*);
 };
 
 struct zNPCArfDog : zNPCRobot
@@ -241,6 +266,10 @@ struct zNPCArfDog : zNPCRobot
 
     zNPCArfDog(S32 myType);
     zNPCLassoInfo* PRIV_GetLassoData();
+    void Reset();
+    void BlinkReset();
+    void Init(xEntAsset*);
+    void ParseINI();
 };
 
 struct zNPCArfArf : zNPCRobot
@@ -250,6 +279,9 @@ struct zNPCArfArf : zNPCRobot
 
     zNPCArfArf(S32 myType);
     zMovePoint* GetTelepoint(S32 unk);
+    void Reset();
+    void Init(xEntAsset* asset);
+    void ParseINI();
 };
 
 struct zNPCChuck : zNPCRobot
@@ -313,6 +345,9 @@ struct zNPCChuck : zNPCRobot
     IsDying(); // 0xD0 zNPCRobot
     LassoModelIndex(int*, int*); // 0xD4 zNPCChuck
     */
+    void Reset();
+    void Init(xEntAsset*);
+    void ParseINI();
 };
 
 enum en_tubestat
@@ -350,6 +385,9 @@ struct zNPCTubelet : zNPCRobot
     TubeNotice psynote;
 
     zNPCTubelet(S32 myType);
+    void ParseINI();
+    void Reset();
+    S32 IsDying();
 };
 
 enum en_tubespot
@@ -375,6 +413,9 @@ struct zNPCTubeSlave : zNPCRobot
     U8 ColPenFlags() const;
     U8 ColChkFlags() const;
     S32 CanRope();
+    void Reset();
+    void WeGotAGig();
+    void ParseINI();
 };
 
 struct zNPCSlick : zNPCRobot
