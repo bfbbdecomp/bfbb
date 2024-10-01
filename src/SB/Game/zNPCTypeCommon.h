@@ -181,7 +181,7 @@ struct zNPCSettings : xDynAsset
     S8 allowDetect;
     U8 allowPatrol;
     U8 allowWander;
-    S8 reduceCollide;
+    U8 reduceCollide;
     S8 useNavSplines;
     S8 pad[3];
     S8 allowChase;
@@ -407,7 +407,9 @@ struct zNPCCommon : xNPCBasic
     void ModelScaleSet(F32 x, F32 y, F32 z);
     void ModelScaleSet(F32 unk);
     void ModelScaleSet(const xVec3* vec);
+    xModelInstance* ModelAtomicFind(int index, int idx_prev, xModelInstance* mdl_prev);
     xModelInstance* ModelAtomicHide(int index, xModelInstance* mdl);
+    xModelInstance* ModelAtomicShow(int index, xModelInstance* mdl);
     S32 AnimStart(U32 animID, S32 forceRestart);
     xAnimState* AnimFindState(U32 animID);
     xAnimState* AnimCurState();

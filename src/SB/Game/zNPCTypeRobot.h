@@ -46,6 +46,8 @@ struct NPCLaser
     void ColorSet(const RwRGBA*, const RwRGBA*);
     U32 TextureGet();
     static void Render(xVec3&, xVec3&);
+    void UVScrollUpdate(F32);
+    void Prepare();
 };
 
 struct NPCBattle
@@ -166,6 +168,8 @@ struct zNPCFodder : zNPCRobot
 
 struct zNPCFodBomb : zNPCRobot
 {
+    static RwRaster* rast_blink;
+
     NPCBlinker blinker;
 
     zNPCFodBomb(S32 myType);
@@ -173,11 +177,14 @@ struct zNPCFodBomb : zNPCRobot
     void Reset();
     void Init(xEntAsset*);
     void ParseINI();
+    void Setup();
+    void BlinkerReset();
 };
 
 struct zNPCFodBzzt : zNPCRobot
 {
     volatile static S32 cnt_alerthokey;
+    static NPCLaser laser;
 
     RwRGBA rgba_discoLight;
     F32 tmr_discoLight;
@@ -189,6 +196,7 @@ struct zNPCFodBzzt : zNPCRobot
     void Reset();
     void DiscoReset();
     void ParseINI();
+    void Process(xScene* sc, F32 dt);
 };
 
 struct zNPCChomper : zNPCRobot
@@ -200,6 +208,7 @@ struct zNPCChomper : zNPCRobot
     zNPCLassoInfo* PRIV_GetLassoData();
     void Reset();
     void ParseINI();
+    void Init(xEntAsset*);
 };
 
 struct zNPCCritter : zNPCRobot
@@ -208,6 +217,7 @@ struct zNPCCritter : zNPCRobot
     zNPCLassoInfo* PRIV_GetLassoData();
     void Reset();
     void Init(xEntAsset*);
+    void SelfSetup();
 };
 
 struct zNPCHammer : zNPCRobot
@@ -239,11 +249,13 @@ struct zNPCMonsoon : zNPCRobot
     U8 FoulWeather(float);
     void Reset();
     void ParseINI();
+    void Init(xEntAsset* asset);
 };
 
 struct zNPCSleepy : zNPCRobot
 {
     static S8 init;
+    volatile static F32 hyt_NightLightCurrent;
 
     S32 flg_sleepy;
     NPCHazard* haz_patriot;
@@ -257,10 +269,14 @@ struct zNPCSleepy : zNPCRobot
     void Reset();
     void ParseINI();
     U32 AnimPick(int, en_NPC_GOAL_SPOT, xGoal*);
+    S32 RepelMissile(float);
+    void NightLightPos(xVec3*);
 };
 
 struct zNPCArfDog : zNPCRobot
 {
+    static RwRaster* rast_blink;
+
     NPCBlinker blinkHead;
     NPCBlinker blinkTail;
 
@@ -270,6 +286,7 @@ struct zNPCArfDog : zNPCRobot
     void BlinkReset();
     void Init(xEntAsset*);
     void ParseINI();
+    void Setup();
 };
 
 struct zNPCArfArf : zNPCRobot
@@ -388,6 +405,11 @@ struct zNPCTubelet : zNPCRobot
     void ParseINI();
     void Reset();
     S32 IsDying();
+    void PainInTheBand();
+    void PrepTheBand();
+    S32 Respawn(const xVec3*, zMovePoint*, zMovePoint*);
+    void Init(xEntAsset* asset);
+    void Unbonk();
 };
 
 enum en_tubespot
@@ -416,7 +438,14 @@ struct zNPCTubeSlave : zNPCRobot
     void Reset();
     void WeGotAGig();
     void ParseINI();
+    S32 IsDying();
+    void DoLaserRendering();
+    void PartyOn();
+    void Process(xScene* xscn, F32 dt);
+    void Init(xEntAsset* asset);
 };
+
+typedef struct zNPCSlick;
 
 struct zNPCSlick : zNPCRobot
 {
@@ -428,7 +457,7 @@ struct zNPCSlick : zNPCRobot
 
     zNPCSlick(S32 myType);
 
-    void YouOwnSlipFX();
+    zNPCSlick* YouOwnSlipFX();
     void BUpdate(xVec3* pos);
     void RopePopsShield();
     void ShieldUpdate(F32 dt);
@@ -440,6 +469,11 @@ struct zNPCSlick : zNPCRobot
     void Reset();
     void Init(xEntAsset* asset);
     void LassoModelIndex(S32* idxgrab, S32* idxhold);
+    void ShieldHide();
+    void ShieldShow();
+    void ShieldGeneratorDamaged();
+    bool IsShield() const;
+    void ShieldFX(F32 dt);
 };
 
 void ZNPC_Robot_Startup();

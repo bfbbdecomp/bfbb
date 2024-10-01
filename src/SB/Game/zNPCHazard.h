@@ -24,6 +24,7 @@ struct UVAModelInfo
     void UVVelSet(float, float);
     S32 GetUV(RwTexCoords*& coords, S32& numVertices, RpAtomic* model);
     void SetColor(iColor_tag);
+    void Update(F32, xVec2*);
 };
 
 struct NPCHazard;
