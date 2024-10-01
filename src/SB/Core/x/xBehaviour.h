@@ -129,8 +129,15 @@ struct xPsyche : RyzMemData
     void SetOwner(xBase*, void*);
     void KillBrain(xFactory*);
     void Lobotomy(xFactory*);
-    void SetSafety(S32);
+    void SetSafety(S32 goalID)
+    {
+        gid_safegoal = goalID;
+    }
     void Amnesia(S32);
+    void SetNotify(xPSYNote* notice)
+    {
+        cb_notice = notice;
+    }
 
     xBase* GetClient()
     {
@@ -169,7 +176,11 @@ struct xGoal : xListItem<xGoal>, xFactoryInst
     xPsyche* GetPsyche() const;
     void SetCallbacks(xGoalProcessCallback process, xGoalChkRuleCallback chkRule,
                       xGoalPreCalcCallback precalc, void* cbdata);
-    S32 GetFlags() const;
+    S32 GetFlags() const
+    {
+        return flg_able;
+    }
+
     void SetPsyche(xPsyche* psyche);
     const char* Name();
     void SetState(en_GOALSTATE state);

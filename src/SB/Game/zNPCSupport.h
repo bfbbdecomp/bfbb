@@ -42,6 +42,8 @@ struct NPCBlinker
 {
     F32 tmr_uvcell;
     S32 idx_uvcell;
+
+    void Reset();
 };
 
 void NPCWidget_Shutdown();
@@ -53,6 +55,7 @@ void NPCSupport_SceneReset();
 void NPCSupport_Shutdown();
 void NPCSupport_ScenePostInit();
 S32 NPCC_LampStatus();
+F32 NPCC_TmrCycle(float* tmr, float dt, float interval);
 xVec3* NPCC_rightDir(xEnt* ent);
 xVec3* NPCC_faceDir(xEnt* ent);
 void NPCC_ang_toXZDir(F32 angle, xVec3* dir);
@@ -60,5 +63,6 @@ F32 NPCC_aimVary(xVec3* dir_aim, xVec3* pos_src, xVec3* pos_tgt, F32 dst_vary, S
 F32 NPCC_ds2_toCam(const xVec3* pos_from, xVec3* delta);
 void zNPC_SNDStop(_tageNPCSnd snd);
 void zNPC_SNDPlay3D(_tageNPCSnd snd, xEnt*);
+RwRaster* NPCC_FindRWRaster(char*);
 
 #endif

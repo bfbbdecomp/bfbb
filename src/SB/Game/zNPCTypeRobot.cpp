@@ -1,17 +1,17 @@
 #include "zNPCTypeRobot.h"
 #include "zNPCSupplement.h"
-
+#include "zNPCSupport.h"
 #include "zNPCGoalRobo.h"
 #include "zNPCTypes.h"
 #include "zNPCGoalStd.h"
+#include "zGlobals.h"
+#include "zNPCGoals.h"
 
 #include "xFactory.h"
 #include "xMath.h"
-
 #include "xAnim.h"
 
 #include <string.h>
-#include "zGlobals.h"
 
 extern UVAModelInfo g_uvaShield;
 extern S32 g_cnt_fodbzzt;
@@ -42,7 +42,7 @@ extern NPCSndTrax g_sndTrax_Glove[];
 extern F32 zNPCRobot_f_0_0;
 extern F32 zNPCRobot_f_1_0;
 
-S32 rast_blink; // zNPCFodBomb
+zNPCSlick* g_slick_slipfx_owner;
 
 char* g_strz_roboanim[41] =
 {
@@ -107,10 +107,40 @@ char* g_strz_ttsanim[2] =
     "TarTar_Slosh01"
 };
 
+char* g_strz_flotanim[2] =
+{
+    "Unknown",
+    "Wiggle01"
+};
+
+U32 g_hash_flotanim[2];
+U32 g_hash_nytlytanim[2];
+U32 g_hash_ttsanim[2];
+U32 g_hash_cloudanim[3];
+U32 g_hash_shieldanim[2];
+U32 g_hash_roboanim[41];
+
+char* g_strz_cloudanim[3];
+
 extern char stringBase[];
 
-void zNPCRobot_Timestep(F32 dt);
-void zNPCSleepy_Timestep(F32 dt);
+// Scheduling
+void zNPCSleepy_Timestep(F32 dt)
+{
+    static S8 init;
+    static F32 tmr_cycle;
+
+    if (init == 0)
+    {
+        init = 1;
+        tmr_cycle = 0.0f;
+    }
+
+    F32 dVar1 = NPCC_TmrCycle(&tmr_cycle, 0.01666667f, 2.63f);
+    zNPCSleepy::hyt_NightLightCurrent = 4.0f;
+    zNPCSleepy::hyt_NightLightCurrent += (0.35f * isin(PI * dVar1));
+}
+
 void zNPCFodBzzt_DoTheHokeyPokey(F32 dt);
 void ZNPC_Destroy_Robot(xFactoryInst* inst);
 
@@ -150,7 +180,21 @@ void zNPCRobot_ScenePostInit()
     ROBO_PrepRoboCop();
 }
 
-void zNPCRobot_Timestep(float dt)
+void zNPCRobot::LassoNotify(en_LASSO_EVENT event)
+{
+    if (!IsDead())
+    {
+        zNPCCommon::LassoNotify(event);
+        switch (event)
+        {
+            case LASS_EVNT_GRABSTART:
+            psy_instinct->GoalSet(0x4e47525d, 0); // NPC_GOAL_LASSOGRAB??
+            break;
+        }
+    }
+}
+
+void zNPCRobot_Timestep(xScene* sc, float dt)
 {
     if (g_cnt_fodbzzt)
     {
@@ -586,6 +630,11 @@ void zNPCRobot::ParseINI()
     NPCS_SndTablePrepare(g_sndTrax_Robot);
 }
 
+void zNPCTubeSlave::Process(xScene* xscn, F32 dt)
+{
+    zNPCRobot::Process(xscn, dt);
+}
+
 void zNPCRobot::Process(xScene* xscn, F32 dt)
 {
     psy_instinct->Timestep(dt, NULL);
@@ -642,6 +691,23 @@ void zNPCRobot::DuploOwner(zNPCCommon* duper)
     }
 }
 
+void zNPCFodBzzt::DiscoReset()
+{
+    tmr_discoLight = -1.0f;
+}
+
+void zNPCArfDog::BlinkReset()
+{
+    blinkHead.Reset();
+    blinkTail.Reset();
+    flg_xtrarend &= ~1;
+}
+
+void zNPCTubelet::PainInTheBand()
+{
+    tmr_restoreHealth = 2.5f;
+}
+
 S32 zNPCRobot::LassoSetup()
 {
     S32 param1 = -1;
@@ -677,6 +743,53 @@ void zNPCRobot::InflictPain(S32 numHitPoints, S32 giveCreditToPlayer)
     {
         zNPCCommon::GiveReward();
     }
+}
+
+F32 hyt_NightLightCurrent;
+
+void zNPCSleepy::NightLightPos(xVec3* vec)
+{
+    xVec3Copy(vec, Pos());
+    vec->y += hyt_NightLightCurrent;
+}
+
+void zNPCCritter::SelfSetup()
+{
+    zNPCRobot::SelfSetup();
+    psy_instinct->SetSafety(NPC_GOAL_IDLE);
+}
+
+void zNPCTubeSlave::DoLaserRendering()
+{
+    xGoal* goal;
+    if (tubespot == ROBO_TUBE_PAUL)
+    {
+        goal = psy_instinct->GetCurGoal();
+        if (goal != NULL && (goal->GetID() == NPC_GOAL_TUBEATTACK))
+        {
+            ((zNPCGoalTubeAttack*)(goal))->LaserRender();
+        }
+    }
+}
+
+void zNPCFodBzzt::Process(xScene* sc, F32 dt)
+{
+    zNPCRobot::Process(sc, dt);
+    if (g_needuvincr_bzzt != 0)
+    {
+        g_needuvincr_bzzt = 0;
+        laser.UVScrollUpdate(dt);
+    }
+}
+
+S32 zNPCTubelet::Respawn(const xVec3* pos, zMovePoint* mvptFirst, zMovePoint* mvptSpawnRef)
+{
+    S32 rc = zNPCCommon::Respawn(pos, mvptFirst, mvptSpawnRef);
+    if (rc != 0)
+    {
+        PrepTheBand();
+    }
+    return rc;
 }
 
 void zNPCFodder::ParseINI()
@@ -767,6 +880,87 @@ void zNPCFodder::LassoModelIndex(S32* idxgrab, S32* idxhold)
 {
     *idxgrab = -1;
     *idxhold = -1;
+}
+
+void zNPCSlick::RopePopsShield()
+{
+    ShieldGeneratorDamaged();
+    alf_shieldCurrent = 0.0f;
+    tmr_repairShield = 5.0f;
+}
+
+bool zNPCSlick::IsShield() const
+{
+    return alf_shieldDesired == 100.0f/255.0f;
+}
+
+void zNPCSlick::ShieldShow()
+{
+    alf_shieldDesired = 100.0f/255.0f;
+}
+
+void zNPCSlick::ShieldHide()
+{
+    alf_shieldDesired = 0.0f;
+}
+
+S32 zNPCTubeSlave::IsDying()
+{
+    return tub_pete->IsDying();
+}
+
+S32 zNPCTubelet::IsDying()
+{
+    return tubestat == TUBE_STAT_DEAD;
+}
+
+zNPCSlick* zNPCSlick::YouOwnSlipFX()
+{
+    return g_slick_slipfx_owner = this;
+}
+
+void zNPCArfDog::Setup()
+{
+    zNPCCommon::Setup();
+    if (rast_blink == NULL)
+    {
+        rast_blink = NPCC_FindRWRaster(stringBase + 0x2e2); // "fx_fodbomb_blinker"
+    }
+}
+
+void zNPCFodBomb::Setup()
+{
+    zNPCCommon::Setup();
+    if (rast_blink == NULL)
+    {
+        rast_blink = NPCC_FindRWRaster(stringBase + 0x2e2); // "fx_fodbomb_blinker"
+    }
+}
+
+void zNPCFodBomb::BlinkerReset()
+{
+    blinker.Reset();
+    flg_xtrarend &= ~1;
+}
+
+void zNPCSlick::ShieldFX(F32 dt)
+{
+    if (g_needuvincr_slickshield)
+    {
+        g_uvaShield.Update(dt, NULL);
+        g_needuvincr_slickshield = 0;
+    }
+}
+
+S32 zNPCSleepy::RepelMissile(F32 dt)
+{
+    tmr_nextPatriot = MAX(-1.0f, tmr_nextPatriot - dt);
+    if (haz_patriot != NULL && !(tmr_nextPatriot < 0.0f))
+    {
+        return 1;
+    }
+    haz_patriot = NULL;
+    return 0;
 }
 
 void ZNPC_AnimTable_RobotBase(xAnimTable*);
@@ -1188,8 +1382,6 @@ xAnimTable* ZNPC_AnimTable_Tubelet()
     return pxVar1;
 }
 
-char* g_strz_flotanim[2];
-
 xAnimTable* ZNPC_AnimTable_FloatDevice()
 {
     xAnimTable *pxVar1 = xAnimTableNew(stringBase + 0x2b3, NULL, 0); // "FloatDevice"
@@ -1297,14 +1489,89 @@ void zNPCArfArf::Reset()
     }
 }
 
+NPARMgmt* NPAR_PartySetup(en_nparptyp parType, void** userData, NPARXtraData* xtraData);
+
+void zNPCMonsoon::Init(xEntAsset* asset)
+{
+    zNPCRobot::Init(asset);
+    flg_move &= ~2;
+    flg_move |= 4;
+    flg_vuln &= 0x9fffffff;
+    idx_neckBone = -1;
+    NPAR_PartySetup(NPAR_TYP_MONSOONRAIN, NULL, NULL);
+}
+
+void zNPCTubeSlave::Init(xEntAsset* asset)
+{
+    zNPCRobot::Init(asset);
+    flg_move &= 0xfffffffd;
+    flg_move |= 4;
+
+    flg_vuln &= 0x8fffffff;
+    flg_vuln &= 0xfeffffff;
+
+    idx_neckBone = -1;
+    tubespot = ROBO_TUBE_PAUL;
+    tub_pete = NULL;
+
+    laser.Prepare();
+
+    xModelInstance* mdl = ModelAtomicFind(1, -1, NULL);
+    mdl->Flags &= 0xffdf;
+    mdl->Flags |= 8;
+}
+
+void zNPCChomper::Init(xEntAsset* asset)
+{
+    zNPCRobot::Init(asset);
+    flg_move |= 0x10;
+    flg_vuln &= 0x9effffff;
+    idx_neckBone = -1;
+    NPAR_PartySetup(NPAR_TYP_DOGBREATH, NULL, NULL);
+}
+
+void zNPCTubelet::Init(xEntAsset* asset)
+{
+    zNPCRobot::Init(asset);
+
+    flg_move |= 2;
+    flg_vuln &= 0x9FFFFFFF;
+    idx_neckBone = -1;
+
+    psynote.npc = this;
+
+    NPAR_PartySetup(NPAR_TYP_TUBESPIRAL, NULL, NULL);
+    NPAR_PartySetup(NPAR_TYP_TUBECONFETTI, NULL, NULL);
+
+    xModelInstance* iVar1 = zNPCCommon::ModelAtomicFind(1, -1, NULL);
+
+    iVar1->Flags &= 0xffdf;
+    iVar1->Flags |= 8;
+}
+
+void zNPCTubeSlave::WeGotAGig()
+{
+    PartyOn();
+    psy_instinct->GoalSet(0x4e47524f, 1);
+}
+
+void zNPCTubelet::Unbonk()
+{
+    ModelAtomicShow(0, NULL);
+    ModelAtomicHide(1, NULL);
+    ModelAtomicHide(4, NULL);
+    hitpoints = cfg_npc->pts_damage;
+    // Epilogue weirdness
+    pflags &= 0xdf;
+    bonkSpinRate = -1.0;
+}
+
 void zNPCTubeSlave::Reset()
 {
     zNPCRobot::Reset();
     flags |= 0x40;
     zNPCTubeSlave::WeGotAGig();
 }
-
-U32 g_hash_roboanim[41];
 
 U32 zNPCSleepy::AnimPick(int gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal)
 {
