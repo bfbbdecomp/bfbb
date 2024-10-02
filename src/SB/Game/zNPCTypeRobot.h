@@ -71,7 +71,10 @@ struct zNPCRobot : zNPCCommon
     zNPCLassoInfo raw_lassoinfo;
     xEntDrive raw_drvdata;
 
-    zNPCRobot(S32);
+    zNPCRobot(S32 myType) : zNPCCommon(myType)
+    {
+        hitpoints = 1;
+    }
 
     S32 LaunchProjectile(en_npchaz haztyp, F32 spd_proj, F32 dst_minRange, en_mdlvert idx_mvtx,
                          F32 tym_predictMax, F32 hyt_offset);
@@ -155,7 +158,11 @@ struct zNPCRobot : zNPCCommon
 
 struct zNPCFodder : zNPCRobot
 {
-    zNPCFodder(S32 myType);
+    zNPCFodder(S32 myType) : zNPCRobot(myType)
+    {
+
+    }
+
     void Stun(F32 stuntime);
     U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal);
     void SelfSetup();
@@ -172,7 +179,11 @@ struct zNPCFodBomb : zNPCRobot
 
     NPCBlinker blinker;
 
-    zNPCFodBomb(S32 myType);
+    zNPCFodBomb(S32 myType) : zNPCRobot(myType)
+    {
+
+    }
+
     zNPCLassoInfo* PRIV_GetLassoData();
     void Reset();
     void Init(xEntAsset*);
@@ -191,7 +202,11 @@ struct zNPCFodBzzt : zNPCRobot
     xVec3 pos_discoLight;
     F32 uv_discoLight[2];
 
-    zNPCFodBzzt(S32 myType);
+    zNPCFodBzzt(S32 myType) : zNPCRobot(myType)
+    {
+
+    }
+
     zNPCLassoInfo* PRIV_GetLassoData();
     void Reset();
     void DiscoReset();
@@ -204,7 +219,11 @@ struct zNPCChomper : zNPCRobot
     S32 cnt_spurt;
     S32 cnt_skipEmit;
 
-    zNPCChomper(S32 myType);
+    zNPCChomper(S32 myType) : zNPCRobot(myType)
+    {
+
+    }
+
     zNPCLassoInfo* PRIV_GetLassoData();
     void Reset();
     void ParseINI();
@@ -213,7 +232,11 @@ struct zNPCChomper : zNPCRobot
 
 struct zNPCCritter : zNPCRobot
 {
-    zNPCCritter(S32 myType);
+    zNPCCritter(S32 myType) : zNPCRobot(myType)
+    {
+
+    }
+
     zNPCLassoInfo* PRIV_GetLassoData();
     void Reset();
     void Init(xEntAsset*);
@@ -222,7 +245,11 @@ struct zNPCCritter : zNPCRobot
 
 struct zNPCHammer : zNPCRobot
 {
-    zNPCHammer(S32 myType);
+    zNPCHammer(S32 myType) : zNPCRobot(myType)
+    {
+
+    }
+
     void Init(xEntAsset*);
     void Reset();
     void ParseINI();
@@ -230,7 +257,11 @@ struct zNPCHammer : zNPCRobot
 
 struct zNPCTarTar : zNPCRobot
 {
-    zNPCTarTar(S32 myType);
+    zNPCTarTar(S32 myType) : zNPCRobot(myType)
+    {
+
+    }
+
     void Reset();
     void Init(xEntAsset*);
     void ParseINI();
@@ -238,23 +269,34 @@ struct zNPCTarTar : zNPCRobot
 
 struct zNPCGlove : zNPCRobot
 {
-    zNPCGlove(S32 myType);
+    zNPCGlove(S32 myType) : zNPCRobot(myType)
+    {
+
+    }
+
     void Init(xEntAsset*);
     void ParseINI();
 };
 
 struct zNPCMonsoon : zNPCRobot
 {
-    zNPCMonsoon(S32 myType);
+    zNPCMonsoon(S32 myType) : zNPCRobot(myType)
+    {
+
+    }
+
     U8 FoulWeather(float);
     void Reset();
     void ParseINI();
     void Init(xEntAsset* asset);
+    void NewTime(xScene*, F32);
 };
 
 struct zNPCSleepy : zNPCRobot
 {
     static S8 init;
+    static RwRaster* rast_detectcone;
+    static RwRaster* rast_killcone;
     volatile static F32 hyt_NightLightCurrent;
 
     S32 flg_sleepy;
@@ -265,12 +307,18 @@ struct zNPCSleepy : zNPCRobot
     F32 tmr_emitzeez;
     F32 cnt_grpzeez;
 
-    zNPCSleepy(S32 myType);
+    zNPCSleepy(S32 myType) : zNPCRobot(myType)
+    {
+
+    }
+
     void Reset();
     void ParseINI();
     U32 AnimPick(int, en_NPC_GOAL_SPOT, xGoal*);
     S32 RepelMissile(float);
     void NightLightPos(xVec3*);
+    void NewTime(xScene* sc, F32 dt);
+    void Init(xEntAsset* asset);
 };
 
 struct zNPCArfDog : zNPCRobot
@@ -280,7 +328,11 @@ struct zNPCArfDog : zNPCRobot
     NPCBlinker blinkHead;
     NPCBlinker blinkTail;
 
-    zNPCArfDog(S32 myType);
+    zNPCArfDog(S32 myType) : zNPCRobot(myType)
+    {
+
+    }
+
     zNPCLassoInfo* PRIV_GetLassoData();
     void Reset();
     void BlinkReset();
@@ -294,7 +346,11 @@ struct zNPCArfArf : zNPCRobot
     S32 flg_puppy[5];
     zNPCArfDog* pup_kennel[5];
 
-    zNPCArfArf(S32 myType);
+    zNPCArfArf(S32 myType) : zNPCRobot(myType)
+    {
+
+    }
+
     zMovePoint* GetTelepoint(S32 unk);
     void Reset();
     void Init(xEntAsset* asset);
@@ -305,7 +361,11 @@ struct zNPCChuck : zNPCRobot
 {
     xVec3 dir_attack;
 
-    zNPCChuck(S32 myType);
+    zNPCChuck(S32 myType) : zNPCRobot(myType)
+    {
+
+    }
+
     //    0x00000000; // 0x0
     //    0x00000000; // 0x4
     /*
@@ -401,7 +461,11 @@ struct zNPCTubelet : zNPCRobot
     S32 pete_attack_last;
     TubeNotice psynote;
 
-    zNPCTubelet(S32 myType);
+    zNPCTubelet(S32 myType) : zNPCRobot(myType)
+    {
+
+    }
+
     void ParseINI();
     void Reset();
     S32 IsDying();
@@ -428,7 +492,11 @@ struct zNPCTubeSlave : zNPCRobot
     en_tubespot tubespot;
     zNPCTubelet* tub_pete;
 
-    zNPCTubeSlave(S32 myType);
+    zNPCTubeSlave(S32 myType) : zNPCRobot(myType)
+    {
+
+    }
+
     U8 PhysicsFlags() const;
     U8 ColPenByFlags() const;
     U8 ColChkByFlags() const;
@@ -455,7 +523,10 @@ struct zNPCSlick : zNPCRobot
     F32 alf_shieldCurrent;
     F32 alf_shieldDesired;
 
-    zNPCSlick(S32 myType);
+    zNPCSlick(S32 myType) : zNPCRobot(myType)
+    {
+
+    }
 
     zNPCSlick* YouOwnSlipFX();
     void BUpdate(xVec3* pos);

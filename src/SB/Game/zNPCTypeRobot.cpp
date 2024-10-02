@@ -10,6 +10,7 @@
 #include "xFactory.h"
 #include "xMath.h"
 #include "xAnim.h"
+#include "xBehaviour.h"
 
 #include <string.h>
 
@@ -689,6 +690,118 @@ void zNPCRobot::DuploOwner(zNPCCommon* duper)
         dead->DieQuietly();
         psyche->GoalSet('NGRj', 1);
     }
+}
+
+void zNPCRobot::AddLassoing
+(
+    xPsyche* psyche,
+    xGoalProcessCallback cb1,
+    xGoalProcessCallback cb2,
+    xGoalProcessCallback cb3,
+    xGoalProcessCallback cb4,
+    xGoalProcessCallback cb5
+)
+{
+    if (!(flg_vuln & 0x1000000))
+    {
+        return;
+    }
+
+    xGoal* goal;
+    goal = psyche->AddGoal(NPC_GOAL_LASSOBASE, NULL);
+    goal->SetCallbacks(cb1, NULL, NULL, NULL);
+
+    goal = psyche->AddGoal(NPC_GOAL_LASSOGRAB, NULL);
+    goal->SetCallbacks(cb2, NULL, NULL, NULL);
+
+    goal = psyche->AddGoal(NPC_GOAL_LASSOTHROW, NULL);
+    goal->SetCallbacks(cb3, NULL, NULL, NULL);
+
+}
+
+void zNPCRobot::AddMiscTypical
+(
+    xPsyche* psyche,
+    xGoalProcessCallback cb1,
+    xGoalProcessCallback cb2,
+    xGoalProcessCallback cb3
+)
+{
+    xGoal* goal;
+
+    goal = psyche->AddGoal(NPC_GOAL_NOTICE, NULL);
+    goal->SetCallbacks(cb1, NULL, NULL, NULL);
+
+    goal = psyche->AddGoal(NPC_GOAL_TAUNT, NULL);
+    goal->SetCallbacks(cb2, NULL, NULL, NULL);
+
+    goal = psyche->AddGoal(NPC_GOAL_NOMANLAND, NULL);
+    goal->SetCallbacks(cb3, NULL, NULL, NULL);
+}
+
+void zNPCRobot::AddStunThrow
+(
+    xPsyche* psyche,
+    xGoalProcessCallback cb1,
+    xGoalProcessCallback cb2,
+    xGoalProcessCallback cb3,
+    xGoalProcessCallback cb4
+)
+{
+    xGoal* goal;
+
+    goal = psyche->AddGoal(NPC_GOAL_EVILPAT, NULL);
+    goal->SetCallbacks(cb1, NULL, NULL, NULL);
+
+    goal = psyche->AddGoal(NPC_GOAL_STUNNED, NULL);
+    goal->SetCallbacks(cb2, NULL, NULL, NULL);
+
+    if (cfg_npc->pts_damage < 2)
+    {
+        goal = psyche->AddGoal(NPC_GOAL_PATCARRY, NULL);
+        goal->SetCallbacks(cb3, NULL, NULL, NULL);
+
+        goal = psyche->AddGoal(NPC_GOAL_PATTHROW, NULL);
+        goal->SetCallbacks(cb4, NULL, NULL, NULL);
+    }
+}
+
+void zNPCRobot::AddDamage
+(
+    xPsyche* psyche,
+    xGoalProcessCallback cb1,
+    xGoalProcessCallback cb2,
+    xGoalProcessCallback cb3,
+    xGoalProcessCallback cb4,
+    xGoalProcessCallback cb5
+)
+{
+    xGoal* goal;
+
+    goal = psyche->AddGoal(NPC_GOAL_DAMAGE, NULL);
+    goal->SetCallbacks(cb1, NULL, NULL, NULL);
+
+    goal = psyche->AddGoal(NPC_GOAL_KNOCK, NULL);
+    goal->SetCallbacks(cb2, NULL, NULL, NULL);
+
+    goal = psyche->AddGoal(NPC_GOAL_BASHED, NULL);
+    goal->SetCallbacks(cb3, NULL, NULL, NULL);
+}
+
+void zNPCRobot::AddSpawning
+(
+    xPsyche* psyche,
+    xGoalProcessCallback cb1,
+    xGoalProcessCallback cb2
+)
+{
+    xGoal* goal;
+
+    goal = psyche->AddGoal(NPC_GOAL_AFTERLIFE, NULL);
+    goal->SetCallbacks(cb1, NULL, NULL, NULL);
+
+    goal = psyche->AddGoal(NPC_GOAL_RESPAWN, NULL);
+    goal->SetCallbacks(cb2, NULL, NULL, NULL);
 }
 
 void zNPCFodBzzt::DiscoReset()
@@ -1573,6 +1686,106 @@ void zNPCTubeSlave::Reset()
     zNPCTubeSlave::WeGotAGig();
 }
 
+F32 zNPCRobot::GenShadCacheRad()
+{
+    F32 fac_use;
+    F32 rad_cache;
+
+    switch (xNPCBasic::SelfType())
+    {
+    case NPC_TYPE_HAMMER:    // 0x4e545230:
+    case NPC_TYPE_HAMSPIN:   // 0x4e545231:
+    case NPC_TYPE_TARTAR:    // 0x4e545232:
+    case NPC_TYPE_GLOVE:     // 0x4e545233:
+    case NPC_TYPE_MONSOON:   // 0x4e545234:
+    case NPC_TYPE_SLEEPY:    // 0x4e545235:
+    case NPC_TYPE_ARFARF:    // 0x4e545237:
+    case NPC_TYPE_TUBELET:   // 0x4e545239:
+    case NPC_TYPE_TUBESLAVE: // 0x4e54523a:
+        fac_use = 2.4f;
+        break;
+    case NPC_TYPE_ARFDOG:  // 0x4e545236:
+    case NPC_TYPE_CHUCK:   // 0x4e545238:
+    case NPC_TYPE_FODDER:  // 0x4e54523c:
+    case NPC_TYPE_FODBOMB: // 0x4e54523d:
+    case NPC_TYPE_FODBZZT: // 0x4e54523e:
+    case NPC_TYPE_CHOMPER: // 0x4e54523f:
+    case NPC_TYPE_CRITTER: // 0x4e545240:
+        fac_use = 1.5f;
+        break;
+    case NPC_TYPE_SLICK:
+        fac_use = 2.5f;
+        break;
+    default:
+        fac_use = 2.0f;
+        break;
+    }
+    rad_cache = zNPCCommon::BoundAsRadius(0);
+    return (fac_use * rad_cache);
+}
+
+void zNPCSleepy::Init(xEntAsset* asset)
+{
+    zNPCRobot::Init(asset);
+
+    flg_move |= 2;
+
+    flg_vuln &= 0x8fffffff;
+
+    idx_neckBone = -1;
+
+    rast_detectcone = NULL;
+    rast_killcone = NULL;
+
+    // Weirdness related to this line.
+    g_cnt_sleepy++;
+
+    NPAR_PartySetup(NPAR_TYP_SLEEPYZEEZ, NULL, NULL);
+}
+
+void zNPCSlick::Init(xEntAsset* asset)
+{
+    zNPCRobot::Init(asset);
+
+    flg_move &= 0xfffffffd;
+    flg_move |= 4;
+
+    flg_vuln &= 0x9fffffff;
+    flg_vuln |= 0x1000000;
+
+    idx_neckBone = -1;
+
+    if (!g_uvaShield.Valid())
+    {
+        xModelInstance* mdl = zNPCCommon::ModelAtomicFind(1, -1, NULL);
+        if ((mdl != NULL) && (mdl->Data != NULL))
+        {
+            g_uvaShield.Init(mdl->Data, 0);
+            g_uvaShield.UVVelSet(0.0f, -0.7f);
+        }
+    }
+    NPAR_PartySetup(NPAR_TYP_OILBUB, NULL, NULL);
+}
+
+void zNPCSleepy::NewTime(xScene* sc, F32 dt)
+{
+    if (!IsDead())
+    {
+        xModelInstance* nightlight = zNPCCommon::ModelAtomicFind(4, -1, NULL);
+        if (nightlight == NULL)
+        {
+            return;
+        }
+        NightLightPos((xVec3*)(&nightlight->Mat->pos));
+    }
+    zNPCRobot::NewTime(sc, dt);
+}
+
+void zNPCMonsoon::NewTime(xScene* sc, F32 dt)
+{
+    zNPCRobot::NewTime(sc, dt);
+}
+
 U32 zNPCSleepy::AnimPick(int gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal)
 {
     U32 uVar1 = 0;
@@ -1599,9 +1812,93 @@ U32 zNPCSleepy::AnimPick(int gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal)
     return uVar1;
 }
 
+S32 FODR_grul_alert(xGoal* goal, void*, en_trantype* trantype, float, void*)
+{
+    *trantype = GOAL_TRAN_PUSH;
+    return NPC_GOAL_ALERTFODDER;
+}
+
+S32 BOMB_grul_alert(xGoal* goal, void*, en_trantype* trantype, float, void*)
+{
+    *trantype = GOAL_TRAN_PUSH;
+    return NPC_GOAL_ALERTFODBOMB;
+}
+
+S32 BZZT_grul_alert(xGoal* goal, void*, en_trantype* trantype, float, void*)
+{
+    *trantype = GOAL_TRAN_PUSH;
+    return NPC_GOAL_ALERTFODBZZT;
+}
+
+S32 CHMP_grul_alert(xGoal* goal, void*, en_trantype* trantype, float, void*)
+{
+    *trantype = GOAL_TRAN_PUSH;
+    return NPC_GOAL_ALERTCHOMPER;
+}
+
+S32 HAMR_grul_alert(xGoal* goal, void*, en_trantype* trantype, float, void*)
+{
+    *trantype = GOAL_TRAN_PUSH;
+    return NPC_GOAL_ALERTHAMMER;
+}
+
+S32 TART_grul_alert(xGoal* goal, void*, en_trantype* trantype, float, void*)
+{
+    *trantype = GOAL_TRAN_PUSH;
+    return NPC_GOAL_ALERTTARTAR;
+}
+
+S32 GLOV_grul_alert(xGoal* goal, void*, en_trantype* trantype, float, void*)
+{
+    *trantype = GOAL_TRAN_PUSH;
+    return NPC_GOAL_ALERTGLOVE;
+}
+
+S32 MOON_grul_alert(xGoal* goal, void*, en_trantype* trantype, float, void*)
+{
+    *trantype = GOAL_TRAN_PUSH;
+    return NPC_GOAL_ALERTMONSOON;
+}
+
+S32 SLEP_grul_alert(xGoal* goal, void*, en_trantype* trantype, float, void*)
+{
+    *trantype = GOAL_TRAN_PUSH;
+    return NPC_GOAL_ALERTSLEEPY;
+}
+
+S32 ARFY_grul_alert(xGoal* goal, void*, en_trantype* trantype, float, void*)
+{
+    *trantype = GOAL_TRAN_PUSH;
+    return NPC_GOAL_ALERTARF;
+}
+
+S32 PUPY_grul_alert(xGoal* goal, void*, en_trantype* trantype, float, void*)
+{
+    *trantype = GOAL_TRAN_PUSH;
+    return NPC_GOAL_ALERTPUPPY;
+}
+
+S32 CHUK_grul_alert(xGoal* goal, void*, en_trantype* trantype, float, void*)
+{
+    *trantype = GOAL_TRAN_PUSH;
+    return NPC_GOAL_ALERTCHUCK;
+}
+
+S32 TUBE_grul_alert(xGoal* goal, void*, en_trantype* trantype, float, void*)
+{
+    *trantype = GOAL_TRAN_PUSH;
+    return NPC_GOAL_ALERTTUBELET;
+}
+
+S32 SLCK_grul_alert(xGoal* goal, void*, en_trantype* trantype, float, void*)
+{
+    *trantype = GOAL_TRAN_PUSH;
+    return NPC_GOAL_ALERTSLICK;
+}
+
 S32 xEntIsEnabled(xEnt* ent)
 {
-    return xBaseIsEnabled((xBase*)ent) & 0xff;
+    return xBaseIsEnabled(ent);
 }
 
 void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)

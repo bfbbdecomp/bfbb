@@ -388,6 +388,7 @@ struct zNPCCommon : xNPCBasic
     F32 ThrottleAccel(F32 dt, S32 speedup, F32 pct_max);
     F32 ThrottleAdjust(F32 dt, F32 spd_want, F32 accel);
 
+    F32 BoundAsRadius(int useCfg);
     void VelStop();
     static void ConfigSceneDone();
     U32 LassoInit();
