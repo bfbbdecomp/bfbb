@@ -556,6 +556,8 @@ public:
     S32 flg_attack; // offset 0x58, size 0x4
     en_slepatak sleepattack; // offset 0x5C, size 0x4
     F32 tmr_minAttack; // offset 0x60, size 0x4
+
+    S32 Exit(F32, void*);
 };
 
 class zNPCGoalChase : public zNPCGoalCommon
@@ -711,6 +713,7 @@ public:
     }
     S32 Suspend(F32 dt, void* updCtxt);
     S32 Resume(F32 dt, void* updCtxt);
+    S32 Exit(F32 dt, void* updCtxt);
     F32 tmr_attack; // offset 0x4C, size 0x4
     F32 tmr_minAttack; // offset 0x50, size 0x4
     xVec3 pos_began; // offset 0x54, size 0xC
@@ -909,7 +912,7 @@ public:
         xGoal::AddFlags(0x20000);
         flg_npcgauto &= 0xfffffff9;
     }
-
+    S32 Exit(F32 dt, void* updCtxt);
     S32 flg_alert; // offset 0x4C, size 0x4
 };
 
@@ -1046,6 +1049,7 @@ public:
     }
 
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Exit(F32 dt, void* updCtxt);
     void ChkPrelimTran(en_trantype* trantype, int* nextgoal);
 };
 
@@ -1071,6 +1075,7 @@ public:
     }
 
     S32 DeathByLasso(const xVec3*);
+    S32 Exit(F32 dt, void* updCtxt);
     S32 flg_tubedying; // offset 0x4C, size 0x4
     F32 spd_gothatway; // offset 0x50, size 0x4
     S32 cnt_loop; // offset 0x54, size 0x4
@@ -1091,6 +1096,9 @@ public:
     F32 tmr_recover; // offset 0x4C, size 0x4
     F32 ang_spinrate; // offset 0x50, size 0x4
     xVec3 vec_offsetPete; // offset 0x54, size 0xC
+
+    S32 Exit(F32 dt, void* updCtxt);
+    void CheckForTran(en_trantype*, int*);
 };
 
 class zNPCGoalTubeBirth : public zNPCGoalCommon
@@ -1118,8 +1126,10 @@ public:
     void AttackDataReset();
     S32 Enter(F32 dt, void* updCtxt);
     S32 Resume(F32 dt, void* updCtxt);
+    bool MarySpinUp(float);
     S32 LaserRender();
     void MaryzBlessing();
+    void MaryzFury();
     S32 MarySpinDown(F32 dt);
     void ChkPrelimTran(en_trantype* trantype, int* nextgoal);
     S32 flg_attack; // offset 0x4C, size 0x4
@@ -1188,6 +1198,8 @@ public:
     {
         SetFlags(2);
     }
+
+    S32 Exit(F32 dt, void* updCtxt);
 
     F32 spd_gothatway; // offset 0x4C, size 0x4
     S32 cnt_loop; // offset 0x50, size 0x4
@@ -1268,6 +1280,7 @@ public:
     }
 
     S32 NPCMessage(NPCMsg* msg);
+    S32 Exit(F32 dt, void* updCtxt);
     F32 tmr_countdown; // offset 0x4C, size 0x4
 };
 

@@ -18,6 +18,7 @@ struct zNPCSubBoss : zNPCCommon
     virtual U8 PhysicsFlags() const;
 };
 
+void zNPCSubBoss_ScenePrepare();
 void ZNPC_SubBoss_Startup();
 void ZNPC_SubBoss_Shutdown();
 void zNPCSubBoss_ScenePrepare();

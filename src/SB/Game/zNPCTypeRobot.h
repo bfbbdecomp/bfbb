@@ -45,7 +45,7 @@ struct NPCLaser
 
     void ColorSet(const RwRGBA*, const RwRGBA*);
     U32 TextureGet();
-    static void Render(xVec3&, xVec3&);
+    void Render(xVec3*, xVec3*);
     void UVScrollUpdate(F32);
     void Prepare();
 };
@@ -547,6 +547,7 @@ struct zNPCSlick : zNPCRobot
     void ShieldFX(F32 dt);
 };
 
+void zNPCRobot_SceneReset();
 void ZNPC_Robot_Startup();
 void ZNPC_Robot_Shutdown();
 void zNPCRobot_ScenePrepare();

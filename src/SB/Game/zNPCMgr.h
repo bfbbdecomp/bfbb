@@ -14,6 +14,10 @@ struct zNPCMgr : RyzMemData
     xBase selfbase;
 
     zNPCMgr();
+    S32 NPCTypeForModel(U32, U32);
+    void BackdoorUpdateAllNPCsOnce(xScene*, F32);
+    void PrepTypeTable();
+    void Startup();
     void Shutdown();
     void ScenePrepare(S32 npccnt);
     void SceneFinish();

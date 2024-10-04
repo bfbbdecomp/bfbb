@@ -1,13 +1,37 @@
 #include "zNPCMgr.h"
 #include "zNPCTypeCommon.h"
+#include "zNPCTypeRobot.h"
+#include "zNPCTypeVillager.h"
+#include "zNPCTypeSubBoss.h"
+#include "zNPCTypeBoss.h"
+#include "zNPCTypeDuplotron.h"
 #include "zNPCTypes.h"
 #include "zNPCSpawner.h"
 #include "zNPCMessenger.h"
+#include "zGlobals.h"
+
+#include "xBehaveMgr.h"
 
 #include <types.h>
 
 extern S32 g_modinit;
 extern zNPCMgr* g_npcmgr;
+
+S32 g_firstFrameUpdateAllNPC;
+
+struct NPCMTypeTable
+{
+    en_NPCTYPES useNPCType;
+    char* modelName;
+    unsigned int hashOfName;
+} g_tbltype[250];
+
+struct NPCBrainTableEntry
+{
+    char* name;
+    en_NPCTYPES type;
+    unsigned int id;
+} g_brainTable[63];
 
 zNPCMgr* zNPCMgrSelf()
 {
@@ -19,8 +43,14 @@ st_XORDEREDARRAY* zNPCMgr_GetNPCList()
     return &zNPCMgrSelf()->npclist;
 }
 
-#if 0
-// Can't find the new operator declaration for some reason?
+void zNPCMgr::ScenePostInit()
+{
+    zNPCCommon_ScenePostInit();
+    zNPCRobot_ScenePostInit();
+    zNPCVillager_ScenePostInit();
+    zNPCDuplotron_ScenePostInit();
+}
+
 void zNPCMgr_Startup()
 {
     if (g_modinit++ == 0)
@@ -28,13 +58,10 @@ void zNPCMgr_Startup()
         xBehaveMgr_Startup();
         zNPCMgr* npc = new (0x4e50434d, NULL) zNPCMgr(); //NPCM
         g_npcmgr = npc;
-        Startup(npc);
+        npc->Startup();
     }
 }
 
-#endif
-
-// Doesn't set r4 to 1 before calling the delete operator...
 void zNPCMgr_Shutdown()
 {
     g_modinit--;
@@ -109,8 +136,59 @@ void zNPCMgr::Shutdown()
     zNPCMsg_Shutdown();
 }
 
-#if 0
-// Need to define all the functions.
+void zNPCMgr::PrepTypeTable()
+{
+    for (NPCMTypeTable* p = &g_tbltype[0]; p->useNPCType != NPC_TYPE_UNKNOWN; p++)
+    {
+        p->hashOfName = xStrHash(p->modelName);
+    }
+
+    for (int i = 0; i < (S32)(sizeof(g_brainTable) / sizeof(NPCBrainTableEntry)); i++)
+    {
+        g_brainTable[i].id = xStrHash(g_brainTable[i].name);
+    }
+}
+
+void zNPCMgr::SceneReset()
+{
+    zNPCCommon_SceneReset();
+    zNPCRobot_SceneReset();
+    zNPCVillager_SceneReset();
+    zNPCMsg_SceneReset();
+    xBehaveMgr_SceneReset();
+    BackdoorUpdateAllNPCsOnce(globals.sceneCur, 0.01666666f);
+}
+
+S32 zNPCMgr_OrdTest_npcid(const void* vkey, void* vitem)
+{
+    S32 rc;
+    void* key = *(void**)(vitem);
+
+    if (vkey < key)
+    {
+        rc = -1;
+    }
+    else if (vkey > key)
+    {
+        rc = 1;
+    }
+    else
+    {
+        rc = 0;
+    }
+
+    return rc;
+}
+
+void zNPCMgr::ScenePostSetup()
+{
+    for (int i = 0; i < npclist.cnt; i++)
+    {
+        xNPCBasic* npc = (xNPCBasic*)npclist.list[i];
+        npc->PostSetup();
+    }
+}
+
 void zNPCMgr::ScenePrepare(S32 npccnt)
 {
     XOrdInit(&this->npclist, npccnt, 0);
@@ -125,8 +203,6 @@ void zNPCMgr::ScenePrepare(S32 npccnt)
     zNPCBoss_ScenePrepare();
     g_firstFrameUpdateAllNPC = 1;
 }
-
-#endif
 
 S32 zNPCMgr_OrdComp_npcid(void* vkey, void* vitem)
 {

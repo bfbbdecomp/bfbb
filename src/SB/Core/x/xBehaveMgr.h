@@ -26,6 +26,8 @@ struct xBehaveMgr : RyzMemData
     void operator delete(void*, U16);
 };
 
+void xBehaveMgr_ScenePrepare();
+void xBehaveMgr_SceneReset();
 void xBehaveMgr_Startup();
 void xBehaveMgr_Shutdown();
 xBehaveMgr* xBehaveMgr_GetSelf();
