@@ -616,6 +616,7 @@ struct NPCMsg
 xFactoryInst* ZNPC_Create_Common(S32 who, RyzMemGrow* grow, void*);
 void ZNPC_Destroy_Common(xFactoryInst* inst);
 void zNPCCommon_ScenePrepare();
+void zNPCCommon_ScenePostInit();
 void zNPCCommon_SceneFinish();
 void zNPCPlyrSnd_Reset();
 void zNPCPlyrSnd_Update(F32 dt);

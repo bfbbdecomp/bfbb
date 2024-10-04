@@ -25,6 +25,7 @@ protected:
     ~zNPCBoss();
 };
 
+void zNPCBoss_ScenePrepare();
 void ZNPC_Boss_Startup();
 void ZNPC_Boss_Shutdown();
 xFactoryInst* ZNPC_Create_Boss(S32 who, RyzMemGrow* grow, void*);

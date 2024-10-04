@@ -235,6 +235,123 @@ void zNPCGoalTubeLasso::ChkPrelimTran(en_trantype* trantype, int* nextgoal)
     }
 }
 
+S32 zNPCGoalPatThrow::Enter(F32 dt, void* updCtxt)
+{
+    zNPCRobot* npc = (zNPCRobot *)(psyche->clt_owner);
+    NPCGlyph* glyph = npc->glyf_stun;
+    if (glyph != NULL)
+    {
+        glyph->Discard();
+    }
+    npc->glyf_stun = NULL;
+    zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalTubeAttack::LaserRender()
+{
+    zNPCTubeSlave::laser.Render(&paul.pos_laserSource, &paul.pos_laserTarget);
+}
+
+void zNPCGoalTubeAttack::MaryzFury()
+{
+    zNPCTubelet* npc = *(zNPCTubelet **)(&psyche->clt_owner);
+    NPCHazard* haz = HAZ_Acquire();
+    if (haz != NULL)
+    {
+        haz->ConfigHelper(NPC_HAZ_TUBELETBLAST);
+        haz->SetNPCOwner(npc);
+        xVec3* center = xEntGetCenter(npc);
+        haz->Start(center, -1.0f);
+        U32 sndID = xStrHash("Tube_pop");
+        xSndPlay3D(sndID, 0.77f, 0.0f, 0x80, 0, &haz->pos_hazard, 5.0f, 15.0f, SND_CAT_GAME, 0.0f);
+    }
+}
+
+S32 zNPCGoalStunned::Enter(F32 dt, void* updCtxt)
+{
+    zNPCRobot* npc = (zNPCRobot *)(psyche->clt_owner);
+    if (!(flg_info & 0x10))
+    {
+        F32 stun = npc->cfg_npc->tym_stun;
+        npc->tmr_stunned = (stun * (0.25f * (xurand() - 0.5f)) + stun);
+    }
+    flg_info = 0;
+    npc->VelStop();
+    zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalTubeLasso::Exit(F32 dt, void* updCtxt)
+{
+    zNPCTubeSlave* npc = ((zNPCTubeSlave*)(psyche->clt_owner));
+
+    zNPCGoalTubeDying* tubedie = (zNPCGoalTubeDying*)psyche->FindGoal(0x4e475255);
+    tubedie->DeathByLasso(npc->Pos());
+
+    xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalDeflate::Exit(F32 dt, void* updCtxt)
+{
+    zNPCTubelet* npc = ((zNPCTubelet*)(psyche->clt_owner));
+    xModelInstance* mdl_wig = npc->ModelAtomicShow(4, NULL);
+
+    mdl_wig->Scale.assign(1.0f);
+    npc->RestoreColFlags();
+
+    xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalTubeDying::Exit(F32 dt, void* updCtxt)
+{
+    zNPCTubeSlave* npc = ((zNPCTubeSlave*)(psyche->clt_owner));
+    xModelInstance* mdl_wig = npc->ModelAtomicFind(4, -1, NULL);
+
+    mdl_wig->Scale.assign(1.0f);
+    npc->RestoreColFlags();
+
+    xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalTeleport::Exit(F32 dt, void* updCtxt)
+{
+    zNPCRobot* npc = ((zNPCSleepy*)(psyche->clt_owner));
+
+    npc->flg_move |= 2;
+    npc->flg_move &= 0xFFFFFFFB;
+
+    npc->RestoreColFlags();
+
+    xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalTubeBonked::Exit(F32 dt, void* updCtxt)
+{
+    zNPCSleepy* npc = ((zNPCSleepy*)(psyche->clt_owner));
+    npc->ModelAtomicShow(0, NULL);
+    npc->ModelAtomicHide(1, NULL);
+    npc->ModelAtomicHide(4, NULL);
+    npc->ShowerConfetti(NULL);
+    npc->SndPlayRandom(NPC_STYP_UNBONKED);
+    xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalAlertGlove::Exit(F32 dt, void* updCtxt)
+{
+    zNPCGlove* npc = ((zNPCGlove*)(psyche->clt_owner));
+    npc->flg_vuln |= 0x00100000;
+    npc->flg_vuln |= 0x82010000;
+    zNPC_SNDStop(eNPCSnd_GloveAttack);
+    xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalAlertSleepy::Exit(F32 dt, void* updCtxt)
+{
+    zNPCSleepy* npc = ((zNPCSleepy*)(psyche->clt_owner));
+    npc->ModelAtomicHide(1, NULL);
+    zNPC_SNDStop(eNPCSnd_SleepyAttack);
+    xGoal::Exit(dt, updCtxt);
+}
+
 void zNPCGoalTubePal::ChkPrelimTran(en_trantype* trantype, int* nextgoal)
 {
     zNPCTubeSlave* npc = ((zNPCTubeSlave*)(psyche->clt_owner));
@@ -1025,6 +1142,23 @@ S32 NPCArena::IncludesPlayer(F32 rad_thresh, xVec3* vec)
     return 0;
 }
 
+NPCGlyph* GLYF_Acquire(en_npcglyph);
+
+F32 zNPCGoalEvilPat::GlyphStart()
+{
+    static xVec3 ang_delta = { DEG2RAD(2.1f), 0.0f, 0.0f };
+    static xVec3 scale = { 0.75f, 0.75f, 0.75f };
+
+    zNPCRobot* robot = (zNPCRobot*)psyche->clt_owner;
+    robot->glyf_stun = GLYF_Acquire(NPC_GLYPH_DAZED);
+    if (robot->glyf_stun != NULL)
+    {
+        robot->glyf_stun->Enable(1);
+        robot->glyf_stun->RotSet(&ang_delta, 0);
+        robot->glyf_stun->ScaleSet(&scale);
+    }
+}
+
 S32 NPCArena::IsReady()
 {
     return rad_arena > 1.0f;
@@ -1482,9 +1616,60 @@ S32 zNPCGoalKnock::Exit(F32 dt, void* updCtxt)
     return xGoal::Exit(dt, updCtxt);
 }
 
+void zNPCGoalTubeBonked::CheckForTran(en_trantype* trantype, int* nextgoal)
+{
+    zNPCTubeSlave* npc = (zNPCTubeSlave *)(psyche->clt_owner);
+
+    switch (npc->tub_pete->tubestat)
+    {
+        case TUBE_STAT_BORN:
+            if (npc->hitpoints != 0)
+            {
+                *nextgoal = NPC_GOAL_TUBEBIRTH;
+                *trantype = GOAL_TRAN_SET;
+            }
+            break;
+        case TUBE_STAT_DUCKLING:
+            if (npc->hitpoints != 0)
+            {
+                *nextgoal = NPC_GOAL_TUBEDUCKLING;
+                *trantype = GOAL_TRAN_SET;
+            }
+            break;
+        case TUBE_STAT_ATTACK:
+            if (npc->hitpoints != 0)
+            {
+                *nextgoal = NPC_GOAL_TUBEATTACK;
+                *trantype = GOAL_TRAN_SET;
+            }
+            break;
+        case TUBE_STAT_LASSO:
+            *nextgoal = NPC_GOAL_TUBELASSO;
+            *trantype = GOAL_TRAN_SET;
+            break;
+        case TUBE_STAT_DYING:
+        case TUBE_STAT_DEAD:
+            *nextgoal = NPC_GOAL_TUBEDYING;
+            *trantype = GOAL_TRAN_SET;
+            break;
+    }
+}
+
 S32 zNPCGoalAlertHammer::Exit(F32 dt, void* updCtxt)
 {
     zNPCHammer* npc = ((zNPCHammer*)(psyche->clt_owner));
+    return xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalAlert::Exit(F32 dt, void* updCtxt)
+{
+    zNPCRobot* npc = ((zNPCRobot*)(psyche->clt_owner));
+    if (npc->inf_battle != NULL)
+    {
+        npc->inf_battle->LeaveBattle(npc);
+    }
+    npc->inf_battle = NULL;
+    flg_user = 1;
     return xGoal::Exit(dt, updCtxt);
 }
 

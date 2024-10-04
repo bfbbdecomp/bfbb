@@ -30,8 +30,9 @@ struct zNPCDuplotron : zNPCCommon
 };
 
 extern U32 g_hash_dupoanim[5];
-
+void zNPCDuplotron_ScenePrepare();
 void ZNPC_Duplotron_Startup();
+void zNPCDuplotron_ScenePostInit();
 void ZNPC_Duplotron_Shutdown();
 xFactoryInst* ZNPC_Create_Duplotron(S32 who, RyzMemGrow* grow, void*);
 void ZNPC_Destroy_Duplotron(xFactoryInst* inst);
