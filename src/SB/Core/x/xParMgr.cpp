@@ -5,8 +5,8 @@
 
 #include <types.h>
 
-U32 sFrameCount;
-S32 sParMgrInit;
+volatile static U32 sFrameCount;
+static S32 sParMgrInit;
 
 void xParMgrInit()
 {
@@ -27,22 +27,21 @@ void xParMgrKillAllParticles()
 {
 }
 
-#if 0
-// If statement and statement above are wrong.
 void xParMgrUpdate(F32 elapsedTime)
 {
     iParMgrUpdate(elapsedTime);
-    sFrameCount = (S32)sFrameCount;
-    if (++sFrameCount > 10)
+
+    sFrameCount++;
+
+    if (sFrameCount > 10)
     {
         sFrameCount = 1;
     }
-    while (sFrameCount >= 1)
-    {
-        sFrameCount--;
-    }
+
+    U32 i;
+    for (i = sFrameCount; i >= 1; i--);
+    sFrameCount = i;
 }
-#endif
 
 void xParMgrRender()
 {
