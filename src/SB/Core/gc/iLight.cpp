@@ -2,10 +2,6 @@
 
 RpWorld* gLightWorld;
 
-// iLightCreate will not match without these floats being externed :thinking:
-extern F32 _535_0; // 0.0f
-extern F32 _536; // 1.0f
-
 void iLightInit(RpWorld* world)
 {
     gLightWorld = world;
@@ -49,18 +45,18 @@ iLight* iLightCreate(iLight* light, U32 type)
     RwFrameUpdateObjects(frame);
 
     light->type = type;
-    light->sph.center.x = _535_0;
-    light->sph.center.y = _535_0;
-    light->sph.center.z = _535_0;
-    light->sph.r = _535_0;
-    light->color.r = _536;
-    light->color.g = _536;
-    light->color.b = _536;
-    light->color.a = _536;
-    light->dir.x = _535_0;
-    light->dir.y = _535_0;
-    light->dir.z = _536;
-    light->coneangle = _535_0;
+    light->sph.center.x = 0.0f;
+    light->sph.center.y = 0.0f;
+    light->sph.center.z = 0.0f;
+    light->sph.r = 0.0f;
+    light->color.r = 1.0f;
+    light->color.g = 1.0f;
+    light->color.b = 1.0f;
+    light->color.a = 1.0f;
+    light->dir.x = 0.0f;
+    light->dir.y = 0.0f;
+    light->dir.z = 1.0f;
+    light->coneangle = 0.0f;
 
     return light;
 }
