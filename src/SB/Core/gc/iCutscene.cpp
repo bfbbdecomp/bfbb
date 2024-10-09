@@ -11,10 +11,6 @@
 
 U32 read_sizzze = 0;
 
-extern F32 _835_1;
-extern F32 _836_1;
-extern F32 _837_4;
-
 void iCSSoundSetup(xCutscene* csn)
 {
     xCutsceneData* data;
@@ -316,17 +312,17 @@ S32 iCSLoadStep(xCutscene* csn)
                 {
                     // Stereo
 
-                    csn->SndHandle[0] = xSndPlay(csn->SndAssetID[0], _835_1, _836_1, 255, 0x200, 0,
-                                                 SND_CAT_CUTSCENE, _837_4);
-                    csn->SndHandle[1] = xSndPlay(csn->SndAssetID[1], _835_1, _836_1, 255, 0x200, 0,
-                                                 SND_CAT_CUTSCENE, _837_4);
+                    csn->SndHandle[0] = xSndPlay(csn->SndAssetID[0], 0.9f, -99999.0f, 255, 0x200, 0,
+                                                 SND_CAT_CUTSCENE, 0.0f);
+                    csn->SndHandle[1] = xSndPlay(csn->SndAssetID[1], 0.9f, -99999.0f, 255, 0x200, 0,
+                                                 SND_CAT_CUTSCENE, 0.0f);
                 }
                 else
                 {
                     // Mono
 
-                    csn->SndHandle[0] = xSndPlay(csn->SndAssetID[0], _835_1, _836_1, 255, 0x200, 0,
-                                                 SND_CAT_CUTSCENE, _837_4);
+                    csn->SndHandle[0] = xSndPlay(csn->SndAssetID[0], 0.9f, -99999.0f, 255, 0x200, 0,
+                                                 SND_CAT_CUTSCENE, 0.0f);
                     csn->SndHandle[1] = 0;
                 }
             }
