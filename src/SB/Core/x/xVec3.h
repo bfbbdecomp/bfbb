@@ -17,6 +17,7 @@ struct xVec3
     static xVec3 create(F32 f);
 
     xVec3& operator=(F32);
+    xVec3& operator=(const xVec3&);
     xVec3 operator+(const xVec3&) const;
     xVec3 operator-(const xVec3&) const;
     xVec3 operator*(F32) const;
