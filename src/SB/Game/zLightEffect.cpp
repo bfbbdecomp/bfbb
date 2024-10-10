@@ -1,16 +1,11 @@
 #include "zLightEffect.h"
 
+#include "xMath.h"
+
 #include <types.h>
 #include <stdlib.h>
 
 extern lightInitFunc sEffectInitFuncs[18];
-extern F32 lbl_803CDB60; // 65535f
-extern F32 lbl_803CDB68; // 176f
-extern F32 lbl_803CDB70; // 0.0f
-extern F32 lbl_803CDB74; // 0.1f
-extern F32 lbl_803CDB78; // 0.2f
-extern F32 lbl_803CDB80; // 0.05f
-extern F32 lbl_803CDB84; // 0.3f
 
 void zLightEffectSet(_zLight* zlight, S32 idx)
 {
@@ -60,31 +55,72 @@ void zLightEffectInitRandomCol(_zLight* zlight)
 
 void zLightEffectInitFlicker(_zLight* zlight)
 {
-    *zlight->reg = lbl_803CDB70;
+    *zlight->reg = 0.0f;
     zLightOn(zlight, true);
 }
 
-#if 0
-// WIP.
 void EffectFlicker(_zLight* zlight, F32 seconds, F32 min, F32 rnd)
 {
-}
+    iLight* l = &zlight->light;
+    F32* reg = zlight->reg;
 
-#endif
+    *reg -= seconds;
+
+    if (*reg <= 0.0f)
+    {
+        *reg = (rnd * leGetRandom());
+        *reg += min;
+
+        l->color.r = zlight->tasset->lightColor[0] - (leGetRandom() * 0.2f + 0.1f);
+        l->color.g = zlight->tasset->lightColor[1] - (leGetRandom() * 0.2f + 0.1f);
+        l->color.b = zlight->tasset->lightColor[2] - (leGetRandom() * 0.2f + 0.1f);
+
+        // Clamp light color RGB between 0.0 and 1.0
+
+        if (l->color.r > 1.0f)
+        {
+            l->color.r = 1.0f;
+        }
+        else if (l->color.r < 0.0f)
+        {
+            l->color.r = 0.0f;
+        }
+
+        if (l->color.g > 1.0f)
+        {
+            l->color.g = 1.0f;
+        }
+        else if (l->color.g < 0.0f)
+        {
+            l->color.g = 0.0f;
+        }
+
+        if (l->color.b > 1.0f)
+        {
+            l->color.b = 1.0f;
+        }
+        else if (l->color.b < 0.0f)
+        {
+            l->color.b = 0.0f;
+        }
+
+        iLightSetColor(l, &l->color);
+    }
+}
 
 void zLightEffectFlicker(_zLight* zlight, F32 seconds)
 {
-    EffectFlicker(zlight, seconds, lbl_803CDB80, lbl_803CDB78);
+    EffectFlicker(zlight, seconds, 0.05f, 0.2f);
 }
 
 void zLightEffectFlickerSlow(_zLight* zlight, F32 seconds)
 {
-    EffectFlicker(zlight, seconds, lbl_803CDB78, lbl_803CDB84);
+    EffectFlicker(zlight, seconds, 0.2f, 0.3f);
 }
 
 void zLightEffectFlickerErratic(_zLight* zlight, F32 seconds)
 {
-    EffectFlicker(zlight, seconds, lbl_803CDB70, lbl_803CDB74);
+    EffectFlicker(zlight, seconds, 0.0f, 0.1f);
 }
 
 void zLightEffectStrobeSlow()
@@ -185,28 +221,27 @@ void zLightEffectStrobeSlow(_zLight*, F32)
 
 void zLightEffectInitCauldron(_zLight* zlight)
 {
-    *zlight->reg = lbl_803CDB70;
+    *zlight->reg = 0.0f;
     zLightOn(zlight, true);
 }
 
-#if 0
-// Need to figure out proper conditional checks.
 F32 leBlendToCol(F32 f1, F32 f2, F32 f3)
 {
     if (f1 > f2)
     {
         f1 -= f3;
-        return f1 >= f2 ? f1 : f2;
+        return (f1 < f2) ? f2 : f1;
     }
-    if (f1 >= f2)
+    else if (f1 < f2)
+    {
+        f1 += f3;
+        return (f1 > f2) ? f2 : f1;
+    }
+    else
     {
         return f1;
     }
-    f1 += f3;
-    return f1 <= f2 ? f1 : f2;
 }
-
-#endif
 
 #if 0
 // WIP.

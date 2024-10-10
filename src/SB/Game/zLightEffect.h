@@ -17,7 +17,7 @@ void zLightEffectInitDim(_zLight* zlight);
 void zLightEffectInitHalfDim(_zLight* zlight);
 void zLightEffectInitRandomCol(_zLight* zlight);
 void zLightEffectInitFlicker(_zLight* zlight);
-void EffectFlicker(_zLight* zlight, F32 seconds, F32 min, F32 rnd);
+static void EffectFlicker(_zLight* zlight, F32 seconds, F32 min, F32 rnd);
 void zLightEffectFlicker(_zLight* zlight, F32 seconds);
 void zLightEffectFlickerSlow(_zLight* zlight, F32 seconds);
 void zLightEffectFlickerErratic(_zLight* zlight, F32 seconds);
