@@ -365,7 +365,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zHud.cpp"),
             Object(NonMatching, "SB/Game/zLasso.cpp"),
             Object(NonMatching, "SB/Game/zLight.cpp"),
-            Object(NonMatching, "SB/Game/zLightEffect.cpp"),
+            Object(Matching, "SB/Game/zLightEffect.cpp"),
             Object(NonMatching, "SB/Game/zLightning.cpp"),
             Object(NonMatching, "SB/Game/zLOD.cpp"),
             Object(NonMatching, "SB/Game/zMain.cpp"),
