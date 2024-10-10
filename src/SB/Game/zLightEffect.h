@@ -21,20 +21,9 @@ static void EffectFlicker(_zLight* zlight, F32 seconds, F32 min, F32 rnd);
 void zLightEffectFlicker(_zLight* zlight, F32 seconds);
 void zLightEffectFlickerSlow(_zLight* zlight, F32 seconds);
 void zLightEffectFlickerErratic(_zLight* zlight, F32 seconds);
-void zLightEffectStrobeSlow();
-void zLightEffectStrobe();
-void zLightEffectStrobeFast();
-void zLightEffectDimSlow();
-void zLightEffectDim();
-void zLightEffectDimFast();
-void zLightEffectHalfDimSlow();
-void zLightEffectHalfDim();
-void zLightEffectHalfDimFast();
-void zLightEffectRandomColSlow();
-void zLightEffectRandomCol();
-void zLightEffectRandomColFast();
+
 void zLightEffectInitCauldron(_zLight* zlight);
-F32 leBlendToCol(F32 f1, F32 f2, F32 f3);
+static F32 leBlendToCol(F32 f1, F32 f2, F32 f3);
 void zLightEffectCauldron(_zLight* zlight, F32 seconds);
 
 #endif
