@@ -306,7 +306,7 @@ config.libs = [
             Object(NonMatching, "SB/Core/x/xHudUnitMeter.cpp"),
             Object(Matching, "SB/Core/x/xIni.cpp"),
             Object(NonMatching, "SB/Core/x/xMath.cpp"),
-            Object(NonMatching, "SB/Core/x/xMath2.cpp"),
+            Object(Matching, "SB/Core/x/xMath2.cpp"),
             Object(NonMatching, "SB/Core/x/xMath3.cpp"),
             Object(NonMatching, "SB/Core/x/xMemMgr.cpp"),
             Object(NonMatching, "SB/Core/x/xModel.cpp"),

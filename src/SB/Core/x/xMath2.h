@@ -10,8 +10,8 @@ template <class T> struct basic_rect
     T w;
     T h;
 
-    static basic_rect m_Null;
-    static basic_rect m_Unit;
+    const static basic_rect m_Null;
+    const static basic_rect m_Unit;
 
     basic_rect& assign(T x, T y, T w, T h);
     basic_rect& contract(T x, T y, T w, T h);
