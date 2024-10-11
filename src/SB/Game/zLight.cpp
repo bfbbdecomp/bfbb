@@ -20,6 +20,19 @@ extern _zLight* gTemporaryLights[32];
 extern F32 zLight_float;
 extern xVec3 sDefaultShadowVec;
 extern void (*sEffectFuncs[18])(_zLight*, F32);
+extern lightInitFunc sEffectInitFuncs[18];
+
+void zLightEffectSet(_zLight* zlight, S32 idx)
+{
+    if (zlight->reg)
+    {
+        zlight->effect_idx = idx;
+        if (sEffectInitFuncs[zlight->effect_idx] != NULL)
+        {
+            sEffectInitFuncs[zlight->effect_idx](zlight);
+        }
+    }
+}
 
 #ifdef NON_MATCHING
 
@@ -39,6 +52,8 @@ void zLightResetAll(xEnv* env)
     xPartitionDump(&sLightPart, zLight_strings);
 }
 #endif
+
+
 
 void zLightInit(void* b, void* tasset)
 {
@@ -283,5 +298,17 @@ void zLightSetVolume(zVolume* vol)
         {
             sPartitionVolume = vol;
         }
+    }
+}
+
+void zLightOn(_zLight* zl, S32 on)
+{
+    if (on)
+    {
+        zl->flags |= 1;
+    }
+    else
+    {
+        zl->flags &= 0xfffffffe;
     }
 }

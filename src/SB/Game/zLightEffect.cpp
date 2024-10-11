@@ -5,32 +5,6 @@
 #include <types.h>
 #include <stdlib.h>
 
-extern lightInitFunc sEffectInitFuncs[18];
-
-void zLightEffectSet(_zLight* zlight, S32 idx)
-{
-    if (zlight->reg)
-    {
-        zlight->effect_idx = idx;
-        if (sEffectInitFuncs[zlight->effect_idx] != NULL)
-        {
-            sEffectInitFuncs[zlight->effect_idx](zlight);
-        }
-    }
-}
-
-void zLightOn(_zLight* zl, S32 on)
-{
-    if (on)
-    {
-        zl->flags |= 1;
-    }
-    else
-    {
-        zl->flags &= 0xfffffffe;
-    }
-}
-
 static F32 leGetRandom()
 {
     F32 ret = (U16)rand() / (F32)0xffff;
@@ -123,91 +97,7 @@ void zLightEffectFlickerErratic(_zLight* zlight, F32 seconds)
     EffectFlicker(zlight, seconds, 0.0f, 0.1f);
 }
 
-void zLightEffectStrobeSlow()
-{
-}
-
-void zLightEffectStrobe()
-{
-}
-
-void zLightEffectStrobeFast()
-{
-}
-
-void zLightEffectDimSlow()
-{
-}
-
-void zLightEffectDim()
-{
-}
-
-void zLightEffectDimFast()
-{
-}
-
-void zLightEffectHalfDimSlow()
-{
-}
-
-void zLightEffectHalfDim()
-{
-}
-
-void zLightEffectHalfDimFast()
-{
-}
-
-void zLightEffectRandomColSlow()
-{
-}
-
-void zLightEffectRandomCol()
-{
-}
-
-void zLightEffectRandomColFast()
-{
-}
-
-void zLightEffectRandomColFast(_zLight*, F32)
-{
-}
-
-void zLightEffectRandomCol(_zLight*, F32)
-{
-}
-
-void zLightEffectRandomColSlow(_zLight*, F32)
-{
-}
-
-void zLightEffectHalfDimFast(_zLight*, F32)
-{
-}
-
-void zLightEffectHalfDim(_zLight*, F32)
-{
-}
-
-void zLightEffectHalfDimSlow(_zLight*, F32)
-{
-}
-
-void zLightEffectDimFast(_zLight*, F32)
-{
-}
-
-void zLightEffectDim(_zLight*, F32)
-{
-}
-
-void zLightEffectDimSlow(_zLight*, F32)
-{
-}
-
-void zLightEffectStrobeFast(_zLight*, F32)
+void zLightEffectStrobeSlow(_zLight*, F32)
 {
 }
 
@@ -215,7 +105,43 @@ void zLightEffectStrobe(_zLight*, F32)
 {
 }
 
-void zLightEffectStrobeSlow(_zLight*, F32)
+void zLightEffectStrobeFast(_zLight*, F32)
+{
+}
+
+void zLightEffectDimSlow(_zLight*, F32)
+{
+}
+
+void zLightEffectDim(_zLight*, F32)
+{
+}
+
+void zLightEffectDimFast(_zLight*, F32)
+{
+}
+
+void zLightEffectHalfDimSlow(_zLight*, F32)
+{
+}
+
+void zLightEffectHalfDim(_zLight*, F32)
+{
+}
+
+void zLightEffectHalfDimFast(_zLight*, F32)
+{
+}
+
+void zLightEffectRandomColSlow(_zLight*, F32)
+{
+}
+
+void zLightEffectRandomCol(_zLight*, F32)
+{
+}
+
+void zLightEffectRandomColFast(_zLight*, F32)
 {
 }
 
@@ -243,10 +169,25 @@ F32 leBlendToCol(F32 f1, F32 f2, F32 f3)
     }
 }
 
-#if 0
-// WIP.
 void zLightEffectCauldron(_zLight* zlight, F32 seconds)
 {
-}
+    iLight* l = &zlight->light;
 
-#endif
+    F32* reg = zlight->reg;
+    *reg -= seconds;
+
+    if (*reg <= 0.0f)
+    {
+        reg[0] = 0.25f;
+        reg[1] = (leGetRandom() * 0.5f);
+        reg[2] = (leGetRandom() * 0.4f + 0.6f);
+        reg[3] = (leGetRandom() * 0.5f);
+    }
+
+    F32 amount = (seconds * 3.0f);
+    l->color.r = leBlendToCol(l->color.r, reg[1], amount);
+    l->color.g = leBlendToCol(l->color.g, reg[2], amount);
+    l->color.b = leBlendToCol(l->color.b, reg[3], amount);
+
+    iLightSetColor(l,  &l->color);
+}
