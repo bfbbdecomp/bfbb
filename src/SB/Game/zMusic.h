@@ -38,7 +38,6 @@ struct zMusicTrackInfo
 
 void volume_reset();
 void zMusicRefreshVolume();
-S32 getCurrLevelMusicEnum();
 void zMusicNotify(S32 situation);
 void zMusicSetVolume(F32 vol, F32 delay);
 void zMusicKill();

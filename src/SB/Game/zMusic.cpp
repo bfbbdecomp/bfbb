@@ -114,8 +114,7 @@ void zMusicInit()
     volume_reset();
 }
 
-// Correct, but won't work due to the switch case jump table (messes with offsets)
-S32 getCurrLevelMusicEnum()
+static S32 getCurrLevelMusicEnum()
 {
     S32 snd_enum;
 
@@ -247,39 +246,36 @@ void zMusicPause()
     }
 }
 
-// WIP.
-#if 0
-// Only thing that doesn't compile correctly is the function call to xSndPlay, in which a bunch of stuff is in the wrong order it looks like.
 void zMusicUnpause(S32 kill)
 {
-    if (sMusicPaused != 0)
+    if (sMusicPaused == 0)
     {
-        for (S32 i = 0; i < 2; i++)
-        {
-            zMusicTrackInfo* track = &sMusicTrack[i];
-            U32 prioBase = 0x800 * i;
-            if (track->snd_id != 0)
-            {
-                if (kill != 0)
-                {
-                    track->snd_id = 0;
-                }
-                else
-                {
-                    U32 res =
-                        xSndPlay(track->assetID, track->lastVol, lbl_803CDD48, 0xff,
-                                 prioBase | (int)(-track->loop | track->loop) >> 0x1f & 0x8000U |
-                                     0x10000 | 0x20000,
-                                 0, SND_CAT_MUSIC, lbl_803CDD48);
-                    track->snd_id = res;
-                }
-            }
-        }
-        sMusicPaused = 0;
+        return;
     }
-}
 
-#endif
+    for (S32 i = 0; i < 2; i++)
+    {
+        zMusicTrackInfo* track = &sMusicTrack[i];
+        if (track->snd_id == 0)
+        {
+            continue;
+        }
+
+        if (kill != 0)
+        {
+            track->snd_id = 0;
+        }
+        else
+        {
+            S32 flags = i * 0x800;
+            flags |= ((track->loop != 0) ? 0x8000 : 0) | 0x10000;
+            flags |= 0x20000;
+            track->snd_id = xSndPlay(track->assetID, track->lastVol, 0.0f, 0xff, flags, 0, SND_CAT_MUSIC, 0.0f);
+        }
+    }
+
+    sMusicPaused = 0;
+}
 
 // WIP.
 #if 0
