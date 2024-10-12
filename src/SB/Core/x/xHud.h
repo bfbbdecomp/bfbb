@@ -47,6 +47,28 @@ namespace xhud
         F32 g;
         F32 b;
         F32 a;
+
+        render_context& operator=(const render_context& rhs)
+        {
+            *(S32*)(&loc.x) = *(S32*)(&rhs.loc.x);
+            *(S32*)(&loc.y) = *(S32*)(&rhs.loc.y);
+            *(S32*)(&loc.z) = *(S32*)(&rhs.loc.z);
+
+            *(S32*)(&size.x) = *(S32*)(&rhs.size.x);
+            *(S32*)(&size.y) = *(S32*)(&rhs.size.y);
+            *(S32*)(&size.z) = *(S32*)(&rhs.size.z);
+
+            *(S32*)(&rot.x) = *(S32*)(&rhs.rot.x);
+            *(S32*)(&rot.y) = *(S32*)(&rhs.rot.y);
+            *(S32*)(&rot.z) = *(S32*)(&rhs.rot.z);
+
+            r = rhs.r;
+            g = rhs.g;
+            b = rhs.b;
+            a = rhs.a;
+
+            return *this;
+        }
     };
 
     struct asset : xDynAsset

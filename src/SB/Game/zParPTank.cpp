@@ -55,6 +55,28 @@ namespace
         F32 life;
         F32 u;
         F32 pad[3];
+
+        snow_particle_data& operator=(const snow_particle_data& rhs)
+        {
+            *(S32*)(&loc.x) = *(S32*)(&rhs.loc.x);
+            *(S32*)(&loc.y) = *(S32*)(&rhs.loc.y);
+            *(S32*)(&loc.z) = *(S32*)(&rhs.loc.z);
+
+            size = rhs.size;
+
+            *(S32*)(&vel.x) = *(S32*)(&rhs.vel.x);
+            *(S32*)(&vel.y) = *(S32*)(&rhs.vel.y);
+            *(S32*)(&vel.z) = *(S32*)(&rhs.vel.z);
+
+            life = rhs.life;
+            u = rhs.u;
+
+            *(S32*)(&pad[0]) = *(S32*)(&rhs.pad[0]);
+            *(S32*)(&pad[1]) = *(S32*)(&rhs.pad[1]);
+            *(S32*)(&pad[2]) = *(S32*)(&rhs.pad[2]);
+			
+			return *this;
+        }
     };
 
     static ptank_pool__pos_color_size_uv2 snow_pool;
