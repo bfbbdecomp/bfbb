@@ -13,6 +13,29 @@ struct xMat3x3
     U32 pad1;
     xVec3 at;
     U32 pad2;
+
+    xMat3x3& operator=(const xMat3x3& rhs)
+    {
+        *(S32*)(&right.x) = *(S32*)(&rhs.right.x);
+        *(S32*)(&right.y) = *(S32*)(&rhs.right.y);
+        *(S32*)(&right.z) = *(S32*)(&rhs.right.z);
+
+        flags = rhs.flags;
+
+        *(S32*)(&up.x) = *(S32*)(&rhs.up.x);
+        *(S32*)(&up.y) = *(S32*)(&rhs.up.y);
+        *(S32*)(&up.z) = *(S32*)(&rhs.up.z);
+
+        pad1 = rhs.pad1;
+
+        *(S32*)(&at.x) = *(S32*)(&rhs.at.x);
+        *(S32*)(&at.y) = *(S32*)(&rhs.at.y);
+        *(S32*)(&at.z) = *(S32*)(&rhs.at.z);
+
+        pad2 = rhs.pad2;
+
+        return *this;
+    }
 };
 
 // Size: 0x40
@@ -20,12 +43,35 @@ struct xMat4x3 : xMat3x3
 {
     xVec3 pos;
     U32 pad3;
+
+    xMat4x3& operator=(const xMat4x3& rhs)
+    {
+        *this = rhs;
+
+        *(S32*)(&pos.x) = *(S32*)(&rhs.pos.x);
+        *(S32*)(&pos.y) = *(S32*)(&rhs.pos.y);
+        *(S32*)(&pos.z) = *(S32*)(&rhs.pos.z);
+
+        pad3 = rhs.pad3;
+
+        return *this;
+    }
 };
 
 struct xSphere
 {
     xVec3 center;
     F32 r;
+
+    xSphere& operator=(const xSphere& rhs)
+    {
+        *(S32*)(&center.x) = *(S32*)(&rhs.center.x);
+        *(S32*)(&center.y) = *(S32*)(&rhs.center.y);
+        *(S32*)(&center.z) = *(S32*)(&rhs.center.z);
+        r = rhs.r;
+
+        return *this;
+    }
 };
 
 // Size: 0x18
@@ -33,6 +79,19 @@ struct xBox
 {
     xVec3 upper;
     xVec3 lower;
+
+    xBox& operator=(const xBox& rhs)
+    {
+        *(S32*)(&upper.x) = *(S32*)(&rhs.upper.x);
+        *(S32*)(&upper.y) = *(S32*)(&rhs.upper.y);
+        *(S32*)(&upper.z) = *(S32*)(&rhs.upper.z);
+
+        *(S32*)(&lower.x) = *(S32*)(&rhs.lower.x);
+        *(S32*)(&lower.y) = *(S32*)(&rhs.lower.y);
+        *(S32*)(&lower.z) = *(S32*)(&rhs.lower.z);
+
+        return *this;
+    }
 };
 
 struct xBBox
@@ -52,6 +111,17 @@ struct xQuat
 {
     xVec3 v;
     F32 s;
+
+    xQuat& operator=(const xQuat& rhs)
+    {
+        *(S32*)(&v.x) = *(S32*)(&rhs.v.x);
+        *(S32*)(&v.y) = *(S32*)(&rhs.v.y);
+        *(S32*)(&v.z) = *(S32*)(&rhs.v.z);
+
+        s = rhs.s;
+
+        return *this;
+    }
 };
 
 struct xVec4
