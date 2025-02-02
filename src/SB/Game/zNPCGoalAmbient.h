@@ -6,6 +6,8 @@
 #include "zNPCGoalStd.h"
 #include "zNPCSndTable.h"
 #include "zNPCTypeAmbient.h"
+#include "zNPCSupport.h"
+#include "zLightning.h"
 
 
 xFactoryInst* GOALCreate_Ambient(S32 who, RyzMemGrow* grow, void*);
@@ -22,9 +24,14 @@ struct zNPCGoalJellyBirth : zNPCGoalCommon
 
 struct zNPCGoalJellyAttack : zNPCGoalPushAnim
 {
+    class zLightning * zap_lytnin[3];
     U32 lastAnimTime;
     S32 Enter(F32 dt, void* updCtxt);
-    S32 ZapperStart();
+    S32 Exit(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantyp, F32 dt, void* updCxt, xScene* xscn);
+    S32 ZapperStart(); 
+    S32 ZapperStop();
+    S32 ZapperUpdate();
 };
 
 #endif
