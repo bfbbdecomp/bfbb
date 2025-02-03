@@ -28,9 +28,9 @@ namespace
             RwMatrixCopyMacro(modelInst->Mat, ent->model->Mat);
             
             modelInst->Flags &= 0xBBFC;
-            modelInst->Flags |= (s16) (ent->model->Flags & 0x4403);
+            modelInst->Flags |= (u16) (ent->model->Flags & 0x4403);
             ent->model = modelInst;
-            iBoxForModelLocal((xBox*) &ent->bound.box, (xModelInstance *) modelInst);
+            iBoxForModelLocal(&ent->bound.box.box, modelInst);
             zCollGeom_EntSetup((xEnt *) ent);
             
             sfxDestroy = ent->sfx_destroy;
