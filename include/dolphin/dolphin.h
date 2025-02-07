@@ -299,6 +299,10 @@ typedef struct CARDStat
 } CARDStat;
 // CARDRead.h
 s32 CARDRead(struct CARDFileInfo* fileInfo, void* buf, s32 length, s32 offset);
+// CARDOpen.h
+s32 CARDFastOpen(s32 chan, s32 fileNo, CARDFileInfo* fileInfo);
+s32 CARDOpen(s32 chan, char* fileName, CARDFileInfo* fileInfo);
+s32 CARDClose(CARDFileInfo* fileInfo);
 
 #ifdef __cplusplus
 }
