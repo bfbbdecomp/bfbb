@@ -250,6 +250,12 @@ typedef struct CARDFileInfo
     /*0x10*/ u16 iBlock;
 } CARDFileInfo;
 
+#define CARD_ATTR_PUBLIC 0x04u
+#define CARD_ATTR_NO_COPY 0x08u
+#define CARD_ATTR_NO_MOVE 0x10u
+#define CARD_ATTR_GLOBAL 0x20u
+#define CARD_ATTR_COMPANY 0x40u
+
 #define CARD_RESULT_UNLOCKED 1
 #define CARD_RESULT_READY 0
 #define CARD_RESULT_BUSY -1
@@ -297,12 +303,15 @@ typedef struct CARDStat
     /*0x64*/ u32 offsetIconTlut;
     /*0x68*/ u32 offsetData;
 } CARDStat;
+s32 CARDSetStatus(s32 chan, s32 fileNo, struct CARDStat* stat);
 // CARDRead.h
 s32 CARDRead(struct CARDFileInfo* fileInfo, void* buf, s32 length, s32 offset);
 // CARDOpen.h
 s32 CARDFastOpen(s32 chan, s32 fileNo, CARDFileInfo* fileInfo);
 s32 CARDOpen(s32 chan, char* fileName, CARDFileInfo* fileInfo);
 s32 CARDClose(CARDFileInfo* fileInfo);
+// CARDNet
+s32 CARDSetAttributes(s32 chan, s32 fileNo, u8 attr);
 
 #ifdef __cplusplus
 }
