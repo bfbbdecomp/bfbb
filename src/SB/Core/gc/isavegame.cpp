@@ -11,6 +11,9 @@
 #include <string.h>
 #include <types.h>
 
+// Not 100% on what this does or if it's correctly defined for all cases. Seems to be used for allocation alignment
+#define ALIGN_THING(x, n) (n + x - 1 & -x)
+
 // WIP
 struct st_ISG_TPL_TEXPALETTE
 {
@@ -570,10 +573,204 @@ S32 iSGSetupGameDir(st_ISGSESSION* isgdata, const char* dname, S32 force_iconfix
     return 1;
 }
 
+static char* iSG_bfr_icondata(char* param1, CARDStat* stat, char* param3, int param4);
+static S32 iSG_mc_fopen(st_ISG_MEMCARD_DATA*, const char*, S32, en_ISG_IOMODE, en_ASYNC_OPERR*);
+static void iSG_mc_fclose(st_ISG_MEMCARD_DATA*);
+static void iSG_mc_fclose(st_ISG_MEMCARD_DATA*, CARDStat*);
+static S32 iSG_mc_fdel(st_ISG_MEMCARD_DATA*, const char*);
+static S32 iSG_mc_fwrite(st_ISG_MEMCARD_DATA*, char*, int);
+static S32 iSG_upd_icostat(CARDStat*, CARDStat*);
+static void iSG_timestamp(CARDStat*);
+S32 iSGSaveFile(st_ISGSESSION* isgdata, const char* fname, char* data, S32 n, S32 async, char* arg5)
+{
+    void* alloc;
+    S32 allocsize;
+    char* icondata;
+    S32 iconsize;
+
+    S32 writeret = 0;
+    en_ASYNC_OPERR operr = ISG_OPERR_NONE;
+    CARDStat statA = { 0 };
+    CARDStat statB = { 0 };
+
+    ResetButton::DisableReset();
+    if (isgdata->slot < 0)
+    {
+        isgdata->unk_26c = ISG_OPSTAT_FAILURE;
+        isgdata->unk_268 = ISG_OPERR_NOCARD;
+        return 0;
+    }
+
+    st_ISG_MEMCARD_DATA* mcdata = &isgdata->mcdata[isgdata->slot];
+    if (mcdata->unk_12c != 0)
+    {
+        isgdata->unk_26c = ISG_OPSTAT_FAILURE;
+        isgdata->unk_268 = ISG_OPERR_DAMAGE;
+        return 0;
+    }
+
+    iTRCDisk::CheckDVDAndResetState();
+    iconsize = iSG_cubeicon_size(isgdata->slot, mcdata->sectorSize);
+    S32 sectorsize200 = ALIGN_THING(mcdata->sectorSize, 0x200);
+    iconsize += ALIGN_THING(sectorsize200, n);
+
+    allocsize = iconsize + 0x1f;
+    alloc = xMemPushTemp(allocsize);
+    memset(alloc, 0, allocsize);
+    icondata = (char*)((U32)alloc + 0x1f & 0xFFFFFFE0);
+
+    memcpy(iSG_bfr_icondata(icondata, &statA, arg5, mcdata->sectorSize), data, n);
+    iTRCDisk::CheckDVDAndResetState();
+
+    if (iSG_mc_fopen(mcdata, fname, iconsize, ISG_IOMODE_WRITE, &operr) != 0)
+    {
+        if (iSG_mc_fwrite(mcdata, icondata, iconsize) != 0)
+        {
+            writeret = 1;
+        }
+        else
+        {
+            writeret = 0;
+            operr = ISG_OPERR_SVWRITE;
+        }
+
+        if (writeret != 0)
+        {
+            iSG_upd_icostat(&statA, &mcdata->unk_20);
+            iSG_timestamp(&mcdata->unk_20);
+            s32 result;
+            do
+            {
+                result = CARDSetStatus(mcdata->unk_4, mcdata->unk_c.fileNo, &mcdata->unk_20);
+            } while (result == CARD_RESULT_BUSY);
+
+            if (result != CARD_RESULT_READY)
+            {
+                writeret = 0;
+            }
+        }
+
+        if (writeret != 0)
+        {
+            s32 result;
+            do
+            {
+                result = CARDSetAttributes(mcdata->unk_4, mcdata->unk_c.fileNo, CARD_ATTR_PUBLIC);
+            } while (result == CARD_RESULT_BUSY);
+        }
+
+        iSG_mc_fclose(mcdata, &statB);
+    }
+    xMemPopTemp(alloc);
+
+    if (writeret == 0 && mcdata->unk_12c == 0)
+    {
+        iSG_mc_fdel(mcdata, fname);
+    }
+
+    ResetButton::EnableReset();
+    iTRCDisk::CheckDVDAndResetState();
+
+    isgdata->unk_268 = ISG_OPERR_NONE;
+    if (writeret != 0)
+    {
+        isgdata->unk_26c = ISG_OPSTAT_SUCCESS;
+    }
+    else
+    {
+        isgdata->unk_26c = ISG_OPSTAT_FAILURE;
+        if (operr != ISG_OPERR_NONE)
+        {
+            isgdata->unk_268 = operr;
+        }
+        else
+        {
+            isgdata->unk_268 = ISG_OPERR_UNKNOWN;
+        }
+    }
+    return writeret;
+}
+
 S32 iSGLoadFile(st_ISGSESSION* isgdata, const char* fname, char* databuf, S32 async)
 {
     S32 numBytes = iSGFileSize(isgdata, fname);
     return iSGReadLeader(isgdata, fname, databuf, numBytes, async);
+}
+
+static S32 iSG_mc_fread(st_ISG_MEMCARD_DATA* mcdata, char*, S32, S32);
+S32 iSGReadLeader(st_ISGSESSION* isgdata, const char* fname, char* databuf, S32 numbytes, S32 async)
+{
+    en_ASYNC_OPERR operr = ISG_OPERR_NONE;
+    S32 readret = 0;
+    void* alloc = NULL;
+    if (isgdata->slot < 0)
+    {
+        isgdata->unk_26c = ISG_OPSTAT_FAILURE;
+        isgdata->unk_268 = ISG_OPERR_NOCARD;
+        return 0;
+    }
+    st_ISG_MEMCARD_DATA* data = &isgdata->mcdata[isgdata->slot];
+
+    if (data->unk_12c != 0)
+    {
+        isgdata->unk_26c = ISG_OPSTAT_FAILURE;
+        isgdata->unk_268 = ISG_OPERR_DAMAGE;
+        return 0;
+    }
+
+    iTRCDisk::CheckDVDAndResetState();
+    S32 iconsize = iSG_cubeicon_size(data->unk_4, data->sectorSize);
+    U32 sign = (S32)databuf >> 0x1f;
+    // /x + (n-1) & -x is the same as Round x up to next n
+    S32 nearest200 = -data->sectorSize & 0x1ff + data->sectorSize;
+    // FIXME: I think the code is supposed to check if there is enough room at the end of the existing databuf allocation to use
+    //        and only allocate if not.
+    void* readbuf;
+    if (((sign * 0x20 | (int)databuf * 0x8000000 + sign >> 0x1b) != sign) ||
+        (sign = numbytes, readbuf = databuf, numbytes != (numbytes / nearest200) * nearest200))
+    {
+        sign = numbytes + 0x1ffU & 0xfffffe00;
+        S32 __n = sign + 0x1f;
+        alloc = (void*)xMemPushTemp(__n);
+        readbuf = alloc;
+        memset(alloc, 0, __n);
+        readbuf = (char*)((int)alloc + 0x1fU & 0xffffffe0);
+    }
+    iTRCDisk::CheckDVDAndResetState();
+
+    if (iSG_mc_fopen(data, fname, -1, ISG_IOMODE_READ, &operr) != 0)
+    {
+        readret = (bool)iSG_mc_fread(data, (char*)readbuf, numbytes, iconsize);
+        iSG_mc_fclose(data);
+    }
+
+    if (readret == 0 && alloc != NULL)
+    {
+        memcpy(databuf, readbuf, numbytes);
+    }
+    if (alloc != NULL)
+    {
+        xMemPopTemp(alloc);
+    }
+
+    isgdata->unk_268 = ISG_OPERR_NONE;
+    if (readret != 0)
+    {
+        isgdata->unk_26c = ISG_OPSTAT_SUCCESS;
+    }
+    else
+    {
+        isgdata->unk_26c = ISG_OPSTAT_FAILURE;
+        if (data->unk_12c != 0)
+        {
+            isgdata->unk_268 = ISG_OPERR_DAMAGE;
+        }
+        else
+        {
+            isgdata->unk_268 = ISG_OPERR_OTHER;
+        }
+    }
+    return readret;
 }
 
 en_ASYNC_OPSTAT iSGPollStatus(st_ISGSESSION* isgdata, en_ASYNC_OPCODE* curop, S32 block)
@@ -878,8 +1075,7 @@ static S32 iSG_isSpaceForFile(st_ISG_MEMCARD_DATA* mcdata, S32 param2, const cha
     }
     len = iSG_cubeicon_size(mcdata->unk_4, mcdata->sectorSize);
     len = len + param2;
-    // FIXME: fakematch: x + (n-1) & -x is the same as Round x up to next n
-    len = -mcdata->sectorSize & len + mcdata->sectorSize - 1;
+    len = ALIGN_THING(mcdata->sectorSize, len);
 
     do
     {
@@ -948,8 +1144,6 @@ static S32 iSG_mc_settgt(st_ISG_MEMCARD_DATA* mcdata, S32 slot)
     return mcdata->unk_0 != 0 ? 1 : 0;
 }
 
-static S32 iSG_mc_fopen(st_ISG_MEMCARD_DATA*, const char*, int, en_ISG_IOMODE, en_ASYNC_OPERR*);
-static void iSG_mc_fclose(st_ISG_MEMCARD_DATA*);
 static S32 iSG_get_finfo(st_ISG_MEMCARD_DATA* mcdata, const char* dpath)
 {
     S32 rc = 0;
@@ -1007,7 +1201,6 @@ static S32 iSG_curKosher(CARDStat* stat, CARDFileInfo* info)
 
     return rc;
 }
-static S32 iSG_mc_fdel(st_ISG_MEMCARD_DATA*, const char*);
 static S32 iSG_fileKosher(st_ISG_MEMCARD_DATA* mcdata, const char* param2, int param3, int* param4)
 {
     S32 rc = 0;
@@ -1130,9 +1323,11 @@ static S32 iSG_cubeicon_size(S32 slot, S32 param2)
         return -1;
     }
 
-    // FIXME: fakematch: x + (n-1) & -x is the same as Round x up to next n
-    S32 t = (param2 + 0x1ffU) & -param2;
-    return -t & (t + (sizeof(IconData) - 1));
+    S32 t = ALIGN_THING(param2, 0x200);
+
+    // FIXME: Macro not quite right
+    // return ALIGN_THING(t, sizeof(IconData));
+    return -t & sizeof(IconData) + t - 1;
 }
 
 static S32 iSG_chk_icondata()
@@ -1202,7 +1397,7 @@ static char* iSG_bfr_icondata(char* param1, CARDStat* stat, char* param3, int pa
 
     memcpy(param1, &data, sizeof(data));
 
-    S32 t = param4 + 0x1ff & -param4;
+    S32 t = ALIGN_THING(param4, 0x1ff);
     return param1 + (t + (sizeof(IconData) - 1) & -t);
 }
 
