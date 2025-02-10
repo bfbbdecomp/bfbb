@@ -14,10 +14,44 @@
 // Not 100% on what this does or if it's correctly defined for all cases. Seems to be used for allocation alignment
 #define ALIGN_THING(x, n) (n + x - 1 & -x)
 
-// WIP
+// name is a total guess for now
+struct st_ISG_TPL_TEX
+{
+    struct UnkIn
+    {
+        U32 unk_0;
+        U32 unk_4;
+        void* unk_8;
+        U32 unk_c;
+        U32 unk_10[4];
+        U8 unk_20;
+        U8 unk_21;
+        U8 unk_22;
+        U8 unk_23;
+    };
+    struct UnkOut
+    {
+        U8 unk_0;
+        U8 unk_1;
+        U8 unk_2;
+        U8 unk_3;
+        U32 unk_4;
+        void* unk_8;
+    };
+
+    UnkIn* unk_0;
+    UnkOut* unk_4;
+};
+// WIP. Looks like some sort of header for a file with embedded texture information.
 struct st_ISG_TPL_TEXPALETTE
 {
+    U32 magic;
+    U32 count;
+    st_ISG_TPL_TEX* unk_8;
 };
+
+// .bss
+static char cardwork[2][0xa000];
 
 // .sbss
 static volatile S32 g_isginit;
@@ -158,7 +192,7 @@ S32 iSGTgtPhysSlotIdx(st_ISGSESSION* isgdata, S32 tidx)
 
 static S32 iSG_mc_exists(S32 slot);
 static S32 iSG_mc_isGCcard(st_ISG_MEMCARD_DATA* mcdata, int* param2, int* param3);
-static S32 iSG_mc_format(st_ISG_MEMCARD_DATA*, int, int*);
+static S32 iSG_mc_format(st_ISG_MEMCARD_DATA*, S32, S32* canRecover);
 S32 iSGTgtFormat(st_ISGSESSION* isgdata, S32 tgtidx, S32 async, S32* canRecover)
 {
     S32 slot = 0;
@@ -579,7 +613,7 @@ static void iSG_mc_fclose(st_ISG_MEMCARD_DATA*);
 static void iSG_mc_fclose(st_ISG_MEMCARD_DATA*, CARDStat*);
 static S32 iSG_mc_fdel(st_ISG_MEMCARD_DATA*, const char*);
 static S32 iSG_mc_fwrite(st_ISG_MEMCARD_DATA*, char*, int);
-static S32 iSG_upd_icostat(CARDStat*, CARDStat*);
+static void iSG_upd_icostat(CARDStat*, CARDStat*);
 static void iSG_timestamp(CARDStat*);
 S32 iSGSaveFile(st_ISGSESSION* isgdata, const char* fname, char* data, S32 n, S32 async, char* arg5)
 {
@@ -700,9 +734,13 @@ S32 iSGLoadFile(st_ISGSESSION* isgdata, const char* fname, char* databuf, S32 as
 static S32 iSG_mc_fread(st_ISG_MEMCARD_DATA* mcdata, char*, S32, S32);
 S32 iSGReadLeader(st_ISGSESSION* isgdata, const char* fname, char* databuf, S32 numbytes, S32 async)
 {
+    void* alloc = NULL;
+    S32 allocsize;
+    char* readbuf;
+    S32 bufsize;
+
     en_ASYNC_OPERR operr = ISG_OPERR_NONE;
     S32 readret = 0;
-    void* alloc = NULL;
     if (isgdata->slot < 0)
     {
         isgdata->unk_26c = ISG_OPSTAT_FAILURE;
@@ -720,27 +758,26 @@ S32 iSGReadLeader(st_ISGSESSION* isgdata, const char* fname, char* databuf, S32 
 
     iTRCDisk::CheckDVDAndResetState();
     S32 iconsize = iSG_cubeicon_size(data->unk_4, data->sectorSize);
-    U32 sign = (S32)databuf >> 0x1f;
-    // /x + (n-1) & -x is the same as Round x up to next n
-    S32 nearest200 = -data->sectorSize & 0x1ff + data->sectorSize;
-    // FIXME: I think the code is supposed to check if there is enough room at the end of the existing databuf allocation to use
-    //        and only allocate if not.
-    void* readbuf;
-    if (((sign * 0x20 | (int)databuf * 0x8000000 + sign >> 0x1b) != sign) ||
-        (sign = numbytes, readbuf = databuf, numbytes != (numbytes / nearest200) * nearest200))
+    S32 sectorsize200 = ALIGN_THING(data->sectorSize, 0x200);
+    if ((S32)databuf % 32 != 0 || numbytes - ((numbytes / sectorsize200) * sectorsize200) != 0)
     {
-        sign = numbytes + 0x1ffU & 0xfffffe00;
-        S32 __n = sign + 0x1f;
-        alloc = (void*)xMemPushTemp(__n);
-        readbuf = alloc;
-        memset(alloc, 0, __n);
-        readbuf = (char*)((int)alloc + 0x1fU & 0xffffffe0);
+        bufsize = (iconsize + 0x1ff & ~0x1ff);
+        S32 allocsize = bufsize + 0x1f;
+        alloc = xMemPushTemp(allocsize);
+        memset(alloc, 0, allocsize);
+        readbuf = (char*)((U32)alloc + 0x1f & ~0x1f);
     }
+    else
+    {
+        readbuf = databuf;
+        bufsize = numbytes;
+    }
+
     iTRCDisk::CheckDVDAndResetState();
 
     if (iSG_mc_fopen(data, fname, -1, ISG_IOMODE_READ, &operr) != 0)
     {
-        readret = (bool)iSG_mc_fread(data, (char*)readbuf, numbytes, iconsize);
+        readret = (bool)iSG_mc_fread(data, (char*)readbuf, bufsize, iconsize);
         iSG_mc_fclose(data);
     }
 
@@ -1335,7 +1372,7 @@ static S32 iSG_chk_icondata()
     return 1;
 }
 
-void iSG_tpl_unpack(st_ISG_TPL_TEXPALETTE*);
+static S32 iSG_tpl_unpack(st_ISG_TPL_TEXPALETTE*);
 static S32 iSG_load_icondata()
 {
     g_rawicon = (st_ISG_TPL_TEXPALETTE*)iFileLoad("/SBGCIcon.tpl", NULL, (U32*)g_iconsize);
@@ -1356,22 +1393,12 @@ static void iSG_discard_icondata()
     g_banrsize = 0;
 }
 
-struct TEX
-{
-    struct UnkStruct
-    {
-        U32 unk_0;
-        U32 unk_4;
-        void* unk_8;
-    };
-    UnkStruct* unk_0;
-};
-static TEX* iSG_tpl_TEXGet(st_ISG_TPL_TEXPALETTE*, unsigned int);
+static st_ISG_TPL_TEX* iSG_tpl_TEXGet(st_ISG_TPL_TEXPALETTE*, unsigned int);
 static char* iSG_bfr_icondata(char* param1, CARDStat* stat, char* param3, int param4)
 {
     IconData data = { 0 };
     static st_ISG_TPL_TEXPALETTE* ico_pal;
-    static TEX* ico_desc;
+    static st_ISG_TPL_TEX* ico_desc;
     static U32 i = 0;
 
     sprintf(data.footer, "SPONGEBOB:WHENROBOTSATTACK::RyanNeilDan");
@@ -1399,6 +1426,157 @@ static char* iSG_bfr_icondata(char* param1, CARDStat* stat, char* param3, int pa
 
     S32 t = ALIGN_THING(param4, 0x1ff);
     return param1 + (t + (sizeof(IconData) - 1) & -t);
+}
+
+static void iSG_upd_icostat(CARDStat*, CARDStat* stat)
+{
+    CARDSetCommentAddress(stat, 0);
+    CARDSetBannerFormat(stat, CARD_STAT_BANNER_RGB5A3);
+    CARDSetIconAddress(stat, 0x40);
+    CARDSetIconAnim(stat, CARD_STAT_ANIM_LOOP);
+
+    for (S32 i = 0; i < CARD_ICON_MAX; ++i)
+    {
+        CARDSetIconFormat(stat, i, CARD_STAT_BANNER_RGB5A3);
+        CARDSetIconSpeed(stat, i, CARD_STAT_SPEED_MIDDLE);
+    }
+}
+
+static S32 iSG_tpl_unpack(st_ISG_TPL_TEXPALETTE* tpl)
+{
+    if (tpl->magic != 0x20af30)
+    {
+        return 0;
+    }
+
+    tpl->unk_8 = (st_ISG_TPL_TEX*)((U32)tpl + (U32)tpl->unk_8);
+    for (S32 i = 0; i < tpl->count; ++i)
+    {
+        st_ISG_TPL_TEX* x = &tpl->unk_8[i];
+        if (x->unk_0 != NULL)
+        {
+            x->unk_0 = (st_ISG_TPL_TEX::UnkIn*)((U32)tpl + (U32)x->unk_0);
+            if (x->unk_0->unk_23 == 0)
+            {
+                x->unk_0->unk_8 = (void*)((U32)tpl + (U32)x->unk_0->unk_8);
+                x->unk_0->unk_23 = 1;
+            }
+        }
+        if (x->unk_4 != NULL)
+        {
+            x->unk_4 = (st_ISG_TPL_TEX::UnkOut*)((U32)tpl + (U32)x->unk_4);
+            if (x->unk_4->unk_2 == 0)
+            {
+                x->unk_4->unk_8 = tpl;
+                x->unk_4->unk_2 = 1;
+            }
+        }
+    }
+    return 1;
+}
+
+static S32 iSG_bnr_unpack(st_ISG_TPL_TEXPALETTE* tpl)
+{
+    return iSG_tpl_unpack(tpl);
+}
+
+static st_ISG_TPL_TEX* iSG_tpl_TEXGet(st_ISG_TPL_TEXPALETTE* tpl, U32 n)
+{
+    return &tpl->unk_8[n];
+}
+
+static void iSG_cb_unmount(s32 chan, s32 result);
+static S32 iSG_mc_mount(S32 slot)
+{
+    s32 ret = 0;
+    // ?? for some reason this variable is in the stack frame
+    volatile s32 result = 0;
+    do
+    {
+        result = CARDMount(slot, cardwork[slot], iSG_cb_unmount);
+        isMounted = 1;
+    } while (result == CARD_RESULT_BUSY);
+
+    if (result == CARD_RESULT_READY)
+    {
+        ret = 1;
+    }
+    else if (result == CARD_RESULT_BROKEN || result == CARD_RESULT_ENCODING)
+    {
+        ret = 1;
+    }
+    return ret;
+}
+
+static void iSG_cb_unmount(s32 chan, s32 result)
+{
+    st_ISGSESSION* session = &g_isgdata_MAIN;
+    if (chan != session->slot)
+    {
+        return;
+    }
+    session->slot = -1;
+    if (session->chgfunc != NULL)
+    {
+        session->chgfunc(session->cltdata, ISG_CHG_TARGET);
+    }
+    memset(&session->mcdata[chan], 0, sizeof(st_ISG_MEMCARD_DATA));
+}
+
+static S32 iSG_mc_format(st_ISG_MEMCARD_DATA* mcdata, S32, S32* canRecover)
+{
+    if (mcdata->unk_12c != 0)
+    {
+        if (canRecover != NULL)
+        {
+            *canRecover = 0;
+        }
+        return 0;
+    }
+
+    if (canRecover != NULL)
+    {
+        *canRecover = 1;
+    }
+
+    s32 result;
+    do
+    {
+        result = CARDFormat(mcdata->unk_4);
+    } while (result == CARD_RESULT_BUSY);
+
+    S32 ret;
+    if (result == CARD_RESULT_READY)
+    {
+        ret = 1;
+    }
+    else
+    {
+        ret = 0;
+
+        switch (result)
+        {
+        case CARD_RESULT_IOERROR:
+            mcdata->unk_12c = 1;
+            if (canRecover != NULL)
+            {
+                *canRecover = 0;
+            }
+            break;
+        case CARD_RESULT_NOCARD:
+            if (canRecover != NULL)
+            {
+                *canRecover = -1;
+            }
+            ret = -1;
+            break;
+        case CARD_RESULT_FATAL_ERROR:
+        case CARD_RESULT_WRONGDEVICE:
+        case CARD_RESULT_NOFILE:
+            break;
+        }
+    }
+    return ret;
 }
 
 static S32 iSG_mc_unmount(S32 slot)
