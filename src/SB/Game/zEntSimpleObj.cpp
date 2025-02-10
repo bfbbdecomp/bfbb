@@ -453,7 +453,7 @@ void zEntSimpleObj_Init(zEntSimpleObj* ent, xEntAsset* asset, bool arg2)
     xAnimPlay* temp_r3_2;
     xAnimPlay* temp_r3_3;
     xAnimTable* temp_r4;
-    U32 temp_r0;
+    xSimpleObjAsset* temp_r0;
 
     zEntInit((zEnt*)ent, asset, 0x53494D50U);
 
@@ -464,10 +464,14 @@ void zEntSimpleObj_Init(zEntSimpleObj* ent, xEntAsset* asset, bool arg2)
 
     if (arg2 != 0)
     {
-        asset + 1;
+        temp_r0 = (xSimpleObjAsset*)(asset + 1);    
+    }
+    else
+    {
+        temp_r0 = (xSimpleObjAsset*)(asset + 1);
     }
 
-    ent->sasset = (xSimpleObjAsset*)(asset + 1);
+    ent->sasset = temp_r0;
     ent->sflags = 0;
     ent->pflags = 0;
     ent->penby |= 0x10;
