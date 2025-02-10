@@ -68,7 +68,7 @@ void zEntSimpleObj_MgrInit(zEntSimpleObj** entList, U32 entCount)
     if (entCount != 0)
     {
         var_r26 = 0;
-        temp_r27 = (zEntSimpleObj**) RwMalloc(entCount * 4);
+        temp_r27 = (zEntSimpleObj**)RwMalloc(entCount * 4);
         var_r25 = 0;
         temp_r31 = xStrHash("trailer_hitch\0xEntAutoEventSimple");
         var_r30 = entList;
@@ -84,22 +84,21 @@ void zEntSimpleObj_MgrInit(zEntSimpleObj** entList, U32 entCount)
                     (temp_r3->render != zEntSimpleObj_Render) ||
                     (temp_r3->eventFunc != (xBaseEventCB)zEntSimpleObjEventCB) ||
                     (temp_r3->move != NULL) ||
-                    (temp_r4 = temp_r3->moreFlags, (((temp_r4 & 8) == 0) == 0)) || (temp_r4 & 0x20) ||
-                    (temp_r3->miscflags & 1) || (temp_r3->atbl != NULL) || (temp_r6 & 4) ||
-                    (temp_r6 & 8) || (temp_r31 == temp_r3->asset->modelInfoID) ||
+                    (temp_r4 = temp_r3->moreFlags, (((temp_r4 & 8) == 0) == 0)) ||
+                    (temp_r4 & 0x20) || (temp_r3->miscflags & 1) || (temp_r3->atbl != NULL) ||
+                    (temp_r6 & 4) || (temp_r6 & 8) || (temp_r31 == temp_r3->asset->modelInfoID) ||
                     (temp_r3->baseType == eBaseTypeTrackPhysics) || (temp_r3->driver != NULL))
                 {
                     temp_r0 = (entCount - 1) - var_r25;
                     var_r25 += 1;
                     *(temp_r27 + (temp_r0 * 4)) = temp_r3;
                     temp_r6_2 = *var_r30;
-                    if ((temp_r6_2->driver != NULL) &&
-                        (temp_r6_2->move == NULL))
+                    if ((temp_r6_2->driver != NULL) && (temp_r6_2->move == NULL))
                     {
                         temp_r6_2->move = zEntSimpleObj_Move;
                         temp_r3_2 = *var_r30;
                         temp_r3_2->pflags |= 1;
-                        (*var_r30)->frame = (xEntFrame*) xMemAlloc(gActiveHeap, 0xE4U, 0);
+                        (*var_r30)->frame = (xEntFrame*)xMemAlloc(gActiveHeap, 0xE4U, 0);
                     }
                 }
                 else
@@ -117,7 +116,7 @@ void zEntSimpleObj_MgrInit(zEntSimpleObj** entList, U32 entCount)
         if (var_r25 != 0)
         {
             sSimpleCustomCount = var_r25;
-            sSimpleCustomList = (xEnt**) xMemAlloc(gActiveHeap, var_r25 * 4, 0);
+            sSimpleCustomList = (xEnt**)xMemAlloc(gActiveHeap, var_r25 * 4, 0);
             var_r4 = 0;
             if (var_r25 > 0U)
             {
@@ -183,7 +182,7 @@ void zEntSimpleObj_MgrInit(zEntSimpleObj** entList, U32 entCount)
             return;
         }
         sMgrCount = var_r26;
-        sMgrList = (xSphere*) xMemAlloc(gActiveHeap, var_r26 << 6, 0x40);
+        sMgrList = (xSphere*)xMemAlloc(gActiveHeap, var_r26 << 6, 0x40);
         var_r29_2 = temp_r27;
         var_r30_2 = 0U;
         var_r25_2 = sMgrList;
@@ -309,30 +308,36 @@ void zEntSimpleObj_MgrUpdateRender(RpWorld* world, F32 dt)
     f32 temp_f4;
     u32 var_r30;
     u8 var_r27;
-    xModelInstance *var_r3;
-    xModelInstance *var_r3_2;
-    xEnt *temp_r28;
-    xModelInstance *temp_r3;
-    xModelInstance *temp_r5;
-    xQuat *temp_r26;
-    xSphere *var_r29;
-    xVec3 *temp_r25;
+    xModelInstance* var_r3;
+    xModelInstance* var_r3_2;
+    xEnt* temp_r28;
+    xModelInstance* temp_r3;
+    xModelInstance* temp_r5;
+    xQuat* temp_r26;
+    xSphere* var_r29;
+    xVec3* temp_r25;
 
     var_r29 = sMgrList;
-    for (var_r30 = 0; var_r30 < (u32) sMgrCount; var_r30++) {
-        temp_r28 = (xEnt*) &var_r29[3].center.z;
-        if (xEntIsVisible(temp_r28) != 0U) {
-            temp_f2 = globals.camera.mat.at.x - *((F32*) var_r29 + 0x0);
-            temp_f4 = globals.camera.mat.at.y    - *((F32*) var_r29 + 0x1);
-            temp_f3 = globals.camera.mat.at.z - *((F32*) var_r29 + 0x2);
+    for (var_r30 = 0; var_r30 < (u32)sMgrCount; var_r30++)
+    {
+        temp_r28 = (xEnt*)&var_r29[3].center.z;
+        if (xEntIsVisible(temp_r28) != 0U)
+        {
+            temp_f2 = globals.camera.mat.at.x - *((F32*)var_r29 + 0x0);
+            temp_f4 = globals.camera.mat.at.y - *((F32*)var_r29 + 0x1);
+            temp_f3 = globals.camera.mat.at.z - *((F32*)var_r29 + 0x2);
             temp_f30 = (temp_f3 * temp_f3) + ((temp_f2 * temp_f2) + (temp_f4 * temp_f4));
-            if (!(temp_f30 > *((F32*) var_r29 + 0x7)) && (iModelSphereCull((xSphere*) var_r29) == 0)) {
+            if (!(temp_f30 > *((F32*)var_r29 + 0x7)) && (iModelSphereCull((xSphere*)var_r29) == 0))
+            {
                 var_r27 = 0;
-                if (temp_f30 > *((F32*) var_r29 + 0x4)) {
+                if (temp_f30 > *((F32*)var_r29 + 0x4))
+                {
                     var_r27 = 1;
-                    if (temp_f30 > *((F32*) var_r29 + 0x5)) {
+                    if (temp_f30 > *((F32*)var_r29 + 0x5))
+                    {
                         var_r27 = 2;
-                        if (temp_f30 > *((F32*) var_r29 + 0x6)) {
+                        if (temp_f30 > *((F32*)var_r29 + 0x6))
+                        {
                             var_r27 = 3;
                         }
                     }
@@ -340,38 +345,48 @@ void zEntSimpleObj_MgrUpdateRender(RpWorld* world, F32 dt)
                 temp_r5 = temp_r28->model;
                 temp_r5->Flags &= 0xFBFF;
                 *((U8*)var_r29 + 0x22) = var_r27;
-                temp_r5->Bucket = (xModelBucket**) var_r29 + (((var_r27 * 4) & 0x3FC) + 0x24);
+                temp_r5->Bucket = (xModelBucket**)var_r29 + (((var_r27 * 4) & 0x3FC) + 0x24);
                 temp_r5->Data = (*temp_r5->Bucket)->OriginalData;
-                if (var_r27 == 0) {
+                if (var_r27 == 0)
+                {
                     var_r3 = temp_r5->Next;
-                    while (var_r3 != NULL) {
-                        var_r3->Flags = (u16) (var_r3->Flags & 0xFBFF);
+                    while (var_r3 != NULL)
+                    {
+                        var_r3->Flags = (u16)(var_r3->Flags & 0xFBFF);
                         var_r3 = var_r3->Next;
                     }
-                } else {
+                }
+                else
+                {
                     var_r3_2 = temp_r5->Next;
-                    while (var_r3_2 != NULL) {
-                        var_r3_2->Flags = (u16) (var_r3_2->Flags | 0x400);
+                    while (var_r3_2 != NULL)
+                    {
+                        var_r3_2->Flags = (u16)(var_r3_2->Flags | 0x400);
                         var_r3_2 = var_r3_2->Next;
                     }
                 }
-                if ((((zEntSimpleObj*) temp_r28)->anim != NULL) && (zGameIsPaused() == 0)) {
-                    temp_f1 = iAnimDuration(((zEntSimpleObj*) temp_r28));
-                    ((zEntSimpleObj*) temp_r28)->animTime += dt;
-                    temp_f0 = ((zEntSimpleObj*) temp_r28)->animTime;
-                    if (temp_f0 >= temp_f1) {
-                        ((zEntSimpleObj*) temp_r28)->animTime = temp_f0 - temp_f1;
+                if ((((zEntSimpleObj*)temp_r28)->anim != NULL) && (zGameIsPaused() == 0))
+                {
+                    temp_f1 = iAnimDuration(((zEntSimpleObj*)temp_r28));
+                    ((zEntSimpleObj*)temp_r28)->animTime += dt;
+                    temp_f0 = ((zEntSimpleObj*)temp_r28)->animTime;
+                    if (temp_f0 >= temp_f1)
+                    {
+                        ((zEntSimpleObj*)temp_r28)->animTime = temp_f0 - temp_f1;
                     }
-                    temp_r26 = (xQuat*) giAnimScratch;
-                    temp_r25 = (xVec3*) temp_r26 + 0x410; 
-                    iAnimEval(((zEntSimpleObj*) temp_r28)->anim, ((zEntSimpleObj*) temp_r28)->animTime, 0U, temp_r25, temp_r26);
+                    temp_r26 = (xQuat*)giAnimScratch;
+                    temp_r25 = (xVec3*)temp_r26 + 0x410;
+                    iAnimEval(((zEntSimpleObj*)temp_r28)->anim,
+                              ((zEntSimpleObj*)temp_r28)->animTime, 0U, temp_r25, temp_r26);
                     temp_r3 = temp_r28->model;
-                    iModelAnimMatrices(temp_r3->Data, temp_r26, temp_r25, (RwMatrixTag *) &temp_r3->Mat);
+                    iModelAnimMatrices(temp_r3->Data, temp_r26, temp_r25,
+                                       (RwMatrixTag*)&temp_r3->Mat);
                 }
                 xLightKit_Enable(temp_r28->lightKit, globals.currWorld);
                 zEntSimpleObj_Render(temp_r28);
-                if ((var_r27 == 0) && (xrand() < 0x55U)) {
-                    xVec3Copy(&sp8, (xVec3*) &temp_r28->model->Mat->pos);
+                if ((var_r27 == 0) && (xrand() < 0x55U))
+                {
+                    xVec3Copy(&sp8, (xVec3*)&temp_r28->model->Mat->pos);
                     spC += (0.25f * xurand()) + 0.25f;
                     zFX_SpawnBubbleTrail(&sp8, (xrand() & 7) + 1, &temp_r28->asset->pos, NULL);
                 }
@@ -435,9 +450,9 @@ void zEntSimpleObj_Render(xEnt* ent)
 {
     if (ent->model == NULL || xEntIsVisible(ent) == FALSE)
     {
-       return;
+        return;
     }
-    
+
     xModelRender(ent->model);
 }
 
@@ -464,7 +479,7 @@ void zEntSimpleObj_Init(zEntSimpleObj* ent, xEntAsset* asset, bool arg2)
 
     if (arg2 != 0)
     {
-        temp_r0 = (xSimpleObjAsset*)(asset + 1);    
+        temp_r0 = (xSimpleObjAsset*)(asset + 1);
     }
     else
     {
@@ -535,7 +550,7 @@ void zEntSimpleObj_Init(zEntSimpleObj* ent, xEntAsset* asset, bool arg2)
     zEntReset((zEnt*)ent);
 }
 
-    void zEntSimpleObj_Move(xEnt*, xScene*, F32, xEntFrame*)
+void zEntSimpleObj_Move(xEnt*, xScene*, F32, xEntFrame*)
 {
 }
 
