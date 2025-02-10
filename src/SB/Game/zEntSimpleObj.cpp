@@ -535,10 +535,9 @@ void zEntSimpleObj_Init(zEntSimpleObj* ent, xEntAsset* asset, bool arg2)
         temp_r3_4 = asset->animListID;
         if ((temp_r3_4 != 0) && (ent->atbl == NULL))
         {
-            temp_r3_5 = xSTFindAsset(temp_r3_4, &sp8);
-            var_r31 = temp_r3_5;
+            var_r31 = xSTFindAsset(temp_r3_4, &sp8);
             if ((var_r31 != NULL) &&
-                ((temp_r3_6 = iAnimBoneCount(temp_r3_5), ((temp_r3_6 == 0U) != 0)) ||
+                ((temp_r3_6 = iAnimBoneCount(var_r31), ((temp_r3_6 == 0U) != 0)) ||
                  (temp_r3_6 != iModelNumBones(temp_r28))))
             {
                 var_r31 = NULL;
