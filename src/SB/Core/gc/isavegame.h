@@ -110,11 +110,12 @@ public:
 struct st_ISG_MEMCARD_DATA
 {
     S32 unk_0;
-    S32 unk_4;
+    S32 chan;
     S32 sectorSize;
-    CARDFileInfo unk_c;
-    CARDStat unk_20;
-    S32 unk_pad5[4];
+    CARDFileInfo finfo;
+    CARDStat fstat;
+    S32 unk_pad5[3];
+    S32 unk_98;
     CARDFileInfo unk_9c;
     CARDStat unk_b0;
     S32 unk_pad6[4];

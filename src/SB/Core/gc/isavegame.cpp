@@ -1,6 +1,9 @@
 #include "isavegame.h"
 
+#include "zGlobals.h"
+
 #include "xMemMgr.h"
+#include "xSnd.h"
 
 #include "iFile.h"
 #include "iSystem.h"
@@ -57,9 +60,9 @@ static char cardwork[2][0xa000];
 static volatile S32 g_isginit;
 static st_ISG_TPL_TEXPALETTE* g_rawicon;
 static st_ISG_TPL_TEXPALETTE* g_rawbanr;
-static S32 g_iconsize;
-static S32 g_banrsize;
-static S8 isMounted;
+static U32 g_iconsize;
+static U32 g_banrsize;
+static U8 isMounted;
 
 // .data
 static st_ISGSESSION g_isgdata_MAIN = { 0 };
@@ -122,6 +125,20 @@ char* iSGMakeName(en_NAMEGEN_TYPE type, const char* base, S32 idx)
     }
 
     return use_buf;
+}
+
+static const char* __deadstripped()
+{
+    return "Slot %c\0"
+           "Memory Card Slot %c\0"
+           "Nintendo GameCube Memory Card in Slot %c\0"
+           "Nintendo GameCube%s Memory Card in Slot %c\0"
+           "^\0"
+           "Nintendo GameCube%s Memory Card\0"
+           "is damaged and cannot be used\0"
+           "unsupprted sector size\0"
+           "is formatted for another market\0"
+           "encountered unexpected error (%d)";
 }
 
 st_ISGSESSION* iSGSessionBegin(void* cltdata, void (*chgfunc)(void*, en_CHGCODE), S32 monitor)
@@ -493,7 +510,7 @@ S32 iSGFileSize(st_ISGSESSION* isgdata, const char* fname)
     ret = iSG_get_fsize(data, fname);
     if (ret >= 0)
     {
-        ret -= iSG_cubeicon_size(data->unk_4, data->sectorSize);
+        ret -= iSG_cubeicon_size(data->chan, data->sectorSize);
         if (ret < 0)
         {
             ret = -1;
@@ -609,10 +626,10 @@ S32 iSGSetupGameDir(st_ISGSESSION* isgdata, const char* dname, S32 force_iconfix
 
 static char* iSG_bfr_icondata(char* param1, CARDStat* stat, char* param3, int param4);
 static S32 iSG_mc_fopen(st_ISG_MEMCARD_DATA*, const char*, S32, en_ISG_IOMODE, en_ASYNC_OPERR*);
-static void iSG_mc_fclose(st_ISG_MEMCARD_DATA*);
-static void iSG_mc_fclose(st_ISG_MEMCARD_DATA*, CARDStat*);
-static S32 iSG_mc_fdel(st_ISG_MEMCARD_DATA*, const char*);
-static S32 iSG_mc_fwrite(st_ISG_MEMCARD_DATA*, char*, int);
+static S32 iSG_mc_fclose(st_ISG_MEMCARD_DATA*);
+static S32 iSG_mc_fclose(st_ISG_MEMCARD_DATA*, CARDStat*);
+static S32 iSG_mc_fdel(st_ISG_MEMCARD_DATA* mcdata, const char* fname);
+static S32 iSG_mc_fwrite(st_ISG_MEMCARD_DATA* mcdata, char* buf, S32 bufsize);
 static void iSG_upd_icostat(CARDStat*, CARDStat*);
 static void iSG_timestamp(CARDStat*);
 S32 iSGSaveFile(st_ISGSESSION* isgdata, const char* fname, char* data, S32 n, S32 async, char* arg5)
@@ -670,12 +687,12 @@ S32 iSGSaveFile(st_ISGSESSION* isgdata, const char* fname, char* data, S32 n, S3
 
         if (writeret != 0)
         {
-            iSG_upd_icostat(&statA, &mcdata->unk_20);
-            iSG_timestamp(&mcdata->unk_20);
+            iSG_upd_icostat(&statA, &mcdata->fstat);
+            iSG_timestamp(&mcdata->fstat);
             s32 result;
             do
             {
-                result = CARDSetStatus(mcdata->unk_4, mcdata->unk_c.fileNo, &mcdata->unk_20);
+                result = CARDSetStatus(mcdata->chan, mcdata->finfo.fileNo, &mcdata->fstat);
             } while (result == CARD_RESULT_BUSY);
 
             if (result != CARD_RESULT_READY)
@@ -689,7 +706,7 @@ S32 iSGSaveFile(st_ISGSESSION* isgdata, const char* fname, char* data, S32 n, S3
             s32 result;
             do
             {
-                result = CARDSetAttributes(mcdata->unk_4, mcdata->unk_c.fileNo, CARD_ATTR_PUBLIC);
+                result = CARDSetAttributes(mcdata->chan, mcdata->finfo.fileNo, CARD_ATTR_PUBLIC);
             } while (result == CARD_RESULT_BUSY);
         }
 
@@ -757,7 +774,7 @@ S32 iSGReadLeader(st_ISGSESSION* isgdata, const char* fname, char* databuf, S32 
     }
 
     iTRCDisk::CheckDVDAndResetState();
-    S32 iconsize = iSG_cubeicon_size(data->unk_4, data->sectorSize);
+    S32 iconsize = iSG_cubeicon_size(data->chan, data->sectorSize);
     S32 sectorsize200 = ALIGN_THING(data->sectorSize, 0x200);
     if ((S32)databuf % 32 != 0 || numbytes - ((numbytes / sectorsize200) * sectorsize200) != 0)
     {
@@ -817,7 +834,30 @@ en_ASYNC_OPSTAT iSGPollStatus(st_ISGSESSION* isgdata, en_ASYNC_OPCODE* curop, S3
 
 en_ASYNC_OPERR iSGOpError(st_ISGSESSION* isgdata, char* errmsg)
 {
-    static char errmsgs[0x15][0x4] = { 0 };
+    static char* errmsgs[0x16] = {
+        "No current error",
+        "No operation in async queue",
+        "Too many async ops queued simultaneously",
+        "Init Failed",
+        "Unable to access Save Game Directory",
+        "Access Error - no card ?!? (eg yanked out)",
+        "Access Error - no room on card (file handles free bytes, etc)",
+        "Access Error - card is damaged or something bad",
+        "Access Error - file being loaded appears to be corrupt (I-Level)",
+        "Access Error - general problem",
+        "Save Error - Not enough free space to save file",
+        "Save Error - during initalization (async queue)",
+        "Save Error - during write",
+        "Save Error - opening file",
+        "Load Error - during initalization (async queue)",
+        "Load Error - during read",
+        "Load Error - opening file",
+        "Target problem (general error)",
+        "Target Error - media removed or changed",
+        "Target Error - Not ready for I/O (unformatted?)",
+        "Operation encountered unknown error",
+        NULL
+    };
 
     en_ASYNC_OPERR err;
     if (errmsg == NULL)
@@ -936,7 +976,7 @@ static S32 iSG_mc_tryRepair(st_ISG_MEMCARD_DATA* mcdata)
     {
         do
         {
-            result = CARDCheckEx(mcdata->unk_4, &xferBytes);
+            result = CARDCheckEx(mcdata->chan, &xferBytes);
         } while (result == CARD_RESULT_BUSY);
 
         if (result == CARD_RESULT_READY)
@@ -977,7 +1017,7 @@ static S32 iSG_mc_isformatted(st_ISG_MEMCARD_DATA* mcdata)
     {
         do
         {
-            result = CARDCheckEx(mcdata->unk_4, &xferBytes);
+            result = CARDCheckEx(mcdata->chan, &xferBytes);
         } while (result == CARD_RESULT_BUSY);
 
         if (result == CARD_RESULT_READY)
@@ -1028,7 +1068,7 @@ static S32 iSG_mc_isGCcard(st_ISG_MEMCARD_DATA* mcdata, int* param2, int* param3
 
     do
     {
-        result = CARDProbeEx(mcdata->unk_4, &memSize, &sectorSize);
+        result = CARDProbeEx(mcdata->chan, &memSize, &sectorSize);
     } while (result == CARD_RESULT_BUSY);
 
     if (result == CARD_RESULT_READY)
@@ -1040,7 +1080,7 @@ static S32 iSG_mc_isGCcard(st_ISG_MEMCARD_DATA* mcdata, int* param2, int* param3
     {
         do
         {
-            result = CARDCheckEx(mcdata->unk_4, &xferBytes);
+            result = CARDCheckEx(mcdata->chan, &xferBytes);
         } while (result == CARD_RESULT_BUSY);
 
         if (result == CARD_RESULT_READY)
@@ -1080,7 +1120,7 @@ static S32 iSG_mc_isGCcard(st_ISG_MEMCARD_DATA* mcdata, int* param2, int* param3
     {
         do
         {
-            result = CARDGetEncoding(mcdata->unk_4, &encoding);
+            result = CARDGetEncoding(mcdata->chan, &encoding);
         } while (result == CARD_RESULT_BUSY);
 
         if (result == CARD_RESULT_READY && encoding && param2)
@@ -1110,13 +1150,13 @@ static S32 iSG_isSpaceForFile(st_ISG_MEMCARD_DATA* mcdata, S32 param2, const cha
     {
         return 0;
     }
-    len = iSG_cubeicon_size(mcdata->unk_4, mcdata->sectorSize);
+    len = iSG_cubeicon_size(mcdata->chan, mcdata->sectorSize);
     len = len + param2;
     len = ALIGN_THING(mcdata->sectorSize, len);
 
     do
     {
-        result = CARDFreeBlocks(mcdata->unk_4, &byteNotUsed, &filesNotUsed);
+        result = CARDFreeBlocks(mcdata->chan, &byteNotUsed, &filesNotUsed);
     } while (result == CARD_RESULT_BUSY);
 
     if (result == CARD_RESULT_READY)
@@ -1168,7 +1208,7 @@ static S32 iSG_mc_settgt(st_ISG_MEMCARD_DATA* mcdata, S32 slot)
     if (iSG_mc_mount(slot))
     {
         mcdata->unk_0 = 1;
-        mcdata->unk_4 = slot;
+        mcdata->chan = slot;
 
         iSG_mc_tryRepair(mcdata);
         CARDGetSectorSize(slot, (u32*)&mcdata->sectorSize);
@@ -1189,8 +1229,8 @@ static S32 iSG_get_finfo(st_ISG_MEMCARD_DATA* mcdata, const char* dpath)
     if (iSG_mc_fopen(mcdata, dpath, -1, ISG_IOMODE_READ, &operr))
     {
         rc = 1;
-        memcpy(&mcdata->unk_b0, &mcdata->unk_20, sizeof(CARDStat));
-        memcpy(&mcdata->unk_9c, &mcdata->unk_c, sizeof(CARDFileInfo));
+        memcpy(&mcdata->unk_b0, &mcdata->fstat, sizeof(CARDStat));
+        memcpy(&mcdata->unk_9c, &mcdata->finfo, sizeof(CARDFileInfo));
         iSG_mc_fclose(mcdata);
     }
 
@@ -1253,7 +1293,7 @@ static S32 iSG_fileKosher(st_ISG_MEMCARD_DATA* mcdata, const char* param2, int p
         return -1;
     }
 
-    S32 ret = iSG_curKosher(&mcdata->unk_20, &mcdata->unk_c);
+    S32 ret = iSG_curKosher(&mcdata->fstat, &mcdata->finfo);
     iSG_mc_fclose(mcdata);
 
     if (ret == 0)
@@ -1373,14 +1413,15 @@ static S32 iSG_chk_icondata()
 }
 
 static S32 iSG_tpl_unpack(st_ISG_TPL_TEXPALETTE*);
+static S32 iSG_bnr_unpack(st_ISG_TPL_TEXPALETTE*);
 static S32 iSG_load_icondata()
 {
-    g_rawicon = (st_ISG_TPL_TEXPALETTE*)iFileLoad("/SBGCIcon.tpl", NULL, (U32*)g_iconsize);
-    g_rawbanr = (st_ISG_TPL_TEXPALETTE*)iFileLoad("/SBGCBanner.tpl", NULL, (U32*)g_banrsize);
+    g_rawicon = (st_ISG_TPL_TEXPALETTE*)iFileLoad("/SBGCIcon.tpl", NULL, &g_iconsize);
+    g_rawbanr = (st_ISG_TPL_TEXPALETTE*)iFileLoad("/SBGCBanner.tpl", NULL, &g_banrsize);
     iSG_tpl_unpack(g_rawicon);
-    iSG_tpl_unpack(g_rawbanr);
+    iSG_bnr_unpack(g_rawbanr);
 
-    return g_rawicon && g_iconsize && g_rawbanr && g_banrsize ? 1 : 0;
+    return g_rawicon && (S32)g_iconsize && g_rawbanr && (S32)g_banrsize ? 1 : 0;
 }
 
 static void iSG_discard_icondata()
@@ -1424,7 +1465,7 @@ static char* iSG_bfr_icondata(char* param1, CARDStat* stat, char* param3, int pa
 
     memcpy(param1, &data, sizeof(data));
 
-    S32 t = ALIGN_THING(param4, 0x1ff);
+    S32 t = ALIGN_THING(param4, 0x200);
     return param1 + (t + (sizeof(IconData) - 1) & -t);
 }
 
@@ -1542,7 +1583,7 @@ static S32 iSG_mc_format(st_ISG_MEMCARD_DATA* mcdata, S32, S32* canRecover)
     s32 result;
     do
     {
-        result = CARDFormat(mcdata->unk_4);
+        result = CARDFormat(mcdata->chan);
     } while (result == CARD_RESULT_BUSY);
 
     S32 ret;
@@ -1579,6 +1620,353 @@ static S32 iSG_mc_format(st_ISG_MEMCARD_DATA* mcdata, S32, S32* canRecover)
     return ret;
 }
 
+static S32 iSG_mc_fopen(st_ISG_MEMCARD_DATA* mcdata, const char* fname, S32 fsize,
+                        en_ISG_IOMODE mode, en_ASYNC_OPERR* operr)
+{
+    S32 ret = 0;
+    CARDFileInfo* finfo = &mcdata->finfo;
+    CARDStat* stat = &mcdata->fstat;
+    if (operr != NULL)
+    {
+        *operr = ISG_OPERR_NONE;
+    }
+
+    if (mode == ISG_IOMODE_READ)
+    {
+        s32 result;
+        do
+        {
+            result = CARDOpen(mcdata->chan, (char*)fname, finfo);
+        } while (result == CARD_RESULT_BUSY);
+
+        if (result == CARD_RESULT_READY)
+        {
+            ret = 1;
+        }
+    }
+    else
+    {
+        S32 res = iSG_mc_fdel(mcdata, fname);
+        if (mcdata->unk_12c == 0 && res > 0)
+        {
+            s32 result;
+            do
+            {
+                result = CARDCreate(mcdata->chan, (char*)fname, fsize, finfo);
+            } while (result == CARD_RESULT_BUSY);
+
+            if (result == CARD_RESULT_READY)
+            {
+                ret = 1;
+                mcdata->unk_98 = 0;
+            }
+            else if (operr != NULL)
+            {
+                switch (result)
+                {
+                case CARD_RESULT_WRONGDEVICE:
+                case CARD_RESULT_NOCARD:
+                    *operr = ISG_OPERR_NOCARD;
+                    break;
+                case CARD_RESULT_IOERROR:
+                case CARD_RESULT_BROKEN:
+                    mcdata->unk_12c = 1;
+                    *operr = ISG_OPERR_DAMAGE;
+                    break;
+                case CARD_RESULT_NOENT:
+                case CARD_RESULT_INSSPACE:
+                    *operr = ISG_OPERR_NOROOM;
+                    break;
+                default:
+                    *operr = ISG_OPERR_OTHER;
+                    break;
+                case CARD_RESULT_READY:
+                case CARD_RESULT_BUSY:
+                case CARD_RESULT_EXIST:
+                case CARD_RESULT_NOPERM:
+                    break;
+                }
+            }
+        }
+    }
+
+    if (ret != 0)
+    {
+        s32 result;
+        do
+        {
+            result = CARDGetStatus(mcdata->chan, finfo->fileNo, stat);
+        } while (result == CARD_RESULT_BUSY);
+
+        if (result == CARD_RESULT_READY)
+        {
+            ret = 1;
+        }
+    }
+
+    if (ret != 0)
+    {
+        if (memcmp(stat->gameName, "GQPE", 4) != 0 || memcmp(stat->company, "78", 2) != 0)
+        {
+            iSG_mc_fclose(mcdata);
+            ret = 0;
+        }
+    }
+
+    return ret;
+}
+
+static S32 iSG_mc_fclose(st_ISG_MEMCARD_DATA* mcdata)
+{
+    iSG_mc_fclose(mcdata, NULL);
+}
+
+static S32 iSG_mc_fclose(st_ISG_MEMCARD_DATA* mcdata, CARDStat* stat)
+{
+    S32 ret = 0;
+    s32 result;
+    do
+    {
+        result = CARDClose(&mcdata->finfo);
+    } while (result == CARD_RESULT_BUSY);
+
+    if (result == CARD_RESULT_READY)
+    {
+        ret = 1;
+    }
+
+    if (stat != NULL)
+    {
+        memcpy(stat, &mcdata->fstat, sizeof(CARDStat));
+    }
+
+    memset(&mcdata->finfo, 0, sizeof(CARDFileInfo));
+    memset(&mcdata->fstat, 0, sizeof(CARDStat));
+
+    return ret;
+}
+
+static S32 iSG_mc_fdel(st_ISG_MEMCARD_DATA* mcdata, const char* fname)
+{
+    if (mcdata->chan < 0 || mcdata->chan > 1)
+    {
+        return 0;
+    }
+
+    if (isMounted == 0)
+    {
+        return 0;
+    }
+
+    s32 result;
+    do
+    {
+        result = CARDDelete(mcdata->chan, fname);
+    } while (result == CARD_RESULT_BUSY);
+
+    S32 ret;
+    if (result == CARD_RESULT_NOFILE)
+    {
+        ret = 1;
+    }
+    else if (result == CARD_RESULT_READY)
+    {
+        ret = 1;
+    }
+    else
+    {
+        ret = 0;
+        switch (result)
+        {
+        case CARD_RESULT_IOERROR:
+            mcdata->unk_12c = 1;
+            break;
+        case CARD_RESULT_NOPERM:
+        case CARD_RESULT_FATAL_ERROR:
+        case CARD_RESULT_WRONGDEVICE:
+            break;
+        }
+    }
+    return ret;
+}
+
+static S32 iSG_mcqa_fread(st_ISG_MEMCARD_DATA* mcdata, char* buf, S32 len, S32 offset);
+static S32 iSG_mc_fread(st_ISG_MEMCARD_DATA* mcdata, char* buf, S32 len, S32 offset)
+{
+    return iSG_mcqa_fread(mcdata, buf, len, offset);
+}
+
+static void iSG_cb_asyndone(s32, s32);
+static S32 iSG_mcqa_fread(st_ISG_MEMCARD_DATA* mcdata, char* buf, S32 len, S32 offset)
+{
+    S32 x = 1000;
+    s32 result = CARDGetResultCode(mcdata->chan);
+    do
+    {
+        result = CARDGetResultCode(mcdata->chan);
+    } while (result == CARD_RESULT_BUSY);
+
+    if (result != CARD_RESULT_READY)
+    {
+        return 0;
+    }
+
+    CARDGetXferredBytes(mcdata->chan);
+    do
+    {
+        result = CARDReadAsync(&mcdata->finfo, buf, len, offset, iSG_cb_asyndone);
+    } while (result == CARD_RESULT_BUSY);
+
+    if (result != CARD_RESULT_READY)
+    {
+        return 0;
+    }
+
+    result = CARD_RESULT_BUSY;
+    do
+    {
+        if (x++ > 500)
+        {
+            xSndUpdate();
+            CARDGetXferredBytes(mcdata->chan);
+            result = CARDGetResultCode(mcdata->chan);
+            x = 0;
+        }
+        iTRCDisk::CheckDVDAndResetState();
+    } while (result == CARD_RESULT_BUSY);
+    return result != 0 ? 0 : 1;
+}
+
+static S32 iSG_mcqa_fwrite(st_ISG_MEMCARD_DATA* mcdata, char* buf, S32 len);
+static S32 iSG_mc_fwrite(st_ISG_MEMCARD_DATA* mcdata, char* buf, S32 len)
+{
+    iSG_mcqa_fwrite(mcdata, buf, len);
+}
+
+static S32 iSG_mcqa_fwrite(st_ISG_MEMCARD_DATA* mcdata, char* buf, S32 len)
+{
+    S32 ret = 0;
+    S32 x = 1000;
+    CARDStat* fstat = &mcdata->fstat;
+    s32 result;
+    do
+    {
+        result = CARDGetResultCode(mcdata->chan);
+    } while (result == CARD_RESULT_BUSY);
+
+    if (result != CARD_RESULT_READY)
+    {
+        return 0;
+    }
+
+    CARDGetXferredBytes(mcdata->chan);
+    s32 asynresult;
+    do
+    {
+        asynresult = CARDWriteAsync(&mcdata->finfo, buf, len, mcdata->unk_98, iSG_cb_asyndone);
+    } while (asynresult == CARD_RESULT_BUSY);
+
+    if (asynresult != CARD_RESULT_READY)
+    {
+        return 0;
+    }
+
+    result = CARD_RESULT_BUSY;
+    do
+    {
+        if (x++ > 500)
+        {
+            result = CARDGetResultCode(mcdata->chan);
+            xSndUpdate();
+            CARDGetXferredBytes(mcdata->chan);
+            x = 0;
+        }
+        iTRCDisk::CheckDVDAndResetState();
+    } while (result == CARD_RESULT_BUSY);
+
+    if (asynresult == CARD_RESULT_READY)
+    {
+        mcdata->unk_98 += len;
+
+        do
+        {
+            result = CARDGetStatus(mcdata->chan, mcdata->finfo.fileNo, fstat);
+        } while (result == CARD_RESULT_BUSY);
+
+        if (result == CARD_RESULT_READY)
+        {
+            ret = 1;
+        }
+    }
+    return ret;
+}
+
+S32 iSGCheckForWrongDevice()
+{
+    char* workarea = (char*)RwMalloc(0x10000 - 0x6000);
+
+    S32 ret = -1;
+    for (S32 i = 0; i < ISG_NUM_SLOTS; ++i)
+    {
+        s32 result = CARDMount(i, workarea, NULL);
+
+        switch (result)
+        {
+        case CARD_RESULT_READY:
+        case CARD_RESULT_BROKEN:
+        case CARD_RESULT_ENCODING:
+            CARDUnmount(i);
+            break;
+        case CARD_RESULT_WRONGDEVICE:
+            ret = i;
+            i = ISG_NUM_SLOTS;
+            break;
+        }
+    }
+
+    RwFree(workarea);
+
+    return ret;
+}
+
+S32 iSGCheckForCorruptFiles(st_ISGSESSION* isgdata, char files[][64])
+{
+    if (isgdata->slot < 0)
+    {
+        return 0;
+    }
+
+    S32 i;
+    char* name;
+    st_ISG_MEMCARD_DATA* mcdata = &isgdata->mcdata[isgdata->slot];
+    S32 ret = 0;
+    memset(files, NULL, 0xc0);
+
+    for (i = 0; i < ISG_NUM_FILES; ++i)
+    {
+        name = iSGMakeName(ISG_NGTYP_GAMEFILE, NULL, i);
+        if (iSG_fileKosher(mcdata, name, 0, NULL) == 0)
+        {
+            strcpy(files[ret], name);
+            ret++;
+        }
+    }
+    return ret;
+}
+
+U8 iSGCheckMemoryCard(st_ISGSESSION* isgdata, S32 index)
+{
+    s32 memSize;
+    s32 sectorSize;
+
+    switch (CARDProbeEx(index, &memSize, &sectorSize))
+    {
+    case CARD_RESULT_READY:
+        return 1;
+    }
+    return 0;
+}
+
 static S32 iSG_mc_unmount(S32 slot)
 {
     S32 rc = 0;
@@ -1601,10 +1989,47 @@ static S32 iSG_mc_unmount(S32 slot)
     return rc;
 }
 
-static void iSG_cb_asyndone(long, long)
+static void iSG_cb_asyndone(s32, s32)
 {
 }
 
 void iSGAutoSave_Startup()
 {
+}
+
+st_ISGSESSION* iSGAutoSave_Connect(S32 idx_target, void* cltdata, void (*chg)(void*, en_CHGCODE))
+{
+    st_ISGSESSION* isgdata = iSGSessionBegin(cltdata, chg, 1);
+    if (isgdata == NULL)
+    {
+        return isgdata;
+    }
+
+    if (iSGTgtSetActive(isgdata, idx_target) == 0)
+    {
+        iSGSessionEnd(isgdata);
+        isgdata = NULL;
+    }
+    return isgdata;
+}
+
+void iSGAutoSave_Disconnect(st_ISGSESSION* isg)
+{
+    iSGSessionEnd(isg);
+}
+
+S32 iSGAutoSave_Monitor(st_ISGSESSION* isg, S32 idx_target)
+{
+    if (isg == NULL)
+    {
+        return 0;
+    }
+
+    U32 ret = iSGTgtState(isg, idx_target, NULL);
+    if (ret == 0 || (ret & 1) == 0)
+    {
+        globals.autoSaveFeature = 0;
+        return 0;
+    }
+    return 1;
 }

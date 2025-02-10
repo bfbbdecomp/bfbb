@@ -326,9 +326,14 @@ typedef struct CARDFileInfo
 
 // CARDBios.h
 void CARDInit(void);
+s32 CARDGetResultCode(s32 chan);
 s32 CARDFreeBlocks(s32 chan, s32* byteNotUsed, s32* filesNotUsed);
 s32 CARDGetEncoding(s32 chan, u16* encode);
 s32 CARDGetSectorSize(s32 chan, u32* size);
+// CARDCreate
+s32 CARDCreate(s32 chan, const char* fileName, u32 size, CARDFileInfo* fileInfo);
+// CARDDelete
+s32 CARDDelete(s32 chan, const char* fileName);
 // CARDMount.h
 s32 CARDProbeEx(s32 chan, s32* memSize, s32* sectorSize);
 s32 CARDMount(s32 chan, void* workArea, CARDCallback detachCallback);
@@ -354,9 +359,13 @@ typedef struct CARDStat
     /*0x64*/ u32 offsetIconTlut;
     /*0x68*/ u32 offsetData;
 } CARDStat;
+s32 CARDGetStatus(s32 chan, s32 fileNo, CARDStat* stat);
 s32 CARDSetStatus(s32 chan, s32 fileNo, struct CARDStat* stat);
 // CARDRead.h
+s32 CARDReadAsync(CARDFileInfo* fileInfo, void* buf, s32 length, s32 offset, CARDCallback callback);
 s32 CARDRead(struct CARDFileInfo* fileInfo, void* buf, s32 length, s32 offset);
+// CARDWrite
+s32 CARDWriteAsync(CARDFileInfo*  fileInfo, void* buf, s32 length, s32 offset, CARDCallback callback);
 // CARDOpen.h
 s32 CARDFastOpen(s32 chan, s32 fileNo, CARDFileInfo* fileInfo);
 s32 CARDOpen(s32 chan, char* fileName, CARDFileInfo* fileInfo);
@@ -365,6 +374,8 @@ s32 CARDClose(CARDFileInfo* fileInfo);
 s32 CARDSetAttributes(s32 chan, s32 fileNo, u8 attr);
 // CARDFormat
 s32 CARDFormat(s32 chan);
+// CARDRdwr
+s32 CARDGetXferredBytes(s32 chan);
 
 #ifdef __cplusplus
 }
