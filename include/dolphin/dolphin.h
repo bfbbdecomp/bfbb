@@ -241,6 +241,8 @@ void VIWaitForRetrace();
 #define CARD_MAX_FILE 127
 #define CARD_ICON_MAX 8
 
+typedef void (*CARDCallback)(s32 chan, s32 result);
+
 typedef struct CARDFileInfo
 {
     /*0x00*/ s32 chan;
@@ -255,6 +257,12 @@ typedef struct CARDFileInfo
 #define CARD_ATTR_NO_MOVE 0x10u
 #define CARD_ATTR_GLOBAL 0x20u
 #define CARD_ATTR_COMPANY 0x40u
+
+#define CARD_STAT_SPEED_END 0
+#define CARD_STAT_SPEED_FAST 1
+#define CARD_STAT_SPEED_MIDDLE 2
+#define CARD_STAT_SPEED_SLOW 3
+#define CARD_STAT_SPEED_MASK 3
 
 #define CARD_RESULT_UNLOCKED 1
 #define CARD_RESULT_READY 0
@@ -274,13 +282,61 @@ typedef struct CARDFileInfo
 #define CARD_RESULT_CANCELED -14
 #define CARD_RESULT_FATAL_ERROR -128
 
+#define CARD_ICON_WIDTH 32
+#define CARD_ICON_HEIGHT 32
+
+#define CARD_BANNER_WIDTH 96
+#define CARD_BANNER_HEIGHT 32
+
+#define CARD_STAT_ICON_NONE 0
+#define CARD_STAT_ICON_C8 1
+#define CARD_STAT_ICON_RGB5A3 2
+#define CARD_STAT_ICON_MASK 3
+
+#define CARD_STAT_BANNER_NONE 0
+#define CARD_STAT_BANNER_C8 1
+#define CARD_STAT_BANNER_RGB5A3 2
+#define CARD_STAT_BANNER_MASK 3
+
+#define CARD_ENCODE_ANSI 0
+#define CARD_ENCODE_SJIS 1
+
+#define CARD_STAT_ANIM_LOOP 0x00
+#define CARD_STAT_ANIM_BOUNCE 0x04
+#define CARD_STAT_ANIM_MASK 0x04
+
+#define CARDGetDirCheck(dir) ((CARDDirCheck*)&(dir)[CARD_MAX_FILE])
+#define CARDGetBannerFormat(stat) (((stat)->bannerFormat) & CARD_STAT_BANNER_MASK)
+#define CARDGetIconAnim(stat) (((stat)->bannerFormat) & CARD_STAT_ANIM_MASK)
+#define CARDGetIconFormat(stat, n) (((stat)->iconFormat >> (2 * (n))) & CARD_STAT_ICON_MASK)
+#define CARDGetIconSpeed(stat, n) (((stat)->iconSpeed >> (2 * (n))) & CARD_STAT_SPEED_MASK)
+#define CARDSetBannerFormat(stat, f)                                                               \
+    ((stat)->bannerFormat = (u8)(((stat)->bannerFormat & ~CARD_STAT_BANNER_MASK) | (f)))
+#define CARDSetIconAnim(stat, f)                                                                   \
+    ((stat)->bannerFormat = (u8)(((stat)->bannerFormat & ~CARD_STAT_ANIM_MASK) | (f)))
+#define CARDSetIconFormat(stat, n, f)                                                              \
+    ((stat)->iconFormat =                                                                          \
+         (u16)(((stat)->iconFormat & ~(CARD_STAT_ICON_MASK << (2 * (n)))) | ((f) << (2 * (n)))))
+#define CARDSetIconSpeed(stat, n, f)                                                               \
+    ((stat)->iconSpeed =                                                                           \
+         (u16)(((stat)->iconSpeed & ~(CARD_STAT_SPEED_MASK << (2 * (n)))) | ((f) << (2 * (n)))))
+#define CARDSetIconAddress(stat, addr) ((stat)->iconAddr = (u32)(addr))
+#define CARDSetCommentAddress(stat, addr) ((stat)->commentAddr = (u32)(addr))
+#define CARDGetFileNo(fileInfo) ((fileInfo)->fileNo)
+
 // CARDBios.h
 void CARDInit(void);
+s32 CARDGetResultCode(s32 chan);
 s32 CARDFreeBlocks(s32 chan, s32* byteNotUsed, s32* filesNotUsed);
 s32 CARDGetEncoding(s32 chan, u16* encode);
 s32 CARDGetSectorSize(s32 chan, u32* size);
+// CARDCreate
+s32 CARDCreate(s32 chan, const char* fileName, u32 size, CARDFileInfo* fileInfo);
+// CARDDelete
+s32 CARDDelete(s32 chan, const char* fileName);
 // CARDMount.h
 s32 CARDProbeEx(s32 chan, s32* memSize, s32* sectorSize);
+s32 CARDMount(s32 chan, void* workArea, CARDCallback detachCallback);
 s32 CARDUnmount(s32 chan);
 // CARDCheck.h
 s32 CARDCheckEx(s32 chan, s32* xferBytes);
@@ -303,15 +359,23 @@ typedef struct CARDStat
     /*0x64*/ u32 offsetIconTlut;
     /*0x68*/ u32 offsetData;
 } CARDStat;
+s32 CARDGetStatus(s32 chan, s32 fileNo, CARDStat* stat);
 s32 CARDSetStatus(s32 chan, s32 fileNo, struct CARDStat* stat);
 // CARDRead.h
+s32 CARDReadAsync(CARDFileInfo* fileInfo, void* buf, s32 length, s32 offset, CARDCallback callback);
 s32 CARDRead(struct CARDFileInfo* fileInfo, void* buf, s32 length, s32 offset);
+// CARDWrite
+s32 CARDWriteAsync(CARDFileInfo*  fileInfo, void* buf, s32 length, s32 offset, CARDCallback callback);
 // CARDOpen.h
 s32 CARDFastOpen(s32 chan, s32 fileNo, CARDFileInfo* fileInfo);
 s32 CARDOpen(s32 chan, char* fileName, CARDFileInfo* fileInfo);
 s32 CARDClose(CARDFileInfo* fileInfo);
 // CARDNet
 s32 CARDSetAttributes(s32 chan, s32 fileNo, u8 attr);
+// CARDFormat
+s32 CARDFormat(s32 chan);
+// CARDRdwr
+s32 CARDGetXferredBytes(s32 chan);
 
 #ifdef __cplusplus
 }
