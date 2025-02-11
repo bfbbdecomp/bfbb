@@ -395,7 +395,7 @@ config.libs = [
             Object(NonMatching, "SB/Core/gc/iCollide.cpp"),
             Object(Matching, "SB/Core/gc/iCollideFast.cpp"),
             Object(Matching, "SB/Core/gc/iDraw.cpp"),
-            Object(NonMatching, "SB/Core/gc/iEnv.cpp"),
+            Object(Equivalent, "SB/Core/gc/iEnv.cpp"),
             Object(NonMatching, "SB/Core/gc/iFile.cpp"),
             Object(NonMatching, "SB/Core/gc/iFMV.cpp"),
             Object(NonMatching, "SB/Core/gc/iFX.cpp"),

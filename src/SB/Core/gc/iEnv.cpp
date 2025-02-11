@@ -10,8 +10,6 @@ static RpWorld* sPipeWorld;
 static RwCamera* sPipeCamera;
 static iEnv* lastEnv;
 
-const static RwBBox lbl_80260130 = { 1000.0f, 1000.0f, 1000.0f, -1000.0f, -1000.0f, -1000.0f };
-
 static RpAtomic* SetPipelineCB(RpAtomic* atomic, void* data)
 {
     if (RwCameraBeginUpdate(sPipeCamera))
@@ -48,7 +46,6 @@ static void iEnvSetBSP(iEnv* env, S32 envDataType, RpWorld* bsp)
     }
 }
 
-#ifdef NON_MATCHING
 void iEnvLoad(iEnv* env, const void* data, U32, S32 dataType)
 {
     RpWorld* bsp = (RpWorld*)data;
@@ -98,7 +95,6 @@ void iEnvLoad(iEnv* env, const void* data, U32, S32 dataType)
         env->memlvl = xMemGetBase();
     }
 }
-#endif
 
 void iEnvFree(iEnv* env)
 {
