@@ -3,6 +3,7 @@
 
 #include <rwcore.h>
 #include <rpworld.h>
+#include <string.h>
 
 #include "xBase.h"
 #include "xMath3.h"
@@ -40,7 +41,7 @@ struct xEntAsset : xBaseAsset
     F32 greenMult;
     F32 blueMult;
     F32 seeThru;
-
+ 
     // Offset: 0x48
     F32 seeThruSpeed;
     U32 modelInfoID;

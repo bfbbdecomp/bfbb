@@ -138,6 +138,10 @@ void zFXGoo_SceneEnter();
 void zFXGoo_SceneReset();
 void zFXGoo_SceneExit();
 
+void zFXGooEventSetWarb(xEnt* obj, const F32* param);
+void zFXGooEventSetFreezeDuration(xEnt* obj, const F32 param);
+void zFXGooEventMelt(xEnt* obj);
+
 void zFXGooUpdate(F32 dt);
 
 void zFXUpdate(F32 dt);
@@ -165,6 +169,7 @@ void xMat3x3RMulVec(xVec3* result, const xMat3x3* mat, const xVec3* vec);
 
 xFXRing* zFXMuscleArmWave(const xVec3* pos);
 
+void zFX_SpawnBubbleTrail(const xVec3* pos, unsigned int num, const xVec3* pos_rnd, const xVec3* vel_rnd);
 void zFX_SpawnBubbleMenuTrail(const xVec3* pos, U32 num, const xVec3* pos_rnd,
                               const xVec3* vel_rnd);
 
