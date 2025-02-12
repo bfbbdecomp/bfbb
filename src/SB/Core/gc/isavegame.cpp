@@ -361,23 +361,27 @@ S32 iSGTgtSetActive(st_ISGSESSION* isgdata, S32 tgtidx)
 static S32 iSG_get_finfo(st_ISG_MEMCARD_DATA* mcdata, const char* dpath);
 static S32 iSG_isSpaceForFile(st_ISG_MEMCARD_DATA* mcdata, S32 param2, const char* param3,
                               S32* param4, S32* param5, S32* param6);
-// Regswaps
 S32 iSGTgtHaveRoom(st_ISGSESSION* isgdata, S32 tidx, S32 fsize, const char* dpath,
                    const char* fname, S32* bytesNeeded, S32* availOnDisk, S32* needFile)
 {
+    st_ISG_MEMCARD_DATA* data;
+    S32 i;
+    S32 count;
+    S32 opened;
+    S32 is_space;
     if (isgdata->slot < 0)
     {
         return 0;
     }
-    st_ISG_MEMCARD_DATA* data = &isgdata->mcdata[isgdata->slot];
+    data = &isgdata->mcdata[isgdata->slot];
     if (data->unk_0 == NULL)
     {
         return 0;
     }
-    S32 count = 0;
+    count = 0;
     if (fname == NULL)
     {
-        for (S32 i = 0; i < ISG_NUM_FILES; ++i)
+        for (i = 0; i < ISG_NUM_FILES; ++i)
         {
             iTRCDisk::CheckDVDAndResetState();
             fname = iSGMakeName(ISG_NGTYP_GAMEFILE, NULL, i);
@@ -388,7 +392,7 @@ S32 iSGTgtHaveRoom(st_ISGSESSION* isgdata, S32 tidx, S32 fsize, const char* dpat
         }
     }
 
-    S32 is_space = iSG_isSpaceForFile(data, fsize, fname, bytesNeeded, availOnDisk, needFile);
+    is_space = iSG_isSpaceForFile(data, fsize, fname, bytesNeeded, availOnDisk, needFile);
     if (count > 0 && *bytesNeeded > *availOnDisk)
     {
         if (needFile != NULL && *bytesNeeded > *availOnDisk)
@@ -400,8 +404,8 @@ S32 iSGTgtHaveRoom(st_ISGSESSION* isgdata, S32 tidx, S32 fsize, const char* dpat
     }
 
     CARDFileInfo fileInfo;
-    S32 opened = 0;
-    for (S32 i = 0; i < CARD_MAX_FILE && isgdata->slot >= 0 && isgdata->slot < ISG_NUM_SLOTS; ++i)
+    opened = 0;
+    for (i = 0; i < CARD_MAX_FILE && isgdata->slot >= 0 && isgdata->slot < ISG_NUM_SLOTS; ++i)
     {
         if (CARDFastOpen(isgdata->slot, i, &fileInfo) == 0)
         {
@@ -426,23 +430,27 @@ S32 iSGTgtHaveRoom(st_ISGSESSION* isgdata, S32 tidx, S32 fsize, const char* dpat
     return (*bytesNeeded > *availOnDisk) ? 0 : is_space;
 }
 
-// Regswaps, very similar to above
 S32 iSGTgtHaveRoomStartup(st_ISGSESSION* isgdata, S32 tidx, S32 fsize, const char* dpath,
                           const char* fname, S32* bytesNeeded, S32* availOnDisk, S32* needFile)
 {
+    st_ISG_MEMCARD_DATA* data;
+    S32 i;
+    S32 count;
+    S32 opened;
+    S32 is_space;
     if (isgdata->slot < 0)
     {
         return 0;
     }
-    st_ISG_MEMCARD_DATA* data = &isgdata->mcdata[isgdata->slot];
+    data = &isgdata->mcdata[isgdata->slot];
     if (data->unk_0 == NULL)
     {
         return 0;
     }
-    S32 count = 0;
+    count = 0;
     if (fname == NULL)
     {
-        for (S32 i = 0; i < ISG_NUM_FILES; ++i)
+        for (i = 0; i < ISG_NUM_FILES; ++i)
         {
             iTRCDisk::CheckDVDAndResetState();
             fname = iSGMakeName(ISG_NGTYP_GAMEFILE, NULL, i);
@@ -453,7 +461,7 @@ S32 iSGTgtHaveRoomStartup(st_ISGSESSION* isgdata, S32 tidx, S32 fsize, const cha
         }
     }
 
-    S32 is_space = iSG_isSpaceForFile(data, fsize, fname, bytesNeeded, availOnDisk, needFile);
+    is_space = iSG_isSpaceForFile(data, fsize, fname, bytesNeeded, availOnDisk, needFile);
     if (count > 0 && *bytesNeeded > *availOnDisk)
     {
         if (needFile != NULL && *bytesNeeded > *availOnDisk)
@@ -465,8 +473,8 @@ S32 iSGTgtHaveRoomStartup(st_ISGSESSION* isgdata, S32 tidx, S32 fsize, const cha
     }
 
     CARDFileInfo fileInfo;
-    S32 opened = 0;
-    for (S32 i = 0; i < CARD_MAX_FILE && isgdata->slot >= 0 && isgdata->slot < ISG_NUM_SLOTS; ++i)
+    opened = 0;
+    for (i = 0; i < CARD_MAX_FILE && isgdata->slot >= 0 && isgdata->slot < ISG_NUM_SLOTS; ++i)
     {
         if (CARDFastOpen(isgdata->slot, i, &fileInfo) == 0)
         {
@@ -751,20 +759,23 @@ S32 iSGLoadFile(st_ISGSESSION* isgdata, const char* fname, char* databuf, S32 as
 static S32 iSG_mc_fread(st_ISG_MEMCARD_DATA* mcdata, char*, S32, S32);
 S32 iSGReadLeader(st_ISGSESSION* isgdata, const char* fname, char* databuf, S32 numbytes, S32 async)
 {
-    void* alloc = NULL;
+    S32 bufsize;
+    S32 iconsize;
     S32 allocsize;
     char* readbuf;
-    S32 bufsize;
+
+    S32 readret = 0;
+    st_ISG_MEMCARD_DATA* data;
+    void* alloc = NULL;
 
     en_ASYNC_OPERR operr = ISG_OPERR_NONE;
-    S32 readret = 0;
     if (isgdata->slot < 0)
     {
         isgdata->unk_26c = ISG_OPSTAT_FAILURE;
         isgdata->unk_268 = ISG_OPERR_NOCARD;
         return 0;
     }
-    st_ISG_MEMCARD_DATA* data = &isgdata->mcdata[isgdata->slot];
+    data = &isgdata->mcdata[isgdata->slot];
 
     if (data->unk_12c != 0)
     {
@@ -774,14 +785,15 @@ S32 iSGReadLeader(st_ISGSESSION* isgdata, const char* fname, char* databuf, S32 
     }
 
     iTRCDisk::CheckDVDAndResetState();
-    S32 iconsize = iSG_cubeicon_size(data->chan, data->sectorSize);
+    iconsize = iSG_cubeicon_size(data->chan, data->sectorSize);
     S32 sectorsize200 = ALIGN_THING(data->sectorSize, 0x200);
-    if ((S32)databuf % 32 != 0 || numbytes - ((numbytes / sectorsize200) * sectorsize200) != 0)
+    if ((S32)databuf % 32 != 0 || numbytes - (numbytes / sectorsize200) * sectorsize200 != 0)
     {
-        bufsize = (iconsize + 0x1ff & ~0x1ff);
-        S32 allocsize = bufsize + 0x1f;
+        S32 tmpsize = (numbytes + 0x1ff & ~0x1ff);
+        allocsize = tmpsize + 0x1f;
         alloc = xMemPushTemp(allocsize);
         memset(alloc, 0, allocsize);
+        bufsize = tmpsize;
         readbuf = (char*)((U32)alloc + 0x1f & ~0x1f);
     }
     else
@@ -798,7 +810,7 @@ S32 iSGReadLeader(st_ISGSESSION* isgdata, const char* fname, char* databuf, S32 
         iSG_mc_fclose(data);
     }
 
-    if (readret == 0 && alloc != NULL)
+    if (readret != 0 && alloc != NULL)
     {
         memcpy(databuf, readbuf, numbytes);
     }
@@ -1340,8 +1352,9 @@ static S32 iSG_get_fmoddate(st_ISG_MEMCARD_DATA* mcdata, const char* fname, int*
     }
     else
     {
-        // FIXME: This first param isn't right, can't decipher the 64 bit math
-        OSTicksToCalendarTime((u64)mcdata->unk_b0.time * (u64)(GET_BUS_FREQUENCY() / 4), &time);
+        OSTime t = mcdata->unk_b0.time;
+        t = OSSecondsToTicks(t);
+        OSTicksToCalendarTime(t, &time);
 
         if (sec)
         {
