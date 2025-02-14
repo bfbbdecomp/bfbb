@@ -8,6 +8,7 @@
 #include "xTextAsset.h"
 #include "zGlobals.h"
 #include "zTextBox.h"
+#include "zUIFont.h"
 
 extern const char zCombo_Strings[];
 extern const F32 zCombo_float_zero;
@@ -29,19 +30,23 @@ struct widget_chunk : xBase
     xhud::text_widget w;
 };
 
-extern widget_chunk* comboHUD;
+/* .bss */
+static xVec3 sUnderCamPos;
+static xtextbox * sHideText[5];
+
+/* .sbss */
+static widget_chunk* comboHUD;
+static zUIFont* sHideUIF[1];
+static S32 comboPending;
+static S32 comboLastCounter;
+static S32 comboCounter;
+static F32 comboTimer;
+
+/* .sdata */
+static F32 comboMaxTime = 1.0f;
+static F32 comboDisplayTime = 2.0f;
 
 extern zComboReward comboReward[16];
-
-extern S32 zCombo_int32_1; // probably comboPending
-extern S32 zCombo_int32_2; // probably comboLastCounter
-extern S32 zCombo_int32_3; // probably comboCounter
-
-extern F32 zCombo_float32_1; // probably comboMaxTime
-extern F32 zCombo_float32_3; // probably comboTimer
-
-extern xBase* sHideText[5];
-extern xBase* sHideUIF[1];
 
 void fillCombo(zComboReward* reward)
 {
@@ -78,6 +83,23 @@ void fillCombo(zComboReward* reward)
     }
 
     reward->rewardNum = j;
+}
+
+void zCombo_Add(S32 arg0) 
+{
+    if (comboTimer < 0.0f) 
+    {
+        comboTimer = comboMaxTime;
+        comboPending = arg0 - 1;
+        return;
+    }
+    comboTimer = comboMaxTime;
+    comboCounter += arg0;
+    if ((S32) comboPending != 0) 
+    {
+        comboCounter += comboPending;
+        comboPending = 0;
+    }
 }
 
 #if 0
