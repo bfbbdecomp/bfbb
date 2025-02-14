@@ -1562,6 +1562,28 @@ static S32 iSG_mc_mount(S32 slot)
     return ret;
 }
 
+static S32 iSG_mc_unmount(S32 slot)
+{
+    S32 rc = 0;
+    S32 result;
+
+    do
+    {
+        result = CARDUnmount(slot);
+    } while (result == CARD_RESULT_BUSY);
+
+    if (result == CARD_RESULT_READY)
+    {
+        rc = 1;
+    }
+    else if (result == CARD_RESULT_NOCARD)
+    {
+        rc = 1;
+    }
+
+    return rc;
+}
+
 static void iSG_cb_unmount(s32 chan, s32 result)
 {
     st_ISGSESSION* session = &g_isgdata_MAIN;
@@ -1803,6 +1825,10 @@ static S32 iSG_mc_fdel(st_ISG_MEMCARD_DATA* mcdata, const char* fname)
     return ret;
 }
 
+static void iSG_cb_asyndone(s32, s32)
+{
+}
+
 static S32 iSG_mcqa_fread(st_ISG_MEMCARD_DATA* mcdata, char* buf, S32 len, S32 offset);
 static S32 iSG_mc_fread(st_ISG_MEMCARD_DATA* mcdata, char* buf, S32 len, S32 offset)
 {
@@ -1978,32 +2004,6 @@ U8 iSGCheckMemoryCard(st_ISGSESSION* isgdata, S32 index)
         return 1;
     }
     return 0;
-}
-
-static S32 iSG_mc_unmount(S32 slot)
-{
-    S32 rc = 0;
-    S32 result;
-
-    do
-    {
-        result = CARDUnmount(slot);
-    } while (result == CARD_RESULT_BUSY);
-
-    if (result == CARD_RESULT_READY)
-    {
-        rc = 1;
-    }
-    else if (result == CARD_RESULT_NOCARD)
-    {
-        rc = 1;
-    }
-
-    return rc;
-}
-
-static void iSG_cb_asyndone(s32, s32)
-{
 }
 
 void iSGAutoSave_Startup()
