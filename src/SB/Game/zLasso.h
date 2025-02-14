@@ -3,6 +3,8 @@
 
 #include "xMath3.h"
 #include "xModel.h"
+#include "xSnd.h"
+#include "xString.h"
 
 struct zLasso
 {
@@ -33,9 +35,24 @@ struct zLasso
     xModelInstance* model;
 };
 
+struct zLassoGuide
+{
+    xModelInstance* poly;
+    xAnimState* lassoAnim;
+    S32 vertMap[16];
+};
+
+struct zLassoGuideList // Size: 0xE0
+{
+    xEnt* target;
+    U32 numGuides;
+    zLassoGuide guide[3];
+};
+
 void zLasso_scenePrepare();
 void zLasso_InitTimer(zLasso* lasso, F32 interpTime);
 void zLasso_ResetTimer(zLasso* lasso, F32 interpTime);
+void zLasso_AddGuide(xEnt* ent, xAnimState* lassoAnim, xModelInstance modelInst);
 void zLasso_SetGuide(xEnt* ent, xAnimState* lassoAnim);
 void zLasso_InterpToGuide(zLasso* lasso);
 

@@ -4,6 +4,13 @@
 
 #include <types.h>
 
+static u32 sLassoRaster;
+static u32 sNumGuideLists;
+static zLassoGuide* sCurrentGuide;
+static void* lnverts;
+
+static zLassoGuideList sGuideList[64];
+
 static s32 negativeHondaX = 1;
 
 void zLasso_InitTimer(zLasso* lasso, F32 interpTime)
@@ -37,6 +44,24 @@ void zLasso_InitTimer(zLasso* lasso, F32 interpTime)
     lasso->reindex[2] = 2;
     lasso->reindex[3] = 3;
     lasso->reindex[4] = 4;
+}
+
+void zLasso_ResetTimer(zLasso* lasso, F32 interpTime)
+{
+    f32 temp_f0;
+    f32 temp_f0_2;
+
+    lasso->secsTotal = interpTime;
+    lasso->secsLeft = interpTime;
+    temp_f0 = lasso->crRadius;
+    lasso->stRadius = temp_f0;
+    lasso->tgRadius = temp_f0;
+    temp_f0_2 = lasso->crSlack;
+    lasso->stSlack = temp_f0_2;
+    lasso->tgSlack = temp_f0_2;
+    xVec3Copy(&lasso->stNormal, &lasso->crNormal);
+    xVec3Copy(&lasso->tgNormal, &lasso->crNormal);
+    xVec3Add(&lasso->stCenter, &lasso->crCenter, &lasso->anchor);
 }
 
 void fizzicalRadius(zLasso* lasso, f32 arg1, xVec3* arg2)
@@ -125,4 +150,10 @@ void fizzicalSlack(zLasso* lasso, f32 arg1, xVec3* arg2)
     {
         lasso->crSlack = 1.0f;
     }
+}
+
+void zLasso_scenePrepare()
+{
+    sNumGuideLists = 0;
+    sCurrentGuide = NULL;
 }
