@@ -925,9 +925,7 @@ xMat4x3* xEntGetFrame(const xEnt* ent)
 void xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, const xVec3* pos, F32 radius,
                 sound_category category, F32 delay)
 {
-    // This is UB to assign radius in the function call like this, but the assembly matches a *=
-    // so maybe HI made a mistake here.
-    xSndPlay3D(id, vol, pitch, priority, flags, pos, radius *= 0.25f, radius, category, delay);
+    xSndPlay3D(id, vol, pitch, priority, flags, pos, radius / 4.0f, radius, category, delay);
 }
 
 S32 xNPCBasic::SelfType() const
