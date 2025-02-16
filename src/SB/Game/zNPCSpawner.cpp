@@ -178,27 +178,27 @@ U8 zMovePoint::IsOn()
     return this->on;
 }
 
-
 st_XORDEREDARRAY* zNPCSpawner::FillPending()
 {
     ClearPending();
     ReFillPending();
-    return &this->actvlist; 
+    return &this->actvlist;
 }
 
 st_XORDEREDARRAY* zNPCSpawner::ReFillPending()
 {
     s32 var_r28;
-    zNPCCommon *temp_r29;
-    zNPCSpawner *var_r30;
+    zNPCCommon* temp_r29;
+    zNPCSpawner* var_r30;
 
     var_r28 = 0;
     var_r30 = this;
-    do {
+    do
+    {
         temp_r29 = var_r30->npc_owner;
-        if (((zNPCCommon*)var_r30->npc_owner != NULL) && ((s32) temp_r29->flg_vuln == 1))
+        if (((zNPCCommon*)var_r30->npc_owner != NULL) && ((s32)temp_r29->flg_vuln == 1))
         {
-            XOrdAppend(&this->pendlist, (void*) temp_r29);
+            XOrdAppend(&this->pendlist, (void*)temp_r29);
             temp_r29->flg_vuln = 2;
         }
         var_r28 += 1;
@@ -206,7 +206,6 @@ st_XORDEREDARRAY* zNPCSpawner::ReFillPending()
     } while (var_r28 < 0x10);
     return &this->actvlist;
 }
-
 
 // void zNPCSpawner::ClearActive()
 // {
@@ -243,17 +242,18 @@ SMNPCStatus* zNPCSpawner::NextPendingNPC(S32 arg0)
 }
 
 /* zNPCSpawner::StatForNPC (zNPCCommon *) */
-SMNPCStatus* zNPCSpawner::StatForNPC(zNPCCommon *npc) {
+SMNPCStatus* zNPCSpawner::StatForNPC(zNPCCommon* npc)
+{
     s32 var_ctr;
-    SMNPCStatus *var_r6;
-    zNPCCommon *temp_r0;
-    zNPCCommon *temp_r0_2;
-    zNPCCommon *temp_r0_3;
-    zNPCCommon *temp_r0_4;
-    zNPCCommon *temp_r0_5;
-    zNPCCommon *temp_r0_6;
-    zNPCCommon *temp_r0_7;
-    zNPCCommon *temp_r0_8;
+    SMNPCStatus* var_r6;
+    zNPCCommon* temp_r0;
+    zNPCCommon* temp_r0_2;
+    zNPCCommon* temp_r0_3;
+    zNPCCommon* temp_r0_4;
+    zNPCCommon* temp_r0_5;
+    zNPCCommon* temp_r0_6;
+    zNPCCommon* temp_r0_7;
+    zNPCCommon* temp_r0_8;
 
     var_r6 = NULL;
     var_ctr = 2;
@@ -266,6 +266,6 @@ SMNPCStatus* zNPCSpawner::StatForNPC(zNPCCommon *npc) {
             var_r6 = &this->npcpool[var_ctr];
         }
     }
-    
+
     return var_r6;
 }
