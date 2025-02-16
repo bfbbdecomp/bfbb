@@ -13,6 +13,61 @@ static zLassoGuideList sGuideList[64];
 
 static s32 negativeHondaX = 1;
 
+void zLasso_SetGuide(xEnt* ent, xAnimState* lassoAnim)
+{
+    // FIXME: 90% disassembly match, needs more work to get all the way
+    zLassoGuideList* temp_r5;
+    zLassoGuideList* var_r3;
+    zLassoGuideList* var_r5;
+
+    sCurrentGuide = NULL;
+
+    if (ent == NULL || lassoAnim == NULL)
+    {
+        return;
+    }
+
+    var_r5 = sGuideList;
+    u32 guideListIdx = 0;
+
+    for (u32 i = sNumGuideLists; i > 0; i--) {
+        if (var_r5->target == ent) {
+            break;
+        }
+
+        var_r5 += 1;
+        guideListIdx += 1;
+    }
+
+    if (guideListIdx < sNumGuideLists)
+    {
+        u32 guideIdx = 0;
+
+        temp_r5 = &sGuideList[guideListIdx];
+        var_r3 = temp_r5;
+        for (u32 i = temp_r5->numGuides; i > 0; i--)
+        {
+            if (var_r3->guide[0].lassoAnim == lassoAnim)
+            {
+                break;
+            }
+
+            var_r3 += 1;
+            guideIdx += 1;
+        }
+
+        if (guideIdx < sGuideList[guideListIdx].numGuides)
+        {
+            sCurrentGuide = &temp_r5->guide[guideIdx];
+        }
+    }
+
+    if (sCurrentGuide == NULL)
+    {
+        sCurrentGuide = &sGuideList->guide[0];
+    }
+}
+
 void zLasso_InitTimer(zLasso* lasso, F32 interpTime)
 {
     lasso->secsTotal = interpTime;
