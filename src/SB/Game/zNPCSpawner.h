@@ -5,6 +5,7 @@
 
 #include "xRMemData.h"
 #include "xordarray.h"
+#include "xutil.h"
 
 enum en_SM_NOTICES
 {
@@ -106,6 +107,9 @@ struct zNPCSpawner : RyzMemData
     // NextPendingNPC.
     void ClearActive();
     void ClearPending();
+    SMNPCStatus* NextPendingNPC( s32 arg0 );
+    st_XORDEREDARRAY* FillPending();
+    st_XORDEREDARRAY* ReFillPending();
 
     void SetNPCStatus(zNPCCommon* npc, en_SM_NPC_STATUS status);
 

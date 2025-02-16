@@ -177,3 +177,94 @@ U8 zMovePoint::IsOn()
 {
     return this->on;
 }
+
+
+st_XORDEREDARRAY* zNPCSpawner::FillPending()
+{
+    ClearPending();
+    ReFillPending();
+    return this->actvlist; 
+}
+
+st_XORDEREDARRAY* zNPCSpawner::ReFillPending()
+{
+    s32 var_r28;
+    zNPCCommon *temp_r29;
+    zNPCSpawner *var_r30;
+
+    var_r28 = 0;
+    var_r30 = this;
+    do {
+        temp_r29 = var_r30->npc_owner;
+        if (((zNPCCommon*)var_r30->npc_owner != NULL) && ((s32) temp_r29->pad0[4] == 1))
+        {
+            XOrdAppend(this->pendlist, (void*) temp_r29);
+            temp_r29->pad0[4] = 2;
+        }
+        var_r28 += 1;
+        var_r30 += 0xC;
+    } while (var_r28 < 0x10);
+    return this->actvlist;
+}
+
+
+// void zNPCSpawner::ClearActive()
+// {
+//     s32 var_r6;
+//     s32 var_r7;
+//     void *temp_r5;
+
+//     var_r7 = 0;
+//     var_r6 = 0;
+// loop_4:
+//     if (var_r7 < (s32) this->cnt_cleanup) {
+//         temp_r5 = *(this->pendlist->list + var_r6);
+//         if (temp_r5 != NULL) {
+//             (u32) temp_r5[1] = 1;
+//         }
+//         var_r6 += 4;
+//         var_r7 += 1;
+//         goto loop_4;
+//     }
+//     XOrdReset__FP16st_XORDEREDARRAY(&this->unk1B0);
+// }
+
+SMNPCStatus* zNPCSpawner::NextPendingNPC( s32 arg0 )
+{
+    S32 temp_r4;
+    const F32* temp_ptr = NULL;
+
+    temp_r4 = (S32) this->actvlist;
+    if (temp_r4 < 1) {
+        return NULL;
+    }
+    return xUtil_select<SMNPCStatus>((SMNPCStatus **) this->pendlist, temp_r4, temp_ptr);
+}
+
+/* zNPCSpawner::StatForNPC (zNPCCommon *) */
+SMNPCStatus* zNPCSpawner::StatForNPC(zNPCCommon *npc) {
+    s32 var_ctr;
+    SMNPCStatus *var_r6;
+    zNPCCommon *temp_r0;
+    zNPCCommon *temp_r0_2;
+    zNPCCommon *temp_r0_3;
+    zNPCCommon *temp_r0_4;
+    zNPCCommon *temp_r0_5;
+    zNPCCommon *temp_r0_6;
+    zNPCCommon *temp_r0_7;
+    zNPCCommon *temp_r0_8;
+
+    var_r6 = NULL;
+    var_ctr = 2;
+
+    for (var_ctr = 0; var_ctr < 16; var_ctr++)
+    {
+        temp_r0 = this->npcpool[var_ctr].npc;
+        if ((temp_r0 != NULL) && (temp_r0 == npc))
+        {
+            var_r6 = &this->npcpool[var_ctr];
+        }
+    }
+    
+    return var_r6;
+}
