@@ -7,19 +7,7 @@
 #include "xordarray.h"
 #include "xutil.h"
 
-enum en_SM_NOTICES
-{
-    SM_NOTE_NPCDIED,
-    SM_NOTE_NPCSTANDBY,
-    SM_NOTE_NPCALIVE,
-    SM_NOTE_DUPPAUSE,
-    SM_NOTE_DUPRESUME,
-    SM_NOTE_DUPSETDELAY,
-    SM_NOTE_DUPDEAD,
-    SM_NOTE_KILLKIDS,
-    SM_NOTE_NOMORE,
-    SM_NOTE_FORCE = 0x7fffffff
-};
+#include "zNPCTypeCommon.h"
 
 enum en_SM_WAVE_MODE
 {
@@ -50,11 +38,6 @@ enum en_SM_NPC_STATUS
     SM_NPC_NOMORE,
     SM_NPC_FORCE = 0x7fffffff
 };
-
-struct zNPCCommon {
-    /* 0x000 */ char pad0[0x1B8];
-    /* 0x1B8 */ void *unk1B8;                       /* inferred */
-};                                                  /* size >= 0x1BC */
 
 struct SMDepot
 {
