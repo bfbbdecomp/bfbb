@@ -70,8 +70,8 @@ void zNPCSpawner::Subscribe(zNPCCommon* owner)
     this->tym_delay = _805_Spawner;
     this->max_spawn = -1;
     this->wavestat = SM_STAT_BEGIN;
-    XOrdInit(this->pendlist, 0x10, 0);
-    XOrdInit(this->actvlist, 0x10, 0);
+    XOrdInit(&this->pendlist, 0x10, 0);
+    XOrdInit(&this->actvlist, 0x10, 0);
 }
 
 void zNPCSpawner::SetWaveMode(en_SM_WAVE_MODE mode, F32 delay, S32 lifemax)
@@ -164,7 +164,7 @@ void zNPCSpawner::SetNPCStatus(zNPCCommon* npc, en_SM_NPC_STATUS status)
 SMNPCStatus* zNPCSpawner::ToastedBeastie(zNPCCommon* npc)
 {
     SMNPCStatus* ret = this->StatForNPC(npc);
-    XOrdRemove(this->actvlist, ret, -1);
+    XOrdRemove(&this->actvlist, ret, -1);
     zEntEvent((xBase*)this->npc_owner, eEventDuploNPCKilled);
     return ret;
 }
@@ -183,7 +183,7 @@ st_XORDEREDARRAY* zNPCSpawner::FillPending()
 {
     ClearPending();
     ReFillPending();
-    return this->actvlist; 
+    return &this->actvlist; 
 }
 
 st_XORDEREDARRAY* zNPCSpawner::ReFillPending()
@@ -198,13 +198,13 @@ st_XORDEREDARRAY* zNPCSpawner::ReFillPending()
         temp_r29 = var_r30->npc_owner;
         if (((zNPCCommon*)var_r30->npc_owner != NULL) && ((s32) temp_r29->flg_vuln == 1))
         {
-            XOrdAppend(this->pendlist, (void*) temp_r29);
+            XOrdAppend(&this->pendlist, (void*) temp_r29);
             temp_r29->flg_vuln = 2;
         }
         var_r28 += 1;
         var_r30 += 0xC;
     } while (var_r28 < 0x10);
-    return this->actvlist;
+    return &this->actvlist;
 }
 
 
