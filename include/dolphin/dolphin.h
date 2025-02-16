@@ -42,6 +42,35 @@ typedef int BOOL;
 #define NULL 0
 #endif
 
+#define OS_CACHED_REGION_PREFIX 0x8000
+#define OS_UNCACHED_REGION_PREFIX 0xC000
+#define OS_PHYSICAL_MASK 0x3FFF
+
+#define OS_BASE_CACHED (OS_CACHED_REGION_PREFIX << 16)
+#define OS_BASE_UNCACHED (OS_UNCACHED_REGION_PREFIX << 16)
+
+#ifdef __MWERKS__
+u32 __OSSimulatedMemSize : (OS_BASE_CACHED | 0x00F0);
+u32 __OSBusClock : (OS_BASE_CACHED | 0x00F8);
+u32 __OSCoreClock : (OS_BASE_CACHED | 0x00FC);
+s32 __gUnknown800030C0[2] : (OS_BASE_CACHED | 0x30C0);
+u8 __gUnknown800030E3 : (OS_BASE_CACHED | 0x30E3);
+#else
+#define __OSBusClock (*(u32*)(OS_BASE_CACHED | 0x00F8))
+#define __OSCoreClock (*(u32*)(OS_BASE_CACHED | 0x00FC))
+#endif
+#define OS_BUS_CLOCK __OSBusClock
+#define OS_CORE_CLOCK __OSCoreClock
+#define OS_TIMER_CLOCK (OS_BUS_CLOCK / 4)
+
+#define OSTicksToSeconds(ticks) ((ticks) / (OS_TIMER_CLOCK))
+#define OSTicksToMilliseconds(ticks) ((ticks) / (OS_TIMER_CLOCK / 1000))
+#define OSTicksToMicroseconds(ticks) ((ticks) * 8 / (OS_TIMER_CLOCK / 125000))
+#define OSSecondsToTicks(sec) ((sec) * (OS_TIMER_CLOCK))
+#define OSMillisecondsToTicks(msec) ((msec) * (OS_TIMER_CLOCK / 1000))
+#define OSNanosecondsToTicks(nsec) (((nsec) * (OS_TIMER_CLOCK / 125000)) / 8000)
+#define OSMicrosecondsToTicks(usec) (((usec) * (OS_TIMER_CLOCK / 125000)) / 8)
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -365,7 +394,8 @@ s32 CARDSetStatus(s32 chan, s32 fileNo, struct CARDStat* stat);
 s32 CARDReadAsync(CARDFileInfo* fileInfo, void* buf, s32 length, s32 offset, CARDCallback callback);
 s32 CARDRead(struct CARDFileInfo* fileInfo, void* buf, s32 length, s32 offset);
 // CARDWrite
-s32 CARDWriteAsync(CARDFileInfo*  fileInfo, void* buf, s32 length, s32 offset, CARDCallback callback);
+s32 CARDWriteAsync(CARDFileInfo* fileInfo, void* buf, s32 length, s32 offset,
+                   CARDCallback callback);
 // CARDOpen.h
 s32 CARDFastOpen(s32 chan, s32 fileNo, CARDFileInfo* fileInfo);
 s32 CARDOpen(s32 chan, char* fileName, CARDFileInfo* fileInfo);

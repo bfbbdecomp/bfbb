@@ -105,6 +105,15 @@ void zLasso_InterpToGuide(zLasso* lasso)
     }
 }
 
+static u32 sLassoRaster;
+static u32 sNumGuideLists;
+static zLassoGuide* sCurrentGuide;
+static void* lnverts;
+
+static zLassoGuideList sGuideList[64];
+
+static s32 negativeHondaX = 1;
+
 void zLasso_InitTimer(zLasso* lasso, F32 interpTime)
 {
     lasso->secsTotal = interpTime;
