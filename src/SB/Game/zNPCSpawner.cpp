@@ -70,8 +70,8 @@ void zNPCSpawner::Subscribe(zNPCCommon* owner)
     this->tym_delay = _805_Spawner;
     this->max_spawn = -1;
     this->wavestat = SM_STAT_BEGIN;
-    XOrdInit(&this->pendlist, 0x10, 0);
-    XOrdInit(&this->actvlist, 0x10, 0);
+    XOrdInit(this->pendlist, 0x10, 0);
+    XOrdInit(this->actvlist, 0x10, 0);
 }
 
 void zNPCSpawner::SetWaveMode(en_SM_WAVE_MODE mode, F32 delay, S32 lifemax)
@@ -164,7 +164,7 @@ void zNPCSpawner::SetNPCStatus(zNPCCommon* npc, en_SM_NPC_STATUS status)
 SMNPCStatus* zNPCSpawner::ToastedBeastie(zNPCCommon* npc)
 {
     SMNPCStatus* ret = this->StatForNPC(npc);
-    XOrdRemove(&this->actvlist, ret, -1);
+    XOrdRemove(this->actvlist, ret, -1);
     zEntEvent((xBase*)this->npc_owner, eEventDuploNPCKilled);
     return ret;
 }
