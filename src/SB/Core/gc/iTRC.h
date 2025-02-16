@@ -1,6 +1,8 @@
 #ifndef ITRC_H
 #define ITRC_H
 
+#include <types.h>
+
 #include "xPad.h"
 
 struct _tagiTRCPadInfo
@@ -11,8 +13,9 @@ struct _tagiTRCPadInfo
 // Yes, this is a namespace, not a class.
 namespace iTRCDisk
 {
-    void CheckDVDAndResetState();
+    bool CheckDVDAndResetState();
     void Init();
+    bool IsDiskIDed();
 } // namespace iTRCDisk
 
 namespace ResetButton

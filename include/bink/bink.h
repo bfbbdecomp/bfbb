@@ -22,6 +22,16 @@
 struct BINK
 {
     // Do the members really need to be defined?
+    U32 unk_0;
+    U32 unk_4;
+    U32 unk_8;
+    U32 unk_c;
+    U32 unk_10;
+    U32 unk_14;
+    U32 unk_18;
+    U32 unk_1c;
+    U8 unk_20[0xd0];
+    S32 unk_f0;
 };
 
 typedef struct BINK* HBINK;
@@ -37,8 +47,20 @@ extern int BinkDoFrame(HBINK bnk);
 extern int BinkCopyToBuffer(HBINK bnk, void* dest, int destpitch, unsigned int destheight,
                             unsigned int destx, unsigned int desty, unsigned int flags);
 extern int Lock_RAD_3D_image(HRAD3DIMAGE rad_image, void* out_pixel_buffer,
-                             unsigned int* out_buffer_pitch);
+                             unsigned int* out_buffer_pitch, unsigned int* arg3);
 extern void Unlock_RAD_3D_image(HRAD3DIMAGE rad_image);
+extern void Blit_RAD_3D_image(HRAD3DIMAGE Image, float, float, float, float, float);
+extern void RADSetAudioMemory(void* (*malloc)(size_t), void (*free)(void*));
+extern void RADSetMemory(void* (*malloc)(size_t), void (*free)(void*));
+extern HBINK BinkOpen(const char* fname, void*);
+extern void BinkGetError();
+extern void BinkSetVolume(HBINK bink, unsigned int, int volume);
+extern HRAD3DIMAGE Open_RAD_3D_image(HBINK bink, unsigned int, unsigned int, unsigned int);
+extern void Close_RAD_3D_image(HRAD3DIMAGE rad_image);
+extern void BinkGoto(HBINK bink, int frame, unsigned int);
+extern int BinkWait(HBINK bink);
+extern void BinkNextFrame(HBINK bink);
+extern void BinkClose(HBINK bink);
 
 #ifdef __cplusplus
 }
