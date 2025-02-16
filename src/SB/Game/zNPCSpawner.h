@@ -86,8 +86,8 @@ struct zNPCSpawner : RyzMemData
     S32 cnt_spawn;
     SMSPStatus sppool[16];
     SMNPCStatus npcpool[16];
-    st_XORDEREDARRAY pendlist;
-    st_XORDEREDARRAY actvlist;
+    st_XORDEREDARRAY* pendlist;
+    st_XORDEREDARRAY* actvlist; //0x1A4
     S32 cnt_cleanup;
 
     void Subscribe(zNPCCommon* owner);
