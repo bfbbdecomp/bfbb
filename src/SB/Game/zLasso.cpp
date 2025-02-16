@@ -68,6 +68,43 @@ void zLasso_SetGuide(xEnt* ent, xAnimState* lassoAnim)
     }
 }
 
+void zLasso_InterpToGuide(zLasso* lasso)
+{
+    xVec3 sp14;
+    xVec3 sp8;
+
+    RwV3d* morphTargetVector;
+    S32 currentGuideNumTris;
+
+    if (sCurrentGuide != NULL)
+    {
+        currentGuideNumTris = sCurrentGuide->poly->Data->geometry->numTriangles;
+        morphTargetVector = sCurrentGuide->poly->Data->geometry->morphTarget->verts;
+        xVec3Init(&lasso->tgCenter, 0.0f, 0.0f, 0.0f);
+
+        S32 vertMapIdx = 0;
+        for (S32 i = 0; i < currentGuideNumTris; i++) {
+            xVec3AddTo(&lasso->tgCenter, (xVec3*) morphTargetVector + sCurrentGuide->vertMap[vertMapIdx]);
+            vertMapIdx += 1;
+        }
+
+        xVec3SMul(&lasso->tgCenter, &lasso->tgCenter, 1.0f / (f32) currentGuideNumTris);
+        xVec3Sub(&sp14, (xVec3*) morphTargetVector + sCurrentGuide->vertMap[0], &lasso->tgCenter);
+        xVec3Sub(&sp8, (xVec3*) morphTargetVector + sCurrentGuide->vertMap[1], &lasso->tgCenter);
+
+        lasso->tgRadius = xVec3Normalize(&sp14, &sp14);
+        
+        xVec3Cross(&lasso->tgNormal, &sp14, &sp8);
+        xVec3Normalize(&lasso->tgNormal, &lasso->tgNormal);
+
+        if (lasso->tgNormal.y < 0.0f) {
+            xVec3Inv(&lasso->tgNormal, &lasso->tgNormal);
+        }
+
+        xMat4x3Toworld(&lasso->tgCenter, (xMat4x3*) sCurrentGuide->poly->Mat, &lasso->tgCenter);
+    }
+}
+
 void zLasso_InitTimer(zLasso* lasso, F32 interpTime)
 {
     lasso->secsTotal = interpTime;
