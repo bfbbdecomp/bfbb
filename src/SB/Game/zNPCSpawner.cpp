@@ -196,10 +196,10 @@ st_XORDEREDARRAY* zNPCSpawner::ReFillPending()
     var_r30 = this;
     do {
         temp_r29 = var_r30->npc_owner;
-        if (((zNPCCommon*)var_r30->npc_owner != NULL) && ((s32) temp_r29->pad0[4] == 1))
+        if (((zNPCCommon*)var_r30->npc_owner != NULL) && ((s32) temp_r29->flg_vuln == 1))
         {
             XOrdAppend(this->pendlist, (void*) temp_r29);
-            temp_r29->pad0[4] = 2;
+            temp_r29->flg_vuln = 2;
         }
         var_r28 += 1;
         var_r30 += 0xC;
