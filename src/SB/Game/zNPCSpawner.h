@@ -50,7 +50,10 @@ enum en_SM_NPC_STATUS
     SM_NPC_FORCE = 0x7fffffff
 };
 
-struct zNPCCommon;
+struct zNPCCommon {
+    /* 0x000 */ char pad0[0x1B8];
+    /* 0x1B8 */ void *unk1B8;                       /* inferred */
+};                                                  /* size >= 0x1BC */
 
 struct SMDepot
 {
