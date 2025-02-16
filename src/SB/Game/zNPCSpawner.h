@@ -5,20 +5,9 @@
 
 #include "xRMemData.h"
 #include "xordarray.h"
+#include "xutil.h"
 
-enum en_SM_NOTICES
-{
-    SM_NOTE_NPCDIED,
-    SM_NOTE_NPCSTANDBY,
-    SM_NOTE_NPCALIVE,
-    SM_NOTE_DUPPAUSE,
-    SM_NOTE_DUPRESUME,
-    SM_NOTE_DUPSETDELAY,
-    SM_NOTE_DUPDEAD,
-    SM_NOTE_KILLKIDS,
-    SM_NOTE_NOMORE,
-    SM_NOTE_FORCE = 0x7fffffff
-};
+#include "zNPCTypeCommon.h"
 
 enum en_SM_WAVE_MODE
 {
@@ -49,8 +38,6 @@ enum en_SM_NPC_STATUS
     SM_NPC_NOMORE,
     SM_NPC_FORCE = 0x7fffffff
 };
-
-struct zNPCCommon;
 
 struct SMDepot
 {
@@ -84,7 +71,7 @@ struct zNPCSpawner : RyzMemData
     SMSPStatus sppool[16];
     SMNPCStatus npcpool[16];
     st_XORDEREDARRAY pendlist;
-    st_XORDEREDARRAY actvlist;
+    st_XORDEREDARRAY actvlist; //0x1A4
     S32 cnt_cleanup;
 
     void Subscribe(zNPCCommon* owner);
@@ -103,6 +90,9 @@ struct zNPCSpawner : RyzMemData
     // NextPendingNPC.
     void ClearActive();
     void ClearPending();
+    SMNPCStatus* NextPendingNPC( S32 arg0 );
+    st_XORDEREDARRAY* FillPending();
+    st_XORDEREDARRAY* ReFillPending();
 
     void SetNPCStatus(zNPCCommon* npc, en_SM_NPC_STATUS status);
 

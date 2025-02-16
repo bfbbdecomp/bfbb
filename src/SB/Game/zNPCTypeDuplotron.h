@@ -1,7 +1,7 @@
 #ifndef ZNPCTYPEDUPLOTRON_H
 #define ZNPCTYPEDUPLOTRON_H
 
-#include "zNPCTypeCommon.h"
+#include "zNPCSpawner.h"
 
 struct zNPCDuplotron : zNPCCommon
 {
