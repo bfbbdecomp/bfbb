@@ -229,16 +229,17 @@ st_XORDEREDARRAY* zNPCSpawner::ReFillPending()
 //     XOrdReset__FP16st_XORDEREDARRAY(&this->unk1B0);
 // }
 
-SMNPCStatus* zNPCSpawner::NextPendingNPC( s32 arg0 )
+SMNPCStatus* zNPCSpawner::NextPendingNPC(S32 arg0)
 {
     S32 temp_r4;
     const F32* temp_ptr = NULL;
 
-    temp_r4 = (S32) this->actvlist;
-    if (temp_r4 < 1) {
+    temp_r4 = this->pendlist.cnt;
+    if (temp_r4 < 1)
+    {
         return NULL;
     }
-    return xUtil_select<SMNPCStatus>((SMNPCStatus **) this->pendlist, temp_r4, temp_ptr);
+    return xUtil_select<SMNPCStatus>((SMNPCStatus**)this->pendlist.list, temp_r4, temp_ptr);
 }
 
 /* zNPCSpawner::StatForNPC (zNPCCommon *) */
