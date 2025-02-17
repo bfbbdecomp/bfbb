@@ -7,8 +7,15 @@
         "GAMECUBE"
       ],
       "includePath": [
-        "${workspaceFolder}/include/**",
-        "${workspaceFolder}/src/**"
+        "${workspaceFolder}/include",
+        "${workspaceFolder}/include/bink",
+        "${workspaceFolder}/include/PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Include",
+        "${workspaceFolder}/include/PowerPC_EABI_Support/MSL/MSL_C++/MSL_Common/Include",
+        "${workspaceFolder}/include/inline",
+        "${workspaceFolder}/include/rwsdk",
+        "${workspaceFolder}/src/SB/Core/gc",
+        "${workspaceFolder}/src/SB/Core/x",
+        "${workspaceFolder}/src/SB/Game"
       ],
       "cStandard": "c99",
       "cppStandard": "c++98",
