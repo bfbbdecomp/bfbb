@@ -67,7 +67,7 @@ void arammalloc(size_t size)
 // Something weird is going on here...
 static void aramfree(void* mem)
 {
-    void* vol;
+    u32 vol;
     ARFree(&vol);
 }
 
