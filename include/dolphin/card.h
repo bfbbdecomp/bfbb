@@ -205,6 +205,10 @@ typedef struct CARDStat
 #define CARD_ENCODE_ANSI 0
 #define CARD_ENCODE_SJIS 1
 
+#define CARD_STAT_ANIM_LOOP 0x00
+#define CARD_STAT_ANIM_BOUNCE 0x04
+#define CARD_STAT_ANIM_MASK 0x04
+
 #define CARDGetDirCheck(dir) ((CARDDirCheck*)&(dir)[CARD_MAX_FILE])
 #define CARDGetBannerFormat(stat) (((stat)->bannerFormat) & CARD_STAT_BANNER_MASK)
 #define CARDGetIconAnim(stat) (((stat)->bannerFormat) & CARD_STAT_ANIM_MASK)

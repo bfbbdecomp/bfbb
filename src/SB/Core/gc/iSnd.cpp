@@ -4,7 +4,7 @@
 
 #include <types.h>
 
-#include "dolphin/dolphin.h"
+#include "dolphin.h"
 #include "iMix.h"
 #include "xCutscene.h"
 #include "xSnd.h"
