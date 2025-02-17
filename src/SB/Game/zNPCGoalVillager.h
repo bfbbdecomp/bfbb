@@ -167,6 +167,13 @@ struct zNPCGoalBoySwim : zNPCGoalCommon
     }
 };
 
+struct NPCSndProp
+{
+    en_NPC_SOUND sndtype;
+    int flg_snd;
+    float tym_delayNext;
+};
+
 xFactoryInst* GOALCreate_Villager(S32 who, RyzMemGrow* grow, void*);
 
 #endif

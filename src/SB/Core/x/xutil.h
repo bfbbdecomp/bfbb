@@ -11,4 +11,7 @@ U32 xUtil_crc_update(U32 crc_accum, char* data, S32 datasize);
 S32 xUtil_yesno(F32 wt_yes);
 void xUtil_wtadjust(F32* wts, S32 cnt, F32 arbref);
 
+template <typename T>
+T* xUtil_select(T** arg0, S32 arg1, const F32* arg3);
+
 #endif

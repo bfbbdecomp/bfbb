@@ -110,11 +110,12 @@ public:
 struct st_ISG_MEMCARD_DATA
 {
     S32 unk_0;
-    S32 unk_4;
+    S32 chan;
     S32 sectorSize;
-    CARDFileInfo unk_c;
-    CARDStat unk_20;
-    S32 unk_pad5[4];
+    CARDFileInfo finfo;
+    CARDStat fstat;
+    S32 unk_pad5[3];
+    S32 unk_98;
     CARDFileInfo unk_9c;
     CARDStat unk_b0;
     S32 unk_pad6[4];
@@ -122,11 +123,15 @@ struct st_ISG_MEMCARD_DATA
 };
 
 #define ISG_NUM_SLOTS 2
+#define ISG_NUM_FILES 3
 struct st_ISGSESSION
 {
     st_ISG_MEMCARD_DATA mcdata[ISG_NUM_SLOTS];
-    S32 unk_260;
-    S32 unk_264[4];
+    S32 slot;
+    S32 unk_264;
+    en_ASYNC_OPERR unk_268;
+    en_ASYNC_OPSTAT unk_26c;
+    S32 unk_270;
     void (*chgfunc)(void*, en_CHGCODE); // 0x274
     void* cltdata; // 0x278
     S32 unk_27c;
@@ -168,6 +173,7 @@ void iSGMakeTimeStamp(char* str);
 S32 iSGSetupGameDir(st_ISGSESSION* isgdata, const char* dname, S32 force_iconfix);
 S32 iSGSaveFile(st_ISGSESSION* isgdata, const char* fname, char* data, S32 n, S32 async, char*);
 S32 iSGLoadFile(st_ISGSESSION* isgdata, const char* fname, char* databuf, S32 async);
+S32 iSG_mcidx2slot(S32 param1, S32* out_slot, S32* param3);
 void iSGAutoSave_Startup();
 st_ISGSESSION* iSGAutoSave_Connect(S32 idx_target, void* cltdata, void (*chg)(void*, en_CHGCODE));
 void iSGAutoSave_Disconnect(st_ISGSESSION* isg);
