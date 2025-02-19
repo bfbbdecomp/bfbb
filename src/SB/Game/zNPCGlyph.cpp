@@ -5,6 +5,7 @@
 #include "xMath.h"
 #include "xMathInlines.h"
 #include "xMath3.h"
+#include "xClimate.h"
 #include "xstransvc.h"
 
 #include <types.h>
