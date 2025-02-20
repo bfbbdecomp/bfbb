@@ -12,11 +12,7 @@
 #include "zGlobals.h"
 
 #include <types.h>
-// #include <dolphin.h>
-#include <dolphin/gx.h>
-#include <dolphin/ar.h>
-#include <dolphin/mtx.h>
-#include <dolphin/vi.h>
+#include <dolphin.h>
 
 // FIXME: These should be in a RW header somewhere
 extern GXRenderModeObj* _RwDlRenderMode;
@@ -189,7 +185,7 @@ static void* arammalloc(size_t size)
 // Something weird is going on here...
 static void aramfree(void* mem)
 {
-    void* vol;
+    u32 vol;
     ARFree(&vol);
 }
 

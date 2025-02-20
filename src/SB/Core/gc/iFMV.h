@@ -2,20 +2,19 @@
 #define IFMV_H
 
 #include <types.h>
-#include <rwcore.h>
 #include <bink.h>
+#include <size_t.h>
 
-#include <dolphin/gx/GXEnum.h>
-#include <dolphin/gx/GXStruct.h>
+struct _GXRenderModeObj;
 
 struct iFMV
 {
     static void* mXFBs[2];
     static void* mCurrentFrameBuffer;
-    static GXRenderModeObj* mRenderMode; 
+    static _GXRenderModeObj* mRenderMode;
     static U8 mFirstFrame;
 
-    static void InitDisplay(GXRenderModeObj*);
+    static void InitDisplay(_GXRenderModeObj*);
     static void InitGX();
     static void InitVI();
     static void Suspend();

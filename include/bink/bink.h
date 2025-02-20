@@ -1,6 +1,8 @@
 #ifndef __BINK_H__
 #define __BINK_H__
 
+#include <size_t.h>
+
 #define BINKSURFACE8P 0
 #define BINKSURFACE24 1
 #define BINKSURFACE24R 2

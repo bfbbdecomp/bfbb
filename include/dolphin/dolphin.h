@@ -75,13 +75,6 @@ u8 __gUnknown800030E3 : (OS_BASE_CACHED | 0x30E3);
 extern "C" {
 #endif
 
-typedef u8 GXBool;
-
-#define GX_TRUE ((GXBool)1)
-#define GX_FALSE ((GXBool)0)
-#define GX_ENABLE ((GXBool)1)
-#define GX_DISABLE ((GXBool)0)
-
 typedef struct DVDDiskID DVDDiskID;
 
 struct DVDDiskID
@@ -235,17 +228,16 @@ extern volatile OSHeapHandle __OSCurrHeap;
 #define OSAlloc(size) OSAllocFromHeap(__OSCurrHeap, (size))
 #define OSFree(ptr) OSFreeToHeap(__OSCurrHeap, (ptr))
 
-void ARAlloc(u32 size);
-void ARFree(void* mem);
 BOOL DVDFastOpen(s32 entrynum, DVDFileInfo* fileInfo);
 BOOL DVDReadAsyncPrio(DVDFileInfo* fileInfo, void* addr, s32 length, s32 offset,
                       DVDCallback callback, s32 prio);
+s32 DVDCancel(volatile DVDCommandBlock* block);
 BOOL DVDClose(DVDFileInfo* fileInfo);
+int DVDSeekAsyncPrio(DVDFileInfo* fileInfo, s32 offset, void (*callback)(s32, DVDFileInfo*),
+                     s32 prio);
 s32 DVDGetCommandBlockStatus(const DVDCommandBlock* block);
 s32 DVDConvertPathToEntrynum(const char* pathPtr);
 BOOL DVDCancelAllAsync(DVDCBCallback callback);
-void GXSetColorUpdate(GXBool update_enable);
-void GXSetAlphaUpdate(GXBool update_enable);
 void OSPanic(const char* file, int line, const char* msg, ...);
 void* OSAllocFromHeap(OSHeapHandle heap, u32 size);
 void OSFreeToHeap(OSHeapHandle heap, void* ptr);
@@ -406,6 +398,12 @@ s32 CARDSetAttributes(s32 chan, s32 fileNo, u8 attr);
 s32 CARDFormat(s32 chan);
 // CARDRdwr
 s32 CARDGetXferredBytes(s32 chan);
+
+// GX
+#include <dolphin/mtx.h>
+#include <dolphin/vi.h>
+#include <dolphin/gx.h>
+#include <dolphin/ar.h>
 
 #ifdef __cplusplus
 }
