@@ -39,6 +39,6 @@ void xClimateInitAsset(_tagClimate* climate, xEnvAsset* easset);
 void xClimateInit(_tagClimate* climate);
 
 void xMat3x3Identity(xMat3x3* matrix);
-void xMat3x3Copy(xMat3x3* m1, const xMat3x3* m2);
+
 
 #endif
