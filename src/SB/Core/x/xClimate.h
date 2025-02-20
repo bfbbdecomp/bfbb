@@ -38,7 +38,4 @@ void xClimateSetSnow(F32 stre);
 void xClimateInitAsset(_tagClimate* climate, xEnvAsset* easset);
 void xClimateInit(_tagClimate* climate);
 
-void xMat3x3Identity(xMat3x3* matrix);
-
-
 #endif
