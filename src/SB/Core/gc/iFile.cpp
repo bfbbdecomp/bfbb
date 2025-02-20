@@ -24,8 +24,6 @@ extern file_queue_entry file_queue[4];
 static U32 tbuffer[1024 + 8];
 static U32* buffer32;
 volatile U32 iFileSyncAsyncReadActive;
-static S32 fopcount_503;
-static signed char init_504;
 
 void iFileInit()
 {
@@ -168,9 +166,6 @@ U32 iFileRead(tag_xFile* file, void* buf, U32 size)
     return size;
 }
 
-#ifndef NON_MATCHING
-static void async_cb(s32 result, DVDFileInfo* fileInfo);
-#else
 static void async_cb(s32 result, DVDFileInfo* fileInfo)
 {
     file_queue_entry* entry = &file_queue[(S32)fileInfo->cb.userData];
@@ -205,7 +200,7 @@ static void async_cb(s32 result, DVDFileInfo* fileInfo)
         }
     }
     else if (r7 + entry->offset >= entry->size ||
-             entry->offset + entry->file->ps.offset + r7 >= entry->file->ps.fileInfo.length)
+             r7 + entry->offset + entry->file->ps.offset >= entry->file->ps.fileInfo.length)
     {
         entry->stat = IFILE_RDSTAT_DONE;
         entry->offset = entry->size;
@@ -222,40 +217,45 @@ static void async_cb(s32 result, DVDFileInfo* fileInfo)
         entry->offset += r7;
         entry->stat = IFILE_RDSTAT_INPROG;
 
-        void* addr = (void*)((U32)entry->buf + entry->offset);
-        s32 length =
-            (entry->size - entry->offset < 0x8000) ? ALIGN(entry->size - entry->offset, 3) : 0x8000;
-
-        if (entry->offset + entry->file->ps.offset + length > entry->file->ps.fileInfo.length)
+        s32 length;
+        if ((entry->size - entry->offset < 0x8000))
         {
-            length = OSRoundUp32B(entry->file->ps.fileInfo.length - entry->file->ps.offset -
-                                  entry->offset);
+            length = ALIGN(entry->size - entry->offset, 4);
+        }
+        else
+        {
+            length = 0x10000 - 0x8000;
         }
 
+        if (length + entry->offset + entry->file->ps.offset > entry->file->ps.fileInfo.length)
+        {
+            // length = OSRoundUp32B(entry->file->ps.fileInfo.length - entry->file->ps.offset -
+            //     entry->offset);
+            length = entry->file->ps.fileInfo.length;
+            length -= entry->file->ps.offset;
+            length -= entry->offset;
+            length = length + 32 - 1;
+            length = length & ~(32 - 1);
+        }
+
+        void* addr = (void*)((U32)entry->buf + entry->offset);
         DVDReadAsync(&entry->file->ps.fileInfo, addr, length,
                      entry->file->ps.offset + entry->offset, async_cb);
     }
 }
-#endif
 
-#ifdef NON_MATCHING
 S32 iFileReadAsync(tag_xFile* file, void* buf, U32 aSize, void (*callback)(tag_xFile*),
-                     S32 priority)
+                   S32 priority)
 {
+    static S32 fopcount = 1;
     tag_iFile* ps = &file->ps;
     S32 i;
-
-    if (!init_504)
-    {
-        fopcount_503 = 1;
-        init_504 = true;
-    }
 
     for (i = 0; i < 4; i++)
     {
         if (file_queue[i].stat != IFILE_RDSTAT_QUEUED && file_queue[i].stat != IFILE_RDSTAT_INPROG)
         {
-            S32 id = fopcount_503++ << 2;
+            S32 id = fopcount++ << 2;
             S32 asynckey = id + i;
 
             file_queue[i].file = file;
@@ -280,26 +280,21 @@ S32 iFileReadAsync(tag_xFile* file, void* buf, U32 aSize, void (*callback)(tag_x
 
     return -1;
 }
-#endif
 
-#ifdef NON_MATCHING
 IFILE_READSECTOR_STATUS iFileReadAsyncStatus(S32 key, S32* amtToFar)
 {
-    S32 k = key & 0x3;
-
-    if (k != file_queue[k].asynckey)
+    if (key != file_queue[key & 0x3].asynckey)
     {
         return IFILE_RDSTAT_EXPIRED;
     }
 
     if (amtToFar)
     {
-        *amtToFar = file_queue[k].offset;
+        *amtToFar = file_queue[key & 0x3].offset;
     }
 
-    return file_queue[k].stat;
+    return file_queue[key & 0x3].stat;
 }
-#endif
 
 U32 iFileClose(tag_xFile* file)
 {
