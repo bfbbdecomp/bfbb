@@ -267,32 +267,221 @@ void xQuatToMat(const xQuat* q, xMat3x3* m) {
     m->flags = 0;
 }
 
-void xQuatDiff(xQuat* o, const xQuat* a, const xQuat* b){
-
+/* xQuatDiff (xQuat *, xQuat const *, xQuat const *) */
+void xQuatDiff(xQuat* o, const xQuat* a, const xQuat* b) {
+    xQuatConj(o, a);
+    xQuatMul(o, o, b);
+    if (o->s < 0.0f) {
+        xQuatFlip(o, o);
+    }
 }
 
 F32 xQuatGetAngle(const xQuat* q){
-
+    F32 angle;
+    angle = 5.0;
+    return angle;
 }
 
-void xQuatFromMat(xQuat* q, const xMat3x3* m){
+/* xQuatFromMat (xQuat *, xMat3x3 const *) */
+void xQuatFromMat(xQuat* q, const xMat3x3* m) {
+    F32 temp_f1;
+    F32 temp_f1_2;
+    F32 temp_f1_3;
+    F32 temp_f5;
+    F32 temp_f6;
+    S32 temp_r25;
+    F32 temp_r28;
+    F32 temp_r30;
+    F32 temp_r31;
+    F32 temp_r8;
+    S32 var_r29;
 
+    temp_f1 = m->at.z + (m->right.x + m->up.y);
+    if (temp_f1 > 0.0f) {
+        temp_f1_2 = xsqrt(1.0f + temp_f1);
+        q->s = 0.5f * temp_f1_2;
+        temp_f5 = 0.5f / temp_f1_2;
+        q->v.x = temp_f5 * (m->at.y - m->up.z);
+        q->v.y = temp_f5 * (m->right.z - m->at.x);
+        q->v.z = temp_f5 * (m->up.x - m->right.y);
+        return;
+    }
+    var_r29 = 0;
+    if (m->up.y > m->right.x) {
+        var_r29 = 1;
+    }
+    // if (m->at.z > F32 (*(m + (var_r29 * 0x14)))) {
+    //     var_r29 = 2;
+    // }
+    // temp_r31 = var_r29 * 4;
+    // temp_r25 = nxt2148[var_r29];
+    // temp_r30 = temp_r25 * 4;
+    // temp_r28 = nxt2148[temp_r25];
+    // temp_f1_3 = xsqrt(1.0f + ((*(m + (var_r29 * 0x14)) - *(m + (temp_r25 * 0x14))) - *(m + (temp_r28 * 0x14))));
+    // if ((F32) fabs(temp_f1_3) < 0.00001f) {
+    //     xQuatCopy(q, &g_IQ);
+    //     return;
+    // }
+    // temp_r8 = temp_r28 * 4;
+    // *(q + temp_r31) = 0.5f * temp_f1_3;
+    // temp_f6 = 0.5f / temp_f1_3;
+    // q->unkC = temp_f6 * (*(m + ((temp_r25 + temp_r8) * 4)) - *(m + ((temp_r28 + temp_r30) * 4)));
+    // *(q + temp_r30) = temp_f6 * (*(m + ((var_r29 + temp_r30) * 4)) + *(m + ((temp_r25 + temp_r31) * 4)));
+    // *(q + temp_r8) = temp_f6 * (*(m + ((var_r29 + temp_r8) * 4)) + *(m + ((temp_r28 + temp_r31) * 4)));
+    // if (q->unkC < 0.0f) {
+    //     xQuatFlip(q, q);
+    // }
 }
 
-void xQuatSlerp(xQuat* q, const xQuat* a, const xQuat* b, F32 t){
+/* xQuatSlerp (xQuat *, xQuat const *, xQuat const *, float) */
+void xQuatSlerp(xQuat* q, const xQuat* a, const xQuat* b, F32 t) {
+    xQuat sp28;
+    xQuat sp18;
+    F32 sp14;
+    F32 sp10;
+    F32 spC;
+    F32 sp8;
+    F32 temp_f0;
+    F32 temp_f1;
+    F32 temp_f28;
+    F32 temp_f2;
+    F32 temp_f3;
+    F32 temp_f4;
+    F32 var_f1;
+    F32 var_f29;
+    F32 var_f30;
+    const xQuat* var_r31;
 
+    var_r31 = b;
+    var_f1 = xQuatDot(a, var_r31);
+    if (var_f1 < 0.0f) {
+        var_f1 = -var_f1;
+        temp_f4 = -var_r31->v.x;
+        temp_f0 = var_r31->s;
+        temp_f3 = -var_r31->v.y;
+        temp_f2 = -var_r31->v.z;
+        var_r31 = (xQuat *) &sp8;
+        sp8 = temp_f4;
+        spC = temp_f3;
+        sp10 = temp_f2;
+        sp14 = -temp_f0;
+    }
+    //M2C_ERROR(/* unknown instruction: cror eq, gt, eq */);
+    if (var_f1 == 0.999f) {
+        var_f30 = t;
+        var_f29 = 1.0f - t;
+    } else {
+        temp_f1 = xacos(var_f1);
+        temp_f28 = 1.0f / isin(temp_f1);
+        var_f29 = temp_f28 * isin((1.0f - t) * temp_f1);
+        var_f30 = temp_f28 * isin(t * temp_f1);
+    }
+    xQuatSMul(&sp28, a, var_f29);
+    xQuatSMul(&sp18, var_r31, var_f30);
+    xQuatAdd(q, &sp28, &sp18);
+    xQuatNormalize(q, q);
+}
+
+/* xQuatMul (xQuat *, xQuat const *, xQuat const *) */
+void xQuatMul(xQuat *o, const xQuat *a, const xQuat *b) {
+    F32 temp_f10;
+    F32 temp_f11;
+    F32 temp_f4;
+    F32 temp_f5;
+    F32 temp_f6;
+    F32 temp_f7;
+    F32 temp_f8;
+    F32 temp_f9;
+
+    temp_f4 = b->s;
+    temp_f11 = a->v.x;
+    temp_f5 = a->v.y;
+    temp_f8 = b->v.x;
+    temp_f7 = a->s;
+    temp_f9 = a->v.z;
+    temp_f6 = b->v.y;
+    temp_f10 = b->v.z;
+    o->v.x = -((temp_f9 * temp_f6) - ((temp_f5 * temp_f10) + ((temp_f7 * temp_f8) + (temp_f11 * temp_f4))));
+    o->v.y = -((temp_f11 * temp_f10) - ((temp_f9 * temp_f8) + ((temp_f7 * temp_f6) + (temp_f5 * temp_f4))));
+    o->v.z = -((temp_f5 * temp_f8) - ((temp_f11 * temp_f6) + ((temp_f7 * temp_f10) + (temp_f9 * temp_f4))));
+    o->s = -((temp_f9 * temp_f10) - -((temp_f5 * temp_f6) - ((temp_f7 * temp_f4) - (temp_f11 * temp_f8))));
+    xQuatNormalize(o, o);
 }
 
 void xQuatConj(xQuat* o, const xQuat* q){
 
 }
 
+/* xQuatSMul (xQuat *, xQuat const *, float) */
+void xQuatSMul(xQuat* q, const xQuat* a, F32 t) {
+    q->s = a->s * t;
+    xVec3SMul((xVec3 *) q, (xVec3 *) a, t);
+}
+
+/* xQuatAdd (xQuat *, xQuat const *, xQuat const *) */
+void xQuatAdd(xQuat* q, const xQuat* a, const xQuat* b) {
+    q->s = a->s + b->s;
+    xVec3Add((xVec3 *) q, (xVec3 *) a, (xVec3 *) b);
+}
+
 void xMat3x3LookAt(xMat3x3* m, const xVec3* pos, const xVec3* at){
 
 }
 
+/* xMat3x3LookVec (xMat3x3 *, xVec3 const *) */
 F32 xMat3x3LookVec(xMat3x3* m, const xVec3* at){
+    F32 temp_f2;
+    F32 temp_f31;
+    xVec3 *temp_r3;
 
+    temp_f31 = xVec3Normalize(&m->at, at);
+    temp_r3 = &m->at;
+    xVec3Inv(temp_r3, temp_r3);
+    temp_f2 = m->at.y;
+    if ((F32) fabs(1.0f - temp_f2) < 0.00001f) {
+        m->right.x = 1.0f;
+        m->right.y = 0.0f;
+        m->right.z = 0.0f;
+        m->up.x = 0.0f;
+        m->up.y = 0.0f;
+        m->up.z = 1.0f;
+        m->at.x = 0.0f;
+        m->at.y = -1.0f;
+        m->at.z = 0.0f;
+        return temp_f31;
+    }
+    if ((F32) fabs(1.0f + temp_f2) < 0.00001f) {
+        m->right.x = -1.0f;
+        m->right.y = 0.0f;
+        m->right.z = 0.0f;
+        m->up.x = 0.0f;
+        m->up.y = 0.0f;
+        m->up.z = -1.0f;
+        m->at.x = 0.0f;
+        m->at.y = 1.0f;
+        m->at.z = 0.0f;
+        return temp_f31;
+    }
+    if (((F32) fabs(at->z) < 0.00001f) && ((F32) fabs(at->x) < 0.00001f)) {
+        m->right.x = 1.0f;
+        m->right.y = 0.0f;
+        m->right.z = 0.0f;
+        m->up.x = 0.0f;
+        m->up.y = 1.0f;
+        m->up.z = 0.0f;
+        m->at.x = 0.0f;
+        m->at.y = 0.0f;
+        m->at.y = 1.0f;
+        return 0.0f;
+    }
+    m->right.x = m->at.z;
+    m->right.y = 0.0f;
+    m->right.z = -m->at.x;
+    xVec3Normalize((xVec3 *) m, (xVec3 *) m);
+    xVec3Cross(&m->up, &m->at, (xVec3 *) m);
+    xVec3Cross((xVec3 *) m, &m->up, &m->at);
+    m->flags = 0;
+    return temp_f31;
 }
 
 void xBoxInitBoundOBB(xBox* o, const xBox* b, const xMat4x3* m){
