@@ -76,8 +76,6 @@ struct xLine3
 
 struct xRay3;
 
-static S32 nxt2148[4] = { 1, 2, 0, 0 }; // Used by xQuatFromMat
-
 extern xVec3 g_O3;
 extern xVec3 g_X3;
 extern xVec3 g_Y3;
@@ -137,8 +135,8 @@ void xQuatNormalize(xQuat* arg01, xQuat* arg02);
 
 void xQuatSMul(xQuat* q, const xQuat* a, F32 t);
 void xQuatAdd(xQuat* q, const xQuat* a, const xQuat* b);
-F32 xQuatDot( const xQuat* a, const xQuat* b );
+F32 xQuatDot(const xQuat* a, const xQuat* b);
 
-F32 fabs( F32 x ); // Unsure where this should come from.
+F32 fabs(F32 x); // Unsure where this should come from.
 
 #endif
