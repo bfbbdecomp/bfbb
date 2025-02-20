@@ -92,7 +92,7 @@ extern xVec3 g_Onez;
 // We could also define it as static in each .cpp file, but it's not required.
 static void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v);
 
-void xMat3x3Copy(xMat3x3* o, const xMat3x3* m); // May come from xClimate
+void xMat3x3Copy(xMat3x3* o, const xMat3x3* m); // TODO: These functions should be inline
 void xMat4x3Copy(xMat4x3* o, const xMat4x3* m);
 void xMat4x3Mul(xMat4x3* o, const xMat4x3* a, const xMat4x3* b);
 void xMat3x3Euler(xMat3x3* m, F32 yaw, F32 pitch, F32 roll);
@@ -127,7 +127,7 @@ void xMat3x3Mul(xMat3x3* o, const xMat3x3* a, const xMat3x3* b);
 void xMat3x3SMul(xMat3x3*, const xMat3x3*, F32);
 void xBoxFromLine(xBox& box, const xLine3& line);
 void xBoxFromRay(xBox& box, const xRay3& ray);
-void xMat3x3Identity(xMat3x3* matrix); // May come from xClimate
+void xMat3x3Identity(xMat3x3* matrix); // TODO: These functions should be inline
 S32 xPointInBox(const xBox* b, const xVec3* p);
 void xMat3x3LMulVec(xVec3* o, const xMat3x3* m, const xVec3* v);
 
