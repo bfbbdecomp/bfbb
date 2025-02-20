@@ -3,6 +3,7 @@
 #include "iAnim.h"
 #include "xMemMgr.h"
 #include "xMath.h"
+#include "xMorph.h"
 #include "xString.h"
 
 #include <types.h>
@@ -10,7 +11,11 @@
 #include <stdlib.h>
 #include <cmath>
 
+#include <dolphin.h>
+
 extern xMemPool sxAnimTempTranPool;
+
+U32 gxAnimUseGrowAlloc = 0;
 
 static bool _xSingleCompare(char a, char b)
 {
@@ -61,15 +66,275 @@ static bool _xCharIn(char ch, const char* str)
     return false;
 }
 
-// _xCheckAnimNameInner(const char*,const char*,int,char*,int*,int*)
+static U8 _xCheckAnimNameInner(const char* name, const char* pattern, S32 patternSize, char* extra,
+                               S32* nameOut, S32* extraOut)
+{
+    const char* startExtra = NULL;
+    char* initialExtra = extra;
+    S32 patternCurrent = 0;
+    S32 nameCurrent = 0;
+    while (patternCurrent < patternSize)
+    {
+        U32 check = pattern[patternCurrent];
+        switch (check)
+        {
+        case '+':
+        case '?':
+            patternCurrent++;
+            if (nameCurrent == 0)
+            {
+                return 0;
+            }
+            nameCurrent++;
+            if (check != '?')
+            {
+                // Holy shit I hate this please tell me there's a better way
+            case '*':
+                check = patternCurrent + 1;
+                char nextPattern[128] = { 0 };
+                nextPattern[0] = pattern[check];
+                while (nextPattern[0] == '{' || nextPattern[0] == '}' || nextPattern[0] == '<' ||
+                       nextPattern[0] == '>')
+                {
+                    check++;
+                    nextPattern[0] = pattern[check];
+                }
 
-bool _xCheckAnimNameInner(const char* name, const char* pattern, S32 patternSize, char* extra,
-                          S32* nameOut, S32* extraOut);
+                if (nextPattern[0] == '(')
+                {
+                    S32 nextPatternCount = 0;
+                    U8 first = 1;
+                    S32 parenCount = 0;
+
+                    while (pattern[check] != NULL && parenCount > -1)
+                    {
+                        if (pattern[check] == '(')
+                        {
+                            parenCount++;
+                        }
+                        else if (pattern[check] == ')')
+                        {
+                            parenCount--;
+                        }
+                        else if (parenCount == 0)
+                        {
+                            const char* IGNORE_PATTERNS = "{}()<>";
+                            if (pattern[check] == '|')
+                            {
+                                first = 1;
+                            }
+                            else if (first && _xCharIn(pattern[check], IGNORE_PATTERNS) == 0)
+                            {
+                                first = 0;
+                                nextPattern[nextPatternCount++] = pattern[check];
+                            }
+                        }
+                        check++;
+                    }
+                    nextPattern[nextPatternCount] = NULL;
+                }
+
+                while (name[nameCurrent] != NULL &&
+                       _xSingleCompare(name[nameCurrent], nextPattern) == 0)
+                {
+                    nameCurrent++;
+                }
+                patternCurrent++;
+            }
+            break;
+        case '#':
+            if (name[nameCurrent] < '0' || name[nameCurrent] > '9')
+            {
+                return 0;
+            }
+            nameCurrent++;
+
+            for (const char* x = &name[nameCurrent]; *x >= '0' && *x <= '9'; x++)
+            {
+                nameCurrent++;
+            }
+            patternCurrent++;
+            break;
+        case '{':
+            startExtra = &name[nameCurrent];
+            patternCurrent++;
+            break;
+        case '}':
+            S32 length = &name[nameCurrent] - startExtra;
+            if (extra != NULL)
+            {
+                memcpy(extra, startExtra, length);
+                extra[length] = NULL;
+                extra = extra + length;
+                *++extra = '\x01';
+            }
+            startExtra = NULL;
+            patternCurrent++;
+            break;
+        case '(':
+            patternCurrent++;
+            U8 done = 0;
+            const char* current = &pattern[patternCurrent];
+            while (*current != ')' && *current != NULL)
+            {
+                const char* startPattern = current;
+                while (*startPattern != NULL && *startPattern != ')' && *startPattern != '|')
+                {
+                    if (*startPattern == '(')
+                    {
+                        S32 pc = 1;
+                        while (*startPattern != NULL && pc > 0)
+                        {
+                            if (*startPattern == ')')
+                            {
+                                pc--;
+                            }
+                            else if (*startPattern == '(')
+                            {
+                                pc++;
+                            }
+                            startPattern++;
+                        }
+                        if (*startPattern != NULL)
+                        {
+                            startPattern++;
+                        }
+                    }
+                    else
+                    {
+                        startPattern++;
+                    }
+                }
+
+                if (startPattern != current)
+                {
+                    S32 nameOut;
+                    S32 extraOut;
+
+                    // NOTE (Square): There is no DWARF for an extra variable here and this programming pattern seems
+                    // extremely wack. I think this "variable" is completely compiler generated for some reason
+                    U8 wtfman = 0;
+                    if (!done &&
+                        _xCheckAnimNameInner(&name[nameCurrent], current, startPattern - current,
+                                             extra, &nameOut, &extraOut))
+                    {
+                        wtfman = 1;
+                    }
+
+                    if (wtfman != 0)
+                    {
+                        done = 1;
+                        nameCurrent += nameOut;
+                        extra = extra + extraOut;
+                    }
+                    else if (extra != NULL)
+                    {
+                        *extra = '\x01';
+                    }
+                }
+
+                current = startPattern;
+                if (*startPattern == '|')
+                {
+                    current++;
+                }
+            }
+            if (*current != NULL)
+            {
+                current++;
+            }
+            patternCurrent += current - pattern;
+            if (!done)
+            {
+                return 0;
+            }
+            break;
+        case '<':
+        {
+            patternCurrent++;
+            const char* current = &pattern[patternCurrent];
+            const char* positiveEnd = current;
+            while (*positiveEnd != NULL && *positiveEnd != ';' && *positiveEnd != '>')
+            {
+                positiveEnd++;
+            }
+
+            const char* negative = NULL;
+            const char* negativeEnd = NULL;
+
+            if (*positiveEnd == ';')
+            {
+                negativeEnd = positiveEnd + 1;
+                negative = negativeEnd;
+                while (*negativeEnd != NULL && *negativeEnd != '>')
+                {
+                    negativeEnd++;
+                };
+                positiveEnd = negativeEnd;
+            }
+            S32 nameOut;
+            S32 extraOut;
+            U8 matched = _xCheckAnimNameInner(&name[nameCurrent], current, positiveEnd - current,
+                                              extra, &nameOut, &extraOut);
+            if (matched != 0)
+            {
+                if (negative != NULL &&
+                    _xCheckAnimNameInner(&name[nameCurrent], negative, negativeEnd - negative, NULL,
+                                         NULL, NULL) != 0)
+                {
+                    if (extra != NULL)
+                    {
+                        *extra = '\x01';
+                    }
+                    matched = 0;
+                }
+                else
+                {
+                    nameCurrent = nameCurrent + nameOut;
+                    extra += extraOut;
+                }
+            }
+
+            if (*positiveEnd != NULL)
+            {
+                positiveEnd++;
+            }
+            patternCurrent += &positiveEnd[patternCurrent] - &pattern[patternCurrent];
+            if (matched == 0)
+            {
+                return 0;
+            }
+            break;
+        }
+        case NULL:
+            return 0;
+        case ')':
+        default:
+            if (name[nameCurrent] != pattern[patternCurrent])
+            {
+                return 0;
+            }
+            nameCurrent++;
+            patternCurrent++;
+            break;
+        }
+    }
+
+    if (nameOut != NULL)
+    {
+        *nameOut = nameCurrent;
+    }
+    if (extraOut != NULL)
+    {
+        *extraOut = extra - initialExtra;
+    }
+    return 1;
+}
 
 static bool _xCheckAnimName(const char* name, const char* pattern, char* extra)
 {
     S32 patternSize, nameOut;
-    bool rc;
+    U8 rc;
 
     *extra = 1;
     patternSize = strlen(pattern);
@@ -92,7 +357,7 @@ void xAnimTempTransitionInit(U32 count)
 }
 
 // TODO: move to xMathInlines.h
-F32 xatan2(F32 y, F32 x)
+static F32 xatan2(F32 y, F32 x)
 {
     return xAngleClampFast(std::atan2f(y, x));
 }
@@ -104,7 +369,35 @@ float std::atan2f(float y, float x)
 }
 #endif
 
-float CalcRecipBlendMax(U16*);
+float CalcRecipBlendMax(U16* arg0)
+{
+    float ret = 0.0f;
+    while (arg0[0] != 0xFFFF)
+    {
+        float f3;
+        if (arg0[1] == 0)
+        {
+            f3 = 0.0f;
+        }
+        else
+        {
+            f3 = 1.0f / (0.001f * arg0[1]);
+        }
+
+        f3 = 0.001f * arg0[0] + f3;
+        if (f3 > ret)
+        {
+            ret = f3;
+        }
+        arg0 += 2;
+    }
+
+    if (ret == 0.0f)
+    {
+        return 0.0f;
+    }
+    return 1.0f / ret;
+}
 
 static U32 StateHasTransition(xAnimState* state, xAnimTransition* tran)
 {
@@ -165,33 +458,131 @@ static U32 DefaultOverride(xAnimState* state, xAnimTransition* tran)
     return FALSE;
 }
 
-#if 0
 static void TransitionTimeInit(xAnimSingle* single, xAnimTransition* tran)
 {
     if (tran->Flags & 0x20)
     {
-        if ((single->State->Data->FileFlags ^ tran->Dest->Data->FileFlags) & 0x1000)
+        if ((tran->Dest->Data->FileFlags ^ single->State->Data->FileFlags) & 0x1000)
         {
             single->Time = tran->Dest->Data->Duration - single->Time;
         }
     }
     else
     {
-        if ((tran->Dest->Flags & 0x100) &&)
+        single->Time = ((tran->Dest->Flags & 0x100) && tran->DestTime == 0.0f) ?
+                           single->State->Data->Duration * xurand() :
+                           tran->DestTime;
     }
+    single->LastTime = single->Time;
 }
-#endif
 
-xAnimFile* xAnimFileNewBilinear(void** rawData, const char* name, U32 flags,
-                                xAnimFile** linkedList, U32 numX, U32 numY);
+xAnimFile* xAnimFileNewBilinear(void** rawData, const char* name, U32 flags, xAnimFile** linkedList,
+                                U32 numX, U32 numY)
+{
+    xAnimFile* afile;
+    if (gxAnimUseGrowAlloc)
+    {
+        afile = (xAnimFile*)xMemGrowAlloc(gActiveHeap, numX * numY * 4 + sizeof(xAnimFile));
+    }
+    else
+    {
+        afile = (xAnimFile*)xMemAlloc(gActiveHeap, numX * numY * 4 + sizeof(xAnimFile), 0);
+    }
+
+    if (numX > 1 || numY > 1)
+    {
+        flags |= 0x4000;
+    }
+
+    if (**(U32**)rawData == 'QSPM')
+    {
+        flags |= 0x8000;
+    }
+
+    if (linkedList != NULL)
+    {
+        afile->Next = *linkedList;
+        *linkedList = afile;
+    }
+    else
+    {
+        afile->Next = NULL;
+    }
+
+    afile->RawData = (void**)&afile[1];
+    for (S32 i = 0; i < numX * numY; ++i)
+    {
+        afile->RawData[i] = rawData[i];
+    }
+
+    afile->Name = name;
+    afile->ID = xStrHash(name);
+    afile->FileFlags = flags;
+
+    F32 dur;
+    if (afile->FileFlags & 0x2000)
+    {
+        if (afile->FileFlags & 0x8000)
+        {
+            dur = xMorphSeqDuration(*(xMorphSeqFile**)afile->RawData);
+        }
+        else
+        {
+            dur = iAnimDuration(*afile->RawData);
+        }
+        dur = dur * 2.0f;
+    }
+    else if (afile->FileFlags & 0x8000)
+    {
+        dur = xMorphSeqDuration(*(xMorphSeqFile**)afile->RawData);
+    }
+    else
+    {
+        dur = iAnimDuration(*afile->RawData);
+    }
+    afile->Duration = dur;
+    afile->TimeOffset = 0.0f;
+
+    afile->BoneCount = flags & 0x8000 ? 0 : iAnimBoneCount(*rawData);
+
+    afile->NumAnims[0] = numX;
+    afile->NumAnims[1] = numY;
+
+    return afile;
+}
 
 xAnimFile* xAnimFileNew(void* rawData, const char* name, U32 flags, xAnimFile** linkedList)
 {
     return xAnimFileNewBilinear(&rawData, name, flags, linkedList, 1, 1);
 }
 
-void xAnimFileEval(xAnimFile* data, F32 time, F32* bilinear, U32 flags, xVec3* tran,
-                   xQuat* quat, F32*);
+void xAnimFileSetTime(xAnimFile* data, float duration, float timeOffset)
+{
+    F32 rawDuration;
+    if (data->FileFlags & 0x8000)
+    {
+        rawDuration = xMorphSeqDuration(*(xMorphSeqFile**)data->RawData);
+    }
+    else {
+        rawDuration = iAnimDuration(*data->RawData);
+    }
+
+    if(timeOffset > rawDuration - 0.1f)
+    {
+        timeOffset = rawDuration - 0.1f;
+    }
+
+    data->TimeOffset = timeOffset;
+    if(duration > rawDuration - timeOffset)
+    {
+        duration = rawDuration - timeOffset;
+    }
+
+    data->Duration = (data->FileFlags & 0x2000) ? 2.0f * duration : duration;
+}
+
+void xAnimFileEval(xAnimFile* data, F32 time, F32* bilinear, U32 flags, xVec3* tran, xQuat* quat,
+                   F32*);
 
 #ifndef INLINE
 float std::floorf(float x)
@@ -200,8 +591,8 @@ float std::floorf(float x)
 }
 #endif
 
-xAnimEffect* xAnimStateNewEffect(xAnimState* state, U32 flags, F32 startTime,
-                                 F32 endTime, xAnimEffectCallback callback, U32 userDataSize)
+xAnimEffect* xAnimStateNewEffect(xAnimState* state, U32 flags, F32 startTime, F32 endTime,
+                                 xAnimEffectCallback callback, U32 userDataSize)
 {
     xAnimEffect* curr;
     xAnimEffect** prev;
@@ -271,8 +662,8 @@ void xAnimDefaultBeforeEnter(xAnimPlay* play, xAnimState* state)
 
 #ifdef NON_MATCHING
 xAnimState* xAnimTableNewState(xAnimTable* table, const char* name, U32 flags, U32 userFlags,
-                               F32 speed, F32* boneBlend, F32* timeSnap,
-                               F32 fadeRecip, U16* fadeOffset, void* callbackData,
+                               F32 speed, F32* boneBlend, F32* timeSnap, F32 fadeRecip,
+                               U16* fadeOffset, void* callbackData,
                                xAnimStateBeforeEnterCallback beforeEnter,
                                xAnimStateCallback stateCallback,
                                xAnimStateBeforeAnimMatricesCallback beforeAnimMatrices)
@@ -348,8 +739,8 @@ void xAnimTableAddTransition(xAnimTable* table, xAnimTransition* tran, const cha
 
 xAnimState* xAnimTableGetStateID(xAnimTable* table, U32 ID);
 
-xAnimState* xAnimTableAddFileID(xAnimTable* table, xAnimFile* file, U32 stateID,
-                                U32 subStateID, U32 subStateCount)
+xAnimState* xAnimTableAddFileID(xAnimTable* table, xAnimFile* file, U32 stateID, U32 subStateID,
+                                U32 subStateCount)
 {
     xAnimState* state;
 
@@ -595,13 +986,7 @@ static void EffectSingleRun(xAnimSingle* single)
 }
 
 void EffectSingleLoop(xAnimSingle* single);
-
-// EffectSingleStop(xAnimSingle*)
-
 void EffectSingleStop(xAnimSingle* single);
-
-// StopUpdate(xAnimSingle*)
-
 static void LoopUpdate(xAnimSingle* single)
 {
     F32 time = single->Time;
@@ -798,5 +1183,3 @@ void xAnimPoolFree(xAnimPlay* play)
 
     xMemPoolFree(play->Pool, play);
 }
-
-// xAnimFileRawTime(xAnimFile*,float)
