@@ -25,7 +25,7 @@ extern void* MemoryFunctions[4];
 extern U16 last_error;
 extern OSContext* last_context;
 
-extern char stringBase0[];
+char* _ = "Level %d, Warning $03d: %s\n";
 
 void** psGetMemoryFunctions()
 {
@@ -87,9 +87,9 @@ void iSystemExit()
     xMemExit();
     OSPanic
     (
-        stringBase0 + 0x113, // "iSystem.cpp"
-        0x21d,
-        stringBase0 + 0x144 // "(With apologies to Jim Morrison) This the end, my only friend, The End."
+        "iSystem.cpp",
+        '!',
+        "(With apologies to Jim Morrison) This the end, my only friend, The End."
     );
 }
 
