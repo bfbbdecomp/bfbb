@@ -39,7 +39,7 @@ extern F32 lbl_803CF5AC; // A
 extern F32 lbl_803CDA54;
 extern F32 lbl_803CDA58;
 
-extern char stringBase0[];
+char* _ = "HB02";
 
 #ifdef NON_MATCHING
 // Scheduling, I guess
@@ -197,7 +197,7 @@ S32 zGameOkToPause()
     {
         return 0;
     }
-    if ((globals.sceneCur)->sceneID == 0x50473132)
+    if ((globals.sceneCur)->sceneID == 'PG12')
     {
         return 0;
     }
@@ -226,10 +226,10 @@ void zGamePause()
         }
         else
         {
-            zEntEvent(stringBase0 + 0xff, 24); // "techbutton6_click"
-            zEntEvent(stringBase0 + 0x111, 4); // "SAVING GAME ICON UI"
-            zEntEvent(stringBase0 + 0x125, 4); // "MNU4 AUTO SAVE FAILED"
-            zEntEvent(stringBase0 + 0x13b, 4); // "MNU4 SAVE COMPLETED"
+            zEntEvent("techbutton6_click", 24);
+            zEntEvent("SAVING GAME ICON UI", 4);
+            zEntEvent("MNU4 AUTO SAVE FAILED", 4);
+            zEntEvent("MNU4 SAVE COMPLETED", 4);
             iPadStopRumble(globals.pad0);
             zGameModeSwitch(eGameMode_Pause);
             zGameStateSwitch(0);
@@ -244,7 +244,7 @@ void zGameStall()
         zGameModeSwitch(eGameMode_Stall);
         xSndPauseAll(1, 1);
         iPadStopRumble(globals.pad0);
-        zEntEvent(stringBase0 + 0xff, 24); // "techbutton6_click"
+        zEntEvent("techbutton6_click", 24);
     }
 }
 

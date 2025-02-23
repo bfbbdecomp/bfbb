@@ -11,7 +11,7 @@
 zParEmitter* sEmitTremble;
 zParEmitter* sEmitBreakaway;
 
-extern char stringBase0[];
+char* _ = "";
 
 void genericPlatRender(xEnt* ent)
 {
@@ -76,8 +76,8 @@ void zPlatform_Mount(zPlatform* ent)
 void zPlatform_Setup(zPlatform* ent, xScene* sc)
 {
     zEntSetup((zEnt *)ent);
-    sEmitTremble   = zParEmitterFind(stringBase0 + 0x36); // "PAREMIT_PLAT_TREMBLE"
-    sEmitBreakaway = zParEmitterFind(stringBase0 + 0x4b); // "PAREMIT_PLAT_BREAKAWAY"
+    sEmitTremble   = zParEmitterFind("PAREMIT_PLAT_TREMBLE");
+    sEmitBreakaway = zParEmitterFind("PAREMIT_PLAT_BREAKAWAY");
     if (ent->subType == ZPLATFORM_SUBTYPE_PADDLE)
     {
         ent->tmr = -1e38;
