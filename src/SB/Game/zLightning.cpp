@@ -12,7 +12,7 @@ extern RwRaster* sLightningRaster;
 extern xVec3 sTweakStart;
 extern xVec3 sTweakEnd;
 
-extern char stringBase0[];
+char* _ = "Line";
 
 void xDebugAddTweak(const char*, F32*, F32, F32, const tweak_callback*, void*, U32)
 {
@@ -20,8 +20,7 @@ void xDebugAddTweak(const char*, F32*, F32, F32, const tweak_callback*, void*, U
 
 void lightningTweakChangeType(const tweak_info& t)
 {
-    // "Lightning|\x01Type Info"
-    xDebugRemoveTweak(stringBase0 + 0x18);
+    xDebugRemoveTweak("Lightning|\x01Type Info");
 
     switch (gLightningTweakAddInfo.type)
     {
@@ -29,22 +28,17 @@ void lightningTweakChangeType(const tweak_info& t)
             break;
 
         case 1:
-            // "Lightning|\x01Type Info|Setup Degrees"
-            xDebugAddTweak(stringBase0 + 0x2d, &gLightningTweakAddInfo.setup_degrees, -1e9, 1e9, NULL, NULL, 2);
+            xDebugAddTweak("Lightning|\x01Type Info|Setup Degrees", &gLightningTweakAddInfo.setup_degrees, -1e9, 1e9, NULL, NULL, 2);
 
-            // "Lightning|\x01Type Info|Move Degrees"
-            xDebugAddTweak(stringBase0 + 0x50, &gLightningTweakAddInfo.move_degrees, -1e9, 1e9, NULL, NULL, 2);
+            xDebugAddTweak("Lightning|\x01Type Info|Move Degrees", &gLightningTweakAddInfo.move_degrees, -1e9, 1e9, NULL, NULL, 2);
             break;
 
         case 2:
-            // "Lightning|\x01Type Info|Normal Offset"
-            xDebugAddTweak(stringBase0 + 0x72, &gLightningTweakAddInfo.zeus_normal_offset, -100.0, 100.0, NULL, NULL, 2);
+            xDebugAddTweak("Lightning|\x01Type Info|Normal Offset", &gLightningTweakAddInfo.zeus_normal_offset, -100.0, 100.0, NULL, NULL, 2);
 
-            // "Lightning|\x01Type Info|Back Offset"
-            xDebugAddTweak(stringBase0 + 0x95, &gLightningTweakAddInfo.zeus_back_offset, -100.0, 100.0, NULL, NULL, 2);
+            xDebugAddTweak("Lightning|\x01Type Info|Back Offset", &gLightningTweakAddInfo.zeus_back_offset, -100.0, 100.0, NULL, NULL, 2);
 
-            // "Lightning|\x01Type Info|Side Offset"
-            xDebugAddTweak(stringBase0 + 0xb6, &gLightningTweakAddInfo.zeus_side_offset,  0.0,   100.0, NULL, NULL, 2);
+            xDebugAddTweak("Lightning|\x01Type Info|Side Offset", &gLightningTweakAddInfo.zeus_side_offset,  0.0,   100.0, NULL, NULL, 2);
             break;
     }
 }
