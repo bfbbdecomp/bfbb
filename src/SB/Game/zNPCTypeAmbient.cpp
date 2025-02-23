@@ -21,9 +21,10 @@ extern F32 zNPCTypeAmbientx405f66f3;
 extern F32 zNPCTypeAmbientx3f400000;
 extern F32 zNPCTypeAmbientx3edf66f3;
 extern NPCSndTrax g_sndTrax_Neptune;
-extern char zNPCTypeAmbient_stringBase0[];
 extern F32 _882;
 extern F32 _883;
+
+char* _ = "Unknown";
 
 void ZNPC_Ambient_Startup()
 {
@@ -84,7 +85,7 @@ void ZNPC_Destroy_Ambient(xFactoryInst* inst)
 
 xAnimTable* ZNPC_AnimTable_Ambient()
 {
-    xAnimTable* table = (xAnimTable*)xAnimTableNew(zNPCTypeAmbient_stringBase0 + 0x60, NULL, 0);
+    xAnimTable* table = (xAnimTable*)xAnimTableNew("zNPCAmbient", NULL, 0);
     xAnimTableNewState(table, g_strz_ambianim[1], 0x110, 1, _882, NULL, NULL, _883, NULL, NULL,
                        xAnimDefaultBeforeEnter, NULL, NULL);
     return table;
