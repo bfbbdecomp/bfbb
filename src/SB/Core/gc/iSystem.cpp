@@ -25,7 +25,27 @@ extern void* MemoryFunctions[4];
 extern U16 last_error;
 extern OSContext* last_context;
 
-char* _ = "Level %d, Warning $03d: %s\n";
+// Taken from iSystem.s
+// Defining these here makes the stringBase0 offsets match in the later functions.
+char* str1 = "Level %d, Warning $03d: %s\n";
+char* str2 = "FPE: Invalid operation: ";
+char* str3 = "SNaN\n";
+char* str4 = "Infinity - Infinity\n";
+char* str5 = "Infinity / Infinity\n";
+char* str6 = "0 / 0\n";
+char* str7 = "Infinity * 0\n";
+char* str8 = "Invalid compare\n";
+char* str9 = "Software request\n";
+char* str10 = "Invalid square root\n";
+char* str11 = "Invalid integer convert\n";
+char* str12 = "FPE: Overflow\n";
+char* str13 = "FPE: Underflow\n";
+char* str14 = "FPE: Zero division\n";
+char* str15 = "FPE: Inexact result\n";
+char* str16 = "iSystem.cpp";
+char* str17 = "Unable to initialize memory system.\n";
+char* str18 = "(With apologies to Jim Morrison) This the end, my only friend, The End.";
+char* str19 = "%s.rw3";
 
 void** psGetMemoryFunctions()
 {
