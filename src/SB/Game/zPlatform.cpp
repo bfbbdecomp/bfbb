@@ -11,7 +11,18 @@
 zParEmitter* sEmitTremble;
 zParEmitter* sEmitBreakaway;
 
-char* _ = "";
+// Taken from zPlatform.s
+// Defining these here makes the stringBase0 offsets match in the later functions.
+char* str1 = "";
+char* str2 = "Idle";
+char* str3 = "Spring";
+char* str4 = "teeter_totter_pat";
+char* str5 = "teeter_totter_pat_bind";
+char* str6 = "PAREMIT_PLAT_TREMBLE";
+char* str7 = "PAREMIT_PLAT_BREAKAWAY";
+char* str8 = "skatepark_bumper";
+char* str9 = "skatepark_flipper";
+char* str10 = "Check1";
 
 void genericPlatRender(xEnt* ent)
 {
