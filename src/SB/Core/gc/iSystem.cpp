@@ -108,7 +108,7 @@ void iSystemExit()
     OSPanic
     (
         "iSystem.cpp",
-        '!',
+        0x21d,
         "(With apologies to Jim Morrison) This the end, my only friend, The End."
     );
 }
