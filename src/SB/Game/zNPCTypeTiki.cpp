@@ -14,13 +14,23 @@ extern const char* g_strz_tikianim[ANIM_COUNT];
 extern U32 g_hash_tikianim[ANIM_COUNT];
 extern zParEmitter* cloudEmitter;
 extern xParEmitterCustomSettings thunderEmitterInfo;
-extern char zNPCTypeTiki_stringBase0[];
 extern F32 _862;
 extern F32 _858_2;
 extern F32 _1084;
 extern F32 _867;
 extern NPCSndTrax g_sndTrax_TikiShared[3];
 extern NPCSndTrax g_sndTrax_TikiThunder[2];
+
+// Taken from zNPCTypeTiki.s
+// Defining these here makes the stringBase0 offsets match in the later functions.
+char* str1 = "Unknown";
+char* str2 = "Idle01";
+char* str3 = "PAREMIT_THUNDER_CLOUD";
+char* str4 = "PAREMIT_CLOUD";
+char* str5 = "target";
+char* str6 = "zNPCTiki";
+char* str7 = "what the ...\n";
+char* str8 = "Idle";
 
 void ZNPC_Tiki_Startup()
 {
@@ -112,7 +122,7 @@ xAnimTable* ZNPC_AnimTable_Tiki()
 {
     xAnimTable* table;
 
-    table = xAnimTableNew(zNPCTypeTiki_stringBase0 + 0x3a, NULL, 0);
+    table = xAnimTableNew("zNPCTiki", NULL, 0);
     xAnimTableNewState(table, g_strz_tikianim[1], 0x110, 1, _862, NULL, NULL, _858_2, NULL, NULL,
                        xAnimDefaultBeforeEnter, NULL, NULL);
     return table;
@@ -237,7 +247,7 @@ S32 zNPCTiki::CanRope()
 
 void AnimPick()
 {
-    xStrHash(zNPCTypeTiki_stringBase0 + 0x51);
+    xStrHash("Idle");
 }
 
 void zNPCTiki::Move(xScene* xscn, F32 dt, xEntFrame*)

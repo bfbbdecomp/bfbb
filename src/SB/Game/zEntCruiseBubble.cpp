@@ -107,10 +107,6 @@ namespace cruise_bubble
     // U8 (*hazard_check)(NPCHazard&, void*);
     // U8 (*hazard_check)(NPCHazard&, void*);
     // S32 gGridIterActive;
-
-    extern const char stringBase0
-        []; // "Idle01\0Idle02\0Idle03\0Idle04\0Idle05\0Idle06\0Idle07\0Idle08\0Idle09\0Idle10\0Idle11\0Idle12\0Idle13\0SlipIdle01\0Inactive01\0Inactive02\0Inactive03\0Inactive04\0Inactive05\0Inactive06\0Inactive07\0Inactive08\0Inactive09\0Inactive10\0Walk01\0Run01\0Run02\0Run03\0Land01\0LandRun01\0LandHigh01\0WallLand01\0Hit01\0Hit02\0Hit03\0Hit04\0Hit05\0SB_cruise_start\0SB_cruise_hit\0SB_cruise_nav_loop\0cruise_bubble_bind.MINF\0lightning\0Wake Ribbon 0\0Player|Cruise Bubble|Wake Ribbon 0|\0Wake Ribbon 1\0Player|Cruise Bubble|Wake Ribbon 1|\0par_cruise_explode\0Cruise Bubble Explosion\0cruise_bubble_droplet_shrapnel\0.minf\0.dff\0ui_3dicon_reticle\0ui_3dicon_target_lock\0ui_3dicon_missile_frame02\0%02d:%02d\0aura2\0aim_delay\0player.halt_time\0player.aim.turn_speed\0player.aim.anim_delta\0player.fire.delay_wand\0missle.life\0missle.hit_dist\0missle.crash_angle\0missle.collide_twist\0missle.hit_tests\0missle.appear.delay_show\0missle.appear.delay_fly\0missle.appear.offset\0missle.fly.accel\0missle.fly.max_vel\0missle.fly.engine_pitch_max\0missle.fly.engine_pitch_sensitivity\0missle.fly.flash_interval\0missle.fly.turn.xdelta\0missle.fly.turn.ydelta\0missle.fly.turn.xdecay\0missle.fly.turn.ydecay\0missle.fly.turn.ybound\0missle.fly.turn.roll_frac\0missle.explode.hit_radius\0missle.explode.hit_duration\0camera.aim.dist\0camera.aim.height\0camera.aim.pitch\0camera.aim.accel\0camera.aim.max_vel\0camera.aim.stick_decel\0camera.aim.stick_accel\0camera.aim.stick_max_vel\0camera.aim.turn_speed\0camera.seize.delay\0camera.seize.blend_time\0camera.seize.fade_dist\0camera.seize.hide_dist\0camera.seize.fov\0camera.survey.duration\0camera.survey.min_duration\0camera.survey.min_dist\0camera.survey.cut_dist\0camera.survey.drift_dist\0camera.survey.drift_softness\0camera.survey.jerk_offset\0camera.survey.jerk_deflect\0camera.restore.control_delay\0material.env_alpha\0material.env_coeff\0material.fresnel_alpha\0material.fresnel_coeff\0reticle.dist_min\0reticle.dist_max\0reticle.ang_show\0reticle.ang_hide\0reticle.delay_retarget\0trail.sample_rate\0trail.bubble_rate\0trail.bubble_emit_radius\0trail.wake_emit_radius\0blast.emit\0blast.radius\0blast.vel\0blast.rand_vel\0droplet.dist_min\0droplet.dist_max\0droplet.emit_min\0droplet.emit_max\0droplet.vel_min\0droplet.vel_max\0droplet.vel_perturb\0droplet.vel_angle\0droplet.rot_vel_max\0hud.glow_size\0hud.time_fade\0hud.time_glow\0hud.wind.size\0hud.wind.du\0hud.wind.dv\0hud.reticle.size\0hud.target.size\0hud.timer.font\0hud.timer.font_width\0hud.timer.font_height\0hud.timer.x\0hud.timer.y\0hud.timer.glow_size\0dialog.freq\0dialog.decay\0dialog.min_freq\0gloss_edge\0rainbowfilm_smooth32\0cruise_bubble_aim\0cruise_bubble_fire\0cruise_bubble_idle\0cruise_bubble_aim cruise_bubble_fire cruise_bubble_idle\0Cruise Bubble\0fire\0fly\0\0\0\0"
-
 } // namespace cruise_bubble
 
 extern F32 zEntCruiseBubble_f_0_0; // 0.0
@@ -726,17 +722,13 @@ namespace cruise_bubble
 
         void init_shrapnel()
         {
-            shared.droplet_shrapnel = (zShrapnelAsset*)xSTFindAsset(xStrHash(stringBase0 + 0x214), NULL);
+            shared.droplet_shrapnel = (zShrapnelAsset*)xSTFindAsset(xStrHash("cruise_bubble_droplet_shrapnel"), NULL);
         }
 
         void init_wake_ribbons()
         {
-            // stringBase0 + 0x185 == "Wake Ribbon 0"
-            // stringBase0 + 0x193 == "Player|Cruise Bubble|Wake Ribbon 0|"
-            wake_ribbon[0].init(stringBase0 + 0x185, stringBase0 + 0x193);
-            // stringBase0 + 0x1b7 == "Wake Ribbon 1"
-            // stringBase0 + 0x1c5 == "Player|Cruise Bubble|Wake Ribbon 1|"
-            wake_ribbon[1].init(stringBase0 + 0x1b7, stringBase0 + 0x1c5);
+            wake_ribbon[0].init("Wake Ribbon 0", "Player|Cruise Bubble|Wake Ribbon 0|");
+            wake_ribbon[1].init("Wake Ribbon 1", "Player|Cruise Bubble|Wake Ribbon 1|");
             cruise_bubble::reset_wake_ribbons();
         }
 
@@ -837,8 +829,7 @@ namespace cruise_bubble
         void load_settings()
         {
             U32 params_size;
-            // stringBase0 + 0x163 == "cruise_bubble_bind.MINF"
-            xModelAssetParam* params = zEntGetModelParams(xStrHash(stringBase0 + 0x163), &params_size);
+            xModelAssetParam* params = zEntGetModelParams(xStrHash("cruise_bubble_bind.MINF"), &params_size);
 
             if (params == NULL)
             {
@@ -950,7 +941,7 @@ namespace cruise_bubble
             xModelInstance* model;
             U32 size;
 
-            model = (xModelInstance*)xSTFindAsset(xStrHashCat(aid, stringBase0 + 0x233), &size);
+            model = (xModelInstance*)xSTFindAsset(xStrHashCat(aid, ".minf"), &size);
             if (model != NULL)
             {
                 model = zEntRecurseModelInfo(model, NULL);
@@ -960,7 +951,7 @@ namespace cruise_bubble
             model = (xModelInstance*)xSTFindAsset(aid, &size);
             if (model == NULL)
             {
-                model = (xModelInstance*)xSTFindAsset(xStrHashCat(aid, stringBase0 + 0x239), &size);
+                model = (xModelInstance*)xSTFindAsset(xStrHashCat(aid, ".dff"), &size);
             }
             if (model == NULL)
             {
@@ -996,14 +987,13 @@ namespace cruise_bubble
             {
                 explode_decal.cfg.life_time = zEntCruiseBubble_f_0_5;
                 explode_decal.set_curve(&explode_curve[0], 3);
-                // stringBase0 + 0x1e9 == "par_cruise_explode"
-                explode_decal.set_texture(stringBase0 + 0x1e9);
+                explode_decal.set_texture("par_cruise_explode");
             }
             else
             {
                 explode_decal.cfg.life_time = zEntCruiseBubble_f_0_5;
                 explode_decal.set_curve(&cheat_explode_curve[0], 3);
-                explode_decal.set_texture(stringBase0 + 0x1e9);
+                explode_decal.set_texture("par_cruise_explode");
             }
             explode_decal.refresh_config();
         }
@@ -1153,8 +1143,7 @@ namespace cruise_bubble
 
         void init_missle_model()
         {
-            // stringBase0 + 0x163 == "cruise_bubble_bind.MINF"
-            U32 aid = xStrHash(stringBase0 + 0x163);
+            U32 aid = xStrHash("cruise_bubble_bind.MINF");
             xEnt* ent = (xEnt*)xSTFindAsset(aid, NULL);
             xModelInstance* model = zEntRecurseModelInfo(ent, NULL);
 
@@ -1288,9 +1277,6 @@ cruise_bubble::state_player_halt::state_player_halt() : state_type(STATE_PLAYER_
 }
 
 #ifdef NON_MATCHING
-// `stringBase0 + 0x17b` gets cached in r31 where original asm reloads it everytime
-// change the offset in every other `stringBase0 + 0x17b`
-// and the only difference in the diff will be that new offset
 void cruise_bubble::reset_wake_ribbons()
 {
     wake_ribbon[0].set_default_config();
@@ -1299,9 +1285,8 @@ void cruise_bubble::reset_wake_ribbons()
 
     if ((shared.flags & 0x200) == 0)
     {
-        // stringBase0 + 0x17b == "lightning"
-        wake_ribbon[0].set_texture(stringBase0 + 0x17b);
-        wake_ribbon[1].set_texture(stringBase0 + 0x17b);
+        wake_ribbon[0].set_texture("lightning");
+        wake_ribbon[1].set_texture("lightning");
         wake_ribbon[0].set_curve(&wake_ribbon_curve[0], 2);
         wake_ribbon[1].set_curve(&wake_ribbon_curve[0], 2);
 
@@ -1309,8 +1294,8 @@ void cruise_bubble::reset_wake_ribbons()
     }
     else
     {
-        wake_ribbon[0].set_texture(stringBase0 + 0x17b);
-        wake_ribbon[1].set_texture(stringBase0 + 0x17b);
+        wake_ribbon[0].set_texture("lightning");
+        wake_ribbon[1].set_texture("lightning");
         wake_ribbon[0].set_curve(&cheat_wake_ribbon_curve[0], 2);
         wake_ribbon[1].set_curve(&cheat_wake_ribbon_curve[0], 2);
 
@@ -1327,7 +1312,7 @@ void cruise_bubble::reset_wake_ribbons()
 #ifdef NON_MATCHING
 void cruise_bubble::init_explode_decal()
 {
-    explode_decal.init(1, stringBase0 + 0x1fc);
+    explode_decal.init(1, "Cruise Bubble Explosion");
     explode_decal.set_default_config();
 
     // r0 should be use here
@@ -1338,7 +1323,7 @@ void cruise_bubble::init_explode_decal()
     explode_decal.cfg.blend_dst = 2;
 
     explode_decal.set_curve(explode_curve, 3);
-    explode_decal.set_texture(stringBase0 + 0x1e9);
+    explode_decal.set_texture("par_cruise_explosion");
     explode_decal.refresh_config();
 }
 #endif
@@ -1413,12 +1398,9 @@ void init_hud()
     hud.glow = zEntCruiseBubble_f_0_0;
     hud.gizmos_used = 0;
 
-    // stringBase0 + 0x23e == "ui_3dicon_reticle"
-    hud.model.reticle = load_model(xStrHash(stringBase0 + 0x23e));
-    // stringBase0 + 0x23e == "ui_3dicon_target_lock"
-    hud.model.target = load_model(xStrHash(stringBase0 + 0x250));
-    // stringBase0 + 0x23e == "ui_3dicon_missile_frame02"
-    hud.model.wind = load_model(xStrHash(stringBase0 + 0x266));
+    hud.model.reticle = load_model(xStrHash("ui_3dicon_reticle"));
+    hud.model.target = load_model(xStrHash("ui_3dicon_target_lock"));
+    hud.model.wind = load_model(xStrHash("ui_3dicon_missile_frame02"));
 
     hud.uv_wind.init(hud.model.wind->Data);
     hud.uv_wind.offset_vel.assign(current_tweak->hud.wind.du, current_tweak->hud.wind.dv);
@@ -1523,8 +1505,7 @@ void cruise_bubble::render_timer(F32 alpha, F32 glow)
 
     F32 life = state->life;
     char buffer[16];
-    // stringBase0 + 0x280 == "%02d:%02d"
-    sprintf(buffer, stringBase0 + 0x280, (S32)life,
+    sprintf(buffer, "%02d:%02d", (S32)life,
             ((S32)(zEntCruiseBubble_f_100_0 * life)) - (100 * (S32)life));
 
     F32 dsize = glow * current_tweak->hud.timer.glow_size;
@@ -1653,832 +1634,740 @@ void cruise_bubble::tweak_group::register_tweaks(bool init, xModelAssetParam* ap
     if (init)
     {
         this->aim_delay = zEntCruiseBubble_f_0_2;
-        // stringBase0 + 0x290 == "aim_delay"
         auto_tweak::load_param<F32, F32>(this->aim_delay, 1.0f,
                                          zEntCruiseBubble_f_0_0, 1.0f, ap, apsize,
-                                         stringBase0 + 0x290);
+                                         "aim_delay");
     }
 
     if (init)
     {
         this->player.halt_time = zEntCruiseBubble_f_0_5;
-        // stringBase0 + 0x29a == "player.halt_time"
         auto_tweak::load_param<F32, F32>(this->player.halt_time, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0, ap, apsize,
-                                         stringBase0 + 0x29a);
+                                         "player.halt_time");
     }
 
     if (init)
     {
         this->player.aim.turn_speed = zEntCruiseBubble_f_0_05;
-        // stringBase0 + 0x2ab == "player.aim.turn_speed"
         auto_tweak::load_param<F32, F32>(this->player.aim.turn_speed, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_01, zEntCruiseBubble_f_1000000000_0,
-                                         ap, apsize, stringBase0 + 0x2ab);
+                                         ap, apsize, "player.aim.turn_speed");
     }
 
     if (init)
     {
         this->player.aim.anim_delta = zEntCruiseBubble_f_0_5;
-        // stringBase0 + 0x2c1 == "player.aim.anim_delta"
         auto_tweak::load_param<F32, F32>(this->player.aim.anim_delta, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1000000000_0,
-                                         ap, apsize, stringBase0 + 0x2c1);
+                                         ap, apsize, "player.aim.anim_delta");
     }
 
     if (init)
     {
         this->player.fire.delay_wand = zEntCruiseBubble_f_0_0667;
-        // stringBase0 + 0x2d7 == "player.fire.delay_wand"
         auto_tweak::load_param<F32, F32>(this->player.fire.delay_wand, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100_0, ap,
-                                         apsize, stringBase0 + 0x2d7);
+                                         apsize, "player.fire.delay_wand");
     }
 
     if (init)
     {
         this->missle.life = zEntCruiseBubble_f_6_0;
-        // stringBase0 + 0x2ee == "missle.life"
         auto_tweak::load_param<F32, F32>(this->missle.life, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_01, zEntCruiseBubble_f_1000000000_0,
-                                         ap, apsize, stringBase0 + 0x2ee);
+                                         ap, apsize, "missle.life");
     }
 
     if (init)
     {
         this->missle.hit_dist = zEntCruiseBubble_f_0_3;
-        // stringBase0 + 0x2fa == "missle.hit_dist"
         auto_tweak::load_param<F32, F32>(this->missle.hit_dist, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0, ap, apsize,
-                                         stringBase0 + 0x2fa);
+                                         "missle.hit_dist");
     }
 
     if (init)
     {
         this->missle.crash_angle = zEntCruiseBubble_f_30_0;
-        // stringBase0 + 0x30a == "missle.crash_angle"
         auto_tweak::load_param<F32, F32>(this->missle.crash_angle, zEntCruiseBubble_f_0_017,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_60_0, ap,
-                                         apsize, stringBase0 + 0x30a);
+                                         apsize, "missle.crash_angle");
     }
 
     if (init)
     {
         this->missle.collide_twist = zEntCruiseBubble_f_0_025;
-        // stringBase0 + 0x31d == "missle.collide_twist"
         auto_tweak::load_param<F32, F32>(this->missle.collide_twist, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0, ap, apsize,
-                                         stringBase0 + 0x31d);
+                                         "missle.collide_twist");
     }
 
     if (init)
     {
         this->missle.hit_tests = 4;
-        // stringBase0 + 0x332 == "missle.hit_tests"
         auto_tweak::load_param<S32, S32>(this->missle.hit_tests, 1, 1, 100, ap, apsize,
-                                         stringBase0 + 0x332);
+                                         "missle.hit_tests");
     }
 
     if (init)
     {
         this->missle.appear.delay_show = zEntCruiseBubble_f_0_1333;
-        // stringBase0 + 0x343 == "missle.appear.delay_show"
         auto_tweak::load_param<F32, F32>(this->missle.appear.delay_show, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100_0, ap,
-                                         apsize, stringBase0 + 0x343);
+                                         apsize, "missle.appear.delay_show");
     }
 
     if (init)
     {
         this->missle.appear.delay_fly = zEntCruiseBubble_f_0_667;
-        // stringBase0 + 0x35c == "missle.appear.delay_fly"
         auto_tweak::load_param<F32, F32>(this->missle.appear.delay_fly, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100_0, ap,
-                                         apsize, stringBase0 + 0x35c);
+                                         apsize, "missle.appear.delay_fly");
     }
 
     if (init)
     {
         this->missle.appear.offset = xVec3::create(
             zEntCruiseBubble_f_n0_049, zEntCruiseBubble_f_1_728, zEntCruiseBubble_f_0_922);
-        // stringBase0 + 0x374 == "missle.appear.offset"
         auto_tweak::load_param<xVec3, S32>(this->missle.appear.offset, 0, 0, 0, ap, apsize,
-                                           stringBase0 + 0x374);
+                                           "missle.appear.offset");
     }
 
     if (init)
     {
         this->missle.fly.accel = zEntCruiseBubble_f_6_0;
-        // stringBase0 + 0x389 == "missle.fly.accel"
         auto_tweak::load_param<F32, F32>(this->missle.fly.accel, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_01, zEntCruiseBubble_f_1000000000_0,
-                                         ap, apsize, stringBase0 + 0x389);
+                                         ap, apsize, "missle.fly.accel");
     }
 
     if (init)
     {
         this->missle.fly.max_vel = zEntCruiseBubble_f_12_0;
-        // stringBase0 + 0x39a == "missle.fly.max_vel"
         auto_tweak::load_param<F32, F32>(this->missle.fly.max_vel, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_01, zEntCruiseBubble_f_1000000000_0,
-                                         ap, apsize, stringBase0 + 0x39a);
+                                         ap, apsize, "missle.fly.max_vel");
     }
 
     if (init)
     {
         this->missle.fly.engine_pitch_max = zEntCruiseBubble_f_10_0;
-        // stringBase0 + 0x3ad == "missle.fly.engine_pitch_max"
         auto_tweak::load_param<F32, F32>(this->missle.fly.engine_pitch_max, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_01, zEntCruiseBubble_f_1000000000_0,
-                                         ap, apsize, stringBase0 + 0x3ad);
+                                         ap, apsize, "missle.fly.engine_pitch_max");
     }
 
     if (init)
     {
         this->missle.fly.engine_pitch_sensitivity = zEntCruiseBubble_f_0_005;
-        // stringBase0 + 0x3c9 == "missle.fly.engine_pitch_sensitivity"
         auto_tweak::load_param<F32, F32>(this->missle.fly.engine_pitch_sensitivity,
                                          zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0,
-                                         zEntCruiseBubble_f_1_0, ap, apsize, stringBase0 + 0x3c9);
+                                         zEntCruiseBubble_f_1_0, ap, apsize, "missle.fly.engine_pitch_sensitivity");
     }
 
     if (init)
     {
         this->missle.fly.flash_interval = zEntCruiseBubble_f_2_0;
-        // stringBase0 + 0x3ed == "missle.fly.flash_interval"
         auto_tweak::load_param<F32, F32>(this->missle.fly.flash_interval, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1000000000_0,
-                                         ap, apsize, stringBase0 + 0x3ed);
+                                         ap, apsize, "missle.fly.flash_interval");
     }
 
     if (init)
     {
         this->missle.fly.turn.xdelta = zEntCruiseBubble_f_5_0;
-        // stringBase0 + 0x407 == "missle.fly.turn.xdelta"
         auto_tweak::load_param<F32, F32>(this->missle.fly.turn.xdelta, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_01, zEntCruiseBubble_f_1000000000_0,
-                                         ap, apsize, stringBase0 + 0x407);
+                                         ap, apsize, "missle.fly.turn.xdelta");
     }
 
     if (init)
     {
         this->missle.fly.turn.ydelta = zEntCruiseBubble_f_4_0;
-        // stringBase0 + 0x41e == "missle.fly.turn.ydelta"
         auto_tweak::load_param<F32, F32>(this->missle.fly.turn.ydelta, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_01, zEntCruiseBubble_f_1000000000_0,
-                                         ap, apsize, stringBase0 + 0x41e);
+                                         ap, apsize, "missle.fly.turn.ydelta");
     }
 
     if (init)
     {
         this->missle.fly.turn.xdecay = zEntCruiseBubble_f_0_99;
-        // stringBase0 + 0x435 == "missle.fly.turn.xdecay"
         auto_tweak::load_param<F32, F32>(this->missle.fly.turn.xdecay, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0, ap, apsize,
-                                         stringBase0 + 0x435);
+                                         "missle.fly.turn.xdecay");
     }
 
     if (init)
     {
         this->missle.fly.turn.ydecay = zEntCruiseBubble_f_0_99;
-        // stringBase0 + 0x44c == "missle.fly.turn.ydecay"
         auto_tweak::load_param<F32, F32>(this->missle.fly.turn.ydecay, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0, ap, apsize,
-                                         stringBase0 + 0x44c);
+                                         "missle.fly.turn.ydecay");
     }
 
     if (init)
     {
         this->missle.fly.turn.ybound = zEntCruiseBubble_f_0_6;
-        // stringBase0 + 0x463 == "missle.fly.turn.ybound"
         auto_tweak::load_param<F32, F32>(this->missle.fly.turn.ybound, zEntCruiseBubble_f_1_5708,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0, ap, apsize,
-                                         stringBase0 + 0x463);
+                                         "missle.fly.turn.ybound");
     }
 
     if (init)
     {
         this->missle.fly.turn.roll_frac = zEntCruiseBubble_f_0_2;
-        // stringBase0 + 0x47a == "missle.fly.turn.roll_frac"
         auto_tweak::load_param<F32, F32>(this->missle.fly.turn.roll_frac, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_n1_0, zEntCruiseBubble_f_1_0, ap,
-                                         apsize, stringBase0 + 0x47a);
+                                         apsize, "missle.fly.turn.roll_frac");
     }
 
     if (init)
     {
         this->missle.explode.hit_radius = zEntCruiseBubble_f_1_0;
-        // stringBase0 + 0x494 == "missle.explode.hit_radius"
         auto_tweak::load_param<F32, F32>(this->missle.explode.hit_radius, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10_0, ap,
-                                         apsize, stringBase0 + 0x494);
+                                         apsize, "missle.explode.hit_radius");
     }
 
     if (init)
     {
         this->missle.explode.hit_duration = zEntCruiseBubble_f_0_25;
-        // stringBase0 + 0x4ae == "missle.explode.hit_duration"
         auto_tweak::load_param<F32, F32>(this->missle.explode.hit_duration, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10_0, ap,
-                                         apsize, stringBase0 + 0x4ae);
+                                         apsize, "missle.explode.hit_duration");
     }
 
     if (init)
     {
         this->camera.aim.dist = zEntCruiseBubble_f_2_0;
-        // stringBase0 + 0x4ca == "camera.aim.dist"
         auto_tweak::load_param<F32, F32>(this->camera.aim.dist, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100_0, ap,
-                                         apsize, stringBase0 + 0x4ca);
+                                         apsize, "camera.aim.dist");
     }
 
     if (init)
     {
         this->camera.aim.height = zEntCruiseBubble_f_1_5;
-        // stringBase0 + 0x4da == "camera.aim.height"
         auto_tweak::load_param<F32, F32>(this->camera.aim.height, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_n10_0, zEntCruiseBubble_f_10_0, ap,
-                                         apsize, stringBase0 + 0x4da);
+                                         apsize, "camera.aim.height");
     }
 
     if (init)
     {
         this->camera.aim.pitch = zEntCruiseBubble_f_0_0;
-        // stringBase0 + 0x4ec == "camera.aim.pitch"
         auto_tweak::load_param<F32, F32>(this->camera.aim.pitch, zEntCruiseBubble_f_0_017,
                                          zEntCruiseBubble_f_n90_0, zEntCruiseBubble_f_90_0, ap,
-                                         apsize, stringBase0 + 0x4ec);
+                                         apsize, "camera.aim.pitch");
     }
 
     if (init)
     {
         this->camera.aim.accel = zEntCruiseBubble_f_10_0;
-        // stringBase0 + 0x4fd == "camera.aim.accel"
         auto_tweak::load_param<F32, F32>(this->camera.aim.accel, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_01, zEntCruiseBubble_f_1000000000_0,
-                                         ap, apsize, stringBase0 + 0x4fd);
+                                         ap, apsize, "camera.aim.accel");
     }
 
     if (init)
     {
         this->camera.aim.max_vel = zEntCruiseBubble_f_5_0;
-        // stringBase0 + 0x50e == "camera.aim.max_vel"
         auto_tweak::load_param<F32, F32>(this->camera.aim.max_vel, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_01, zEntCruiseBubble_f_1000000000_0,
-                                         ap, apsize, stringBase0 + 0x50e);
+                                         ap, apsize, "camera.aim.max_vel");
     }
 
     if (init)
     {
         this->camera.aim.stick_decel = zEntCruiseBubble_f_720_0;
-        // stringBase0 + 0x521 == "camera.aim.stick_decel"
         auto_tweak::load_param<F32, F32>(this->camera.aim.stick_decel, zEntCruiseBubble_f_0_017,
                                          zEntCruiseBubble_f_0_01, zEntCruiseBubble_f_1000000000_0,
-                                         ap, apsize, stringBase0 + 0x521);
+                                         ap, apsize, "camera.aim.stick_decel");
     }
 
     if (init)
     {
         this->camera.aim.stick_accel = zEntCruiseBubble_f_360_0;
-        // stringBase0 + 0x538 == "camera.aim.stick_accel"
         auto_tweak::load_param<F32, F32>(this->camera.aim.stick_accel, zEntCruiseBubble_f_0_017,
                                          zEntCruiseBubble_f_0_01, zEntCruiseBubble_f_1000000000_0,
-                                         ap, apsize, stringBase0 + 0x538);
+                                         ap, apsize, "camera.aim.stick_accel");
     }
 
     if (init)
     {
         this->camera.aim.stick_max_vel = zEntCruiseBubble_f_135_0;
-        // stringBase0 + 0x54f == "camera.aim.stick_max_vel"
         auto_tweak::load_param<F32, F32>(this->camera.aim.stick_max_vel, zEntCruiseBubble_f_0_017,
                                          zEntCruiseBubble_f_0_01, zEntCruiseBubble_f_1000000000_0,
-                                         ap, apsize, stringBase0 + 0x54f);
+                                         ap, apsize, "camera.aim.stick_max_vel");
     }
 
     if (init)
     {
         this->camera.aim.turn_speed = zEntCruiseBubble_f_0_2;
-        // stringBase0 + 0x568 == "camera.aim.turn_speed"
         auto_tweak::load_param<F32, F32>(this->camera.aim.turn_speed, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_001, zEntCruiseBubble_f_1000000000_0,
-                                         ap, apsize, stringBase0 + 0x568);
+                                         ap, apsize, "camera.aim.turn_speed");
     }
 
     if (init)
     {
         this->camera.seize.delay = zEntCruiseBubble_f_0_0;
-        // stringBase0 + 0x57e == "camera.seize.delay"
         auto_tweak::load_param<F32, F32>(this->camera.seize.delay, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1000000000_0,
-                                         ap, apsize, stringBase0 + 0x57e);
+                                         ap, apsize, "camera.seize.delay");
     }
 
     if (init)
     {
         this->camera.seize.blend_time = zEntCruiseBubble_f_1_5;
-        // stringBase0 + 0x591 == "camera.seize.blend_time"
         auto_tweak::load_param<F32, F32>(this->camera.seize.blend_time, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1000000000_0,
-                                         ap, apsize, stringBase0 + 0x591);
+                                         ap, apsize, "camera.seize.blend_time");
     }
 
     if (init)
     {
         this->camera.seize.fade_dist = zEntCruiseBubble_f_2_0;
-        // stringBase0 + 0x5a9 == "camera.seize.fade_dist"
         auto_tweak::load_param<F32, F32>(this->camera.seize.fade_dist, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10_0, ap,
-                                         apsize, stringBase0 + 0x5a9);
+                                         apsize, "camera.seize.fade_dist");
     }
 
     if (init)
     {
         this->camera.seize.hide_dist = zEntCruiseBubble_f_1_0;
-        // stringBase0 + 0x5c0 == "camera.seize.hide_dist"
         auto_tweak::load_param<F32, F32>(this->camera.seize.hide_dist, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10_0, ap,
-                                         apsize, stringBase0 + 0x5c0);
+                                         apsize, "camera.seize.hide_dist");
     }
 
     if (init)
     {
         this->camera.seize.fov = zEntCruiseBubble_f_95_0;
-        // stringBase0 + 0x5d7 == "camera.seize.fov"
         auto_tweak::load_param<F32, F32>(this->camera.seize.fov, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_10_0, zEntCruiseBubble_f_180_0, ap,
-                                         apsize, stringBase0 + 0x5d7);
+                                         apsize, "camera.seize.fov");
     }
 
     if (init)
     {
         this->camera.survey.duration = zEntCruiseBubble_f_2_0;
-        // stringBase0 + 0x5e8 == "camera.survey.duration"
         auto_tweak::load_param<F32, F32>(this->camera.survey.duration, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10_0, ap,
-                                         apsize, stringBase0 + 0x5e8);
+                                         apsize, "camera.survey.duration");
     }
 
     if (init)
     {
         this->camera.survey.min_duration = zEntCruiseBubble_f_0_25;
-        // stringBase0 + 0x5ff == "camera.survey.min_duration"
         auto_tweak::load_param<F32, F32>(this->camera.survey.min_duration, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10_0, ap,
-                                         apsize, stringBase0 + 0x5ff);
+                                         apsize, "camera.survey.min_duration");
     }
 
     if (init)
     {
         this->camera.survey.min_dist = zEntCruiseBubble_f_10_0;
-        // stringBase0 + 0x61a == "camera.survey.min_dist"
         auto_tweak::load_param<F32, F32>(this->camera.survey.min_dist, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100_0, ap,
-                                         apsize, stringBase0 + 0x61a);
+                                         apsize, "camera.survey.min_dist");
     }
 
     if (init)
     {
         this->camera.survey.cut_dist = zEntCruiseBubble_f_6_0;
-        // stringBase0 + 0x631 == "camera.survey.cut_dist"
         auto_tweak::load_param<F32, F32>(this->camera.survey.cut_dist, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100_0, ap,
-                                         apsize, stringBase0 + 0x631);
+                                         apsize, "camera.survey.cut_dist");
     }
 
     if (init)
     {
         this->camera.survey.drift_dist = zEntCruiseBubble_f_8_0;
-        // stringBase0 + 0x648 == "camera.survey.drift_dist"
         auto_tweak::load_param<F32, F32>(this->camera.survey.drift_dist, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100_0, ap,
-                                         apsize, stringBase0 + 0x648);
+                                         apsize, "camera.survey.drift_dist");
     }
 
     if (init)
     {
         this->camera.survey.drift_softness = zEntCruiseBubble_f_0_1;
-        // stringBase0 + 0x661 == "camera.survey.drift_softness"
         auto_tweak::load_param<F32, F32>(this->camera.survey.drift_softness, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_5, ap, apsize,
-                                         stringBase0 + 0x661);
+                                         "camera.survey.drift_softness");
     }
 
     if (init)
     {
         this->camera.survey.jerk_offset = zEntCruiseBubble_f_0_8;
-        // stringBase0 + 0x67e == "camera.survey.jerk_offset"
         auto_tweak::load_param<F32, F32>(this->camera.survey.jerk_offset, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_2_0, ap, apsize,
-                                         stringBase0 + 0x67e);
+                                         "camera.survey.jerk_offset");
     }
 
     if (init)
     {
         this->camera.survey.jerk_deflect = zEntCruiseBubble_f_0_6;
-        // stringBase0 + 0x698 == "camera.survey.jerk_deflect"
         auto_tweak::load_param<F32, F32>(this->camera.survey.jerk_deflect, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0, ap, apsize,
-                                         stringBase0 + 0x698);
+                                         "camera.survey.jerk_deflect");
     }
 
     if (init)
     {
         this->camera.restore.control_delay = zEntCruiseBubble_f_0_25;
-        // stringBase0 + 0x6b3 == "camera.restore.control_delay"
         auto_tweak::load_param<F32, F32>(this->camera.restore.control_delay, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0, ap, apsize,
-                                         stringBase0 + 0x6b3);
+                                         "camera.restore.control_delay");
     }
 
     if (init)
     {
         this->material.env_alpha = zEntCruiseBubble_f_0_5;
-        // stringBase0 + 0x6d0 == "material.env_alpha"
         auto_tweak::load_param<F32, F32>(this->material.env_alpha, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0, ap, apsize,
-                                         stringBase0 + 0x6d0);
+                                         "material.env_alpha");
     }
 
     if (init)
     {
         this->material.env_coeff = zEntCruiseBubble_f_0_5;
-        // stringBase0 + 0x6e3 == "material.env_coeff"
         auto_tweak::load_param<F32, F32>(this->material.env_coeff, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0, ap, apsize,
-                                         stringBase0 + 0x6e3);
+                                         "material.env_coeff");
     }
 
     if (init)
     {
         this->material.fresnel_alpha = zEntCruiseBubble_f_0_0;
-        // stringBase0 + 0x6f6 == "material.fresnel_alpha"
         auto_tweak::load_param<F32, F32>(this->material.fresnel_alpha, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0, ap, apsize,
-                                         stringBase0 + 0x6f6);
+                                         "material.fresnel_alpha");
     }
 
     if (init)
     {
         this->material.fresnel_coeff = zEntCruiseBubble_f_0_75;
-        // stringBase0 + 0x70d == "material.fresnel_coeff"
         auto_tweak::load_param<F32, F32>(this->material.fresnel_coeff, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0, ap, apsize,
-                                         stringBase0 + 0x70d);
+                                         "material.fresnel_coeff");
     }
 
     if (init)
     {
         this->reticle.dist_min = zEntCruiseBubble_f_3_0;
-        // stringBase0 + 0x724 == "reticle.dist_min"
         auto_tweak::load_param<F32, F32>(this->reticle.dist_min, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_10_0, ap,
-                                         apsize, stringBase0 + 0x724);
+                                         apsize, "reticle.dist_min");
     }
 
     if (init)
     {
         this->reticle.dist_max = zEntCruiseBubble_f_30_0;
-        // stringBase0 + 0x735 == "reticle.dist_max"
         auto_tweak::load_param<F32, F32>(this->reticle.dist_max, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_10000_0, ap,
-                                         apsize, stringBase0 + 0x735);
+                                         apsize, "reticle.dist_max");
     }
 
     if (init)
     {
         this->reticle.ang_show = zEntCruiseBubble_f_4_0;
-        // stringBase0 + 0x746 == "reticle.ang_show"
         auto_tweak::load_param<F32, F32>(this->reticle.ang_show, zEntCruiseBubble_f_0_017,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_90_0, ap,
-                                         apsize, stringBase0 + 0x746);
+                                         apsize, "reticle.ang_show");
     }
 
     if (init)
     {
         this->reticle.ang_hide = zEntCruiseBubble_f_22_5;
-        // stringBase0 + 0x757 == "reticle.ang_hide"
         auto_tweak::load_param<F32, F32>(this->reticle.ang_hide, zEntCruiseBubble_f_0_017,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_90_0, ap,
-                                         apsize, stringBase0 + 0x757);
+                                         apsize, "reticle.ang_hide");
     }
 
     if (init)
     {
         this->reticle.delay_retarget = zEntCruiseBubble_f_0_25;
-        // stringBase0 + 0x768 == "reticle.delay_retarget"
         auto_tweak::load_param<F32, F32>(this->reticle.delay_retarget, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_5_0, ap, apsize,
-                                         stringBase0 + 0x768);
+                                         "reticle.delay_retarget");
     }
 
     if (init)
     {
         this->trail.sample_rate = zEntCruiseBubble_f_60_0;
-        // stringBase0 + 0x77f == "trail.sample_rate"
         auto_tweak::load_param<F32, F32>(this->trail.sample_rate, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10000_0, ap,
-                                         apsize, stringBase0 + 0x77f);
+                                         apsize, "trail.sample_rate");
     }
 
     if (init)
     {
         this->trail.bubble_rate = zEntCruiseBubble_f_60_0;
-        // stringBase0 + 0x791 == "trail.bubble_rate"
         auto_tweak::load_param<F32, F32>(this->trail.bubble_rate, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10000_0, ap,
-                                         apsize, stringBase0 + 0x791);
+                                         apsize, "trail.bubble_rate");
     }
 
     if (init)
     {
         this->trail.bubble_emit_radius = zEntCruiseBubble_f_0_5;
-        // stringBase0 + 0x7a3 == "trail.bubble_emit_radius"
         auto_tweak::load_param<F32, F32>(this->trail.bubble_emit_radius, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10_0, ap,
-                                         apsize, stringBase0 + 0x7a3);
+                                         apsize, "trail.bubble_emit_radius");
     }
 
     if (init)
     {
         this->trail.wake_emit_radius = zEntCruiseBubble_f_0_1;
-        // stringBase0 + 0x7bc == "trail.wake_emit_radius"
         auto_tweak::load_param<F32, F32>(this->trail.wake_emit_radius, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10_0, ap,
-                                         apsize, stringBase0 + 0x7bc);
+                                         apsize, "trail.wake_emit_radius");
     }
 
     if (init)
     {
         this->blast.emit = 300;
-        // stringBase0 + 0x7d3 == "blast.emit"
         auto_tweak::load_param<U32, S32>(this->blast.emit, 1, 0, 0x3e8, ap, apsize,
-                                         stringBase0 + 0x7d3);
+                                         "blast.emit");
     }
 
     if (init)
     {
         this->blast.radius = zEntCruiseBubble_f_0_0;
-        // stringBase0 + 0x7de == "blast.radius"
         auto_tweak::load_param<F32, F32>(this->blast.radius, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10_0, ap,
-                                         apsize, stringBase0 + 0x7de);
+                                         apsize, "blast.radius");
     }
 
     if (init)
     {
         this->blast.vel = zEntCruiseBubble_f_5_0;
-        // stringBase0 + 0x7eb == "blast.vel"
         auto_tweak::load_param<F32, F32>(this->blast.vel, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_n100000_0, zEntCruiseBubble_f_100000_0,
-                                         ap, apsize, stringBase0 + 0x7eb);
+                                         ap, apsize, "blast.vel");
     }
 
     if (init)
     {
         this->blast.rand_vel = zEntCruiseBubble_f_0_5;
-        // stringBase0 + 0x7f5 == "blast.rand_vel"
         auto_tweak::load_param<F32, F32>(this->blast.rand_vel, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_n100000_0, zEntCruiseBubble_f_100000_0,
-                                         ap, apsize, stringBase0 + 0x7f5);
+                                         ap, apsize, "blast.rand_vel");
     }
 
     if (init)
     {
         this->droplet.dist_min = zEntCruiseBubble_f_1_0;
-        // stringBase0 + 0x804 == "droplet.dist_min"
         auto_tweak::load_param<F32, F32>(this->droplet.dist_min, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10_0, ap,
-                                         apsize, stringBase0 + 0x804);
+                                         apsize, "droplet.dist_min");
     }
 
     if (init)
     {
         this->droplet.dist_max = zEntCruiseBubble_f_2_0;
-        // stringBase0 + 0x815 == "droplet.dist_max"
         auto_tweak::load_param<F32, F32>(this->droplet.dist_max, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10_0, ap,
-                                         apsize, stringBase0 + 0x815);
+                                         apsize, "droplet.dist_max");
     }
 
     if (init)
     {
         this->droplet.emit_min = 10;
-        // stringBase0 + 0x826 == "droplet.emit_min"
         auto_tweak::load_param<U32, S32>(this->droplet.emit_min, 1, 0, 0x1e, ap, apsize,
-                                         stringBase0 + 0x826);
+                                         "droplet.emit_min");
     }
 
     if (init)
     {
         this->droplet.emit_max = 20;
-        // stringBase0 + 0x837 == "droplet.emit_max"
         auto_tweak::load_param<U32, S32>(this->droplet.emit_max, 1, 0, 0x1e, ap, apsize,
-                                         stringBase0 + 0x837);
+                                         "droplet.emit_max");
     }
 
     if (init)
     {
         this->droplet.vel_min = zEntCruiseBubble_f_2_0;
-        // stringBase0 + 0x848 == "droplet.vel_min"
         auto_tweak::load_param<F32, F32>(this->droplet.vel_min, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100000_0, ap,
-                                         apsize, stringBase0 + 0x848);
+                                         apsize, "droplet.vel_min");
     }
 
     if (init)
     {
         this->droplet.vel_max = zEntCruiseBubble_f_6_0;
-        // stringBase0 + 0x858 == "droplet.vel_max"
         auto_tweak::load_param<F32, F32>(this->droplet.vel_max, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100000_0, ap,
-                                         apsize, stringBase0 + 0x858);
+                                         apsize, "droplet.vel_max");
     }
 
     if (init)
     {
         this->droplet.vel_perturb = zEntCruiseBubble_f_0_25;
-        // stringBase0 + 0x868 == "droplet.vel_perturb"
         auto_tweak::load_param<F32, F32>(this->droplet.vel_perturb, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100000_0, ap,
-                                         apsize, stringBase0 + 0x868);
+                                         apsize, "droplet.vel_perturb");
     }
 
     if (init)
     {
         this->droplet.vel_angle = zEntCruiseBubble_f_60_0;
-        // stringBase0 + 0x87c == "droplet.vel_angle"
         auto_tweak::load_param<F32, F32>(this->droplet.vel_angle, zEntCruiseBubble_f_0_017,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100000_0, ap,
-                                         apsize, stringBase0 + 0x87c);
+                                         apsize, "droplet.vel_angle");
     }
 
     if (init)
     {
         this->droplet.rot_vel_max = zEntCruiseBubble_f_360_0;
-        // stringBase0 + 0x88e == "droplet.rot_vel_max"
         auto_tweak::load_param<F32, F32>(this->droplet.rot_vel_max, zEntCruiseBubble_f_0_017,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100000_0, ap,
-                                         apsize, stringBase0 + 0x88e);
+                                         apsize, "droplet.rot_vel_max");
     }
 
     if (init)
     {
         this->hud.glow_size = zEntCruiseBubble_f_0_05;
-        // stringBase0 + 0x8a2 == "hud.glow_size"
         auto_tweak::load_param<F32, F32>(this->hud.glow_size, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_001, zEntCruiseBubble_f_10_0, ap,
-                                         apsize, stringBase0 + 0x8a2);
+                                         apsize, "hud.glow_size");
     }
 
     if (init)
     {
         this->hud.time_fade = zEntCruiseBubble_f_0_25;
-        // stringBase0 + 0x8b0 == "hud.time_fade"
         auto_tweak::load_param<F32, F32>(this->hud.time_fade, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_001, zEntCruiseBubble_f_10_0, ap,
-                                         apsize, stringBase0 + 0x8b0);
+                                         apsize, "hud.time_fade");
     }
 
     if (init)
     {
         this->hud.time_glow = zEntCruiseBubble_f_0_5;
-        // stringBase0 + 0x8be == "hud.time_glow"
         auto_tweak::load_param<F32, F32>(this->hud.time_glow, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_001, zEntCruiseBubble_f_10_0, ap,
-                                         apsize, stringBase0 + 0x8be);
+                                         apsize, "hud.time_glow");
     }
 
     if (init)
     {
         this->hud.wind.size = zEntCruiseBubble_f_0_75;
-        // stringBase0 + 0x8cc == "hud.wind.size"
         auto_tweak::load_param<F32, F32>(this->hud.wind.size, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100_0, ap,
-                                         apsize, stringBase0 + 0x8cc);
+                                         apsize, "hud.wind.size");
     }
 
     if (init)
     {
         this->hud.wind.du = zEntCruiseBubble_f_0_0;
-        // stringBase0 + 0x8da == "hud.wind.du"
         auto_tweak::load_param<F32, F32>(this->hud.wind.du, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_n1000000000_0,
                                          zEntCruiseBubble_f_1000000000_0, ap, apsize,
-                                         stringBase0 + 0x8da);
+                                         "hud.wind.du");
     }
 
     if (init)
     {
         this->hud.wind.dv = zEntCruiseBubble_f_4_0;
-        // stringBase0 + 0x8e6 == "hud.wind.dv"
         auto_tweak::load_param<F32, F32>(this->hud.wind.dv, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_n1000000000_0,
                                          zEntCruiseBubble_f_1000000000_0, ap, apsize,
-                                         stringBase0 + 0x8e6);
+                                         "hud.wind.dv");
     }
 
     if (init)
     {
         this->hud.reticle.size = zEntCruiseBubble_f_0_1;
-        // stringBase0 + 0x8f2 == "hud.reticle.size"
         auto_tweak::load_param<F32, F32>(this->hud.reticle.size, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100_0, ap,
-                                         apsize, stringBase0 + 0x8f2);
+                                         apsize, "hud.reticle.size");
     }
 
     if (init)
     {
         this->hud.target.size = zEntCruiseBubble_f_0_1;
-        // stringBase0 + 0x903 == "hud.target.size"
         auto_tweak::load_param<F32, F32>(this->hud.target.size, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_100_0, ap,
-                                         apsize, stringBase0 + 0x903);
+                                         apsize, "hud.target.size");
     }
 
     if (init)
     {
         this->hud.timer.font = 2;
-        // stringBase0 + 0x913 == "hud.timer.font"
         auto_tweak::load_param<S32, S32>(this->hud.timer.font, 1, 0, 4, ap, apsize,
-                                         stringBase0 + 0x913);
+                                         "hud.timer.font");
     }
 
     if (init)
     {
         this->hud.timer.font_width = zEntCruiseBubble_f_0_0275;
-        // stringBase0 + 0x922 == "hud.timer.font_width"
         auto_tweak::load_param<F32, F32>(this->hud.timer.font_width, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_001, zEntCruiseBubble_f_1_0, ap,
-                                         apsize, stringBase0 + 0x922);
+                                         apsize, "hud.timer.font_width");
     }
 
     if (init)
     {
         this->hud.timer.font_height = zEntCruiseBubble_f_0_047;
-        // stringBase0 + 0x937 == "hud.timer.font_height"
         auto_tweak::load_param<F32, F32>(this->hud.timer.font_height, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_001, zEntCruiseBubble_f_1_0, ap,
-                                         apsize, stringBase0 + 0x937);
+                                         apsize, "hud.timer.font_height");
     }
 
     if (init)
     {
         this->hud.timer.x = zEntCruiseBubble_f_0_78;
-        // stringBase0 + 0x94d == "hud.timer.x"
         auto_tweak::load_param<F32, F32>(this->hud.timer.x, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0, ap, apsize,
-                                         stringBase0 + 0x94d);
+                                         "hud.timer.x");
     }
 
     if (init)
     {
         this->hud.timer.y = zEntCruiseBubble_f_0_86;
-        // stringBase0 + 0x959 == "hud.timer.y"
         auto_tweak::load_param<F32, F32>(this->hud.timer.y, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0, ap, apsize,
-                                         stringBase0 + 0x959);
+                                         "hud.timer.y");
     }
 
     if (init)
     {
         this->hud.timer.glow_size = zEntCruiseBubble_f_0_01;
-        // stringBase0 + 0x965 == "hud.timer.glow_size"
         auto_tweak::load_param<F32, F32>(this->hud.timer.glow_size, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_10_0, ap,
-                                         apsize, stringBase0 + 0x965);
+                                         apsize, "hud.timer.glow_size");
     }
 
     if (init)
     {
         this->dialog.freq = zEntCruiseBubble_f_1_0;
-        // stringBase0 + 0x979 == "dialog.freq"
         auto_tweak::load_param<F32, F32>(this->dialog.freq, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0, ap, apsize,
-                                         stringBase0 + 0x979);
+                                         "dialog.freq");
     }
 
     if (init)
     {
         this->dialog.decay = zEntCruiseBubble_f_0_75;
-        // stringBase0 + 0x985 == "dialog.decay"
         auto_tweak::load_param<F32, F32>(this->dialog.decay, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0, ap, apsize,
-                                         stringBase0 + 0x985);
+                                         "dialog.decay");
     }
 
     if (init)
     {
         this->dialog.min_freq = zEntCruiseBubble_f_0_1;
-        // stringBase0 + 0x992 == "dialog.min_freq"
         auto_tweak::load_param<F32, F32>(this->dialog.min_freq, zEntCruiseBubble_f_1_0,
                                          zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_1_0, ap, apsize,
-                                         stringBase0 + 0x992);
+                                         "dialog.min_freq");
     }
 
     if (init)
     {
-        this->material.fresnel_texture = xStrHash(stringBase0 + 0x9a2);
-        this->material.env_texture = xStrHash(stringBase0 + 0x9ad);
+        this->material.fresnel_texture = xStrHash("gloss_edge");
+        this->material.env_texture = xStrHash("rainbowfilm_smooth32");
     }
 }
 
@@ -2629,19 +2518,16 @@ void cruise_bubble::insert_player_animations(xAnimTable& table)
         return;
     }
 
-    // stringBase0 + 0x9c2 == "cruise_bubble_aim"
     shared.astate.player.aim =
-        xAnimTableNewState(&table, stringBase0 + 0x9c2, 0x10, 0, zEntCruiseBubble_f_1_0, NULL, NULL,
+        xAnimTableNewState(&table, "cruise_bubble_aim", 0x10, 0, zEntCruiseBubble_f_1_0, NULL, NULL,
                            zEntCruiseBubble_f_0_0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
 
-    // stringBase0 + 0x9d4 == "cruise_bubble_fire"
     shared.astate.player.fire =
-        xAnimTableNewState(&table, stringBase0 + 0x9d4, 0x20, 0, zEntCruiseBubble_f_1_0, NULL, NULL,
+        xAnimTableNewState(&table, "cruise_bubble_fire", 0x20, 0, zEntCruiseBubble_f_1_0, NULL, NULL,
                            zEntCruiseBubble_f_0_0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
 
-    // stringBase0 + 0x9e7 == "cruise_bubble_idle"
     shared.astate.player.idle =
-        xAnimTableNewState(&table, stringBase0 + 0x9e7, 0x10, 0, zEntCruiseBubble_f_1_0, NULL, NULL,
+        xAnimTableNewState(&table, "cruise_bubble_idle", 0x10, 0, zEntCruiseBubble_f_1_0, NULL, NULL,
                            zEntCruiseBubble_f_0_0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
 
     char* start_from = (char*)xMemPushTemp(0x250);
@@ -2656,31 +2542,24 @@ void cruise_bubble::insert_player_animations(xAnimTable& table)
         *++s = '\0';
     }
 
-    // stringBase0 + 0x9c2 == "cruise_bubble_aim"
     shared.atran.player.aim =
-        xAnimTableNewTransition(&table, start_from, stringBase0 + 0x9c2,
+        xAnimTableNewTransition(&table, start_from, "cruise_bubble_aim",
                                 (xAnimTransitionConditionalCallback)&check_anim_aim, NULL, 0, 0,
                                 zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0, 0, 0,
                                 zEntCruiseBubble_f_0_15, NULL);
 
-    // stringBase0 + 0x9c2 == "cruise_bubble_aim"
-    // stringBase0 + 0x9d4 == "cruise_bubble_fire"
     shared.atran.player.fire =
-        xAnimTableNewTransition(&table, stringBase0 + 0x9c2, stringBase0 + 0x9d4, NULL, NULL, 0, 0,
+        xAnimTableNewTransition(&table, "cruise_bubble_aim", "cruise_bubble_fire", NULL, NULL, 0, 0,
                                 zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0, 0, 0,
                                 zEntCruiseBubble_f_0_15, NULL);
 
-    // stringBase0 + 0x9d4 == "cruise_bubble_fire"
-    // stringBase0 + 0x9e7 == "cruise_bubble_idle"
     shared.atran.player.idle =
-        xAnimTableNewTransition(&table, stringBase0 + 0x9d4, stringBase0 + 0x9e7, NULL, NULL, 0x10,
+        xAnimTableNewTransition(&table, "cruise_bubble_fire", "cruise_bubble_idle", NULL, NULL, 0x10,
                                 0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0, 0, 0,
                                 zEntCruiseBubble_f_0_15, NULL);
 
-    // stringBase0 + 0x9fa == "cruise_bubble_aim cruise_bubble_fire cruise_bubble_idle"
-    // stringBase0 + 0x0 == "Idle01"
     shared.atran.player.end =
-        xAnimTableNewTransition(&table, stringBase0 + 0x9fa, stringBase0 + 0x0, NULL, NULL, 0, 0,
+        xAnimTableNewTransition(&table, "cruise_bubble_aim cruise_bubble_fire cruise_bubble_idle", "Idle01", NULL, NULL, 0, 0,
                                 zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0, 0, 0,
                                 zEntCruiseBubble_f_0_15, NULL);
 
