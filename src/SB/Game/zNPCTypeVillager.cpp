@@ -7,9 +7,10 @@ extern U32 g_hash_folkanim[26];
 extern char* g_strz_platanim[2];
 extern U32 g_hash_platanim[2];
 extern zParEmitter* g_pemit_aqualeak;
-extern char zNPCTypeVillager_stringBase0[];
 extern xParEmitterCustomSettings g_parf_aqualeak;
 extern xVec3 g_O3;
+
+char* _ = "Unknown";
 
 void ZNPC_Villager_Startup()
 {
@@ -154,7 +155,7 @@ xAnimTable* ZNPC_AnimTable_SuperFriend()
 /*
 void FOLK_InitEffects()
 {
-    g_pemit_aqualeak = zParEmitterFind(zNPCTypeVillager_stringBase0 + 0x4b6);
+    g_pemit_aqualeak = zParEmitterFind("PAREMIT_FOLK_SANDYB_LEAK");
     g_parf_aqualeak.custom_flags = 0x300; // 0x138
     xVec3Copy((xVec3*)&g_parf_aqualeak.pos, (xVec3*)&g_O3); // 0x140
     xVec3Copy((xVec3*)&g_parf_aqualeak.vel, (xVec3*)&g_O3); // 0x14c
