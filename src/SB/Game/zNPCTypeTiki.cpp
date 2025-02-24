@@ -21,7 +21,16 @@ extern F32 _867;
 extern NPCSndTrax g_sndTrax_TikiShared[3];
 extern NPCSndTrax g_sndTrax_TikiThunder[2];
 
-char* _ = "Unknown";
+// Taken from zNPCTypeTiki.s
+// Defining these here makes the stringBase0 offsets match in the later functions.
+char* str1 = "Unknown";
+char* str2 = "Idle01";
+char* str3 = "PAREMIT_THUNDER_CLOUD";
+char* str4 = "PAREMIT_CLOUD";
+char* str5 = "target";
+char* str6 = "zNPCTiki";
+char* str7 = "what the ...\n";
+char* str8 = "Idle";
 
 void ZNPC_Tiki_Startup()
 {

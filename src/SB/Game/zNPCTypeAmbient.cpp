@@ -24,7 +24,8 @@ extern NPCSndTrax g_sndTrax_Neptune;
 extern F32 _882;
 extern F32 _883;
 
-// Taken from zNPCTypeAmbient.s. Defining these here makes the stringBase0 offsets match in the later functions.
+// Taken from zNPCTypeAmbient.s.
+// Defining these here makes the stringBase0 offsets match in the later functions.
 char* str1 = "Unknown";
 char* str2 = "Idle01";
 char* str3 = "Idle02";
@@ -38,7 +39,7 @@ char* str10 = "Dance01";
 char* str11 = "Pray01";
 char* str12 = "Attack01";
 char* str13 = "zNPCAmbient";
-char* str14 = "zNPCJelly";
+char* str14 = "zNPCJelly";  
 char* str15 = "zNPCNeptune";
 
 void ZNPC_Ambient_Startup()
