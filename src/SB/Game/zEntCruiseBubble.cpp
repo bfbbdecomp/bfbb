@@ -1277,9 +1277,6 @@ cruise_bubble::state_player_halt::state_player_halt() : state_type(STATE_PLAYER_
 }
 
 #ifdef NON_MATCHING
-// `stringBase0 + 0x17b` gets cached in r31 where original asm reloads it everytime
-// change the offset in every other `stringBase0 + 0x17b`
-// and the only difference in the diff will be that new offset
 void cruise_bubble::reset_wake_ribbons()
 {
     wake_ribbon[0].set_default_config();
