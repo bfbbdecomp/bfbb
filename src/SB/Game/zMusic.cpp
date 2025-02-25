@@ -12,12 +12,8 @@ extern zMusicTrackInfo sMusicTrack[2];
 extern zVolumeInfo volume;
 extern U32 sMusicPaused;
 extern S32 sMusicLastEnum[2];
-extern F32 lbl_803CDD48; //0f by default.
-extern F32 minDelay; //Value is defaulted at 0.001f.
 extern U32 sMusicSoundID[24][2];
 extern zMusicSituation sMusicInfo[8];
-extern F32 lbl_803CCA78;
-extern F32 lbl_803CD118;
 extern zMusicSituation* sMusicQueueData[2];
 extern F32 sMusicTimer[2];
 
@@ -26,12 +22,14 @@ extern zGlobals globals;
 
 extern const char zMusic_strings[];
 
+static const F32 minDelay = 0.001f;
+
 #ifdef NON_MATCHING
 void volume_reset()
 {
-    volume.cur = lbl_803CCA78;
-    volume.end = lbl_803CD118;
-    volume.inc = lbl_803CCA78;
+    volume.cur = 0.0f;
+    volume.end = 1.0f;
+    volume.inc = 0.5f;
     memset(volume.adjusted, 0, sizeof(volume.adjusted));
 }
 #endif
@@ -292,6 +290,17 @@ void zMusicSetVolume(F32 vol, F32 delay)
     volume.inc = (vol - volume.cur) / delay;
 }
 
+// This version of it matches 33%. It's also functionally incorrect.
+void zMusicSetVolume(float vol, float delay)
+{
+    volume.cur = vol; // This makes it introduce the "frsp" instruction.
+    volume.inc = vol - volume.cur;
+
+    if (delay > minDelay) // Doing the if statement likes this makes it generate the "blelr" instruction
+    {
+        volume.inc = vol / delay;
+    }
+}
 #endif
 
 void zMusicReset()
