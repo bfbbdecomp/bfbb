@@ -92,9 +92,9 @@ void fillCombo(zComboReward* reward)
     reward->rewardNum = j;
 }
 
-void zCombo_Add(S32 arg0) 
+void zCombo_Add(S32 arg0)
 {
-    if (comboTimer < 0.0f) 
+    if (comboTimer < 0.0f)
     {
         comboTimer = comboMaxTime;
         comboPending = arg0 - 1;
@@ -102,7 +102,7 @@ void zCombo_Add(S32 arg0)
     }
     comboTimer = comboMaxTime;
     comboCounter += arg0;
-    if ((S32) comboPending != 0) 
+    if ((S32)comboPending != 0)
     {
         comboCounter += comboPending;
         comboPending = 0;
