@@ -198,6 +198,7 @@ namespace xhud
 
     bool linear_motive_update(widget& w, motive& m, F32);
     bool accelerate_motive_update(widget& w, motive& m, F32);
+    bool delay_motive_update(widget& w, motive& m, F32);
 
     xModelInstance* load_model(U32);
 }; // namespace xhud
