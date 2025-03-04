@@ -32,11 +32,11 @@ struct widget_chunk : xBase
 
 /* .bss */
 static xVec3 sUnderCamPos;
-static xtextbox * sHideText[5];
+static ztextbox* sHideText[5];
 
 /* .sbss */
 static widget_chunk* comboHUD;
-static zUIFont* sHideUIF[1];
+static zUIFont* sHideUIF;
 static S32 comboPending;
 static S32 comboLastCounter;
 static S32 comboCounter;
