@@ -46,7 +46,14 @@ static F32 comboTimer;
 static F32 comboMaxTime = 1.0f;
 static F32 comboDisplayTime = 2.0f;
 
-extern zComboReward comboReward[16];
+static zComboReward comboReward[16] = {
+    { 0, "", {}, 0, NULL },   { 0, "", {}, 0, NULL },  { 2, "", {}, 0, NULL },
+    { 3, "", {}, 0, NULL },   { 3, "", {}, 0, NULL },  { 5, "", {}, 0, NULL },
+    { 10, "", {}, 0, NULL },  { 15, "", {}, 0, NULL }, { 20, "", {}, 0, NULL },
+    { 25, "", {}, 0, NULL },  { 30, "", {}, 0, NULL }, { 40, "", {}, 0, NULL },
+    { 50, "", {}, 0, NULL },  { 60, "", {}, 0, NULL }, { 75, "", {}, 0, NULL },
+    { 100, "", {}, 0, NULL },
+};
 
 void fillCombo(zComboReward* reward)
 {
