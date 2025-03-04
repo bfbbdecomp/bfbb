@@ -4,6 +4,7 @@
 #include <types.h>
 #include "xFont.h"
 #include "xHud.h"
+#include "zEntPickup.h"
 
 void zCombo_Setup();
 void zCombo_Add(int);
