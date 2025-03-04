@@ -224,6 +224,123 @@ void zCombo_HideImmediately()
     }
 }
 
+void zCombo_Update(F32 dt)
+{
+    F32 temp_f0;
+    S32 var_r31;
+    S32 var_r28;
+    zComboReward* temp_r5;
+    zComboReward* temp_r3;
+    zComboReward* temp_r0;
+
+    xVec3Copy(&sUnderCamPos, &globals.camera.mat.pos);
+
+    xVec3AddScaled(&sUnderCamPos, &globals.camera.mat.up, -3.0f);
+
+    var_r31 = comboCounter;
+    if (comboCounter >= 0x10)
+    {
+        var_r31 = 0xf;
+    }
+
+    temp_r3 = comboReward;
+    temp_r5 = &temp_r3[var_r31];
+    if (comboLastCounter != comboCounter && temp_r5->reward != 0)
+    {
+        if (comboHUD != NULL)
+        {
+            strcpy(comboHUD->w.text, xTextAssetGetText(temp_r5->textAsset));
+            comboHUD->w.show();
+        }
+        comboLastCounter = comboCounter;
+    }
+
+    var_r28 = 0;
+    do
+    {
+        if (sHideText[var_r28] != NULL && sHideText[var_r28]->visible())
+        {
+            // null-terminating character
+            comboHUD->w.text[0] = '\x00';
+            break;
+        }
+
+        var_r28 += 1;
+    } while (var_r28 < 5);
+
+    if (sHideUIF != NULL && xEntIsVisible(sHideUIF))
+    {
+        // null-terminating character
+        comboHUD->w.text[0] = '\x00';
+    }
+
+    if (comboTimer >= 0.0f)
+    {
+        temp_f0 = comboTimer - dt;
+        comboTimer = temp_f0;
+
+        temp_r0 = &comboReward[0];
+        
+        if (comboTimer < 0.0f && temp_r0->reward > 0)
+        {
+            zEntPickup_SpawnNRewards(comboReward->rewardList, comboReward->rewardNum, &sUnderCamPos);
+
+            switch (var_r31)
+            {
+            case 5:
+                zEntPlayer_SNDPlayStreamRandom(0, 1, ePlayerStreamSnd_Combo1, ePlayerStreamSnd_Combo2,
+                                            0.1f);
+                break;
+            case 6:
+            case 7:
+                zEntPlayer_SNDPlayStreamRandom(0, 2, ePlayerStreamSnd_Combo1, ePlayerStreamSnd_Combo2,
+                                            0.1f);
+                break;
+            case 8:
+            case 9:
+                zEntPlayer_SNDPlayStreamRandom(0, 3, ePlayerStreamSnd_Combo1, ePlayerStreamSnd_Combo2,
+                                            0.1f);
+                break;
+            case 10:
+                zEntPlayer_SNDPlayStreamRandom(0, 4, ePlayerStreamSnd_Combo1, ePlayerStreamSnd_Combo2,
+                                            0.1f);
+                break;
+            case 11:
+            case 12:
+                zEntPlayer_SNDPlayStreamRandom(0, 5, ePlayerStreamSnd_Combo1, ePlayerStreamSnd_Combo2,
+                                            0.1f);
+                zEntPlayer_SNDPlayStreamRandom(6, 50, ePlayerStreamSnd_Combo1, ePlayerStreamSnd_Combo5,
+                                            0.1f);
+                break;
+            case 13:
+                zEntPlayer_SNDPlayStreamRandom(0, 10, ePlayerStreamSnd_BigCombo1,
+                                            ePlayerStreamSnd_BigCombo2, 0.1f);
+                zEntPlayer_SNDPlayStream(11, 100, ePlayerStreamSnd_BigCombo1, 0x0);
+                break;
+            case 14:
+                zEntPlayer_SNDPlayStreamRandom(0, 10, ePlayerStreamSnd_BigCombo1,
+                                            ePlayerStreamSnd_BigCombo2, 0.1f);
+                zEntPlayer_SNDPlayStream(21, 100, ePlayerStreamSnd_BigCombo1, 0x0);
+                break;
+            case 15:
+                zEntPlayer_SNDPlayStream(0, 100, ePlayerStreamSnd_BigCombo2, 0x0);
+                break;
+            }
+
+            if (comboHUD != NULL)
+            {
+                comboHUD->w.add_motive(xhud::motive(NULL, comboDisplayTime, (F32)0.0f, (F32)0.0f,
+                                                    xhud::delay_motive_update, (void*)zComboHideMessage));
+            }
+
+            comboTimer = -1.0f;
+            comboCounter = 0;
+            comboLastCounter = 0;
+        }
+
+    }
+}
+
 bool ztextbox::visible()
 {
     return this->flag.visible;
