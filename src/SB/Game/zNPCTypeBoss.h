@@ -31,6 +31,8 @@ void ZNPC_Boss_Shutdown();
 xFactoryInst* ZNPC_Create_Boss(S32 who, RyzMemGrow* grow, void*);
 void ZNPC_Destroy_Boss(xFactoryInst* inst);
 
+xAnimTable* ZNPC_AnimTable_BossSBobbyArm();
+
 #define ANIM_COUNT 78
 extern U32 g_hash_bossanim[ANIM_COUNT];
 extern char* g_strz_bossanim[ANIM_COUNT];

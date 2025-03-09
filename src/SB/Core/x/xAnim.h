@@ -161,6 +161,13 @@ struct xAnimPlay
     void (*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, S32);
 };
 
+class AnimTableList {  // size: 0xC
+public:
+    char * name; // offset 0x0, size 0x4
+    class xAnimTable * (* constructor)(); // offset 0x4, size 0x4
+    unsigned int id; // offset 0x8, size 0x4
+};
+
 void xAnimInit();
 void xAnimTempTransitionInit(U32 count);
 xAnimFile* xAnimFileNew(void* rawData, const char* name, U32 flags, xAnimFile** linkedList);

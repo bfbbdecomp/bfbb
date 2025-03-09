@@ -279,4 +279,6 @@ struct zNPCGoalDutchmanDeath : zNPCGoalCommon
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
+xAnimTable* ZNPC_AnimTable_Dutchman();
+
 #endif

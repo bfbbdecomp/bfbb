@@ -192,4 +192,6 @@ struct zNPCGoalKJDeath : zNPCGoalCommon
     }
 };
 
+xAnimTable* ZNPC_AnimTable_KingJelly();
+
 #endif

@@ -8,10 +8,35 @@
 
 #include "xJSP.h"
 
+#include "zEntCruiseBubble.h"
+#include "zEntPlayerAnimationTables.h"
+#include "xHudModel.h"
+#include "zNPCTypeAmbient.h"
+#include "zNPCTypeCommon.h"
+#include "zNPCTypeBossPatrick.h"
+#include "zNPCTypeBossPlankton.h"
+#include "zNPCTypeBossSandy.h"
+#include "zNPCTypeBossSB1.h"
+#include "zNPCTypeBossSB2.h"
+#include "zNPCTypeDuplotron.h"
+#include "zNPCTypeDutchman.h"
+#include "zNPCHazard.h"
+#include "zNPCTypeKingJelly.h"
+#include "zNPCTypePrawn.h"
+#include "zNPCTypeRobot.h"
+#include "zNPCTypeTest.h"
+#include "zNPCTypeTiki.h"
+
 struct RwMemory
 {
     U8* start;
     U32 length;
+};
+
+class HackModelRadius {
+public:
+    U32 assetid;
+    F32 radius;
 };
 
 void FootstepHackSceneEnter();

@@ -647,4 +647,6 @@ namespace cruise_bubble
     xMat4x3* get_missle_mat();
 } // namespace cruise_bubble
 
+xAnimTable* anim_table();
+
 #endif

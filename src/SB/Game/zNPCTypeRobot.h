@@ -160,7 +160,6 @@ struct zNPCFodder : zNPCRobot
 {
     zNPCFodder(S32 myType) : zNPCRobot(myType)
     {
-
     }
 
     void Stun(F32 stuntime);
@@ -181,7 +180,6 @@ struct zNPCFodBomb : zNPCRobot
 
     zNPCFodBomb(S32 myType) : zNPCRobot(myType)
     {
-
     }
 
     zNPCLassoInfo* PRIV_GetLassoData();
@@ -204,7 +202,6 @@ struct zNPCFodBzzt : zNPCRobot
 
     zNPCFodBzzt(S32 myType) : zNPCRobot(myType)
     {
-
     }
 
     zNPCLassoInfo* PRIV_GetLassoData();
@@ -221,7 +218,6 @@ struct zNPCChomper : zNPCRobot
 
     zNPCChomper(S32 myType) : zNPCRobot(myType)
     {
-
     }
 
     zNPCLassoInfo* PRIV_GetLassoData();
@@ -234,7 +230,6 @@ struct zNPCCritter : zNPCRobot
 {
     zNPCCritter(S32 myType) : zNPCRobot(myType)
     {
-
     }
 
     zNPCLassoInfo* PRIV_GetLassoData();
@@ -247,7 +242,6 @@ struct zNPCHammer : zNPCRobot
 {
     zNPCHammer(S32 myType) : zNPCRobot(myType)
     {
-
     }
 
     void Init(xEntAsset*);
@@ -259,7 +253,6 @@ struct zNPCTarTar : zNPCRobot
 {
     zNPCTarTar(S32 myType) : zNPCRobot(myType)
     {
-
     }
 
     void Reset();
@@ -271,7 +264,6 @@ struct zNPCGlove : zNPCRobot
 {
     zNPCGlove(S32 myType) : zNPCRobot(myType)
     {
-
     }
 
     void Init(xEntAsset*);
@@ -282,7 +274,6 @@ struct zNPCMonsoon : zNPCRobot
 {
     zNPCMonsoon(S32 myType) : zNPCRobot(myType)
     {
-
     }
 
     U8 FoulWeather(float);
@@ -309,7 +300,6 @@ struct zNPCSleepy : zNPCRobot
 
     zNPCSleepy(S32 myType) : zNPCRobot(myType)
     {
-
     }
 
     void Reset();
@@ -330,7 +320,6 @@ struct zNPCArfDog : zNPCRobot
 
     zNPCArfDog(S32 myType) : zNPCRobot(myType)
     {
-
     }
 
     zNPCLassoInfo* PRIV_GetLassoData();
@@ -348,7 +337,6 @@ struct zNPCArfArf : zNPCRobot
 
     zNPCArfArf(S32 myType) : zNPCRobot(myType)
     {
-
     }
 
     zMovePoint* GetTelepoint(S32 unk);
@@ -363,7 +351,6 @@ struct zNPCChuck : zNPCRobot
 
     zNPCChuck(S32 myType) : zNPCRobot(myType)
     {
-
     }
 
     //    0x00000000; // 0x0
@@ -463,7 +450,6 @@ struct zNPCTubelet : zNPCRobot
 
     zNPCTubelet(S32 myType) : zNPCRobot(myType)
     {
-
     }
 
     void ParseINI();
@@ -494,7 +480,6 @@ struct zNPCTubeSlave : zNPCRobot
 
     zNPCTubeSlave(S32 myType) : zNPCRobot(myType)
     {
-
     }
 
     U8 PhysicsFlags() const;
@@ -525,7 +510,6 @@ struct zNPCSlick : zNPCRobot
 
     zNPCSlick(S32 myType) : zNPCRobot(myType)
     {
-
     }
 
     zNPCSlick* YouOwnSlipFX();
@@ -558,6 +542,22 @@ void ZNPC_Destroy_Robot(xFactoryInst* inst);
 void ROBO_KillEffects();
 void zNPCFodBzzt_ResetDanceParty();
 void ROBO_InitEffects();
+xAnimTable* ZNPC_AnimTable_ArfArf();
+xAnimTable* ZNPC_AnimTable_ArfDog();
+xAnimTable* ZNPC_AnimTable_Chuck();
+xAnimTable* ZNPC_AnimTable_Fodder();
+xAnimTable* ZNPC_AnimTable_GLove();
+xAnimTable* ZNPC_AnimTable_Hammer();
+xAnimTable* ZNPC_AnimTable_Monsoon();
+xAnimTable* ZNPC_AnimTable_ThunderCloud();
+xAnimTable* ZNPC_AnimTable_SleepyTime();
+xAnimTable* ZNPC_AnimTable_NightLight();
+xAnimTable* ZNPC_AnimTable_Slick();
+xAnimTable* ZNPC_AnimTable_SlickShield();
+xAnimTable* ZNPC_AnimTable_TarTar();
+xAnimTable* ZNPC_AnimTable_TTSauce();
+xAnimTable* ZNPC_AnimTable_Tubelet();
+xAnimTable* ZNPC_AnimTable_FloatDevice();
 S32 DUMY_grul_returnToIdle(xGoal*, void*, en_trantype*, F32, void*);
 S32 xEntIsEnabled(xEnt* ent);
 

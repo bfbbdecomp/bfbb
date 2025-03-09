@@ -80,4 +80,8 @@ xFactoryInst* ZNPC_Create_Ambient(S32 who, RyzMemGrow* grow, void*);
 void ZNPC_Destroy_Ambient(xFactoryInst* inst);
 S32 JELY_grul_getAngry(xGoal* rawgoal, void* p1, en_trantype* trantype, F32 f, void* p2);
 
+xAnimTable* ZNPC_AnimTable_Ambient();
+xAnimTable* ZNPC_AnimTable_Jelly();
+xAnimTable* ZNPC_AnimTable_Neptune();
+
 #endif
