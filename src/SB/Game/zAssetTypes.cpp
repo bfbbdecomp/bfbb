@@ -8,6 +8,203 @@
 #include <rpworld.h>
 #include <xAnim.h>
 
+void* Curve_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize);
+void* ATBL_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize);
+void* RWTX_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize);
+void* Model_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize);
+void* BSP_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize);
+void* JSP_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize);
+void* SndInfoRead(void*, unsigned int, void*, unsigned int, unsigned int*);
+void Model_Unload(void*, U32);
+void BSP_Unload(void*, U32);
+void JSP_Unload(void*, U32);
+void Anim_Unload(void*, U32);
+void TextureRW3_Unload(void*, U32);
+void LightKit_Unload(void*, U32);
+void MovePoint_Unload(void*, U32);
+
+static xJSPHeader sDummyEmptyJSP;
+
+static st_PACKER_ASSETTYPE assetTypeHandlers[78] = {
+    {'BSP ', 0, 0, BSP_Read, NULL, NULL, NULL, NULL, BSP_Unload, NULL},
+    {'JSP ', 0, 0, JSP_Read, NULL, NULL, NULL, NULL, JSP_Unload, NULL},
+    {'TXD '},
+    {'MODL', 0, 0, Model_Read, NULL, NULL, NULL, NULL, Model_Unload, NULL},
+    {'ANIM', 0, 0, NULL, NULL, NULL, NULL, NULL, Anim_Unload, NULL},
+    {'RWTX', 0, 0, RWTX_Read, NULL, NULL, NULL, NULL, TextureRW3_Unload, NULL},
+    {'LKIT', 0, 0, NULL, NULL, NULL, NULL, NULL, LightKit_Unload, NULL},
+    {'CAM '},
+    {'PLYR'},
+    {'NPC '},
+    {'ITEM'},
+    {'PKUP'},
+    {'TRIG'},
+    {'SDF '},
+    {'TEX '},
+    {'TXT '},
+    {'ENV '},
+    {'ATBL', 0, 0, ATBL_Read, NULL, NULL, NULL, NULL, NULL, NULL},
+    {'MINF'},
+    {'PICK'},
+    {'PLAT'},
+    {'PEND'},
+    {'MRKR'},
+    {'MVPT', 0, 0, NULL, NULL, NULL, NULL, NULL, MovePoint_Unload, NULL},
+    {'TIMR'},
+    {'CNTR'},
+    {'PORT'},
+    {'SND '},
+    {'SNDS'},
+    {'GRUP'},
+    {'MPHT'},
+    {'SFX '},
+    {'SNDI', 0, 0, SndInfoRead, NULL, NULL, NULL, NULL, NULL, NULL},
+    {'HANG'},
+    {'SIMP'},
+    {'BUTN'},
+    {'SURF'},
+    {'DSTR'},
+    {'BOUL'},
+    {'MAPR'},
+    {'GUST'},
+    {'VOLU'},
+    {'UI  '},
+    {'UIFT'},
+    {'TEXT'},
+    {'COND'},
+    {'DPAT'},
+    {'PRJT'},
+    {'LOBM'},
+    {'FOG '},
+    {'LITE'},
+    {'PARE'},
+    {'PARS'},
+    {'CSN '},
+    {'CTOC'},
+    {'CSNM'},
+    {'EGEN'},
+    {'ALST'},
+    {'RAW '},
+    {'LODT'},
+    {'SHDW'},
+    {'DYNA'},
+    {'VIL '},
+    {'VILP'},
+    {'COLL'},
+    {'PARP'},
+    {'PIPT'},
+    {'DSCO'},
+    {'JAW '},
+    {'SHRP'},
+    {'FLY '},
+    {'TRCK'},
+    {'CRV ', 0, 0, Curve_Read, NULL, NULL, NULL, NULL, NULL, NULL},
+    {'ZLIN'},
+    {'DUPC'},
+    {'SLID'},
+    {'CRDT'},
+};
+
+static HackModelRadius hackRadiusTable[3] = { { 0xFA77E6FAU, 20.0f },
+                                       { 0x5BD0EDACU, 1000.0f },
+                                       { 0xED21A1C6U, 50.0f } };
+
+static char* jsp_shadow_hack_textures[5] = {
+    "beach_towel",  "wood_board_Nails_singleV2", "wood_board_Nails_singleV3",
+    "glass_broken", "ground_path_alpha",
+};
+
+struct AnimTableList animTable[33] = {
+    { "ZNPC_AnimTable_Test", ZNPC_AnimTable_Test, 0 },
+    { "ZNPC_AnimTable_Dutchman", ZNPC_AnimTable_Dutchman, 0 },
+    { "ZNPC_AnimTable_Duplotron", ZNPC_AnimTable_Duplotron, 0 },
+    { "ZNPC_AnimTable_Common", ZNPC_AnimTable_Common, 0 },
+    { "ZNPC_AnimTable_BossPlankton", ZNPC_AnimTable_BossPlankton, 0 },
+    { "ZNPC_AnimTable_BossSandy", ZNPC_AnimTable_BossSandy, 0 },
+    { "ZNPC_AnimTable_SleepyTime", ZNPC_AnimTable_SleepyTime, 0 },
+    { "ZNPC_AnimTable_BossSandyHead", ZNPC_AnimTable_BossSandyHead, 0 },
+    { "ZNPC_AnimTable_Hammer", ZNPC_AnimTable_Hammer, 0 },
+    { "ZNPC_AnimTable_TTSauce", ZNPC_AnimTable_TTSauce, 0 },
+    { "ZNPC_AnimTable_KingJelly", ZNPC_AnimTable_KingJelly, 0 },
+    { "ZNPC_AnimTable_Slick", ZNPC_AnimTable_Slick, 0 },
+    { "ZNPC_AnimTable_TarTar", ZNPC_AnimTable_TarTar, 0 },
+    { "ZNPC_AnimTable_Villager", ZNPC_AnimTable_Villager, 0 },
+    { "ZNPC_AnimTable_BalloonBoy", ZNPC_AnimTable_BalloonBoy, 0 },
+    { "ZNPC_AnimTable_Fodder", ZNPC_AnimTable_Fodder, 0 },
+    { "ZNPC_AnimTable_Prawn", ZNPC_AnimTable_Prawn, 0 },
+    { "ZNPC_AnimTable_Neptune", ZNPC_AnimTable_Neptune, 0 },
+    { "ZNPC_AnimTable_BossSB1", ZNPC_AnimTable_BossSB1, 0 },
+    { "ZNPC_AnimTable_BossSBobbyArm", ZNPC_AnimTable_BossSBobbyArm, 0 },
+    { "ZNPC_AnimTable_Monsoon", ZNPC_AnimTable_Monsoon, 0 },
+    { "ZNPC_AnimTable_ArfDog", ZNPC_AnimTable_ArfDog, 0 },
+    { "ZNPC_AnimTable_ArfArf", ZNPC_AnimTable_ArfArf, 0 },
+    { "ZNPC_AnimTable_BossSB2", ZNPC_AnimTable_BossSB2, 0 },
+    { "ZNPC_AnimTable_Tiki", ZNPC_AnimTable_Tiki, 0 },
+    { "ZNPC_AnimTable_Tubelet", ZNPC_AnimTable_Tubelet, 0 },
+    { "ZNPC_AnimTable_Ambient", ZNPC_AnimTable_Ambient, 0 },
+    { "ZNPC_AnimTable_GLove", ZNPC_AnimTable_GLove, 0 },
+    { "ZNPC_AnimTable_LassoGuide", ZNPC_AnimTable_LassoGuide, 0 },
+    { "ZNPC_AnimTable_Chuck", ZNPC_AnimTable_Chuck, 0 },
+    { "ZNPC_AnimTable_Jelly", ZNPC_AnimTable_Jelly, 0 },
+    { "ZNPC_AnimTable_SuperFriend", ZNPC_AnimTable_SuperFriend, 0 },
+    {
+        "ZNPC_AnimTable_BossPatrick\0SB_run1L\0SB_run1R\0SC_run_kelpL\0Pat_run_rock_dryL\0Pat_run_rock_dryR\0\0Debug%02d",
+        ZNPC_AnimTable_BossPatrick,
+        0,
+    },
+};
+
+static xAnimTable* (*tableFuncList[48])() = {
+    zEntPlayer_AnimTable,
+    ZNPC_AnimTable_Common,
+    zPatrick_AnimTable,
+    zSandy_AnimTable,
+    ZNPC_AnimTable_Villager,
+    zSpongeBobTongue_AnimTable,
+    ZNPC_AnimTable_LassoGuide,
+    ZNPC_AnimTable_Hammer,
+    ZNPC_AnimTable_TarTar,
+    ZNPC_AnimTable_GLove,
+    ZNPC_AnimTable_Monsoon,
+    ZNPC_AnimTable_SleepyTime,
+    ZNPC_AnimTable_ArfDog,
+    ZNPC_AnimTable_ArfArf,
+    ZNPC_AnimTable_Chuck,
+    ZNPC_AnimTable_Tubelet,
+    ZNPC_AnimTable_Slick,
+    ZNPC_AnimTable_Ambient,
+    ZNPC_AnimTable_Tiki,
+    ZNPC_AnimTable_Fodder,
+    ZNPC_AnimTable_Duplotron,
+    ZNPC_AnimTable_Jelly,
+    ZNPC_AnimTable_Test,
+    ZNPC_AnimTable_Neptune,
+    ZNPC_AnimTable_KingJelly,
+    ZNPC_AnimTable_Dutchman,
+    ZNPC_AnimTable_Prawn,
+    ZNPC_AnimTable_BossSandy,
+    ZNPC_AnimTable_BossPatrick,
+    ZNPC_AnimTable_BossSB1,
+    ZNPC_AnimTable_BossSB2,
+    ZNPC_AnimTable_BossSBobbyArm,
+    ZNPC_AnimTable_BossPlankton,
+    zEntPlayer_BoulderVehicleAnimTable,
+    ZNPC_AnimTable_BossSandyHead,
+    ZNPC_AnimTable_BalloonBoy,
+    xEnt_AnimTable_AutoEventSmall,
+    ZNPC_AnimTable_SlickShield,
+    ZNPC_AnimTable_SuperFriend,
+    ZNPC_AnimTable_ThunderCloud,
+    XHUD_AnimTable_Idle,
+    ZNPC_AnimTable_NightLight,
+    ZNPC_AnimTable_HazardStd,
+    ZNPC_AnimTable_FloatDevice,
+    anim_table, // Cruise Bubble anim table based on PS2 DWARF data
+    ZNPC_AnimTable_BossSandyScoreboard,
+    zEntPlayer_TreeDomeSBAnimTable,
+    NULL,
+};
+
 extern xJSPHeader* sTempJSP;
 extern xJSPHeader sDummyEmptyJSP;
 
@@ -16,7 +213,18 @@ void zAssetShutdown()
     xSTShutdown();
 }
 
-#if 0
+void* Model_Read(void*, unsigned int, void*, unsigned int, unsigned int*) {
+
+}
+
+void* Curve_Read(void*, unsigned int, void*, unsigned int, unsigned int*) {
+
+}
+
+void Model_Unload(void*, U32) {
+
+}
+
 // Ghidra's output here is not helpful
 void* BSP_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize)
 {
@@ -33,7 +241,7 @@ void* BSP_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsiz
     {
         // damn
         // chunk header info is austack in ghidra :/
-        RwStreamReadChunkHeaderInfo(stream, chunkHeaderInfo);
+        RwStreamReadChunkHeaderInfo(stream, &chunkHeaderInfo);
         *outsize = 0;
     }
     else
@@ -48,7 +256,10 @@ void* BSP_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsiz
     }
     return bsp;
 }
-#endif
+
+void BSP_Unload(void*, U32) {
+
+}
 
 void* JSP_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize)
 {
@@ -65,7 +276,15 @@ void* JSP_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsiz
     return retjsp;
 }
 
-void Anim_Unload(void*, U32)
+void JSP_Unload(void*, U32) {
+
+}
+
+void* RWTX_Read(void*, unsigned int, void*, unsigned int, unsigned int*) {
+
+}
+
+void TextureRW3_Unload(void*, U32)
 {
 }
 
@@ -74,9 +293,29 @@ U8 dummyEffectCB(U32, xAnimActiveEffect*, xAnimSingle*, void*)
     return 0;
 }
 
+void* ATBL_Read(void*, unsigned int, void*, unsigned int, unsigned int*) {
 
-U32 xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags,
-    xEnt* ent, F32 radius, sound_category category, F32 delay)
+}
+
+void Anim_Unload(void*, U32)
+{
+}
+
+void LightKit_Unload(void*, U32)
+{
+}
+
+void MovePoint_Unload(void*, U32)
+{
+
+}
+
+void* SndInfoRead(void*, unsigned int, void*, unsigned int, unsigned int*) {
+
+}
+
+U32 xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, xEnt* ent, F32 radius,
+               sound_category category, F32 delay)
 {
     return xSndPlay3D(id, vol, pitch, priority, flags, ent, radius / 4.0f, radius, category, delay);
 }

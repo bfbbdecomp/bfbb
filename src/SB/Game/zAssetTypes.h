@@ -33,6 +33,12 @@ struct RwMemory
     U32 length;
 };
 
+class HackModelRadius {
+public:
+    U32 assetid;
+    F32 radius;
+};
+
 void FootstepHackSceneEnter();
 void jsp_shadow_hack(xJSPHeader* param_1);
 
