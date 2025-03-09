@@ -168,8 +168,6 @@ public:
     unsigned int id; // offset 0x8, size 0x4
 };
 
-extern U32 gxAnimUseGrowAlloc;
-
 void xAnimInit();
 void xAnimTempTransitionInit(U32 count);
 xAnimFile* xAnimFileNew(void* rawData, const char* name, U32 flags, xAnimFile** linkedList);
