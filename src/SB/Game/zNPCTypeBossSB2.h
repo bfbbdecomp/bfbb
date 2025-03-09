@@ -278,4 +278,6 @@ struct zNPCGoalBossSB2Death : zNPCGoalCommon
     S32 Process(en_trantype*, F32, void*, xScene*);
 };
 
+xAnimTable* ZNPC_AnimTable_BossSB2();
+
 #endif

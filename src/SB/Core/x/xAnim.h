@@ -161,6 +161,13 @@ struct xAnimPlay
     void (*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, S32);
 };
 
+class AnimTableList {  // size: 0xC
+public:
+    char * name; // offset 0x0, size 0x4
+    class xAnimTable * (* constructor)(); // offset 0x4, size 0x4
+    unsigned int id; // offset 0x8, size 0x4
+};
+
 extern U32 gxAnimUseGrowAlloc;
 
 void xAnimInit();

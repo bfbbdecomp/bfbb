@@ -237,4 +237,6 @@ struct zNPCGoalBPlanktonBomb : zNPCGoalCommon
     S32 Process(en_trantype*, float, void*, xScene*);
 };
 
+xAnimTable * ZNPC_AnimTable_BossPlankton();
+
 #endif

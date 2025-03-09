@@ -251,6 +251,9 @@ void zNPCHazard_KillEffects();
 S32 HAZ_ord_sorttest(void* vkey, void* vitem);
 void zNPCHazard_Timestep(F32 dt);
 void zNPCCommon_Hazards_RenderAll(S32 doOpaqueStuff);
+
+xAnimTable* ZNPC_AnimTable_HazardStd();
+
 NPCHazard* HAZ_Acquire();
 S32 HAZ_AvailablePool();
 void HAZ_Iterate(bool (*fp)(NPCHazard&, void*), void* context, S32 flag_filter);

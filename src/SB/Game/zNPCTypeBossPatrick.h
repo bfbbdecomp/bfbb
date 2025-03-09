@@ -293,4 +293,6 @@ struct zNPCGoalBossPatFudge : zNPCGoalCommon
 void zNPCBPatrick_AddBoundEntsToGrid(zScene*);
 void zNPCBPatrick_GameIsPaused(zScene*);
 
+xAnimTable* ZNPC_AnimTable_BossPatrick();
+
 #endif

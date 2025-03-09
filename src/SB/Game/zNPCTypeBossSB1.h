@@ -100,4 +100,6 @@ struct zNPCGoalBossSB1Deflate : zNPCGoalCommon
     S32 Process(en_trantype* trantype, float dt, void* ctxt, xScene* scene);
 };
 
+xAnimTable* ZNPC_AnimTable_BossSB1();
+
 #endif

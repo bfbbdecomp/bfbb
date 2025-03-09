@@ -176,7 +176,7 @@ struct zNPCBSandy : zNPCBoss
     virtual void SelfSetup(); // 8013e5ec entry=28
     virtual void Damage(en_NPC_DAMAGE_TYPE damtype, xBase*, xVec3 const*); // 8014184c entry=32
     virtual U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT param_2,
-                            xGoal* rawgoal); // 8013f1f8 entry=44
+                         xGoal* rawgoal); // 8013f1f8 entry=44
 };
 
 struct zNPCGoalBossSandyIdle : zNPCGoalCommon
@@ -296,6 +296,10 @@ struct zNPCGoalBossSandyClothesline : zNPCGoalCommon
 
 void zNPCBSandy_AddBoundEntsToGrid(zScene*);
 void zNPCBSandy_GameIsPaused(zScene*);
+
+xAnimTable* ZNPC_AnimTable_BossSandy();
+xAnimTable* ZNPC_AnimTable_BossSandyHead();
+xAnimTable* ZNPC_AnimTable_BossSandyScoreboard();
 
 U32 HeadNotShocked(xAnimTransition*, xAnimSingle*, void*);
 U32 HeadIsShocked(xAnimTransition*, xAnimSingle*, void*);

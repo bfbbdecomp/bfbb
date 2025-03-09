@@ -192,4 +192,6 @@ struct zNPCGoalPrawnDeath : zNPCGoalCommon
     }
 };
 
+xAnimTable* ZNPC_AnimTable_Prawn();
+
 #endif

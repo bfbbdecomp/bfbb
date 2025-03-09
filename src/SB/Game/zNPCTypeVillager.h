@@ -176,9 +176,12 @@ struct zNPCNewsFishTV : zNPCVillager
     U8 ColChkFlags() const;
 };
 
+xAnimTable* ZNPC_AnimTable_Villager();
 xAnimTable* ZNPC_AnimTable_Villager(xAnimTable* callerTable);
 void zNPCBubbleBuddy_AlphaUpdate(F32 dt);
+xAnimTable* ZNPC_AnimTable_BalloonBoy();
 xAnimTable* ZNPC_AnimTable_BalloonBoy(xAnimTable* callerTable);
+xAnimTable* ZNPC_AnimTable_SuperFriend();
 xAnimTable* ZNPC_AnimTable_SuperFriend(xAnimTable* callerTable);
 void FOLK_KillEffects();
 void FOLK_InitEffects();
