@@ -391,7 +391,7 @@ void zEntPlayer_ShadowModelEnable();
 void zEntPlayer_ShadowModelDisable();
 
 void zEntPlayerJumpStart(class xEnt* ent, class zJumpParam* jump);
-bool zEntPlayer_IsSneaking();
+S32 zEntPlayer_IsSneaking();
 
 void zEntPlayer_setBoulderMode(U32 mode);
 void zEntPlayer_GiveHealth(S32);

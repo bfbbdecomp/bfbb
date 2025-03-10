@@ -182,7 +182,7 @@ namespace
         return zSceneGetAreaname(globals.sceneCur->sceneID);
     }
 
-    char* var_text_CurrentData()
+    char* var_text_CurrentDate()
     {
         iGetCurrFormattedDate(zVar_printf_buffer6);
         return zVar_printf_buffer6;
@@ -672,42 +672,42 @@ S32 zVarEntryCB_CurrentRoom(void*)
     return room + ((mostSignificantChar - 'A') + 1) * 100;
 }
 
-S32 zVarEntryCB_CurrentLevelPickup()
+S32 zVarEntryCB_CurrentLevelPickup(void*)
 {
     return globals.player.Inv_LevelPickups_CurrentLevel;
 }
 
-S32 zVarEntryCB_CurrentLevelPSocks()
+S32 zVarEntryCB_CurrentLevelPSocks(void*)
 {
     return globals.player.Inv_PatsSock_CurrentLevel;
 }
 
-S32 zVarEntryCB_TotalPSocks()
+S32 zVarEntryCB_TotalPSocks(void*)
 {
     return globals.player.Inv_PatsSock_Total;
 }
 
-S32 zVarEntryCB_Shinies()
+S32 zVarEntryCB_Shinies(void*)
 {
     return globals.player.Inv_Shiny;
 }
 
-S32 zVarEntryCB_Spatulas()
+S32 zVarEntryCB_Spatulas(void*)
 {
     return globals.player.Inv_Spatula;
 }
 
-S32 zVarEntryCB_Date()
+S32 zVarEntryCB_Date(void*)
 {
     return iGetDay() + iGetMonth() * 0x64;
 }
 
-S32 zVarEntryCB_Hour()
+S32 zVarEntryCB_Hour(void*)
 {
     return iGetHour();
 }
 
-S32 zVarEntryCB_Minute()
+S32 zVarEntryCB_Minute(void*)
 {
     return iGetMinute();
 }
