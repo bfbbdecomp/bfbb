@@ -97,6 +97,14 @@ void zPlatform_Setup(zPlatform* ent, xScene* sc)
     }
 }
 
+void zPlatform_Dismount(zPlatform* ent)
+{
+    if ((ent->subType == 9) && (ent->state == 1))
+    {
+        ent->state = 0;
+    }
+}
+
 void zPlatformTranslate(xEnt* xent, xVec3* dpos, xMat4x3* dmat)
 {
     zPlatform* plat = (zPlatform*)xent;
