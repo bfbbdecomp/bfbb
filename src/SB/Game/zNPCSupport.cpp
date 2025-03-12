@@ -26,45 +26,44 @@ void NPCSupport_Shutdown()
     NPCSupplement_Shutdown();
 }
 
-
 bool NPCSupport_ScenePrepare()
 {
-  zNPCHazard_ScenePrepare();
-  zNPCGlyph_ScenePrepare();
-  NPCWidget_ScenePrepare();
-  NPCSupplement_ScenePrepare();
-  Firework_ScenePrepare();
-  return NPCC_ForceTalkOk();
+    zNPCHazard_ScenePrepare();
+    zNPCGlyph_ScenePrepare();
+    NPCWidget_ScenePrepare();
+    NPCSupplement_ScenePrepare();
+    Firework_ScenePrepare();
+    return NPCC_ForceTalkOk();
 }
 
 void NPCSupport_SceneFinish()
 {
-  zNPCHazard_SceneFinish();
-  zNPCGlyph_SceneFinish();
-  NPCWidget_SceneFinish();
-  NPCSupplement_SceneFinish();
-  Firework_SceneFinish();
-  return;
+    zNPCHazard_SceneFinish();
+    zNPCGlyph_SceneFinish();
+    NPCWidget_SceneFinish();
+    NPCSupplement_SceneFinish();
+    Firework_SceneFinish();
+    return;
 }
 
 void NPCSupport_ScenePostInit()
 {
-  zNPCHazard_ScenePostInit();
-  zNPCGlyph_ScenePostInit();
-  NPCWidget_ScenePostInit();
-  NPCSupplement_ScenePostInit();
-  zNPC_SNDInit();
-  return;
+    zNPCHazard_ScenePostInit();
+    zNPCGlyph_ScenePostInit();
+    NPCWidget_ScenePostInit();
+    NPCSupplement_ScenePostInit();
+    zNPC_SNDInit();
+    return;
 }
 
 void NPCSupport_SceneReset()
 {
-  zNPCHazard_SceneReset();
-  zNPCGlyph_SceneReset();
-  NPCWidget_SceneReset();
-  NPCSupplement_SceneReset();
-  Firework_SceneReset(0);
-  return;
+    zNPCHazard_SceneReset();
+    zNPCGlyph_SceneReset();
+    NPCWidget_SceneReset();
+    NPCSupplement_SceneReset();
+    Firework_SceneReset(0);
+    return;
 }
 
 void NPCSupport_Timestep(F32 dt)
@@ -74,7 +73,6 @@ void NPCSupport_Timestep(F32 dt)
     NPCSupplement_Timestep(dt);
     Firework_Timestep(dt);
 }
-
 
 void NPCWidget_Startup()
 {
@@ -125,8 +123,6 @@ bool NPCC_ForceTalkOk()
 void zNPC_SNDInit()
 {
 }
-
-
 
 F32 NPCC_TmrCycle(float* tmr, float dt, float interval)
 {
