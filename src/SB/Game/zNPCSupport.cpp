@@ -120,6 +120,30 @@ bool NPCC_ForceTalkOk()
     return false;
 }
 
+RwRaster* NPCC_FindRWRaster(const char* txtrname)
+{
+    RwTexture* txtr = NPCC_FindRWTexture(txtrname);
+    if (txtr != NULL)
+    {
+        return txtr->raster;
+    }
+    return NULL;
+}
+
+RwTexture* NPCC_FindRWTexture(const char*)
+{
+    return NULL;
+}
+
+RwRaster* NPCC_FindRWRaster(RwTexture* txtr)
+{
+    if (txtr != NULL)
+    {
+        return txtr->raster;
+    }
+    return NULL;
+}
+
 void zNPC_SNDInit()
 {
 }
