@@ -109,6 +109,11 @@ struct StreakInfo
 void NPCC_MakeASplash(const xVec3* pos, F32 radius);
 void NPCSupplement_Startup();
 void NPCSupplement_Shutdown();
+void NPCSupplement_ScenePrepare();
+void NPCSupplement_SceneFinish();
+void NPCSupplement_SceneReset();
+void NPCSupplement_ScenePostInit();
+void NPCSupplement_Timestep(F32 dt);
 void NPAR_ScenePrepare();
 void NPAR_SceneFinish();
 NPARMgmt* NPAR_PartySetup(en_nparptyp parType, void** userData, NPARXtraData* xtraData);
