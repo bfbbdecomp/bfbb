@@ -105,6 +105,7 @@ void Firework_ScenePrepare()
 
 void Firework_SceneFinish()
 {
+    Firework_SceneReset(1);
 }
 
 void Firework_SceneReset(int)
