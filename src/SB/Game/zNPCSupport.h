@@ -46,6 +46,7 @@ struct NPCBlinker
     void Reset();
 };
 
+void NPCWidget_Startup() ;
 void NPCWidget_Shutdown();
 void NPCSupport_Startup();
 void NPCSupport_ScenePrepare();
