@@ -8,6 +8,16 @@
 
 #include "xMathInlines.h"
 
+void NPCSupport_Startup()
+
+{
+    zNPCHazard_Startup();
+    zNPCGlyph_Startup();
+    NPCWidget_Startup();
+    NPCSupplement_Startup();
+    return;
+}
+
 void NPCSupport_Shutdown()
 {
     zNPCHazard_Shutdown();
@@ -16,6 +26,9 @@ void NPCSupport_Shutdown()
     NPCSupplement_Shutdown();
 }
 
+void NPCWidget_Startup()
+{
+}
 void NPCWidget_Shutdown()
 {
 }
@@ -38,7 +51,7 @@ F32 NPCC_TmrCycle(float* tmr, float dt, float interval)
 
     if (*tmr > interval)
     {
-        *tmr = xfmod(*tmr,interval);
+        *tmr = xfmod(*tmr, interval);
     }
 
     return parameterized;
