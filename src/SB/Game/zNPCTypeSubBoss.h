@@ -4,9 +4,9 @@
 #include "zNPCTypeCommon.h"
 #include "zNPCSupport.h"
 
-struct zNPCSubBoss : zNPCCommon
+struct zNPCSubBoss : zNPCCommon //Size of zNPCSubBoss: 0x2B4
 {
-    NPCTarget tgt_cur;
+    NPCTarget tgt_cur; //0x2A0
 
     zNPCSubBoss(S32 myType);
 
