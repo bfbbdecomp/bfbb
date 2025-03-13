@@ -225,9 +225,32 @@ static xAnimTable* (*tableFuncList[48])() = {
 extern xJSPHeader* sTempJSP;
 extern xJSPHeader sDummyEmptyJSP;
 
-static void* Model_Read(void*, unsigned int, void*, unsigned int, unsigned int*)
+static void* Model_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize)
 {
+    RpAtomic* model = (RpAtomic *)iModelFileNew(indata, insize);
 
+    *outsize = 0x70;
+
+    for (int i = 0; i < 3; i++)
+    {
+        if (param_2 != hackRadiusTable[i].assetid)
+        {
+            continue;
+        }
+        for (RpAtomic* tmpModel = model; tmpModel != NULL; tmpModel = (RpAtomic *)iModelFile_RWMultiAtomic(tmpModel))
+        {
+            tmpModel->boundingSphere.radius = hackRadiusTable[i].radius;
+
+            tmpModel->boundingSphere.center.x = 0.0f;
+            tmpModel->boundingSphere.center.y = 0.0f;
+            tmpModel->boundingSphere.center.z = 0.0f;
+
+            tmpModel->interpolator.flags &= ~2;
+        }
+        break;
+    }
+
+    return model;
 }
 
 static void* Curve_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize)
@@ -366,6 +389,11 @@ static void Anim_Unload(void*, U32)
 static void LightKit_Unload(void* userdata, U32 b)
 {
     xLightKit_Destroy((xLightKit*)userdata);
+}
+
+static void Anim_ATBL_getTable(xAnimTable* (*param)(void))
+{
+    *param();
 }
 
 static void MovePoint_Unload(void* userdata, U32 b)
