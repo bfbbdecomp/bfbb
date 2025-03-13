@@ -24,5 +24,6 @@ struct xJSPHeader
 
 RpMesh* AddMeshCB(RpMesh* mesh, RpMeshHeader* header, RwV3d** param_3);
 void xJSP_MultiStreamRead(void* data, U32 size, xJSPHeader** jsp);
+void xJSP_Destroy(xJSPHeader* jsp);
 
 #endif
