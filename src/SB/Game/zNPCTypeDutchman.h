@@ -147,10 +147,6 @@ struct zNPCDutchman : zNPCSubBoss
     void add_splash(const xVec3&, float);
     void vanish();
     void reset_speed();
-    void stop_flames();
-    void stop_hand_trail();
-    void Damage(en_NPC_DAMAGE_TYPE, xBase*, const xVec3*);
-    double goal_delay();
     U8 PhysicsFlags() const;
     U8 ColPenByFlags() const;
     U8 ColChkByFlags() const;

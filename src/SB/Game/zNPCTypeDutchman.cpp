@@ -6,7 +6,6 @@
 
 namespace
 {
-    delay_goal sequence[16][3];
 }
 
 void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
@@ -64,6 +63,7 @@ void zNPCDutchman::stop_hand_trail()
 void zNPCDutchman::add_splash(const xVec3&, float)
 {
 }
+
 
 void zNPCDutchman::stop_flames()
 {
