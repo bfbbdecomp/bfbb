@@ -8,8 +8,11 @@
 
 #include "xMathInlines.h"
 
-void NPCSupport_Startup()
+NPCWidget g_npc_widgets[1] = {};
+static U32 g_hash_uiwidgets[1];
+static char* g_strz_uiwidgets[1] = {};
 
+void NPCSupport_Startup()
 {
     zNPCHazard_Startup();
     zNPCGlyph_Startup();
@@ -76,7 +79,9 @@ void NPCSupport_Timestep(F32 dt)
 
 void NPCWidget_Startup()
 {
+    g_hash_uiwidgets[0] = xStrHash((const char*)g_strz_uiwidgets);
 }
+
 void NPCWidget_Shutdown()
 {
 }
@@ -87,9 +92,15 @@ void NPCWidget_ScenePrepare()
 
 void NPCWidget_SceneFinish()
 {
+    NPCWidget_SceneReset();
 }
 
-void NPCWidget_SceneReset()
+void NPCWidget_SceneReset() // Come back after more data is in
+{
+    g_npc_widgets->Reset();
+}
+
+void NPCWidget::Reset()
 {
 }
 

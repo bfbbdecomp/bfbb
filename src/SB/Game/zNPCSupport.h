@@ -25,6 +25,11 @@ enum _tageNPCSnd
     eNPCSnd_Total
 };
 
+enum en_NPC_UI_WIDGETS
+{
+    NPC_UI_WIDGETS_unk // Come back after more data is put in
+};
+
 struct NPCTarget
 {
     en_npctgt typ_target;
@@ -43,6 +48,19 @@ struct NPCBlinker
     F32 tmr_uvcell;
     S32 idx_uvcell;
 
+    void Reset();
+};
+
+struct NPCWidget
+{
+    en_NPC_UI_WIDGETS idxID;
+    xBase* base_widge;
+    zNPCCommon* npc_ownerlock;
+
+    U32 NPCIsTheLocker(zNPCCommon* npc_lock);
+    U32 IsVisible();
+    U32 Off(zNPCCommon* npc, U32 theman);
+    U32 On(zNPCCommon* npc, U32 theman);
     void Reset();
 };
 
