@@ -137,9 +137,14 @@ struct zNPCDutchman : zNPCSubBoss
     RwRaster* laser_raster;
 
     zNPCDutchman(S32 myType);
+    void Setup();
+    void Destroy();
+    void Render();
     void render_debug();
     void update_animation(float);
     void add_splash(const xVec3&, float);
+    void vanish();
+    void reset_speed();
     U8 PhysicsFlags() const;
     U8 ColPenByFlags() const;
     U8 ColChkByFlags() const;
@@ -155,6 +160,7 @@ struct zNPCGoalDutchmanNil : zNPCGoalCommon
 struct zNPCGoalDutchmanInitiate : zNPCGoalCommon
 {
     zNPCDutchman& owner;
+    S32 Exit(float, void*);
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
@@ -162,6 +168,7 @@ struct zNPCGoalDutchmanInitiate : zNPCGoalCommon
 struct zNPCGoalDutchmanIdle : zNPCGoalCommon
 {
     zNPCDutchman& owner;
+    S32 Exit(float, void*);
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
@@ -169,6 +176,7 @@ struct zNPCGoalDutchmanIdle : zNPCGoalCommon
 struct zNPCGoalDutchmanDisappear : zNPCGoalCommon
 {
     zNPCDutchman& owner;
+    S32 Exit(float, void*);
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
@@ -176,6 +184,7 @@ struct zNPCGoalDutchmanDisappear : zNPCGoalCommon
 struct zNPCGoalDutchmanTeleport : zNPCGoalCommon
 {
     zNPCDutchman& owner;
+    S32 Exit(float, void*);
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
@@ -183,6 +192,8 @@ struct zNPCGoalDutchmanTeleport : zNPCGoalCommon
 struct zNPCGoalDutchmanReappear : zNPCGoalCommon
 {
     zNPCDutchman& owner;
+    S32 Exit(float, void*);
+    void reset_speed();
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
@@ -215,7 +226,7 @@ struct zNPCGoalDutchmanBeam : zNPCGoalCommon
     S32 shots;
     beam_data beam[2];
     zNPCDutchman& owner;
-
+    S32 Exit(float, void*);
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
@@ -280,5 +291,7 @@ struct zNPCGoalDutchmanDeath : zNPCGoalCommon
 };
 
 xAnimTable* ZNPC_AnimTable_Dutchman();
+U32 dutchman_count;
+void Exit();
 
 #endif
