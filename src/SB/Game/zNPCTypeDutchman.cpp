@@ -64,7 +64,6 @@ void zNPCDutchman::add_splash(const xVec3&, float)
 {
 }
 
-
 void zNPCDutchman::stop_flames()
 {
 }
