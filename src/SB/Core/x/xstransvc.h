@@ -20,6 +20,7 @@ struct st_STRAN_DATA
     U32 loadlock;
 };
 
+S32 xSTStartup(st_PACKER_ASSETTYPE* handlers);
 S32 xSTPreLoadScene(U32 sid, void* userdata, S32 flg_hiphop);
 S32 xSTQueueSceneAssets(U32 sid, S32 flg_hiphop);
 void xSTUnLoadScene(U32 sid, S32 flg_hiphop);
