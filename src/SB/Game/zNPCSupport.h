@@ -25,6 +25,11 @@ enum _tageNPCSnd
     eNPCSnd_Total
 };
 
+enum en_NPC_UI_WIDGETS
+{
+    NPC_UI_WIDGETS_unk // Come back after more data is put in
+};
+
 struct NPCTarget
 {
     en_npctgt typ_target;
@@ -46,13 +51,29 @@ struct NPCBlinker
     void Reset();
 };
 
+struct NPCWidget
+{
+    en_NPC_UI_WIDGETS idxID;
+    xBase* base_widge;
+    zNPCCommon* npc_ownerlock;
+
+    U32 NPCIsTheLocker(zNPCCommon* npc_lock);
+    U32 IsVisible();
+    U32 Off(zNPCCommon* npc, U32 theman);
+    U32 On(zNPCCommon* npc, U32 theman);
+    void Reset();
+};
+
 bool NPCC_ForceTalkOk();
 void NPCWidget_Startup();
+static U32 g_hash_uiwidgets[1];
+static char* g_strz_uiwidgets[1] = {};
 void NPCWidget_Shutdown();
 void NPCWidget_ScenePrepare();
 void NPCWidget_SceneFinish();
 void NPCWidget_SceneReset();
 void NPCWidget_ScenePostInit();
+NPCWidget g_npc_widgets[1] = {};
 void NPCSupport_Startup();
 bool NPCSupport_ScenePrepare();
 void NPCSupport_SceneFinish();
