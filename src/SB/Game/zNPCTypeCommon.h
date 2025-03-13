@@ -363,7 +363,7 @@ struct zNPCLassoInfo
     xModelInstance* grabGuideModel;
 };
 
-struct zNPCCommon : xNPCBasic
+struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
 {
     xEntAsset* entass; // 0x1BC
     xEntNPCAsset* npcass; // 0x1C0
@@ -388,11 +388,11 @@ struct zNPCCommon : xNPCBasic
     S32 flg_xtrarend;
     F32 tmr_fidget;
     F32 tmr_invuln; // 0x23C
-    zShrapnelAsset* explosion;
-    xModelAssetParam* parmdata;
-    U32 pdatsize;
-    zNPCLassoInfo* lassdata;
-    NPCSndQueue snd_queue[4];
+    zShrapnelAsset* explosion; // 0x240
+    xModelAssetParam* parmdata; // 0x244
+    U32 pdatsize; //0x248
+    zNPCLassoInfo* lassdata; //0x24C
+    NPCSndQueue snd_queue[4]; //0x250
 
     zNPCCommon(S32 myType);
 
@@ -436,8 +436,7 @@ struct zNPCCommon : xNPCBasic
     S32 LassoUseGuides(S32 idx_grabmdl, S32 idx_holdmdl);
     S32 GetVertPos(en_mdlvert vid, xVec3* pos);
     void Vibrate(en_npcvibe vibe, F32 duration);
-    void AddScripting(xPsyche* psy,
-                      S32 (*eval_script)(xGoal*, void*, en_trantype*, F32, void*),
+    void AddScripting(xPsyche* psy, S32 (*eval_script)(xGoal*, void*, en_trantype*, F32, void*),
                       S32 (*eval_playanim)(xGoal*, void*, en_trantype*, F32, void*),
                       S32 (*eval_attack)(xGoal*, void*, en_trantype*, F32, void*),
                       S32 (*eval_move)(xGoal*, void*, en_trantype*, F32, void*),
@@ -488,7 +487,7 @@ struct zNPCCommon : xNPCBasic
     virtual void NewTime(xScene* xscn, F32 dt);
     virtual void Move(xScene* xscn, F32 dt, xEntFrame*);
     virtual S32 SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
-                           xBase* toParamWidget, S32* handled);
+                         xBase* toParamWidget, S32* handled);
     virtual void CollideReview();
     virtual void Destroy();
 
@@ -642,8 +641,8 @@ void ZNPC_Common_Shutdown();
 void NPCC_BuildStandardAnimTran(xAnimTable* table, char** namelist, S32* ourAnims, S32 idx_dflt,
                                 F32 blend);
 
-xAnimTable * ZNPC_AnimTable_Common();
-xAnimTable * ZNPC_AnimTable_LassoGuide();
+xAnimTable* ZNPC_AnimTable_Common();
+xAnimTable* ZNPC_AnimTable_LassoGuide();
 S32 NPCC_NPCIsConversing();
 void zNPCCommon_EjectPhlemOnPawz();
 U32 xSndIsPlaying(U32 assetID, U32 parid);

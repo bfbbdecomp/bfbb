@@ -4,6 +4,8 @@
 #include "zNPCTypeSubBoss.h"
 #include "zNPCGoalCommon.h"
 #include "containers.h"
+#include "xBehaviour.h"
+#include "zNPCTypeCommon.h"
 
 struct zNPCDutchman : zNPCSubBoss
 {
@@ -80,11 +82,11 @@ struct zNPCDutchman : zNPCSubBoss
         move_enum move;
         fade_enum fade;
     } flag;
-    S32 life;
-    S32 round;
-    S32 stage;
-    F32 delay;
-    F32 alpha;
+    S32 life; //0x2B4
+    S32 round; //0x2B8
+    S32 stage; //0x2BC
+    F32 delay; //0x2C0
+    F32 alpha; //0x2C4
     struct
     {
         xVec2 dir;
@@ -92,7 +94,7 @@ struct zNPCDutchman : zNPCSubBoss
         F32 accel;
         F32 max_vel;
     } turn;
-    move_info move;
+    move_info move; //0x2C8
     struct
     {
         U8 moreFlags;
@@ -144,7 +146,10 @@ struct zNPCDutchman : zNPCSubBoss
     void update_animation(float);
     void add_splash(const xVec3&, float);
     void vanish();
+    void stop_flames();
+    void stop_hand_trail();
     void reset_speed();
+    void Damage(en_NPC_DAMAGE_TYPE, xBase*, const xVec3*);
     U8 PhysicsFlags() const;
     U8 ColPenByFlags() const;
     U8 ColChkByFlags() const;
@@ -244,6 +249,7 @@ struct zNPCGoalDutchmanFlame : zNPCGoalCommon
     xVec2 move_dir;
     U8 stopped;
     zNPCDutchman& owner;
+    S32 Exit(float, void*);
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
@@ -259,6 +265,7 @@ struct zNPCGoalDutchmanCaught : zNPCGoalCommon
 {
     U8 grabbed;
     zNPCDutchman& owner;
+    S32 Exit(float, void*);
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
@@ -269,6 +276,12 @@ struct zNPCGoalDutchmanDamage : zNPCGoalCommon
     zNPCDutchman& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
+};
+
+struct delay_goal
+{
+    U32 goal;
+    F32 delay;
 };
 
 struct zNPCGoalDutchmanDeath : zNPCGoalCommon

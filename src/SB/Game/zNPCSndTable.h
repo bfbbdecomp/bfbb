@@ -43,13 +43,13 @@ struct NPCSndTrax
     U32 aid_sound;
 };
 
-struct NPCSndQueue
+struct NPCSndQueue //0x14
 {
-    U32 sndDirect;
-    en_NPC_SOUND sndtype;
-    S32 flg_snd;
-    F32 tmr_delay;
-    F32 radius;
+    U32 sndDirect; //0x0
+    en_NPC_SOUND sndtype; //0x4
+    S32 flg_snd; //0x8
+    F32 tmr_delay; //0xC
+    F32 radius; //0x10
 };
 
 void NPCS_Startup();

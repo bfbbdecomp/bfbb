@@ -215,7 +215,7 @@ struct xGoal : xListItem<xGoal>, xFactoryInst
     virtual S32 Process(en_trantype* trantype, float dt, void* ctxt, xScene* scene);
 
     virtual S32 SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
-                           xBase* toParamWidget, S32* handled)
+                         xBase* toParamWidget, S32* handled)
     {
         return 1;
     }
