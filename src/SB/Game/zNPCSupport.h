@@ -66,14 +66,11 @@ struct NPCWidget
 
 bool NPCC_ForceTalkOk();
 void NPCWidget_Startup();
-static U32 g_hash_uiwidgets[1];
-static char* g_strz_uiwidgets[1] = {};
 void NPCWidget_Shutdown();
 void NPCWidget_ScenePrepare();
 void NPCWidget_SceneFinish();
 void NPCWidget_SceneReset();
 void NPCWidget_ScenePostInit();
-NPCWidget g_npc_widgets[1] = {};
 void NPCSupport_Startup();
 bool NPCSupport_ScenePrepare();
 void NPCSupport_SceneFinish();

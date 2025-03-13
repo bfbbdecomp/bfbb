@@ -8,6 +8,10 @@
 
 #include "xMathInlines.h"
 
+NPCWidget g_npc_widgets[1] = {};
+static U32 g_hash_uiwidgets[1];
+static char* g_strz_uiwidgets[1] = {};
+
 void NPCSupport_Startup()
 {
     zNPCHazard_Startup();
