@@ -3,6 +3,7 @@
 
 #include "xEnt.h"
 #include "xMovePoint.h"
+#include "xColor.h"
 
 struct xEntMotionERData
 {
