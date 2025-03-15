@@ -30,12 +30,34 @@ enum en_NPC_UI_WIDGETS
     NPC_UI_WIDGETS_unk // Come back after more data is put in
 };
 
+enum en_fwstate
+{
+    FW_STAT_UNUSED,
+    FW_STAT_READY,
+    FW_STAT_FLIGHT,
+    FW_STAT_BOOM,
+    FW_STAT_DONE,
+    FW_STAT_NOMORE,
+    FW_STAT_FORCE = 0x7fffffff
+};
+
+enum en_fwstyle
+{
+    FW_STYL_DEFAULT,
+    FW_STYL_JULY4TH,
+    FW_STYL_XMAS,
+    FW_STYL_STPATS,
+    FW_STYL_VALENTINE,
+    FW_STYL_NOMORE,
+    FW_STYL_FORCE = 0x7fffffff
+};
+
 struct NPCTarget
 {
     en_npctgt typ_target;
     union
     {
-        xEnt* ent_target;
+        xEnt* ent_target; //0x4
         xBase* bas_target;
         xVec3 pos_target;
         zMovePoint* nav_target;
@@ -67,6 +89,24 @@ struct NPCWidget
     void Init(en_NPC_UI_WIDGETS);
 };
 
+struct Firework
+{
+    struct
+    {
+        en_fwstate fwstate : 8;
+        en_fwstyle fwstyle : 8;
+        S32 flg_firework : 16; //0x2
+    };
+    F32 tym_lifespan;
+    F32 tmr_remain; //0x14?
+    xVec3 pos;
+    xVec3 vel;
+
+    void FlyFlyFly(F32 dt);
+    void Update(F32 dt);
+    void Cleanup();
+};
+
 bool NPCC_ForceTalkOk();
 void NPCWidget_Startup();
 void NPCWidget_Shutdown();
@@ -85,6 +125,7 @@ void Firework_SceneReset(S32);
 void Firework_ScenePrepare();
 void Firework_SceneFinish();
 void Firework_Timestep(F32 dt);
+void Firework_Release(Firework*);
 RwTexture* NPCC_FindRWTexture(U32 hashid);
 RwTexture* NPCC_FindRWTexture(const char* txtrname);
 RwRaster* NPCC_FindRWRaster(const char* txtrname);

@@ -119,12 +119,18 @@ void NPCWidget::Init(en_NPC_UI_WIDGETS)
 
 void NPCTarget::TargetClear()
 {
-    g_hash_uiwidgets[1] = 0;
-    return;
+    ent_target = 0; //0x4?
+    typ_target = NPC_TGT_NONE;
+}
 
-    //load 0 into r0
-    // store r0 into 0x4(r3)
-    // store r0 into 0x0(r3)
+void NPCBlinker::Reset()
+{
+}
+
+void Firework_Release(Firework* firework)
+{
+    firework->Cleanup();
+    firework->fwstate = FW_STAT_UNUSED;
 }
 
 void Firework_ScenePrepare()
@@ -136,6 +142,10 @@ void Firework_ScenePrepare()
 void Firework_SceneFinish()
 {
     Firework_SceneReset(1);
+}
+
+void Firework::Cleanup()
+{
 }
 
 void Firework_SceneReset(int)
