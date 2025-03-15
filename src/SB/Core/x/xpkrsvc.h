@@ -176,10 +176,10 @@ char* PKR_AssetName(st_PACKER_READ_DATA* pr, U32 aid);
 U32 PKR_GetBaseSector(st_PACKER_READ_DATA* pr);
 S32 PKR_GetAssetInfo(st_PACKER_READ_DATA* pr, U32 aid, st_PKR_ASSET_TOCINFO* tocainfo);
 S32 PKR_GetAssetInfoByType(st_PACKER_READ_DATA* pr, U32 type, S32 idx,
-                             st_PKR_ASSET_TOCINFO* tocainfo);
+                           st_PKR_ASSET_TOCINFO* tocainfo);
 S32 PKR_PkgHasAsset(st_PACKER_READ_DATA* pr, U32 aid);
-S32 PKR_FRIEND_assetIsGameDup(U32 aid, const st_PACKER_READ_DATA* skippr, S32 oursize,
-                                U32 ourtype, U32 chksum, char*);
+S32 PKR_FRIEND_assetIsGameDup(U32 aid, const st_PACKER_READ_DATA* skippr, S32 oursize, U32 ourtype,
+                              U32 chksum, char*);
 S32 PKR_makepool_anode(st_PACKER_READ_DATA* pr, S32 cnt);
 void PKR_kiilpool_anode(st_PACKER_READ_DATA* pr);
 st_PACKER_ATOC_NODE* PKR_newassnode(st_PACKER_READ_DATA* pr, U32 aid);
@@ -195,7 +195,7 @@ S32 LOD_r_PCNT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
 S32 LOD_r_PCRT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
 S32 LOD_r_PMOD(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
 S32 ValidatePlatform(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, S32 plattag, char* plat,
-                       char* vid, char* lang, char* title);
+                     char* vid, char* lang, char* title);
 S32 LOD_r_PLAT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
 S32 LOD_r_DICT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
 S32 LOD_r_ATOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);

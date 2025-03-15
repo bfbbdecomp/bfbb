@@ -13,7 +13,6 @@ struct st_STRAN_SCENE
     char fnam[256];
 };
 
-
 struct st_STRAN_DATA
 {
     st_STRAN_SCENE hipscn[16];

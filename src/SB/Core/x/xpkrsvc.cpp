@@ -11,12 +11,25 @@
 
 extern char xpkrsvc_strings[];
 
-static st_PACKER_READ_FUNCS g_pkr_read_funcmap_original = {
-    1, 
-    PKR_ReadInit, PKR_ReadDone, PKR_LoadLayer, PKR_GetAssetSize, PKR_LoadAsset, PKR_AssetByType,
-    PKR_AssetCount, PKR_IsAssetReady, PKR_SetActive, PKR_AssetName, PKR_GetBaseSector, PKR_GetAssetInfo,
-    PKR_GetAssetInfoByType, PKR_PkgHasAsset, PKR_getPackTimestamp, PKR_Disconnect
-};
+// Square and JESway: Function relocation issues will resolve themselves when all the functions
+//                    here 100% match, as it is apparently related to the instruction size of each function
+static st_PACKER_READ_FUNCS g_pkr_read_funcmap_original = { 1,
+                                                            PKR_ReadInit,
+                                                            PKR_ReadDone,
+                                                            PKR_LoadLayer,
+                                                            PKR_GetAssetSize,
+                                                            PKR_LoadAsset,
+                                                            PKR_AssetByType,
+                                                            PKR_AssetCount,
+                                                            PKR_IsAssetReady,
+                                                            PKR_SetActive,
+                                                            PKR_AssetName,
+                                                            PKR_GetBaseSector,
+                                                            PKR_GetAssetInfo,
+                                                            PKR_GetAssetInfoByType,
+                                                            PKR_PkgHasAsset,
+                                                            PKR_getPackTimestamp,
+                                                            PKR_Disconnect };
 static st_PACKER_READ_FUNCS g_pkr_read_funcmap = g_pkr_read_funcmap_original;
 st_PACKER_READ_DATA g_readdatainst[16] = {};
 
@@ -865,7 +878,7 @@ S32 PKR_GetAssetInfo(st_PACKER_READ_DATA* pr, U32 aid, st_PKR_ASSET_TOCINFO* toc
 }
 
 S32 PKR_GetAssetInfoByType(st_PACKER_READ_DATA* pr, U32 type, S32 idx,
-                                st_PKR_ASSET_TOCINFO* tocainfo)
+                           st_PKR_ASSET_TOCINFO* tocainfo)
 {
     memset(tocainfo, 0, sizeof(st_PKR_ASSET_TOCINFO));
     if (idx < 0)
@@ -917,8 +930,8 @@ S32 PKR_PkgHasAsset(st_PACKER_READ_DATA* pr, U32 aid)
     return rc;
 }
 
-S32 PKR_FRIEND_assetIsGameDup(U32 aid, const st_PACKER_READ_DATA* skippr, S32 oursize,
-                                U32 ourtype, U32 chksum, char*)
+S32 PKR_FRIEND_assetIsGameDup(U32 aid, const st_PACKER_READ_DATA* skippr, S32 oursize, U32 ourtype,
+                              U32 chksum, char*)
 {
     S32 is_dup = 0;
     if (aid == 0x7ab6743a)
@@ -1181,7 +1194,7 @@ S32 LOD_r_PMOD(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 }
 
 S32 ValidatePlatform(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, S32 plattag, char* plat,
-                       char* vid, char* lang, char* title)
+                     char* vid, char* lang, char* title)
 {
     char fullname[128] = {};
     sprintf(fullname, "%s %s %s %s", plat, vid, lang, title);
@@ -1373,7 +1386,7 @@ S32 LOD_r_AHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     }
 
     S32 isdup = PKR_FRIEND_assetIsGameDup(assnode->aid, pr, assnode->d_size, assnode->asstype,
-                                            assnode->d_chksum, NULL);
+                                          assnode->d_chksum, NULL);
     if (isdup)
     {
         assnode->loadflag |= 0x100000;

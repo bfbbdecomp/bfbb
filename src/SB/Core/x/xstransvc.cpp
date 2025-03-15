@@ -382,7 +382,7 @@ S32 xSTGetAssetInfoByType(U32 type, S32 idx, st_PKR_ASSET_TOCINFO* ainfo)
                 break;
             }
         }
-            sum += cnt;
+        sum += cnt;
     }
 
     return rc;
@@ -438,7 +438,8 @@ char* xST_xAssetID_HIPFullPath(U32 aid, U32* sceneID)
 static S32 XST_PreLoadScene(st_STRAN_SCENE* sdata, const char* name)
 {
     S32 buf = 0;
-    st_PACKER_READ_DATA* spkg = g_pkrf->Init(sdata->userdata, (char*) name, 0x2e, &buf, g_typeHandlers);
+    st_PACKER_READ_DATA* spkg =
+        g_pkrf->Init(sdata->userdata, (char*)name, 0x2e, &buf, g_typeHandlers);
     sdata->spkg = spkg;
     if (sdata->spkg != NULL)
     {
