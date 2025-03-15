@@ -4,6 +4,7 @@
 #include "xstransvc.h"
 #include "xModel.h"
 #include "xColor.h"
+#include "xColor.cpp"
 #include "xTimer.h"
 #include "xTextAsset.h"
 #include "xModelBucket.h"
