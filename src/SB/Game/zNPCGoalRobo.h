@@ -3,6 +3,7 @@
 
 #include "zNPCGoalCommon.h"
 #include "zNPCGoalStd.h"
+#include "xColor.cpp"
 class zNPCGoalNotice : public zNPCGoalPushAnim
 {
 public:

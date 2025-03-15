@@ -8,6 +8,7 @@
 #include "zNPCSupport.h"
 #include "zNPCGlyph.h"
 #include "zNPCHazard.h"
+#include "xColor.cpp"
 
 typedef struct zNPCRobot;
 
