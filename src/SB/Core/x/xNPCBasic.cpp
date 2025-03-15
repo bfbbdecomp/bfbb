@@ -14,6 +14,7 @@
 #include "xDraw.h"
 
 #include "iColor.h"
+#include "xColor.cpp"
 #include "iCollide.h"
 
 extern float xNPCBasic_float_0;
@@ -28,10 +29,6 @@ extern float xNPCBasic_float_0p2;
 extern float xNPCBasic_float_thirty;
 extern float xNPCBasic_float_0p04;
 extern float xNPCBasic_float_0p025;
-
-extern iColor_tag g_BLUE;
-extern iColor_tag g_LAVENDER;
-extern iColor_tag g_PIMP_GOLD;
 
 extern xEntCollis g_colrec;
 extern xVec3 lbl_8026A3F8;
