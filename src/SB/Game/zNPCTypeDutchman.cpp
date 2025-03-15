@@ -56,20 +56,65 @@ void zNPCDutchman::update_animation(float)
 {
 }
 
+void zNPCDutchman::start_eye_glow() //Matches but the data is fucked
+{
+    flag.eye_glow = true;
+    eye_glow.size = 1;
+}
+
+void zNPCDutchman::stop_eye_glow()
+{
+    flag.eye_glow = false;
+}
+
 void zNPCDutchman::stop_hand_trail()
 {
+    flag.hand_trail = false;
 }
 
 void zNPCDutchman::add_splash(const xVec3&, float)
 {
 }
 
+void zNPCDutchman::start_beam()
+{
+    if ((flag.beaming) != 0)
+    {
+        return;
+    }
+    flag.beaming = 1;
+    flag.was_beaming = 0;
+    beam[1].segments = 0; //0x54C
+    beam[0].segments = 0; //0x430
+
+    //Could also write as:
+
+    //for (S32 i = 1; i >= 0; --i)
+    // {
+    //    beam[i].segments = 0;
+    // }
+}
+
+void zNPCDutchman::stop_beam()
+{
+    flag.beaming = false;
+}
+
 void zNPCDutchman::stop_flames()
 {
+    flag.flaming = false;
 }
 
 void zNPCDutchman::vanish()
 {
+    old.moreFlags = moreFlags;
+    pflags = 0;
+    moreFlags = 0;
+    flags2.flg_colCheck = 0;
+    flags2.flg_penCheck = 0;
+    chkby = 0;
+    penby = 0;
+    xEntHide(this);
 }
 
 void zNPCDutchman::reset_speed()
