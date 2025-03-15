@@ -55,14 +55,14 @@ namespace
         {
             S16 x;
             S16 y;
-        } space;
-        U32 flags;
-        U8 char_set[128];
+        } space; // 0xC
+        U32 flags; // 0x10
+        U8 char_set[128]; // 0x14
         struct
         {
             U8 offset;
             U8 size;
-        } char_pos[127];
+        } char_pos[127]; // 0x94
     };
 
     struct font_data
@@ -279,14 +279,38 @@ namespace
         return true;
     }
 
-#if 1
-    basic_rect<F32> get_tex_bounds(const font_data& fd, U8 c);
-#else
+    // FIXME: Float conversions seem to need work
     basic_rect<F32> get_tex_bounds(const font_data& fd, U8 c)
     {
-        // todo: uses int-to-float conversion
+        typedef __typeof__(((struct font_asset){ 0 }).char_pos[0]) char_pos_t;
+
+        F32 boundX;
+        F32 boundY;
+        F32 boundW;
+        F32 boundH;
+        char_pos_t* temp_r8;
+
+        if (fd.asset->flags & 0x4)
+        {
+            boundX = (F32)(c / fd.asset->line_size);
+            boundY = (F32)(c % fd.asset->line_size);
+        }
+        else
+        {
+            boundY = (F32)(c / fd.asset->line_size);
+            boundX = (F32)(c % fd.asset->line_size);
+        }
+
+        temp_r8 = &fd.asset->char_pos[c];
+        boundX = (F32)(temp_r8->offset + (fd.asset->du * boundX + (F32)fd.asset->u));
+        boundW = (F32)temp_r8->size - 0.5f;
+        boundY = ((F32)fd.asset->dv * boundY) + (F32)fd.asset->v;
+        boundH = (F32)fd.asset->dv - 0.5f;
+
+        basic_rect<F32> result = { boundX, boundY, boundW, boundH };
+        result.scale((F32)fd.asset->dv, (F32)fd.asset->v);
+        return result;
     }
-#endif
 
 #if 1
     basic_rect<F32> get_bounds(const font_data& fd, U8 c);
