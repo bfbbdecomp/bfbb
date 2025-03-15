@@ -21,6 +21,7 @@ U32 xStrHashCat(U32 prefix, const char* str);
 char* xStrupr(char* string);
 S32 xStricmp(const char* string1, const char* string2);
 char* xStrTok(char* string, const char* control, char** nextoken);
+char* xStrTokBuffer(const char* string, char* control, void* buffer);
 S32 xStrParseFloatList(F32* dest, const char* strbuf, S32 max);
 
 S32 imemcmp(void const* d1, void const* d2, size_t size);
