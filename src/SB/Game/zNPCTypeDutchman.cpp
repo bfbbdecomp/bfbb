@@ -35,6 +35,19 @@ void zNPCDutchman::Render()
     zNPCDutchman::render_debug();
 }
 
+void zNPCDutchman::Damage(en_NPC_DAMAGE_TYPE, xBase*, const xVec3*)
+{
+    xPsyche* psy = this->psy_instinct;
+    psy->GIDOfActive();
+}
+
+// double zNPCDutchman::goal_delay()
+// {
+//     move_info* tempR4;
+//     tempR4 = &this->move;
+//     move = *tempR4;
+// }
+
 void zNPCDutchman::render_debug()
 {
 }
@@ -43,7 +56,15 @@ void zNPCDutchman::update_animation(float)
 {
 }
 
+void zNPCDutchman::stop_hand_trail()
+{
+}
+
 void zNPCDutchman::add_splash(const xVec3&, float)
+{
+}
+
+void zNPCDutchman::stop_flames()
 {
 }
 
@@ -83,6 +104,23 @@ S32 zNPCGoalDutchmanReappear::Exit(F32 dt, void* updCtxt)
 }
 
 S32 zNPCGoalDutchmanBeam::Exit(F32 dt, void* updCtxt)
+{
+    return xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalDutchmanFlame::Exit(F32 dt, void* updCtxt)
+{
+    S32 tempR0;
+    tempR0 = this->owner.flg_vuln;
+    tempR0 = tempR0 &= 0xFEFFFFFF;
+    this->owner.flg_vuln = tempR0;
+
+    owner.stop_flames();
+    owner.stop_hand_trail();
+    return xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalDutchmanCaught::Exit(float dt, void* updCtxt)
 {
     return xGoal::Exit(dt, updCtxt);
 }
