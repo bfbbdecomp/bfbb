@@ -11,8 +11,13 @@
 
 extern char xpkrsvc_strings[];
 
-extern st_PACKER_READ_FUNCS g_pkr_read_funcmap_original;
-extern st_PACKER_READ_FUNCS g_pkr_read_funcmap; // = g_pkr_read_funcmap_original;
+static st_PACKER_READ_FUNCS g_pkr_read_funcmap_original = {
+    1, 
+    PKR_ReadInit, PKR_ReadDone, PKR_LoadLayer, PKR_GetAssetSize, PKR_LoadAsset, PKR_AssetByType,
+    PKR_AssetCount, PKR_IsAssetReady, PKR_SetActive, PKR_AssetName, PKR_GetBaseSector, PKR_GetAssetInfo,
+    PKR_GetAssetInfoByType, PKR_PkgHasAsset, PKR_getPackTimestamp, PKR_Disconnect
+};
+static st_PACKER_READ_FUNCS g_pkr_read_funcmap = g_pkr_read_funcmap_original;
 st_PACKER_READ_DATA g_readdatainst[16] = {};
 
 st_HIPLOADFUNCS* g_hiprf;

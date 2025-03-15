@@ -136,7 +136,7 @@ struct st_PACKER_READ_FUNCS
     char* (*AssetName)(st_PACKER_READ_DATA*, U32);
     U32 (*GetBaseSector)(st_PACKER_READ_DATA*);
     S32 (*GetAssetInfo)(st_PACKER_READ_DATA*, U32, st_PKR_ASSET_TOCINFO*);
-    S32 (*GetAssetInfoByType)(st_PACKER_READ_DATA*, U32, S32, const st_PKR_ASSET_TOCINFO*);
+    S32 (*GetAssetInfoByType)(st_PACKER_READ_DATA*, U32, S32, st_PKR_ASSET_TOCINFO*);
     S32 (*PkgHasAsset)(st_PACKER_READ_DATA*, U32);
     U32 (*PkgTimeStamp)(st_PACKER_READ_DATA*);
     void (*PkgDisconnect)(st_PACKER_READ_DATA*);
@@ -146,7 +146,7 @@ st_PACKER_READ_FUNCS* PKRGetReadFuncs(S32 apiver);
 S32 PKRStartup();
 S32 PKRShutdown();
 S32 PKRLoadStep(S32);
-st_PACKER_READ_DATA* PKR_ReadInit(void* userdata, char* pkgfile, U32 opts, S32* cltver,
+st_PACKER_READ_DATA* PKR_ReadInit(void* userdata, const char* pkgfile, U32 opts, S32* cltver,
                                   st_PACKER_ASSETTYPE* typelist);
 void PKR_ReadDone(st_PACKER_READ_DATA* pr);
 S32 PKR_SetActive(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer);
@@ -164,7 +164,7 @@ void PKR_xformLayerAssets(st_PACKER_LTOC_NODE* laynode);
 void PKR_xform_asset(st_PACKER_ATOC_NODE* assnode, S32 dumpable_layer);
 void* PKR_FindAsset(st_PACKER_READ_DATA* pr, U32 aid);
 S32 PKR_LoadLayer(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer);
-void* PKR_LoadAsset(st_PACKER_READ_DATA* pr, U32 aid, const char*, void*);
+void* PKR_LoadAsset(st_PACKER_READ_DATA* pr, U32 aid, char*, void*);
 U32 PKR_GetAssetSize(st_PACKER_READ_DATA* pr, U32 aid);
 S32 PKR_AssetCount(st_PACKER_READ_DATA* pr, U32 type);
 void* PKR_AssetByType(st_PACKER_READ_DATA* pr, U32 type, S32 idx, U32* size);
