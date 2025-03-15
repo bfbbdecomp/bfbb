@@ -32,6 +32,7 @@ struct xEnvAsset : xBaseAsset
 };
 
 void xEnvLoadBsp(xEnv* env, const void* data, U32 datasize, S32 dataType);
+void xEnvFree(xEnv* env);
 void xEnvSetup(xEnv* env);
 void xEnvRender(xEnv* env);
 

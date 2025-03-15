@@ -41,7 +41,7 @@ struct xEntAsset : xBaseAsset
     F32 greenMult;
     F32 blueMult;
     F32 seeThru;
- 
+
     // Offset: 0x48
     F32 seeThruSpeed;
     U32 modelInfoID;
@@ -87,7 +87,7 @@ struct xEntCollis
     U8 pen;
     U8 env_sidx;
     U8 env_eidx;
-    
+
     U8 npc_sidx;
     U8 npc_eidx;
     U8 dyn_sidx;
@@ -96,7 +96,7 @@ struct xEntCollis
     U8 stat_sidx;
     U8 stat_eidx;
     U8 idx;
-    
+
     xCollis colls[18];
     void (*post)(xEnt*, xScene*, F32, xEntCollis*);
     U32 (*depenq)(xEnt*, xEnt*, xScene*, F32, xCollis*);
@@ -137,7 +137,7 @@ struct xEnt : xBase
 
     // Offset: 0x1B
     U8 pflags; // p -> physics flags
-    U8 moreFlags;
+    U8 moreFlags; //0x1c
     U8 isCulled;
     U8 driving_count;
     U8 num_ffx;
@@ -163,7 +163,7 @@ struct xEnt : xBase
     // Offset: 0x44
     xEntRenderCallback render;
     xEntFrame* frame;
-    xEntCollis* collis;
+    xEntCollis* collis; //0x4c
 
     // Offset: 0x50
     xGridBound gridb;
@@ -172,8 +172,8 @@ struct xEnt : xBase
     xBound bound;
 
     // Offset: 0xB0
-    xEntTranslateCallback transl;
-    xFFX* ffx;
+    xEntTranslateCallback transl; //0xb0
+    xFFX* ffx; //0xb4
     xEnt* driver;
     S32 driveMode;
 

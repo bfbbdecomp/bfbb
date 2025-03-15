@@ -3,6 +3,7 @@
 
 #include "zNPCTypeSubBoss.h"
 #include "zNPCGoalCommon.h"
+#include "xEnt.h"
 
 struct lightning_ring
 {
@@ -36,6 +37,8 @@ struct lightning_ring
     zLightning* arcs[8];
     U32 arcs_size;
     void (*update_callback)(lightning_ring&, F32);
+
+    void create();
 };
 
 struct zNPCKingJelly : zNPCSubBoss
@@ -79,7 +82,7 @@ struct zNPCKingJelly : zNPCSubBoss
 
     struct
     {
-        U8 moreFlags;
+        U8 moreFlags; //0x2B4
     } old;
     struct
     {
@@ -89,19 +92,19 @@ struct zNPCKingJelly : zNPCSubBoss
         bool stop_moving;
         bool updated;
     } flag;
-    S32 round;
-    S32 attack;
-    S32 life;
-    U32 player_life;
-    S32 show_vertex;
-    U8 enabled;
-    shockstate_enum shockstate;
-    F32 spawn_particle_vel;
+    S32 round; //0x2BC
+    S32 attack; //0x2C0
+    S32 life; // 0x2C4
+    U32 player_life; //
+    S32 show_vertex; //
+    U8 enabled; //
+    shockstate_enum shockstate; //
+    F32 spawn_particle_vel; //0x2D8
     xModelInstance* submodel[4];
     struct
     {
-        U8 active;
-        S32 count;
+        U8 active; //0x2EC
+        S32 count; //0x2f0
         F32 intensity;
         F32 delay;
     } blink;
@@ -111,24 +114,37 @@ struct zNPCKingJelly : zNPCSubBoss
         xVec3 last_target;
     } camera;
     child_data children[32];
-    U32 children_size;
+    U32 children_size; //0x88C
     F32 last_tentacle_shock;
     zLightning* tentacle_lightning[7];
     xVec3 tentacle_points[13][7];
     lightning_ring ambient_rings[3];
     lightning_ring wave_rings[4];
-    U8 disable_tentacle_damage;
+    U8 disable_tentacle_damage; // 0x1090
     F32 next_pulse;
     F32 last_pulse;
     zEnt* curtain_ent;
     xModelInstance* curtain_model[5];
-    U8 first_update;
+    U8 first_update; //0x10B4
 
     zNPCKingJelly(S32 myType);
+    void Setup();
+    void Destroy();
+    void BUpdate(xVec3*);
+    S32 max_strikes();
+    void load_model();
+    void load_curtain_model();
+    void decompose();
+    void post_decompose();
+    void vanish();
+    void reappear();
+    xVec3* get_bottom();
     void on_change_ambient_ring(const tweak_info&);
     void on_change_fade_obstructions(const tweak_info&);
     void render_debug();
     void create_tentacle_lightning();
+    void generate_spawn_particles();
+    void update_round();
 };
 
 struct zNPCGoalKJIdle : zNPCGoalCommon
@@ -183,6 +199,10 @@ struct zNPCGoalKJDamage : zNPCGoalCommon
     zNPCGoalKJDamage(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    S32 Exit(F32 dt, void* updCtxt);
+    S32 Enter(F32 dt, void* updCtxt);
 };
 
 struct zNPCGoalKJDeath : zNPCGoalCommon
