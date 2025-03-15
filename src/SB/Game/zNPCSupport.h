@@ -41,6 +41,8 @@ struct NPCTarget
         zMovePoint* nav_target;
     };
     zNPCCommon* npc_owner;
+
+    void TargetClear();
 };
 
 struct NPCBlinker
@@ -62,6 +64,7 @@ struct NPCWidget
     U32 Off(zNPCCommon* npc, U32 theman);
     U32 On(zNPCCommon* npc, U32 theman);
     void Reset();
+    void Init(en_NPC_UI_WIDGETS);
 };
 
 bool NPCC_ForceTalkOk();

@@ -108,6 +108,25 @@ void NPCWidget_ScenePostInit()
 {
 }
 
+void NPCWidget_Find(en_NPC_UI_WIDGETS)
+{
+    zSceneFindObject(g_hash_uiwidgets[1]);
+}
+
+void NPCWidget::Init(en_NPC_UI_WIDGETS)
+{
+}
+
+void NPCTarget::TargetClear()
+{
+    g_hash_uiwidgets[1] = 0;
+    return;
+
+    //load 0 into r0
+    // store r0 into 0x4(r3)
+    // store r0 into 0x0(r3)
+}
+
 void Firework_ScenePrepare()
 {
     NPAR_PartySetup(NPAR_TYP_FIREWORKS, NULL, NULL);
