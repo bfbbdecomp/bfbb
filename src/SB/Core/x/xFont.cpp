@@ -55,14 +55,14 @@ namespace
         {
             S16 x;
             S16 y;
-        } space;
-        U32 flags;
-        U8 char_set[128];
+        } space; // 0xC
+        U32 flags; // 0x10
+        U8 char_set[128]; // 0x14
         struct
         {
             U8 offset;
             U8 size;
-        } char_pos[127];
+        } char_pos[127]; // 0x94
     };
 
     struct font_data
@@ -279,14 +279,38 @@ namespace
         return true;
     }
 
-#if 1
-    basic_rect<F32> get_tex_bounds(const font_data& fd, U8 c);
-#else
+    // FIXME: Float conversions seem to need work
     basic_rect<F32> get_tex_bounds(const font_data& fd, U8 c)
     {
-        // todo: uses int-to-float conversion
+        typedef __typeof__(((struct font_asset){ 0 }).char_pos[0]) char_pos_t;
+
+        F32 boundX;
+        F32 boundY;
+        F32 boundW;
+        F32 boundH;
+        char_pos_t* temp_r8;
+
+        if (fd.asset->flags & 0x4)
+        {
+            boundX = (F32)(c / fd.asset->line_size);
+            boundY = (F32)(c % fd.asset->line_size);
+        }
+        else
+        {
+            boundY = (F32)(c / fd.asset->line_size);
+            boundX = (F32)(c % fd.asset->line_size);
+        }
+
+        temp_r8 = &fd.asset->char_pos[c];
+        boundX = (F32)(temp_r8->offset + (fd.asset->du * boundX + (F32)fd.asset->u));
+        boundW = (F32)temp_r8->size - 0.5f;
+        boundY = ((F32)fd.asset->dv * boundY) + (F32)fd.asset->v;
+        boundH = (F32)fd.asset->dv - 0.5f;
+
+        basic_rect<F32> result = { boundX, boundY, boundW, boundH };
+        result.scale((F32)fd.asset->dv, (F32)fd.asset->v);
+        return result;
     }
-#endif
 
 #if 1
     basic_rect<F32> get_bounds(const font_data& fd, U8 c);
@@ -381,9 +405,6 @@ namespace
         RwIm2DVertexSetIntRGBA(&vert, c.r, c.g, c.b, c.a);
     }
 
-#ifndef NON_MATCHING
-    void init_model_cache();
-#else
     void init_model_cache()
     {
         struct model_pool
@@ -416,7 +437,6 @@ namespace
             model.shadowID = 0xDEADBEEF;
         }
     }
-#endif
 
 #ifndef NON_MATCHING
     static U32 next_order_967;
@@ -556,7 +576,6 @@ void xfont::restore_render_state()
     RwRenderStateSet(rwRENDERSTATETEXTUREFILTER, (void*)oldrs.filter);
 }
 
-#ifdef NON_MATCHING
 basic_rect<F32> xfont::bounds(char c) const
 {
     font_data& fd = active_fonts[id];
@@ -572,7 +591,6 @@ basic_rect<F32> xfont::bounds(char c) const
     r.scale(width, height);
     return r;
 }
-#endif
 
 basic_rect<F32> xfont::bounds(const char* text) const
 {
@@ -685,7 +703,6 @@ void xfont::irender(const char* text, F32 x, F32 y) const
 
 static const basic_rect<F32> _1107 = {};
 
-#ifdef NON_MATCHING
 void xfont::irender(const char* text, size_t text_size, F32 x, F32 y) const
 {
     if (!text)
@@ -718,15 +735,12 @@ void xfont::irender(const char* text, size_t text_size, F32 x, F32 y) const
         i++;
     }
 }
-#endif
 
 extern substr text_delims;
 
 namespace
 {
-#ifndef NON_MATCHING
-    size_t parse_split_tag(xtextbox::split_tag& ti);
-#else
+
     size_t parse_split_tag(xtextbox::split_tag& ti)
     {
         ti.value.size = 0;
@@ -794,7 +808,6 @@ namespace
 
         return ti.tag.size - s.size;
     }
-#endif
 
     const char* parse_next_tag_jot(xtextbox::jot& a, const xtextbox& tb, const xtextbox& ctb,
                                    const char* text, size_t text_size)
@@ -1357,7 +1370,6 @@ xtextbox::tag_entry_list xtextbox::read_tag(const substr& s)
 }
 #endif
 
-#ifdef NON_MATCHING
 xtextbox::tag_entry* xtextbox::find_entry(const tag_entry_list& el, const substr& name)
 {
     // non-matching: el.size and el.entries are not cached at the beginning
@@ -1374,9 +1386,7 @@ xtextbox::tag_entry* xtextbox::find_entry(const tag_entry_list& el, const substr
 
     return NULL;
 }
-#endif
 
-#ifdef NON_MATCHING
 size_t xtextbox::read_list(const tag_entry& e, F32* v, size_t vsize)
 {
     size_t total = e.args_size;
@@ -1395,9 +1405,7 @@ size_t xtextbox::read_list(const tag_entry& e, F32* v, size_t vsize)
 
     return total;
 }
-#endif
 
-#ifdef NON_MATCHING
 size_t xtextbox::read_list(const tag_entry& e, S32* v, size_t vsize)
 {
     size_t total = e.args_size;
@@ -1416,7 +1424,6 @@ size_t xtextbox::read_list(const tag_entry& e, S32* v, size_t vsize)
 
     return total;
 }
-#endif
 
 void xtextbox::clear_layout_cache()
 {
@@ -1455,7 +1462,6 @@ void xtextbox::layout::clear()
     tb = xtextbox::create();
 }
 
-#ifdef NON_MATCHING
 void xtextbox::layout::trim_line(jot_line& line)
 {
     // non-matching: mtctr and bdnz not generated
@@ -1491,7 +1497,6 @@ void xtextbox::layout::trim_line(jot_line& line)
         }
     }
 }
-#endif
 
 void xtextbox::layout::erase_jots(size_t begin_jot, size_t end_jot)
 {
@@ -1915,7 +1920,6 @@ void xtextbox::layout::render(const xtextbox& ctb, S32 begin_jot, S32 end_jot)
 // this is different than the one in xMath.h
 #define min(a, b) ((a) >= (b) ? (b) : (a))
 
-#ifdef NON_MATCHING
 F32 xtextbox::layout::yextent(F32 max, S32& size, S32 begin_jot, S32 end_jot) const
 {
     size = 0;
@@ -1996,7 +2000,6 @@ F32 xtextbox::layout::yextent(F32 max, S32& size, S32 begin_jot, S32 end_jot) co
 
     return line.bounds.y + line.bounds.h - top;
 }
-#endif
 
 bool xtextbox::layout::changed(const xtextbox& ctb)
 {
