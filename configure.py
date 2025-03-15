@@ -284,7 +284,7 @@ config.libs = [
             Object(NonMatching, "SB/Core/x/xClimate.cpp"),
             Object(NonMatching, "SB/Core/x/xCollide.cpp"),
             Object(Matching, "SB/Core/x/xCollideFast.cpp"),
-            Object(NonMatching, "SB/Core/x/xColor.cpp"),
+            Object(Matching, "SB/Core/x/xColor.cpp"),
             Object(Matching, "SB/Core/x/xCounter.cpp"),
             Object(NonMatching, "SB/Core/x/xCutscene.cpp"),
             Object(NonMatching, "SB/Core/x/xDebug.cpp"),
