@@ -61,7 +61,7 @@ S32 PKRLoadStep(S32)
     return PKR_LoadStep_Async();
 }
 
-st_PACKER_READ_DATA* PKR_ReadInit(void* userdata, const char* pkgfile, U32 opts, S32* cltver,
+st_PACKER_READ_DATA* PKR_ReadInit(void* userdata, char* pkgfile, U32 opts, S32* cltver,
                                   st_PACKER_ASSETTYPE* typelist)
 {
     // I'm pretty sure this is just a pointer to an array on the heap

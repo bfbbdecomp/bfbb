@@ -124,7 +124,7 @@ struct st_PACKER_READ_DATA
 struct st_PACKER_READ_FUNCS
 {
     U32 api_ver;
-    st_PACKER_READ_DATA* (*Init)(void*, const char*, U32, S32*, st_PACKER_ASSETTYPE*);
+    st_PACKER_READ_DATA* (*Init)(void*, char*, U32, S32*, st_PACKER_ASSETTYPE*);
     void (*Done)(st_PACKER_READ_DATA*);
     S32 (*LoadLayer)(st_PACKER_READ_DATA*, en_LAYER_TYPE);
     U32 (*GetAssetSize)(st_PACKER_READ_DATA*, U32);
@@ -146,7 +146,7 @@ st_PACKER_READ_FUNCS* PKRGetReadFuncs(S32 apiver);
 S32 PKRStartup();
 S32 PKRShutdown();
 S32 PKRLoadStep(S32);
-st_PACKER_READ_DATA* PKR_ReadInit(void* userdata, const char* pkgfile, U32 opts, S32* cltver,
+st_PACKER_READ_DATA* PKR_ReadInit(void* userdata, char* pkgfile, U32 opts, S32* cltver,
                                   st_PACKER_ASSETTYPE* typelist);
 void PKR_ReadDone(st_PACKER_READ_DATA* pr);
 S32 PKR_SetActive(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer);

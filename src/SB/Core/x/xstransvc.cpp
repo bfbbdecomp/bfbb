@@ -360,7 +360,7 @@ S32 xSTGetAssetInfoByType(U32 type, S32 idx, st_PKR_ASSET_TOCINFO* ainfo)
 {
     S32 rc = 0;
     S32 sum = 0;
-    const st_PKR_ASSET_TOCINFO tocinfo = { 0, NULL, 0, 0, 0, NULL };
+    st_PKR_ASSET_TOCINFO tocinfo = { 0, NULL, 0, 0, 0, NULL };
     memset(ainfo, 0, sizeof(st_PKR_ASSET_TOCINFO));
 
     S32 found = XST_cnt_locked();
@@ -438,7 +438,7 @@ char* xST_xAssetID_HIPFullPath(U32 aid, U32* sceneID)
 static S32 XST_PreLoadScene(st_STRAN_SCENE* sdata, const char* name)
 {
     S32 buf = 0;
-    st_PACKER_READ_DATA* spkg = g_pkrf->Init(sdata->userdata, name, 0x2e, &buf, g_typeHandlers);
+    st_PACKER_READ_DATA* spkg = g_pkrf->Init(sdata->userdata, (char*) name, 0x2e, &buf, g_typeHandlers);
     sdata->spkg = spkg;
     if (sdata->spkg != NULL)
     {
