@@ -35,19 +35,9 @@
 #define YJUSTIFY_CENTER 0x8
 #define YJUSTIFY_MASK (YJUSTIFY_TOP | YJUSTIFY_BOTTOM | YJUSTIFY_CENTER)
 
-extern F32 _744_0;
-extern F32 _762;
-extern F32 _763;
-extern F32 _903;
-extern F32 _904;
-extern F32 _1027;
 extern substr _1615;
 extern substr _1616;
 extern xtextbox::tag_entry_list _1642;
-extern F32 _2167;
-extern F32 _2418;
-extern F32 _2808;
-extern F32 _2835;
 
 static const basic_rect<F32> screen_bounds = { 0, 0, 1, 1 };
 
@@ -321,7 +311,7 @@ namespace
     {
         font_data& fd = active_fonts[font_id];
 
-        rcz = _763 / RwCameraGetNearClipPlane(RwCameraGetCurrentCamera());
+        rcz = 1.0f / RwCameraGetNearClipPlane(RwCameraGetCurrentCamera());
         nsz = RwIm2DGetNearScreenZ();
 
         xfont::set_render_state(fd.raster);
@@ -365,7 +355,7 @@ namespace
 
         RwIm2DVertex* vert = &vert_buffer[vert_buffer_used];
 
-        r.scale(_903, _904);
+        r.scale(640.0f, 480.0f);
 
         set_vert(vert[0], r.x, r.y, rt.x, rt.y, color);
         set_vert(vert[1], r.x, r.y + r.h, rt.x, rt.y + rt.h, color);
@@ -588,18 +578,17 @@ basic_rect<F32> xfont::bounds(char c) const
 basic_rect<F32> xfont::bounds(const char* text) const
 {
     size_t size;
-    return bounds(text, 0x40000000, _1027, size);
+    return bounds(text, 0x40000000, 1.0e38f, size);
 }
 
-basic_rect<F32> xfont::bounds(const char* text, size_t text_size, F32 max_width,
-                                  size_t& size) const
+basic_rect<F32> xfont::bounds(const char* text, size_t text_size, F32 max_width, size_t& size) const
 {
     font_data& fd = active_fonts[id];
     basic_rect<F32> r;
 
-    r.x = _762;
+    r.x = 0.0f;
     r.y = fd.bounds[0].y * height;
-    r.w = _762;
+    r.w = 0.0f;
     r.h = fd.bounds[0].h * height;
 
     if (!text || !text_size)
@@ -631,7 +620,7 @@ basic_rect<F32> xfont::bounds(const char* text, size_t text_size, F32 max_width,
         s++;
     }
 
-    if (r.w > _762)
+    if (r.w > 0.0f)
     {
         r.w -= space;
     }
@@ -937,9 +926,9 @@ namespace
     void reset_tex_args(tex_args& ta)
     {
         ta.raster = NULL;
-        ta.rot = _762;
+        ta.rot = 0.0f;
         ta.src = ta.dst = basic_rect<F32>::m_Unit;
-        ta.off.x = ta.off.y = _763;
+        ta.off.x = ta.off.y = 1.0f;
         ta.scale = tex_args::SCALE_FONT;
     }
 
@@ -1060,7 +1049,7 @@ namespace
         ma.model = NULL;
         ma.rot = xVec3::m_Null;
         ma.dst = basic_rect<F32>::m_Unit;
-        ma.off.x = ma.off.y = _763;
+        ma.off.x = ma.off.y = 1.0f;
         ma.scale = model_args::SCALE_FONT;
     }
 
@@ -1246,8 +1235,7 @@ void xtextbox::render(layout& l, S32 begin_jot, S32 end_jot) const
     l.render(*this, begin_jot, end_jot);
 }
 
-F32 xtextbox::yextent(F32 max, S32& size, const layout& l, S32 begin_jot,
-                          S32 end_jot) const
+F32 xtextbox::yextent(F32 max, S32& size, const layout& l, S32 begin_jot, S32 end_jot) const
 {
     return l.yextent(max, size, begin_jot, end_jot);
 }
@@ -1560,7 +1548,7 @@ void xtextbox::layout::merge_line(jot_line& line)
 
 void xtextbox::layout::bound_line(jot_line& line)
 {
-    line.bounds.w = line.bounds.h = line.baseline = _762;
+    line.bounds.w = line.bounds.h = line.baseline = 0.0f;
 
     for (size_t i = line.first; i != line.last; i++)
     {
@@ -1657,7 +1645,7 @@ void xtextbox::layout::next_line()
 
     line2.first = line1.last;
     line2.last = _jots_size;
-    line2.bounds.x = _762;
+    line2.bounds.x = 0.0f;
     line2.bounds.y = line1.bounds.y + line1.bounds.h;
 
     bound_line(line2);
@@ -1682,10 +1670,10 @@ void xtextbox::layout::calc(const xtextbox& ctb, size_t start_text)
 
     jot_line& first_line = _lines[_lines_size];
     first_line.first = 0;
-    first_line.bounds.w = _762;
-    first_line.bounds.x = _762;
-    first_line.bounds.y = _762;
-    first_line.baseline = _762;
+    first_line.bounds.w = 0.0f;
+    first_line.bounds.x = 0.0f;
+    first_line.bounds.y = 0.0f;
+    first_line.baseline = 0.0f;
 
     struct
     {
@@ -1893,7 +1881,7 @@ void xtextbox::layout::render(const xtextbox& ctb, S32 begin_jot, S32 end_jot)
 
             if (xj == XJUSTIFY_CENTER)
             {
-                x += _744_0 * (tb.bounds.w - line.bounds.w);
+                x += 0.5f * (tb.bounds.w - line.bounds.w);
             }
             else if (xj == XJUSTIFY_RIGHT)
             {
@@ -1945,7 +1933,7 @@ F32 xtextbox::layout::yextent(F32 max, S32& size, S32 begin_jot, S32 end_jot) co
 
     if (begin_jot >= end_jot)
     {
-        return _762;
+        return 0.0f;
     }
 
     S32 begin_line = 0;
@@ -1954,7 +1942,7 @@ F32 xtextbox::layout::yextent(F32 max, S32& size, S32 begin_jot, S32 end_jot) co
     {
         if (begin_line >= (S32)_lines_size)
         {
-            return _762;
+            return 0.0f;
         }
 
         if ((S32)_lines[begin_line].last > begin_jot)
@@ -2000,7 +1988,7 @@ F32 xtextbox::layout::yextent(F32 max, S32& size, S32 begin_jot, S32 end_jot) co
 
     if (i < begin_line)
     {
-        return _762;
+        return 0.0f;
     }
 
     const jot_line& line = _lines[i];
@@ -2050,7 +2038,7 @@ namespace
 {
     void update_tag_alpha(const xtextbox::jot& j, xtextbox& tb, const xtextbox&)
     {
-        tb.font.color.a = _2167 * (F32&)j.context + _744_0;
+        tb.font.color.a = 255.0f * (F32&)j.context + 0.5f;
     }
 
     void update_tag_reset_alpha(const xtextbox::jot&, xtextbox& tb, const xtextbox& ctb)
@@ -2081,7 +2069,7 @@ namespace
 
     void update_tag_red(const xtextbox::jot& j, xtextbox& tb, const xtextbox&)
     {
-        tb.font.color.r = _2167 * (F32&)j.context + _744_0;
+        tb.font.color.r = 255.0f * (F32&)j.context + 0.5f;
     }
 
     void update_tag_reset_red(const xtextbox::jot&, xtextbox& tb, const xtextbox& ctb)
@@ -2111,7 +2099,7 @@ namespace
 
     void update_tag_green(const xtextbox::jot& j, xtextbox& tb, const xtextbox&)
     {
-        tb.font.color.g = _2167 * (F32&)j.context + _744_0;
+        tb.font.color.g = 255.0f * (F32&)j.context + 0.5f;
     }
 
     void update_tag_reset_green(const xtextbox::jot&, xtextbox& tb, const xtextbox& ctb)
@@ -2142,7 +2130,7 @@ namespace
 
     void update_tag_blue(const xtextbox::jot& j, xtextbox& tb, const xtextbox&)
     {
-        tb.font.color.b = _2167 * (F32&)j.context + _744_0;
+        tb.font.color.b = 255.0f * (F32&)j.context + 0.5f;
     }
 
     void update_tag_reset_blue(const xtextbox::jot&, xtextbox& tb, const xtextbox& ctb)
@@ -2215,13 +2203,13 @@ namespace
         }
         }
 
-        if (v < _762)
+        if (v < 0.0f)
         {
-            v = _762;
+            v = 0.0f;
         }
-        else if (v > _763)
+        else if (v > 1.0f)
         {
-            v = _763;
+            v = 1.0f;
         }
 
         a.cb = &cb;
@@ -2280,13 +2268,13 @@ namespace
         }
         }
 
-        if (v < _762)
+        if (v < 0.0f)
         {
-            v = _762;
+            v = 0.0f;
         }
-        else if (v > _763)
+        else if (v > 1.0f)
         {
-            v = _763;
+            v = 1.0f;
         }
 
         a.cb = &cb;
@@ -2345,13 +2333,13 @@ namespace
         }
         }
 
-        if (v < _2418)
+        if (v < -1.0f)
         {
-            v = _2418;
+            v = -1.0f;
         }
-        else if (v > _763)
+        else if (v > 1.0f)
         {
-            v = _763;
+            v = 1.0f;
         }
 
         a.cb = &cb;
@@ -2409,13 +2397,13 @@ namespace
         }
         }
 
-        if (v < _2418)
+        if (v < -1.0f)
         {
-            v = _2418;
+            v = -1.0f;
         }
-        else if (v > _763)
+        else if (v > 1.0f)
         {
-            v = _763;
+            v = 1.0f;
         }
 
         a.cb = &cb;
@@ -2473,13 +2461,13 @@ namespace
         }
         }
 
-        if (v < _762)
+        if (v < 0.0f)
         {
-            v = _762;
+            v = 0.0f;
         }
-        else if (v > _763)
+        else if (v > 1.0f)
         {
-            v = _763;
+            v = 1.0f;
         }
 
         a.cb = &cb;
@@ -2537,13 +2525,13 @@ namespace
         }
         }
 
-        if (v < _2418)
+        if (v < -1.0f)
         {
-            v = _2418;
+            v = -1.0f;
         }
-        else if (v > _763)
+        else if (v > 1.0f)
         {
-            v = _763;
+            v = 1.0f;
         }
 
         a.cb = &cb;
@@ -2602,13 +2590,13 @@ namespace
         }
         }
 
-        if (v < _2418)
+        if (v < -1.0f)
         {
-            v = _2418;
+            v = -1.0f;
         }
-        else if (v > _763)
+        else if (v > 1.0f)
         {
-            v = _763;
+            v = 1.0f;
         }
 
         a.cb = &cb;
@@ -2956,7 +2944,7 @@ namespace
 
         xMat3x3Euler(&frame, &mtc.rot);
 
-        F32 scale = _2808 * ((mtc.o.r <= _762) ? _763 : _744_0 / mtc.o.r);
+        F32 scale = 1.001f * ((mtc.o.r <= 0.0f) ? 1.0f : 0.5f / mtc.o.r);
 
         frame.right *= scale;
         frame.up *= scale;
@@ -2993,7 +2981,7 @@ namespace
 
             mtc.model = def_model_args.model;
             mtc.rot = def_model_args.rot;
-            mtc.rot *= _2835;
+            mtc.rot *= 0.017453292f;
             mtc.dst = def_model_args.dst;
 
             xSphere& o = *xModelGetLocalSBound(mtc.model);
@@ -3001,7 +2989,7 @@ namespace
 
             mtc.dst.y -= def_model_args.off.y;
 
-            a.bounds.assign(_762, -def_model_args.off.y, def_model_args.off.x,
+            a.bounds.assign(0.0f, -def_model_args.off.y, def_model_args.off.x,
                             def_model_args.off.y);
 
             switch (def_model_args.scale)
@@ -3075,7 +3063,7 @@ namespace
             ttc.dst = def_tex_args.dst;
             ttc.dst.y -= def_tex_args.off.y;
 
-            j.bounds.assign(_762, -def_tex_args.off.y, def_tex_args.off.x, def_tex_args.off.y);
+            j.bounds.assign(0.0f, -def_tex_args.off.y, def_tex_args.off.x, def_tex_args.off.y);
 
             xVec2 size;
 
@@ -3083,7 +3071,7 @@ namespace
             {
             case tex_args::SCALE_SCREEN:
             {
-                size.assign(_763, _763);
+                size.assign(1.0f, 1.0f);
                 break;
             }
             case tex_args::SCALE_SIZE:
@@ -3108,15 +3096,15 @@ namespace
             case tex_args::SCALE_SCREEN_WIDTH:
             {
                 size = get_texture_size(*ttc.raster);
-                size.y *= *(const F32*)&_763 / size.x;
-                size.x = *(const F32*)&_763;
+                size.y *= 1.0f / size.x;
+                size.x = 1.0f;
                 break;
             }
             case tex_args::SCALE_SCREEN_HEIGHT:
             {
                 size = get_texture_size(*ttc.raster);
-                size.x *= *(const F32*)&_763 / size.y;
-                size.y = *(const F32*)&_763;
+                size.x *= 1.0f / size.y;
+                size.y = 1.0f;
                 break;
             }
             default:
@@ -3393,18 +3381,16 @@ xtextbox::tag_type* xtextbox::find_format_tag(const substr& s, S32& index)
 
 namespace
 {
-    void set_rect_verts(RwIm2DVertex* verts, F32 x, F32 y, F32 w, F32 h,
-                        iColor_tag c, F32 rcz, F32 nsz);
-    void set_rect_vert(RwIm2DVertex& vert, F32 x, F32 y, F32 z, iColor_tag c,
-                       F32 rcz);
+    void set_rect_verts(RwIm2DVertex* verts, F32 x, F32 y, F32 w, F32 h, iColor_tag c, F32 rcz,
+                        F32 nsz);
+    void set_rect_vert(RwIm2DVertex& vert, F32 x, F32 y, F32 z, iColor_tag c, F32 rcz);
 } // namespace
 
-#ifdef NON_MATCHING
 void render_fill_rect(const basic_rect<F32>& bounds, iColor_tag color)
 {
     if (!bounds.empty())
     {
-        F32 rcz = _763 / RwCameraGetNearClipPlane(RwCameraGetCurrentCamera());
+        F32 rcz = 1.0f / RwCameraGetNearClipPlane(RwCameraGetCurrentCamera());
         F32 nsz = RwIm2DGetNearScreenZ();
 
         xfont::set_render_state(NULL);
@@ -3414,19 +3400,18 @@ void render_fill_rect(const basic_rect<F32>& bounds, iColor_tag color)
 
         // non-matching: float scheduling
 
-        r.scale(_903, _904);
+        r.scale(640.0f, 480.0f);
 
         set_rect_verts(vert, r.x, r.y, r.w, r.h, color, rcz, nsz);
         RwIm2DRenderPrimitive(rwPRIMTYPETRISTRIP, vert, 4);
         xfont::restore_render_state();
     }
 }
-#endif
 
 namespace
 {
-    void set_rect_verts(RwIm2DVertex* verts, F32 x, F32 y, F32 w, F32 h,
-                        iColor_tag c, F32 rcz, F32 nsz)
+    void set_rect_verts(RwIm2DVertex* verts, F32 x, F32 y, F32 w, F32 h, iColor_tag c, F32 rcz,
+                        F32 nsz)
     {
         set_rect_vert(verts[0], x, y, nsz, c, rcz);
         set_rect_vert(verts[1], x, y + h, nsz, c, rcz);
@@ -3434,8 +3419,7 @@ namespace
         set_rect_vert(verts[3], x + w, y + h, nsz, c, rcz);
     }
 
-    void set_rect_vert(RwIm2DVertex& vert, F32 x, F32 y, F32 z, iColor_tag c,
-                       F32 rcz)
+    void set_rect_vert(RwIm2DVertex& vert, F32 x, F32 y, F32 z, iColor_tag c, F32 rcz)
     {
         RwIm2DVertexSetScreenX(&vert, x);
         RwIm2DVertexSetScreenY(&vert, y);
@@ -3470,7 +3454,7 @@ basic_rect<F32>& basic_rect<F32>::assign(F32 x, F32 y, F32 w, F32 h)
 
 bool basic_rect<F32>::empty() const
 {
-    return (w <= _762 || h <= _762);
+    return (w <= 0.0f || h <= 0.0f);
 }
 
 void basic_rect<F32>::clip(basic_rect<F32>& a, basic_rect<F32>& b) const
@@ -3693,21 +3677,15 @@ size_t xtextbox::layout::jots_size() const
     return _jots_size;
 }
 
-#ifdef NON_MATCHING
 xtextbox xtextbox::create()
 {
-    // non-matching: floats
-    return create(xfont::create(), screen_bounds, 0, _762, _762, _762, _762);
+    return create(xfont::create(), screen_bounds, 0, 0.0f, 0.0f, 0.0f, 0.0f);
 }
-#endif
 
-#ifdef NON_MATCHING
 xfont xfont::create()
 {
-    // non-matching: floats
-    return create(0, _762, _762, _762, g_WHITE, screen_bounds);
+    return create(0, 0.0f, 0.0f, 0.0f, g_WHITE, screen_bounds);
 }
-#endif
 
 void xtextbox::jot::intersect_flags(const jot& other)
 {
