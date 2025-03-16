@@ -7,6 +7,108 @@
 #include "zNPCSpawner.h"
 #include "containers.h"
 
+struct sound_data_type
+{
+    U32 id;
+    U32 handle;
+    xVec3* loc;
+    F32 volume;
+};
+
+struct range_type
+{
+    S32 min;
+    S32 max;
+};
+
+struct _class_5
+{
+    F32 size;
+    F32 alpha;
+    F32 vel;
+    F32 accel;
+    F32 emit_delay;
+    F32 grow;
+    F32 fade_dist;
+    F32 kill_dist;
+    F32 follow;
+    F32 hit_radius;
+    xVec3 hit_offset;
+};
+
+struct config_0
+{
+    F32 duration;
+    S32 sound_interval;
+    _class_5 ring;
+};
+
+struct _class_8
+{
+    S32 first;
+    S32 range;
+    S32 offset;
+    S32 size;
+};
+
+struct _class_7
+{
+    F32 duration;
+    F32 state_delay;
+    F32 transition_delay;
+    _class_8 pattern;
+};
+
+struct _class_18
+{
+    S32 first;
+    S32 range;
+    S32 offset;
+    S32 size;
+};
+
+struct _class_25
+{
+    F32 state_delay;
+    F32 transition_delay;
+    F32 cycle_delay; // 0x100
+    S32 pattern_offset;
+    S32 pattern_size;
+    range_type pattern[20];
+};
+
+struct sound_property
+{
+    U32 asset;
+    F32 volume;
+    F32 range_inner;
+    F32 range_outer;
+    F32 delay;
+    F32 fade_time;
+};
+
+struct _class_14
+{
+    F32 duration[3];
+    F32 state_delay;
+    F32 transition_delay;
+    _class_18 pattern;
+};
+
+struct fire_type : config_0
+{
+    S32 emit_bone;
+    xVec3 offset;
+    F32 yaw;
+    F32 pitch;
+};
+
+namespace auto_tweak
+{
+    template <class T1, class T2>
+    void load_param(T1&, T2, T2, T2, xModelAssetParam*, U32, const char*);
+};
+
 struct aqua_beam
 {
     struct config
