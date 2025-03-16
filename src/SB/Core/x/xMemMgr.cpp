@@ -15,7 +15,6 @@ void xMemDebug_SoakLog(const char*)
 {
 }
 
-#ifdef NON_MATCHING
 // The instructions putting 0/1/2 into registers happen in the wrong order.
 void xMemInit()
 {
@@ -31,7 +30,6 @@ void xMemInit()
     gxHeap[2].opp_heap[1] = 1;
     gActiveHeap = 0;
 }
-#endif
 
 void xMemExit()
 {
@@ -253,7 +251,6 @@ S32 xMemPushBase()
     return xMemPushBase(gActiveHeap);
 }
 
-#ifdef NON_MATCHING
 // Load/Store swap of sMemBaseNotifyFunc and state_idx
 S32 xMemPopBase(U32 heapID, S32 depth)
 {
@@ -271,7 +268,6 @@ S32 xMemPopBase(U32 heapID, S32 depth)
 
     return heap->state_idx;
 }
-#endif
 
 S32 xMemPopBase(S32 depth)
 {
@@ -325,8 +321,8 @@ void xMemPoolAddElements(xMemPool* pool, void* buffer, U32 count)
     pool->Total += count;
 }
 
-void xMemPoolSetup(xMemPool* pool, void* buffer, U32 nextOffset, U32 flags,
-                   xMemPoolInitCB initCB, U32 size, U32 count, U32 numRealloc)
+void xMemPoolSetup(xMemPool* pool, void* buffer, U32 nextOffset, U32 flags, xMemPoolInitCB initCB,
+                   U32 size, U32 count, U32 numRealloc)
 {
     pool->FreeList = NULL;
     pool->NextOffset = nextOffset;
