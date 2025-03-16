@@ -39,7 +39,7 @@ char* str10 = "Dance01";
 char* str11 = "Pray01";
 char* str12 = "Attack01";
 char* str13 = "zNPCAmbient";
-char* str14 = "zNPCJelly";  
+char* str14 = "zNPCJelly";
 char* str15 = "zNPCNeptune";
 
 void ZNPC_Ambient_Startup()
@@ -57,6 +57,7 @@ void ZNPC_Ambient_Shutdown()
 {
 }
 
+// FIXME: new calls aren't working
 xFactoryInst* ZNPC_Create_Ambient(S32 who, RyzMemGrow* grow, void*)
 {
     zNPCAmbient* inst = NULL;
@@ -65,28 +66,28 @@ xFactoryInst* ZNPC_Create_Ambient(S32 who, RyzMemGrow* grow, void*)
     {
     case NPC_TYPE_AMBIENT:
     {
-        inst = new (who, grow) zNPCAmbient(who);
+        // inst = new (who, grow) zNPCAmbient(who);
         break;
     }
     case NPC_TYPE_JELLYPINK:
     case NPC_TYPE_JELLYBLUE:
     {
-        inst = new (who, grow) zNPCJelly(who);
+        // inst = new (who, grow) zNPCJelly(who);
         break;
     }
     case NPC_TYPE_KINGNEPTUNE:
     {
-        inst = new (who, grow) zNPCNeptune(who);
+        // inst = new (who, grow) zNPCNeptune(who);
         break;
     }
     case NPC_TYPE_MIMEFISH:
     {
-        inst = new (who, grow) zNPCMimeFish(who);
+        // inst = new (who, grow) zNPCMimeFish(who);
         break;
     }
     case NPC_TYPE_COW:
     {
-        inst = new (who, grow) zNPCMimeFish(who);
+        // inst = new (who, grow) zNPCMimeFish(who);
         break;
     }
     }
@@ -390,7 +391,7 @@ void zNPCJelly::BUpdate(xVec3*)
     zGridUpdateEnt(this);
 }
 
-/* This should be 100% matching but it causes a vtable duplication error for some reason
+/* FIXME: This should be 100% matching but it causes a vtable duplication error for some reason */
 void zNPCNeptune::ParseINI()
 {
     zNPCAmbient::ParseINI();
@@ -398,23 +399,18 @@ void zNPCNeptune::ParseINI()
     cfg_npc->snd_trax = &g_sndTrax_Neptune;
     NPCS_SndTablePrepare(&g_sndTrax_Neptune);
 }
-*/
 
-#ifdef NON_MATCHING
 void zNPCNeptune::Reset()
 {
     zNPCAmbient::Reset();
     flags |= 0x40;
 }
-#endif
 
-/* This should be 100% matching but it causes a vtable duplication error for some reason
 void zNPCMimeFish::Reset()
 {
     zNPCAmbient::Reset();
     flg_move = 1;
 }
-*/
 
 void zNPCJelly::Process(xScene* xscn, F32 dt)
 {
