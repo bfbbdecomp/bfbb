@@ -226,8 +226,7 @@ void zUIFont_Update(zUIFont* ent, xScene*, F32)
     }
 }
 
-S32 zUIFontEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
-                     xBase* toParamWidget)
+S32 zUIFontEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* toParamWidget)
 {
     S32 rval = 1;
     zUIFont* s = (zUIFont*)to;
@@ -326,7 +325,6 @@ S32 zUIFontEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
     return rval;
 }
 
-#ifdef NON_MATCHING
 void zUIFont_Render(xEnt* e)
 {
     zUIFont* ent = (zUIFont*)e;
@@ -375,7 +373,7 @@ void zUIFont_Render(xEnt* e)
         {
             iColor_tag c = xColorFromRGBA(a.bcolor[0], a.bcolor[1], a.bcolor[2], a.bcolor[3]);
             basic_rect<F32> r = { NSCREENX(a.pos.x), NSCREENY(a.pos.y), NSCREENX(a.dim[0]),
-                                      NSCREENY(a.dim[1]) };
+                                  NSCREENY(a.dim[1]) };
 
             render_fill_rect(r, c);
         }
@@ -440,7 +438,6 @@ void zUIFont_Render(xEnt* e)
         tb.render(true);
     }
 }
-#endif
 
 F32 xtextbox::yextent(F32 max, S32& size, bool cache) const
 {

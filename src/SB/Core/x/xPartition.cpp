@@ -31,14 +31,11 @@ void PartitionSpaceInsert(_tagPartSpace* space, void* data)
     tmp->next->next = NULL;
 }
 
-#if 0
 // Need to figure out the correct order.
 S32 xPartitionGetTrueIdx(_tagPartition* part, S32 x_spaces, S32 y_spaces, S32 z_spaces)
 {
     return part->total_x * z_spaces + part->total_x * y_spaces * part->total_z + x_spaces;
 }
-
-#endif
 
 void xPartitionDump(_tagPartition*, char*)
 {

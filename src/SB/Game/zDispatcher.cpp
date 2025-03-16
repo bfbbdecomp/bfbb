@@ -70,7 +70,6 @@ void zDispatcher_sceneFinish()
     }
 }
 
-#ifdef NON_MATCHING
 // Compiler is optimizng the size calcuation and moving parameters for memset differently.
 st_ZDISPATCH_DATA* zDispatcher_memPool(S32 cnt)
 {
@@ -89,7 +88,6 @@ st_ZDISPATCH_DATA* zDispatcher_memPool(S32 cnt)
         return pool;
     }
 }
-#endif
 
 st_ZDISPATCH_DATA* zDispatcher_getInst(st_ZDISPATCH_DATA* pool, S32 idx)
 {
@@ -353,7 +351,6 @@ void zDispatcherStoreOptions()
     oldSFXVolume = zVarEntryCB_SndFXVol(NULL);
 }
 
-#ifdef NON_MATCHING
 // This is actually stupid. Loading parameter before assignment.
 void zDispatcherRestoreOptions()
 {
@@ -363,13 +360,10 @@ void zDispatcherRestoreOptions()
     WRAP_xsnd_setMusicVolume(oldMusicVolume);
     WRAP_xsnd_setSFXVolume(oldSFXVolume);
 }
-#endif
 
-#if 0
 // WIP
-// This switch is a mess, good luck.
-S32 ZDSP_elcb_event(xBase*, xBase* xb, U32 toEvent, const F32* toParam,
-                      xBase* toParamWidget)
+// FIXME: This switch is a mess, good luck.
+S32 ZDSP_elcb_event(xBase*, xBase* xb, U32 toEvent, const F32* toParam, xBase* toParamWidget)
 {
     st_ZDISPATCH_DATA* dspdata = (st_ZDISPATCH_DATA*)xb;
     switch (toEvent)
@@ -523,9 +517,7 @@ S32 ZDSP_elcb_event(xBase*, xBase* xb, U32 toEvent, const F32* toParam,
     }
     return 1;
 }
-#endif
 
-#if 0
 void WRAP_xsnd_setMusicVolume(S32 i)
 {
     float f1 = _1181 * i;
@@ -542,9 +534,7 @@ void WRAP_xsnd_setMusicVolume(S32 i)
     xSndSetCategoryVol(SND_CAT_MUSIC, f2);
     zMusicRefreshVolume();
 }
-#endif
 
-#if 0
 void WRAP_xsnd_setSFXVolume(S32 i)
 {
     F32 fcmp = _1181 * i; // - _1199;
@@ -562,4 +552,3 @@ void WRAP_xsnd_setSFXVolume(S32 i)
     xSndSetCategoryVol(SND_CAT_DIALOG, f);
     xSndSetCategoryVol(SND_CAT_UI, f);
 }
-#endif

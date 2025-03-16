@@ -9,7 +9,6 @@ extern xPar* gParDead;
 extern F32 lbl_803CCF10; // 0.0f
 extern F32 lbl_803CCF14; // 255f
 
-#if 0
 // For some reason, it does not recompare gParDead and assumes the first comparison is valid for all.
 void xParMemInit()
 {
@@ -26,8 +25,6 @@ void xParMemInit()
         gParDead = curr;
     }
 }
-
-#endif
 
 xPar* xParAlloc()
 {

@@ -72,21 +72,18 @@ void MemoryProtectionErrorHandler(U16 last, OSContext* ctx, U64 unk1, U64 unk2)
     }
 }
 
-#if 0
-// WIP.
+// FIXME: Define a bunch of functions :)
 void TRCInit()
 {
     iTRCDisk::Init();
-    iTRCDisk::SetPadStopRumblingFunction(iPadStopRumble);
-    iTRCDisk::SetSndSuspendFunction(iSndSuspend);
-    iTRCDisk::SetSndResumeFunction(iSndResume);
-    iTRCDisk::SetSndKillFunction(iSndDIEDIEDIE);
-    iTRCDisk::SetMovieSuspendFunction(iFMV::Suspend);
-    iTRCDisk::SetMovieResumeFunction(iFMV::Resume);
-    ResetButton::SetSndKillFunction(iSndDIEDIEDIE);
+    // iTRCDisk::SetPadStopRumblingFunction(iPadStopRumble);
+    // iTRCDisk::SetSndSuspendFunction(iSndSuspend);
+    // iTRCDisk::SetSndResumeFunction(iSndResume);
+    // iTRCDisk::SetSndKillFunction(iSndDIEDIEDIE);
+    // iTRCDisk::SetMovieSuspendFunction(iFMV::Suspend);
+    // iTRCDisk::SetMovieResumeFunction(iFMV::Resume);
+    // ResetButton::SetSndKillFunction(iSndDIEDIEDIE);
 }
-
-#endif
 
 S32 RenderWareExit()
 {
@@ -105,12 +102,8 @@ void iSystemExit()
     iFileExit();
     iTimeExit();
     xMemExit();
-    OSPanic
-    (
-        "iSystem.cpp",
-        0x21d,
-        "(With apologies to Jim Morrison) This the end, my only friend, The End."
-    );
+    OSPanic("iSystem.cpp", 0x21d,
+            "(With apologies to Jim Morrison) This the end, my only friend, The End.");
 }
 
 void null_func()
@@ -159,7 +152,7 @@ void _rwDolphinHeapFree(void* __ptr)
     }
     if (__ptr != NULL)
     {
-        if ( *(S32*)((S32)__ptr - 4) == 0xDEADBEEF )
+        if (*(S32*)((S32)__ptr - 4) == 0xDEADBEEF)
         {
             free((void*)((S32)__ptr - 32));
         }
@@ -207,15 +200,12 @@ S32 iGetMonth()
     return td.mon + 1;
 }
 
-#if 0
-// Template for future use.
+// Template for future use. TODO
 char* iGetCurrFormattedDate(char* input)
 {
+    return NULL;
 }
 
-#endif
-
-#if 0
 // WIP.
 char* iGetCurrFormattedTime(char* input)
 {
@@ -243,5 +233,3 @@ char* iGetCurrFormattedTime(char* input)
     ret[12] = '\0';
     return ret + (0xd - (S32)input);
 }
-
-#endif

@@ -15,7 +15,6 @@ extern F32 _598;
 extern F32 _599;
 extern xSndGlobals gSnd;
 
-#ifdef NON_MATCHING
 void xSndInit()
 {
     iSndInit();
@@ -41,7 +40,6 @@ void xSndInit()
     xSndDelayedInit();
     reset_faders();
 }
-#endif
 
 void xSndSceneInit()
 {
@@ -93,7 +91,6 @@ void xSndSetCategoryVol(sound_category category, F32 vol)
     gSnd.categoryVolFader[category] = vol;
 }
 
-#ifdef NON_MATCHING
 void xSndDelayedInit()
 {
     for (int i = 0; i < 16; i++)
@@ -103,7 +100,6 @@ void xSndDelayedInit()
     }
     sDelayedPaused = 0;
 }
-#endif
 
 void xSndCalculateListenerPosition()
 {
@@ -131,7 +127,6 @@ void xSndCalculateListenerPosition()
     }
 }
 
-#ifdef NON_MATCHING
 void xSndInternalUpdateVoicePos(xSndVoiceInfo* pVoice)
 {
     U32 flags = pVoice->flags;
@@ -139,50 +134,50 @@ void xSndInternalUpdateVoicePos(xSndVoiceInfo* pVoice)
 
     if ((flags & 1) != 0)
     {
-        if ((flags & 8) != 0)
-        {
-            if ((flags & 0x10) != 0)
-            {
-                if (pVoice->parentPos == (xVec3*)0x0)
-                {
-                    if (pVoice->parentID == 0)
-                    {
-                        if ((flags & 8) == 0)
-                        {
-                            pVoice->actualPos = gSnd.pos;
-                        }
-                    }
-                    else
-                    {
-                        ent = pVoice->parentID & 0xfffffffc);
-                        if ((flags & 0x800) == 0)
-                        {
-                            if ((? & 1) == 0)
-                            {
-                                pVoice->flags = flags & 0xffffffef;
-                            }
-                            else
-                            {
-                                pxVar2 = (xVec3*)xEntGetPos((xEnt*)ent);
-                                xVec3Copy(pVoice->actualPos, ent);
-                            }
-                        }
-                        else
-                        {
-                            pVoice->actualPos = ent;
-                        }
-                    }
-                }
-                else
-                {
-                    pVoice->actualPos = pVoice->parentPos;
-                }
-            }
-            xSndProcessSoundPos(pVoice->actualPos, pVoice->playPos);
-        }
+        // FIXME: WIP
+        // if ((flags & 8) != 0)
+        // {
+        //     if ((flags & 0x10) != 0)
+        //     {
+        //         if (pVoice->parentPos == (xVec3*)0x0)
+        //         {
+        //             if (pVoice->parentID == 0)
+        //             {
+        //                 if ((flags & 8) == 0)
+        //                 {
+        //                     pVoice->actualPos = gSnd.pos;
+        //                 }
+        //             }
+        //             else
+        //             {
+        //                 ent = pVoice->parentID & 0xfffffffc);
+        //                 if ((flags & 0x800) == 0)
+        //                 {
+        //                     if ((? & 1) == 0)
+        //                     {
+        //                         pVoice->flags = flags & 0xffffffef;
+        //                     }
+        //                     else
+        //                     {
+        //                         pxVar2 = (xVec3*)xEntGetPos((xEnt*)ent);
+        //                         xVec3Copy(pVoice->actualPos, ent);
+        //                     }
+        //                 }
+        //                 else
+        //                 {
+        //                     pVoice->actualPos = ent;
+        //                 }
+        //             }
+        //         }
+        //         else
+        //         {
+        //             pVoice->actualPos = pVoice->parentPos;
+        //         }
+        //     }
+        //     xSndProcessSoundPos(pVoice->actualPos, pVoice->playPos);
+        // }
     }
 }
-#endif
 
 void xSndUpdate()
 {
@@ -216,24 +211,22 @@ void xSndExit()
     reset_faders();
 }
 
-U32 xSndPlay(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags,
-                U32 parentID, sound_category category, F32 delay)
+U32 xSndPlay(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, U32 parentID,
+             sound_category category, F32 delay)
 {
     return xSndPlayInternal(id, vol, pitch, priority, flags, parentID, NULL, NULL, _598, _598,
                             category, delay);
 }
 
-U32 xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags,
-                  xEnt* parent, F32 innerRadius, F32 outerRadius, sound_category category,
-                  F32 delay)
+U32 xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, xEnt* parent, F32 innerRadius,
+               F32 outerRadius, sound_category category, F32 delay)
 {
     return xSndPlayInternal(id, vol, pitch, priority, flags, NULL, parent, NULL, innerRadius,
                             outerRadius, category, delay);
 }
 
-U32 xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags,
-                  const xVec3* pos, F32 innerRadius, F32 outerRadius,
-                  sound_category category, F32 delay)
+U32 xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, const xVec3* pos,
+               F32 innerRadius, F32 outerRadius, sound_category category, F32 delay)
 {
     if (flags & 0x800)
     {
@@ -311,7 +304,6 @@ void xSndSetExternalCallback(void (*callback)(U32))
     iSndSetExternalCallback(callback);
 }
 
-#if 0
 U32 xSndStreamReady(U32 owner)
 {
     xSndVoiceInfo* begin = gSnd.voice;
@@ -321,13 +313,12 @@ U32 xSndStreamReady(U32 owner)
     {
         if (v->lock_owner == owner)
         {
-            return (v->flags & 1) >> 5; // Missing cntlzw instruction.
+            return (v->flags & 1) >> 5; // FIXME: Missing cntlzw instruction.
         }
     }
 
     return 0;
 }
-#endif
 
 void xSndStreamUnlock(U32 owner)
 {

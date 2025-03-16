@@ -15,7 +15,6 @@ extern U32 HeapSize;
 extern U32 mem_top_alloc;
 extern U32 mem_base_alloc;
 
-#if 0
 // Starts going wrong after the if and else statement, everything else before looks fine.
 void iMemInit()
 {
@@ -39,7 +38,7 @@ void iMemInit()
     gMemInfo.stack.size = 0xffff8000;
     gMemInfo.stack.flags = gMemInfo.DRAM.flags = 0x820;
     HeapSize = 0x384000;
-    gMemInfo.DRAM.addr = (U32)OSAllocFromHeap((void*)__OSCurrHeap, 0x384000);
+    gMemInfo.DRAM.addr = (U32)OSAllocFromHeap(__OSCurrHeap, 0x384000);
     gMemInfo.DRAM.size = HeapSize;
     gMemInfo.DRAM.flags = 0x820;
     gMemInfo.SRAM.addr = 0;
@@ -48,7 +47,6 @@ void iMemInit()
     mem_top_alloc = gMemInfo.DRAM.addr + HeapSize;
     mem_base_alloc = gMemInfo.DRAM.addr;
 }
-#endif
 
 void iMemExit()
 {

@@ -32,7 +32,6 @@ void zNPCHazard_Shutdown()
 {
 }
 
-#if 0
 // WIP.
 void zNPCHazard_ScenePrepare()
 {
@@ -55,8 +54,6 @@ void zNPCHazard_ScenePrepare()
         g_hazard_rawModel[i] = NULL;
     }
 }
-
-#endif
 
 void zNPCHazard_SceneReset()
 {
@@ -101,7 +98,6 @@ S32 HAZ_ord_sorttest(void* vkey, void* vitem)
     }
 }
 
-#if 0
 // Close, kind of.
 NPCHazard* HAZ_Acquire()
 {
@@ -119,8 +115,6 @@ NPCHazard* HAZ_Acquire()
     }
     return NULL;
 }
-
-#endif
 
 S32 HAZ_AvailablePool()
 {
@@ -140,7 +134,6 @@ void NPCHazard::WipeIt()
     memset(&this->custdata, 0, sizeof(this->custdata));
 }
 
-#if 0
 // WIP.
 S32 NPCHazard::ConfigHelper(en_npchaz haztype)
 {
@@ -164,8 +157,6 @@ S32 NPCHazard::ConfigHelper(en_npchaz haztype)
     }
     return result;
 }
-
-#endif
 
 void NPCHazard::Reconfigure(en_npchaz haztype)
 {
@@ -274,7 +265,6 @@ void UVAModelInfo::Hemorrage()
     uv = 0;
 }
 
-#if 0
 // Need to figure out what is wrong with the final return statement, and the b and blr swaps.
 S32 UVAModelInfo::GetUV(RwTexCoords*& coords, S32& numVertices, RpAtomic* model)
 {
@@ -293,8 +283,6 @@ S32 UVAModelInfo::GetUV(RwTexCoords*& coords, S32& numVertices, RpAtomic* model)
     coords = geom->texCoords[0];
     return (-(S32)coords->u | (U32)coords->u) >> 0x1f;
 }
-
-#endif
 
 RwV3d* NPCHazard::At() const
 {
@@ -330,9 +318,9 @@ void UVAModelInfo::SetColor(iColor_tag color)
     RpGeometry* geo = model->geometry;
 
     RwRGBA col;
-    col.red   = color.r;
+    col.red = color.r;
     col.green = color.g;
-    col.blue  = color.b;
+    col.blue = color.b;
     col.alpha = color.a;
 
     int numMats = model->geometry->matList.numMaterials;

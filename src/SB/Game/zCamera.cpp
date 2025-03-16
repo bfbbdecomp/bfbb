@@ -111,7 +111,6 @@ extern F32 zCamera_f_3_141; // 3.141593 ~ pi
 extern F32 zCamera_f_20_0; // 20.0
 extern F32 zCamera_f_180_0; // 180.0
 
-#if 0
 void zCameraReset(xCamera* cam)
 {
     // classic multiple float assign non match
@@ -145,7 +144,6 @@ void zCameraReset(xCamera* cam)
     hMultiplier = zCamera_f_1_0;
     hOffset = zCamera_f_0_0;
 }
-#endif
 
 F32 GetCurrentPitch()
 {
@@ -274,7 +272,6 @@ F32 MatrixSpeed(zFlyKey keys[])
     return xacos(m) * zCamera_f_114_592 * zCamera_f_30_0;
 }
 
-#if 0
 void zCameraFlyStart(U32 assetID)
 {
     st_PKR_ASSET_TOCINFO info;
@@ -302,10 +299,9 @@ void zCameraFlyStart(U32 assetID)
         zMusicSetVolume(zCamera_f_0_5, zCamera_f_0_1);
     }
 }
-#endif
 
-void zCameraFreeLookSetGoals(xCamera* cam, F32 pitch_s, F32& dgoal, F32& hgoal,
-                             F32& pitch_goal, F32& lktm, F32 dt)
+void zCameraFreeLookSetGoals(xCamera* cam, F32 pitch_s, F32& dgoal, F32& hgoal, F32& pitch_goal,
+                             F32& lktm, F32 dt)
 {
     if (zcam_bbounce != 0)
     {
@@ -324,8 +320,8 @@ void zCameraFreeLookSetGoals(xCamera* cam, F32 pitch_s, F32& dgoal, F32& hgoal,
         if (zcam_longbounce != 0)
         {
             F32 len = xsqrt(zcam_playervel->x * zcam_playervel->x +
-                                zcam_playervel->y * zcam_playervel->y +
-                                zcam_playervel->z * zcam_playervel->z);
+                            zcam_playervel->y * zcam_playervel->y +
+                            zcam_playervel->z * zcam_playervel->z);
 
             bool lenValid = false;
             if (zcam_playervel != NULL)
@@ -421,7 +417,6 @@ void zCameraSetBbounce(S32 bbouncing)
     zcam_bbounce = bbouncing;
 }
 
-#if 0
 void zCameraSetLongbounce(S32 lbounce)
 {
     if (zcam_highbounce != 0 || zcam_longbounce != lbounce)
@@ -433,9 +428,7 @@ void zCameraSetLongbounce(S32 lbounce)
     // li r0 happens too early
     zcam_highbounce = 0;
 }
-#endif
 
-#if 0
 void zCameraSetHighbounce(S32 lbounce)
 {
     if (zcam_longbounce != 0 || zcam_highbounce != lbounce)
@@ -447,7 +440,6 @@ void zCameraSetHighbounce(S32 lbounce)
     // li r0 happens too early
     zcam_longbounce = 0;
 }
-#endif
 
 void zCameraSetPlayerVel(xVec3* vel)
 {

@@ -477,8 +477,7 @@ static U32 ClipPlane(F32 denom, F32 numer, F32* t_in, F32* t_out)
     return (numer <= _557_1);
 }
 
-static U32 ClipBox(const xVec3* r3, const xVec3* r4, const xVec3* r5, F32* t_in,
-                      F32* t_out)
+static U32 ClipBox(const xVec3* r3, const xVec3* r4, const xVec3* r5, F32* t_in, F32* t_out)
 {
     return (ClipPlane(r5->x, -r4->x - r3->x, t_in, t_out) &&
             ClipPlane(-r5->x, r4->x - r3->x, t_in, t_out) &&
@@ -488,7 +487,6 @@ static U32 ClipBox(const xVec3* r3, const xVec3* r4, const xVec3* r5, F32* t_in,
             ClipPlane(-r5->z, r4->z - r3->z, t_in, t_out));
 }
 
-#ifdef NON_MATCHING
 void iBoxIsectRay(const xBox* b, const xRay3* r, xIsect* isx)
 {
     xVec3 var_14, var_20;
@@ -569,9 +567,7 @@ void iBoxIsectRay(const xBox* b, const xRay3* r, xIsect* isx)
         isx->contained = _558_3;
     }
 }
-#endif
 
-#ifdef NON_MATCHING
 void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
 {
     U32 xcode, ycode, zcode;
@@ -722,7 +718,6 @@ void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx)
         isx->contained = _558_3;
     }
 }
-#endif
 
 void iBoxInitBoundVec(xBox* b, const xVec3* v)
 {

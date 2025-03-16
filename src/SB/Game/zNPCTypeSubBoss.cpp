@@ -117,14 +117,12 @@ void zNPCSubBoss::Setup()
     }
 }
 
-#ifdef NON_MATCHING
 void SUBB_InitEffects()
 {
     // non-matching: scheduling
     g_pemit_holder = zParEmitterFind("PAREMIT_CLOUD");
     g_parf_holder.custom_flags = 0x100;
 }
-#endif
 
 zNPCSubBoss::zNPCSubBoss(S32 myType) : zNPCCommon(myType)
 {

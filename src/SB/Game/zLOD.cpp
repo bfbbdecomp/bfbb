@@ -16,7 +16,6 @@ extern F32 lbl_803CDC40; // 1.0
 extern F32 lbl_803CDC48; // 4.0
 extern F32 lbl_803CDC4C; // 10.0
 
-#ifdef NON_MATCHING
 // Float memes
 void AddToLODList(xModelInstance* model)
 {
@@ -43,8 +42,8 @@ void AddToLODList(xModelInstance* model)
             if (sManagerCount < 2048)
             {
                 F32 distscale = ((model->Mat->right).x * (model->Mat->right).x +
-                                     (model->Mat->right).y * (model->Mat->right).y +
-                                     (model->Mat->right).z * (model->Mat->right).z);
+                                 (model->Mat->right).y * (model->Mat->right).y +
+                                 (model->Mat->right).z * (model->Mat->right).z);
                 minst = model;
                 if (distscale < lbl_803CDC44)
                 {
@@ -69,7 +68,6 @@ void AddToLODList(xModelInstance* model)
         }
     };
 }
-#endif
 
 xEnt* AddToLODList(xEnt* ent, xScene* scene, void* v)
 {

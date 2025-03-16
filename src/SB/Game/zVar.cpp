@@ -160,7 +160,6 @@ namespace
         return zVar_printf_buffer4;
     }
 
-#ifdef NON_MATCHING
     // Indexing into zVar_strings didn't get pulled out of the loop in the original
     // code for some reason.
     char* var_text_CorruptFileName()
@@ -175,7 +174,6 @@ namespace
         }
         return zVar_printf_buffer5;
     }
-#endif
 
     const char* var_text_CurrentArea()
     {
@@ -219,12 +217,7 @@ namespace
 
 // Note: zVarGameSlotInfo should be in the anonymous namespace, need the
 // anomymous namespace symbol formatting fix from Seil to move it in though.
-#if 1
-// Needed for the following functions to call, but not to be exposed in the
-// header file.
-char* zVarGameSlotInfo(S32 i, char* buffer, size_t something);
 
-#else
 // I don't understand this function. The behavior perfectly matches... but
 // it never ends up doing anything with the buffer it makes up?? It just returns
 // the same buffer it takes in, throwing away all the work it just did.
@@ -287,7 +280,6 @@ char* zVarGameSlotInfo(S32 i, char* buffer, size_t something)
 
     return buffer;
 }
-#endif
 
 namespace
 {
@@ -503,8 +495,6 @@ namespace
         return NULL;
     }
 
-// Note: This function is actually in the anonymous namespace
-#if 0
     // Not close, don't know enough about the data structures to know if things are
     // looking correct or not.
     void parse_tag_var(xtextbox::jot& r31, const xtextbox& r4, const xtextbox& r5,
@@ -524,14 +514,13 @@ namespace
             {
                 r31.context_size = 0xFC00;
                 // Maybe not the correct flags, something is up with the struct
-                r31.flag.upper.dynamic = 1;
+                r31.flag.dynamic = 1;
                 // No clue what this line is:
                 // r31.flag.upper. something = something??
-                r31.flag.upper.insert = 1;
+                r31.flag.insert = 1;
             }
         }
     }
-#endif
 
 } // namespace
 
