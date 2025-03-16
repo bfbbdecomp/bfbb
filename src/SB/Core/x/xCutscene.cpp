@@ -22,7 +22,6 @@ extern F32 _672; // 1.0
 extern F32 lbl_803CCB3C; // 0.0
 extern F32 lbl_803CCB40; // 0.033333335
 
-#ifdef NON_MATCHING
 // Non-matching: scheduling
 void xCutscene_Init(void* toc)
 {
@@ -51,9 +50,7 @@ void xCutscene_Init(void* toc)
         *(volatile float*)&sCutsceneFakeModel[i].Alpha = (volatile float)1.0f;
     }
 }
-#endif
 
-#if 0
 // Damn RwEngineInstance ruining this (as well as the members being accessed incorrectly by Ghidra)
 xCutscene* xCutscene_Create(U32 id)
 {
@@ -78,7 +75,7 @@ xCutscene* xCutscene_Create(U32 id)
     {
         maxload = cnfo->MaxModel;
     }
-    sActiveCutscene.RawBuf = RwFree(maxload + 0x3c);
+    // sActiveCutscene.RawBuf = RwFree(maxload + 0x3c);
     sActiveCutscene.AlignBuf = sActiveCutscene.RawBuf;
     while ((int)sActiveCutscene.AlignBuf & 0x3f != 0)
     {
@@ -94,10 +91,7 @@ xCutscene* xCutscene_Create(U32 id)
     sActiveCutscene.Stream = (xCutsceneTime*)((int)sActiveCutscene.AlignBuf + cnfo->MaxBufEven);
     return &sActiveCutscene;
 }
-#endif
 
-#if 0
-// WIP
 S32 xCutscene_Destroy(xCutscene* csn)
 {
     csn->Ready = 0;
@@ -120,26 +114,24 @@ S32 xCutscene_Destroy(xCutscene* csn)
     }
     for (int i = 0; i < csn->Info->NumData; i++)
     {
-        if ((((U32*)csn->Data->DataType + i) & 0x80000000) &&
-            ((RpAtomic*)((U32*)((U32*)csn->Data->DataType + i) + 3) != NULL))
-        {
-            if ((((U32*)csn->Data->DataType + i) & 0xfffffff) == 6)
-            {
-                RwFree();
-            }
-            else
-            {
-                iModelUnload((RpAtomic*)((U32*)((U32*)csn->Data->DataType + i) + 3));
-            }
-            // (U32)((U32*)csn->Data->DataType + i) =
-            //     (((U32*)csn->Data->DataType + i) & 0xfffffff);
-        }
+        // if ((((U32*)csn->Data->DataType + i) & 0x80000000) &&
+        //     ((RpAtomic*)((U32*)((U32*)csn->Data->DataType + i) + 3) != NULL))
+        // {
+        //     if ((((U32*)csn->Data->DataType + i) & 0xfffffff) == 6)
+        //     {
+        //         RwFree();
+        //     }
+        //     else
+        //     {
+        //         iModelUnload((RpAtomic*)((U32*)((U32*)csn->Data->DataType + i) + 3));
+        //     }
+        //     (U32)((U32*)csn->Data->DataType + i) = (((U32*)csn->Data->DataType + i) & 0xfffffff);
+        // }
     }
     RwFree(csn->RawBuf);
     memset(csn, 0, sizeof(xCutscene));
     return 1;
 }
-#endif
 
 S32 xCutscene_LoadStart(xCutscene* csn)
 {
@@ -156,8 +148,6 @@ S32 xCutscene_LoadStart(xCutscene* csn)
     return 1;
 }
 
-#if 0
-// WIP
 F32 xCutsceneConvertBreak(float param_1, xCutsceneBreak* param_2, U32 param_3, int param_4)
 {
     int i = 0;
@@ -188,7 +178,6 @@ F32 xCutsceneConvertBreak(float param_1, xCutsceneBreak* param_2, U32 param_3, i
     }
     return param_2[i].Time - lbl_803CCB40;
 }
-#endif
 
 xCutscene* xCutscene_CurrentCutscene()
 {
