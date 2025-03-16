@@ -42,9 +42,7 @@ void NPC_entwrap_bupdate(xEnt*, xVec3*);
 void NPC_entwrap_move(xEnt*, xScene*, F32, xEntFrame*);
 void NPC_entwrap_render(xEnt*);
 
-#ifdef NON_MATCHING
 // The order of the function pointer assignment instructions at the end of the
-
 void xNPCBasic::Init(xEntAsset* asset)
 {
     if (xNPCBasic_float_0 == asset->scale.x)
@@ -104,11 +102,7 @@ void xNPCBasic::Init(xEntAsset* asset)
 
     baseFlags &= 0xffef;
 }
-#endif
 
-#ifndef NOT_MATCHING
-
-#else
 // Register assignment in the floating point instructions is slightly wrong.
 void xNPCBasic::Reset()
 {
@@ -136,7 +130,6 @@ void xNPCBasic::Reset()
     RestoreColFlags();
     return;
 }
-#endif
 
 void NPC_alwaysUseSphere(xEnt* ent, xVec3* value)
 {
