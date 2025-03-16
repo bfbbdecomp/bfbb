@@ -86,7 +86,6 @@ void zNPCDuplotron::SelfSetup()
     psy->SetSafety(0x4E474430);
 }
 
-#if 0
 // non-matching: scheduling?
 void DUPO_InitEffects()
 {
@@ -105,7 +104,6 @@ void DUPO_InitEffects()
     xVec3Copy(&g_parf_overheat.pos, &g_O3);
     xVec3Copy(&g_parf_overheat.vel, &g_Y3);
 }
-#endif
 
 void DUPO_KillEffects()
 {
