@@ -1442,16 +1442,6 @@ xAnimTable* ZNPC_AnimTable_Slick()
     return pxVar1;
 }
 
-#if 0
-// Would work if IsDying() returned bool.
-// Some code relies on IsDying() returning S32, though.
-// e.g. zNPCRobot::NewTime
-bool zNPCTubelet::IsDying()
-{
-    return tubestat == TUBE_STAT_DEAD;
-}
-#endif
-
 void zNPCTubelet::Reset()
 {
     tubestat = TUBE_STAT_BORN;
