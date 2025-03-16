@@ -134,7 +134,6 @@ void xParGroupKillAllParticles(xParGroup* ps)
 
 #define clamp(x, a, b) (((x) < (a)) ? (a) : (((x) > (b)) ? (b) : (x)))
 
-#ifdef NON_MATCHING
 void xParGroupAnimate(xParGroup* ps, F32 dt)
 {
     xPar* i = ps->m_root;
@@ -175,7 +174,6 @@ void xParGroupAnimate(xParGroup* ps, F32 dt)
         }
     }
 }
-#endif
 
 void xParGroupAddParP(xParGroup* ps, xPar* p)
 {
