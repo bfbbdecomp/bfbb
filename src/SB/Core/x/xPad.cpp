@@ -16,7 +16,6 @@ S32 xPadInit()
     return 1;
 }
 
-#if 0
 // WIP.
 _tagxPad* xPadEnable(S32 idx)
 {
@@ -27,8 +26,6 @@ _tagxPad* xPadEnable(S32 idx)
     }
     return p;
 }
-
-#endif
 
 void xPadRumbleEnable(S32 idx, S32 enable)
 {
@@ -91,7 +88,6 @@ void xPadKill()
     iPadKill();
 }
 
-#if 0
 // WIP.
 _tagxRumble* xPadGetRumbleSlot()
 {
@@ -107,8 +103,6 @@ _tagxRumble* xPadGetRumbleSlot()
     }
     return NULL;
 }
-
-#endif
 
 void xPadDestroyRumbleChain(_tagxPad* pad)
 {
