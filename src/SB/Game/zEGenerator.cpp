@@ -15,41 +15,39 @@ void zEGenerator_Init(void* egen, void* asset)
     zEGenerator_Init((zEGenerator*)egen, (xEntAsset*)asset);
 }
 
-#if 0
 // I can't figure out the 2nd parameter for the find asset function call.
+// FIXME: struct access offsets and callback definitions with suspect parameter typing
 void zEGenerator_Init(zEGenerator* egen, xEntAsset* asset)
 {
     zEntInit((zEnt*)egen, (xEntAsset*)asset, 'EGEN');
-    egen->zasset = asset;
+    // egen->zasset = asset;
     if (egen->linkCount != 0)
     {
-        egen->link = asset + 1;
+        // egen->link = asset + 1;
     }
     else
     {
         egen->link = NULL;
     }
-    egen->update = zEGenerator_Update;
-    egen->move = zEGenerator_Move;
-    egen->eventFunc = zEGenerator_EventCB;
-    egen->render = zEGenerator_Render;
+    // egen->update = zEGenerator_Update;
+    // egen->move = zEGenerator_Move;
+    // egen->eventFunc = zEGenerator_EventCB;
+    // egen->render = zEGenerator_Render;
     egen->afile = NULL;
-    if (asset->onAnimID)
-    {
-        void* buf = xSTFindAsset(asset->onAnimID, FREFREFRF);
-        if (buf != NULL)
-        {
-            egen->afile = xAnimFileNew(buf, &zEGeneratorStringBase[0], 0, NULL);
-            egen->atbl = xAnimTableNew(&zEGeneratorStringBase[0], NULL, 0);
-            xAnimTableNewState(egen->atbl, &zEGeneratorStringBase[1], 0x10, 0, lbl_803CD290, NULL,
-                               NULL, lbl_803CD294, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-            xAnimTableAddFile(egen->atbl, egen->afile, &zEGeneratorStringBase[1]);
-            xAnimPoolAlloc(globals.scenePreload->mempool, egen, egen->atbl, egen->model);
-        }
-    }
+    // if (asset->onAnimID)
+    // {
+    //     void* buf = xSTFindAsset(asset->onAnimID, FREFREFRF);
+    //     if (buf != NULL)
+    //     {
+    //         egen->afile = xAnimFileNew(buf, &zEGeneratorStringBase[0], 0, NULL);
+    //         egen->atbl = xAnimTableNew(&zEGeneratorStringBase[0], NULL, 0);
+    //         xAnimTableNewState(egen->atbl, &zEGeneratorStringBase[1], 0x10, 0, lbl_803CD290, NULL,
+    //                            NULL, lbl_803CD294, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    //         xAnimTableAddFile(egen->atbl, egen->afile, &zEGeneratorStringBase[1]);
+    //         xAnimPoolAlloc(globals.scenePreload->mempool, egen, egen->atbl, egen->model);
+    //     }
+    // }
 }
-
-#endif
 
 void zEGenerator_Setup(zEGenerator* egen, xScene* sc)
 {
@@ -116,7 +114,6 @@ void zEGenerator_Render(zEGenerator* egen)
     xEntRender((xEnt*)egen);
 }
 
-#if 0
 // WIP.
 void zEGenerator_TurnOn(zEGenerator* egen)
 {
@@ -124,17 +121,18 @@ void zEGenerator_TurnOn(zEGenerator* egen)
     zEGenAsset* zasset = (zEGenAsset*)egen->asset;
     if (egen->afile != NULL)
     {
-        egen->model->Anim->Single->CurrentSpeed = @679;
+        egen->model->Anim->Single->CurrentSpeed = 1.0f;
     }
     egen->tmr = zasset->ontime;
-    xMat4x3Toworld(&egen->src_pos, &egen->model->Mat, &egen->zasset->src_dpos);
+    xMat4x3Toworld(&egen->src_pos, (const xMat4x3*)&egen->model->Mat, &egen->zasset->src_dpos);
     if (egen->num_dsts)
     {
         // TODO!!!
     }
     else
     {
-        xDrawSphere(&egen->dst_pos, @856, 0xc006);
+        // FIXME: Find correct definition
+        // xDrawSphere(&egen->dst_pos, @856, 0xc006);
     }
     for (S32 i = 0; i < 2; i++)
     {
@@ -146,8 +144,6 @@ void zEGenerator_TurnOn(zEGenerator* egen)
     }
     // TODO!!!
 }
-
-#endif
 
 void zEGenerator_TurnOff(zEGenerator* egen)
 {
@@ -178,10 +174,9 @@ void zEGenerator_ToggleOn(zEGenerator* egen)
     }
 }
 
-#if 0
 // Need to figure out how to call the link function. Everything else should be in order as long as the case labels are correct.
 S32 zEGeneratorEventCB(xBase* to, xBase* from, U32 toEvent, const F32* toParam,
-                         xBase* toParamWidget)
+                       xBase* toParamWidget)
 {
     zEGenerator* egen = (zEGenerator*)from;
     switch (toEvent)
@@ -224,10 +219,10 @@ S32 zEGeneratorEventCB(xBase* to, xBase* from, U32 toEvent, const F32* toParam,
             break;
         if (toParamWidget->link == NULL)
             break;
-        toParamWidget->link(toParamWidget, egen->model, 0, 0);
+
+        // FIXME: xLinkAsset isn't a function call :(
+        // toParamWidget->link(toParamWidget, egen->model, 0, 0);
         break;
     }
     return eEventEnable;
 }
-
-#endif
