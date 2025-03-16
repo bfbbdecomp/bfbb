@@ -22,8 +22,7 @@ void xGridBoundInit(xGridBound* bound, void* data)
     bound->gpad = 0xea;
 }
 
-#ifdef NON_MATCHING
-// Usual floating point problems, floating point loads get pulled to the start.
+// FIXME: Usual floating point problems, floating point loads get pulled to the start.
 // Also, there's something funny going on with the malloc + memset at the end,
 // I think they may not have used the obvious pattern for it, since changing
 // the multiplication order for the second one generates closer machine code
@@ -64,7 +63,6 @@ void xGridInit(xGrid* grid, xBox* bounds, U16 nx, U16 nz, U8 ingrid_id)
     grid->cells = (xGridBound**)xMemAllocSize(nx * nz * sizeof(xGridBound*));
     memset(grid->cells, 0, sizeof(xGridBound*) * (nz * nx));
 }
-#endif
 
 void xGridKill(xGrid* grid)
 {
@@ -199,7 +197,6 @@ xGridBound** xGridGetCell(xGrid* grid, const xEnt* ent, S32& grx, S32& grz)
     return &grid->cells[grz * grid->nx] + grx;
 }
 
-#ifdef NON_MATCHING
 void xGridGetCell(xGrid* grid, F32 x, F32 y, F32 z, S32& grx, S32& grz)
 {
     F32 pgridx = (x - grid->minx) * grid->inv_csizex;
@@ -208,10 +205,9 @@ void xGridGetCell(xGrid* grid, F32 x, F32 y, F32 z, S32& grx, S32& grz)
     grx = MIN(F32((grid->nx - 1) ^ 0x8000), MAX(0, pgridx));
     grz = MIN(F32((grid->nz - 1) ^ 0x8000), MAX(0, pgridx));
 }
-#endif
 
-xGridBound* xGridIterFirstCell(xGrid* grid, F32 posx, F32 posy, F32 posz, S32& grx,
-                               S32& grz, xGridIterator& iter)
+xGridBound* xGridIterFirstCell(xGrid* grid, F32 posx, F32 posy, F32 posz, S32& grx, S32& grz,
+                               xGridIterator& iter)
 {
     xGridGetCell(grid, posx, posy, posz, grx, grz);
     return xGridIterFirstCell(grid, grx, grz, iter);
