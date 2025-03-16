@@ -158,7 +158,6 @@ void zCutSceneNamesTable_clearAll()
     }
 }
 
-#ifdef NON_MATCHING
 void zCutsceneMgrPlayStart(zCutsceneMgr* t)
 {
     gCutsceneSkipOK = 1;
@@ -222,7 +221,6 @@ void zCutsceneMgrPlayStart(zCutsceneMgr* t)
         }
     }
 }
-#endif
 
 S32 zCutsceneMgrEventCB(xBase*, xBase* to, U32 toEvent, const F32*, xBase*)
 {
@@ -262,7 +260,6 @@ S32 zCutsceneMgrEventCB(xBase*, xBase* to, U32 toEvent, const F32*, xBase*)
     return 1;
 }
 
-#ifdef NON_MATCHING
 void zCutsceneMgrFinishLoad(xBase* to)
 {
     zCutsceneMgr* t = (zCutsceneMgr*)to;
@@ -285,9 +282,7 @@ void zCutsceneMgrFinishLoad(xBase* to)
     zEntEvent(&globals.player.ent, 4);
     return;
 }
-#endif
 
-#ifdef NON_MATCHING
 void zCutsceneMgrFinishExit(xBase* to)
 {
     zCutsceneMgr* t;
@@ -316,7 +311,6 @@ void zCutsceneMgrFinishExit(xBase* to)
     t->csn = NULL;
     globals.cmgr = NULL;
 }
-#endif
 
 void zCutsceneMgrKillFX(zCutsceneMgr* t)
 {
