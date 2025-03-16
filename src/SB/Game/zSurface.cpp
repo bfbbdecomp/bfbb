@@ -54,41 +54,6 @@ void zSurfaceResetSurface(xSurface* surf)
     surf->friction = ((zSurfaceProps*)(surf->moprops))->asset->friction;
 }
 
-#if 0
-xSurface* zSurfaceGetSurface(U32 mat_id)
-{
-    S32 map;
-    zMaterialMapAsset* mapper;
-    zMaterialMapEntry* entry;
-    U16 nsurfs;
-    xSurface* surf;
-
-    for (int i = 0; i < sMapperCount; i++)
-    {
-        mapper = sMapper[i];
-        if (mapper != NULL)
-        {
-            for (int j = 0; j < mapper->count; j++)
-            {
-                if (mapper->id == mat_id)
-                {
-                    nsurfs = xSurfaceGetNumSurfaces();
-                    for (int k = 0; k < nsurfs; k++)
-                    {
-                        surf = xSurfaceGetByIdx(k);
-                        if (surf->id == mapper->id)
-                        {
-                            return surf;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return &sDef_surf;
-}
-#endif
-
 xSurface* zSurfaceGetSurface(const xCollis* coll)
 {
     xSurface* surf = NULL;
