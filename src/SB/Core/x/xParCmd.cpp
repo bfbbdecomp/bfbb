@@ -352,7 +352,6 @@ void xParCmdRandomVelocityPar_Update(xParCmd* c, xParGroup* ps, F32 dt)
     }
 }
 
-#ifdef NON_MATCHING
 void xParCmdApplyWind_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     xPar* p = ps->m_root;
@@ -369,7 +368,6 @@ void xParCmdApplyWind_Update(xParCmd* c, xParGroup* ps, F32 dt)
         p = p->m_next;
     }
 }
-#endif
 
 void xParCmdRotPar_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
@@ -404,7 +402,6 @@ void xParCmdVelocityApply_Update(xParCmd* c, xParGroup* ps, F32 dt)
     }
 }
 
-#ifdef NON_MATCHING
 void xParCmdRotateAround_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     xPar* p = ps->m_root;
@@ -448,7 +445,6 @@ void xParCmdRotateAround_Update(xParCmd* c, xParGroup* ps, F32 dt)
         p = p->m_next;
     }
 }
-#endif
 
 void xParCmdTex_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
@@ -739,7 +735,6 @@ void xParCmd_DampenSpeed_Update(xParCmd* c, xParGroup* ps, F32 dt)
     }
 }
 
-#ifdef NON_MATCHING
 void xParCmd_SizeInOut_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     xPar* p;
@@ -786,21 +781,16 @@ void xParCmd_SizeInOut_Update(xParCmd* c, xParGroup* ps, F32 dt)
         }
     }
 }
-#endif
 
-#if 0
 void xParCmd_AlphaInOut_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     // todo: this is very similar to xParCmd_SizeInOut_Update
 }
-#endif
 
-#if 0
 void xParCmd_Shaper_Update(xParCmd* c, xParGroup* ps, F32 dt)
 {
     // todo: part of this is very similar to xParCmd_SizeInOut_Update
 }
-#endif
 
 WEAK F32 xVec3LengthFast(F32 x, F32 y, F32 z)
 {
