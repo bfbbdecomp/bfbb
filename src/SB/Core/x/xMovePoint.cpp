@@ -70,12 +70,14 @@ void xMovePointSplineDestroy(xMovePoint* m)
 
 void xMovePointSplineSetup(xMovePoint* m)
 {
-    xMovePoint* w0, *w1, *w2, *w3;
+    xMovePoint *w0, *w1, *w2, *w3;
     xVec3 points[2];
     xVec3 p1, p2;
 
-    if (m->asset->bezIndex != 1) return;
-    if (m->spl) return;
+    if (m->asset->bezIndex != 1)
+        return;
+    if (m->spl)
+        return;
 
     w0 = m->prev;
     w1 = m;
@@ -91,12 +93,12 @@ void xMovePointSplineSetup(xMovePoint* m)
     }
     else
     {
-        p1.x = (1/3.f) * w0->pos->x + (2/3.f) * w1->pos->x;
-        p1.y = (1/3.f) * w0->pos->y + (2/3.f) * w1->pos->y;
-        p1.z = (1/3.f) * w0->pos->z + (2/3.f) * w1->pos->z;
-        p2.x = (2/3.f) * w1->pos->x + (1/3.f) * w2->pos->x;
-        p2.y = (2/3.f) * w1->pos->y + (1/3.f) * w2->pos->y;
-        p2.z = (2/3.f) * w1->pos->z + (1/3.f) * w2->pos->z;
+        p1.x = (1 / 3.f) * w0->pos->x + (2 / 3.f) * w1->pos->x;
+        p1.y = (1 / 3.f) * w0->pos->y + (2 / 3.f) * w1->pos->y;
+        p1.z = (1 / 3.f) * w0->pos->z + (2 / 3.f) * w1->pos->z;
+        p2.x = (2 / 3.f) * w1->pos->x + (1 / 3.f) * w2->pos->x;
+        p2.y = (2 / 3.f) * w1->pos->y + (1 / 3.f) * w2->pos->y;
+        p2.z = (2 / 3.f) * w1->pos->z + (1 / 3.f) * w2->pos->z;
         points[1] = *w2->pos;
     }
 
@@ -104,7 +106,6 @@ void xMovePointSplineSetup(xMovePoint* m)
     xSpline3_ArcInit(m->spl, 20);
 }
 
-#if 0
 // If you uncomment the numPoints variable then this function is a perfect match
 // minus ordering. In the original assembly some variable fetches are lifted to
 // places earlier in the assembly listing than what this comiles to for some
@@ -127,7 +128,7 @@ F32 xMovePointGetNext(xMovePoint* m, xMovePoint* prev, xMovePoint** next, xVec3*
     // The debug symbols don't show a dedicated numPoints var, but if it isn't
     // present, then getting numPoints isn't lifted outside of the loop, which
     // it is in the original assembly.
-    //U16 numPoints = m->asset->numPoints;
+    U16 numPoints = m->asset->numPoints;
 
     for (U16 idx = 0; idx < m->asset->numPoints; ++idx)
     {
@@ -172,7 +173,6 @@ F32 xMovePointGetNext(xMovePoint* m, xMovePoint* prev, xMovePoint** next, xVec3*
         return xMovePoint_float_0;
     }
 }
-#endif
 
 xVec3* xMovePointGetPos(const xMovePoint* m)
 {
