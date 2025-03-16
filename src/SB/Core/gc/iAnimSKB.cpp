@@ -5,7 +5,6 @@
 
 #include <limits.h>
 
-#ifdef NON_MATCHING
 void iAnimEvalSKB(iAnimSKBHeader* data, F32 time, U32 flags, xVec3* tran, xQuat* quat)
 {
     U32 i, tidx, bcount, tcount;
@@ -126,7 +125,6 @@ void iAnimEvalSKB(iAnimSKBHeader* data, F32 time, U32 flags, xVec3* tran, xQuat*
         }
     }
 }
-#endif
 
 F32 iAnimDurationSKB(iAnimSKBHeader* data)
 {
