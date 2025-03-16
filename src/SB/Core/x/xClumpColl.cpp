@@ -38,12 +38,11 @@ void xClumpColl_InstancePointers(xClumpCollBSPTree* tree, RpClump* clump)
     RpMesh* mesh;
 }
 
-#if 0
 //WIP
-xClumpCollBSPTree*
-xClumpColl_ForAllBoxLeafNodeIntersections(xClumpCollBSPTree* tree, RwBBox* box,
-                                          S32 (*callBack)(xClumpCollBSPTriangle*, void*),
-                                          void* data)
+xClumpCollBSPTree* xClumpColl_ForAllBoxLeafNodeIntersections(xClumpCollBSPTree* tree, RwBBox* box,
+                                                             S32 (*callBack)(xClumpCollBSPTriangle*,
+                                                                             void*),
+                                                             void* data)
 {
     S32 nStack;
     nodeInfo nodeStack[33];
@@ -91,4 +90,3 @@ xClumpColl_ForAllBoxLeafNodeIntersections(xClumpCollBSPTree* tree, RwBBox* box,
     }
     return 0;
 }
-#endif
