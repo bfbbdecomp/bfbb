@@ -76,7 +76,7 @@ struct zNPCDutchman : zNPCSubBoss
         bool beaming;
         bool was_beaming;
         bool hurting;
-        bool flaming;
+        bool flaming; //0x2b9
         bool eye_glow;
         bool hand_trail; //0x2bb
         move_enum move;
@@ -97,7 +97,7 @@ struct zNPCDutchman : zNPCSubBoss
     move_info move; //0x2C8
     struct
     {
-        U8 moreFlags; //0x31c??
+        U8 moreFlags; //0x31c
     } old;
     beam_info beam[2]; //Needed for start_beam func
     static_queue<wave_data> waves; //Needed for start_beam func
@@ -108,7 +108,7 @@ struct zNPCDutchman : zNPCSubBoss
         S32 emitted; //0x574
         U8 splash_break;
         xVec3 splash_loc;
-        U8 blob_break;
+        U8 blob_break; //0x588
         xVec3 blob_loc;
         F32 imax_dist; //0x598
         xMat3x3 blob_mat;
@@ -144,14 +144,20 @@ struct zNPCDutchman : zNPCSubBoss
     void Render();
     void render_debug();
     void update_animation(float);
+    void kill_wave(zNPCDutchman::wave_data&);
     void add_splash(const xVec3&, float);
     void vanish();
+    void reappear();
+    void face_player();
     void start_beam();
     void stop_beam();
+    void start_flames();
     void stop_flames();
     void stop_hand_trail();
+    void reset_lasso_anim();
     void reset_speed();
     void Damage(en_NPC_DAMAGE_TYPE, xBase*, const xVec3*);
+    S32 LassoSetup();
     void start_eye_glow();
     void stop_eye_glow();
     U8 PhysicsFlags() const;
@@ -177,6 +183,7 @@ struct zNPCGoalDutchmanInitiate : zNPCGoalCommon
 struct zNPCGoalDutchmanIdle : zNPCGoalCommon
 {
     zNPCDutchman& owner;
+    S32 Enter(float, void*);
     S32 Exit(float, void*);
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);

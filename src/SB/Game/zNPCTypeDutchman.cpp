@@ -6,8 +6,11 @@
 
 namespace
 {
-}
-
+    void kill_sound(S32 a, U32 b)
+    {
+    }
+} // namespace
+//dummy text for pushing
 void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 {
     F32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
@@ -48,12 +51,23 @@ void zNPCDutchman::Damage(en_NPC_DAMAGE_TYPE, xBase*, const xVec3*)
 //     move = *tempR4;
 // }
 
+S32 zNPCDutchman::LassoSetup()
+{
+    zNPCCommon::LassoUseGuides(1, 1);
+    zNPCCommon::LassoSetup();
+}
+
 void zNPCDutchman::render_debug()
 {
 }
 
 void zNPCDutchman::update_animation(float)
 {
+}
+
+void zNPCDutchman::kill_wave(zNPCDutchman::wave_data& wave)
+{
+    kill_sound(1, wave.sound_handle);
 }
 
 void zNPCDutchman::start_eye_glow() //Matches but the data is fucked
@@ -100,6 +114,17 @@ void zNPCDutchman::stop_beam()
     flag.beaming = false;
 }
 
+void zNPCDutchman::start_flames()
+{
+    //static_queue<zNPCDutchman::slime_slice>::clear();
+    flag.flaming = true;
+    flames.time = 0.0;
+    flames.emitted = 0;
+    flames.blob_break = 1;
+    flames.splash_break = 1;
+    slime.slices.clear();
+}
+
 void zNPCDutchman::stop_flames()
 {
     flag.flaming = false;
@@ -117,15 +142,27 @@ void zNPCDutchman::vanish()
     xEntHide(this);
 }
 
+void zNPCDutchman::reappear()
+{
+    moreFlags = old.moreFlags;
+    xNPCBasic::RestoreColFlags();
+    xEntShow(this);
+}
+
 void zNPCDutchman::reset_speed()
 {
 }
 
 //S32 zNPCGoalDutchmanInitiate::Exit(F32 dt, void* updCtxt)
 //{
-// owner;
 // return xGoal::Exit(dt, updCtxt);
 //}
+
+S32 zNPCGoalDutchmanIdle::Enter(F32 dt, void* updCtxt)
+{
+    owner.face_player();
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
 
 S32 zNPCGoalDutchmanIdle::Exit(F32 dt, void* updCtxt)
 {
@@ -193,4 +230,9 @@ U8 zNPCDutchman::ColPenFlags() const
 U8 zNPCDutchman::ColChkFlags() const
 {
     return 0;
+}
+
+WEAK void zNPCDutchman::face_player()
+{
+    flag.face_player = true;
 }
