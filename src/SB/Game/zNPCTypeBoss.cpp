@@ -181,7 +181,6 @@ void ZNPC_Destroy_Boss(xFactoryInst* inst)
     delete inst;
 }
 
-#ifdef NON_MATCHING
 xAnimTable* ZNPC_AnimTable_BossSBobbyArm()
 {
     xAnimTable* table;
@@ -191,7 +190,6 @@ xAnimTable* ZNPC_AnimTable_BossSBobbyArm()
     // Nearly identical, save for a redundant r5 load being skipped.
     table = xAnimTableNew("zNPCBBobbyArm", NULL, ourAnims[0]);
 
-
     xAnimTableNewState(table, g_strz_bossanim[1], 0x10, 0, _920_2, NULL, NULL, _921_2, NULL, NULL,
                        xAnimDefaultBeforeEnter, NULL, NULL);
 
@@ -199,7 +197,6 @@ xAnimTable* ZNPC_AnimTable_BossSBobbyArm()
 
     return table;
 }
-#endif
 
 void BOSS_InitEffects();
 
@@ -214,14 +211,12 @@ void zNPCBoss::Setup()
     }
 }
 
-#ifdef NON_MATCHING
 void BOSS_InitEffects()
 {
     // non-matching: scheduling
     g_pemit_holder = zParEmitterFind("PAREMIT_CLOUD");
     g_parf_holder.custom_flags = 0x100;
 }
-#endif
 
 zNPCBoss::zNPCBoss(S32 myType) : zNPCCommon(myType)
 {
