@@ -65,14 +65,11 @@ void zNPCDutchman::update_animation(float)
 {
 }
 
-<<<<<<< HEAD
 void zNPCDutchman::kill_wave(zNPCDutchman::wave_data& wave)
 {
     kill_sound(1, wave.sound_handle);
 }
 
-=======
->>>>>>> main
 void zNPCDutchman::start_eye_glow() //Matches but the data is fucked
 {
     flag.eye_glow = true;
@@ -117,7 +114,6 @@ void zNPCDutchman::stop_beam()
     flag.beaming = false;
 }
 
-<<<<<<< HEAD
 void zNPCDutchman::start_flames()
 {
     //static_queue<zNPCDutchman::slime_slice>::clear();
@@ -129,8 +125,6 @@ void zNPCDutchman::start_flames()
     slime.slices.clear();
 }
 
-=======
->>>>>>> main
 void zNPCDutchman::stop_flames()
 {
     flag.flaming = false;
@@ -146,7 +140,6 @@ void zNPCDutchman::vanish()
     chkby = 0;
     penby = 0;
     xEntHide(this);
-<<<<<<< HEAD
 }
 
 void zNPCDutchman::reappear()
@@ -154,8 +147,6 @@ void zNPCDutchman::reappear()
     moreFlags = old.moreFlags;
     xNPCBasic::RestoreColFlags();
     xEntShow(this);
-=======
->>>>>>> main
 }
 
 void zNPCDutchman::reset_speed()
