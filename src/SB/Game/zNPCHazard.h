@@ -211,6 +211,7 @@ struct NPCHazard
     NPCHazard(en_npchaz haztype);
     S32 ConfigHelper(en_npchaz haztype);
     void Reconfigure(en_npchaz haztype);
+    void FreeModel();
     void SetNPCOwner(zNPCCommon* owner);
     void Start(const xVec3* pos, F32 tym);
     void MarkForRecycle();
@@ -224,6 +225,9 @@ struct NPCHazard
     S32 ColTestCyl(const xBound* bnd_tgt, F32 rad, F32 hyt);
     S32 ColPlyrSphere(F32 rad);
     S32 ColPlyrCyl(F32 rad, F32 hyt);
+    void TarTarGunkTrail();
+    S32 KickSteamyStinky();
+    void ReconArfBone();
     void HurtThePlayer();
     void TypData_RotMatSet(xMat3x3* mat);
     void TypData_RotMatApply(xMat3x3* mat);

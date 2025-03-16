@@ -116,6 +116,7 @@ void NPCSupplement_ScenePostInit();
 void NPCSupplement_Timestep(F32 dt);
 void NPAR_ScenePrepare();
 void NPAR_SceneFinish();
+void NPAR_EmitTarTarTrail(const xVec3*, const xVec3*);
 NPARMgmt* NPAR_PartySetup(en_nparptyp parType, void** userData, NPARXtraData* xtraData);
 void NPAR_SceneReset();
 void NPCC_ShadowCacheReset();
