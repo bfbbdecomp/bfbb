@@ -10,7 +10,6 @@ extern S32 g_mvpt_cnt;
 extern F32 lbl_803CDD40;
 extern F32 lbl_803CDD44;
 
-#if 0
 // Random load word at the end of the function for some reason.
 zMovePoint* zMovePoint_GetMemPool(S32 cnt)
 {
@@ -30,16 +29,14 @@ zMovePoint* zMovePoint_GetMemPool(S32 cnt)
     return g_mvpt_list;
 }
 
-#endif
-
 void zMovePointInit(zMovePoint* m, xMovePointAsset* asset)
 {
     xMovePointInit((xMovePoint*)m, asset);
     m->eventFunc = zMovePointEventCB;
     if (m->linkCount)
     {
-        m->link = (xLinkAsset*)(((U32*)asset + sizeof(xMovePointAsset) / 4) +
-                                (U32)asset->numPoints);
+        m->link =
+            (xLinkAsset*)(((U32*)asset + sizeof(xMovePointAsset) / 4) + (U32)asset->numPoints);
     }
     else
     {
@@ -122,7 +119,7 @@ S32 zMovePointEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, x
 }
 
 F32 zMovePointGetNext(const zMovePoint* current, const zMovePoint* prev, zMovePoint** next,
-                          xVec3* hdng)
+                      xVec3* hdng)
 {
     return xMovePointGetNext((xMovePoint*)current, (xMovePoint*)prev, (xMovePoint**)next, hdng);
 }

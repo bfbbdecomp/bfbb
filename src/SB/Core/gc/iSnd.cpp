@@ -107,7 +107,6 @@ void iSndStereo(U32 i)
     }
 }
 
-#ifdef NON_MATCHING
 void iSndWaitForDeadSounds()
 {
     fc = 0;
@@ -121,7 +120,6 @@ void iSndWaitForDeadSounds()
         iSndUpdate();
     }
 }
-#endif
 
 void iSndSuspendCD(U32)
 {

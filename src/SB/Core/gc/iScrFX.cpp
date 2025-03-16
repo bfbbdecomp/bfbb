@@ -43,7 +43,6 @@ void iCameraMotionBlurActivate(U32 activate)
     sMotionBlurEnabled = activate;
 }
 
-#if 0
 // The instructions regarding the setting of sMotionBlurEnabled and sMBD.motionBlurAlpha are in the wrong order.
 void iCameraSetBlurriness(F32 amount)
 {
@@ -62,9 +61,6 @@ void iCameraSetBlurriness(F32 amount)
     }
 }
 
-#endif
-
-#if 0
 // Instructions in the wrong order.
 void iScrFxCameraCreated(RwCamera* pCamera)
 {
@@ -78,8 +74,6 @@ void iScrFxCameraCreated(RwCamera* pCamera)
     sMBD.index[5] = 3;
     iScrFxMotionBlurOpen(pCamera);
 }
-
-#endif
 
 void iScrFxCameraEndScene(RwCamera* pCamera)
 {
@@ -116,7 +110,6 @@ S32 iScrFxCameraDestroyed(RwCamera* pCamera)
     return 0;
 }
 
-#if 0
 // WIP.
 void iScrFxMotionBlurRender(RwCamera* camera, U32 col)
 {
@@ -127,8 +120,6 @@ void iScrFxMotionBlurRender(RwCamera* camera, U32 col)
         iCameraOverlayRender(camera, (RwRaster*)sMBD.motionBlurFrontBuffer, col);
     }
 }
-
-#endif
 
 void GCMB_MakeFrameBufferCopy(const RwCamera* camera)
 {

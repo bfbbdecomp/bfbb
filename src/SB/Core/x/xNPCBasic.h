@@ -4,6 +4,7 @@
 #include "xEnt.h"
 #include "xFactory.h"
 #include "xShadowSimple.h"
+#include "xColor.h"
 
 enum en_npcperf
 {

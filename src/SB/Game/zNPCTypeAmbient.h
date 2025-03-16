@@ -57,7 +57,9 @@ struct zNPCNeptune : zNPCAmbient
 {
     zNPCNeptune(S32 myType);
 
+    void ParseINI();
     void SelfSetup();
+    void Reset();
 
     U8 ColChkFlags() const;
     U8 ColPenFlags() const;

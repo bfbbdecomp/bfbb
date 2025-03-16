@@ -78,7 +78,6 @@ U32 zCollGeom_EntSetup(xEnt* ent)
     return 0;
 }
 
-#ifdef NON_MATCHING
 void zCollGeom_Init()
 {
     sNumTables = xSTAssetCountByType('COLL');
@@ -133,7 +132,6 @@ void zCollGeom_Init()
         }
     }
 }
-#endif
 
 void zCollGeom_CamEnable(xEnt* ent)
 {

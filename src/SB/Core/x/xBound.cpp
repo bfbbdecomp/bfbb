@@ -92,7 +92,6 @@ void xBoundGetSphere(xSphere& o, const xBound& bound)
     }
 }
 
-#ifdef NON_MATCHING
 F32 xsqrt(F32 x)
 {
     const F32 half = _571;
@@ -115,16 +114,12 @@ F32 xsqrt(F32 x)
 
     return _643;
 }
-#endif
 
 U32 xBoundSphereHitsOBB(const xSphere* s, const xBox* b, const xMat4x3* m, xCollis* coll)
 {
     return xSphereHitsOBB_nu(s, b, m, coll);
 }
 
-#ifndef NON_MATCHING
-void xBoundHitsBound(const xBound* a, const xBound* b, xCollis* c);
-#else
 void xBoundHitsBound(const xBound* a, const xBound* b, xCollis* c)
 {
     if (!xQuickCullIsects(&a->qcd, &b->qcd))
@@ -169,11 +164,7 @@ void xBoundHitsBound(const xBound* a, const xBound* b, xCollis* c)
         }
     }
 }
-#endif
 
-#ifndef NON_MATCHING
-static void xBoundOBBIsectRay(const xBox* b, const xMat4x3* m, const xRay3* r, xIsect* isect);
-#else
 static void xBoundOBBIsectRay(const xBox* b, const xMat4x3* m, const xRay3* r, xIsect* isect)
 {
     xRay3 xfr;
@@ -304,7 +295,6 @@ static void xBoundOBBIsectRay(const xBox* b, const xMat4x3* m, const xRay3* r, x
 
     iBoxIsectRay(&sbox, &xfr, isect);
 }
-#endif
 
 void xRayHitsBound(const xRay3* r, const xBound* b, xCollis* c)
 {

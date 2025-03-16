@@ -27,7 +27,6 @@ static void zVolumeInit(zVolume* vol, xVolumeAsset* asset)
     vol->eventFunc = zVolumeEventCB;
 }
 
-#ifdef NON_MATCHING
 void zVolumeInit()
 {
     U16 i;
@@ -52,7 +51,6 @@ void zVolumeInit()
         vols = NULL;
     }
 }
-#endif
 
 void zVolumeSetup()
 {
@@ -69,7 +67,6 @@ zVolume* zVolumeGetVolume(U16 n)
     return &vols[n];
 }
 
-#ifdef NON_MATCHING
 void zVolume_OccludePrecalc(xVec3* camPos)
 {
     S32 i;
@@ -187,9 +184,7 @@ void zVolume_OccludePrecalc(xVec3* camPos)
         }
     }
 }
-#endif
 
-#ifdef NON_MATCHING
 S32 zVolumeEventCB(xBase*, xBase* to, U32 toEvent, const F32*, xBase*)
 {
     zVolume* vol = (zVolume*)to;
@@ -241,4 +236,3 @@ S32 zVolumeEventCB(xBase*, xBase* to, U32 toEvent, const F32*, xBase*)
 
     return 1;
 }
-#endif

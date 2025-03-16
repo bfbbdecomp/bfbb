@@ -14,6 +14,7 @@
 #include "xDraw.h"
 
 #include "iColor.h"
+#include "xColor.h"
 #include "iCollide.h"
 
 extern float xNPCBasic_float_0;
@@ -29,10 +30,6 @@ extern float xNPCBasic_float_thirty;
 extern float xNPCBasic_float_0p04;
 extern float xNPCBasic_float_0p025;
 
-extern iColor_tag g_BLUE;
-extern iColor_tag g_LAVENDER;
-extern iColor_tag g_PIMP_GOLD;
-
 extern xEntCollis g_colrec;
 extern xVec3 lbl_8026A3F8;
 
@@ -45,9 +42,7 @@ void NPC_entwrap_bupdate(xEnt*, xVec3*);
 void NPC_entwrap_move(xEnt*, xScene*, F32, xEntFrame*);
 void NPC_entwrap_render(xEnt*);
 
-#ifdef NON_MATCHING
 // The order of the function pointer assignment instructions at the end of the
-
 void xNPCBasic::Init(xEntAsset* asset)
 {
     if (xNPCBasic_float_0 == asset->scale.x)
@@ -107,11 +102,7 @@ void xNPCBasic::Init(xEntAsset* asset)
 
     baseFlags &= 0xffef;
 }
-#endif
 
-#ifndef NOT_MATCHING
-
-#else
 // Register assignment in the floating point instructions is slightly wrong.
 void xNPCBasic::Reset()
 {
@@ -139,7 +130,6 @@ void xNPCBasic::Reset()
     RestoreColFlags();
     return;
 }
-#endif
 
 void NPC_alwaysUseSphere(xEnt* ent, xVec3* value)
 {
@@ -360,8 +350,7 @@ void NPC_entwrap_move(xEnt* ent, xScene* scn, F32 dt, xEntFrame* frame)
     ((xNPCBasic*)ent)->Move(scn, dt, frame);
 }
 
-S32 NPC_entwrap_event(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
-                        xBase* toParamWidget)
+S32 NPC_entwrap_event(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* toParamWidget)
 {
     S32 handled = 0;
     return ((xNPCBasic*)to)->SysEvent(from, to, toEvent, toParam, toParamWidget, &handled);

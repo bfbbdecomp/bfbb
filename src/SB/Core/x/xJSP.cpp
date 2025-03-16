@@ -32,8 +32,6 @@ static RpMesh* AddMeshCB(RpMesh* mesh, RpMeshHeader* header, void* param_3)
     return mesh;
 }
 
-#if 0
-// ¯\_(ツ)_/¯
 RpAtomic* AddAtomicCB(RpAtomic* atomic, void* data)
 {
     // The dwarf defines this variable but it looks like it isnt used
@@ -44,11 +42,7 @@ RpAtomic* AddAtomicCB(RpAtomic* atomic, void* data)
     _rpMeshHeaderForAllMeshes(atomic->geometry->mesh, (RpMeshCallBack)&AddMeshCB, data);
     return atomic;
 }
-#endif
 
-#if 0
-// not in dwarf data
-// ¯\_(ツ)_/¯
 RpAtomic* AddAtomicPrecalcedVertCB(RpAtomic* atomic, void* data)
 {
     sAtomicStartCount--;
@@ -57,7 +51,6 @@ RpAtomic* AddAtomicPrecalcedVertCB(RpAtomic* atomic, void* data)
 
     return atomic;
 }
-#endif
 
 RpAtomic* ListAtomicCB(RpAtomic* atomic, void* data)
 {

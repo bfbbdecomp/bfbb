@@ -57,8 +57,6 @@ void xModelBucket_PreCountReset()
     sAlphaList = NULL;
 }
 
-#if 0
-// Idk.
 void xModelBucket_PreCountAlloc(S32 maxAlphaModels)
 {
     sAlphaCount = maxAlphaModels;
@@ -77,8 +75,6 @@ void xModelBucket_PreCountAlloc(S32 maxAlphaModels)
     sBucketDummyCamera = iCameraCreate(0, 0, 0);
     RpWorldAddCamera(sBucketDummyWorld, sBucketDummyCamera);
 }
-
-#endif
 
 void xModelBucket_Init()
 {
@@ -101,7 +97,6 @@ void xModelBucket_Begin()
     xModelBucketEnabled = 1;
 }
 
-#if 0
 // Scheduling!
 void xModelBucket_RenderAlphaBegin()
 {
@@ -112,5 +107,3 @@ void xModelBucket_RenderAlphaBegin()
         qsort(sAlphaList, sAlphaCurr, sizeof(xModelAlphaBucket), CmpAlphaBucket);
     }
 }
-
-#endif

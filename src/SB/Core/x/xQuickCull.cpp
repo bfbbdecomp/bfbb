@@ -2,10 +2,7 @@
 
 #include <types.h>
 
-#if 0
-// WIP.
-void xQuickCullInit(xQCControl* ctrl, F32 xmin, F32 ymin, F32 zmin, F32 xmax,
-                    F32 ymax, F32 zmax)
+void xQuickCullInit(xQCControl* ctrl, F32 xmin, F32 ymin, F32 zmin, F32 xmax, F32 ymax, F32 zmax)
 {
     ctrl->world_xmin = xmin;
     ctrl->world_ymin = ymin;
@@ -16,22 +13,19 @@ void xQuickCullInit(xQCControl* ctrl, F32 xmin, F32 ymin, F32 zmin, F32 xmax,
     ctrl->world_xsz = xmax - xmin;
     ctrl->world_ysz = ymax - ymin;
     ctrl->world_zsz = zmax - zmin;
-    fVar1 = @527;
-    if (((ctrl->world_xsz <= @526) || (ctrl->world_ysz <= @526)) || (ctrl->world_zsz <= @526))
+    if (((ctrl->world_xsz <= 0.0f) || (ctrl->world_ysz <= 0.0f)) || (ctrl->world_zsz <= 0.0f))
     {
-        ctrl->world_zsz = @527;
-        ctrl->world_ysz = fVar1;
-        ctrl->world_xsz = fVar1;
+        ctrl->world_zsz = 1.0f;
+        ctrl->world_ysz = 1.0f;
+        ctrl->world_xsz = 1.0f;
     }
-    ctrl->scale_x = @528 / ctrl->world_xsz;
-    ctrl->scale_y = @528 / ctrl->world_ysz;
-    ctrl->scale_z = @528 / ctrl->world_zsz;
-    ctrl->center_x = @529 * (xmax + xmin) + @529 / ctrl->scale_x;
-    ctrl->center_y = @529 * (ymax + ymin) + @529 / ctrl->scale_y;
-    ctrl->center_z = @529 * (zmax + zmin) + @529 / ctrl->scale_z;
+    ctrl->scale_x = 127.0f / ctrl->world_xsz;
+    ctrl->scale_y = 127.0f / ctrl->world_ysz;
+    ctrl->scale_z = 127.0f / ctrl->world_zsz;
+    ctrl->center_x = 0.5f * (xmax + xmin) + 0.5f / ctrl->scale_x;
+    ctrl->center_y = 0.5f * (ymax + ymin) + 0.5f / ctrl->scale_y;
+    ctrl->center_z = 0.5f * (zmax + zmin) + 0.5f / ctrl->scale_z;
 }
-
-#endif
 
 void xQuickCullInit(xQCControl* ctrl, const xBox* box)
 {
@@ -39,12 +33,9 @@ void xQuickCullInit(xQCControl* ctrl, const xBox* box)
                    box->upper.z);
 }
 
-#if 0
 // WIP.
 S32 xQuickCullIsects(const xQCData* a, const xQCData* b)
 {
     return a->xmin <= b->xmax && a->ymin <= b->ymax && a->zmin <= b->zmax && b->xmin <= a->xmax &&
            b->ymin <= a->ymax && b->zmin <= a->zmax;
 }
-
-#endif

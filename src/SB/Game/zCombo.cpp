@@ -109,24 +109,21 @@ void zCombo_Add(S32 arg0)
     }
 }
 
-#if 0
 // Can't get the floating point instructions to go in the right order
 // the zCombo_float32_3 = zCombo_float_minusone always gets lifted to the
 // start regardless of what order the code is in, despite it remaining
 // after the other assignments in the original assembly.
 void zCombo_Setup()
 {
-    zCombo_int32_3 = 0;
-    zCombo_int32_2 = 0;
-    zCombo_int32_1 = 0;
-    zCombo_float32_3 = zCombo_float_minusone;
+    // FIXME: define values
+    // zCombo_int32_3 = 0;
+    // zCombo_int32_2 = 0;
+    // zCombo_int32_1 = 0;
+    // zCombo_float32_3 = zCombo_float_minusone;
 
     // "HUD_TEXT_COMBOMESSAGE"
     U32 id = xStrHash(zCombo_Strings + 0xc1);
     comboHUD = (widget_chunk*)zSceneFindObject(id);
-
-    // Junk to make the size match temporarily, REMOVE THIS
-    zCombo_int32_3 = 6;
 
     if (comboHUD != NULL)
     {
@@ -156,7 +153,8 @@ void zCombo_Setup()
     comboReward[13].reward = globals.player.g.ShinyValueCombo13;
     comboReward[14].reward = globals.player.g.ShinyValueCombo14;
     comboReward[15].reward = globals.player.g.ShinyValueCombo15;
-    zCombo_float32_1 = globals.player.g.ComboTimer;
+    // FIXME: zCombo_float32_1
+    // zCombo_float32_1 = globals.player.g.ComboTimer;
 
     for (int i = 0; i < 16; ++i)
     {
@@ -165,51 +163,28 @@ void zCombo_Setup()
 
     // "TEXTBOX_BUNGEE_HELP"
     id = xStrHash(zCombo_Strings + 0xd7);
-    sHideText[0] = zSceneFindObject(id);
+    sHideText[0] = (ztextbox*)zSceneFindObject(id);
 
     // "DIALOG_TEXTBOX"
     id = xStrHash(zCombo_Strings + 0xeb);
-    sHideText[1] = zSceneFindObject(id);
+    sHideText[1] = (ztextbox*)zSceneFindObject(id);
 
     // "MESSAGE_02_TEXTBOX"
     id = xStrHash(zCombo_Strings + 0xfa);
-    sHideText[2] = zSceneFindObject(id);
+    sHideText[2] = (ztextbox*)zSceneFindObject(id);
 
     // "PROMPT_TEXTBOX"
     id = xStrHash(zCombo_Strings + 0x10d);
-    sHideText[3] = zSceneFindObject(id);
+    sHideText[3] = (ztextbox*)zSceneFindObject(id);
 
     // "QUIT_TEXTBOX"
     id = xStrHash(zCombo_Strings + 0x11c);
-    sHideText[4] = zSceneFindObject(id);
+    sHideText[4] = (ztextbox*)zSceneFindObject(id);
 
     // "MNU4 NPCTALK"
     id = xStrHash(zCombo_Strings + 0x129);
-    sHideUIF[0] = zSceneFindObject(id);
+    sHideUIF = (zUIFont*)zSceneFindObject(id);
 }
-#endif
-
-#if 0
-/* Can't figure out how to get the assignments to happen in the right order */
-void zCombo_Add(S32 points)
-{
-    if (zCombo_float32_3 < zCombo_float_zero)
-    {
-        zCombo_float32_3 = zCombo_float32_1;
-        zCombo_int32_1 = points - 1;
-    }
-    else
-    {
-        zCombo_float32_3 = zCombo_float32_1;
-        zCombo_int32_3 += points;
-        if (zCombo_int32_1 != 0)
-        {
-            zCombo_int32_3 += zCombo_int32_1;
-            zCombo_int32_1 = 0;
-        }
-    }
-}
-#endif
 
 void zComboHideMessage(xhud::widget& w, xhud::motive& motive)
 {
@@ -280,46 +255,47 @@ void zCombo_Update(F32 dt)
         comboTimer = temp_f0;
 
         temp_r0 = &comboReward[0];
-        
+
         if (comboTimer < 0.0f && temp_r0->reward > 0)
         {
-            zEntPickup_SpawnNRewards(comboReward->rewardList, comboReward->rewardNum, &sUnderCamPos);
+            zEntPickup_SpawnNRewards(comboReward->rewardList, comboReward->rewardNum,
+                                     &sUnderCamPos);
 
             switch (var_r31)
             {
             case 5:
-                zEntPlayer_SNDPlayStreamRandom(0, 1, ePlayerStreamSnd_Combo1, ePlayerStreamSnd_Combo2,
-                                            0.1f);
+                zEntPlayer_SNDPlayStreamRandom(0, 1, ePlayerStreamSnd_Combo1,
+                                               ePlayerStreamSnd_Combo2, 0.1f);
                 break;
             case 6:
             case 7:
-                zEntPlayer_SNDPlayStreamRandom(0, 2, ePlayerStreamSnd_Combo1, ePlayerStreamSnd_Combo2,
-                                            0.1f);
+                zEntPlayer_SNDPlayStreamRandom(0, 2, ePlayerStreamSnd_Combo1,
+                                               ePlayerStreamSnd_Combo2, 0.1f);
                 break;
             case 8:
             case 9:
-                zEntPlayer_SNDPlayStreamRandom(0, 3, ePlayerStreamSnd_Combo1, ePlayerStreamSnd_Combo2,
-                                            0.1f);
+                zEntPlayer_SNDPlayStreamRandom(0, 3, ePlayerStreamSnd_Combo1,
+                                               ePlayerStreamSnd_Combo2, 0.1f);
                 break;
             case 10:
-                zEntPlayer_SNDPlayStreamRandom(0, 4, ePlayerStreamSnd_Combo1, ePlayerStreamSnd_Combo2,
-                                            0.1f);
+                zEntPlayer_SNDPlayStreamRandom(0, 4, ePlayerStreamSnd_Combo1,
+                                               ePlayerStreamSnd_Combo2, 0.1f);
                 break;
             case 11:
             case 12:
-                zEntPlayer_SNDPlayStreamRandom(0, 5, ePlayerStreamSnd_Combo1, ePlayerStreamSnd_Combo2,
-                                            0.1f);
-                zEntPlayer_SNDPlayStreamRandom(6, 50, ePlayerStreamSnd_Combo1, ePlayerStreamSnd_Combo5,
-                                            0.1f);
+                zEntPlayer_SNDPlayStreamRandom(0, 5, ePlayerStreamSnd_Combo1,
+                                               ePlayerStreamSnd_Combo2, 0.1f);
+                zEntPlayer_SNDPlayStreamRandom(6, 50, ePlayerStreamSnd_Combo1,
+                                               ePlayerStreamSnd_Combo5, 0.1f);
                 break;
             case 13:
                 zEntPlayer_SNDPlayStreamRandom(0, 10, ePlayerStreamSnd_BigCombo1,
-                                            ePlayerStreamSnd_BigCombo2, 0.1f);
+                                               ePlayerStreamSnd_BigCombo2, 0.1f);
                 zEntPlayer_SNDPlayStream(11, 100, ePlayerStreamSnd_BigCombo1, 0x0);
                 break;
             case 14:
                 zEntPlayer_SNDPlayStreamRandom(0, 10, ePlayerStreamSnd_BigCombo1,
-                                            ePlayerStreamSnd_BigCombo2, 0.1f);
+                                               ePlayerStreamSnd_BigCombo2, 0.1f);
                 zEntPlayer_SNDPlayStream(21, 100, ePlayerStreamSnd_BigCombo1, 0x0);
                 break;
             case 15:
@@ -330,14 +306,14 @@ void zCombo_Update(F32 dt)
             if (comboHUD != NULL)
             {
                 comboHUD->w.add_motive(xhud::motive(NULL, comboDisplayTime, (F32)0.0f, (F32)0.0f,
-                                                    xhud::delay_motive_update, (void*)zComboHideMessage));
+                                                    xhud::delay_motive_update,
+                                                    (void*)zComboHideMessage));
             }
 
             comboTimer = -1.0f;
             comboCounter = 0;
             comboLastCounter = 0;
         }
-
     }
 }
 

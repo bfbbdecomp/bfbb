@@ -741,12 +741,7 @@ static void PipeAddStuffCB(RpAtomic* data, U32 pipeFlags, U32)
     }
 }
 
-#ifndef NON_MATCHING
-static void PipeForAllSceneModels(void (*pipeCB)(RpAtomic* data, U32 pipeFlags,
-                                                 U32 subObjects));
-#else
-static void PipeForAllSceneModels(void (*pipeCB)(RpAtomic* data, U32 pipeFlags,
-                                                 U32 subObjects))
+static void PipeForAllSceneModels(void (*pipeCB)(RpAtomic* data, U32 pipeFlags, U32 subObjects))
 {
     // non-matching: wrong registers
 
@@ -809,7 +804,6 @@ static void PipeForAllSceneModels(void (*pipeCB)(RpAtomic* data, U32 pipeFlags,
         continue;
     }
 }
-#endif
 
 void zSceneInitEnvironmentalSoundEffect()
 {
@@ -862,7 +856,6 @@ static U32 BaseTypeNeedsUpdate(U8 baseType)
 
 void add_scene_tweaks();
 
-#ifdef NON_MATCHING
 void zSceneInit(U32 theSceneID, S32 reloadInProgress)
 {
     F32 pdone;
@@ -1175,13 +1168,11 @@ void zSceneInit(U32 theSceneID, S32 reloadInProgress)
     zGame_HackGalleryInit();
     iSndSuspendCD(0);
 }
-#endif
 
 void add_scene_tweaks()
 {
 }
 
-#ifdef NON_MATCHING
 void zSceneExit(S32 beginReload)
 {
     zScene* s = globals.sceneCur;
@@ -1285,7 +1276,6 @@ void zSceneExit(S32 beginReload)
 
     xSceneExit(s);
 }
-#endif
 
 void zSceneUpdateSFXWidgets()
 {
@@ -1294,9 +1284,6 @@ void zSceneUpdateSFXWidgets()
                                         s->baseCount[eBaseTypeSFX]);
 }
 
-#ifndef NON_MATCHING
-static void HackSwapIt(char* buf, S32 size);
-#else
 static void HackSwapIt(char* buf, S32 size)
 {
     // non-matching: r3 and r4 swapped
@@ -1313,9 +1300,7 @@ static void HackSwapIt(char* buf, S32 size)
         end--;
     }
 }
-#endif
 
-#ifdef NON_MATCHING
 void zSceneSwitch(_zPortal* p, S32 forceSameScene)
 {
     globals.sceneCur->pendingPortal = p;
@@ -1330,9 +1315,8 @@ void zSceneSwitch(_zPortal* p, S32 forceSameScene)
         HackSwapIt(id, 4);
     }
 
-    U32 nextSceneID = (((char*)&passet->sceneID)[0] << 24) |
-                         (((char*)&passet->sceneID)[1] << 16) |
-                         (((char*)&passet->sceneID)[2] << 8) | ((char*)&passet->sceneID)[3];
+    U32 nextSceneID = (((char*)&passet->sceneID)[0] << 24) | (((char*)&passet->sceneID)[1] << 16) |
+                      (((char*)&passet->sceneID)[2] << 8) | ((char*)&passet->sceneID)[3];
 
     if (!forceSameScene && nextSceneID == globals.sceneCur->sceneID)
     {
@@ -1392,7 +1376,6 @@ void zSceneSwitch(_zPortal* p, S32 forceSameScene)
         globals.sceneCur->pendingPortal = NULL;
     }
 }
-#endif
 
 void zSceneSave(zScene* ent, xSerial* s)
 {
@@ -2111,7 +2094,6 @@ static U32 _2098_0[] =
 };
 // clang-format on
 
-#ifdef NON_MATCHING
 void zSceneSetup()
 {
     zScene* s = globals.sceneCur;
@@ -2459,9 +2441,9 @@ void zSceneSetup()
     xEnt** entList =
         s->act_ents + s->baseCount[eBaseTypeTrigger] + s->baseCount[eBaseTypePickup]; // r28
     U32 entCount = s->baseCount[eBaseTypeStatic] + s->baseCount[eBaseTypePlatform] +
-                      s->baseCount[eBaseTypePendulum] + s->baseCount[eBaseTypeHangable] +
-                      s->baseCount[eBaseTypeDestructObj] + s->baseCount[eBaseTypeBoulder] +
-                      s->baseCount[eBaseTypeNPC] + s->baseCount[eBaseTypeButton]; // r27
+                   s->baseCount[eBaseTypePendulum] + s->baseCount[eBaseTypeHangable] +
+                   s->baseCount[eBaseTypeDestructObj] + s->baseCount[eBaseTypeBoulder] +
+                   s->baseCount[eBaseTypeNPC] + s->baseCount[eBaseTypeButton]; // r27
 
     U32 i, j, k;
     U32 numPrimeMovers = 0; // r24
@@ -2558,7 +2540,7 @@ void zSceneSetup()
     if (numDriven)
     {
         U32 allocsize = numDriven * sizeof(xGroup) + numDriven * sizeof(xGroupAsset) +
-                           (numDriven + numPrimeMovers) * sizeof(xBase*);
+                        (numDriven + numPrimeMovers) * sizeof(xBase*);
 
         driveGroupList = (xGroup*)RwMalloc(allocsize);
 
@@ -2720,7 +2702,6 @@ void zSceneSetup()
 
     xScrFxFade(&black, &clear, _1374, NULL, 0);
 }
-#endif
 
 S32 zSceneSetup_serialTraverseCB(U32 clientID, xSerial* xser)
 {
@@ -3231,7 +3212,6 @@ void zSceneRender()
     zSceneRenderPostFX();
 }
 
-#ifdef NON_MATCHING
 static void zSceneObjHashtableInit(S32 count)
 {
     scobj_idbps = (IDBasePair*)xMemAllocSize(count * sizeof(IDBasePair));
@@ -3241,16 +3221,13 @@ static void zSceneObjHashtableInit(S32 count)
     scobj_size = count;
     nidbps = 0;
 }
-#endif
 
-#ifdef NON_MATCHING
 static void zSceneObjHashtableExit()
 {
     scobj_idbps = NULL;
     scobj_size = -1;
     nidbps = -1;
 }
-#endif
 
 static S32 zSceneObjHashtableUsage()
 {
@@ -3417,7 +3394,6 @@ void zSceneMemLvlChkCB()
 {
 }
 
-#ifdef NON_MATCHING
 U32 zSceneLeavingLevel()
 {
     // non-matching: instruction order
@@ -3431,7 +3407,6 @@ U32 zSceneLeavingLevel()
 
     return (curScene[0] != nextScene[3]);
 }
-#endif
 
 const char* zSceneGetLevelName(U32 sceneID)
 {
@@ -3535,13 +3510,11 @@ void zSceneEnableScreenAdj(U32 enable)
     enableScreenAdj = enable;
 }
 
-#ifdef NON_MATCHING
 void zSceneSetOldScreenAdj()
 {
     oldOffsetx = offsetx;
     oldOffsety = offsety;
 }
-#endif
 
 U32 zScene_ScreenAdjustMode()
 {

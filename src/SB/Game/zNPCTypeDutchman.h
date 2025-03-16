@@ -97,10 +97,14 @@ struct zNPCDutchman : zNPCSubBoss
     move_info move; //0x2C8
     struct
     {
+<<<<<<< HEAD
         U8 moreFlags; //0x31c
+=======
+        U8 moreFlags; //0x31c??
+>>>>>>> main
     } old;
-    beam_info beam[2];
-    static_queue<wave_data> waves;
+    beam_info beam[2]; //Needed for start_beam func
+    static_queue<wave_data> waves; //Needed for start_beam func
     struct
     {
         F32 size; //0x56c
@@ -147,17 +151,25 @@ struct zNPCDutchman : zNPCSubBoss
     void kill_wave(zNPCDutchman::wave_data&);
     void add_splash(const xVec3&, float);
     void vanish();
+<<<<<<< HEAD
     void reappear();
     void face_player();
     void start_beam();
     void stop_beam();
     void start_flames();
+=======
+    void start_beam();
+    void stop_beam();
+>>>>>>> main
     void stop_flames();
     void stop_hand_trail();
     void reset_lasso_anim();
     void reset_speed();
     void Damage(en_NPC_DAMAGE_TYPE, xBase*, const xVec3*);
+<<<<<<< HEAD
     S32 LassoSetup();
+=======
+>>>>>>> main
     void start_eye_glow();
     void stop_eye_glow();
     U8 PhysicsFlags() const;

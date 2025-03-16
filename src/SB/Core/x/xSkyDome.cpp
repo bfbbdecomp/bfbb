@@ -22,7 +22,6 @@ void xSkyDome_Setup()
     sSkyCount = 0;
 }
 
-#ifdef NON_MATCHING
 void xSkyDome_AddEntity(xEnt* ent, S32 sortorder, S32 lockY)
 {
     S32 i, j;
@@ -63,7 +62,6 @@ void xSkyDome_AddEntity(xEnt* ent, S32 sortorder, S32 lockY)
     zEntEvent(ent, eEventCollisionOff);
     zEntEvent(ent, eEventCameraCollideOff);
 }
-#endif
 
 void xSkyDome_Render()
 {

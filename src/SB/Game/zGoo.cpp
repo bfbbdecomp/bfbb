@@ -94,7 +94,6 @@ S32 zGooIs(xEnt* obj, F32& depth, U32 playerCheck)
     return ret;
 }
 
-#ifdef NON_MATCHING
 void zGooCollsBegin()
 {
     S32 i;
@@ -120,7 +119,6 @@ void zGooCollsBegin()
         }
     }
 }
-#endif
 
 void zGooCollsEnd()
 {

@@ -149,7 +149,6 @@ U32 HeadNotShocked(xAnimTransition*, xAnimSingle*, void*)
     return !(sSandyPtr->bossFlags & 0x100);
 }
 
-#if 0
 #define str_SandyBossHead (bossSandyStrings + 0xff)
 #define str_Idle01 (bossSandyStrings + 0x10d)
 #define str_Carried01 (bossSandyStrings + 0x114)
@@ -169,17 +168,16 @@ xAnimTable* ZNPC_AnimTable_BossSandyHead()
                        xAnimDefaultBeforeEnter, NULL, NULL);
 
     xAnimTableNewTransition(table, str_Idle01, str_Carried01, HeadIsCarried, NULL, 0, 0, __830,
-                            __830, 0, 0, __864, NULL);
+                            __830, 0, 0, _864, NULL);
     xAnimTableNewTransition(table, str_Carried01, str_Idle01, HeadNotCarried, NULL, 0, 0, __830,
-                            __830, 0, 0, __864, NULL);
+                            __830, 0, 0, _864, NULL);
     xAnimTableNewTransition(table, str_Idle01, str_Shocked01, HeadIsShocked, NULL, 0, 0, __830,
-                            __830, 0, 0, __864, NULL);
+                            __830, 0, 0, _864, NULL);
     xAnimTableNewTransition(table, str_Shocked01, str_Idle01, HeadNotShocked, NULL, 0, 0, __830,
-                            __830, 0, 0, __864, NULL);
+                            __830, 0, 0, _864, NULL);
 
     return table;
 }
-#endif
 
 void zNPCBSandy::ParseINI()
 {

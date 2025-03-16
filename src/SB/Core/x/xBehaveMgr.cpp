@@ -17,7 +17,6 @@ void xBehaveMgr_Startup()
     }
 }
 
-#if 0
 void xBehaveMgr_Shutdown()
 {
     g_modinit_xBehaveMgr--;
@@ -30,7 +29,6 @@ void xBehaveMgr_Shutdown()
         g_behavmgr = NULL;
     }
 }
-#endif
 
 xBehaveMgr* xBehaveMgr_GetSelf()
 {
@@ -115,8 +113,6 @@ void xPsyche::BrainEnd()
     this->psystat = PSY_STAT_THINK;
 }
 
-#ifdef NON_MATCHING
-// Regalloc
 xGoal* xPsyche::AddGoal(S32 gid, void* createData)
 {
     xGoal* goal = (xGoal*)xBehaveMgr_GoalFactory()->CreateItem(gid, createData, NULL);
@@ -139,7 +135,6 @@ xGoal* xPsyche::AddGoal(S32 gid, void* createData)
     }
     return goal;
 }
-#endif
 
 extern F32 _750;
 void xPsyche::FreshWipe()
@@ -198,7 +193,6 @@ void xPsyche::Lobotomy(xFactory* factory)
     }
 }
 
-#if 0
 void xPsyche::Amnesia(S32 i)
 {
     xGoal* g = this->goallist;
@@ -214,4 +208,3 @@ void xPsyche::Amnesia(S32 i)
         }
     }
 }
-#endif

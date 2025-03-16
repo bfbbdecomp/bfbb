@@ -124,7 +124,7 @@ struct st_PACKER_READ_DATA
 struct st_PACKER_READ_FUNCS
 {
     U32 api_ver;
-    st_PACKER_READ_DATA* (*Init)(void*, const char*, U32, S32*, st_PACKER_ASSETTYPE*);
+    st_PACKER_READ_DATA* (*Init)(void*, char*, U32, S32*, st_PACKER_ASSETTYPE*);
     void (*Done)(st_PACKER_READ_DATA*);
     S32 (*LoadLayer)(st_PACKER_READ_DATA*, en_LAYER_TYPE);
     U32 (*GetAssetSize)(st_PACKER_READ_DATA*, U32);
@@ -136,7 +136,7 @@ struct st_PACKER_READ_FUNCS
     char* (*AssetName)(st_PACKER_READ_DATA*, U32);
     U32 (*GetBaseSector)(st_PACKER_READ_DATA*);
     S32 (*GetAssetInfo)(st_PACKER_READ_DATA*, U32, st_PKR_ASSET_TOCINFO*);
-    S32 (*GetAssetInfoByType)(st_PACKER_READ_DATA*, U32, S32, const st_PKR_ASSET_TOCINFO*);
+    S32 (*GetAssetInfoByType)(st_PACKER_READ_DATA*, U32, S32, st_PKR_ASSET_TOCINFO*);
     S32 (*PkgHasAsset)(st_PACKER_READ_DATA*, U32);
     U32 (*PkgTimeStamp)(st_PACKER_READ_DATA*);
     void (*PkgDisconnect)(st_PACKER_READ_DATA*);
@@ -164,7 +164,7 @@ void PKR_xformLayerAssets(st_PACKER_LTOC_NODE* laynode);
 void PKR_xform_asset(st_PACKER_ATOC_NODE* assnode, S32 dumpable_layer);
 void* PKR_FindAsset(st_PACKER_READ_DATA* pr, U32 aid);
 S32 PKR_LoadLayer(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer);
-void* PKR_LoadAsset(st_PACKER_READ_DATA* pr, U32 aid, const char*, void*);
+void* PKR_LoadAsset(st_PACKER_READ_DATA* pr, U32 aid, char*, void*);
 U32 PKR_GetAssetSize(st_PACKER_READ_DATA* pr, U32 aid);
 S32 PKR_AssetCount(st_PACKER_READ_DATA* pr, U32 type);
 void* PKR_AssetByType(st_PACKER_READ_DATA* pr, U32 type, S32 idx, U32* size);
@@ -176,10 +176,10 @@ char* PKR_AssetName(st_PACKER_READ_DATA* pr, U32 aid);
 U32 PKR_GetBaseSector(st_PACKER_READ_DATA* pr);
 S32 PKR_GetAssetInfo(st_PACKER_READ_DATA* pr, U32 aid, st_PKR_ASSET_TOCINFO* tocainfo);
 S32 PKR_GetAssetInfoByType(st_PACKER_READ_DATA* pr, U32 type, S32 idx,
-                             st_PKR_ASSET_TOCINFO* tocainfo);
+                           st_PKR_ASSET_TOCINFO* tocainfo);
 S32 PKR_PkgHasAsset(st_PACKER_READ_DATA* pr, U32 aid);
-S32 PKR_FRIEND_assetIsGameDup(U32 aid, const st_PACKER_READ_DATA* skippr, S32 oursize,
-                                U32 ourtype, U32 chksum, char*);
+S32 PKR_FRIEND_assetIsGameDup(U32 aid, const st_PACKER_READ_DATA* skippr, S32 oursize, U32 ourtype,
+                              U32 chksum, char*);
 S32 PKR_makepool_anode(st_PACKER_READ_DATA* pr, S32 cnt);
 void PKR_kiilpool_anode(st_PACKER_READ_DATA* pr);
 st_PACKER_ATOC_NODE* PKR_newassnode(st_PACKER_READ_DATA* pr, U32 aid);
@@ -195,7 +195,7 @@ S32 LOD_r_PCNT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
 S32 LOD_r_PCRT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
 S32 LOD_r_PMOD(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
 S32 ValidatePlatform(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, S32 plattag, char* plat,
-                       char* vid, char* lang, char* title);
+                     char* vid, char* lang, char* title);
 S32 LOD_r_PLAT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
 S32 LOD_r_DICT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
 S32 LOD_r_ATOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr);
