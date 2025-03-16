@@ -96,7 +96,6 @@ void zThrownCollide_Tiki(zThrownStruct* thrown, xEntCollis* collis, F32* bounce,
     zEntEvent(thrown->ent, eEventDestroy);
 }
 
-#if 0
 // WIP.
 S32 zThrown_IsFruit(xEnt* ent, F32* stackHeight)
 {
@@ -116,8 +115,6 @@ S32 zThrown_IsFruit(xEnt* ent, F32* stackHeight)
     }
     return 0;
 }
-
-#endif
 
 void checkAgainstButtons(xEnt* ent)
 {
