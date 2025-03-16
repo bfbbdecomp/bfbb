@@ -76,17 +76,11 @@ static void DrawRingSceneExit()
     g_txtr_drawRing = NULL;
 }
 
-#if 1
-static void DrawRing(xFXRing* m);
-
-#else
 static void DrawRing(xFXRing* m)
 {
     // todo: uses int-to-float conversion
 }
-#endif
 
-#ifdef NON_MATCHING
 xFXRing* xFXRingCreate(const xVec3* pos, const xFXRing* params)
 {
     xFXRing* ring = &ringlist[0];
@@ -116,11 +110,7 @@ xFXRing* xFXRingCreate(const xVec3* pos, const xFXRing* params)
 
     return NULL;
 }
-#endif
 
-#ifndef NON_MATCHING
-static void xFXRingUpdate(F32 dt);
-#else
 static void xFXRingUpdate(F32 dt)
 {
     xFXRing* ring = &ringlist[0];
@@ -163,7 +153,6 @@ static void xFXRingUpdate(F32 dt)
         }
     }
 }
-#endif
 
 void xFXRingRender()
 {
@@ -184,7 +173,6 @@ static RpMaterial* MaterialSetBumpMap(RpMaterial* material, void* data);
 static RpMaterial* MaterialSetBumpEnvMap(RpMaterial* material, RwTexture* env, F32 shininess,
                                          RwTexture* bump, F32 bumpiness);
 
-#ifdef NON_MATCHING
 void xFX_SceneEnter(RpWorld* world)
 {
     S32 i;
@@ -296,7 +284,6 @@ void xFX_SceneEnter(RpWorld* world)
 
     num_fx_atomics = 0;
 }
-#endif
 
 void xFX_SceneExit(RpWorld*)
 {
@@ -312,7 +299,6 @@ void xFXUpdate(F32 dt)
 static const RwV3d _1168 = { 1, 0, 0 };
 static const RwV3d _1169 = { 0, 1, 0 };
 
-#ifdef NON_MATCHING
 static void LightResetFrame(RpLight* light)
 {
     // non-matching: lwzu instruction
@@ -325,7 +311,6 @@ static void LightResetFrame(RpLight* light)
     RwFrameRotate(frame, &v1, _1171, rwCOMBINEREPLACE);
     RwFrameRotate(frame, &v2, _1171, rwCOMBINEPOSTCONCAT);
 }
-#endif
 
 static RpMaterial* MaterialDisableMatFX(RpMaterial* material, void*)
 {
