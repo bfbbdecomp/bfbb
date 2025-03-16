@@ -40,7 +40,6 @@ void xSFXInit(void* t, void* asset)
     xSFXInit((xSFX*)t, (xSFXAsset*)asset);
 }
 
-#ifdef NON_MATCHING
 void xSFXInit(xSFX* t, xSFXAsset* asset)
 {
     xBaseInit(t, asset);
@@ -65,7 +64,6 @@ void xSFXInit(xSFX* t, xSFXAsset* asset)
     t->asset->flagsSFX = t->asset->flagsSFX & 0xefff;
     t->cachedOuterDistSquared = (t->asset->outerRadius * t->asset->outerRadius);
 }
-#endif
 
 void xSFXSave(xSFX* ent, xSerial* s)
 {
@@ -82,12 +80,10 @@ void xSFXReset(xSFX* param_1)
     xBaseReset(param_1, param_1->asset);
 }
 
-#if 0
 U32 xSFXConvertFlags(U32 param_1)
 {
     return param_1 & 4 ? 0 : 0x800;
 }
-#endif
 
 void xSFXUpdate(xSFX* param_1)
 {
