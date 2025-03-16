@@ -154,9 +154,6 @@ static U32 CtoOCheck(xAnimTransition*, xAnimSingle*, void* object)
     return (SQR(dx__) + SQR(dy__) + SQR(dz__) < _853_3);
 }
 
-#ifndef NON_MATCHING
-static U32 CtoOCB(xAnimTransition*, xAnimSingle*, void* object);
-#else
 static U32 CtoOCB(xAnimTransition*, xAnimSingle*, void* object)
 {
     // non-matching: floats
@@ -172,7 +169,6 @@ static U32 CtoOCB(xAnimTransition*, xAnimSingle*, void* object)
 
     return 0;
 }
-#endif
 
 static U32 JumpInEffectPlrInvisibleCB(U32, xAnimActiveEffect*, xAnimSingle*, void* object)
 {
@@ -248,9 +244,6 @@ void zEntTeleportBox_InitAll()
 
 void zEntTeleportBox_Setup(_zEntTeleportBox* ent);
 
-#if 1 // wip
-void zEntTeleportBox_Update(xEnt* rawent, xScene* sc, F32 dt);
-#else
 void zEntTeleportBox_Update(xEnt* rawent, xScene* sc, F32 dt)
 {
     _zEntTeleportBox* ent = (_zEntTeleportBox*)rawent;
@@ -415,7 +408,6 @@ void zEntTeleportBox_Update(xEnt* rawent, xScene* sc, F32 dt)
         }
     }
 }
-#endif
 
 void zEntTeleportBox_Save(_zEntTeleportBox* ent, xSerial* s)
 {
