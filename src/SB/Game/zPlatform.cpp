@@ -24,7 +24,7 @@ char* str8 = "skatepark_bumper";
 char* str9 = "skatepark_flipper";
 char* str10 = "Check1";
 
-void genericPlatRender(xEnt* ent)
+static void genericPlatRender(xEnt* ent)
 {
     if (!ent->model || !xEntIsVisible(ent))
     {
@@ -37,6 +37,11 @@ void genericPlatRender(xEnt* ent)
 void zPlatform_Init(void* plat, void* asset)
 {
     zPlatform_Init((zPlatform*)plat, (xEntAsset*)asset);
+}
+
+void zPlatform_Init(zPlatform* plat, xEntAsset* asset)
+{
+    zEntInit(plat, asset, 'PLAT');
 }
 
 void zPlatform_Save(zPlatform* ent, xSerial* s)
@@ -74,20 +79,19 @@ void zPlatform_Mount(zPlatform* ent)
 
                 // Needs to be used or the comparison's operands will be swapped.
                 F32 restingSpeed = 0.0f;
-                if ( ent->passet->fr.fspeed != restingSpeed )
+                if (ent->passet->fr.fspeed != restingSpeed)
                 {
                     zPlatform_Tremble(ent, 0.06f, DEG2RAD(720), ent->passet->fr.fspeed + 1.0f);
                 }
             }
-
         }
     }
 }
 
 void zPlatform_Setup(zPlatform* ent, xScene* sc)
 {
-    zEntSetup((zEnt *)ent);
-    sEmitTremble   = zParEmitterFind("PAREMIT_PLAT_TREMBLE");
+    zEntSetup((zEnt*)ent);
+    sEmitTremble = zParEmitterFind("PAREMIT_PLAT_TREMBLE");
     sEmitBreakaway = zParEmitterFind("PAREMIT_PLAT_BREAKAWAY");
     if (ent->subType == ZPLATFORM_SUBTYPE_PADDLE)
     {
@@ -108,7 +112,7 @@ void zPlatform_Dismount(zPlatform* ent)
 void zPlatformTranslate(xEnt* xent, xVec3* dpos, xMat4x3* dmat)
 {
     zPlatform* plat = (zPlatform*)xent;
-    xEntDefaultTranslate(xent,dpos,dmat);
+    xEntDefaultTranslate(xent, dpos, dmat);
     xEntMotionTranslate(&plat->motion, dpos, dmat);
 }
 
