@@ -57,35 +57,30 @@ void XOrdAppend(st_XORDEREDARRAY* array, void* elt)
     array->list[array->cnt++] = elt;
 }
 
-#if 0
-
 void XOrdInsert(st_XORDEREDARRAY* array, void* elt, XOrdCompareCallback compare)
 {
     if (array->cnt < array->max)
     {
         array->cnt++;
         S32 pos = array->cnt - 1;
-        void* currElement = pos * sizeof(void*);
+        void* currElement = (void*)(pos * sizeof(void*));
         while (pos > 0)
         {
-            S32 score = compare(array->list + currElement - sizeof(void*), elt);
-            if (score <= 0)
-            {
-                array->list[pos] = elt;
-                return;
-            }
-            pos--;
-            void* tmp = (void*)(array->list + currElement);
-            currElement--;
-            *tmp = tmp[-1];
+            // FIXME: currElement
+            // S32 score = compare(array->list + currElement - sizeof(void*), elt);
+            // if (score <= 0)
+            // {
+            //     array->list[pos] = elt;
+            //     return;
+            // }
+            // pos--;
+            // void* tmp = (void*)(array->list + currElement);
+            // currElement--;
+            // *tmp = tmp[-1];
         }
         *array->list = elt;
     }
 }
-
-#endif
-
-
 
 void* XOrdRemove(st_XORDEREDARRAY* array, void* elt, S32 index)
 {
@@ -134,7 +129,6 @@ void* XOrdRemove(st_XORDEREDARRAY* array, void* elt, S32 index)
     return elt;
 }
 
-#if 0
 S32 XOrdLookup(st_XORDEREDARRAY* array, const void* key, XOrdTestCallback test)
 {
     S32 v, index, rightBound, leftBound;
@@ -160,17 +154,15 @@ S32 XOrdLookup(st_XORDEREDARRAY* array, const void* key, XOrdTestCallback test)
     return index;
 }
 
-#endif
-
-#if 0
 void XOrdSort(st_XORDEREDARRAY* array, S32 (*test)(void*, void*))
 {
     void** list = array->list;
     S32 num = 1;
-    while (num <= cnt)
-    {
-        num = num * 3 + 1;
-    }
+    // FIXME: cnt??
+    // while (num <= cnt)
+    // {
+    //     num = num * 3 + 1;
+    // }
     for (;;)
     {
         if (num == 1)
@@ -182,11 +174,10 @@ void XOrdSort(st_XORDEREDARRAY* array, S32 (*test)(void*, void*))
         S32 numPos = num * sizeof(void*);
         void** currItem = list + num;
         S32 i = num;
-        while (i < cnt)
-        {
-            // TODO!!!
-        }
+        // FIXME: cnt??
+        // while (i < cnt)
+        // {
+        //     // TODO!!!
+        // }
     }
 }
-
-#endif
