@@ -45,7 +45,6 @@ void zActionLineUpdate(F32 seconds)
     }
 }
 
-#if 0
 void RenderActionLine(_tagActionLine* l)
 {
     static RxObjSpace3DVertex sStripVert[4];
@@ -87,7 +86,6 @@ void RenderActionLine(_tagActionLine* l)
         RwIm3DEnd();
     }
 }
-#endif
 
 void zActionLineRender()
 {
