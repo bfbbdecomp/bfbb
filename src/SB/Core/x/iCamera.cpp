@@ -227,7 +227,6 @@ void iCameraUpdatePos(RwCamera* cam, xMat4x3* pos)
     RwFrameUpdateObjects(f);
 }
 
-#ifdef NON_MATCHING
 void iCameraSetFOV(RwCamera* cam, F32 fov)
 {
     RwV2d vw;
@@ -239,7 +238,6 @@ void iCameraSetFOV(RwCamera* cam, F32 fov)
 
     RwCameraSetViewWindow(cam, &vw);
 }
-#endif
 
 void iCameraAssignEnv(RwCamera* camera, iEnv* env_geom)
 {
@@ -271,7 +269,6 @@ void iCamGetViewMatrix(RwCamera* camera, xMat4x3* view_matrix)
     view_matrix->pos.z = rw_view->pos.z;
 }
 
-#ifdef NON_MATCHING
 void iCameraSetNearFarClip(F32 nearPlane, F32 farPlane)
 {
     if (nearPlane <= *(const F32*)&_742_1)
@@ -290,9 +287,7 @@ void iCameraSetNearFarClip(F32 nearPlane, F32 farPlane)
 
     sCameraFarClip = farPlane;
 }
-#endif
 
-#ifdef NON_MATCHING
 void iCameraSetFogParams(iFogParams* fp, F32 time)
 {
     if (!fp || fp->type == rwFOGTYPENAFOGTYPE)
@@ -314,7 +309,6 @@ void iCameraSetFogParams(iFogParams* fp, F32 time)
         // todo
     }
 }
-#endif
 
 void iCameraSetFogRenderStates()
 {
