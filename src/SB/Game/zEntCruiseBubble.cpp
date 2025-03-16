@@ -468,26 +468,19 @@ namespace cruise_bubble
 
                 if (s->streamed != 0)
                 {
-                   zEntPlayer_SNDPlayStream((_tagePlayerStreamSnd) i);
+                    zEntPlayer_SNDPlayStream((_tagePlayerStreamSnd)i);
                 }
                 else
                 {
-                    zEntPlayer_SNDPlay((_tagePlayerSnd) i, 0.0f);
+                    zEntPlayer_SNDPlay((_tagePlayerSnd)i, 0.0f);
                 }
 
                 s->handle = 0;
             }
             else
             {
-                s->handle = xSndPlay(
-                        (U32) s->id,
-                        s->volume * volFactor,
-                        0.0f,
-                        (U32) 128,
-                        (U32) 0,
-                        (U32) 0,
-                        SND_CAT_GAME,
-                        0.0f);
+                s->handle = xSndPlay((U32)s->id, s->volume * volFactor, 0.0f, (U32)128, (U32)0,
+                                     (U32)0, SND_CAT_GAME, 0.0f);
             }
 
             if (s->rumble != SDR_None)
@@ -505,17 +498,8 @@ namespace cruise_bubble
             {
                 // using float literals only the TOC address doesnt match
                 // -> will match when file is complete
-                s->handle = xSndPlay3D(
-                        s->id,
-                        s->volume * volFactor,
-                        0.0f,
-                        (U32) 128,
-                        (U32) 2048,
-                        pos,
-                        s->radius_inner,
-                        s->radius_outer,
-                        SND_CAT_GAME,
-                        0.0f);
+                s->handle = xSndPlay3D(s->id, s->volume * volFactor, 0.0f, (U32)128, (U32)2048, pos,
+                                       s->radius_inner, s->radius_outer, SND_CAT_GAME, 0.0f);
             }
 
             if (s->rumble != SDR_None)
@@ -882,7 +866,8 @@ namespace cruise_bubble
 
         void init_shrapnel()
         {
-            shared.droplet_shrapnel = (zShrapnelAsset*)xSTFindAsset(xStrHash("cruise_bubble_droplet_shrapnel"), NULL);
+            shared.droplet_shrapnel =
+                (zShrapnelAsset*)xSTFindAsset(xStrHash("cruise_bubble_droplet_shrapnel"), NULL);
         }
 
         void init_wake_ribbons()
@@ -895,12 +880,9 @@ namespace cruise_bubble
         bool check_launch()
         {
             bool can_cruise_bubble =
-            (
-                !(globals.player.ControlOff || globals.player.cheat_mode) &&
-                 globals.player.g.PowerUp[1] &&
-                (globals.player.s->pcType == ePlayer_SB) &&
-                (globals.pad0->pressed & 0x100)
-            );
+                (!(globals.player.ControlOff || globals.player.cheat_mode) &&
+                 globals.player.g.PowerUp[1] && (globals.player.s->pcType == ePlayer_SB) &&
+                 (globals.pad0->pressed & 0x100));
 
             if (!can_cruise_bubble)
             {
@@ -963,7 +945,8 @@ namespace cruise_bubble
             {
                 xAnimPlayStartTransition(
                     globals.player.ent.model->Anim,
-                    shared.atran.player.end); // [xAnimPlayStartTransition__FP9xAnimPlayP15xAnimTransition]
+                    shared.atran.player
+                        .end); // [xAnimPlayStartTransition__FP9xAnimPlayP15xAnimTransition]
             }
             exit_triggers(*globals.sceneCur);
         }
@@ -989,7 +972,8 @@ namespace cruise_bubble
         void load_settings()
         {
             U32 params_size;
-            xModelAssetParam* params = zEntGetModelParams(xStrHash("cruise_bubble_bind.MINF"), &params_size);
+            xModelAssetParam* params =
+                zEntGetModelParams(xStrHash("cruise_bubble_bind.MINF"), &params_size);
 
             if (params == NULL)
             {
@@ -1031,7 +1015,6 @@ namespace cruise_bubble
 
         void refresh_missle_model()
         {
-
         }
 
         void render_hud()
@@ -1209,10 +1192,6 @@ namespace cruise_bubble
             return screen_loc;
         }
 
-#ifndef NON_MATCHING
-        void damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir, const xVec3& hit_norm,
-                           F32 radius, bool explosive);
-#else
         void damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir, const xVec3& hit_norm,
                            F32 radius, bool explosive)
         {
@@ -1299,7 +1278,6 @@ namespace cruise_bubble
 
             zEntEvent(&ent, 0x1c7);
         }
-#endif
 
         void init_missle_model()
         {
@@ -1320,7 +1298,6 @@ namespace cruise_bubble
     } // namespace
 } // namespace cruise_bubble
 
-#ifdef NON_MATCHING
 void cruise_bubble::start_trail()
 {
     if (shared.flags & 0x80)
@@ -1332,9 +1309,8 @@ void cruise_bubble::start_trail()
     shared.fov_default = zEntCruiseBubble_f_0_0;
     shared.dialog_freq = zEntCruiseBubble_f_0_0;
 
-    refresh_trail(shared.trail.mat, shared.trail.dir);
+    cruise_bubble::refresh_trail(shared.trail.mat, shared.trail.dir);
 }
-#endif
 
 void cruise_bubble::state_type::start()
 {
@@ -1351,11 +1327,10 @@ void cruise_bubble::state_type::abort()
     // empty
 }
 
-#ifdef NON_MATCHING
 void cruise_bubble::update_player(xScene& s, F32 dt)
 {
     // register usage and stack scheduling differing
-    xVec3 pre_update_loc = get_player_loc();
+    xVec3 pre_update_loc = cruise_bubble::get_player_loc();
     xVec3 drive_motion;
 
     bool stop = zEntPlayer_MinimalUpdate(&globals.player.ent, &s, dt, drive_motion) ||
@@ -1363,7 +1338,7 @@ void cruise_bubble::update_player(xScene& s, F32 dt)
 
     if (!stop)
     {
-        shared.player_motion += get_player_loc() - pre_update_loc - drive_motion;
+        shared.player_motion += cruise_bubble::get_player_loc() - pre_update_loc - drive_motion;
 
         if (shared.player_motion.length2() > zEntCruiseBubble_f_0_25)
         {
@@ -1373,10 +1348,9 @@ void cruise_bubble::update_player(xScene& s, F32 dt)
 
     if (stop)
     {
-        kill(true, false);
+        cruise_bubble::kill(true, false);
     }
 }
-#endif
 
 void cruise_bubble::state_type::render()
 {
@@ -1436,7 +1410,6 @@ cruise_bubble::state_player_halt::state_player_halt() : state_type(STATE_PLAYER_
 {
 }
 
-#ifdef NON_MATCHING
 void cruise_bubble::reset_wake_ribbons()
 {
     wake_ribbon[0].set_default_config();
@@ -1467,9 +1440,7 @@ void cruise_bubble::reset_wake_ribbons()
     wake_ribbon[0].refresh_config();
     wake_ribbon[1].refresh_config();
 }
-#endif
 
-#ifdef NON_MATCHING
 void cruise_bubble::init_explode_decal()
 {
     explode_decal.init(1, "Cruise Bubble Explosion");
@@ -1486,9 +1457,7 @@ void cruise_bubble::init_explode_decal()
     explode_decal.set_texture("par_cruise_explosion");
     explode_decal.refresh_config();
 }
-#endif
 
-#ifdef NON_MATCHING
 void cruise_bubble::update_trail(F32 dt)
 {
     // will match once file complete
@@ -1515,7 +1484,7 @@ void cruise_bubble::update_trail(F32 dt)
 
     xMat4x3 end_mat;
     xQuat end_dir;
-    refresh_trail(end_mat, end_dir);
+    cruise_bubble::refresh_trail(end_mat, end_dir);
 
     // float cast
     F32 ds = zEntCruiseBubble_f_1_0 / (F32)samples;
@@ -1545,27 +1514,26 @@ void cruise_bubble::update_trail(F32 dt)
     shared.trail.dir = end_dir;
     shared.flags = shared.flags & 0xfffffeff;
 }
-#endif
 
-#ifdef NON_MATCHING
 void init_hud()
 {
     // should use stbu here and save an addi instruction
     // which should also fix the rest of the function by correcting offsets
-    hud.hiding = false;
-    hud.alpha = zEntCruiseBubble_f_0_0;
-    hud.alpha_vel = zEntCruiseBubble_f_0_0;
-    hud.glow = zEntCruiseBubble_f_0_0;
-    hud.gizmos_used = 0;
 
-    hud.model.reticle = load_model(xStrHash("ui_3dicon_reticle"));
-    hud.model.target = load_model(xStrHash("ui_3dicon_target_lock"));
-    hud.model.wind = load_model(xStrHash("ui_3dicon_missile_frame02"));
+    //FIXME: HUD is undefined
+    // hud.hiding = false;
+    // hud.alpha = zEntCruiseBubble_f_0_0;
+    // hud.alpha_vel = zEntCruiseBubble_f_0_0;
+    // hud.glow = zEntCruiseBubble_f_0_0;
+    // hud.gizmos_used = 0;
 
-    hud.uv_wind.init(hud.model.wind->Data);
-    hud.uv_wind.offset_vel.assign(current_tweak->hud.wind.du, current_tweak->hud.wind.dv);
+    // hud.model.reticle = load_model(xStrHash("ui_3dicon_reticle"));
+    // hud.model.target = load_model(xStrHash("ui_3dicon_target_lock"));
+    // hud.model.wind = load_model(xStrHash("ui_3dicon_missile_frame02"));
+
+    // hud.uv_wind.init(hud.model.wind->Data);
+    // hud.uv_wind.offset_vel.assign(current_tweak->hud.wind.du, current_tweak->hud.wind.dv);
 }
-#endif
 
 bool cruise_bubble::uv_animated_model::init(RpAtomic* m)
 {
@@ -1645,16 +1613,13 @@ void cruise_bubble::update_gizmo(cruise_bubble::hud_gizmo& gizmo, F32 dt)
                                   zEntCruiseBubble_f_1_0);
 }
 
-#ifdef NON_MATCHING
 void cruise_bubble::flash_hud()
 {
     // nice meme
     hud.glow = zEntCruiseBubble_f_1_0;
     hud.glow_vel = zEntCruiseBubble_f_n1_0 / current_tweak->hud.time_glow;
 }
-#endif
 
-#ifdef NON_MATCHING
 void cruise_bubble::render_timer(F32 alpha, F32 glow)
 {
     state_missle_fly* state = (state_missle_fly*)shared.state[THREAD_MISSLE];
@@ -1676,7 +1641,8 @@ void cruise_bubble::render_timer(F32 alpha, F32 glow)
                       screen_bounds);
     // register use for copying fields into font off, also causes a larger stack frame
     // also the color tags are loaded too early, should be just before the call
-    lerp(font.color, glow, zEntCruiseBubble_color_80_00_00_FF, zEntCruiseBubble_color_FF_14_14_FF);
+    cruise_bubble::lerp(font.color, glow, zEntCruiseBubble_color_80_00_00_FF,
+                        zEntCruiseBubble_color_FF_14_14_FF);
     font.color.a = (S32)(zEntCruiseBubble_f_255_0 * alpha + zEntCruiseBubble_f_0_5);
 
     basic_rect<F32> bound = font.bounds(buffer);
@@ -1685,9 +1651,7 @@ void cruise_bubble::render_timer(F32 alpha, F32 glow)
 
     font.render(buffer, x, y);
 }
-#endif
 
-#ifdef NON_MATCHING
 void cruise_bubble::update_hud(F32 dt)
 {
     if (hud.gizmos_used == 0)
@@ -1738,7 +1702,6 @@ void cruise_bubble::update_hud(F32 dt)
         hud.gizmo[i].flags &= 0xfffffffe;
     }
 }
-#endif
 
 void cruise_bubble::uv_animated_model::update(F32 dt)
 {
@@ -1754,7 +1717,6 @@ void cruise_bubble::uv_animated_model::update(F32 dt)
     this->refresh();
 }
 
-#ifdef NON_MATCHING
 void cruise_bubble::show_hud()
 {
     // scheduling and register usage off
@@ -1773,30 +1735,27 @@ void cruise_bubble::show_hud()
 
     flash_hud();
 }
-#endif
 
-#ifdef NON_MATCHING
 void cruise_bubble::hide_hud()
 {
     hud.gizmos_used = 0;
     // float scheduling ...
     hud.model.wind->Alpha = zEntCruiseBubble_f_0_0;
 }
-#endif
 
 void cruise_bubble::tweak_group::load(xModelAssetParam* params, U32 size)
 {
     this->register_tweaks(true, params, size, NULL);
 }
 
-void cruise_bubble::tweak_group::register_tweaks(bool init, xModelAssetParam* ap, U32 apsize, const char*)
+void cruise_bubble::tweak_group::register_tweaks(bool init, xModelAssetParam* ap, U32 apsize,
+                                                 const char*)
 {
     if (init)
     {
         this->aim_delay = zEntCruiseBubble_f_0_2;
-        auto_tweak::load_param<F32, F32>(this->aim_delay, 1.0f,
-                                         zEntCruiseBubble_f_0_0, 1.0f, ap, apsize,
-                                         "aim_delay");
+        auto_tweak::load_param<F32, F32>(this->aim_delay, 1.0f, zEntCruiseBubble_f_0_0, 1.0f, ap,
+                                         apsize, "aim_delay");
     }
 
     if (init)
@@ -1923,7 +1882,8 @@ void cruise_bubble::tweak_group::register_tweaks(bool init, xModelAssetParam* ap
         this->missle.fly.engine_pitch_sensitivity = zEntCruiseBubble_f_0_005;
         auto_tweak::load_param<F32, F32>(this->missle.fly.engine_pitch_sensitivity,
                                          zEntCruiseBubble_f_1_0, zEntCruiseBubble_f_0_0,
-                                         zEntCruiseBubble_f_1_0, ap, apsize, "missle.fly.engine_pitch_sensitivity");
+                                         zEntCruiseBubble_f_1_0, ap, apsize,
+                                         "missle.fly.engine_pitch_sensitivity");
     }
 
     if (init)
@@ -2289,8 +2249,7 @@ void cruise_bubble::tweak_group::register_tweaks(bool init, xModelAssetParam* ap
     if (init)
     {
         this->blast.emit = 300;
-        auto_tweak::load_param<U32, S32>(this->blast.emit, 1, 0, 0x3e8, ap, apsize,
-                                         "blast.emit");
+        auto_tweak::load_param<U32, S32>(this->blast.emit, 1, 0, 0x3e8, ap, apsize, "blast.emit");
     }
 
     if (init)
@@ -2531,7 +2490,6 @@ void cruise_bubble::tweak_group::register_tweaks(bool init, xModelAssetParam* ap
     }
 }
 
-#ifdef NON_MATCHING
 void cruise_bubble::init()
 {
     if ((shared.flags & 0x1) != 0x1)
@@ -2539,24 +2497,23 @@ void cruise_bubble::init()
         return;
     }
 
-    init_sound();
+    cruise_bubble::init_sound();
 
     shared.flags = shared.flags | 0x2;
 
-    load_settings();
-    init_states();
-    init_missle_model();
-    init_wake_ribbons();
-    init_explode_decal();
-    init_shrapnel();
-    init_hud();
-    init_debug();
+    cruise_bubble::load_settings();
+    cruise_bubble::init_states();
+    cruise_bubble::init_missle_model();
+    cruise_bubble::init_wake_ribbons();
+    cruise_bubble::init_explode_decal();
+    cruise_bubble::init_shrapnel();
+    cruise_bubble::init_hud();
+    cruise_bubble::init_debug();
 
     // scheduling off
     shared.fov_default = xCameraGetFOV(&globals.camera);
     shared.dialog_freq = current_tweak->dialog.freq;
 }
-#endif
 
 void cruise_bubble::reset()
 {
@@ -2567,7 +2524,6 @@ void cruise_bubble::reset()
     cruise_bubble::kill(true, false);
 }
 
-#ifdef NON_MATCHING
 void cruise_bubble::launch()
 {
     if ((shared.flags & 0x13) != 0x3)
@@ -2586,8 +2542,8 @@ void cruise_bubble::launch()
         current_tweak = &normal_tweak;
     }
 
-    reset_wake_ribbons();
-    reset_explode_decal();
+    cruise_bubble::reset_wake_ribbons();
+    cruise_bubble::reset_explode_decal();
 
     shared.flags = shared.flags | 0x14;
     shared.last_sp = shared.sp = globals.pad0->analog[0].offset;
@@ -2597,9 +2553,8 @@ void cruise_bubble::launch()
     shared.fov_default = xCameraGetFOV(&globals.camera);
 
     ztalkbox::permit(0x0, 0xffffffff);
-    set_state(THREAD_PLAYER, BEGIN_STATE_PLAYER);
+    cruise_bubble::set_state(THREAD_PLAYER, BEGIN_STATE_PLAYER);
 }
-#endif
 
 bool cruise_bubble::update(xScene* s, F32 dt)
 {
@@ -2664,7 +2619,6 @@ void cruise_bubble::render_screen()
     cruise_bubble::render_hud();
 }
 
-#ifdef NON_MATCHING
 void cruise_bubble::insert_player_animations(xAnimTable& table)
 {
     // not matching for different reasons
@@ -2683,12 +2637,14 @@ void cruise_bubble::insert_player_animations(xAnimTable& table)
                            zEntCruiseBubble_f_0_0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
 
     shared.astate.player.fire =
-        xAnimTableNewState(&table, "cruise_bubble_fire", 0x20, 0, zEntCruiseBubble_f_1_0, NULL, NULL,
-                           zEntCruiseBubble_f_0_0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+        xAnimTableNewState(&table, "cruise_bubble_fire", 0x20, 0, zEntCruiseBubble_f_1_0, NULL,
+                           NULL, zEntCruiseBubble_f_0_0, NULL, NULL, xAnimDefaultBeforeEnter, NULL,
+                           NULL);
 
     shared.astate.player.idle =
-        xAnimTableNewState(&table, "cruise_bubble_idle", 0x10, 0, zEntCruiseBubble_f_1_0, NULL, NULL,
-                           zEntCruiseBubble_f_0_0, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+        xAnimTableNewState(&table, "cruise_bubble_idle", 0x10, 0, zEntCruiseBubble_f_1_0, NULL,
+                           NULL, zEntCruiseBubble_f_0_0, NULL, NULL, xAnimDefaultBeforeEnter, NULL,
+                           NULL);
 
     char* start_from = (char*)xMemPushTemp(0x250);
     memset(start_from, 0, 0x250);
@@ -2714,18 +2670,17 @@ void cruise_bubble::insert_player_animations(xAnimTable& table)
                                 zEntCruiseBubble_f_0_15, NULL);
 
     shared.atran.player.idle =
-        xAnimTableNewTransition(&table, "cruise_bubble_fire", "cruise_bubble_idle", NULL, NULL, 0x10,
-                                0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0, 0, 0,
+        xAnimTableNewTransition(&table, "cruise_bubble_fire", "cruise_bubble_idle", NULL, NULL,
+                                0x10, 0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0, 0, 0,
                                 zEntCruiseBubble_f_0_15, NULL);
 
     shared.atran.player.end =
-        xAnimTableNewTransition(&table, "cruise_bubble_aim cruise_bubble_fire cruise_bubble_idle", "Idle01", NULL, NULL, 0, 0,
-                                zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0, 0, 0,
-                                zEntCruiseBubble_f_0_15, NULL);
+        xAnimTableNewTransition(&table, "cruise_bubble_aim cruise_bubble_fire cruise_bubble_idle",
+                                "Idle01", NULL, NULL, 0, 0, zEntCruiseBubble_f_0_0,
+                                zEntCruiseBubble_f_0_0, 0, 0, zEntCruiseBubble_f_0_15, NULL);
 
     xMemPopTemp(start_from);
 }
-#endif
 
 bool cruise_bubble::active()
 {
@@ -2879,7 +2834,8 @@ cruise_bubble::state_enum cruise_bubble::state_player_halt::update(F32 dt)
     }
 
     xVec3 dmotion = shared.player_motion - this->last_motion;
-    if (dmotion.length2() < zEntCruiseBubble_f_0_0001) {
+    if (dmotion.length2() < zEntCruiseBubble_f_0_0001)
+    {
         return STATE_PLAYER_AIM;
     }
 
@@ -2913,7 +2869,8 @@ cruise_bubble::state_enum cruise_bubble::state_player_aim::update(F32 dt)
 {
     this->turn_delay += dt;
 
-    if (this->turn_delay >= current_tweak->aim_delay) {
+    if (this->turn_delay >= current_tweak->aim_delay)
+    {
         this->face_camera(dt);
     }
     this->apply_yaw();
@@ -2991,7 +2948,8 @@ void cruise_bubble::state_player_fire::start()
         play_sound(3, zEntCruiseBubble_f_1_0);
         shared.dialog_freq *= current_tweak->dialog.decay;
 
-        if (shared.dialog_freq < current_tweak->dialog.min_freq) {
+        if (shared.dialog_freq < current_tweak->dialog.min_freq)
+        {
             shared.dialog_freq = current_tweak->dialog.min_freq;
         }
     }
@@ -3050,7 +3008,8 @@ void cruise_bubble::state_missle_appear::start()
     cruise_bubble::show_missle();
     shared.missle_model->Flags = shared.missle_model->Flags & 0xfffe;
     shared.missle_model->Alpha = zEntCruiseBubble_f_1_0;
-    xAnimPlaySetState(shared.missle_model->Anim->Single, shared.astate.missle.fire, zEntCruiseBubble_f_0_0);
+    xAnimPlaySetState(shared.missle_model->Anim->Single, shared.astate.missle.fire,
+                      zEntCruiseBubble_f_0_0);
     this->move();
 }
 
@@ -3082,7 +3041,8 @@ cruise_bubble::state_enum cruise_bubble::state_missle_appear::update(F32 dt)
     }
     move();
 
-    if (time >= current_tweak->missle.appear.delay_fly) {
+    if (time >= current_tweak->missle.appear.delay_fly)
+    {
         return STATE_MISSLE_FLY;
     }
 
@@ -3095,7 +3055,6 @@ void cruise_bubble::state_missle_appear::update_effects(F32 dt)
     //empty
 }
 
-#ifdef NON_MATCHING
 void cruise_bubble::state_missle_fly::start()
 {
     // lwzu
@@ -3121,7 +3080,6 @@ void cruise_bubble::state_missle_fly::start()
     play_sound(2, zEntCruiseBubble_f_1_0, &cruise_bubble::get_missle_mat()->pos);
     signal_event(0x203);
 }
-#endif
 
 cruise_bubble::missle_record_data::missle_record_data(const xVec3& loc, F32 roll)
     : loc(loc), roll(roll)
@@ -3150,7 +3108,7 @@ void cruise_bubble::state_missle_fly::abort()
 
     xSphere o;
     o.center = zEntCruiseBubble_f_1_0e38;
-    o.r =zEntCruiseBubble_f_0_0;
+    o.r = zEntCruiseBubble_f_0_0;
     notify_triggers(*globals.sceneCur, o, xVec3::create(zEntCruiseBubble_f_0_0));
 }
 
@@ -3211,10 +3169,10 @@ void cruise_bubble::state_missle_fly::update_flash(F32 dt)
 void cruise_bubble::state_missle_fly::update_engine_sound(F32 dt)
 {
     F32 tmp = current_tweak->missle.fly.engine_pitch_max *
-    (iabs(shared.last_sp.x) + iabs(shared.last_sp.y));
+              (iabs(shared.last_sp.x) + iabs(shared.last_sp.y));
 
-    this->engine_pitch += (tmp - this->engine_pitch) *
-    current_tweak->missle.fly.engine_pitch_sensitivity;
+    this->engine_pitch +=
+        (tmp - this->engine_pitch) * current_tweak->missle.fly.engine_pitch_sensitivity;
 
     set_pitch(2, this->engine_pitch, 0);
 }
@@ -3238,7 +3196,6 @@ U8 cruise_bubble::state_missle_fly::collide_hazards()
     return true;
 }
 
-#ifdef NON_MATCHING
 bool cruise_bubble::state_missle_fly::hazard_check(NPCHazard& haz, void* context)
 {
     // get_missle_mat()->pos uses one more instruction for no apparent reason
@@ -3254,7 +3211,6 @@ bool cruise_bubble::state_missle_fly::hazard_check(NPCHazard& haz, void* context
 
     return true;
 }
-#endif
 
 U8 cruise_bubble::state_missle_fly::collide()
 {
@@ -3323,7 +3279,6 @@ U8 cruise_bubble::state_missle_fly::collide()
     return this->hit_test(*hit_loc, *hit_norm, hit_depen, hit_ent);
 }
 
-#ifdef NON_MATCHING
 U8 cruise_bubble::state_missle_fly::hit_test(xVec3& hit_loc, xVec3& hit_norm, xVec3& hit_depen,
                                              xEnt*& hit_ent) const
 {
@@ -3351,7 +3306,6 @@ U8 cruise_bubble::state_missle_fly::hit_test(xVec3& hit_loc, xVec3& hit_norm, xV
 
     return true;
 }
-#endif
 
 void cruise_bubble::state_missle_fly::update_move(F32 dt)
 {
@@ -3365,7 +3319,6 @@ void cruise_bubble::state_missle_fly::update_move(F32 dt)
     mat->pos += mat->at * move;
 }
 
-#ifdef NON_MATCHING
 void cruise_bubble::state_missle_explode::start()
 {
     shared.flags |= 0x40;
@@ -3383,7 +3336,6 @@ void cruise_bubble::state_missle_explode::start()
     play_sound(1, 1.0f, &get_missle_mat()->pos);
     this->start_effects();
 }
-#endif
 
 void cruise_bubble::state_missle_explode::stop()
 {
@@ -3403,7 +3355,6 @@ cruise_bubble::state_enum cruise_bubble::state_missle_explode::update(F32 dt)
     return STATE_MISSLE_EXPLODE;
 }
 
-#ifdef NON_MATCHING
 void cruise_bubble::state_camera_aim::start()
 {
     capture_camera();
@@ -3434,7 +3385,6 @@ void cruise_bubble::state_camera_aim::start()
     start_cam_mat = *mat;
     start_cam_mat.pos -= ploc;
 }
-#endif
 
 void cruise_bubble::state_camera_aim::stop()
 {
@@ -3545,7 +3495,8 @@ void cruise_bubble::state_camera_attach::start()
     capture_camera();
     xMat4x3* mat = get_missle_mat();
     xCameraMove(&globals.camera, mat->pos);
-    xCameraRotate(&globals.camera, *mat, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0);
+    xCameraRotate(&globals.camera, *mat, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0,
+                  zEntCruiseBubble_f_0_0);
     xCameraSetFOV(&globals.camera, current_tweak->camera.seize.fov);
     distort_screen(zEntCruiseBubble_f_1_0);
 }
@@ -3568,7 +3519,8 @@ cruise_bubble::state_enum cruise_bubble::state_camera_attach::update(F32 dt)
 {
     xMat4x3* mat = get_missle_mat();
     xCameraMove(&globals.camera, mat->pos);
-    xCameraRotate(&globals.camera, *mat, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0);
+    xCameraRotate(&globals.camera, *mat, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0,
+                  zEntCruiseBubble_f_0_0);
     this->lock_targets();
 
     return STATE_CAMERA_ATTACH;
@@ -3622,7 +3574,7 @@ cruise_bubble::state_enum cruise_bubble::state_camera_survey::update(F32 dt)
     }
 
     if (this->time >= current_tweak->camera.survey.min_duration &&
-            ((globals.pad0->pressed & 0x100) != 0 || this->control_jerked()))
+        ((globals.pad0->pressed & 0x100) != 0 || this->control_jerked()))
     {
         return STATE_CAMERA_RESTORE;
     }
@@ -3640,7 +3592,8 @@ void cruise_bubble::state_camera_restore::start()
     {
         xVec3 loc = get_player_loc() + start_cam_mat.pos;
         xCameraMove(&globals.camera, loc);
-        xCameraRotate(&globals.camera, start_cam_mat, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0);
+        xCameraRotate(&globals.camera, start_cam_mat, zEntCruiseBubble_f_0_0,
+                      zEntCruiseBubble_f_0_0, zEntCruiseBubble_f_0_0);
     }
 
     if (camera_taken())
