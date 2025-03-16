@@ -127,7 +127,7 @@ struct xEnt : xBase
 
     // Offset: 0x10
     xEntAsset* asset;
-    U16 idx;
+    U16 idx; //0x14
     U16 num_updates;
 
     // Offset: 0x18
