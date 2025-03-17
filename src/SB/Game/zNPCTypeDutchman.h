@@ -78,7 +78,7 @@ struct zNPCDutchman : zNPCSubBoss
         bool hurting;
         bool flaming;
         bool eye_glow;
-        bool hand_trail;
+        bool hand_trail; //0x2bb
         move_enum move;
         fade_enum fade;
     } flag;
@@ -97,20 +97,20 @@ struct zNPCDutchman : zNPCSubBoss
     move_info move; //0x2C8
     struct
     {
-        U8 moreFlags;
+        U8 moreFlags; //0x31c??
     } old;
-    beam_info beam[2];
-    static_queue<wave_data> waves;
+    beam_info beam[2]; //Needed for start_beam func
+    static_queue<wave_data> waves; //Needed for start_beam func
     struct
     {
-        F32 size;
-        F32 time;
-        S32 emitted;
+        F32 size; //0x56c
+        F32 time; //0x570
+        S32 emitted; //0x574
         U8 splash_break;
         xVec3 splash_loc;
         U8 blob_break;
         xVec3 blob_loc;
-        F32 imax_dist;
+        F32 imax_dist; //0x598
         xMat3x3 blob_mat;
     } flames;
     struct
@@ -123,7 +123,7 @@ struct zNPCDutchman : zNPCSubBoss
         F32 duration;
         F32 iduration;
         xVec3 sound_loc;
-        U32 sound_handle;
+        U32 sound_handle; //0x5fc
     } fade;
     struct
     {
@@ -133,7 +133,7 @@ struct zNPCDutchman : zNPCSubBoss
     } slime;
     struct
     {
-        F32 size;
+        F32 size; //0x62C
     } eye_glow;
     zNPCLassoInfo lasso_info;
     RwRaster* laser_raster;
@@ -146,10 +146,20 @@ struct zNPCDutchman : zNPCSubBoss
     void update_animation(float);
     void add_splash(const xVec3&, float);
     void vanish();
+<<<<<<< HEAD
+=======
+    void start_beam();
+    void stop_beam();
+>>>>>>> upstream
     void stop_flames();
     void stop_hand_trail();
     void reset_speed();
     void Damage(en_NPC_DAMAGE_TYPE, xBase*, const xVec3*);
+<<<<<<< HEAD
+=======
+    void start_eye_glow();
+    void stop_eye_glow();
+>>>>>>> upstream
     U8 PhysicsFlags() const;
     U8 ColPenByFlags() const;
     U8 ColChkByFlags() const;

@@ -34,8 +34,6 @@ void zLightEffectSet(_zLight* zlight, S32 idx)
     }
 }
 
-#ifdef NON_MATCHING
-
 void zLightResetAll(xEnv* env)
 {
     memset(sLight, 0, sizeof(sLight));
@@ -51,9 +49,6 @@ void zLightResetAll(xEnv* env)
     }
     xPartitionDump(&sLightPart, zLight_strings);
 }
-#endif
-
-
 
 void zLightInit(void* b, void* tasset)
 {
@@ -210,7 +205,6 @@ S32 zLightEventCB(xBase* param_1, xBase* to, U32 toEvent, const float* param_4, 
     return 1;
 }
 
-#ifdef NON_MATCHING
 // Float issue
 void zLightUpdate(xBase* to, xScene* param_2, F32 dt)
 {
@@ -229,9 +223,7 @@ void zLightUpdate(xBase* to, xScene* param_2, F32 dt)
         sEffectFuncs[t->effect_idx](t, dt);
     }
 }
-#endif
 
-#if 0
 // Something is wrong with gNumTemporaryLights
 void zLightAddLocalEnv()
 {
@@ -252,9 +244,7 @@ void zLightAddLocalEnv()
         }
     }
 }
-#endif
 
-#ifdef NON_MATCHING
 // Float issue
 void zLightAddLocal(xEnt* ent)
 {
@@ -269,7 +259,6 @@ void zLightAddLocal(xEnt* ent)
     }
     xShadowSetLight(&ent->entShadow->pos, &ent->entShadow->vec, zLight_float);
 }
-#endif
 
 void zLightRemoveLocalEnv()
 {

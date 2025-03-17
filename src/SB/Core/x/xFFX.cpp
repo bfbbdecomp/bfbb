@@ -69,7 +69,6 @@ S16 xFFXAddEffect(xEnt* ent, void (*dof)(xEnt*, xScene*, F32, void*), void* fd)
     return effectID;
 }
 
-#if 0
 // WIP.
 U32 xFFXRemoveEffectByFData(xEnt* ent, void* fdata)
 {
@@ -94,8 +93,6 @@ U32 xFFXRemoveEffectByFData(xEnt* ent, void* fdata)
     *found = ffx;
     return 1;
 }
-
-#endif
 
 void xFFXApplyOne(xFFX* ffx, xEnt* ent, xScene* sc, F32 dt)
 {
@@ -138,7 +135,6 @@ void xFFXShakeFree(xFFXShakeState* s)
     shake_alist = s;
 }
 
-#if 0
 // Some instructions are in the wrong order.
 void xFFXRotMatchPoolInit(U32 num)
 {
@@ -156,8 +152,6 @@ void xFFXRotMatchPoolInit(U32 num)
     }
     rot_match_alist = rot_match_pool + (rot_match_psize - 1);
 }
-
-#endif
 
 xFFXRotMatchState* xFFXRotMatchAlloc()
 {

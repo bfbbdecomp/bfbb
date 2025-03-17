@@ -406,9 +406,6 @@ F32 zNPCCommon::GenShadCacheRad()
     return lbl_803CE4C0;
 }
 
-#if 0
-
-#else
 // xNPCBasic vtable at: 0x2949F4
 // vtable reference is stored immidately _after_ object fields in an xNPCBasic
 // instance. That is, sizeof(xNPCBasic) = sizeof(visible fields) + an extra 4
@@ -438,7 +435,6 @@ xNPCBasic::xNPCBasic(S32 value)
 {
     myNPCType = value;
 }
-#endif
 
 void xNPCBasic::Setup()
 {
@@ -449,7 +445,7 @@ void xNPCBasic::Move(xScene* xscn, F32 dt, xEntFrame* frm)
 }
 
 S32 xNPCBasic::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
-                          xBase* toParamWidget, S32* handled)
+                        xBase* toParamWidget, S32* handled)
 {
     return 1;
 }

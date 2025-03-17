@@ -37,7 +37,6 @@ void xClimateInit(_tagClimate* climate)
     climate->rain.snow_emitter->emit_flags &= 0xfe;
 }
 
-#ifdef NON_MATCHING
 // Equivalent
 // float ops are being optimized more aggressively
 void xClimateInitAsset(_tagClimate* climate, xEnvAsset* asset)
@@ -65,7 +64,6 @@ void xClimateInitAsset(_tagClimate* climate, xEnvAsset* asset)
         climate->rain.strength += asset->climateStrengthMin;
     }
 }
-#endif
 
 void xClimateSetSnow(F32 stre)
 {
@@ -79,7 +77,6 @@ void xClimateSetRain(F32 stre)
     sClimate->rain.strength = stre;
 }
 
-#ifdef NON_MATCHING
 // Equivalent
 // Float literal is being loaded three separate times in the original code.
 void GetPosBigDogWhattupFool(xVec3* vec)
@@ -89,9 +86,7 @@ void GetPosBigDogWhattupFool(xVec3* vec)
     vec->y = 10.0f * camera->mat.at.y + camera->mat.pos.y;
     vec->z = 10.0f * camera->mat.at.z + camera->mat.pos.z;
 }
-#endif
 
-#ifdef NON_MATCHING
 // NOTE (Square): I think it's equivalent but it's very hard to tell. Our compiler is optimizing the float ops
 // much more aggresively and it's throwing the regalloc off.
 void UpdateRain(_tagClimate* climate, float seconds)
@@ -174,7 +169,6 @@ void UpdateRain(_tagClimate* climate, float seconds)
         }
     }
 }
-#endif
 
 void UpdateWind(_tagClimate* climate, F32 seconds)
 {

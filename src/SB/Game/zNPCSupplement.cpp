@@ -68,14 +68,12 @@ void NPCSupplement_Timestep(float dt)
     NPAR_Timestep(dt);
 }
 
-#if 0
-U32 NPCC_StreakCreate(en_npcstreak styp)
+S32 NPCC_StreakCreate(en_npcstreak styp)
 {
     StreakInfo info = info_950;
     NPCC_MakeStreakInfo(styp, &info);
     xFXStreakStart(&styp);
 }
-#endif
 
 void NPAR_ScenePrepare()
 {
@@ -111,7 +109,6 @@ void NPAR_CheckSpecials()
     g_isSpecialDay = g_gameExtrasFlags & 0b111110111;
 }
 
-#if 0
 // WIP
 void NPAR_Timestep(F32 dt)
 {
@@ -130,7 +127,6 @@ void NPAR_Timestep(F32 dt)
         }
     }
 }
-#endif
 
 NPARMgmt* NPAR_PartySetup(en_nparptyp parType, void** userData, NPARXtraData* xtraData)
 {
@@ -188,7 +184,6 @@ void NPAR_CopyNPARToPTPool(NPARData* param_1, ptank_pool__pos_color_size_uv2* pa
     param_2->uv[1].y = param_1->uv_br[1];
 }
 
-#ifdef NON_MATCHING
 // Matches, it just defines new data that won't match until that stuff can be redefined.
 // It also loads a bunch of byte stuff at the end for some reason
 // For the record it also matches when using the static colors. Externing zanyArray does not work.
@@ -362,7 +357,6 @@ void NPAR_TubeSpiralMagic(RwRGBA* color, int unused, F32 pam)
         return;
     }
 }
-#endif
 
 F32 ARCH3(F32 param_1)
 {

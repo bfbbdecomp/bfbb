@@ -50,15 +50,10 @@ void xLaserBoltEmitter::refresh_config()
     this->ialpha = alpha;
 }
 
-#if 0
-
-// WIP.
 void xLaserBoltEmitter::attach_effects(fx_when_enum when, effect_data* fx, size_t fxsize)
 {
     // TODO!!!
 }
-
-#endif
 
 RxObjSpace3DVertex* xLaserBoltEmitter::get_vert_buffer(S32& dat)
 {
@@ -66,13 +61,9 @@ RxObjSpace3DVertex* xLaserBoltEmitter::get_vert_buffer(S32& dat)
     return gRenderBuffer.m_vertex;
 }
 
-#if 0
-
 // WIP.
 void xLaserBoltEmitter::reset_fx(fx_when_enum when)
 {
     U32* sizePtr = &this->fxsize[when];
     effect_data** effect = &this->fx[when];
 }
-
-#endif

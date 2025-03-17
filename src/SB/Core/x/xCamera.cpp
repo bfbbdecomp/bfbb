@@ -202,9 +202,6 @@ void xCameraReset(xCamera* cam, F32 d, F32 h, F32 pitch)
     xcam_collis_owner_disable = 0;
 }
 
-#ifndef NON_MATCHING
-static void xCam_buildbasis(xCamera* cam);
-#else
 static void xCam_buildbasis(xCamera* cam)
 {
     if (cam->tgt_mat)
@@ -270,10 +267,8 @@ static void xCam_buildbasis(xCamera* cam)
         cam->mbasis.right.z = -cam->mbasis.at.x;
     }
 }
-#endif
 
-static void xCam_cyltoworld(xVec3* v, const xMat4x3* tgt_mat, F32 d, F32 h, F32 p,
-                            U32 flags)
+static void xCam_cyltoworld(xVec3* v, const xMat4x3* tgt_mat, F32 d, F32 h, F32 p, U32 flags)
 {
     if (flags & 0x10)
     {
@@ -298,8 +293,8 @@ static void xCam_cyltoworld(xVec3* v, const xMat4x3* tgt_mat, F32 d, F32 h, F32 
     }
 }
 
-static void xCam_worldtocyl(F32& d, F32& h, F32& p, const xMat4x3* tgt_mat,
-                            const xVec3* v, U32 flags)
+static void xCam_worldtocyl(F32& d, F32& h, F32& p, const xMat4x3* tgt_mat, const xVec3* v,
+                            U32 flags)
 {
     F32 lx, lz;
 
@@ -348,9 +343,6 @@ static void xCam_worldtocyl(F32& d, F32& h, F32& p, const xMat4x3* tgt_mat,
     }
 }
 
-#ifndef NON_MATCHING
-static void xCam_CorrectD(xCamera* r3, F32 f1, F32 f2, F32 f3);
-#else
 static void xCam_CorrectD(xCamera* r3, F32 f1, F32 f2, F32 f3)
 {
     // non-matching: incorrect float register
@@ -367,7 +359,6 @@ static void xCam_CorrectD(xCamera* r3, F32 f1, F32 f2, F32 f3)
     r3->mat.pos.x += tmp2;
     r3->mat.pos.z += tmp3;
 }
-#endif
 
 static void xCam_CorrectH(xCamera* r3, F32 f1, F32 f2, F32 f3)
 {
@@ -412,10 +403,6 @@ static void xCam_DampP(xCamera* r3, F32 f1, F32 f2)
     r3->mat.pos.x += tmp1;
     r3->mat.pos.z += tmp2;
 }
-
-#ifndef NON_MATCHING
-static void xCam_CorrectYaw(xCamera* r3, F32 f1, F32 f2, F32 f3);
-#else
 static void xCam_CorrectYaw(xCamera* r3, F32 f1, F32 f2, F32 f3)
 {
     // non-matching: incorrect float registers, slightly out-of-order fmsubs instruction
@@ -431,11 +418,6 @@ static void xCam_CorrectYaw(xCamera* r3, F32 f1, F32 f2, F32 f3)
 
     r3->yaw_cur += tmp2;
 }
-#endif
-
-#ifndef NON_MATCHING
-static void xCam_CorrectPitch(xCamera* r3, F32 f1, F32 f2, F32 f3);
-#else
 static void xCam_CorrectPitch(xCamera* r3, F32 f1, F32 f2, F32 f3)
 {
     // non-matching: same reasons as xCam_CorrectYaw
@@ -451,11 +433,7 @@ static void xCam_CorrectPitch(xCamera* r3, F32 f1, F32 f2, F32 f3)
 
     r3->pitch_cur += tmp2;
 }
-#endif
 
-#ifndef NON_MATCHING
-static void xCam_CorrectRoll(xCamera* r3, F32 f1, F32 f2, F32 f3);
-#else
 static void xCam_CorrectRoll(xCamera* r3, F32 f1, F32 f2, F32 f3)
 {
     // non-matching: same reasons as xCam_CorrectYaw
@@ -471,7 +449,6 @@ static void xCam_CorrectRoll(xCamera* r3, F32 f1, F32 f2, F32 f3)
 
     r3->roll_cur += tmp2;
 }
-#endif
 
 void SweptSphereHitsCameraEnt(xScene*, xRay3* ray, xQCData* qcd, xEnt* ent, void* data)
 {
@@ -573,18 +550,11 @@ void SweptSphereHitsCameraEnt(xScene*, xRay3* ray, xQCData* qcd, xEnt* ent, void
     }
 }
 
-#ifndef NON_MATCHING
-static void _xCameraUpdate(xCamera* cam, F32 dt);
-#else
 static void _xCameraUpdate(xCamera* cam, F32 dt)
 {
     // lol nope
 }
-#endif
 
-#ifndef NON_MATCHING
-void xCameraUpdate(xCamera* cam, F32 dt);
-#else
 void xCameraUpdate(xCamera* cam, F32 dt)
 {
     S32 i;
@@ -603,7 +573,6 @@ void xCameraUpdate(xCamera* cam, F32 dt)
         _xCameraUpdate(cam, sdt);
     }
 }
-#endif
 
 #ifndef INLINE
 float std::ceilf(float x)
@@ -641,9 +610,6 @@ static void xCameraFXInit()
     sCameraFX[9].flags = 0;
 }
 
-#ifndef NON_MATCHING
-cameraFX* xCameraFXAlloc();
-#else
 cameraFX* xCameraFXAlloc()
 {
     S32 i;
@@ -667,11 +633,7 @@ cameraFX* xCameraFXAlloc()
 
     return NULL;
 }
-#endif
 
-#ifndef NON_MATCHING
-void xCameraFXZoomUpdate(cameraFX* f, F32 dt, const xMat4x3*, xMat4x3* m);
-#else
 void xCameraFXZoomUpdate(cameraFX* f, F32 dt, const xMat4x3*, xMat4x3* m)
 {
     switch (f->zoom.mode)
@@ -731,10 +693,9 @@ void xCameraFXZoomUpdate(cameraFX* f, F32 dt, const xMat4x3*, xMat4x3* m)
     }
     }
 }
-#endif
 
-void xCameraFXShake(F32 maxTime, F32 magnitude, F32 cycleMax, F32 rotate_magnitude,
-                    F32 radius, xVec3* epicenter, xVec3* player)
+void xCameraFXShake(F32 maxTime, F32 magnitude, F32 cycleMax, F32 rotate_magnitude, F32 radius,
+                    xVec3* epicenter, xVec3* player)
 {
     cameraFX* f = xCameraFXAlloc();
 
@@ -814,9 +775,6 @@ void xCameraFXShakeUpdate(cameraFX* f, F32 dt, const xMat4x3*, xMat4x3* m)
     xMat3x3Euler(m, &e);
 }
 
-#ifndef NON_MATCHING
-void xCameraFXUpdate(xCamera* cam, F32 dt);
-#else
 void xCameraFXUpdate(xCamera* cam, F32 dt)
 {
     S32 i;
@@ -858,7 +816,6 @@ void xCameraFXUpdate(xCamera* cam, F32 dt)
 
     iCameraUpdatePos(cam->lo_cam, &cam->mat);
 }
-#endif
 
 void xCameraFXEnd(xCamera* cam)
 {
@@ -906,8 +863,8 @@ void xCameraDoCollisions(S32 do_collis, S32 owner)
     xcam_do_collis = (xcam_collis_owner_disable == 0);
 }
 
-void xCameraMove(xCamera* cam, U32 flags, F32 dgoal, F32 hgoal, F32 pgoal,
-                 F32 tm, F32 tm_acc, F32 tm_dec)
+void xCameraMove(xCamera* cam, U32 flags, F32 dgoal, F32 hgoal, F32 pgoal, F32 tm, F32 tm_acc,
+                 F32 tm_dec)
 {
     cam->flags = (cam->flags & ~0x3E) | (flags & 0x3E);
     cam->dgoal = dgoal;
@@ -1002,8 +959,7 @@ void xCameraFOV(xCamera* cam, F32 fov, F32 maxSpeed, F32 dt)
     }
 }
 
-void xCameraLook(xCamera* cam, U32 flags, const xQuat* orn_goal, F32 tm, F32 tm_acc,
-                 F32 tm_dec)
+void xCameraLook(xCamera* cam, U32 flags, const xQuat* orn_goal, F32 tm, F32 tm_acc, F32 tm_dec)
 {
     F32 s; // unused
 
@@ -1032,8 +988,8 @@ void xCameraLook(xCamera* cam, U32 flags, const xQuat* orn_goal, F32 tm, F32 tm_
     }
 }
 
-void xCameraLookYPR(xCamera* cam, U32 flags, F32 yaw, F32 pitch, F32 roll,
-                    F32 tm, F32 tm_acc, F32 tm_dec)
+void xCameraLookYPR(xCamera* cam, U32 flags, F32 yaw, F32 pitch, F32 roll, F32 tm, F32 tm_acc,
+                    F32 tm_dec)
 {
     cam->flags = (cam->flags & ~0xF80) | (flags & 0xF80) | 0x80;
     cam->yaw_goal = yaw;
@@ -1108,8 +1064,7 @@ void xCameraRotate(xCamera* cam, const xMat3x3& m, F32 time, F32 accel, F32 decl
     cam->yaw_epv = cam->pitch_epv = cam->roll_epv = _765;
 }
 
-void xCameraRotate(xCamera* cam, const xVec3& v, F32 roll, F32 time, F32 accel,
-                   F32 decl)
+void xCameraRotate(xCamera* cam, const xVec3& v, F32 roll, F32 time, F32 accel, F32 decl)
 {
     cam->yaw_goal = xatan2(v.x, v.z);
     cam->pitch_goal = -xasin(v.y);
@@ -1157,12 +1112,7 @@ float std::asinf(float x)
 }
 #endif
 
-#ifndef NON_MATCHING
-static void bound_sphere_xz(xVec3& r3, xVec3& r4, const xVec3& r5, F32 f1, const xVec3& r6,
-                            F32 f2);
-#else
-static void bound_sphere_xz(xVec3& r3, xVec3& r4, const xVec3& r5, F32 f1, const xVec3& r6,
-                            F32 f2)
+static void bound_sphere_xz(xVec3& r3, xVec3& r4, const xVec3& r5, F32 f1, const xVec3& r6, F32 f2)
 {
     // non-matching: incorrect registers and out-of-order instructions
     F32 _f31 = f1 / f2;
@@ -1181,7 +1131,6 @@ static void bound_sphere_xz(xVec3& r3, xVec3& r4, const xVec3& r5, F32 f1, const
     r4.y = r5.y;
     r4.z = r5.z + _f6 + _f5_2;
 }
-#endif
 
 void xBinaryCamera::init()
 {
@@ -1204,12 +1153,9 @@ void xBinaryCamera::stop()
     this->camera = NULL;
 }
 
-#ifdef NON_MATCHING
 void xBinaryCamera::update(F32 dt)
 {
-    // lol nope
 }
-#endif
 
 void xCameraSetFOV(xCamera* cam, F32 fov)
 {

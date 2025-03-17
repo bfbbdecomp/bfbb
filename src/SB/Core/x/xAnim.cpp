@@ -563,17 +563,18 @@ void xAnimFileSetTime(xAnimFile* data, float duration, float timeOffset)
     {
         rawDuration = xMorphSeqDuration(*(xMorphSeqFile**)data->RawData);
     }
-    else {
+    else
+    {
         rawDuration = iAnimDuration(*data->RawData);
     }
 
-    if(timeOffset > rawDuration - 0.1f)
+    if (timeOffset > rawDuration - 0.1f)
     {
         timeOffset = rawDuration - 0.1f;
     }
 
     data->TimeOffset = timeOffset;
-    if(duration > rawDuration - timeOffset)
+    if (duration > rawDuration - timeOffset)
     {
         duration = rawDuration - timeOffset;
     }
@@ -581,8 +582,104 @@ void xAnimFileSetTime(xAnimFile* data, float duration, float timeOffset)
     data->Duration = (data->FileFlags & 0x2000) ? 2.0f * duration : duration;
 }
 
+F32 xAnimFileRawTime(xAnimFile* data, float);
+
 void xAnimFileEval(xAnimFile* data, F32 time, F32* bilinear, U32 flags, xVec3* tran, xQuat* quat,
-                   F32*);
+                   F32* arg6)
+{
+    S32 i;
+    U32 numBones;
+    F32 bilerp[2];
+    U32 biindex[2];
+    U32 biplus[2];
+    xQuat* q0;
+    xVec3* t0;
+    xQuat* q1;
+    xVec3* t1;
+
+    time = xAnimFileRawTime(data, CLAMP(time, 0.0f, data->Duration));
+    if (data->FileFlags & 0x8000)
+    {
+        return;
+    }
+
+    if (flags & 0x1)
+    {
+        numBones = 1;
+    }
+    else
+    {
+        numBones = data->BoneCount;
+    }
+
+    if (flags & 0x2)
+    {
+        numBones--;
+    }
+
+    if (numBones == 0)
+    {
+        return;
+    }
+
+    if (bilinear != NULL && data->FileFlags & 0x4000)
+    {
+        for (i = 0; i < 2; ++i)
+        {
+            F32 f30 = CLAMP(bilinear[i], 0.0f, data->NumAnims[i] - 1);
+            f32 t = std::floorf(f30);
+            bilerp[i] = f30 - t;
+            biindex[i] = t;
+            biplus[i] = MIN(biindex[i] + 1, data->NumAnims[i]);
+        }
+
+        q0 = (xQuat*)(giAnimScratch + 0x1560);
+        t0 = (xVec3*)((U8*)q0 + 0x410);
+        if (bilerp[0] && bilerp[1])
+        {
+            q1 = (xQuat*)(giAnimScratch + 0x1c80);
+            t1 = (xVec3*)((U8*)q1 + 0x410);
+
+            iAnimEval(data->RawData[biindex[0] + biindex[1] * data->NumAnims[0]], time, flags, tran,
+                      quat);
+            iAnimEval(data->RawData[biplus[0] + biindex[1] * data->NumAnims[0]], time, flags, t0,
+                      q0);
+            iAnimBlend(bilerp[0], 1.0f, NULL, NULL, numBones, tran, quat, t0, q0, tran, quat);
+
+            iAnimEval(data->RawData[biindex[0] + biplus[1] * data->NumAnims[0]], time, flags, t0,
+                      q0);
+            iAnimEval(data->RawData[biplus[0] + biplus[1] * data->NumAnims[0]], time, flags, t1,
+                      q1);
+            iAnimBlend(bilerp[0], 1.0f, NULL, NULL, numBones, t0, q0, t1, q1, t0, q0);
+            iAnimBlend(bilerp[1], 1.0f, NULL, NULL, numBones, tran, quat, t0, q0, tran, quat);
+        }
+        else if (bilerp[0])
+        {
+            iAnimEval(data->RawData[biindex[0] + biindex[1] * data->NumAnims[0]], time, flags, tran,
+                      quat);
+            iAnimEval(data->RawData[biplus[0] + biindex[1] * data->NumAnims[0]], time, flags, t0,
+                      q0);
+            iAnimBlend(bilerp[0], 1.0f, NULL, NULL, numBones, tran, quat, t0, q0, tran, quat);
+        }
+        else if (bilerp[1])
+        {
+            iAnimEval(data->RawData[biindex[0] + biindex[1] * data->NumAnims[0]], time, flags, tran,
+                      quat);
+            iAnimEval(data->RawData[biindex[0] + biplus[1] * data->NumAnims[0]], time, flags, t0,
+                      q0);
+            iAnimBlend(bilerp[0], 1.0f, NULL, NULL, numBones, tran, quat, t0, q0, tran, quat);
+        }
+        else
+        {
+            iAnimEval(data->RawData[biindex[0] + biindex[1] * data->NumAnims[0]], time, flags, tran,
+                      quat);
+        }
+    }
+    else
+    {
+        iAnimEval(data->RawData[0], time, flags, tran, quat);
+    }
+}
 
 #ifndef INLINE
 float std::floorf(float x)
@@ -660,7 +757,6 @@ void xAnimDefaultBeforeEnter(xAnimPlay* play, xAnimState* state)
     }
 }
 
-#ifdef NON_MATCHING
 xAnimState* xAnimTableNewState(xAnimTable* table, const char* name, U32 flags, U32 userFlags,
                                F32 speed, F32* boneBlend, F32* timeSnap, F32 fadeRecip,
                                U16* fadeOffset, void* callbackData,
@@ -705,7 +801,6 @@ xAnimState* xAnimTableNewState(xAnimTable* table, const char* name, U32 flags, U
 
     return state;
 }
-#endif
 
 static void _xAnimTableAddTransitionHelper(xAnimState* state, xAnimTransition* tran, U32& r5,
                                            U32& r6, xAnimState** r7)
@@ -729,12 +824,97 @@ static void _xAnimTableAddTransitionHelper(xAnimState* state, xAnimTransition* t
     }
 }
 
+// WIP
 void _xAnimTableAddTransition(xAnimTable* table, xAnimTransition* tran, const char* source,
-                              const char* dest);
+                              const char* dest)
+{
+    //   unsigned char * buffer; // r29+0x110
+    //     class xAnimState * * stateList; // r29+0x100
+    //     unsigned int i; // r4
+    //     unsigned int stateCount; // r30
+    //     unsigned int allocCount; // r21
+    //     char * stateName; // r29+0xFC
+    //     class xAnimTransitionList * tlist; // r29+0xE0
+    //     class xAnimTransition * substTransitionList[32]; // r29+0x230
+    //     unsigned int substTransitionCount; // r29+0xD0
+    //     unsigned char hasSubst; // r29+0xC0
+    //     signed int i; // r5
+    //     unsigned char isComplex; // r8
+    //     char * COMPLEX_PATTERNS; // r7
+    //     char * search; // r6
+    //     class xAnimState * state; // r23
+    //     char extra[128]; // r29+0x1B0
+    //     char tempName[128]; // r29+0x130
+    //     char * tempIterator; // r19
+    //     char * extraIterator; // r18
+    //     unsigned char allowMissingState; // r29+0xB0
+    //     signed int i; // r17
+    //     unsigned int extraIteratorLength; // r16
+    //     class xAnimTransition * duplicatedTransition; // r17
+    //     class xAnimTransitionList * curr; // r7
+
+    U8* buffer = (U8*)giAnimScratch;
+    char* x = (char*)(giAnimScratch + 0x400);
+    U8 bVar2 = false;
+    U8 bVar1 = false;
+
+    if (dest != NULL)
+    {
+        for (S32 i = 0; dest[i] != NULL; ++i)
+        {
+            if (dest[i] == '@' || dest[i] == '~')
+            {
+                bVar2 = true;
+                break;
+            }
+        }
+    }
+
+    char* str = xStrTokBuffer(source, " ,\t\n\r", table);
+    // Note: might be compiler generated to lift this from the loop
+    U8 bVar3 = dest != NULL; // isComplex??
+    char* COMPLEX_PATTERNS = "{}()<>";
+    for (S32 i = 0; i < 2; ++i)
+    {
+        U8 bVar4 = bVar3;
+        if (bVar4)
+        {
+            for (char* it = str; *it != NULL; ++it)
+            {
+                if (_xCharIn(*it, "#+*?{}()<>|;") != 0)
+                {
+                    bVar4 = true;
+                    break;
+                }
+            }
+        }
+
+        if (bVar4)
+        {
+            xAnimState* state = table->StateList;
+            while (1)
+            {
+                // _xCheckAnimName(state->Name, str, )
+            }
+        }
+    }
+    tran->Flags = bVar1;
+}
 
 void xAnimTableAddTransition(xAnimTable* table, xAnimTransition* tran, const char* source)
 {
     _xAnimTableAddTransition(table, tran, source, NULL);
+}
+
+void xAnimTableAddFile(xAnimTable* table, xAnimFile* file, char* states)
+{
+    U8* buffer = (U8*)giAnimScratch;
+    char* stateName = xStrTokBuffer(states, " ,\t\n\r", buffer);
+    while (stateName != NULL)
+    {
+        xAnimTableAddFileID(table, file, xStrHash(stateName), 0, 0);
+        stateName = xStrTokBuffer(NULL, " ,\t\n\r", buffer);
+    }
 }
 
 xAnimState* xAnimTableGetStateID(xAnimTable* table, U32 ID);
@@ -985,7 +1165,34 @@ static void EffectSingleRun(xAnimSingle* single)
     single->Effect = effect;
 }
 
-void EffectSingleLoop(xAnimSingle* single);
+void EffectSingleLoop(xAnimSingle* single)
+{
+    EffectSingleRun(single);
+    xAnimActiveEffect* alist = single->ActiveList;
+    U32 index = 0;
+    U32 count = single->ActiveCount;
+    while (index < count && alist[index].Effect != NULL)
+    {
+        if (!(alist[index].Effect->Flags & 0x20))
+        {
+            alist[index].Effect->Callback(3, &alist[index], single, single->Play->Object);
+
+            EffectActiveRemove(&alist[index], index, count);
+        }
+        else
+        {
+            index++;
+        }
+    }
+
+    xAnimEffect* effect = single->State->Effects;
+    while (effect != NULL && effect->StartTime < 0.0f)
+    {
+        effect = effect->Next;
+    }
+    single->Effect = effect;
+}
+
 void EffectSingleStop(xAnimSingle* single);
 static void LoopUpdate(xAnimSingle* single)
 {

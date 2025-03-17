@@ -108,6 +108,31 @@ void NPCWidget_ScenePostInit()
 {
 }
 
+void NPCWidget_Find(en_NPC_UI_WIDGETS)
+{
+    zSceneFindObject(g_hash_uiwidgets[1]);
+}
+
+void NPCWidget::Init(en_NPC_UI_WIDGETS)
+{
+}
+
+void NPCTarget::TargetClear()
+{
+    ent_target = 0; //0x4?
+    typ_target = NPC_TGT_NONE;
+}
+
+void NPCBlinker::Reset()
+{
+}
+
+void Firework_Release(Firework* firework)
+{
+    firework->Cleanup();
+    firework->fwstate = FW_STAT_UNUSED;
+}
+
 void Firework_ScenePrepare()
 {
     NPAR_PartySetup(NPAR_TYP_FIREWORKS, NULL, NULL);
@@ -117,6 +142,10 @@ void Firework_ScenePrepare()
 void Firework_SceneFinish()
 {
     Firework_SceneReset(1);
+}
+
+void Firework::Cleanup()
+{
 }
 
 void Firework_SceneReset(int)

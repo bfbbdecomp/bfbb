@@ -37,8 +37,7 @@ namespace
     xtextbox::tag_type new_tags[] = { SUBSTR("blahblah"), parse_tag_blahblah, NULL, NULL };
     U32 new_tags_size = sizeof(new_tags) / sizeof(new_tags[0]);
 
-    void set_vert(RwIm2DVertex& vert, F32 x, F32 y, F32 u, F32 v, iColor_tag c,
-                  F32 nsz, F32 rcz);
+    void set_vert(RwIm2DVertex& vert, F32 x, F32 y, F32 u, F32 v, iColor_tag c, F32 nsz, F32 rcz);
 
     void render_bk_fill(const ztextbox& e)
     {
@@ -47,7 +46,6 @@ namespace
         render_fill_rect(e.tb.font.clip, convert(a.backdrop.color));
     }
 
-#ifdef NON_MATCHING
     void render_bk_tex_scale(const ztextbox& e)
     {
         // non-matching: float instruction order
@@ -75,10 +73,8 @@ namespace
 
         xfont::restore_render_state();
     }
-#endif
 
-    void set_vert(RwIm2DVertex& vert, F32 x, F32 y, F32 u, F32 v, iColor_tag c,
-                  F32 nsz, F32 rcz)
+    void set_vert(RwIm2DVertex& vert, F32 x, F32 y, F32 u, F32 v, iColor_tag c, F32 nsz, F32 rcz)
     {
         RwIm2DVertexSetScreenX(&vert, x);
         RwIm2DVertexSetScreenY(&vert, y);

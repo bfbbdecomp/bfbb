@@ -55,9 +55,6 @@ namespace
         xLightKitLight light[1];
     } glow_light;
 
-#ifndef NON_MATCHING
-    void create_glow_light();
-#else
     void create_glow_light()
     {
         memset(&glow_light, 0, sizeof(glow_light));
@@ -75,7 +72,6 @@ namespace
 
         xLightKit_Prepare(&glow_light.kit);
     }
-#endif
 
     void destroy_glow_light()
     {
@@ -272,7 +268,8 @@ namespace
                 df.curr_note = 5.0f * -xurand() - 5.0f;
             }
 
-            F32 pitch = (df.curr_note >= 0) ? close_encounters[df.curr_note] : blues_scale[(S32)(6.0f * xurand() - 0.01f)];
+            F32 pitch = (df.curr_note >= 0) ? close_encounters[df.curr_note] :
+                                              blues_scale[(S32)(6.0f * xurand() - 0.01f)];
             F32 pitch_offset = pitch;
 
             if (df.transition_delay < 0.05f)
@@ -1033,7 +1030,6 @@ void z_disco_floor::render(S32 group)
     }
 }
 
-#ifdef NON_MATCHING
 void z_disco_floor::effects_render(S32 group)
 {
     F32 glow = pulse_glow[group];
@@ -1090,7 +1086,6 @@ void z_disco_floor::effects_render(S32 group)
         yoffset += dyoffset;
     }
 }
-#endif
 
 S32 z_disco_floor::event_handler(xBase*, xBase* to, U32 event, const F32* argf, xBase*)
 {

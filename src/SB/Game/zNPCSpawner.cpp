@@ -21,8 +21,9 @@ void zNPCSpawner_ScenePrepare()
     XOrdInit(&depot->spawners, sizeof(g_smdepot), 0);
     for (S32 i = 0; i < 0x10; i++)
     {
-        zNPCSpawner* sm = (zNPCSpawner*)RyzMemData::operator new(sizeof(zNPCSpawner), 'SPWN', NULL);
-        XOrdAppend(&depot->spawners, sm);
+        // FIXME: operator new call
+        // zNPCSpawner* sm = RyzMemData::operator new((size_t)sizeof(zNPCSpawner), 'SPWN', NULL);
+        // XOrdAppend(&depot->spawners, sm);
     }
 }
 
@@ -36,7 +37,6 @@ void zNPCSpawner_SceneFinish()
     XOrdDone(&depot->spawners, 0);
 }
 
-#if 0
 // Something weird with the conditions here.
 zNPCSpawner* zNPCSpawner_GetInstance()
 {
@@ -61,8 +61,6 @@ zNPCSpawner* zNPCSpawner_GetInstance()
         return NULL;
     }
 }
-
-#endif
 
 void zNPCSpawner::Subscribe(zNPCCommon* owner)
 {
@@ -98,7 +96,6 @@ S32 zNPCSpawner::AddSpawnPoint(zMovePoint* sp)
     return ack;
 }
 
-#if 0
 S32 zNPCSpawner::AddSpawnNPC(zNPCCommon* npc)
 {
     S32 ack = 0;
@@ -119,8 +116,6 @@ S32 zNPCSpawner::AddSpawnNPC(zNPCCommon* npc)
     return ack;
 }
 
-#endif
-
 void zNPCSpawner::Reset()
 {
     this->cnt_spawn = 0;
@@ -133,7 +128,6 @@ void zNPCSpawner::Reset()
     this->MapPreferred();
 }
 
-#if 0
 void zNPCSpawner::MapPreferred()
 {
     for (S32 i = 0; i < 0x10; i++)
@@ -141,16 +135,15 @@ void zNPCSpawner::MapPreferred()
         SMNPCStatus* npc_stat = &this->npcpool[i];
         if (npc_stat->npc != NULL)
         {
-            zMovePoint* sp = (zMovePoint*)npc_stat->npc->FirstAssigned();
-            if (sp != NULL && /*TODO*/)
-            {
-                npc_stat->sp_prefer = sp;
-            }
+            // FIXME
+            // zMovePoint* sp = (zMovePoint*)npc_stat->npc->FirstAssigned();
+            // if (sp != NULL&& /*TODO*/)
+            // {
+            //     npc_stat->sp_prefer = sp;
+            // }
         }
     }
 }
-
-#endif
 
 void zNPCSpawner::SetNPCStatus(zNPCCommon* npc, en_SM_NPC_STATUS status)
 {

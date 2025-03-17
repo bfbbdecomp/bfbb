@@ -193,7 +193,6 @@ char* str149 = "eGameWhere_SetupPlayerInit";
 char* str150 = "eGameWhere_SetupPlayerCamera";
 char* str151 = "eGameWhere_SetupPlayerEnd";
 
-#ifdef NON_MATCHING
 // Scheduling, I guess
 void zGameInit(U32 theSceneID)
 {
@@ -224,9 +223,7 @@ void zGameInit(U32 theSceneID)
     zhud::init();
     gGameWhereAmI = eGameWhere_InitEnd;
 }
-#endif
 
-#ifdef NON_MATCHING
 // Scheduling, I guess
 void zGameExit()
 {
@@ -253,9 +250,7 @@ void zGameExit()
     }
     gGameWhereAmI = eGameWhere_ExitEnd;
 }
-#endif
 
-#ifdef NON_MATCHING
 void zGameSetup()
 {
     gGameWhereAmI = eGameWhere_SetupScene;
@@ -297,7 +292,6 @@ void zGameSetup()
     zGameExtras_SceneInit();
     gGameWhereAmI = eGameWhere_SetupEnd;
 }
-#endif
 
 S32 zGameIsPaused()
 {
@@ -404,7 +398,6 @@ void zGameTakeSnapShot(RwCamera*)
 {
 }
 
-#ifdef NON_MATCHING
 // Float memes
 void zGameUpdateTransitionBubbles()
 {
@@ -415,9 +408,7 @@ void zGameUpdateTransitionBubbles()
     zParPTankUpdate(lbl_803CDA28 > sTimeElapsed ? sTimeElapsed : NULL);
     zParPTankRender();
 }
-#endif
 
-#ifdef NON_MATCHING
 // Tons of extra instructions for some reason
 void zGameScreenTransitionBegin()
 {
@@ -443,7 +434,6 @@ void zGameScreenTransitionBegin()
         }
     }
 }
-#endif
 
 //
 void zGameScreenTransitionUpdate(F32 percentComplete, char* msg)

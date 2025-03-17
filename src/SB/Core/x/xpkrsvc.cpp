@@ -11,8 +11,26 @@
 
 extern char xpkrsvc_strings[];
 
-extern st_PACKER_READ_FUNCS g_pkr_read_funcmap_original;
-extern st_PACKER_READ_FUNCS g_pkr_read_funcmap; // = g_pkr_read_funcmap_original;
+// Square and JESway: Function relocation issues will resolve themselves when all the functions
+//                    here 100% match, as it is apparently related to the instruction size of each function
+static st_PACKER_READ_FUNCS g_pkr_read_funcmap_original = { 1,
+                                                            PKR_ReadInit,
+                                                            PKR_ReadDone,
+                                                            PKR_LoadLayer,
+                                                            PKR_GetAssetSize,
+                                                            PKR_LoadAsset,
+                                                            PKR_AssetByType,
+                                                            PKR_AssetCount,
+                                                            PKR_IsAssetReady,
+                                                            PKR_SetActive,
+                                                            PKR_AssetName,
+                                                            PKR_GetBaseSector,
+                                                            PKR_GetAssetInfo,
+                                                            PKR_GetAssetInfoByType,
+                                                            PKR_PkgHasAsset,
+                                                            PKR_getPackTimestamp,
+                                                            PKR_Disconnect };
+static st_PACKER_READ_FUNCS g_pkr_read_funcmap = g_pkr_read_funcmap_original;
 st_PACKER_READ_DATA g_readdatainst[16] = {};
 
 st_HIPLOADFUNCS* g_hiprf;
@@ -34,8 +52,6 @@ st_PACKER_READ_FUNCS* PKRGetReadFuncs(S32 apiver)
     }
 }
 
-#ifdef NON_MATCHING
-// Small reordering
 S32 PKRStartup()
 {
     if (g_packinit++ == 0)
@@ -46,7 +62,6 @@ S32 PKRStartup()
     }
     return g_packinit;
 }
-#endif
 
 S32 PKRShutdown()
 {
@@ -195,8 +210,6 @@ void PKR_ReadDone(st_PACKER_READ_DATA* pr)
     g_loadlock &= ~(1 << lockid);
 }
 
-#ifdef NON_MATCHING
-// Incorrect (but equivalent) logic for comparing the loadflag
 S32 PKR_SetActive(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer)
 {
     S32 result;
@@ -249,7 +262,6 @@ S32 PKR_SetActive(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer)
 
     return rc;
 }
-#endif
 
 S32 PKR_parse_TOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
@@ -507,8 +519,6 @@ S32 PKR_layerTypeNeedsXForm(en_LAYER_TYPE layer)
     }
 }
 
-#ifdef NON_MATCHING
-//Regalloc
 S32 PKR_findNextLayerToLoad(st_PACKER_READ_DATA** work_on_pkg, st_PACKER_LTOC_NODE** next_layer)
 {
     st_PACKER_READ_DATA* tmppr;
@@ -560,10 +570,7 @@ S32 PKR_findNextLayerToLoad(st_PACKER_READ_DATA** work_on_pkg, st_PACKER_LTOC_NO
 
     return *next_layer != NULL;
 }
-#endif
 
-#ifdef NON_MATCHING
-//Regalloc
 void PKR_updateLayerAssets(st_PACKER_LTOC_NODE* laynode)
 {
     st_PACKER_ATOC_NODE* tmpass = NULL;
@@ -600,7 +607,6 @@ void PKR_updateLayerAssets(st_PACKER_LTOC_NODE* laynode)
         }
     }
 }
-#endif
 
 void PKR_xformLayerAssets(st_PACKER_LTOC_NODE* laynode)
 {
@@ -628,7 +634,6 @@ void PKR_xformLayerAssets(st_PACKER_LTOC_NODE* laynode)
     }
 }
 
-//
 void PKR_xform_asset(st_PACKER_ATOC_NODE* assnode, S32 dumpable_layer)
 {
     if (!(assnode->infoflag & 4))
@@ -713,7 +718,7 @@ S32 PKR_LoadLayer(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer)
     return 0;
 }
 
-void* PKR_LoadAsset(st_PACKER_READ_DATA* pr, U32 aid, const char*, void*)
+void* PKR_LoadAsset(st_PACKER_READ_DATA* pr, U32 aid, char*, void*)
 {
     return PKR_FindAsset(pr, aid);
 }
@@ -873,7 +878,7 @@ S32 PKR_GetAssetInfo(st_PACKER_READ_DATA* pr, U32 aid, st_PKR_ASSET_TOCINFO* toc
 }
 
 S32 PKR_GetAssetInfoByType(st_PACKER_READ_DATA* pr, U32 type, S32 idx,
-                             st_PKR_ASSET_TOCINFO* tocainfo)
+                           st_PKR_ASSET_TOCINFO* tocainfo)
 {
     memset(tocainfo, 0, sizeof(st_PKR_ASSET_TOCINFO));
     if (idx < 0)
@@ -925,8 +930,8 @@ S32 PKR_PkgHasAsset(st_PACKER_READ_DATA* pr, U32 aid)
     return rc;
 }
 
-S32 PKR_FRIEND_assetIsGameDup(U32 aid, const st_PACKER_READ_DATA* skippr, S32 oursize,
-                                U32 ourtype, U32 chksum, char*)
+S32 PKR_FRIEND_assetIsGameDup(U32 aid, const st_PACKER_READ_DATA* skippr, S32 oursize, U32 ourtype,
+                              U32 chksum, char*)
 {
     S32 is_dup = 0;
     if (aid == 0x7ab6743a)
@@ -1116,8 +1121,6 @@ S32 LOD_r_PACK(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     return 1;
 }
 
-#ifdef NON_MATCHING
-// reordering
 S32 LOD_r_PVER(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     S32 ver = 0;
@@ -1146,17 +1149,13 @@ S32 LOD_r_PVER(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     }
     return 1;
 }
-#endif
 
-#ifdef NON_MATCHING
-// reordering
 S32 LOD_r_PFLG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     S32 flg = 0;
     g_hiprf->readLongs(pkg, &flg, 1);
     return 1;
 }
-#endif
 
 S32 LOD_r_PCNT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
@@ -1171,8 +1170,6 @@ S32 LOD_r_PCNT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     return 1;
 }
 
-#ifdef NON_MATCHING
-// need all of .rodata to generate for the OK
 S32 LOD_r_PCRT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     S32 time = 0;
@@ -1187,7 +1184,6 @@ S32 LOD_r_PCRT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     }
     return 1;
 }
-#endif
 
 S32 LOD_r_PMOD(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
@@ -1197,10 +1193,8 @@ S32 LOD_r_PMOD(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     return 1;
 }
 
-#ifdef NON_MATCHING
-// String data
 S32 ValidatePlatform(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, S32 plattag, char* plat,
-                       char* vid, char* lang, char* title)
+                     char* vid, char* lang, char* title)
 {
     char fullname[128] = {};
     sprintf(fullname, "%s %s %s %s", plat, vid, lang, title);
@@ -1273,10 +1267,7 @@ S32 ValidatePlatform(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, S32 plattag, 
     }
     return 1;
 }
-#endif
 
-#ifdef NON_MATCHING
-// Orderings and Regalloc
 S32 LOD_r_PLAT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     S32 result = 1;
@@ -1300,7 +1291,6 @@ S32 LOD_r_PLAT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     }
     return result;
 }
-#endif
 
 S32 LOD_r_DICT(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
@@ -1344,15 +1334,12 @@ S32 LOD_r_ATOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     return 1;
 }
 
-#ifdef NON_MATCHING
-// reordering
 S32 LOD_r_AINF(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     S32 ival = 0;
     g_hiprf->readLongs(pkg, &ival, 1);
     return 1;
 }
-#endif
 
 S32 LOD_r_AHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
@@ -1399,7 +1386,7 @@ S32 LOD_r_AHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     }
 
     S32 isdup = PKR_FRIEND_assetIsGameDup(assnode->aid, pr, assnode->d_size, assnode->asstype,
-                                            assnode->d_chksum, NULL);
+                                          assnode->d_chksum, NULL);
     if (isdup)
     {
         assnode->loadflag |= 0x100000;
@@ -1407,8 +1394,6 @@ S32 LOD_r_AHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     return 1;
 }
 
-#ifdef NON_MATCHING
-// uses reordering and uses .rodata
 S32 LOD_r_ADBG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, st_PACKER_ATOC_NODE* assnode)
 {
     S32 ival = 0;
@@ -1430,7 +1415,6 @@ S32 LOD_r_ADBG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, st_PACKER_ATOC_NODE
 
     return 1;
 }
-#endif
 
 S32 LOD_r_LTOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
@@ -1452,18 +1436,13 @@ S32 LOD_r_LTOC(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     return 1;
 }
 
-#ifdef NON_MATCHING
-// reordering
 S32 LOD_r_LINF(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     S32 ival = 0;
     g_hiprf->readLongs(pkg, &ival, 1);
     return 1;
 }
-#endif
 
-#ifdef NON_MATCHING
-// reordering
 S32 LOD_r_LHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     S32 i;
@@ -1512,7 +1491,6 @@ S32 LOD_r_LHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     }
     return 1;
 }
-#endif
 
 S32 LOD_r_LDBG(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, st_PACKER_LTOC_NODE* laynode)
 {
@@ -1545,15 +1523,12 @@ S32 LOD_r_STRM(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
     return 1;
 }
 
-#ifdef NON_MATCHING
-// reordering
 S32 LOD_r_DHDR(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
     S32 ivar = 0;
     g_hiprf->readLongs(pkg, &ivar, 1);
     return 1;
 }
-#endif
 
 S32 LOD_r_DPAK(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr)
 {
@@ -1585,8 +1560,6 @@ st_PACKER_ASSETTYPE* PKR_type2typeref(U32 asstype, st_PACKER_ASSETTYPE* types)
     return da_type;
 }
 
-#if 0
-// Probably func match, weird regalloc
 void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
 {
     st_PACKER_LTOC_NODE* laynode;
@@ -1674,7 +1647,6 @@ void PKR_bld_typecnt(st_PACKER_READ_DATA* pr)
         }
     }
 }
-#endif
 
 S32 PKR_typeHdlr_idx(st_PACKER_READ_DATA* pr, U32 type)
 {

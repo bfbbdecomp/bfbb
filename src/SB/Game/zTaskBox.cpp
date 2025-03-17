@@ -11,16 +11,18 @@
 
 extern ztaskbox* shared;
 
-#if 0
 void ztaskbox::load(const ztaskbox::asset_type& a)
 {
     xBaseInit((xBase*)this, &(xBaseAsset)a);
     this->baseType = eBaseTypeEnv;
-    this->asset = &a;
-    this->eventFunc = cb_dispatch;
+    // FIXME: can't force const to non-const?
+    // this->asset = &a;
+
+    // FIXME: Define cb_dispatch
+    // this->eventFunc = cb_dispatch;
     if (this->linkCount != 0)
     {
-        this->link = (xLinkAsset*)(a + 1);
+        this->link = (xLinkAsset*)(&a + 1);
     }
     bool enabled = a.enable;
     this->state = STATE_INVALID;
@@ -32,16 +34,14 @@ void ztaskbox::load(const ztaskbox::asset_type& a)
     else
     {
         this->flag.enabled = true;
-        set_state(this, STATE_BEGIN);
+        this->set_state(STATE_BEGIN);
         this->current = this;
     }
-    if (a->persistent)
+    if (a.persistent)
     {
         this->baseFlags |= 2;
     }
 }
-
-#endif
 
 void ztaskbox::read(xSerial& s)
 {
@@ -56,7 +56,6 @@ void ztaskbox::write(xSerial& s)
     s.Write((U8)this->state);
 }
 
-#if 0
 // WIP.
 void ztaskbox::start_talk(zNPCCommon* npc)
 {
@@ -65,7 +64,7 @@ void ztaskbox::start_talk(zNPCCommon* npc)
     {
         if (curr == this)
         {
-            if (this->flag.enabled && this->state != STATE_INVLAID)
+            if (this->flag.enabled && this->state != STATE_INVALID)
             {
                 //TODO!!!
             }
@@ -77,8 +76,6 @@ void ztaskbox::start_talk(zNPCCommon* npc)
         }
     }
 }
-
-#endif
 
 void ztaskbox::talk_callback::reset(ztaskbox& task)
 {
@@ -194,15 +191,12 @@ void ztaskbox::set_callback(callback* cb)
     this->cb = cb;
 }
 
-#if 0
 // WIP.
 void ztaskbox::init()
 {
     shared = NULL;
     // STUFF.
 }
-
-#endif
 
 ztaskbox::talk_callback::talk_callback()
 {

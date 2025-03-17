@@ -24,7 +24,6 @@ extern const char zMusic_strings[];
 
 static const F32 minDelay = 0.001f;
 
-#ifdef NON_MATCHING
 void volume_reset()
 {
     volume.cur = 0.0f;
@@ -32,7 +31,6 @@ void volume_reset()
     volume.inc = 0.5f;
     memset(volume.adjusted, 0, sizeof(volume.adjusted));
 }
-#endif
 
 // Reset both music tracks to their default volume.
 void zMusicRefreshVolume()
@@ -179,7 +177,6 @@ static S32 getCurrLevelMusicEnum()
     return snd_enum;
 }
 
-#if 0
 // Probably floating point memes idk
 void zMusicNotify(S32 situation)
 {
@@ -209,7 +206,6 @@ void zMusicNotify(S32 situation)
     sMusicTimer[s->track] = s->punchDelay;
     sMusicQueueData[s->track]->game_state = gGameMode == eGameMode_Game;
 }
-#endif
 
 // Stop all tracks and set them to null.
 void zMusicKill()
@@ -268,26 +264,12 @@ void zMusicUnpause(S32 kill)
             S32 flags = i * 0x800;
             flags |= ((track->loop != 0) ? 0x8000 : 0) | 0x10000;
             flags |= 0x20000;
-            track->snd_id = xSndPlay(track->assetID, track->lastVol, 0.0f, 0xff, flags, 0, SND_CAT_MUSIC, 0.0f);
+            track->snd_id =
+                xSndPlay(track->assetID, track->lastVol, 0.0f, 0xff, flags, 0, SND_CAT_MUSIC, 0.0f);
         }
     }
 
     sMusicPaused = 0;
-}
-
-// WIP.
-#if 0
-// Not sure what's wrong with this one. Doesn't match in the slightest.
-void zMusicSetVolume(F32 vol, F32 delay)
-{
-    if (delay <= minDelay)
-    {
-        volume.end = vol;
-        volume.inc = vol - volume.cur;
-        return;
-    }
-    volume.end = vol;
-    volume.inc = (vol - volume.cur) / delay;
 }
 
 // This version of it matches 33%. It's also functionally incorrect.
@@ -296,12 +278,12 @@ void zMusicSetVolume(float vol, float delay)
     volume.cur = vol; // This makes it introduce the "frsp" instruction.
     volume.inc = vol - volume.cur;
 
-    if (delay > minDelay) // Doing the if statement likes this makes it generate the "blelr" instruction
+    if (delay >
+        minDelay) // Doing the if statement likes this makes it generate the "blelr" instruction
     {
         volume.inc = vol / delay;
     }
 }
-#endif
 
 void zMusicReset()
 {

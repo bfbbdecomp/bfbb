@@ -65,6 +65,7 @@ S32 iSndIsPlaying(U32 assetID, U32 parid);
 void iSndWaitForDeadSounds();
 void iSndSceneExit();
 void sndloadcb(tag_xFile* tag);
+S32 iSndLoadSounds(void*);
 void iSndSetExternalCallback(void (*func_ptr)(U32));
 void iSndAXFree(_AXVPB** param1);
 void iSndStartStereo(U32 id1, U32 id2, F32 pitch);
