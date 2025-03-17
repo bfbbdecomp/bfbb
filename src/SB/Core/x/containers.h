@@ -38,6 +38,7 @@ template <class T> struct static_queue
     U32 _max_size;
     U32 _max_size_mask;
     T* _buffer;
+    void clear();
 };
 
 template <class T, U32 N> struct fixed_queue
@@ -50,6 +51,7 @@ template <class T, U32 N> struct fixed_queue
     void push_front(const T& element);
     bool full() const;
     void pop_back();
+    bool empty() const;
 };
 
 #endif

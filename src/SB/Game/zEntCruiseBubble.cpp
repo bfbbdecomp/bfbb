@@ -1753,6 +1753,7 @@ void cruise_bubble::tweak_group::register_tweaks(bool init, xModelAssetParam* ap
 {
     if (init)
     {
+        this->aim_delay;
         this->aim_delay = zEntCruiseBubble_f_0_2;
         auto_tweak::load_param<F32, F32>(this->aim_delay, 1.0f, zEntCruiseBubble_f_0_0, 1.0f, ap,
                                          apsize, "aim_delay");

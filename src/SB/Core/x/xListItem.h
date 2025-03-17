@@ -9,7 +9,8 @@ template <class T> struct xListItem
     T* next;
     T* prev;
 
-    xListItem() {
+    xListItem()
+    {
         flg_travFilter = 0;
         prev = NULL;
         next = NULL;
