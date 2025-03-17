@@ -51,6 +51,7 @@ template <class T, U32 N> struct fixed_queue
     void push_front(const T& element);
     bool full() const;
     void pop_back();
+    bool empty() const;
 };
 
 #endif
