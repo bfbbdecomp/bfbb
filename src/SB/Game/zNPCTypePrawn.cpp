@@ -204,6 +204,7 @@ void tweak_group::register_tweaks(bool init, xModelAssetParam* ap, U32 apsize)
     */
 }
 
+
 void aqua_beam::reset() // I don't know whats wrong here. Probably a simple error
 {
     firing = 0;

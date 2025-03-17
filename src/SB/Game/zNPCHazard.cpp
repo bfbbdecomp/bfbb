@@ -6,6 +6,8 @@
 #include "zGlobals.h"
 #include "zNPCTypeCommon.h"
 #include "zNPCTypes.h"
+#include "zNPCSupplement.h"
+#include "xMath.h"
 
 extern U32 g_hash_hazanim[3];
 extern char* g_strz_hazanim[3];
@@ -177,6 +179,56 @@ void NPCHazard::Reconfigure(en_npchaz haztype)
     }
 }
 
+void NPCHazard::FreeModel()
+{
+    if (mdl_hazard != NULL)
+    {
+        xModelInstanceFree(mdl_hazard);
+    }
+    mdl_hazard = NULL;
+}
+
+void NPCHazard::Discard()
+{
+    if ((flg_hazard & 1) != 0)
+    {
+        if (cb_notify != NULL)
+        {
+            cb_notify->Notify((en_haznote)0, this);
+        }
+
+        Cleanup();
+
+        g_cnt_activehaz &= ~((g_cnt_activehaz-1) >> 31);
+    }
+}
+
+void NPCHazard::Kill()
+{
+    if ((flg_hazard & 1) != 0)
+    {
+        if (cb_notify != NULL)
+        {
+            cb_notify->Notify(HAZ_NOTE_ABORT, this);
+        }
+        Discard();
+    }
+}
+
+void NPCHazard::Start(const xVec3* pos, F32 tym)
+{
+    if (tym > 0.0f)
+    {
+        tmr_remain = tym;
+    }
+    tym_lifespan = tmr_remain;
+    if (pos != NULL)
+    {
+        PosSet(pos);
+    }
+    flg_hazard |= 0x1a;
+}
+
 void NPCHazard::PosSet(const xVec3* pos)
 {
     if (pos != NULL)
@@ -259,6 +311,45 @@ void NPCHazard::Upd_Patriot(F32)
 {
 }
 
+S32 NPCHazard::KickSteamyStinky()
+{
+    S32 ok;
+    NPCHazard* haz = (NPCHazard *)HAZ_Acquire();
+
+    F32 tym_lifeOfChild = 0.25f;
+
+    if (haz == NULL)
+    {
+        ok = 0;
+    }
+    else
+    {
+        if (haz->ConfigHelper(NPC_HAZ_TARTARSTINK) == 0)
+        {
+            haz->Discard();
+            ok = 1;
+        }
+        else
+        {
+            haz->Start(&pos_hazard, tmr_remain - tym_lifeOfChild);
+            ok = 2;
+        }
+    }
+    return ok;
+}
+
+void NPCHazard::TarTarGunkTrail()
+{
+    xVec3 pos = pos_hazard;
+    NPAR_EmitTarTarTrail(&pos, &g_Y3);
+}
+
+void NPCHazard::ReconArfBone()
+{
+    Reconfigure(NPC_HAZ_ARFBONEBLAST);
+    Start(NULL, -1.0f);
+}
+
 void UVAModelInfo::Hemorrage()
 {
     model = 0;
@@ -280,8 +371,10 @@ S32 UVAModelInfo::GetUV(RwTexCoords*& coords, S32& numVertices, RpAtomic* model)
     {
         return 0;
     }
+
     coords = geom->texCoords[0];
-    return (-(S32)coords->u | (U32)coords->u) >> 0x1f;
+
+    return coords != NULL;
 }
 
 RwV3d* NPCHazard::At() const
