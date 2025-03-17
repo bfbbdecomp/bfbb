@@ -113,10 +113,13 @@ namespace auto_tweak
 
 struct sound_data_type
 {
-    U32 id;
-    U32 handle;
-    xVec3* loc;
-    F32 volume;
+    union
+    {
+        U32 id;
+        U32 handle;
+        xVec3* loc;
+        F32 volume;
+    };
 };
 
 struct range_type
