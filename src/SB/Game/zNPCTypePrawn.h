@@ -3,9 +3,11 @@
 
 #include "zNPCTypeSubBoss.h"
 #include "zNPCGoalCommon.h"
+#include "zNPCGoals.h"
 #include "zDiscoFloor.h"
 #include "zNPCSpawner.h"
 #include "containers.h"
+#include "xBehaviour.h"
 
 struct sound_data_type
 {
@@ -122,7 +124,7 @@ struct aqua_beam
             F32 vel;
             F32 accel;
             F32 emit_delay;
-            F32 grow;
+            F32 grow; //0x1c
             F32 fade_dist;
             F32 kill_dist;
             F32 follow;
@@ -153,16 +155,16 @@ struct aqua_beam
     };
 
     config cfg;
-    U8 firing;
+    U8 firing; //0x3c
     xVec3 loc;
     xVec3 dir;
     xMat4x3 mat;
-    F32 time;
+    F32 time; //0x98
     struct
     {
         RpAtomic* model_data;
-        F32 emit_time;
-        fixed_queue<ring_segment, 31> queue;
+        F32 emit_time; //0xa0
+        fixed_queue<ring_segment, 31> queue; //0xa4
     } ring;
     struct
     {
@@ -170,7 +172,12 @@ struct aqua_beam
         F32 alpha;
         F32 scale;
     } squiggle;
-    S32 ring_sounds;
+    S32 ring_sounds; //0xf54
+    void reset();
+    void start();
+    void stop();
+    bool kill_ring();
+    void render();
 };
 
 struct zNPCPrawn : zNPCSubBoss
@@ -187,22 +194,22 @@ struct zNPCPrawn : zNPCSubBoss
 
     struct range_type
     {
-        S32 min;
-        S32 max;
+        S32 min; //0x304
+        S32 max; //0x308
     };
 
     struct
     {
     } flag;
-    S32 life;
-    S32 round;
+    S32 life; //0x2b8
+    S32 round; //0x2bc
     U8 face_player;
     xVec2 look_dir;
     z_disco_floor* disco;
     zNPCSpawner* spawner[3];
-    U32 danger_mask;
+    U32 danger_mask; //0x2dc
     floor_state_enum floor_state;
-    S32 floor_state_index;
+    S32 floor_state_index; //0x2e4
     U32 floor_state_counter;
     F32 floor_time;
     F32 delay;
@@ -210,9 +217,9 @@ struct zNPCPrawn : zNPCSubBoss
     U8 fighting;
     struct
     {
-        U8 change;
+        U8 change; //0x2f8
         floor_state_enum floor_state;
-        U32 counter;
+        U32 counter; //0x300
         range_type pattern;
         F32 transition_delay;
         F32 state_delay;
@@ -235,7 +242,15 @@ struct zNPCPrawn : zNPCSubBoss
 
     zNPCPrawn(S32 myType);
     void render_debug();
+    void Render();
     void update_particles(float);
+    void NewTime(xScene*, float);
+    void SelfSetup();
+    void apply_pending();
+    void vanish();
+    void reappear();
+    void render_closeup();
+    void Damage(en_NPC_DAMAGE_TYPE, xBase*, const xVec3*);
     U8 PhysicsFlags() const;
     U8 ColPenByFlags() const;
     U8 ColChkByFlags() const;

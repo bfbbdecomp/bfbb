@@ -42,6 +42,7 @@ struct z_disco_floor : xBase
         bool glow_culled;
     } flag;
     z_disco_floor_asset* asset;
+
     U8** state_masks;
     U8* active_state_mask;
     U8* next_state_mask;
