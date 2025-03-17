@@ -283,6 +283,14 @@ void zNPCPrawn::Render()
     zNPCPrawn::render_debug();
 }
 
+void zNPCPrawn::update_round()
+{
+}
+
+void zNPCPrawn::decompose()
+{
+}
+
 void zNPCPrawn::update_particles(float)
 {
 }
@@ -293,6 +301,10 @@ void zNPCPrawn::apply_pending()
     disco->set_state_range(pending.pattern.min, pending.pattern.max, SM_NPC_DEAD);
     disco->set_transition_delay(pending.transition_delay);
     disco->set_state_delay(pending.state_delay);
+}
+
+void zNPCPrawn::set_floor_state(zNPCPrawn::floor_state_enum, bool, bool)
+{
 }
 
 // void zNPCPrawn::vanish() //Didn't figure out how to finish it
@@ -314,7 +326,62 @@ void zNPCPrawn::render_closeup()
 {
 }
 
+void zNPCGoalPrawnBeam::update_aim(float dt) //Needs clrlwi and cntlzw to be finished
+{
+    zNPCPrawn& prawn = *((zNPCPrawn*)this->psyche->clt_owner);
+    prawn.turning();
+}
+
+S32 zNPCGoalPrawnDamage::Enter(float dt, void* updCtxt)
+{
+    zNPCPrawn& prawn = *(zNPCPrawn*)psyche->clt_owner;
+    prawn.set_floor_state(prawn.FS_DANGER, false, false);
+    zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+// S32 zNPCGoalPrawnBowl::Enter(float dt, void* updCtxt)
+// {
+//     zNPCPrawn& prawn = *(zNPCPrawn*)psyche->clt_owner;
+//     prawn.set_floor_state(prawn.FS_DANGER, false, false);
+//     zNPCGoalCommon::Enter(dt, updCtxt);
+// }
+
+S32 zNPCGoalPrawnBowl::Exit(float dt, void* updCtxt)
+{
+    zNPCPrawn& prawn = *(zNPCPrawn*)psyche->clt_owner;
+    prawn.set_floor_state(prawn.FS_BEGIN, true, false);
+    xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalPrawnDamage::Exit(float dt, void* updCtxt)
+{
+    zNPCPrawn& prawn = *(zNPCPrawn*)this->psyche->clt_owner;
+    prawn.update_round();
+    xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalPrawnDeath::Enter(float dt, void* updCtxt)
+{
+    zNPCPrawn& prawn = *(zNPCPrawn*)this->psyche->clt_owner;
+    prawn.decompose();
+    zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalPrawnDeath::Exit(float dt, void* updCtxt)
+{
+    xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalPrawnDeath::Process(en_trantype* trantype, float dt, void* updCtxt, xScene* xscn)
+{
+    xGoal::Process(trantype, dt, updCtxt, xscn);
+}
+
 void xDebugAddTweak(const char*, xVec3*, const tweak_callback*, void*, U32)
+{
+}
+
+void zNPCPrawn::turning() const
 {
 }
 

@@ -250,7 +250,12 @@ struct zNPCPrawn : zNPCSubBoss
     void vanish();
     void reappear();
     void render_closeup();
+    void turning() const;
+    void update_round();
+    void decompose();
+    void set_floor_state(zNPCPrawn::floor_state_enum, bool, bool);
     void Damage(en_NPC_DAMAGE_TYPE, xBase*, const xVec3*);
+
     U8 PhysicsFlags() const;
     U8 ColPenByFlags() const;
     U8 ColChkByFlags() const;
@@ -281,6 +286,7 @@ struct zNPCGoalPrawnBeam : zNPCGoalCommon
     F32 sweep_dir;
     F32 delay;
 
+    void update_aim(float);
     zNPCGoalPrawnBeam(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
@@ -289,6 +295,8 @@ struct zNPCGoalPrawnBeam : zNPCGoalCommon
 struct zNPCGoalPrawnBowl : zNPCGoalCommon
 {
     U8 aiming;
+    S32 Enter(float, void*);
+    S32 Exit(float, void*);
 
     zNPCGoalPrawnBowl(S32 goalID) : zNPCGoalCommon(goalID)
     {
@@ -297,6 +305,9 @@ struct zNPCGoalPrawnBowl : zNPCGoalCommon
 
 struct zNPCGoalPrawnDamage : zNPCGoalCommon
 {
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    S32 Exit(float dt, void* updCtxt);
+    S32 Enter(F32 dt, void* updCtxt);
     zNPCGoalPrawnDamage(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
@@ -304,6 +315,9 @@ struct zNPCGoalPrawnDamage : zNPCGoalCommon
 
 struct zNPCGoalPrawnDeath : zNPCGoalCommon
 {
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    S32 Exit(float dt, void* updCtxt);
+    S32 Enter(F32 dt, void* updCtxt);
     zNPCGoalPrawnDeath(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
