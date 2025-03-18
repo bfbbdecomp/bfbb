@@ -11,6 +11,11 @@ namespace
 
 void lightning_ring::create()
 {
+    // store 1 into 0x0
+    active = 1;
+    arcs_size = 0;
+
+    //store 0 into 0x7c
 }
 
 xVec3* zNPCKingJelly::get_bottom()
@@ -44,6 +49,57 @@ void zNPCKingJelly::BUpdate(xVec3* pos)
     // (xVec3&)this->model->Mat->pos = (xVec3&)this->model->Mat->pos + *pos;
 
     zNPCCommon::BUpdate(pos);
+}
+
+void zNPCKingJelly::SelfSetup()
+{
+    xBehaveMgr* bmgr;
+    xPsyche* psy;
+
+    bmgr = xBehaveMgr_GetSelf();
+    psy_instinct = bmgr->Subscribe(this, 0);
+    psy = psy_instinct;
+    psy->BrainBegin();
+    psy->AddGoal(NPC_GOAL_KJIDLE, NULL);
+    psy->AddGoal(NPC_GOAL_KJBORED, NULL);
+    psy->AddGoal(NPC_GOAL_KJSPAWNKIDS, NULL);
+    psy->AddGoal(NPC_GOAL_KJTAUNT, NULL);
+    psy->AddGoal(NPC_GOAL_KJSHOCKGROUND, NULL);
+    psy->AddGoal(NPC_GOAL_KJDAMAGE, NULL);
+    psy->AddGoal(NPC_GOAL_KJDEATH, NULL);
+    psy->AddGoal(NPC_GOAL_LIMBO, NULL);
+    psy->BrainEnd();
+    psy->SetSafety(NPC_GOAL_KJIDLE);
+}
+
+void zNPCKingJelly::init_child(zNPCKingJelly::child_data& child, zNPCCommon& npc, int wave)
+{
+    child.npc = &npc;
+    child.wave = wave;
+    child.active = 1;
+    child.callback.eventFunc = npc.eventFunc;
+    child.callback.update = npc.update;
+    child.callback.bupdate = npc.bupdate;
+    child.callback.move = npc.move;
+    child.callback.render = npc.render;
+    child.callback.transl = npc.transl;
+}
+
+void zNPCKingJelly::disable_child(zNPCKingJelly::child_data& child)
+{
+    if (child.active)
+    {
+        ((zNPCJelly*)child.npc)->JellyKill();
+        child.active = false;
+    }
+}
+
+void zNPCKingJelly::enable_child(zNPCKingJelly::child_data& child)
+{
+    if (child.active == false)
+    {
+        child.active = true;
+    }
 }
 
 // probably how many times the jellyfish can hit the player for that round
@@ -144,6 +200,16 @@ void zNPCKingJelly::load_curtain_model()
 {
 }
 
+// void zNPCKingJelly::reset_curtain()
+// {
+//     // f0 = data shit
+//     // r4 = 0x10b0
+//     // 0x24 = f0
+//     // r3 = 0x10a8
+//     // 0x24 = f0        // 0x24 model???
+
+// }
+
 S32 zNPCGoalKJDamage::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
 {
     // TODO
@@ -166,4 +232,26 @@ S32 zNPCGoalKJDamage::Exit(F32 dt, void* updCtxt)
     kj.disable_tentacle_damage = false;
 
     return xGoal::Exit(dt, updCtxt);
+}
+
+void zNPCKingJelly::update_round()
+{
+}
+
+S32 zNPCGoalKJDeath::Enter(float dt, void* updCtxt)
+{
+    zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
+    kj.decompose();
+    kj.post_decompose();
+    zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalKJDeath::Exit(float dt, void* updCtxt)
+{
+    xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalKJDeath::Process(en_trantype* trantype, float dt, void* updCtxt, xScene* xscn)
+{
+    xGoal::Process(trantype, dt, updCtxt, xscn);
 }
