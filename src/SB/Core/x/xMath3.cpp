@@ -7,6 +7,8 @@
 #include "xMathInlines.h" // xasin, xatan2
 //#include "xVec3Inlines.h" // xVec3Init, imported, realized xClimate has a declaration as well though.
 
+xVec3 g_O3 = { 0, 0, 0 };
+
 void xMat4x3Copy(xMat4x3* o, const xMat4x3* m)
 {
 }
