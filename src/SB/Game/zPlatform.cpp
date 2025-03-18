@@ -150,12 +150,12 @@ void zPlatform_Reset(zPlatform* plat, xScene* sc)
     plat->plat_flags = 0x1;
     if (plat->subType == ZPLATFORM_SUBTYPE_PLATFORM)
     {
-        plat->state = 0x3;
+        plat->state = ZPLATFORM_STATE_UNK1;
     }
     else if (plat->subType == ZPLATFORM_SUBTYPE_BREAKAWAY)
     {
         plat->tmr = plat->passet->ba.ba_delay;
-        plat->state = 0x0;
+        plat->state = ZPLATFORM_STATE_UNK2;
         plat->pflags &= 0xF9;
         plat->collis->chk = 0x0;
 
@@ -175,7 +175,7 @@ void zPlatform_Reset(zPlatform* plat, xScene* sc)
     else if (plat->subType == ZPLATFORM_SUBTYPE_PADDLE)
     {
         plat->tmr = 1e-9f;
-        plat->state = 0x2;
+        plat->state = ZPLATFORM_STATE_UNK3;
         plat->ctr = plat->passet->paddle.startOrient;
     }
     else if (plat->subType == ZPLATFORM_SUBTYPE_FM)
