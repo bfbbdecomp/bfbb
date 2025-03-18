@@ -28,8 +28,8 @@ struct zNPCDutchman : zNPCSubBoss
 
     struct move_info
     {
-        xVec3 dest;
-        xVec3 vel;
+        xVec3 dest; //0x2ec
+        xVec3 vel; //0x2f8
         xVec3 accel;
         xVec3 max_vel;
     };
@@ -86,15 +86,15 @@ struct zNPCDutchman : zNPCSubBoss
     S32 round; //0x2B8
     S32 stage; //0x2BC
     F32 delay; //0x2C0
-    F32 alpha; //0x2C4
+    F32 alpha; //0x2d0
     struct
     {
-        xVec2 dir;
-        F32 vel;
-        F32 accel;
-        F32 max_vel;
+        xVec2 dir; //0x2d4
+        F32 vel; //0x2dc
+        F32 accel; //0x2e0
+        F32 max_vel; //0x2e4
     } turn;
-    move_info move; //0x2C8
+    move_info move; //0x2e8
     struct
     {
         U8 moreFlags; //0x31c
@@ -309,6 +309,7 @@ struct zNPCGoalDutchmanDeath : zNPCGoalCommon
     F32 emit_frac;
     F32 min_y;
     F32 max_y;
+    S32 Enter(F32 dt, void* updCtxt);
     zNPCDutchman& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);

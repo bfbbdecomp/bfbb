@@ -207,6 +207,13 @@ S32 zNPCGoalDutchmanCaught::Exit(float dt, void* updCtxt)
     return xGoal::Exit(dt, updCtxt);
 }
 
+S32 zNPCGoalDutchmanDeath::Enter(F32 dt, void* updCtxt)
+{
+    owner.delay = 0.0f;
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+
+}
+
 U8 zNPCDutchman::PhysicsFlags() const
 {
     return 3;
