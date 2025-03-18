@@ -309,7 +309,7 @@ struct zNPCGoalDutchmanDeath : zNPCGoalCommon
     F32 emit_frac;
     F32 min_y;
     F32 max_y;
-    S32 Enter(float, void*);
+    S32 Enter(F32 dt, void* updCtxt);
     zNPCDutchman& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
