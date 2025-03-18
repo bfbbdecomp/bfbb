@@ -5,6 +5,7 @@
 #include "zParEmitter.h"
 
 #include "xMath.h"
+#include "xMath3.h"
 
 #include <types.h>
 
@@ -129,6 +130,93 @@ void zPlatform_BreakawayFallFX(zPlatform* ent, F32 dt)
             xParEmitterEmitCustom(sEmitBreakaway, 0.03333333f, &info);
         }
     }
+}
+
+void zPlatform_Reset(zPlatform* plat, xScene* sc)
+{
+    if (plat->subType == ZPLATFORM_SUBTYPE_BREAKAWAY)
+    {
+        plat->model = plat->am;
+        plat->collModel = NULL;
+    }
+
+    zEntReset(plat);
+
+    // FIXME: One of the xPlatformAssetData structs is bigger than detected by DWARF data.
+    //        Need to eventually figure out which one it is.
+    xEntMotionInit(&plat->motion, plat, (xEntMotionAsset*)((char*)plat->passet + 0x3C));
+    xEntMotionReset(&plat->motion, sc);
+
+    plat->plat_flags = 0x1;
+    if (plat->subType == ZPLATFORM_SUBTYPE_PLATFORM)
+    {
+        plat->state = 0x3;
+    }
+    else if (plat->subType == ZPLATFORM_SUBTYPE_BREAKAWAY)
+    {
+        plat->tmr = plat->passet->ba.ba_delay;
+        plat->state = 0x0;
+        plat->pflags &= 0xF9;
+        plat->collis->chk = 0x0;
+
+        xVec3Copy(&plat->frame->vel, (const xVec3*)&g_O3);
+
+        plat->bound.mat = (xMat4x3*)plat->model->Mat;
+    }
+    else if (plat->subType == ZPLATFORM_SUBTYPE_MECH)
+    {
+        plat->state = (U16)plat->motion.mech.state;
+    }
+    else if (plat->subType == ZPLATFORM_SUBTYPE_SPRINGBOARD)
+    {
+        plat->tmr = -1.0f;
+        plat->ctr = 0;
+    }
+    else if (plat->subType == ZPLATFORM_SUBTYPE_PADDLE)
+    {
+        plat->tmr = 1e-9f;
+        plat->state = 0x2;
+        plat->ctr = plat->passet->paddle.startOrient;
+    }
+    else if (plat->subType == ZPLATFORM_SUBTYPE_FM)
+    {
+        for (U32 i = 0; i < 12; i++)
+        {
+            plat->fmrt->flags = 0;
+
+            plat->fmrt->tmrs[i] = 0.0f;
+            plat->fmrt->ttms[i] = 0.0f;
+            plat->fmrt->atms[i] = 0.0f;
+            plat->fmrt->dtms[i] = 0.0f;
+            plat->fmrt->vms[i] = 0.0f;
+            plat->fmrt->dss[i] = 0.0f;
+        }
+    }
+
+    if (plat->motion.type == 0x3)
+    {
+        plat->src = plat->motion.mp.src;
+    }
+
+    plat->chkby &= 0xE3;
+
+    if (plat->passet->flags & 0x4)
+    {
+        plat->chkby |= 0x18;
+    }
+
+    plat->bupdate(plat, (xVec3*)&plat->model->Mat->pos);
+
+    plat->moving = FALSE;
+
+    if (plat->asset->modelInfoID == xStrHash("teeter_totter_pat") ||
+        plat->asset->modelInfoID == xStrHash("teeter_totter_pat_bind"))
+    {
+        plat->plat_flags |= 0x2;
+    }
+
+    plat->pauseMult = 1.0f;
+    plat->pauseDelta = 0.0f;
 }
 
 U32 zMechIsStartingForth(zPlatform* ent, U16 param_2)
