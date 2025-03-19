@@ -26,4 +26,8 @@ void zNPCSubBoss_SceneFinish();
 xFactoryInst* ZNPC_Create_SubBoss(S32 who, RyzMemGrow* grow, void*);
 void ZNPC_Destroy_SubBoss(xFactoryInst* inst);
 
+#define ANIM_COUNT 78
+extern U32 g_hash_subbanim[ANIM_COUNT];
+extern char* g_strz_subbanim[ANIM_COUNT];
+
 #endif

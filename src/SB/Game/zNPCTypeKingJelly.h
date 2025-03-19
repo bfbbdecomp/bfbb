@@ -134,6 +134,7 @@ struct zNPCKingJelly : zNPCSubBoss
     zNPCKingJelly(S32 myType);
     void Setup();
     void Destroy();
+    U32 AnimPick(S32 rawgoal, en_NPC_GOAL_SPOT gspot, xGoal* goal);
     void BUpdate(xVec3*);
     void SelfSetup();
     void init_child(zNPCKingJelly::child_data&, zNPCCommon&, int);
