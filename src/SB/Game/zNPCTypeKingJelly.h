@@ -3,7 +3,11 @@
 
 #include "zNPCTypeSubBoss.h"
 #include "zNPCGoalCommon.h"
+#include "zNPCGoals.h"
 #include "xEnt.h"
+#include "containers.h"
+#include "xBehaviour.h"
+#include "zNPCTypeAmbient.h"
 
 struct lightning_ring
 {
@@ -13,7 +17,7 @@ struct lightning_ring
     F32 min_height;
     F32 max_height;
     F32 min_radius;
-    F32 max_radius;
+    F32 max_radius; //0x20?
     F32 delay;
     F32 accel;
     F32 max_vel;
@@ -24,7 +28,7 @@ struct lightning_ring
         F32 radius;
         F32 vel;
         F32 accel;
-        F32 time;
+        F32 time; //0x44??
     } current;
     struct
     {
@@ -32,10 +36,10 @@ struct lightning_ring
         F32 thickness;
         iColor_tag color;
         F32 rot_radius;
-        F32 degrees;
+        F32 degrees; //0x58?
     } property;
     zLightning* arcs[8];
-    U32 arcs_size;
+    U32 arcs_size; //0x7c
     void (*update_callback)(lightning_ring&, F32);
 
     void create();
@@ -56,11 +60,11 @@ struct zNPCKingJelly : zNPCSubBoss
     struct child_data
     {
         zNPCCommon* npc;
-        U8 wave;
+        U8 wave; //0x5
         U8 active;
         struct
         {
-            S32 (*eventFunc)(xBase*, xBase*, U32, F32*, xBase*);
+            xBaseEventCB eventFunc;
             void (*update)(xEnt*, xScene*, F32);
             void (*bupdate)(xEnt*, xVec3*);
             void (*move)(xEnt*, xScene*, F32, xEntFrame*);
@@ -130,10 +134,16 @@ struct zNPCKingJelly : zNPCSubBoss
     zNPCKingJelly(S32 myType);
     void Setup();
     void Destroy();
+    U32 AnimPick(S32 rawgoal, en_NPC_GOAL_SPOT gspot, xGoal* goal);
     void BUpdate(xVec3*);
+    void SelfSetup();
+    void init_child(zNPCKingJelly::child_data&, zNPCCommon&, int);
+    void disable_child(zNPCKingJelly::child_data&);
+    void enable_child(zNPCKingJelly::child_data& child);
     S32 max_strikes();
     void load_model();
     void load_curtain_model();
+    void reset_curtain();
     void decompose();
     void post_decompose();
     void vanish();
@@ -143,6 +153,8 @@ struct zNPCKingJelly : zNPCSubBoss
     void on_change_fade_obstructions(const tweak_info&);
     void render_debug();
     void create_tentacle_lightning();
+    void refresh_tentacle_points();
+    void refresh_tentacle_points(S32);
     void generate_spawn_particles();
     void update_round();
 };
@@ -207,6 +219,9 @@ struct zNPCGoalKJDamage : zNPCGoalCommon
 
 struct zNPCGoalKJDeath : zNPCGoalCommon
 {
+    S32 Enter(float dt, void* updCtxt);
+    S32 Exit(float dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, float dt, void* updCtxt, xScene* xscn);
     zNPCGoalKJDeath(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
