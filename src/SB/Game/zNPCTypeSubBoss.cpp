@@ -9,8 +9,12 @@
 
 U32 g_hash_subbanim[ANIM_COUNT] = {};
 
+void foo(zNPCKingJelly* jelly)
+{
+}
+
 // clang-format off
-const char* g_strz_subbanim[ANIM_COUNT] =
+char* g_strz_subbanim[ANIM_COUNT] =
 {
     "Unknown",
     "Idle01",

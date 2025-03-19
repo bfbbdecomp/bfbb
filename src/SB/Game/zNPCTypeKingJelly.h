@@ -130,10 +130,14 @@ struct zNPCKingJelly : zNPCSubBoss
     zEnt* curtain_ent;
     xModelInstance* curtain_model[5];
     U8 first_update; //0x10B4
+    xAnimState* animState; // offset 0x157C, size 0x4           //copied from patrick comment not true
+    xAnimTransitionList*
+        animTranList; // offset 0x1580, size 0x4       //copied from patrick comment not true
 
     zNPCKingJelly(S32 myType);
     void Setup();
     void Destroy();
+    U32 AnimPick(S32 rawgoal, en_NPC_GOAL_SPOT gspot, xGoal* goal);
     void BUpdate(xVec3*);
     void SelfSetup();
     void init_child(zNPCKingJelly::child_data&, zNPCCommon&, int);
