@@ -130,9 +130,6 @@ struct zNPCKingJelly : zNPCSubBoss
     zEnt* curtain_ent;
     xModelInstance* curtain_model[5];
     U8 first_update; //0x10B4
-    xAnimState* animState; // offset 0x157C, size 0x4           //copied from patrick comment not true
-    xAnimTransitionList*
-        animTranList; // offset 0x1580, size 0x4       //copied from patrick comment not true
 
     zNPCKingJelly(S32 myType);
     void Setup();

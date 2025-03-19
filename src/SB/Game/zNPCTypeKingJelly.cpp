@@ -57,11 +57,6 @@ void lightning_ring::create()
     //store 0 into 0x7c
 }
 
-void foo()
-{
-    xAnimTable* foo = xAnimTableNew("FOO", 0, 0);
-}
-
 xAnimTable* ZNPC_AnimTable_KingJelly()
 {
     // clang-format off
