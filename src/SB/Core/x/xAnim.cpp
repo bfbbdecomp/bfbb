@@ -802,24 +802,24 @@ xAnimState* xAnimTableNewState(xAnimTable* table, const char* name, U32 flags, U
     return state;
 }
 
-static void _xAnimTableAddTransitionHelper(xAnimState* state, xAnimTransition* tran, U32& r5,
-                                           U32& r6, xAnimState** r7)
+static void _xAnimTableAddTransitionHelper(xAnimState* state, xAnimTransition* tran,
+                                           U32& stateCount, U32& allocCount, xAnimState** stateList)
 {
     if (tran->Flags & 0x10)
     {
-        if (!DefaultHasTransition(state, tran, &r5))
+        if (!DefaultHasTransition(state, tran, &stateCount))
         {
-            r7[r6] = state;
-            r6++;
+            stateList[allocCount] = state;
+            allocCount++;
         }
     }
     else
     {
         if (!StateHasTransition(state, tran))
         {
-            r7[r6] = state;
-            r6++;
-            r5++;
+            stateList[allocCount] = state;
+            allocCount++;
+            stateCount++;
         }
     }
 }
@@ -854,9 +854,20 @@ void _xAnimTableAddTransition(xAnimTable* table, xAnimTransition* tran, const ch
     //     class xAnimTransitionList * curr; // r7
 
     U8* buffer = (U8*)giAnimScratch;
-    char* x = (char*)(giAnimScratch + 0x400);
+    xAnimState** stateList = (xAnimState**)(giAnimScratch + 0x400);
+    S32 i;
+    U32 stateCount = 0;
+    U32 allocCount = 0;
+
+    xAnimTransitionList* tlist;
+    xAnimTransition* substTransitionList[32];
+
+    char extra[128];
+    char tempName[128];
+
     U8 bVar2 = false;
     U8 bVar1 = false;
+    S32 iVar12 = 0;
 
     if (dest != NULL)
     {
@@ -870,35 +881,139 @@ void _xAnimTableAddTransition(xAnimTable* table, xAnimTransition* tran, const ch
         }
     }
 
-    char* str = xStrTokBuffer(source, " ,\t\n\r", table);
-    // Note: might be compiler generated to lift this from the loop
-    U8 bVar3 = dest != NULL; // isComplex??
-    char* COMPLEX_PATTERNS = "{}()<>";
-    for (S32 i = 0; i < 2; ++i)
+    for (char* x = xStrTokBuffer(source, " ,\t\n\r", table); x != NULL;
+    x = xStrTokBuffer(source, " ,\t\n\r", table))
     {
-        U8 bVar4 = bVar3;
-        if (bVar4)
+        bVar1 = dest != NULL;
+        if (!bVar1)
         {
-            for (char* it = str; *it != NULL; ++it)
+            for (char* it = x; *it != NULL; ++it)
             {
                 if (_xCharIn(*it, "#+*?{}()<>|;") != 0)
                 {
-                    bVar4 = true;
+                    bVar1 = true;
                     break;
                 }
             }
         }
 
-        if (bVar4)
+        if (bVar1)
         {
-            xAnimState* state = table->StateList;
-            while (1)
+            for (xAnimState* state = table->StateList; state != NULL; state = state->Next)
             {
-                // _xCheckAnimName(state->Name, str, )
+                if (_xCheckAnimName(state->Name, x, tempName))
+                {
+                    if (bVar2)
+                    {
+                        for (const char* tempIterator = dest; *tempIterator != NULL; ++tempIterator)
+                        {
+                            if (*dest == '@' || *dest == '~')
+                            {
+                                bVar1 = *dest == '~';
+                                U32 l = strlen(tempName);
+                                strcpy(extra, tempName);
+                            }
+                            else
+                            {
+                                *extra = *dest;
+                            }
+                        }
+                        *extra = NULL;
+                        xAnimState* sp = xAnimTableGetState(table, extra);
+                        if (bVar1 && sp == NULL)
+                        {
+                            continue;
+                        }
+
+                        xAnimTransition* duplicatedTransition = tran;
+                        if (iVar12 != 0)
+                        {
+                            if (gxAnimUseGrowAlloc)
+                            {
+                                duplicatedTransition = (xAnimTransition*)xMemGrowAlloc(
+                                    gActiveHeap, sizeof(xAnimTransition));
+                            }
+                            else
+                            {
+                                duplicatedTransition = (xAnimTransition*)xMemAlloc(
+                                    gActiveHeap, sizeof(xAnimTransition), 0);
+                            }
+                            memcpy(duplicatedTransition, tran, sizeof(xAnimTransition));
+                        }
+                        duplicatedTransition->Dest = sp;
+                        iVar12++;
+                        substTransitionList[iVar12] = duplicatedTransition;
+                    }
+                    if (tran->Dest != state)
+                    {
+                        _xAnimTableAddTransitionHelper(state, tran, stateCount, allocCount,
+                                                       stateList);
+                    }
+                }
+            }
+        }
+        else
+        {
+            xAnimState* ssp = xAnimTableGetState(table, x);
+            if(ssp != NULL && tran->Dest != ssp)
+            {
+                _xAnimTableAddTransitionHelper(ssp, tran, stateCount, allocCount, stateList);
             }
         }
     }
-    tran->Flags = bVar1;
+
+    xAnimTransitionList* curr;
+    if (stateCount != 0)
+    {
+        if (gxAnimUseGrowAlloc)
+        {
+            curr = (xAnimTransitionList*)xMemGrowAlloc(gActiveHeap,
+                                                       stateCount * sizeof(xAnimTransitionList));
+        }
+        else
+        {
+            curr = (xAnimTransitionList*)xMemAlloc(gActiveHeap,
+                                                   stateCount * sizeof(xAnimTransitionList), 0);
+        }
+    }
+    if (tran->Flags & 0x10)
+    {
+        for (S32 i = 0; i < allocCount; ++i)
+        {
+            if (DefaultOverride(stateList[i], tran) == 0)
+            {
+                if (tran->Conditional == NULL && stateList[i]->Default != NULL)
+                {
+                    curr->Next = NULL;
+                    curr->T = bVar2 ? substTransitionList[i] : tran;
+                }
+            }
+            else
+            {
+                curr->T = bVar2 ? substTransitionList[i] : tran;
+                stateList[i]->Default = curr;
+            }
+        }
+    }
+    else
+    {
+        if (bVar2)
+        {
+            for (S32 i = 0; i < allocCount; ++i)
+            {
+                curr->T = substTransitionList[i];
+                curr->Next = stateList[i]->List->Next;
+            }
+        }
+        else
+        {
+            for (S32 i = 0; i < allocCount; ++i)
+            {
+                curr->T = tran;
+                curr->Next = stateList[i]->List->Next;
+            }
+        }
+    }
 }
 
 void xAnimTableAddTransition(xAnimTable* table, xAnimTransition* tran, const char* source)
