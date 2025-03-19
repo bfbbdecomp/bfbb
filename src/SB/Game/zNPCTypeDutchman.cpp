@@ -174,6 +174,11 @@ S32 zNPCGoalDutchmanDisappear::Exit(F32 dt, void* updCtxt)
     return xGoal::Exit(dt, updCtxt);
 }
 
+S32 zNPCGoalDutchmanDamage::Exit(F32 dt, void* updCtxt)
+{
+    return xGoal::Exit(dt, updCtxt);
+}
+
 S32 zNPCGoalDutchmanTeleport::Exit(F32 dt, void* updCtxt)
 {
     return xGoal::Exit(dt, updCtxt);

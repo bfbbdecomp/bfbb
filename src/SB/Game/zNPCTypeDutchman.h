@@ -287,6 +287,7 @@ struct zNPCGoalDutchmanDamage : zNPCGoalCommon
     zNPCDutchman& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
+    S32 Exit(F32 dt, void* updCtxt); 
 };
 
 struct delay_goal
