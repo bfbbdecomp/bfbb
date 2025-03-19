@@ -80,7 +80,6 @@ xAnimTable* ZNPC_AnimTable_KingJelly()
         
     };
     // clang-format on
-
     xAnimTable* table = xAnimTableNew("zNPCKingJelly", NULL, 0);
 
     xAnimTableNewState(table, g_strz_subbanim[ANIM_Idle01], 0x10, 0, f1868, NULL, NULL, f1869, NULL,
