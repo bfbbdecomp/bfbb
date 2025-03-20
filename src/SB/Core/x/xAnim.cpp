@@ -1787,57 +1787,65 @@ void xAnimPoolCB(xMemPool* pool, void* data)
     clone->Pool = pool;
 }
 
-// WIP
+#define ADD_4_BITS(x) (((x) & 1) + (((x) >> 1) & 1) + (((x) >> 2) & 1) + (((x) >> 3) & 1))
 void xAnimPoolInit(xMemPool* pool, U32 count, U32 singles, U32 blendFlags, U32 effectMax)
 {
-    // unsigned int size; // r22
-    // unsigned int i; // r7
-    // void* buffer; // r2
     effectMax += effectMax & 1;
-    U32 size = (1 << singles) - 1;
+
+    U32 size =
+        (effectMax * sizeof(xAnimActiveEffect) + sizeof(xAnimSingle)) *
+            (ADD_4_BITS((blendFlags & 0xffff) & ((int)(1 << singles) - 1 >> 0x0)) +
+             ADD_4_BITS((blendFlags & 0xffff) & ((int)(1 << singles) - 1 >> 0x4)) +
+             ADD_4_BITS((blendFlags & 0xffff) & ((int)(1 << singles) - 1 >> 0x8)) +
+             ADD_4_BITS((blendFlags & 0xffff) & ((int)(1 << singles) - 1 >> 0xC)) + singles) +
+        sizeof(xAnimPlay);
+
+    U32 i;
     void* buffer = xMemAllocSize(count * size);
 
-    xAnimPlay* play;
-    xAnimSingle* currsingle = (xAnimSingle*)((U32)buffer + 0x20 + singles * sizeof(xAnimSingle));
-    xAnimActiveEffect* curract; // r2
+    xAnimPlay* play = (xAnimPlay*)buffer;
+    play->NumSingle = singles;
 
-    for (U32 i = 0; i < singles; ++i)
+    xAnimSingle* currsingle;
+    play->Single = currsingle = (xAnimSingle*)((U32)play + sizeof(xAnimPlay));
+    currsingle += singles;
+
+    for (i = 0; i < singles; ++i)
     {
-        if (blendFlags & (1 << (i % 0x40)))
+        if (blendFlags & (1 << i))
         {
-            ((xAnimSingle*)((U32)buffer + 8))[i].Blend = currsingle;
+            play->Single[i].Blend = currsingle;
             currsingle->Blend = NULL;
             currsingle++;
         }
         else
         {
-            ((xAnimSingle*)((U32)buffer + 8))[i].Blend = NULL;
+            play->Single[i].Blend = NULL;
         }
     }
 
-    for (U32 i = 0; i < *(U16*)((U32)buffer + 4); ++i)
+    xAnimActiveEffect* curract = (xAnimActiveEffect*)currsingle;
+    for (i = 0; i < play->NumSingle; ++i)
     {
-        xAnimSingle* s2 = &((xAnimSingle*)((U32)buffer + 8))[i];
-        if (effectMax != 0)
+        currsingle = &play->Single[i];
+        while (currsingle)
         {
-            for (; s2 != NULL; s2 = s2->Blend)
+            currsingle->ActiveCount = effectMax;
+            if (effectMax != 0)
             {
-                s2->ActiveCount = effectMax;
-                s2->ActiveList = (xAnimActiveEffect*)currsingle;
-                ((xAnimActiveEffect*)currsingle) += effectMax;
+                currsingle->ActiveList = curract;
+                curract += effectMax;
             }
-        }
-        else
-        {
-            for (; s2 != NULL; s2 = s2->Blend)
+            else
             {
-                s2->ActiveCount = 0;
-                s2->ActiveList = NULL;
+                currsingle->ActiveList = NULL;
             }
+
+            currsingle = currsingle->Blend;
         }
     }
 
-    *(xMemPool**)((U32)buffer + 0x14) = pool;
+    play->Pool = pool;
     xMemPoolSetup(pool, buffer, 0, 1, xAnimPoolCB, size, count, count / 2);
 }
 
