@@ -129,7 +129,7 @@ void xMat3x3Identity(xMat3x3* matrix); // TODO: These functions should be inline
 S32 xPointInBox(const xBox* b, const xVec3* p);
 void xMat3x3LMulVec(xVec3* o, const xMat3x3* m, const xVec3* v);
 
-void xQuatMul(xQuat* arg0, const xQuat* arg1, const xQuat* arg2);
+void xQuatMul(xQuat* o, const xQuat* a, const xQuat* b);
 void xQuatFlip(xQuat* o1, xQuat* o2);
 void xQuatNormalize(xQuat* arg01, xQuat* arg02);
 

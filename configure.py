@@ -276,7 +276,7 @@ config.libs = [
         "cflags": cflags_bfbb,
         "host": True,
         "objects": [
-            Object(NonMatching, "SB/Core/x/xAnim.cpp"),
+            Object(NonMatching, "SB/Core/x/xAnim.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/x/xBase.cpp"),
             Object(Matching, "SB/Core/x/xbinio.cpp"),
             Object(NonMatching, "SB/Core/x/xBound.cpp"),
