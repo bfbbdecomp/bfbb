@@ -140,6 +140,8 @@ struct xAnimSingle
     xAnimActiveEffect* ActiveList;
     xAnimPlay* Play;
     xAnimTransition* Sync;
+
+    // Offset: 0x30
     xAnimTransition* Tran;
     xAnimSingle* Blend;
     F32 BlendFactor;
@@ -197,5 +199,15 @@ void xAnimPlaySetState(xAnimSingle* single, xAnimState* state, F32 startTime);
 void xAnimPlayStartTransition(xAnimPlay* play, xAnimTransition* transition);
 void xAnimPlayUpdate(xAnimPlay* play, F32 timeDelta);
 void xAnimPlayEval(xAnimPlay* play);
+
+inline F32 xAnimFileRawTime(xAnimFile* data, float time)
+{
+    if (data->FileFlags & 0x1000 || (data->FileFlags & 0x2000 && time > data->Duration * 0.5f))
+    {
+        return data->TimeOffset + data->Duration - time;
+    }
+    return data->TimeOffset + time;
+}
+
 
 #endif
