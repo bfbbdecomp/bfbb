@@ -16,7 +16,7 @@
 #define ANIM_Fidget02 5
 #define ANIM_Fidget03 6
 #define ANIM_Taunt01 7 // 0x1c
-#define ANIM_Attack01 8 //0x20               DEPRACATED
+#define ANIM_Attack01 8 //0x20
 #define ANIM_Damage01 9 //0x24
 #define ANIM_Damage02 10 //0x28
 #define ANIM_Death01 11 //0x2c
@@ -28,18 +28,6 @@
 #define ANIM_Attack02Loop01 17
 #define ANIM_Attack02End01 18
 #define ANIM_LassoGrab01 19
-
-// #define ANIM_Idle01 1
-// #define ANIM_Idle02 2
-// #define ANIM_Idle03 3
-// #define ANIM_Taunt01 7
-// #define ANIM_Attack01 8
-// #define ANIM_AttackWindup01 12
-// #define ANIM_AttackLoop01 13
-// #define ANIM_AttackEnd01 14
-// #define ANIM_Damage01 9
-// #define ANIM_SpawnKids01 15
-// #define ANIM_Unknown 0
 
 namespace
 {
@@ -66,7 +54,7 @@ xAnimTable* ZNPC_AnimTable_KingJelly()
         ANIM_Idle03,
         ANIM_Taunt01,
         ANIM_Attack01,
-        ANIM_AttackWindup01,         // replace with king jelly anims
+        ANIM_AttackWindup01,        
         ANIM_AttackLoop01,
         ANIM_AttackEnd01,
         ANIM_Damage01,
