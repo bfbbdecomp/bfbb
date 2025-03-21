@@ -14,13 +14,24 @@ void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
     o->z = z;
 }
 
+// Artificial
+enum en_MOTIONTYPE
+{
+    MOTION_TYPE_EXRT,
+    MOTION_TYPE_ORBT,
+    MOTION_TYPE_SPLN,
+    MOTION_TYPE_MVPT,
+    MOTION_TYPE_MECH,
+    MOTION_TYPE_PEND
+};
+
 void xEntMotionInit(xEntMotion* a, xEnt* b, xEntMotionAsset* c)
 {
     a->asset = c;
     a->type = c->type;
     a->flags = c->flags;
 
-    if (a->type == 0) // ER
+    if (a->type == MOTION_TYPE_EXRT)
     {
         xVec3Copy(&a->er.a, &c->er.ret_pos);
         xVec3Add(&a->er.b, &c->er.ret_pos, &c->er.ext_dpos);
@@ -39,7 +50,7 @@ void xEntMotionInit(xEntMotion* a, xEnt* b, xEntMotionAsset* c)
         a->er.ert = a->er.brt + a->er.rt;
         a->er.p   = a->er.ert + a->er.wrt;
     }
-    else if (a->type == 1) // Orbit
+    else if (a->type == MOTION_TYPE_ORBT)
     {
         xVec3Copy((xVec3*)(&a->er.b), &c->er.ret_pos);
 
@@ -54,11 +65,11 @@ void xEntMotionInit(xEntMotion* a, xEnt* b, xEntMotionAsset* c)
         a->orb.p = c->orb.period;
         a->orb.w = (2 * PI) / c->orb.period;
     }
-    else if (a->type == 3) // MP
+    else if (a->type == MOTION_TYPE_MVPT)
     {
         // literally nothing
     }
-    else if (a->type == 5)  // Pen
+    else if (a->type == MOTION_TYPE_PEND)
     {
         if (c->pen.period <= 1e-5f)
         {
@@ -67,7 +78,7 @@ void xEntMotionInit(xEntMotion* a, xEnt* b, xEntMotionAsset* c)
 
         a->pen.w = (2 * PI) / c->pen.period;
     }
-    else if (a->type == 4) // Mech
+    else if (a->type == MOTION_TYPE_MECH)
     {
         if (c->mp.speed < 1e-5f)
         {
@@ -105,4 +116,45 @@ void xEntMotionInit(xEntMotion* a, xEnt* b, xEntMotionAsset* c)
     a->target = NULL;
 
     xEntMotionDebugAdd(a);
+}
+
+void xEntMechForward(xEntMotion* motion)
+{
+    xEntMotionMechData* mech = &(motion->asset->mech);
+    xEntMotionAsset* mkasst = motion->asset;
+
+    xEntMotionRun(motion);
+
+    if ((motion->mech.state != 0) && (motion->mech.state != 1) && (motion->mech.state != 2))
+    {
+        if (motion->mech.state == 3)
+        {
+            motion->mech.ss = -motion->mech.ss;
+            motion->mech.sr = -motion->mech.sr;
+            motion->tmr = mkasst->mech.sld_tm - motion->tmr;
+            motion->mech.state = 0;
+        }
+        else if (motion->mech.state == 4)
+        {
+            motion->mech.ss = -motion->mech.ss;
+            motion->mech.sr = -motion->mech.sr;
+            motion->tmr = mkasst->mech.rot_tm - motion->tmr;
+            motion->mech.state = 1;
+        }
+        else if ((motion->mech.state != 5) && (motion->mech.state != 6) && (motion->mech.state == 7))
+        {
+            motion->mech.ss = -motion->mech.ss;
+            motion->mech.sr = -motion->mech.sr;
+            motion->tmr = 0.0f;
+
+            if ((mech->type == 0) || (mech->type == 2) || (mech->type == 4))
+            {
+                motion->mech.state = 0;
+            }
+            else
+            {
+                motion->mech.state = 1;
+            }
+        }
+    }
 }
