@@ -36,7 +36,7 @@ jobs:
       - name: Download objdiff CLI
         if: github.ref == 'refs/heads/main'
         run: |
-          python tools/download_tool.py --tag v2.0.0-alpha.5 objdiff-cli objdiff-cli
+          python tools/download_tool.py --tag v2.7.1 objdiff-cli objdiff-cli
 
       # Build the project
       - name: Build
