@@ -28,6 +28,14 @@ namespace ROMFont
 // Yes, this is a namespace, not a class.
 namespace iTRCDisk
 {
+    char mMessage[];
+    void (*mPadStopRumbling)();
+    void (*mSndSuspend)();
+    void (*mSndResume)();
+    void (*mSndKill)();
+    void (*mMovieSuspendFunction)();
+    void (*mMovieResumeFunction)();
+
     void SetPadStopRumblingFunction(void (*)(void));
     void SetSndSuspendFunction(void (*)(void));
     void SetSndResumeFunction(void (*)(void));
@@ -41,14 +49,15 @@ namespace iTRCDisk
     void SetDVDState();
     void SetErrorMessage(const char*);
     bool IsDiskIDed();
-    char mMessage();
 } // namespace iTRCDisk
 
 namespace ResetButton
 {
-    int EnableReset();
-    int mResetEnabled;
-    int DisableReset();
+    bool mResetEnabled;
+    void (*mSndKill)();
+
+    void EnableReset();
+    void DisableReset();
     void SetSndKillFunction(void (*func)());
     void CheckResetButton();
 
