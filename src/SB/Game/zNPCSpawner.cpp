@@ -175,7 +175,7 @@ st_XORDEREDARRAY* zNPCSpawner::FillPending()
 {
     ClearPending();
     ReFillPending();
-    return &this->actvlist;
+    return (st_XORDEREDARRAY*)this->pendlist.cnt;
 }
 
 st_XORDEREDARRAY* zNPCSpawner::ReFillPending()
