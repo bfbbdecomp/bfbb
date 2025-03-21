@@ -3,74 +3,65 @@
 #include <types.h>
 #include <string.h>
 
+namespace ResetButton
+{
+    bool mResetEnabled = 1;
+}
+
 bool ROMFont::Init()
 {
-
 }
 
 void ROMFont::InitGX()
 {
-
 }
 
 void ROMFont::InitVI()
 {
-
 }
 
 void ROMFont::RenderBegin()
 {
-
 }
 
 void ROMFont::RenderEnd()
 {
-
 }
 
 void ROMFont::SwapBuffers()
 {
-
 }
 
 void ROMFont::DrawCell(int, int, int, int)
 {
-
 }
 
 void GXEnd()
 {
-
 }
 
 void GXPosition3s16()
 {
-
 }
 
 void ROMFont::LoadSheet(void*)
 {
-
 }
 
 void GXSetTexCoordGen()
 {
-
 }
 
 void ROMFont::DrawString(int, int, char*)
 {
-
 }
 
 void ROMFont::GetWidth(char*)
 {
-
 }
 
 void ROMFont::DrawTextBox(int, int, int, int, char*)
 {
-
 }
 
 void ResetButton::EnableReset()
@@ -90,7 +81,6 @@ void ResetButton::SetSndKillFunction(void (*Func)())
 
 void ResetButton::CheckResetButton()
 {
-
 }
 
 bool iTRCDisk::Init(void)
@@ -140,20 +130,16 @@ void iTRCDisk::SetMovieResumeFunction(void (*Func)())
 
 bool iTRCDisk::IsDiskIDed()
 {
-
 }
 
 void iTRCDisk::DisplayErrorMessage()
 {
-
 }
 
 void iTRCDisk::SetDVDState()
 {
-
 }
 
 bool iTRCDisk::CheckDVDAndResetState()
 {
-
 }

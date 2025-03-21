@@ -23,7 +23,7 @@ namespace ROMFont
     void DrawString(int, int, char*);
     void GetWidth(char*);
     void DrawTextBox(int, int, int, int, char*);
-}
+} // namespace ROMFont
 
 // Yes, this is a namespace, not a class.
 namespace iTRCDisk
@@ -53,7 +53,6 @@ namespace iTRCDisk
 
 namespace ResetButton
 {
-    bool mResetEnabled;
     void (*mSndKill)();
 
     void EnableReset();
