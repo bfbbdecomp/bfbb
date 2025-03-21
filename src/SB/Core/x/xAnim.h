@@ -20,10 +20,14 @@ struct xAnimFile
     const char* Name;
     U32 ID;
     U32 FileFlags;
+
+    // 0x10
     F32 Duration;
     F32 TimeOffset;
     U16 BoneCount;
     U8 NumAnims[2];
+
+    // 0x20
     void** RawData;
 };
 
@@ -53,18 +57,26 @@ struct xAnimState
     const char* Name;
     U32 ID;
     U32 Flags;
+
+    // 0x10
     U32 UserFlags;
     F32 Speed;
     xAnimFile* Data;
     xAnimEffect* Effects;
+    
+    // 0x20
     xAnimTransitionList* Default;
     xAnimTransitionList* List;
     F32* BoneBlend;
     F32* TimeSnap;
+
+    // 0x30
     F32 FadeRecip;
     U16* FadeOffset;
     void* CallbackData;
     xAnimMultiFile* MultiFile;
+
+    // 0x40
     xAnimStateBeforeEnterCallback BeforeEnter;
     xAnimStateCallback StateCallback;
     xAnimStateBeforeAnimMatricesCallback BeforeAnimMatrices;
