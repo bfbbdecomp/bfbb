@@ -375,7 +375,7 @@ float std::atan2f(float y, float x)
 
 float CalcRecipBlendMax(U16* arg0)
 {
-    float ret = 0.0f;
+    float max = 0.0f;
     while (arg0[0] != 0xFFFF)
     {
         float f3;
@@ -385,22 +385,22 @@ float CalcRecipBlendMax(U16* arg0)
         }
         else
         {
-            f3 = 1.0f / (0.001f * arg0[1]);
+            f3 = 1.0f / (0.0009765625f * arg0[1]);
         }
 
         f3 = 0.001f * arg0[0] + f3;
-        if (f3 > ret)
+        if (f3 > max)
         {
-            ret = f3;
+            max = f3;
         }
         arg0 += 2;
     }
 
-    if (ret == 0.0f)
+    if (max == 0.0f)
     {
         return 0.0f;
     }
-    return 1.0f / ret;
+    return 1.0f / max;
 }
 
 static U32 StateHasTransition(xAnimState* state, xAnimTransition* tran)
@@ -514,7 +514,7 @@ xAnimFile* xAnimFileNewBilinear(void** rawData, const char* name, U32 flags, xAn
     }
 
     afile->RawData = (void**)&afile[1];
-    for (S32 i = 0; i < numX * numY; ++i)
+    for (S32 i = 0; i < (S32)numX * (S32)numY; ++i)
     {
         afile->RawData[i] = rawData[i];
     }
@@ -1554,18 +1554,10 @@ static void SingleUpdate(xAnimSingle* single, F32 timeDelta)
                 ((single->State->Default->T->Flags & 0x4) == 0 || bl == NULL))
             {
                 xAnimTransitionList* curr = single->State->Default;
-                // FIXME: this should probably just be a loop
-                goto start;
-            loop:
-                curr = curr->Next;
-            start:
-                if (curr != NULL)
+                while (curr != NULL && curr->T->Conditional != NULL &&
+                       curr->T->Conditional(curr->T, single, object) == 0)
                 {
-                    if (curr->T->Conditional != NULL &&
-                        curr->T->Conditional(curr->T, single, object) == 0)
-                    {
-                        goto loop;
-                    }
+                    curr = curr->Next;
                 }
 
                 if (curr == NULL)
