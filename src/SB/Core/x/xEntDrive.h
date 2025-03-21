@@ -10,7 +10,7 @@ struct xEntDrive
     {
         xVec3 loc;
         F32 yaw;
-        xCollis* coll;
+        const xCollis* coll;
     };
 
     U32 flags;
@@ -28,12 +28,14 @@ struct xEntDrive
     xVec3 q;
     F32 yaw;
     xVec3 dloc;
+
+    // 0x5c
     tri_data tri;
 };
 
 void xEntDriveInit(xEntDrive* drv, xEnt* driven);
 void xEntDriveMount(xEntDrive* drv, xEnt* driver, F32 mt, const xCollis* coll);
 void xEntDriveDismount(xEntDrive* drv, F32 dmt);
-void xEntDriveUpdate(xEntDrive* drv, xScene* s, F32 dt, xEntFrame* frame);
+void xEntDriveUpdate(xEntDrive* drv, xScene* s, F32 dt, xCollis* coll);
 
 #endif
