@@ -102,6 +102,7 @@ namespace oob_state
 
             substate_enum (*updatess)(grab_state_type&, xScene&, float&)[10];
             bool update_reorient(xScene&, F32&);
+            substate_enum update_stopping(xScene&, float&);
 
             void start();
             void stop();
