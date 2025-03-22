@@ -4678,7 +4678,7 @@ void zEntPlayer_SNDPlayStreamRandom(_tagePlayerStreamSnd player_snd_start,
             if (player_snd_start != player_snd_end)
             {
                 S32 first_valid;
-                S32 num_valid;
+                S32 num_valid = 0;
                 for (S32 i = 0; i < diff; i++)
                 {
                     S32 possible = rand_array[i];

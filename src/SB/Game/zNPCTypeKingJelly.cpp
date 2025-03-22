@@ -357,15 +357,15 @@ S32 zNPCGoalKJDeath::Enter(float dt, void* updCtxt)
     zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
     kj.decompose();
     kj.post_decompose();
-    zNPCGoalCommon::Enter(dt, updCtxt);
+    return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
 S32 zNPCGoalKJDeath::Exit(float dt, void* updCtxt)
 {
-    xGoal::Exit(dt, updCtxt);
+    return xGoal::Exit(dt, updCtxt);
 }
 
 S32 zNPCGoalKJDeath::Process(en_trantype* trantype, float dt, void* updCtxt, xScene* xscn)
 {
-    xGoal::Process(trantype, dt, updCtxt, xscn);
+    return xGoal::Process(trantype, dt, updCtxt, xscn);
 }
