@@ -175,7 +175,7 @@ config.reconfig_deps = []
 
 # Optional numeric ID for decomp.me preset
 # Can be overridden in libraries or objects
-config.scratch_preset_id = None
+config.scratch_preset_id = 65  # Battle for Bikini Bottom
 
 # Base flags, common to most GC/Wii games.
 # Generally leave untouched, with overrides added below.
