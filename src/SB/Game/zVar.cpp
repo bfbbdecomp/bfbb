@@ -495,30 +495,18 @@ namespace
         return NULL;
     }
 
-    // Not close, don't know enough about the data structures to know if things are
-    // looking correct or not.
     void parse_tag_var(xtextbox::jot& r31, const xtextbox& r4, const xtextbox& r5,
                        const xtextbox::split_tag& r6)
     {
-        if (r6.action.size != 1)
+        if ((r6.action.size != 1) || (r6.action.text[0] != 0x3A) || (r6.value.size <= 1))
             return;
 
-        if (r6.action.text[0] != 0x3A)
-            return;
-
-        if (r6.value.size > 1)
+        r31.context = var_text(r6.value);
+        r31.context_size = 0;
+        if (r31.context != NULL)
         {
-            r31.context = var_text(r6.value);
-            r31.context_size = 0;
-            if (r31.context)
-            {
-                r31.context_size = 0xFC00;
-                // Maybe not the correct flags, something is up with the struct
-                r31.flag.dynamic = 1;
-                // No clue what this line is:
-                // r31.flag.upper. something = something??
-                r31.flag.insert = 1;
-            }
+            r31.context_size = 0xFC00;
+            r31.flag.insert = r31.flag.dynamic = 1;
         }
     }
 

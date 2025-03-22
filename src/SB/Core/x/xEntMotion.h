@@ -174,6 +174,7 @@ void xEntMotionReset(xEntMotion* motion, xScene* sc);
 void xEntMotionMove(xEntMotion* motion, xScene* sc, F32 dt, xEntFrame* frame);
 void xEntMotionTranslate(xEntMotion* motion, const xVec3* dpos, xMat4x3* dmat);
 void xEntMotionDebugInit(U16 num_xems);
+void xEntMotionDebugAdd(xEntMotion*);
 void xEntMotionDebugExit();
 void xEntMotionStop(xEntMotion* motion);
 void xEntMotionRun(xEntMotion* motion);

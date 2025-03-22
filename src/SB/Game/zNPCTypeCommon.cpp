@@ -256,15 +256,13 @@ S32 zNPCCommon::SomethingWonderful()
     return flg_wonder;
 }
 
-/*
-// Off by one instruction, I don't understand what the original code is doing
 S32 zNPCCommon::SndIsAnyPlaying()
 {
     S32 iVar1 = 0;
 
     for (S32 i = 0; i < 4; i++)
     {
-        iVar1 = xSndIsPlaying(0, this->id);
+        iVar1 = xSndIsPlaying(0, (U32)this + i);
         if (iVar1)
         {
             break;
@@ -273,7 +271,6 @@ S32 zNPCCommon::SndIsAnyPlaying()
 
     return iVar1;
 }
-*/
 
 U32 zNPCCommon::LassoInit()
 {
