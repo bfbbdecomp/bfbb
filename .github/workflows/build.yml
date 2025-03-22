@@ -18,11 +18,11 @@ jobs:
         version: [GQPE78]
 
     steps:
-      # Checkout the repository (shallow clone)
+      # Checkout the repository
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 2
           submodules: recursive
 
       # Set Git config
@@ -33,17 +33,15 @@ jobs:
       - name: Prepare
         run: cp -R /orig .
 
-      - name: Download objdiff CLI
-        if: github.ref == 'refs/heads/main'
-        run: |
-          python tools/download_tool.py --tag v2.7.1 objdiff-cli objdiff-cli
-
       # Build the project
       - name: Build
         run: |
-          python configure.py --wrapper wibo --map --version ${{ matrix.version }} \
+          python configure.py --map --version ${{ matrix.version }} \
               --binutils /binutils --compilers /compilers
-          ninja all_source build/${{ matrix.version }}/progress.json
+          ninja all_source build/${{ matrix.version }}/progress.json \
+              build/${{ matrix.version }}/report.json
+          git log -1 --pretty='{"id": "%H", "email": "%ae", "time": "%ad", "message": "%s"}' \
+              --date=format:"%Y-%m-%dT%H:%M:%S" > build/${{ matrix.version }}/progress-commit.json
 
       # Upload progress if we're on the main branch
       - name: Upload progress
@@ -67,25 +65,28 @@ jobs:
           name: ${{ matrix.version }}_maps
           path: build/${{ matrix.version }}/**/*.MAP
 
-      - name: Generate Progress Reports
-        if: github.ref == 'refs/heads/main'
-        run: |
-          ./objdiff-cli report generate -o progress.json
-          git log -1 --pretty='{"id": "%H", "email": "%ae", "time": "%ad", "message": "%s"}' --date=format:"%Y-%m-%dT%H:%M:%S" > progress-commit.json
-          git checkout HEAD~1
-          rm -rf ./build/
-          ninja all_source
-          ./objdiff-cli report generate -o previous.json
-
-      - name: Save Progress Artifacts
-        if: github.ref == 'refs/heads/main'
+      # Upload progress report
+      - name: Upload report
         uses: actions/upload-artifact@v4
         with:
-          name: progress
+          name: ${{ matrix.version }}_report
           path: |
-            progress.json
-            previous.json
-            progress-commit.json
+            build/${{ matrix.version }}/report.json
+            build/${{ matrix.version }}/progress-commit.json
+
+      # Generate report for previous commit
+      - name: Generate previous report
+        continue-on-error: true
+        run: |
+          git checkout HEAD^
+          ninja build/${{ matrix.version }}/report.json
+
+      # Upload previous report
+      - name: Upload previous report
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.version }}_previous
+          path: build/${{ matrix.version }}/report.json
 
   website:
     runs-on: ubuntu-latest
@@ -102,8 +103,13 @@ jobs:
       - name: Download Progress Artifacts
         uses: actions/download-artifact@v4
         with:
-          name: progress
           path: ./artifacts
+
+      - name: Rename Artifacts
+        run: |
+          mv artifacts/GQPE78_report/report.json progress.json
+          mv artifacts/GQPE78_report/progress-commit.json progress-commit.json
+          mv artifacts/GQPE78_previous/report.json previous.json
 
       - uses: actions/setup-dotnet@v4
         with:
