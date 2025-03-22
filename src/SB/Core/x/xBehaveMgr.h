@@ -13,6 +13,7 @@ struct xBehaveMgr : RyzMemData
     st_XORDEREDARRAY psylist;
 
     xBehaveMgr();
+    ~xBehaveMgr();
     void Startup(S32, S32);
     void RegBuiltIn();
     xPsyche* Subscribe(xBase* owner, S32 i);

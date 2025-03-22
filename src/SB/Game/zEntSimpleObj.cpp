@@ -298,7 +298,7 @@ void zEntSimpleObj_MgrUpdateRender(RpWorld* world, F32 dt)
     s32 sp1C;
     s32 sp18;
     s32 sp14;
-    f32 spC;
+    f32 spC = 0.0f;
     xVec3 sp8;
     f32 temp_f0;
     f32 temp_f1;

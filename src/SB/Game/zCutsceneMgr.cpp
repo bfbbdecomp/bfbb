@@ -285,7 +285,7 @@ void zCutsceneMgrFinishLoad(xBase* to)
 
 void zCutsceneMgrFinishExit(xBase* to)
 {
-    zCutsceneMgr* t;
+    zCutsceneMgr* t = (zCutsceneMgr*)to;
 
     while (1)
     {

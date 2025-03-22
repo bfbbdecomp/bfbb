@@ -39,12 +39,12 @@ S32 zNPCGoalJellyAttack::Process(en_trantype* arg0, F32 arg1, void* arg2, xScene
     return zNPCGoalPushAnim::Process(arg0, arg1, arg2, arg3);
 }
 
-S32 zNPCGoalJellyAttack::ZapperStop()
+void zNPCGoalJellyAttack::ZapperStop()
 {
-    zNPC_SNDStop((_tageNPCSnd) 4);
-    for (S32 i = 0; i< 3; ++i) 
+    zNPC_SNDStop((_tageNPCSnd)4);
+    for (S32 i = 0; i < 3; ++i)
     {
-        if(zap_lytnin[i] != NULL)
+        if (zap_lytnin[i] != NULL)
         {
             zLightningKill(zap_lytnin[i]);
         }

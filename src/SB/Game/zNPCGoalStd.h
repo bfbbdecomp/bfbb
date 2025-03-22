@@ -343,7 +343,7 @@ public:
 
     S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);
-    S32 FXStreakPrep();
+    void FXStreakPrep();
     void FXStreakDone();
 
     U32 streakID[4]; // offset 0x54, size 0x10
@@ -360,7 +360,7 @@ public:
 
     S32 LaunchBone(F32 dt, S32 param_2);
     S32 Exit(F32 dt, void* updCtxt);
-    S32 SetAttackMode(S32 a, S32 b);
+    void SetAttackMode(S32 a, S32 b);
     S32 flg_attack; // offset 0x54, size 0x4
 };
 
@@ -432,7 +432,7 @@ public:
 
     S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);
-    F32 GlyphStart();
+    void GlyphStart();
     void GlyphStop();
     S32 NPCMessage(NPCMsg* mail);
     S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
@@ -650,11 +650,11 @@ public:
         xGoal::SetFlags(6);
     }
 
-    S32 PeteAttackBegin();
+    void PeteAttackBegin();
     S32 Exit(F32 dt, void* updCtxt);
     S32 Enter(F32 dt, void* updCtxt);
     S32 Resume(F32 dt, void* updCtxt);
-    S32 PeteAttackBegin(F32 dt, void* updCtxt);
+    void PeteAttackBegin(F32 dt, void* updCtxt);
     S32 flg_attack; // offset 0x4C, size 0x4
     S32 cnt_nextlos; // offset 0x50, size 0x4
     F32 len_laser; // offset 0x54, size 0x4
@@ -850,8 +850,8 @@ public:
 
     void ModifyAnimSpeed();
     S32 Exit(F32 dt, void* updCtxt);
-    S32 FXStreakPrep();
-    S32 FXStreakDone();
+    void FXStreakPrep();
+    void FXStreakDone();
     void TellBunnies();
     S32 Enter(F32 dt, void* updCtxt);
     S32 flg_attack; // offset 0x54, size 0x4
@@ -880,7 +880,6 @@ struct zNPCGoalAttackFodder : zNPCGoalPushAnim
 
         CattleNotify()
         {
-
         }
 
         S32 Notify(en_haznote note, NPCHazard*);
@@ -1059,7 +1058,6 @@ class zNPCGoalTubeDead : public zNPCGoalDead
 public:
     zNPCGoalTubeDead(S32 id) : zNPCGoalDead(id)
     {
-
     }
 
     void ChkPrelimTran(en_trantype*, int*);
@@ -1071,10 +1069,9 @@ class zNPCGoalTubeDying : public zNPCGoalCommon
 public:
     zNPCGoalTubeDying(S32 id) : zNPCGoalCommon(id)
     {
-
     }
 
-    S32 DeathByLasso(const xVec3*);
+    void DeathByLasso(const xVec3*);
     S32 Exit(F32 dt, void* updCtxt);
     S32 flg_tubedying; // offset 0x4C, size 0x4
     F32 spd_gothatway; // offset 0x50, size 0x4
@@ -1127,7 +1124,7 @@ public:
     S32 Enter(F32 dt, void* updCtxt);
     S32 Resume(F32 dt, void* updCtxt);
     bool MarySpinUp(float);
-    S32 LaserRender();
+    void LaserRender();
     void MaryzBlessing();
     void MaryzFury();
     S32 MarySpinDown(F32 dt);
@@ -1233,7 +1230,7 @@ public:
     }
 
     void StreakDone();
-    S32 StreakPrep();
+    void StreakPrep();
     S32 Exit(F32 dt, void* updCtxt);
     S32 flg_knock; // offset 0x4C, size 0x4
     xVec3 pos_bumper; // offset 0x50, size 0xC

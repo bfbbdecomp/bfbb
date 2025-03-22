@@ -10,6 +10,7 @@ namespace ResetButton
 
 bool ROMFont::Init()
 {
+    return false;
 }
 
 void ROMFont::InitGX()
@@ -130,6 +131,7 @@ void iTRCDisk::SetMovieResumeFunction(void (*Func)())
 
 bool iTRCDisk::IsDiskIDed()
 {
+    return false;
 }
 
 void iTRCDisk::DisplayErrorMessage()
@@ -142,4 +144,5 @@ void iTRCDisk::SetDVDState()
 
 bool iTRCDisk::CheckDVDAndResetState()
 {
+    return false;
 }
