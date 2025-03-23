@@ -68,7 +68,7 @@ xAnimTable* ZNPC_AnimTable_BossSB2()
     // ANIM_ChopLeftLoop,
     // ANIM_ChopLeftEnd,
     // ANIM_ChopRightBegin,             No longer needed?
-    // ANIM_ChopRightLoop,              Was used instead of "ANIM_xxxxx;" right about new state
+    // ANIM_ChopRightLoop,              Was used instead of "ANIM_xxxxx;" right before new state
     // ANIM_ChopRightEnd,               
     // ANIM_SwipeLeftBegin,
     // ANIM_SwipeLeftLoop,
