@@ -68,11 +68,11 @@ void NPCSupplement_Timestep(float dt)
     NPAR_Timestep(dt);
 }
 
-S32 NPCC_StreakCreate(en_npcstreak styp)
+U32 NPCC_StreakCreate(en_npcstreak styp)
 {
-    StreakInfo info = info_950;
+    static StreakInfo info;
     NPCC_MakeStreakInfo(styp, &info);
-    xFXStreakStart(&styp);
+    return xFXStreakStart(&info);
 }
 
 void NPAR_ScenePrepare()

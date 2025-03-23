@@ -19,6 +19,7 @@ from typing import Any, Dict, List
 
 from tools.project import (
     Object,
+    ProgressCategory,
     ProjectConfig,
     calculate_progress,
     generate_build,
@@ -72,11 +73,6 @@ parser.add_argument(
     help="generate map file(s)",
 )
 parser.add_argument(
-    "--no-asm",
-    action="store_true",
-    help="don't incorporate .s files from asm directory",
-)
-parser.add_argument(
     "--debug",
     action="store_true",
     help="build with debug info (non-matching)",
@@ -95,6 +91,12 @@ parser.add_argument(
     help="path to decomp-toolkit binary or source (optional)",
 )
 parser.add_argument(
+    "--objdiff",
+    metavar="BINARY | DIR",
+    type=Path,
+    help="path to objdiff-cli binary or source (optional)",
+)
+parser.add_argument(
     "--sjiswrap",
     metavar="EXE",
     type=Path,
@@ -111,6 +113,12 @@ parser.add_argument(
     action="store_true",
     help="builds equivalent (but non-matching) or modded objects",
 )
+parser.add_argument(
+    "--no-progress",
+    dest="progress",
+    action="store_false",
+    help="disable progress calculation",
+)
 args = parser.parse_args()
 
 config = ProjectConfig()
@@ -120,25 +128,29 @@ version_num = VERSIONS.index(config.version)
 # Apply arguments
 config.build_dir = args.build_dir
 config.dtk_path = args.dtk
+config.objdiff_path = args.objdiff
 config.binutils_path = args.binutils
 config.compilers_path = args.compilers
-config.debug = args.debug
 config.generate_map = args.map
 config.non_matching = args.non_matching
 config.sjiswrap_path = args.sjiswrap
+config.progress = args.progress
 if not is_windows():
     config.wrapper = args.wrapper
-if args.no_asm:
+# Don't build asm unless we're --non-matching
+if not config.non_matching:
     config.asm_dir = None
 
 # Tool versions
 config.binutils_tag = "2.42-1"
-config.compilers_tag = "20240702"
-config.dtk_tag = "v1.4.0"
-config.sjiswrap_tag = "v1.1.1"
+config.compilers_tag = "20240706"
+config.dtk_tag = "v1.4.1"
+config.objdiff_tag = "v2.7.1"
+config.sjiswrap_tag = "v1.2.0"
 config.wibo_tag = "0.6.11"
 
 # Project
+config.shift_jis = False
 config.config_path = Path("config") / config.version / "config.yml"
 config.check_sha_path = Path("config") / config.version / "build.sha1"
 config.asflags = [
@@ -146,16 +158,25 @@ config.asflags = [
     "--strip-local-absolute",
     "-I include",
     f"-I build/{config.version}/include",
-    f"--defsym version={version_num}",
+    f"--defsym BUILD_VERSION={version_num}",
+    f"--defsym VERSION_{config.version}",
 ]
 config.ldflags = [
     "-fp hardware",
     "-nodefaults",
-    "-warn off",
-    # "-listclosure", # Uncomment for Wii linkers
 ]
+if args.debug:
+    config.ldflags.append("-g")  # Or -gdwarf-2 for Wii linkers
+if args.map:
+    config.ldflags.append("-mapunused")
+    # config.ldflags.append("-listclosure") # For Wii linkers
+
 # Use for any additional files that should cause a re-configure when modified
 config.reconfig_deps = []
+
+# Optional numeric ID for decomp.me preset
+# Can be overridden in libraries or objects
+config.scratch_preset_id = 65  # Battle for Bikini Bottom
 
 # Base flags, common to most GC/Wii games.
 # Generally leave untouched, with overrides added below.
@@ -179,11 +200,13 @@ cflags_base = [
     "-multibyte",  # For Wii compilers, replace with `-enc SJIS`
     "-i include",
     f"-i build/{config.version}/include",
-    f"-DVERSION={version_num}",
+    f"-DBUILD_VERSION={version_num}",
+    f"-DVERSION_{config.version}",
 ]
 
 # Debug flags
-if config.debug:
+if args.debug:
+    # Or -sym dwarf-2 for Wii compilers
     cflags_base.extend(["-sym on", "-DDEBUG=1"])
 else:
     cflags_base.append("-DNDEBUG=1")
@@ -236,7 +259,7 @@ def DolphinLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
         "lib": lib_name,
         "mw_version": "GC/1.2.5n",
         "cflags": cflags_base,
-        "host": False,
+        "progress_category": "sdk",
         "objects": objects,
     }
 
@@ -247,7 +270,7 @@ def RenderWareLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
         "lib": lib_name,
         "mw_version": "GC/1.3.2",
         "cflags": cflags_base,
-        "host": False,
+        "progress_category": "sdk",
         "objects": objects,
     }
 
@@ -258,7 +281,7 @@ def Rel(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
         "lib": lib_name,
         "mw_version": "GC/1.3.2",
         "cflags": cflags_rel,
-        "host": True,
+        "progress_category": "game",
         "objects": objects,
     }
 
@@ -267,6 +290,12 @@ Matching = True                   # Object matches and should be linked
 NonMatching = False               # Object does not match and should not be linked
 Equivalent = config.non_matching  # Object should be linked when configured with --non-matching
 
+
+# Object is only matching for specific versions
+def MatchingFor(*versions):
+    return config.version in versions
+
+
 config.warn_missing_config = True
 config.warn_missing_source = False
 config.libs = [
@@ -274,9 +303,9 @@ config.libs = [
         "lib": "SB",
         "mw_version": config.linker_version,
         "cflags": cflags_bfbb,
-        "host": True,
+        "progress_category": "game",
         "objects": [
-            Object(NonMatching, "SB/Core/x/xAnim.cpp"),
+            Object(NonMatching, "SB/Core/x/xAnim.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/x/xBase.cpp"),
             Object(Matching, "SB/Core/x/xbinio.cpp"),
             Object(NonMatching, "SB/Core/x/xBound.cpp"),
@@ -289,7 +318,7 @@ config.libs = [
             Object(NonMatching, "SB/Core/x/xCutscene.cpp"),
             Object(NonMatching, "SB/Core/x/xDebug.cpp"),
             Object(Equivalent, "SB/Core/x/xEnt.cpp"),
-            Object(NonMatching, "SB/Core/x/xEntDrive.cpp"),
+            Object(Equivalent, "SB/Core/x/xEntDrive.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Core/x/xEntMotion.cpp"),
             Object(Matching, "SB/Core/x/xEnv.cpp"),
             Object(Matching, "SB/Core/x/xEvent.cpp"),
@@ -506,7 +535,7 @@ config.libs = [
         "lib": "binkngc",
         "mw_version": "GC/1.3.2",
         "cflags": cflags_runtime,
-        "host": False,
+        "progress_category": "sdk",
         "objects": [
             Object(NonMatching, "bink/src/sdk/decode/ngc/binkngc.c"),
             Object(NonMatching, "bink/src/sdk/decode/ngc/ngcsnd.c"),
@@ -703,7 +732,7 @@ config.libs = [
         "lib": "Runtime.PPCEABI.H",
         "mw_version": config.linker_version,
         "cflags": cflags_runtime,
-        "host": False,
+        "progress_category": "sdk",
         "objects": [
             Object(NonMatching, "PowerPC_EABI_Support/Runtime/Src/__mem.c"),
             Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/abort_exit.c"),
@@ -781,7 +810,7 @@ config.libs = [
         "lib": "TRK_Minnow_Dolphin",
         "mw_version": "GC/1.3.2",
         "cflags": cflags_runtime,
-        "host": False,
+        "progress_category": "sdk",
         "objects": [
             Object(NonMatching, "TRK_MINNOW_DOLPHIN/Portable/mainloop.c"),
             Object(NonMatching, "TRK_MINNOW_DOLPHIN/Portable/nubevent.c"),
@@ -813,7 +842,7 @@ config.libs = [
         "lib": "OdemuExi2",
         "mw_version": "GC/1.3.2",
         "cflags": cflags_runtime,
-        "host": False,
+        "progress_category": "sdk",
         "objects": [
             Object(NonMatching, "OdemuExi2/DebuggerDriver.c"),
         ],
@@ -825,13 +854,6 @@ config.libs = [
             Object(NonMatching, "rwsdk/plugin/collis/ctworld.c"),
             Object(NonMatching, "rwsdk/plugin/collis/ctbsp.c"),
             Object(NonMatching, "rwsdk/plugin/collis/rpcollis.c"),
-        ],
-    ),
-    RenderWareLib(
-        "rphanim",
-        [
-            Object(NonMatching, "rwsdk/plugin/hanim/stdkey.c"),
-            Object(NonMatching, "rwsdk/plugin/hanim/rphanim.c"),
         ],
     ),
     RenderWareLib(
@@ -1002,12 +1024,37 @@ config.libs = [
     ),
 ]
 
+
+# Optional callback to adjust link order. This can be used to add, remove, or reorder objects.
+# This is called once per module, with the module ID and the current link order.
+#
+# For example, this adds "dummy.c" to the end of the DOL link order if configured with --non-matching.
+# "dummy.c" *must* be configured as a Matching (or Equivalent) object in order to be linked.
+def link_order_callback(module_id: int, objects: List[str]) -> List[str]:
+    # Don't modify the link order for matching builds
+    if not config.non_matching:
+        return objects
+    if module_id == 0:  # DOL
+        return objects + ["dummy.c"]
+    return objects
+
+# Uncomment to enable the link order callback.
+# config.link_order_callback = link_order_callback
+
+
+# Optional extra categories for progress tracking
+# Adjust as desired for your project
+config.progress_categories = [
+    ProgressCategory("game", "Game Code"),
+    ProgressCategory("sdk", "SDK Code"),
+]
+config.progress_each_module = args.verbose
+
 if args.mode == "configure":
     # Write build.ninja and objdiff.json
     generate_build(config)
 elif args.mode == "progress":
     # Print progress and write progress.json
-    config.progress_each_module = args.verbose
     calculate_progress(config)
 else:
     sys.exit("Unknown mode: " + args.mode)

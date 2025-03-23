@@ -56,16 +56,7 @@ def dtk_url(tag: str) -> str:
     return f"{repo}/releases/download/{tag}/dtk-{system}-{arch}{suffix}"
 
 
-def sjiswrap_url(tag: str) -> str:
-    repo = "https://github.com/encounter/sjiswrap"
-    return f"{repo}/releases/download/{tag}/sjiswrap-windows-x86.exe"
-
-
-def wibo_url(tag: str) -> str:
-    repo = "https://github.com/decompals/wibo"
-    return f"{repo}/releases/download/{tag}/wibo"
-
-def objdiffcli_url(tag: str) -> str:
+def objdiff_cli_url(tag: str) -> str:
     uname = platform.uname()
     suffix = ""
     system = uname.system.lower()
@@ -80,15 +71,41 @@ def objdiffcli_url(tag: str) -> str:
     repo = "https://github.com/encounter/objdiff"
     return f"{repo}/releases/download/{tag}/objdiff-cli-{system}-{arch}{suffix}"
 
+
+def sjiswrap_url(tag: str) -> str:
+    repo = "https://github.com/encounter/sjiswrap"
+    return f"{repo}/releases/download/{tag}/sjiswrap-windows-x86.exe"
+
+
+def wibo_url(tag: str) -> str:
+    repo = "https://github.com/decompals/wibo"
+    return f"{repo}/releases/download/{tag}/wibo"
+
+
 TOOLS: Dict[str, Callable[[str], str]] = {
     "binutils": binutils_url,
     "compilers": compilers_url,
     "dtk": dtk_url,
+    "objdiff-cli": objdiff_cli_url,
     "sjiswrap": sjiswrap_url,
     "wibo": wibo_url,
-    "objdiff-cli": objdiffcli_url
 }
 
+def download(url, response, output) -> None:
+    if url.endswith(".zip"):
+        data = io.BytesIO(response.read())
+        with zipfile.ZipFile(data) as f:
+            f.extractall(output)
+        # Make all files executable
+        for root, _, files in os.walk(output):
+            for name in files:
+                os.chmod(os.path.join(root, name), 0o755)
+        output.touch(mode=0o755)  # Update dir modtime
+    else:
+        with open(output, "wb") as f:
+            shutil.copyfileobj(response, f)
+        st = os.stat(output)
+        os.chmod(output, st.st_mode | stat.S_IEXEC)
 
 def main() -> None:
     parser = argparse.ArgumentParser()
@@ -102,22 +119,21 @@ def main() -> None:
 
     print(f"Downloading {url} to {output}")
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    with urllib.request.urlopen(req) as response:
-        if url.endswith(".zip"):
-            data = io.BytesIO(response.read())
-            with zipfile.ZipFile(data) as f:
-                f.extractall(output)
-            # Make all files executable
-            for root, _, files in os.walk(output):
-                for name in files:
-                    os.chmod(os.path.join(root, name), 0o755)
-            output.touch(mode=0o755)  # Update dir modtime
-        else:
-            with open(output, "wb") as f:
-                shutil.copyfileobj(response, f)
-            st = os.stat(output)
-            os.chmod(output, st.st_mode | stat.S_IEXEC)
-
+    try:
+        with urllib.request.urlopen(req) as response:
+            download(url, response, output)
+    except urllib.error.URLError as e:
+        if str(e).find("CERTIFICATE_VERIFY_FAILED") == -1:
+            raise e
+        try:
+            import certifi
+            import ssl
+        except:
+            print("\"certifi\" module not found. Please install it using \"python -m pip install certifi\".")
+            return
+            
+        with urllib.request.urlopen(req, context=ssl.create_default_context(cafile=certifi.where())) as response:
+            download(url, response, output)
 
 if __name__ == "__main__":
     main()

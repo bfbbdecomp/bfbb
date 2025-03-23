@@ -541,3 +541,19 @@ F32 xVec3Dist2(const xVec3* vecA, const xVec3* vecB)
     float dz = vecA->z - vecB->z;
     return dx * dx + dy * dy + dz * dz;
 }
+
+U32 zCamera_FlyOnly()
+{
+    switch (globals.sceneCur->sceneID)
+    {
+        case 'PG12':
+        case 'KF05':
+        case 'DB02':
+        case 'SM02':
+        case 'SM03':
+        case 'SM04':
+            return 1;
+        default:
+            return 0;
+    }
+}

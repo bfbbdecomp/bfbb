@@ -72,7 +72,7 @@ static U32 sCurrentStreamSndID;
 static F32 sPlayerSndStreamVolume[ePlayerStreamSnd_Total] = {};
 static F32 sPlayerSndSneakDelay;
 static S32 sPlayerDiedLastTime;
-static S32 sPlayerIgnoreSound;
+volatile static S32 sPlayerIgnoreSound;
 static S32 sPlayerAttackInAir;
 
 #define MAX_DELAYED_SOUNDS 8
@@ -3683,6 +3683,15 @@ static void load_player_ini()
     }
 }
 
+void zEntPlayer_RestoreSounds()
+{
+    sPlayerIgnoreSound--;
+    if (sPlayerIgnoreSound < 0) 
+	{
+		sPlayerIgnoreSound = 0;
+    }
+}
+
 void zEntPlayer_Load(xEnt* ent, xSerial* serial)
 {
     return;
@@ -3691,6 +3700,18 @@ void zEntPlayer_Load(xEnt* ent, xSerial* serial)
 void zEntPlayer_PatrickLaunch(xEnt* patLauncher)
 {
     globals.player.carry.patLauncher = patLauncher;
+}
+
+void zEntPlayerUpdateModelSB();
+
+void zEntPlayerUpdateModel()
+{
+	zPlayerGlobals* pg = &globals.player;
+	
+	if (pg->ent.model == pg->model_spongebob)
+	{
+	    zEntPlayerUpdateModelSB();
+	}
 }
 
 S32 zEntPlayer_Damage(xBase* src, U32 damage, const xVec3* knockback)
@@ -4678,7 +4699,7 @@ void zEntPlayer_SNDPlayStreamRandom(_tagePlayerStreamSnd player_snd_start,
             if (player_snd_start != player_snd_end)
             {
                 S32 first_valid;
-                S32 num_valid;
+                S32 num_valid = 0;
                 for (S32 i = 0; i < diff; i++)
                 {
                     S32 possible = rand_array[i];

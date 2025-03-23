@@ -36,83 +36,83 @@ static u32 s_patFootSoundA;
 static u32 s_patFootSoundB;
 
 static st_PACKER_ASSETTYPE assetTypeHandlers[78] = {
-    {'BSP ', 0, 0, BSP_Read, NULL, NULL, NULL, NULL, BSP_Unload, NULL},
-    {'JSP ', 0, 0, JSP_Read, NULL, NULL, NULL, NULL, JSP_Unload, NULL},
-    {'TXD '},
-    {'MODL', 0, 0, Model_Read, NULL, NULL, NULL, NULL, Model_Unload, NULL},
-    {'ANIM', 0, 0, NULL, NULL, NULL, NULL, NULL, Anim_Unload, NULL},
-    {'RWTX', 0, 0, RWTX_Read, NULL, NULL, NULL, NULL, TextureRW3_Unload, NULL},
-    {'LKIT', 0, 0, NULL, NULL, NULL, NULL, NULL, LightKit_Unload, NULL},
-    {'CAM '},
-    {'PLYR'},
-    {'NPC '},
-    {'ITEM'},
-    {'PKUP'},
-    {'TRIG'},
-    {'SDF '},
-    {'TEX '},
-    {'TXT '},
-    {'ENV '},
-    {'ATBL', 0, 0, ATBL_Read, NULL, NULL, NULL, NULL, NULL, NULL},
-    {'MINF'},
-    {'PICK'},
-    {'PLAT'},
-    {'PEND'},
-    {'MRKR'},
-    {'MVPT', 0, 0, NULL, NULL, NULL, NULL, NULL, MovePoint_Unload, NULL},
-    {'TIMR'},
-    {'CNTR'},
-    {'PORT'},
-    {'SND '},
-    {'SNDS'},
-    {'GRUP'},
-    {'MPHT'},
-    {'SFX '},
-    {'SNDI', 0, 0, SndInfoRead, NULL, NULL, NULL, NULL, NULL, NULL},
-    {'HANG'},
-    {'SIMP'},
-    {'BUTN'},
-    {'SURF'},
-    {'DSTR'},
-    {'BOUL'},
-    {'MAPR'},
-    {'GUST'},
-    {'VOLU'},
-    {'UI  '},
-    {'UIFT'},
-    {'TEXT'},
-    {'COND'},
-    {'DPAT'},
-    {'PRJT'},
-    {'LOBM'},
-    {'FOG '},
-    {'LITE'},
-    {'PARE'},
-    {'PARS'},
-    {'CSN '},
-    {'CTOC'},
-    {'CSNM'},
-    {'EGEN'},
-    {'ALST'},
-    {'RAW '},
-    {'LODT'},
-    {'SHDW'},
-    {'DYNA'},
-    {'VIL '},
-    {'VILP'},
-    {'COLL'},
-    {'PARP'},
-    {'PIPT'},
-    {'DSCO'},
-    {'JAW '},
-    {'SHRP'},
-    {'FLY '},
-    {'TRCK'},
-    {'CRV ', 0, 0, Curve_Read, NULL, NULL, NULL, NULL, NULL, NULL},
-    {'ZLIN'},
-    {'DUPC'},
-    {'SLID'},
-    {'CRDT'},
+    { 'BSP ', 0, 0, BSP_Read, NULL, NULL, NULL, NULL, BSP_Unload, NULL },
+    { 'JSP ', 0, 0, JSP_Read, NULL, NULL, NULL, NULL, JSP_Unload, NULL },
+    { 'TXD ' },
+    { 'MODL', 0, 0, Model_Read, NULL, NULL, NULL, NULL, Model_Unload, NULL },
+    { 'ANIM', 0, 0, NULL, NULL, NULL, NULL, NULL, Anim_Unload, NULL },
+    { 'RWTX', 0, 0, RWTX_Read, NULL, NULL, NULL, NULL, TextureRW3_Unload, NULL },
+    { 'LKIT', 0, 0, NULL, NULL, NULL, NULL, NULL, LightKit_Unload, NULL },
+    { 'CAM ' },
+    { 'PLYR' },
+    { 'NPC ' },
+    { 'ITEM' },
+    { 'PKUP' },
+    { 'TRIG' },
+    { 'SDF ' },
+    { 'TEX ' },
+    { 'TXT ' },
+    { 'ENV ' },
+    { 'ATBL', 0, 0, ATBL_Read, NULL, NULL, NULL, NULL, NULL, NULL },
+    { 'MINF' },
+    { 'PICK' },
+    { 'PLAT' },
+    { 'PEND' },
+    { 'MRKR' },
+    { 'MVPT', 0, 0, NULL, NULL, NULL, NULL, NULL, MovePoint_Unload, NULL },
+    { 'TIMR' },
+    { 'CNTR' },
+    { 'PORT' },
+    { 'SND ' },
+    { 'SNDS' },
+    { 'GRUP' },
+    { 'MPHT' },
+    { 'SFX ' },
+    { 'SNDI', 0, 0, SndInfoRead, NULL, NULL, NULL, NULL, NULL, NULL },
+    { 'HANG' },
+    { 'SIMP' },
+    { 'BUTN' },
+    { 'SURF' },
+    { 'DSTR' },
+    { 'BOUL' },
+    { 'MAPR' },
+    { 'GUST' },
+    { 'VOLU' },
+    { 'UI  ' },
+    { 'UIFT' },
+    { 'TEXT' },
+    { 'COND' },
+    { 'DPAT' },
+    { 'PRJT' },
+    { 'LOBM' },
+    { 'FOG ' },
+    { 'LITE' },
+    { 'PARE' },
+    { 'PARS' },
+    { 'CSN ' },
+    { 'CTOC' },
+    { 'CSNM' },
+    { 'EGEN' },
+    { 'ALST' },
+    { 'RAW ' },
+    { 'LODT' },
+    { 'SHDW' },
+    { 'DYNA' },
+    { 'VIL ' },
+    { 'VILP' },
+    { 'COLL' },
+    { 'PARP' },
+    { 'PIPT' },
+    { 'DSCO' },
+    { 'JAW ' },
+    { 'SHRP' },
+    { 'FLY ' },
+    { 'TRCK' },
+    { 'CRV ', 0, 0, Curve_Read, NULL, NULL, NULL, NULL, NULL, NULL },
+    { 'ZLIN' },
+    { 'DUPC' },
+    { 'SLID' },
+    { 'CRDT' },
 };
 
 void zAssetStartup()
@@ -127,8 +127,8 @@ void zAssetShutdown()
 }
 
 static HackModelRadius hackRadiusTable[3] = { { 0xFA77E6FAU, 20.0f },
-                                       { 0x5BD0EDACU, 1000.0f },
-                                       { 0xED21A1C6U, 50.0f } };
+                                              { 0x5BD0EDACU, 1000.0f },
+                                              { 0xED21A1C6U, 50.0f } };
 
 static char* jsp_shadow_hack_textures[5] = {
     "beach_towel",  "wood_board_Nails_singleV2", "wood_board_Nails_singleV3",
@@ -168,7 +168,11 @@ struct AnimTableList animTable[33] = {
     { "ZNPC_AnimTable_Chuck", ZNPC_AnimTable_Chuck, 0 },
     { "ZNPC_AnimTable_Jelly", ZNPC_AnimTable_Jelly, 0 },
     { "ZNPC_AnimTable_SuperFriend", ZNPC_AnimTable_SuperFriend, 0 },
-    { "ZNPC_AnimTable_BossPatrick", ZNPC_AnimTable_BossPatrick, 0, }
+    {
+        "ZNPC_AnimTable_BossPatrick",
+        ZNPC_AnimTable_BossPatrick,
+        0,
+    }
 };
 
 static xAnimTable* (*tableFuncList[48])() = {
@@ -227,7 +231,7 @@ extern xJSPHeader sDummyEmptyJSP;
 
 static void* Model_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize)
 {
-    RpAtomic* model = (RpAtomic *)iModelFileNew(indata, insize);
+    RpAtomic* model = (RpAtomic*)iModelFileNew(indata, insize);
 
     *outsize = 0x70;
 
@@ -237,7 +241,8 @@ static void* Model_Read(void* param_1, U32 param_2, void* indata, U32 insize, U3
         {
             continue;
         }
-        for (RpAtomic* tmpModel = model; tmpModel != NULL; tmpModel = (RpAtomic *)iModelFile_RWMultiAtomic(tmpModel))
+        for (RpAtomic* tmpModel = model; tmpModel != NULL;
+             tmpModel = (RpAtomic*)iModelFile_RWMultiAtomic(tmpModel))
         {
             tmpModel->boundingSphere.radius = hackRadiusTable[i].radius;
 
@@ -260,7 +265,7 @@ static void* Curve_Read(void* param_1, U32 param_2, void* indata, U32 insize, U3
     void* __dest = RWSRCGLOBAL(memoryFuncs.rwmalloc(insize));
     memcpy(__dest, indata, insize);
 
-    *(int *)((int)__dest + 0x10) = (int)__dest + 0x14;
+    *(int*)((int)__dest + 0x10) = (int)__dest + 0x14;
 
     return __dest;
 }
@@ -305,7 +310,6 @@ static void* BSP_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32*
     return bsp;
 }
 
-
 static void BSP_Unload(void*, U32)
 {
     xEnvFree(globals.sceneCur->env);
@@ -340,10 +344,12 @@ static RwTexture* TexCB(RwTexture* texture, void* data)
     {
         *(RwTexture**)(data) = texture;
     }
+    return texture;
 }
 
-static void* RWTX_Read(void*, unsigned int, void*, unsigned int, unsigned int*) {
-
+static void* RWTX_Read(void*, unsigned int, void*, unsigned int, unsigned int*)
+{
+    return NULL;
 }
 
 static void TextureRW3_Unload(void* a, U32 b)
@@ -365,10 +371,10 @@ static void ATBL_Init()
 
 void FootstepHackSceneEnter()
 {
-    s_sbFootSoundA  = xStrHash("SB_run1L");
-    s_sbFootSoundB  = xStrHash("SB_run1R");
-    s_scFootSoundA  = xStrHash("SC_run_kelpL");
-    s_scFootSoundB  = xStrHash("SC_run_kelpL");
+    s_sbFootSoundA = xStrHash("SB_run1L");
+    s_sbFootSoundB = xStrHash("SB_run1R");
+    s_scFootSoundA = xStrHash("SC_run_kelpL");
+    s_scFootSoundB = xStrHash("SC_run_kelpL");
     s_patFootSoundA = xStrHash("Pat_run_rock_dryL");
     s_patFootSoundB = xStrHash("Pat_run_rock_dryR");
 }
@@ -378,8 +384,9 @@ static U8 dummyEffectCB(U32, xAnimActiveEffect*, xAnimSingle*, void*)
     return 0;
 }
 
-static void* ATBL_Read(void*, unsigned int, void*, unsigned int, unsigned int*) {
-
+static void* ATBL_Read(void*, unsigned int, void*, unsigned int, unsigned int*)
+{
+    return NULL;
 }
 
 static void Anim_Unload(void*, U32)

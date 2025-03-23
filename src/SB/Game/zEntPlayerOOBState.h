@@ -45,8 +45,6 @@ namespace oob_state
             void stop();
         };
 
-        extern xMat4x3 shared_target;
-
         struct in_state_type : state_type
         {
             void start();
@@ -102,8 +100,9 @@ namespace oob_state
 
             unsigned char finished_tutorial;
 
-            substate_enum(*updatess)(grab_state_type&, xScene&, float&)[10];
+            substate_enum (*updatess)(grab_state_type&, xScene&, float&)[10];
             bool update_reorient(xScene&, F32&);
+            substate_enum update_stopping(xScene&, float&);
 
             void start();
             void stop();
@@ -178,15 +177,14 @@ namespace oob_state
             float hand_pitch;
             float hand_roll;
         };
-    }
+    } // namespace
 
     struct idiot_level_data
     {
-        unsigned char triggered;
-        unsigned int scene;
+        bool triggered; // offset 0x0, size 0x1
+        U32 scene; // offset 0x4, size 0x4
     };
 
-    extern idiot_level_data idiot_levels[];
 } // namespace oob_state
 
 #endif

@@ -148,7 +148,7 @@ void zNPCDutchman::Damage(en_NPC_DAMAGE_TYPE, xBase*, const xVec3*)
 S32 zNPCDutchman::LassoSetup()
 {
     zNPCCommon::LassoUseGuides(1, 1);
-    zNPCCommon::LassoSetup();
+    return zNPCCommon::LassoSetup();
 }
 
 void zNPCDutchman::render_debug()

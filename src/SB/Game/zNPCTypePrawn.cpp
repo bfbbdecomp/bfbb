@@ -204,7 +204,6 @@ void tweak_group::register_tweaks(bool init, xModelAssetParam* ap, U32 apsize)
     */
 }
 
-
 void aqua_beam::reset() // I don't know whats wrong here. Probably a simple error
 {
     firing = 0;
@@ -337,7 +336,7 @@ S32 zNPCGoalPrawnDamage::Enter(float dt, void* updCtxt)
 {
     zNPCPrawn& prawn = *(zNPCPrawn*)psyche->clt_owner;
     prawn.set_floor_state(prawn.FS_DANGER, false, false);
-    zNPCGoalCommon::Enter(dt, updCtxt);
+    return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
 // S32 zNPCGoalPrawnBowl::Enter(float dt, void* updCtxt)
@@ -351,31 +350,31 @@ S32 zNPCGoalPrawnBowl::Exit(float dt, void* updCtxt)
 {
     zNPCPrawn& prawn = *(zNPCPrawn*)psyche->clt_owner;
     prawn.set_floor_state(prawn.FS_BEGIN, true, false);
-    xGoal::Exit(dt, updCtxt);
+    return xGoal::Exit(dt, updCtxt);
 }
 
 S32 zNPCGoalPrawnDamage::Exit(float dt, void* updCtxt)
 {
     zNPCPrawn& prawn = *(zNPCPrawn*)this->psyche->clt_owner;
     prawn.update_round();
-    xGoal::Exit(dt, updCtxt);
+    return xGoal::Exit(dt, updCtxt);
 }
 
 S32 zNPCGoalPrawnDeath::Enter(float dt, void* updCtxt)
 {
     zNPCPrawn& prawn = *(zNPCPrawn*)this->psyche->clt_owner;
     prawn.decompose();
-    zNPCGoalCommon::Enter(dt, updCtxt);
+    return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
 S32 zNPCGoalPrawnDeath::Exit(float dt, void* updCtxt)
 {
-    xGoal::Exit(dt, updCtxt);
+    return xGoal::Exit(dt, updCtxt);
 }
 
 S32 zNPCGoalPrawnDeath::Process(en_trantype* trantype, float dt, void* updCtxt, xScene* xscn)
 {
-    xGoal::Process(trantype, dt, updCtxt, xscn);
+    return xGoal::Process(trantype, dt, updCtxt, xscn);
 }
 
 void xDebugAddTweak(const char*, xVec3*, const tweak_callback*, void*, U32)

@@ -20,10 +20,14 @@ struct xAnimFile
     const char* Name;
     U32 ID;
     U32 FileFlags;
+
+    // 0x10
     F32 Duration;
     F32 TimeOffset;
     U16 BoneCount;
     U8 NumAnims[2];
+
+    // 0x20
     void** RawData;
 };
 
@@ -53,18 +57,26 @@ struct xAnimState
     const char* Name;
     U32 ID;
     U32 Flags;
+
+    // 0x10
     U32 UserFlags;
     F32 Speed;
     xAnimFile* Data;
     xAnimEffect* Effects;
+    
+    // 0x20
     xAnimTransitionList* Default;
     xAnimTransitionList* List;
     F32* BoneBlend;
     F32* TimeSnap;
+
+    // 0x30
     F32 FadeRecip;
     U16* FadeOffset;
     void* CallbackData;
     xAnimMultiFile* MultiFile;
+
+    // 0x40
     xAnimStateBeforeEnterCallback BeforeEnter;
     xAnimStateCallback StateCallback;
     xAnimStateBeforeAnimMatricesCallback BeforeAnimMatrices;
@@ -140,6 +152,8 @@ struct xAnimSingle
     xAnimActiveEffect* ActiveList;
     xAnimPlay* Play;
     xAnimTransition* Sync;
+
+    // Offset: 0x30
     xAnimTransition* Tran;
     xAnimSingle* Blend;
     F32 BlendFactor;
@@ -197,5 +211,15 @@ void xAnimPlaySetState(xAnimSingle* single, xAnimState* state, F32 startTime);
 void xAnimPlayStartTransition(xAnimPlay* play, xAnimTransition* transition);
 void xAnimPlayUpdate(xAnimPlay* play, F32 timeDelta);
 void xAnimPlayEval(xAnimPlay* play);
+
+inline F32 xAnimFileRawTime(xAnimFile* data, float time)
+{
+    if (data->FileFlags & 0x1000 || (data->FileFlags & 0x2000 && time > data->Duration * 0.5f))
+    {
+        return data->TimeOffset + data->Duration - time;
+    }
+    return data->TimeOffset + time;
+}
+
 
 #endif

@@ -6,6 +6,8 @@
 #include "xQuickCull.h"
 #include "iMath3.h"
 
+struct xModelInstance;
+
 struct xCollis
 {
     struct tri_data
@@ -13,13 +15,21 @@ struct xCollis
         U32 index;
         F32 r;
         F32 d;
+
+        tri_data& operator=(const tri_data& o)
+        {
+            index = o.index;
+            r = o.r;
+            d = o.d;
+            return *this;
+        };
     };
 
     U32 flags;
     U32 oid;
     void* optr;
     xModelInstance* mptr;
-    F32 dist; // 0x30
+    F32 dist; // 0x10
     xVec3 norm;
     xVec3 tohit;
     xVec3 depen;
@@ -116,5 +126,8 @@ void xParabolaEvalPos(const xParabola*, xVec3*, F32);
 void xParabolaEvalVel(const xParabola*, xVec3*, F32);
 
 void xVec3AddScaled(xVec3*, const xVec3*, F32);
+xVec3 xCollisTriHit(const xCollis::tri_data& tri, const xModelInstance& model);
+bool xModelAnimCollDirty(const xModelInstance& cm);
+void xModelAnimCollRefresh(const xModelInstance& cm);
 
 #endif

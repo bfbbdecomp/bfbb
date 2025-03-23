@@ -1,4 +1,5 @@
 #include "xString.h"
+#include "xMath.h"
 
 #include <types.h>
 
@@ -76,24 +77,13 @@ U32 tolower__21_esc__2_unnamed_esc__2_xString_cpp_esc__2_Fi(U32 param_1)
 }
 }
 
-/*
-// Non-matching
 S32 icompare(const substr& s1, const substr& s2)
 {
-    S32 result;
-    U32 len;
-
-    len = s2.size;
-
-    if (s1.size < s2.size)
+    U32 len = MIN(s1.size, s2.size);
+    S32 result = imemcmp(s1.text, s2.text, len);
+    switch (result)
     {
-        len = s1.size;
-    }
-
-    result = imemcmp(s1.text, s2.text, len);
-
-    if (result == 0)
-    {
+        case 0:
         if (s1.size == s2.size)
         {
             result = 0;
@@ -106,7 +96,7 @@ S32 icompare(const substr& s1, const substr& s2)
                 result = -1;
             }
         }
+        break;
     }
     return result;
 }
-*/

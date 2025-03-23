@@ -1753,7 +1753,7 @@ static S32 iSG_mc_fopen(st_ISG_MEMCARD_DATA* mcdata, const char* fname, S32 fsiz
 
 static S32 iSG_mc_fclose(st_ISG_MEMCARD_DATA* mcdata)
 {
-    iSG_mc_fclose(mcdata, NULL);
+    return iSG_mc_fclose(mcdata, NULL);
 }
 
 static S32 iSG_mc_fclose(st_ISG_MEMCARD_DATA* mcdata, CARDStat* stat)
@@ -1879,7 +1879,7 @@ static S32 iSG_mcqa_fread(st_ISG_MEMCARD_DATA* mcdata, char* buf, S32 len, S32 o
 static S32 iSG_mcqa_fwrite(st_ISG_MEMCARD_DATA* mcdata, char* buf, S32 len);
 static S32 iSG_mc_fwrite(st_ISG_MEMCARD_DATA* mcdata, char* buf, S32 len)
 {
-    iSG_mcqa_fwrite(mcdata, buf, len);
+    return iSG_mcqa_fwrite(mcdata, buf, len);
 }
 
 static S32 iSG_mcqa_fwrite(st_ISG_MEMCARD_DATA* mcdata, char* buf, S32 len)

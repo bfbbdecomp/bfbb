@@ -1,8 +1,11 @@
 #include "xAnim.h"
 
 #include "iAnim.h"
+#include "iModel.h"
+
 #include "xMemMgr.h"
 #include "xMath.h"
+#include "xModel.h"
 #include "xMorph.h"
 #include "xString.h"
 
@@ -12,8 +15,9 @@
 #include <cmath>
 
 #include <dolphin.h>
+#include <stdio.h>
 
-extern xMemPool sxAnimTempTranPool;
+static xMemPool sxAnimTempTranPool;
 
 U32 gxAnimUseGrowAlloc = 0;
 
@@ -371,7 +375,7 @@ float std::atan2f(float y, float x)
 
 float CalcRecipBlendMax(U16* arg0)
 {
-    float ret = 0.0f;
+    float max = 0.0f;
     while (arg0[0] != 0xFFFF)
     {
         float f3;
@@ -381,22 +385,22 @@ float CalcRecipBlendMax(U16* arg0)
         }
         else
         {
-            f3 = 1.0f / (0.001f * arg0[1]);
+            f3 = 1.0f / (0.0009765625f * arg0[1]);
         }
 
         f3 = 0.001f * arg0[0] + f3;
-        if (f3 > ret)
+        if (f3 > max)
         {
-            ret = f3;
+            max = f3;
         }
         arg0 += 2;
     }
 
-    if (ret == 0.0f)
+    if (max == 0.0f)
     {
         return 0.0f;
     }
-    return 1.0f / ret;
+    return 1.0f / max;
 }
 
 static U32 StateHasTransition(xAnimState* state, xAnimTransition* tran)
@@ -510,7 +514,7 @@ xAnimFile* xAnimFileNewBilinear(void** rawData, const char* name, U32 flags, xAn
     }
 
     afile->RawData = (void**)&afile[1];
-    for (S32 i = 0; i < numX * numY; ++i)
+    for (S32 i = 0; i < (S32)numX * (S32)numY; ++i)
     {
         afile->RawData[i] = rawData[i];
     }
@@ -581,8 +585,6 @@ void xAnimFileSetTime(xAnimFile* data, float duration, float timeOffset)
 
     data->Duration = (data->FileFlags & 0x2000) ? 2.0f * duration : duration;
 }
-
-F32 xAnimFileRawTime(xAnimFile* data, float);
 
 void xAnimFileEval(xAnimFile* data, F32 time, F32* bilinear, U32 flags, xVec3* tran, xQuat* quat,
                    F32* arg6)
@@ -802,24 +804,24 @@ xAnimState* xAnimTableNewState(xAnimTable* table, const char* name, U32 flags, U
     return state;
 }
 
-static void _xAnimTableAddTransitionHelper(xAnimState* state, xAnimTransition* tran, U32& r5,
-                                           U32& r6, xAnimState** r7)
+static void _xAnimTableAddTransitionHelper(xAnimState* state, xAnimTransition* tran,
+                                           U32& stateCount, U32& allocCount, xAnimState** stateList)
 {
     if (tran->Flags & 0x10)
     {
-        if (!DefaultHasTransition(state, tran, &r5))
+        if (!DefaultHasTransition(state, tran, &stateCount))
         {
-            r7[r6] = state;
-            r6++;
+            stateList[allocCount] = state;
+            allocCount++;
         }
     }
     else
     {
         if (!StateHasTransition(state, tran))
         {
-            r7[r6] = state;
-            r6++;
-            r5++;
+            stateList[allocCount] = state;
+            allocCount++;
+            stateCount++;
         }
     }
 }
@@ -854,9 +856,20 @@ void _xAnimTableAddTransition(xAnimTable* table, xAnimTransition* tran, const ch
     //     class xAnimTransitionList * curr; // r7
 
     U8* buffer = (U8*)giAnimScratch;
-    char* x = (char*)(giAnimScratch + 0x400);
+    xAnimState** stateList = (xAnimState**)(giAnimScratch + 0x400);
+    S32 i;
+    U32 stateCount = 0;
+    U32 allocCount = 0;
+
+    xAnimTransitionList* tlist;
+    xAnimTransition* substTransitionList[32];
+
+    char extra[128];
+    char tempName[128];
+
     U8 bVar2 = false;
     U8 bVar1 = false;
+    S32 iVar12 = 0;
 
     if (dest != NULL)
     {
@@ -870,35 +883,139 @@ void _xAnimTableAddTransition(xAnimTable* table, xAnimTransition* tran, const ch
         }
     }
 
-    char* str = xStrTokBuffer(source, " ,\t\n\r", table);
-    // Note: might be compiler generated to lift this from the loop
-    U8 bVar3 = dest != NULL; // isComplex??
-    char* COMPLEX_PATTERNS = "{}()<>";
-    for (S32 i = 0; i < 2; ++i)
+    for (char* x = xStrTokBuffer(source, " ,\t\n\r", table); x != NULL;
+         x = xStrTokBuffer(source, " ,\t\n\r", table))
     {
-        U8 bVar4 = bVar3;
-        if (bVar4)
+        bVar1 = dest != NULL;
+        if (!bVar1)
         {
-            for (char* it = str; *it != NULL; ++it)
+            for (char* it = x; *it != NULL; ++it)
             {
                 if (_xCharIn(*it, "#+*?{}()<>|;") != 0)
                 {
-                    bVar4 = true;
+                    bVar1 = true;
                     break;
                 }
             }
         }
 
-        if (bVar4)
+        if (bVar1)
         {
-            xAnimState* state = table->StateList;
-            while (1)
+            for (xAnimState* state = table->StateList; state != NULL; state = state->Next)
             {
-                // _xCheckAnimName(state->Name, str, )
+                if (_xCheckAnimName(state->Name, x, tempName))
+                {
+                    if (bVar2)
+                    {
+                        for (const char* tempIterator = dest; *tempIterator != NULL; ++tempIterator)
+                        {
+                            if (*dest == '@' || *dest == '~')
+                            {
+                                bVar1 = *dest == '~';
+                                U32 l = strlen(tempName);
+                                strcpy(extra, tempName);
+                            }
+                            else
+                            {
+                                *extra = *dest;
+                            }
+                        }
+                        *extra = NULL;
+                        xAnimState* sp = xAnimTableGetState(table, extra);
+                        if (bVar1 && sp == NULL)
+                        {
+                            continue;
+                        }
+
+                        xAnimTransition* duplicatedTransition = tran;
+                        if (iVar12 != 0)
+                        {
+                            if (gxAnimUseGrowAlloc)
+                            {
+                                duplicatedTransition = (xAnimTransition*)xMemGrowAlloc(
+                                    gActiveHeap, sizeof(xAnimTransition));
+                            }
+                            else
+                            {
+                                duplicatedTransition = (xAnimTransition*)xMemAlloc(
+                                    gActiveHeap, sizeof(xAnimTransition), 0);
+                            }
+                            memcpy(duplicatedTransition, tran, sizeof(xAnimTransition));
+                        }
+                        duplicatedTransition->Dest = sp;
+                        iVar12++;
+                        substTransitionList[iVar12] = duplicatedTransition;
+                    }
+                    if (tran->Dest != state)
+                    {
+                        _xAnimTableAddTransitionHelper(state, tran, stateCount, allocCount,
+                                                       stateList);
+                    }
+                }
+            }
+        }
+        else
+        {
+            xAnimState* ssp = xAnimTableGetState(table, x);
+            if (ssp != NULL && tran->Dest != ssp)
+            {
+                _xAnimTableAddTransitionHelper(ssp, tran, stateCount, allocCount, stateList);
             }
         }
     }
-    tran->Flags = bVar1;
+
+    xAnimTransitionList* curr;
+    if (stateCount != 0)
+    {
+        if (gxAnimUseGrowAlloc)
+        {
+            curr = (xAnimTransitionList*)xMemGrowAlloc(gActiveHeap,
+                                                       stateCount * sizeof(xAnimTransitionList));
+        }
+        else
+        {
+            curr = (xAnimTransitionList*)xMemAlloc(gActiveHeap,
+                                                   stateCount * sizeof(xAnimTransitionList), 0);
+        }
+    }
+    if (tran->Flags & 0x10)
+    {
+        for (S32 i = 0; i < allocCount; ++i)
+        {
+            if (DefaultOverride(stateList[i], tran) == 0)
+            {
+                if (tran->Conditional == NULL && stateList[i]->Default != NULL)
+                {
+                    curr->Next = NULL;
+                    curr->T = bVar2 ? substTransitionList[i] : tran;
+                }
+            }
+            else
+            {
+                curr->T = bVar2 ? substTransitionList[i] : tran;
+                stateList[i]->Default = curr;
+            }
+        }
+    }
+    else
+    {
+        if (bVar2)
+        {
+            for (S32 i = 0; i < allocCount; ++i)
+            {
+                curr->T = substTransitionList[i];
+                curr->Next = stateList[i]->List->Next;
+            }
+        }
+        else
+        {
+            for (S32 i = 0; i < allocCount; ++i)
+            {
+                curr->T = tran;
+                curr->Next = stateList[i]->List->Next;
+            }
+        }
+    }
 }
 
 void xAnimTableAddTransition(xAnimTable* table, xAnimTransition* tran, const char* source)
@@ -906,7 +1023,66 @@ void xAnimTableAddTransition(xAnimTable* table, xAnimTransition* tran, const cha
     _xAnimTableAddTransition(table, tran, source, NULL);
 }
 
-void xAnimTableAddFile(xAnimTable* table, xAnimFile* file, char* states)
+xAnimTransition* xAnimTableNewTransition(xAnimTable* table, const char* source, const char* dest,
+                                         xAnimTransitionConditionalCallback conditional,
+                                         xAnimTransitionCallback callback, U32 flags, U32 userFlags,
+                                         F32 srcTime, F32 destTime, U16 priority, U16 queuePriority,
+                                         F32 blendRecip, U16* blendOffset)
+{
+    xAnimTransition* tran;
+    if (gxAnimUseGrowAlloc)
+    {
+        tran = (xAnimTransition*)xMemGrowAllocSize(sizeof(xAnimTransition));
+    }
+    else
+    {
+        tran = (xAnimTransition*)xMemAllocSize(sizeof(xAnimTransition));
+    }
+
+    if (blendRecip != 0.0f)
+    {
+        blendRecip = 1.0f / blendRecip;
+    }
+
+    tran->Next = table->TransitionList;
+    table->TransitionList = tran;
+
+    U8 isComplex = FALSE;
+    if (dest == NULL || *dest == NULL)
+    {
+        tran->Dest = NULL;
+    }
+    else
+    {
+        for (S32 i = 0; dest[i] != NULL; ++i)
+        {
+            if (dest[i] == '@' || dest[i] == '~')
+            {
+                isComplex = true;
+                break;
+            }
+        }
+        tran->Dest = isComplex ? NULL : xAnimTableGetState(table, dest);
+    }
+
+    tran->Conditional = conditional;
+    tran->Callback = callback;
+    tran->Flags = flags;
+    tran->UserFlags = userFlags;
+    tran->SrcTime = srcTime;
+    tran->DestTime = destTime;
+    tran->Priority = priority;
+    tran->QueuePriority = queuePriority;
+
+    tran->BlendRecip = blendOffset != NULL ? CalcRecipBlendMax(blendOffset) : blendRecip;
+    tran->BlendOffset = blendOffset;
+
+    _xAnimTableAddTransition(table, tran, source, isComplex ? dest : NULL);
+
+    return tran;
+}
+
+void xAnimTableAddFile(xAnimTable* table, xAnimFile* file, const char* states)
 {
     U8* buffer = (U8*)giAnimScratch;
     char* stateName = xStrTokBuffer(states, " ,\t\n\r", buffer);
@@ -1165,7 +1341,7 @@ static void EffectSingleRun(xAnimSingle* single)
     single->Effect = effect;
 }
 
-void EffectSingleLoop(xAnimSingle* single)
+static void EffectSingleLoop(xAnimSingle* single)
 {
     EffectSingleRun(single);
     xAnimActiveEffect* alist = single->ActiveList;
@@ -1193,7 +1369,50 @@ void EffectSingleLoop(xAnimSingle* single)
     single->Effect = effect;
 }
 
-void EffectSingleStop(xAnimSingle* single);
+static void EffectSingleStop(xAnimSingle* single)
+{
+    if (single->State == NULL || single->LastTime == -1.0f)
+    {
+        return;
+    }
+
+    for (U32 i = 0; single->ActiveCount > i && single->ActiveList[i].Effect != NULL; ++i)
+    {
+        if (single->ActiveList[i].Effect->Flags & 0x2)
+        {
+            single->ActiveList[i].Effect->Callback(3, &single->ActiveList[i], single,
+                                                   single->Play->Object);
+        }
+    }
+
+    single->ActiveList->Effect = NULL;
+    for (xAnimEffect* effect = single->Effect; effect != NULL; effect = effect->Next)
+    {
+        xAnimActiveEffect tempActive;
+        if ((effect->Flags & 0x9) == 0x9)
+        {
+            tempActive.Effect = effect;
+            tempActive.Handle = effect->Callback(1, &tempActive, single, single->Play->Object);
+
+            if (effect->Flags & 0x2)
+            {
+                effect->Callback(3, &tempActive, single, single->Play->Object);
+            }
+        }
+    }
+
+    single->Effect = NULL;
+}
+
+static void StopUpdate(xAnimSingle* single)
+{
+    if (single->Time > single->State->Data->Duration)
+    {
+        single->Time = single->State->Data->Duration;
+        single->CurrentSpeed = 0.0f;
+    }
+}
+
 static void LoopUpdate(xAnimSingle* single)
 {
     F32 time = single->Time;
@@ -1209,7 +1428,346 @@ static void LoopUpdate(xAnimSingle* single)
     }
 }
 
-void SingleUpdate(xAnimSingle* single, F32 timeDelta);
+void xAnimPlaySetState(xAnimSingle* single, xAnimState* state, F32 startTime)
+{
+    EffectSingleStop(single);
+    if (single->Blend)
+    {
+        EffectSingleStop(single->Blend);
+        single->Blend->State = NULL;
+    }
+
+    single->State = state;
+    if (state == NULL)
+    {
+        return;
+    }
+
+    single->Time =
+        (state->Flags & 0x100 && startTime == 0.0f) ? state->Data->Duration * xurand() : startTime;
+    single->CurrentSpeed = state->Speed;
+    single->BilinearLerp[0] = 0.0f;
+    single->BilinearLerp[1] = 0.0f;
+    single->Effect = NULL;
+    memset(single->ActiveList, 0, single->ActiveCount * sizeof(xAnimActiveEffect));
+    single->LastTime = -1.0f;
+    single->Sync = NULL;
+
+    if (single->Tran != NULL && single->Tran->Flags & 0x2)
+    {
+        xMemPoolFree(&sxAnimTempTranPool, single->Tran);
+    }
+
+    single->Tran = NULL;
+    single->BlendFactor = 0.0f;
+}
+
+static void SingleUpdate(xAnimSingle* single, F32 timeDelta)
+{
+    U32 foundBlendstop = 0;
+    U32 firstStep = 1;
+    xAnimTransition* foundTransition = NULL;
+    xAnimSingle* bl = NULL;
+    F32 tranDelta = 0.0f;
+    F32 blendDelta = 0.0f;
+    F32 singleTime;
+    if (single->State == NULL)
+    {
+        return;
+    }
+
+    void* object = single->Play->Object;
+    if (single->LastTime == -1.0f)
+    {
+        EffectSingleStart(single);
+    }
+
+    single->LastTime = single->Time;
+    singleTime = timeDelta * single->CurrentSpeed + single->Time;
+
+    if (single->Blend != NULL && single->Blend->State != NULL)
+    {
+        bl = single->Blend;
+        if (bl->LastTime == -1.0f)
+        {
+            EffectSingleStart(bl);
+        }
+        bl->LastTime = bl->Time;
+    }
+
+    F32 duration = single->State->Data->Duration;
+    if (single->Sync != NULL)
+    {
+        // FIXME: assignment in the loop seems unlikely but assigning at the
+        // declaration swaps instructions.
+        F32 timeCmp;
+        if ((timeCmp = single->Sync->SrcTime) != 0.0f)
+        {
+            if (timeCmp > duration)
+            {
+                timeCmp = duration;
+            }
+            if (single->LastTime <= timeCmp && singleTime >= timeCmp)
+            {
+                foundTransition = single->Sync;
+                tranDelta = (singleTime - timeCmp) / single->CurrentSpeed;
+                timeDelta = timeDelta - tranDelta;
+                if (timeDelta < 0.0f)
+                {
+                    timeDelta = 0.0f;
+                }
+            }
+            else
+            {
+                timeCmp += duration;
+                if (single->LastTime <= timeCmp && singleTime >= timeCmp)
+                {
+                    foundTransition = single->Sync;
+                    tranDelta = (singleTime - timeCmp) / single->CurrentSpeed;
+                    timeDelta = timeDelta - tranDelta;
+                    if (timeDelta < 0.0f)
+                    {
+                        timeDelta = 0.0f;
+                    }
+                }
+            }
+        }
+        else if (bl == NULL)
+        {
+            foundTransition = single->Sync;
+            tranDelta = timeDelta;
+            timeDelta = 0.0f;
+        }
+    }
+    else
+    {
+        if ((single->State->Flags & 0x30) == 0x20)
+        {
+            F32 timeCmp = single->State->Default->T->SrcTime;
+
+            if (timeCmp == 0.0f || timeCmp > duration)
+            {
+                timeCmp = duration;
+            }
+
+            if (singleTime >= timeCmp &&
+                ((single->State->Default->T->Flags & 0x4) == 0 || bl == NULL))
+            {
+                xAnimTransitionList* curr = single->State->Default;
+                while (curr != NULL && curr->T->Conditional != NULL &&
+                       curr->T->Conditional(curr->T, single, object) == 0)
+                {
+                    curr = curr->Next;
+                }
+
+                if (curr == NULL)
+                {
+                    fprintf(stderr, "State \"%s\" no default conditionals true!\n",
+                            single->State->Name);
+                    curr = single->State->Default;
+                }
+
+                foundTransition = curr->T;
+                if (single->LastTime < timeCmp)
+                {
+                    tranDelta = (singleTime - timeCmp) / single->CurrentSpeed;
+                    timeDelta = timeDelta - tranDelta;
+                    if (timeDelta < 0.0f)
+                    {
+                        timeDelta = 0.0f;
+                    }
+                }
+                else
+                {
+                    tranDelta = timeDelta;
+                    timeDelta = 0.0f;
+                }
+            }
+        }
+    }
+
+    if (single->BlendFactor != 0.0f)
+    {
+        F32 recip;
+        if (single->Tran != NULL)
+        {
+            recip = single->Tran->BlendRecip;
+        }
+        else
+        {
+            recip = single->State->FadeRecip;
+        }
+
+        if (recip * (single->BlendFactor + timeDelta) > 1.0f)
+        {
+            foundBlendstop = 1;
+            blendDelta = (single->BlendFactor + timeDelta) - (1.0f / recip);
+            timeDelta = timeDelta - blendDelta;
+            if (timeDelta < 0.0f)
+            {
+                timeDelta = 0.0f;
+            }
+            if (blendDelta < 0.0f)
+            {
+                blendDelta = 0.01f;
+            }
+        }
+    }
+
+    do
+    {
+        if (!firstStep)
+        {
+            if (foundBlendstop)
+            {
+                single->BlendFactor = 0.0f;
+                if (bl != NULL)
+                {
+                    EffectSingleStop(bl);
+                    bl->State = NULL;
+                    bl = NULL;
+
+                    if (single->Tran != NULL && single->Tran->Flags & 0x2)
+                    {
+                        xMemPoolFree(&sxAnimTempTranPool, single->Tran);
+                    }
+                    single->Tran = NULL;
+                }
+                else
+                {
+                    if (single->Tran != NULL)
+                    {
+                        if (single->Tran != NULL && single->Tran->Flags & 0x2)
+                        {
+                            xMemPoolFree(&sxAnimTempTranPool, single->Tran);
+                        }
+                        single->Tran = NULL;
+                    }
+                    else
+                    {
+                        EffectSingleStop(single);
+                        single->State = NULL;
+                        return;
+                    }
+                }
+                timeDelta = blendDelta;
+                foundBlendstop = FALSE;
+            }
+            else
+            {
+                if (bl != NULL)
+                {
+                    EffectSingleStop(bl);
+                    bl->State = NULL;
+                    bl = NULL;
+                    single->BlendFactor = 0.0f;
+                }
+                if (foundTransition->BlendRecip == 0.0f || single->Blend == NULL)
+                {
+                    EffectSingleStop(single);
+                    if (single->Tran != NULL && single->Tran->Flags & 0x2)
+                    {
+                        xMemPoolFree(&sxAnimTempTranPool, single->Tran);
+                    }
+                    single->Tran = NULL;
+                }
+                else
+                {
+                    bl = single->Blend;
+                    bl->State = single->State;
+                    bl->Time = single->Time;
+                    bl->CurrentSpeed = single->CurrentSpeed;
+                    bl->BilinearLerp[0] = single->BilinearLerp[0];
+                    bl->BilinearLerp[1] = single->BilinearLerp[1];
+                    bl->Effect = single->Effect;
+                    bl->LastTime = single->LastTime;
+                    memcpy(bl->ActiveList, single->ActiveList,
+                           single->ActiveCount * sizeof(xAnimTransitionList));
+                    single->ActiveList->Effect = NULL;
+
+                    if (single->Tran != NULL && single->Tran->Flags & 0x2)
+                    {
+                        xMemPoolFree(&sxAnimTempTranPool, single->Tran);
+                    }
+                    single->Tran = foundTransition;
+                    single->BlendFactor = 0.0000001f;
+                }
+
+                TransitionTimeInit(single, foundTransition);
+                single->State = foundTransition->Dest;
+                single->CurrentSpeed = single->State->Speed;
+                single->BilinearLerp[0] = 0.0f;
+                single->BilinearLerp[1] = 0.0f;
+                single->Sync = NULL;
+                EffectSingleStart(single);
+
+                if (foundTransition->Dest->BeforeEnter != NULL)
+                {
+                    foundTransition->Dest->BeforeEnter(single->Play, foundTransition->Dest);
+                }
+                if (foundTransition->Callback != NULL)
+                {
+                    foundTransition->Callback(foundTransition, single, single->Play->Object);
+                }
+                timeDelta = tranDelta;
+                foundTransition = NULL;
+            }
+        }
+
+        single->Time = timeDelta * single->CurrentSpeed + single->Time;
+        if (single->BlendFactor != 0.0f)
+        {
+            single->BlendFactor += timeDelta;
+        }
+        if ((single->State->Flags & 0x30) == 0x10)
+        {
+            LoopUpdate(single);
+        }
+        else
+        {
+            StopUpdate(single);
+        }
+        EffectSingleRun(single);
+
+        if (bl != NULL)
+        {
+            if ((bl->State->Flags & 0x30) == 0x10)
+            {
+                LoopUpdate(bl);
+            }
+            else
+            {
+                StopUpdate(bl);
+            }
+            EffectSingleRun(bl);
+        }
+
+        firstStep = FALSE;
+    } while (foundBlendstop || foundTransition != NULL);
+
+    if (single->Tran == NULL && single->BlendFactor == 0.0f)
+    {
+        if ((single->State->Flags & 0x30) == 0x30)
+        {
+            if (single->State->Flags & 0x200)
+            {
+                if (single->Time >= duration)
+                {
+                    single->BlendFactor = 0.0000001f;
+                }
+            }
+            else if (single->State->FadeRecip * (duration - single->Time) < 1.0f)
+            {
+                single->BlendFactor = 0.0000001f;
+            }
+        }
+    }
+    EffectSingleDuration(single);
+    if (bl != NULL)
+    {
+        EffectSingleDuration(bl);
+    }
+}
 
 static void SingleEval(xAnimSingle* single, xVec3* tran, xQuat* quat)
 {
@@ -1233,7 +1791,33 @@ static void SingleEval(xAnimSingle* single, xVec3* tran, xQuat* quat)
     }
 }
 
-void xAnimPlaySetup(xAnimPlay* play, void* object, xAnimTable* table, xModelInstance* modelInst);
+void xAnimPlaySetup(xAnimPlay* play, void* object, xAnimTable* table, xModelInstance* modelInst)
+{
+    play->BoneCount = modelInst->BoneCount;
+    play->Object = object;
+    play->Table = table;
+    play->ModelInst = modelInst;
+
+    modelInst->Anim = play;
+    modelInst->Flags |= 0x104;
+
+    if (table->MorphIndex != 0)
+    {
+        modelInst->Flags |= 0x80;
+    }
+
+    for (S32 i = 0; i < play->NumSingle; ++i)
+    {
+        play->Single[i].SingleFlags = (1 << i & table->MorphIndex) ? 0x8000 : 0x1;
+        play->Single[i].State = NULL;
+        play->Single[i].Tran = NULL;
+        if (play->Single[i].Blend != NULL)
+        {
+            play->Single[i].Blend->State = NULL;
+        }
+    }
+    xAnimPlaySetState(play->Single, table->StateList, 0.0f);
+}
 
 void xAnimPlayChooseTransition(xAnimPlay* play)
 {
@@ -1281,6 +1865,78 @@ void xAnimPlayChooseTransition(xAnimPlay* play)
     }
 }
 
+void xAnimPlayStartTransition(xAnimPlay* play, xAnimTransition* transition)
+{
+    xAnimSingle* single = &play->Single[transition->Dest->Flags & 0xf];
+    xAnimSingle* bl = single->Blend;
+
+    if (transition->SrcTime != 0.0f || (transition->Flags & 0x4 && bl != NULL && bl->State))
+    {
+        single->Sync = transition;
+        return;
+    }
+
+    if (bl != NULL && bl->State != NULL)
+    {
+        EffectSingleStop(bl);
+        bl->State = NULL;
+        single->BlendFactor = 0.0f;
+    }
+
+    if (transition->BlendRecip == 0.0f || single->Blend == NULL)
+    {
+        EffectSingleStop(single);
+        if (single->Tran != NULL && single->Tran->Flags & 0x2)
+        {
+            xMemPoolFree(&sxAnimTempTranPool, single->Tran);
+        }
+        single->Tran = NULL;
+    }
+    else
+    {
+        if (single->State != NULL)
+        {
+            bl->State = single->State;
+            bl->Time = single->Time;
+            bl->CurrentSpeed = single->CurrentSpeed;
+            bl->BilinearLerp[0] = single->BilinearLerp[0];
+            bl->BilinearLerp[1] = single->BilinearLerp[1];
+            bl->Effect = single->Effect;
+
+            bl->LastTime = single->LastTime;
+
+            memcpy(bl->ActiveList, single->ActiveList,
+                   single->ActiveCount * sizeof(xAnimActiveEffect));
+            single->ActiveList[0].Effect = NULL;
+        }
+
+        if (single->Tran != NULL && single->Tran->Flags & 0x2)
+        {
+            xMemPoolFree(&sxAnimTempTranPool, single->Tran);
+        }
+        single->Tran = transition;
+        single->BlendFactor = 0.0000001f;
+    }
+
+    TransitionTimeInit(single, transition);
+    single->State = transition->Dest;
+    single->CurrentSpeed = single->State->Speed;
+    single->BilinearLerp[0] = 0.0f;
+    single->BilinearLerp[1] = 0.0f;
+    single->Sync = NULL;
+    EffectSingleStart(single);
+
+    if (transition->Dest->BeforeEnter != NULL)
+    {
+        transition->Dest->BeforeEnter(play, transition->Dest);
+    }
+
+    if (transition->Callback != NULL)
+    {
+        transition->Callback(transition, single, single->Play->Object);
+    }
+}
+
 void xAnimPlayUpdate(xAnimPlay* play, F32 timeDelta)
 {
     U32 i;
@@ -1297,6 +1953,81 @@ void xAnimPlayUpdate(xAnimPlay* play, F32 timeDelta)
             single->State->StateCallback(single->State, single, play->Object);
         }
     }
+}
+
+void xAnimPlayEval(xAnimPlay* play)
+{
+    U32 i;
+    U32 bone;
+    xQuat* quatresult = (xQuat*)giAnimScratch;
+    xVec3* tranresult = (xVec3*)((U8*)quatresult + 0x410);
+
+    if (play->BoneCount > 1)
+    {
+        xQuat* quatblend = (xQuat*)((U8*)quatresult + 0x720);
+        xVec3* tranblend = (xVec3*)((U8*)quatblend + 0x410);
+        SingleEval(play->Single, tranresult, (xQuat*)giAnimScratch);
+        for (i = 1; i < play->NumSingle; ++i)
+        {
+            xAnimSingle* si = &play->Single[i];
+            if (si->State == NULL || si->SingleFlags & 0x8000)
+            {
+                continue;
+            }
+            F32 blendF = 1.0f;
+            F32 blendR = 1.0f;
+            U16* blendO = NULL;
+            SingleEval(si, tranblend, quatblend);
+
+            if ((si->Blend == NULL || si->Blend->State == NULL) && si->BlendFactor)
+            {
+                if (si->Tran != NULL)
+                {
+                    blendF = si->BlendFactor;
+                    blendR = si->Tran->BlendRecip;
+                    blendO = si->Tran->BlendOffset;
+                }
+                else
+                {
+                    blendF = -si->BlendFactor;
+                    blendR = si->State->FadeRecip;
+                    blendO = si->State->FadeOffset;
+                }
+            }
+
+            if ((si->SingleFlags & 0x3) == 2)
+            {
+                iAnimBlend(blendF, blendR, blendO, si->State->BoneBlend, play->BoneCount - 1,
+                           tranblend + 1, quatblend + 1, NULL, NULL, tranblend + 1, quatblend + 1);
+
+                for (bone = 1; bone < play->BoneCount; ++bone)
+                {
+                    tranresult[bone].x += tranblend[bone].x;
+                    tranresult[bone].y += tranblend[bone].y;
+                    tranresult[bone].z += tranblend[bone].z;
+                    xQuatMul(&quatresult[bone], &quatresult[bone], &quatblend[bone]);
+                }
+            }
+            else
+            {
+                iAnimBlend(blendF, blendR, blendO, si->State->BoneBlend, play->BoneCount - 1,
+                           tranresult + 1, quatresult + 1, tranblend + 1, quatblend + 1,
+                           tranresult + 1, quatresult + 1);
+            }
+        }
+    }
+    memset(tranresult, 0, sizeof(xVec3));
+    memset(quatresult, 0, sizeof(xQuat));
+    if (play->Single->State->BeforeAnimMatrices != NULL)
+    {
+        play->Single->State->BeforeAnimMatrices(play, quatresult, tranresult, play->BoneCount);
+    }
+
+    if (play->BeforeAnimMatrices != NULL)
+    {
+        play->BeforeAnimMatrices(play, quatresult, tranresult, play->BoneCount);
+    }
+    iModelAnimMatrices(play->ModelInst->Data, quatresult, tranresult, &play->ModelInst->Mat[1]);
 }
 
 void xAnimPoolCB(xMemPool* pool, void* data)
@@ -1360,6 +2091,68 @@ void xAnimPoolCB(xMemPool* pool, void* data)
     }
 
     clone->Pool = pool;
+}
+
+#define ADD_4_BITS(x) (((x) & 1) + (((x) >> 1) & 1) + (((x) >> 2) & 1) + (((x) >> 3) & 1))
+void xAnimPoolInit(xMemPool* pool, U32 count, U32 singles, U32 blendFlags, U32 effectMax)
+{
+    effectMax += effectMax & 1;
+
+    U32 size =
+        (effectMax * sizeof(xAnimActiveEffect) + sizeof(xAnimSingle)) *
+            (ADD_4_BITS((blendFlags & 0xffff) & ((int)(1 << singles) - 1 >> 0x0)) +
+             ADD_4_BITS((blendFlags & 0xffff) & ((int)(1 << singles) - 1 >> 0x4)) +
+             ADD_4_BITS((blendFlags & 0xffff) & ((int)(1 << singles) - 1 >> 0x8)) +
+             ADD_4_BITS((blendFlags & 0xffff) & ((int)(1 << singles) - 1 >> 0xC)) + singles) +
+        sizeof(xAnimPlay);
+
+    U32 i;
+    void* buffer = xMemAllocSize(count * size);
+
+    xAnimPlay* play = (xAnimPlay*)buffer;
+    play->NumSingle = singles;
+
+    xAnimSingle* currsingle;
+    play->Single = currsingle = (xAnimSingle*)((U32)play + sizeof(xAnimPlay));
+    currsingle += singles;
+
+    for (i = 0; i < singles; ++i)
+    {
+        if (blendFlags & (1 << i))
+        {
+            play->Single[i].Blend = currsingle;
+            currsingle->Blend = NULL;
+            currsingle++;
+        }
+        else
+        {
+            play->Single[i].Blend = NULL;
+        }
+    }
+
+    xAnimActiveEffect* curract = (xAnimActiveEffect*)currsingle;
+    for (i = 0; i < play->NumSingle; ++i)
+    {
+        currsingle = &play->Single[i];
+        while (currsingle)
+        {
+            currsingle->ActiveCount = effectMax;
+            if (effectMax != 0)
+            {
+                currsingle->ActiveList = curract;
+                curract += effectMax;
+            }
+            else
+            {
+                currsingle->ActiveList = NULL;
+            }
+
+            currsingle = currsingle->Blend;
+        }
+    }
+
+    play->Pool = pool;
+    xMemPoolSetup(pool, buffer, 0, 1, xAnimPoolCB, size, count, count / 2);
 }
 
 xAnimPlay* xAnimPoolAlloc(xMemPool* pool, void* object, xAnimTable* table,

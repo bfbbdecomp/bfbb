@@ -103,7 +103,6 @@ void xNPCBasic::Init(xEntAsset* asset)
     baseFlags &= 0xffef;
 }
 
-// Register assignment in the floating point instructions is slightly wrong.
 void xNPCBasic::Reset()
 {
     xEntReset(this);
@@ -111,7 +110,7 @@ void xNPCBasic::Reset()
     if (!(U32(flags1.flg_basenpc) & 0x2))
     {
         xVec3Copy(&frame->drot.axis, &g_Y3);
-        frame->drot.angle = xNPCBasic_float_0;
+        frame->drot.angle = 0.0f;
         xVec3Copy(&frame->rot.axis, &g_Y3);
         frame->rot.angle = asset->ang.x;
     }
@@ -119,16 +118,8 @@ void xNPCBasic::Reset()
     flags1.flg_basenpc |= 4;
     colFreq = -1;
 
-    F32 f1 = xurand();
-    F32 f0 = xNPCBasic_float_onehalf;
-    F32 f2 = xNPCBasic_float_onequarter;
-    f1 -= f0;
-    f0 = xNPCBasic_float_15;
-    f1 = f2 * f1;
-    f0 = f0 * f1 + f0;
-    colFreqReset = (S32)f0;
+    colFreqReset = (15.0f * (0.25f * (xurand() - 0.5f))) + 15.0f;
     RestoreColFlags();
-    return;
 }
 
 void NPC_alwaysUseSphere(xEnt* ent, xVec3* value)

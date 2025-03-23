@@ -21,5 +21,6 @@ void iModelMaterialMul(RpAtomic* model, F32 rm, F32 gm, F32 bm);
 RpAtomic* iModelFileNew(void* buffer, U32 size);
 void iModelRender(RpAtomic* model, RwMatrix* mat);
 void iModelUnload(RpAtomic* userdata);
+void iModelAnimMatrices(RpAtomic* model, xQuat* quat, xVec3* tran, RwMatrixTag* mat);
 
 #endif
