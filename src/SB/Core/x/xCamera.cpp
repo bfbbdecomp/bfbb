@@ -563,7 +563,6 @@ void xCameraUpdate(xCamera* cam, F32 dt)
 
     num_updates = std::ceilf(_1283 * dt);
 
-    // non-matching: int-to-float conversion
     sdt = dt / num_updates;
 
     for (i = 0; i < num_updates; i++)
@@ -674,11 +673,9 @@ void xCameraFXZoomUpdate(cameraFX* f, F32 dt, const xMat4x3*, xMat4x3* m)
         f->zoom.velCur += f->zoom.accel * dt;
         f->zoom.distanceCur -= f->zoom.velCur * dt;
 
-        // non-matching: float registers swapped
-
-        if (f->zoom.distanceCur <= _765)
+        if (f->zoom.distanceCur <= 0.0f)
         {
-            f->zoom.distanceCur = _765;
+            f->zoom.distanceCur = 0.0f;
             f->zoom.mode = CAMERAFX_ZOOM_MODE_3;
             f->flags |= 0x2;
         }

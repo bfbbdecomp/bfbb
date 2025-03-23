@@ -1,3 +1,4 @@
+#include "xDebug.h"
 #include "xEntMotion.h"
 #include "xMath.h"
 
@@ -157,4 +158,80 @@ void xEntMechForward(xEntMotion* motion)
             }
         }
     }
+}
+
+void xEntMechReverse(xEntMotion* motion)
+{
+    xEntMotionMechData* mech = &(motion->asset->mech);
+    xEntMotionAsset* mkasst = motion->asset;
+
+    xEntMotionRun(motion);
+
+    if (motion->mech.state == 0)
+    {
+        motion->mech.ss = -motion->mech.ss;
+        motion->mech.sr = -motion->mech.sr;
+        motion->tmr = mkasst->mech.sld_tm - motion->tmr;
+        motion->mech.state = 3;
+    }
+    else if (motion->mech.state == 1)
+    {
+        motion->mech.ss = -motion->mech.ss;
+        motion->mech.sr = -motion->mech.sr;
+        motion->tmr = mkasst->mech.rot_tm - motion->tmr;
+        motion->mech.state = 4;
+    }
+    else if ((motion->mech.state != 2) && (motion->mech.state != 3) && (motion->mech.state != 4) && (motion->mech.state != 5) && (motion->mech.state == 6))
+    {
+        motion->mech.ss = -motion->mech.ss;
+        motion->mech.sr = -motion->mech.sr;
+        motion->tmr = 0.0f;
+
+        if ((mech->type == 0) || (mech->type == 2) || (mech->type == 4))
+        {
+            motion->mech.state = 3;
+        }
+        else
+        {
+            motion->mech.state = 4;
+        }
+    }
+}
+
+static xEntMotion** dbg_xems;
+static U16 dbg_num;
+static U16 dbg_num_allocd;
+static S16 dbg_idx;
+
+void xEntMotionDebugCB();
+
+// Non-matching: scheduling
+void xEntMotionDebugInit(U16 num_xems)
+{
+    if (num_xems != 0)
+    {
+        xDebugModeAdd("DBG_XENTMOTION", xEntMotionDebugCB);
+        dbg_num = 0;
+        dbg_xems = (xEntMotion**)xMemAlloc(gActiveHeap, num_xems << 2, 0);
+        dbg_num_allocd = num_xems;
+        dbg_idx = 0;
+    }
+}
+
+// This scheduling is absolutely shambolic
+void xEntMotionDebugAdd(xEntMotion* motion)
+{
+    if (dbg_num < dbg_num_allocd)
+    {
+        dbg_num++;
+        dbg_xems[dbg_num] = motion;
+    }
+}
+
+void xEntMotionDebugExit()
+{
+    dbg_num = 0;
+    dbg_xems = NULL;
+    dbg_num_allocd = 0;
+    dbg_idx = -1;
 }
