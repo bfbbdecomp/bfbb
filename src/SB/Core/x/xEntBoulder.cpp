@@ -4,6 +4,18 @@
 
 #include <types.h>
 
+void xEntBoulder_FitToModel(xEntBoulder* ent)
+{
+    xVec3Copy
+    (
+    &ent->bound.cyl.center,
+    (xVec3 *)(&ent->model->Data->boundingSphere.center)
+    );
+    ent->bound.cyl.r = ent->model->Data->boundingSphere.radius;
+    xVec3Copy(&ent->localCenter, &ent->bound.cyl.center);
+    xVec3AddTo(&ent->bound.cyl.center,(xVec3*)&ent->model->Mat->pos);
+}
+
 void xEntBoulder_Init(void* ent, void* asset)
 {
     xEntBoulder_Init((xEntBoulder*)ent, (xEntAsset*)asset);
@@ -45,4 +57,22 @@ void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 
 void xEntBoulder_BUpdate(xEnt*, xVec3*)
 {
+}
+
+void xEntBoulder_Setup(xEntBoulder* ent)
+{
+    ent->asset->redMult = 0.0f;
+    ent->asset->greenMult = 0.0f;
+    ent->asset->blueMult = 0.0f;
+
+    if (ent->model != NULL)
+    {
+        ent->asset->seeThru = ent->model->Alpha;
+    }
+    else
+    {
+        ent->asset->seeThru = 1.0f;
+    }
+
+    xEntSetup(ent);
 }
