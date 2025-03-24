@@ -2,6 +2,32 @@
 
 #include <types.h>
 
+#define f1052 1.0f
+#define f1053 0.0f
+#define f1454 0.2f
+#define f1455 0.1f
+
+#define ANIM_Unknown 0 // 0x0
+#define ANIM_Idle01 1 // 0x04
+#define ANIM_Idle02 2 // 0x08       animtable new state
+#define ANIM_Idle03 3 // 0xC
+#define ANIM_Fidget01 4 //
+#define ANIM_Fidget02 5
+#define ANIM_Fidget03 6
+#define ANIM_Taunt01 7 // 0x1c
+#define ANIM_Attack01 8 //0x20
+#define ANIM_Damage01 9 //0x24
+#define ANIM_Damage02 10 //0x28
+#define ANIM_Death01 11 //0x2c
+#define ANIM_AttackWindup01 12 //0x30
+#define ANIM_AttackLoop01 13 //0x34
+#define ANIM_AttackEnd01 14 //0x38
+#define ANIM_SpawnKids01 15 //0x3C
+#define ANIM_Attack02Windup01 16
+#define ANIM_Attack02Loop01 17
+#define ANIM_Attack02End01 18
+#define ANIM_LassoGrab01 19
+
 namespace
 {
     sound_data_type sound_data[4];
@@ -244,6 +270,57 @@ void aqua_beam::stop()
 
 void aqua_beam::render()
 {
+}
+
+xAnimTable* ZNPC_AnimTable_Prawn()
+{
+    // clang-format off
+    S32 ourAnims[10] = {
+        ANIM_Idle01,
+        ANIM_Fidget01,
+        ANIM_Fidget02,
+        ANIM_Taunt01,
+        ANIM_AttackWindup01,
+        ANIM_AttackLoop01,        
+        ANIM_AttackLoop01,
+        ANIM_AttackEnd01,
+        ANIM_Damage01,
+        ANIM_Damage02,
+        
+    };
+    // clang-format on
+    xAnimTable* table = xAnimTableNew("zNPCPrawn", NULL, 0);
+
+    xAnimTableNewState(table, g_strz_subbanim[ANIM_Idle01], 0x10, 0, f1052, NULL, NULL, f1053, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_subbanim[ANIM_Fidget01], 0x20, 0, f1052, NULL, NULL, f1053,
+                       NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_subbanim[ANIM_Fidget02], 0x20, 0, f1052, NULL, NULL, f1053,
+                       NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_subbanim[ANIM_Taunt01], 0x20, 0, f1052, NULL, NULL, f1053,
+                       NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_subbanim[ANIM_AttackWindup01], 0x20, 0, f1052, NULL, NULL,
+                       f1053, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_subbanim[ANIM_AttackLoop01], 0x10, 0, f1052, NULL, NULL, f1053,
+                       NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_subbanim[ANIM_AttackEnd01], 0x20, 0, f1052, NULL, NULL, f1053,
+                       NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_subbanim[ANIM_Damage01], 0x20, 0, f1052, NULL, NULL, f1053,
+                       NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_subbanim[ANIM_Damage02], 0x20, 0, f1052, NULL, NULL, f1053,
+                       NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+
+    NPCC_BuildStandardAnimTran(table, g_strz_subbanim, ourAnims, 1, f1454);
+
+    xAnimTableNewTransition(table, g_strz_subbanim[ANIM_AttackWindup01],
+                            g_strz_subbanim[ANIM_AttackLoop01], 0, 0, 0x10, 0, 0, 0, 0, 0, f1455,
+                            0);
+    xAnimTableNewTransition(table, g_strz_subbanim[ANIM_AttackLoop01],
+                            g_strz_subbanim[ANIM_AttackEnd01], 0, 0, 0, 0, 0, 0, 0, 0, f1455, 0);
+    xAnimTableNewTransition(table, g_strz_subbanim[ANIM_AttackEnd01], g_strz_subbanim[ANIM_Idle01],
+                            0, 0, 0x10, 0, 0, 0, 0, 0, f1455, 0);
+
+    return table;
 }
 
 void zNPCPrawn::NewTime(xScene* xscn, float dt)
