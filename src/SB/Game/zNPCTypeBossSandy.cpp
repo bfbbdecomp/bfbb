@@ -14,6 +14,35 @@
 
 extern const char bossSandyStrings[];
 
+#define Unknown 1
+#define Idle01 2
+#define Idle02 3
+#define Taunt01 4
+#define Run01 5
+#define Walk01 6
+#define Melee01 7
+#define Hit01 8
+#define Hit02 9
+#define GetUp01 10
+#define Dizzy01 11
+#define ElbowDrop01 12
+#define Leap01 13
+#define Leap02 14
+#define Leap03 15
+#define Leap04 16
+#define Sit01 17
+#define SitShock01 18
+#define CLBegin01 19
+#define CLLoop01 20
+#define CLEnd01 21
+#define NoHeadIdle01 22
+#define NoHeadWaving01 23
+#define NoHeadGetUp01 24
+#define NoHeadShotUp01 25
+#define NoHeadShock01 26
+#define NoHeadReplace01 27
+#define NoHeadHit01 28
+
 extern F32 __830; // 0.0   0
 extern F32 __831; // 1.0   3f800000
 extern F32 __842; // 0.20000000298023224   3e4ccccd
@@ -127,6 +156,96 @@ void on_change_shockwave(const tweak_info& tweak)
 
     sSandyPtr->shockwaveEmitter->tasset->pos.y = __830;
     sSandyPtr->shockRadius = __831;
+}
+
+xAnimTable* ZNPC_AnimTable_BossSandy()
+{
+    // clang-format off
+    S32 ourAnims[28] = {
+        Unknown,
+        Idle01, 
+        Idle02, 
+        Taunt01, 
+        Run01, 
+        Walk01, 
+        Melee01, 
+        Hit01, 
+        Hit02, 
+        GetUp01,
+        Dizzy01, 
+        ElbowDrop01, 
+        Leap01, 
+        Leap02, 
+        Leap03 ,
+        Leap04, 
+        Sit01, 
+        SitShock01,
+        CLBegin01, 
+        CLLoop01, 
+        CLEnd01,
+        NoHeadIdle01,
+        NoHeadWaving01, 
+        NoHeadGetUp01,
+        NoHeadShotUp01, 
+        NoHeadShock01,
+        NoHeadReplace01, 
+        NoHeadHit01,
+    };
+    // clang-format on
+
+    //Missing like 2 logic lines or something, too tired to figure it out
+    xAnimTable* table = xAnimTableNew("zNPCBSandy", NULL, 0);
+
+    xAnimTableNewState(table, g_strz_bossanim[Unknown], 0x10, 0x40, __831, NULL, NULL, __830, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[Idle02], 0x10, 0x40, __831, NULL, NULL, __830, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[Taunt01], 0x10, 0, __831, NULL, NULL, __830, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[Run01], 0x10, 0, __831, NULL, NULL, __830, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[Walk01], 0x10, 0, __831, NULL, NULL, __830, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[Dizzy01], 0x10, 0, __831, NULL, NULL, __830, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[ElbowDrop01], 0x10, 0, __831, NULL, NULL, __830, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[Leap01], 0x10, 0, __831, NULL, NULL, __830, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[Leap02], 0x10, 0, __831, NULL, NULL, __830, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[Leap03], 0x10, 0, __831, NULL, NULL, __830, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[Leap04], 0x10, 0, __831, NULL, NULL, __830, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[Sit01], 0x10, 0, __831, NULL, NULL, __830, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[Hit02], 0x10, 0, __831, NULL, NULL, __830, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[SitShock01], 0x10, 0, __831, NULL, NULL, __830, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[CLBegin01], 0x10, 0, __831, NULL, NULL, __830, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[CLLoop01], 0x10, 0, __831, NULL, NULL, __830, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[CLEnd01], 0x10, 0, __831, NULL, NULL, __830, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[NoHeadIdle01], 0x10, 0, __831, NULL, NULL, __830,
+                       NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[NoHeadWaving01], 0x10, 0, __831, NULL, NULL, __830,
+                       NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[NoHeadGetUp01], 0x10, 0, __831, NULL, NULL, __830,
+                       NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[NoHeadShotUp01], 0x10, 0, __831, NULL, NULL, __830,
+                       NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[NoHeadShock01], 0x10, 0, __831, NULL, NULL, __830,
+                       NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[NoHeadReplace01], 0x10, 0, __831, NULL, NULL, __830,
+                       NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+
+    NPCC_BuildStandardAnimTran(table, g_strz_bossanim, ourAnims, 1, __842);
+
+    return table;
 }
 
 U32 HeadIsCarried(xAnimTransition*, xAnimSingle*, void*)
