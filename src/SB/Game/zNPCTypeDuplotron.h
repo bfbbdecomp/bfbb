@@ -13,10 +13,14 @@ struct zNPCDuplotron : zNPCCommon
     zNPCDuplotron(S32 myType);
 
     void SelfSetup();
-
+    S32 IsAlive();
     void VFXSmokeStack(F32 dt);
     void VFXOverheat(F32 dt, F32);
     void VFXCycleLights(F32 dt, S32 fastpace);
+    void ParseINI();
+    void Reset();
+    void BUpdate(xVec3*);
+    void Process(xScene*, float);
 
     // zNPCTypeCommon overrides
     void Move(xScene*, F32 dt, xEntFrame*);

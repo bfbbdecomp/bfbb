@@ -1,8 +1,15 @@
 #include "zNPCTypeDuplotron.h"
+#include "zNPCTypeCommon.h"
 #include "zNPCTypes.h"
 #include "xMath3.h"
 
 #include "xstransvc.h"
+
+#define ANIM_Unk1 1
+#define ANIM_Unk2 2
+#define ANIM_Unk3 3 // TEMP NAMES
+#define ANIM_Unk4 4
+#define ANIM_UNKNOWN 5
 
 extern U32 g_hash_dupoanim[5];
 extern char* g_strz_dupoanim[5];
@@ -72,6 +79,38 @@ void ZNPC_Destroy_Duplotron(xFactoryInst* inst)
     delete inst;
 }
 
+xAnimTable* ZNPC_AnimTable_Duplotron()
+{
+    S32 ourAnims[5] = { //Literally no clue what the names should be.
+                        ANIM_Unk1, ANIM_Unk2, ANIM_Unk3, ANIM_Unk4, ANIM_UNKNOWN
+    };
+
+    xAnimTable* table = xAnimTableNew("zNPCDupltron", NULL, 0);
+
+    xAnimTableNewState(table, g_strz_dupoanim[ANIM_Unk1], 0x10, 0, 1, NULL, NULL, 0, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_dupoanim[ANIM_Unk2], 0x20, 0, 1, NULL, NULL, 0, NULL,
+                       NULL, //Needs a bit of attention
+                       xAnimDefaultBeforeEnter, NULL,
+                       NULL); //Only pushing cus im done with it for now
+    xAnimTableNewState(table, g_strz_dupoanim[ANIM_Unk3], 0x10, 0, 1, NULL, NULL, 0, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_dupoanim[ANIM_Unk4], 0, 0, 1, NULL, NULL, 0, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+
+    NPCC_BuildStandardAnimTran(table, g_strz_dupoanim, ourAnims, 1, 0.2);
+}
+
+void zNPCDuplotron::ParseINI()
+{
+    zNPCCommon::ParseINI();
+}
+
+void zNPCDuplotron::BUpdate(xVec3* pos)
+{
+    zNPCCommon::BUpdate(pos);
+}
+
 // 100% match that needs the full vtable to be filled out
 // because it induces vtable generation
 void zNPCDuplotron::SelfSetup()
@@ -84,6 +123,12 @@ void zNPCDuplotron::SelfSetup()
     psy->AddGoal(0x4E474E37, NULL);
     psy->BrainEnd();
     psy->SetSafety(0x4E474430);
+}
+
+S32 zNPCDuplotron::IsAlive()
+{
+    xPsyche* psy = this->psy_instinct;
+    psy->GIDOfActive();
 }
 
 // non-matching: scheduling?
