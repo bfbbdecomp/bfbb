@@ -14,6 +14,8 @@ typedef struct xAnimActiveEffect;
 typedef struct xAnimSingle;
 typedef struct xAnimPlay;
 
+extern U32 gxAnimUseGrowAlloc;
+
 struct xAnimFile
 {
     xAnimFile* Next;

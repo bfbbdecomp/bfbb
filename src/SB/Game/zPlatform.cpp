@@ -6,6 +6,8 @@
 
 #include "xMath.h"
 #include "xMath3.h"
+#include "xstransvc.h"
+#include "zGlobals.h"
 
 #include <types.h>
 
@@ -25,6 +27,9 @@ char* str8 = "skatepark_bumper";
 char* str9 = "skatepark_flipper";
 char* str10 = "Check1";
 
+void zPlatformTranslate(xEnt* xent, xVec3* dpos, xMat4x3* dmat);
+void zPlatform_Move(xEnt* entPlat, xScene* s, float dt, xEntFrame* frame);
+
 static void genericPlatRender(xEnt* ent)
 {
     if (!ent->model || !xEntIsVisible(ent))
@@ -43,6 +48,139 @@ void zPlatform_Init(void* plat, void* asset)
 void zPlatform_Init(zPlatform* plat, xEntAsset* asset)
 {
     zEntInit(plat, asset, 'PLAT');
+    
+    plat->passet = (xPlatformAsset*)asset + 1;
+    plat->subType = asset[1].id;
+    
+    xPlatformAsset* passet = (xPlatformAsset*)asset;
+    if (plat->linkCount != 0)
+    {
+        plat->link = (xLinkAsset*)passet;
+    }
+    else
+    {
+        plat->link = NULL;
+    }
+
+    plat->update = zPlatform_Update;
+    plat->move = zPlatform_Move;
+    plat->eventFunc = zPlatformEventCB;
+    plat->transl = zPlatformTranslate;
+    plat->render = genericPlatRender;
+
+    plat->am = NULL;
+    plat->bm = NULL;
+
+    plat->state = ZPLATFORM_STATE_INIT;
+    plat->plat_flags = 0x0;
+
+    plat->fmrt = NULL;
+
+    plat->pauseMult = 1.0;
+    plat->pauseDelta = 0.0f;
+
+    if (plat->subType == ZPLATFORM_SUBTYPE_BREAKAWAY)
+    {
+        plat->collis = (xEntCollis*)xMemAlloc(gActiveHeap, sizeof(xEntCollis), 0);
+
+        // FIXME: some weird shtuff
+        plat->collis->chk = 0x0;
+        plat->collis->pen = 0x0;
+        plat->collis->colls[0].optr = NULL;
+        plat->collis->colls[17].optr = NULL;
+
+        plat->am = plat->model;
+        xModelInstance* modelInst = NULL;
+        plat->flags = 0x0;
+
+        if (plat->link != NULL)
+        {
+            modelInst = (xModelInstance*)xSTFindAsset(plat->link->dstAssetID, (U32*)&plat->flags);
+        }
+
+        if (modelInst != NULL)
+        {
+            xEntLoadModel(plat, (RpAtomic*)modelInst);
+            plat->bm = plat->model;
+        }
+        else
+        {
+            plat->bm = NULL;
+        }
+
+        plat->model = plat->am;
+        plat->collModel = NULL;
+    }
+    else if (plat->subType == ZPLATFORM_SUBTYPE_SPRINGBOARD)
+    {
+        xAnimFile* anim1File;
+        if (passet->sb.animID[0] != NULL)
+        {
+            anim1File = (xAnimFile*)xSTFindAsset(passet->sb.animID[0], NULL);
+        }
+        else
+        {
+            anim1File = NULL;
+        }
+
+        void* anim2File;
+        if (passet->sb.animID[1] != NULL)
+        {
+            anim2File = xSTFindAsset(passet->sb.animID[1], NULL);
+        }
+        else
+        {
+            anim2File = NULL;
+        }
+
+        if (anim1File != NULL || anim2File != NULL)
+        {
+            gxAnimUseGrowAlloc = TRUE;
+
+            plat->atbl = xAnimTableNew("", NULL, 0x0);
+            xAnimTableNewState(plat->atbl, "Idle", 0x10, 0x0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                               xAnimDefaultBeforeEnter, NULL, NULL);
+
+            xAnimFile* animFile = NULL;
+            if (anim1File != NULL)
+            {
+                xAnimTableNewState(plat->atbl, "Spring", 0x20, 0, 1.0f, NULL, NULL, 0.0f, NULL,
+                                   NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+                xAnimTableNewTransition(plat->atbl, "Spring", "Idle",
+                                        (xAnimTransitionConditionalCallback)0x0,
+                                        (xAnimTransitionCallback)0x0, 0x10, 0, 0.0f, 0.0f, 0, 0,
+                                        0.1f, NULL);
+
+                animFile = xAnimFileNew(anim1File, "", 0, (xAnimFile**)0x0);
+                xAnimTableAddFile(plat->atbl, animFile, "Spring");
+            }
+
+            if (anim2File == (void *)0x0) {
+                xAnimTableAddFile(plat->atbl, animFile, "Idle");
+                plat->atbl->StateList->Speed = 1.0f;
+            }
+            else {
+                animFile = xAnimFileNew(anim2File, "", 0, NULL);
+                xAnimTableAddFile(plat->atbl,animFile,"Idle");
+            }
+
+            gxAnimUseGrowAlloc = FALSE;
+            xAnimPoolAlloc(&globals.scenePreload->mempool, plat, plat->atbl, plat->model);
+        }
+    }
+    else if (plat->subType == ZPLATFORM_SUBTYPE_FM)
+    {
+        plat->fmrt = (zPlatFMRunTime*)xMemAlloc(gActiveHeap, sizeof(zPlatFMRunTime), 0);
+    }
+
+    xEntMotionInit(&plat->motion, plat, (xEntMotionAsset*)(asset + 1));
+    xEntDriveInit(&plat->drv, plat);
+
+    if (plat->asset->modelInfoID == xStrHash("teeter_totter_pat") ||
+        plat->asset->modelInfoID == xStrHash("teeter_totter_pat_bind"))
+    {
+        plat->flags |= 0x2;
+    }
 }
 
 void zPlatform_Save(zPlatform* ent, xSerial* s)
@@ -53,6 +191,11 @@ void zPlatform_Save(zPlatform* ent, xSerial* s)
 void zPlatform_Load(zPlatform* ent, xSerial* s)
 {
     zEntLoad(ent, s);
+}
+
+void zPlatform_Update(xEnt* ent, xScene* sc, float dt) 
+{
+    
 }
 
 void zPlatform_Move(xEnt* entPlat, xScene* s, float dt, xEntFrame* frame)
@@ -155,7 +298,7 @@ void zPlatform_Reset(zPlatform* plat, xScene* sc)
     else if (plat->subType == ZPLATFORM_SUBTYPE_BREAKAWAY)
     {
         plat->tmr = plat->passet->ba.ba_delay;
-        plat->state = ZPLATFORM_STATE_UNK2;
+        plat->state = ZPLATFORM_STATE_INIT;
         plat->pflags &= 0xF9;
         plat->collis->chk = 0x0;
 
@@ -241,4 +384,9 @@ U32 zMechIsStartingBack(zPlatform* ent, U16 param_2)
     {
         return param_2 == 3;
     }
+}
+
+S32 zPlatformEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* base3) 
+{
+    return 1;
 }
