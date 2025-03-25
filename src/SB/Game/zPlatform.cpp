@@ -395,6 +395,54 @@ U32 zMechIsStartingBack(zPlatform* ent, U16 param_2)
     }
 }
 
+static F32 SolvePaddleMotion(zPlatform* plat, F32* time, F32 tmr)
+{
+}
+
+void zPlatform_PaddleStartRotate(xEnt* entplat, S32 direction, S32 stutter)
+{
+    zPlatform* plat = (zPlatform*)entplat;
+    F32 time[3];
+
+    if (stutter != 0)
+    {
+        if (direction > 0)
+        {
+            plat->state = ZPLATFORM_STATE_UNK4;
+        }
+        else if (direction < 0)
+        {
+            plat->state = ZPLATFORM_STATE_UNK1;
+        }
+    }
+    else
+    {
+        if (direction > 0)
+        {
+            plat->state = ZPLATFORM_STATE_UNK3;
+            plat->ctr += 1;
+
+            if (plat->ctr >= plat->passet->paddle.countOrient)
+            {
+                plat->ctr = 0;
+            }
+        }
+        else if (direction < 0)
+        {
+            plat->state = ZPLATFORM_STATE_UNK2;
+            plat->ctr -= 1;
+
+            if (plat->ctr < 0)
+            {
+                plat->ctr = plat->passet->paddle.countOrient - 1;
+            }
+        }
+    }
+
+    SolvePaddleMotion(plat, time, -1.0f);
+    plat->tmr = time[0] + time[1] + time[2];
+}
+
 S32 zPlatformEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* base3)
 {
     return 1;

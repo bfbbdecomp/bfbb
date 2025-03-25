@@ -161,9 +161,11 @@ struct zPlatform : zEnt
 #define ZPLATFORM_SUBTYPE_PADDLE 12
 #define ZPLATFORM_SUBTYPE_FM 13
 
-#define ZPLATFORM_STATE_UNK1 0x3
 #define ZPLATFORM_STATE_INIT 0x0
+#define ZPLATFORM_STATE_UNK1 0x3
+#define ZPLATFORM_STATE_UNK2 0x1
 #define ZPLATFORM_STATE_UNK3 0x2
+#define ZPLATFORM_STATE_UNK4 0x4
 
 void zPlatform_Init(void* plat, void* asset);
 void zPlatform_Init(zPlatform* plat, xEntAsset* asset);
@@ -171,6 +173,7 @@ void zPlatform_Setup(zPlatform* plat, xScene* sc);
 void zPlatform_Save(zPlatform* ent, xSerial* s);
 void zPlatform_Load(zPlatform* ent, xSerial* s);
 void zPlatform_Reset(zPlatform* plat, xScene* sc);
+void zPlatform_PaddleStartRotate(class xEnt* entplat, S32 direction, S32 stutter);
 void zPlatform_Update(xEnt* ent, xScene* sc, float dt);
 U32 zPlatform_PaddleCollide(xCollis* coll, const xVec3* hitsource, const xVec3* hitvel,
                             U32 worldSpaceNorm);
