@@ -1,6 +1,19 @@
 #include "zNPCTypeVillager.h"
 
 #include "zNPCTypes.h"
+#include "zNPCGoals.h"
+
+#define ANIM_Idle01 1
+#define ANIM_Move01 2
+#define ANIM_Hurt01 3
+#define ANIM_Yawn01 4
+#define ANIM_Talk01 5
+#define ANIM_Flee01 6
+#define ANIM_Fear01 7
+#define ANIM_Pray01 8
+#define ANIM_Clap01 9
+#define ANIM_Special01 10
+#define ANIM_Unknown 0
 
 extern char* g_strz_folkanim[26];
 extern U32 g_hash_folkanim[26];
@@ -268,6 +281,120 @@ xAnimTable* ZNPC_AnimTable_SuperFriend()
     return ZNPC_AnimTable_SuperFriend(NULL);
 }
 
+U8 zNPCVillager::PhysicsFlags() const
+{
+    S32 flags = 0;
+    S32 pflags = 0;
+    if (flg_move & 0x6)
+    {
+        flags |= 3;
+    }
+    pflags = flags * -5;
+    if (flg_move & 0x2)
+    {
+        pflags = flags |= 4;
+    }
+
+    return pflags;
+}
+
+void zNPCVillager::Init(xEntAsset* asset)
+{
+    zNPCCommon::Init(asset);
+    zNPCCommon::flg_move = 10;
+    zNPCCommon::flg_vuln = 0;
+}
+
+// void zNPCVillager::Reset() //Not sure what the correct values are for the IFs
+// {
+//     NPCConfig* cfg;
+//     this->zNPCCommon::Reset();
+
+//     if (psy_instinct != 0)
+//     {
+//         this->psy_instinct->GoalSet(NPC_GOAL_IDLE, 1);
+//     }
+// }
+
+void zNPCVillager::ParseINI()
+{
+    zNPCCommon::ParseINI();
+    cfg_npc->snd_traxShare = &g_sndTrax_Villager;
+    NPCS_SndTablePrepare((NPCSndTrax*)&g_sndTrax_Villager);
+    zNPCVillager::ParseNonRandTalk();
+}
+
+void zNPCVillager::ParseNonRandTalk()
+{
+    // NPCConfig* cfg; //0x1d8
+    // F32 non_choices[4];
+    // S32 found;
+    // S32 i;
+    // U8 skip;
+    // S32 j;
+
+    // cfg = cfg_npc;
+    // cfg = 0;
+    // non_choices[0] = 0.0;
+    // non_choices[1] = 0.0;
+    // non_choices[2] = 0.0;
+    // non_choices[3] = 0.0;
+
+    //
+}
+
+void zNPCVillager::Process(xScene* xscn, float dt)
+{
+    zNPCVillager::ChkCheatSize();
+    if (psy_instinct != 0)
+    {
+        this->psy_instinct->Timestep(dt, NULL);
+    }
+    zNPCCommon::Process(xscn, dt);
+}
+
+void zNPCVillager::SpeakBegin()
+{
+    psy_instinct->GoalSet(NPC_GOAL_SPEAK, 1);
+}
+
+void zNPCVillager::SpeakEnd() //80%
+{
+    xPsyche* psy = psy_instinct;
+    psy->GIDInStack(NPC_GOAL_LIMBO);
+
+    if ((psy == 0) && (psy->GIDOfSafety() != 0))
+    {
+        psy->GoalSet(NPC_GOAL_LIMBO, 1);
+    }
+}
+
+void zNPCVillager::TossMyConverse()
+{
+    converse = 0;
+}
+
+void zNPCFish::ParseINI()
+{
+    zNPCVillager::ParseINI();
+    zNPCFish::FishSoundTables();
+}
+
+// void zNPCFish::FishSoundTables()
+// {
+//     S32 tempR;
+//     tempR = xNPCBasic::SelfType();
+//     switch (tempR)
+//     {
+//     case 'NTF0':
+//     {
+//     }
+//     case 'NPC_TYPE_FISH_MALE':
+//     {
+//     }
+// }
+// }
+
 /*
 void FOLK_InitEffects()
 {
@@ -299,6 +426,14 @@ void zNPCNewsFish::SelfSetup()
 
 void zNPCFish::CheckDoChat()
 {
+}
+
+void zNPCMerManChair::Init(xEntAsset*) //Seems to load an extra value?
+{
+    zNPCVillager::Init(asset);
+    flg_move = 1;
+    flg_vuln = -1;
+    flg_vuln = flg_vuln & 0x9effffff;
 }
 
 void ztaskbox::callback::on_talk_start()
