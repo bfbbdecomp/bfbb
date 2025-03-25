@@ -45,17 +45,22 @@ void zPlatform_Init(void* plat, void* asset)
     zPlatform_Init((zPlatform*)plat, (xEntAsset*)asset);
 }
 
+// FIXME: some asset pointer shenanigans plus a few other quirky spots
 void zPlatform_Init(zPlatform* plat, xEntAsset* asset)
 {
+    // asset pointer points to packed structure with more than just an xEntAsset inside!
+    xPlatformAsset* platAsset = (xPlatformAsset*)((char*)asset + sizeof(xEntAsset));
+    xEntMotionAsset* entMotionAsset = (xEntMotionAsset*)((char*)platAsset + sizeof(xPlatformAsset));
+    xLinkAsset* linkAsset = (xLinkAsset*)((char*)entMotionAsset + sizeof(xLinkAsset));
+
     zEntInit(plat, asset, 'PLAT');
-    
-    plat->passet = (xPlatformAsset*)asset + 1;
-    plat->subType = asset[1].id;
-    
-    xPlatformAsset* passet = (xPlatformAsset*)asset;
+
+    plat->passet = platAsset;
+    plat->subType = platAsset->type;
+
     if (plat->linkCount != 0)
     {
-        plat->link = (xLinkAsset*)passet;
+        plat->link = linkAsset;
     }
     else
     {
@@ -70,12 +75,9 @@ void zPlatform_Init(zPlatform* plat, xEntAsset* asset)
 
     plat->am = NULL;
     plat->bm = NULL;
-
     plat->state = ZPLATFORM_STATE_INIT;
     plat->plat_flags = 0x0;
-
     plat->fmrt = NULL;
-
     plat->pauseMult = 1.0;
     plat->pauseDelta = 0.0f;
 
@@ -83,19 +85,21 @@ void zPlatform_Init(zPlatform* plat, xEntAsset* asset)
     {
         plat->collis = (xEntCollis*)xMemAlloc(gActiveHeap, sizeof(xEntCollis), 0);
 
-        // FIXME: some weird shtuff
+        xModelInstance* modelInst = NULL;
+
         plat->collis->chk = 0x0;
         plat->collis->pen = 0x0;
-        plat->collis->colls[0].optr = NULL;
-        plat->collis->colls[17].optr = NULL;
+
+        // TODO: does collis need to be null terminated???
+        //       this manual memory management is weird as heck but it matches the disassembly
+        *((U32*)&plat->collis->colls[18]) = NULL;
 
         plat->am = plat->model;
-        xModelInstance* modelInst = NULL;
-        plat->flags = 0x0;
+        platAsset->ba.bustModelID = 0x0;
 
-        if (plat->link != NULL)
+        if (linkAsset->dstAssetID != NULL)
         {
-            modelInst = (xModelInstance*)xSTFindAsset(plat->link->dstAssetID, (U32*)&plat->flags);
+            modelInst = (xModelInstance*)xSTFindAsset(linkAsset->dstAssetID, (U32*)&plat->flags);
         }
 
         if (modelInst != NULL)
@@ -113,10 +117,12 @@ void zPlatform_Init(zPlatform* plat, xEntAsset* asset)
     }
     else if (plat->subType == ZPLATFORM_SUBTYPE_SPRINGBOARD)
     {
+        xAnimFile* animFile = NULL;
+
         xAnimFile* anim1File;
-        if (passet->sb.animID[0] != NULL)
+        if (platAsset->sb.animID[0] != NULL)
         {
-            anim1File = (xAnimFile*)xSTFindAsset(passet->sb.animID[0], NULL);
+            anim1File = (xAnimFile*)xSTFindAsset(platAsset->sb.animID[0], NULL);
         }
         else
         {
@@ -124,9 +130,9 @@ void zPlatform_Init(zPlatform* plat, xEntAsset* asset)
         }
 
         void* anim2File;
-        if (passet->sb.animID[1] != NULL)
+        if (platAsset->sb.animID[1] != NULL)
         {
-            anim2File = xSTFindAsset(passet->sb.animID[1], NULL);
+            anim2File = xSTFindAsset(platAsset->sb.animID[1], NULL);
         }
         else
         {
@@ -141,7 +147,6 @@ void zPlatform_Init(zPlatform* plat, xEntAsset* asset)
             xAnimTableNewState(plat->atbl, "Idle", 0x10, 0x0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
                                xAnimDefaultBeforeEnter, NULL, NULL);
 
-            xAnimFile* animFile = NULL;
             if (anim1File != NULL)
             {
                 xAnimTableNewState(plat->atbl, "Spring", 0x20, 0, 1.0f, NULL, NULL, 0.0f, NULL,
@@ -155,15 +160,19 @@ void zPlatform_Init(zPlatform* plat, xEntAsset* asset)
                 xAnimTableAddFile(plat->atbl, animFile, "Spring");
             }
 
-            if (anim2File == (void *)0x0) {
+            if (anim2File != NULL)
+            {
+                animFile = xAnimFileNew(anim2File, "", 0, NULL);
+                xAnimTableAddFile(plat->atbl, animFile, "Idle");
+            }
+            else
+            {
                 xAnimTableAddFile(plat->atbl, animFile, "Idle");
                 plat->atbl->StateList->Speed = 1.0f;
             }
-            else {
-                animFile = xAnimFileNew(anim2File, "", 0, NULL);
-                xAnimTableAddFile(plat->atbl,animFile,"Idle");
-            }
 
+            // TODO: if this isn't matching, it's because the globals struct isn't defined correctly
+            //       Figure out why that is
             gxAnimUseGrowAlloc = FALSE;
             xAnimPoolAlloc(&globals.scenePreload->mempool, plat, plat->atbl, plat->model);
         }
@@ -173,7 +182,8 @@ void zPlatform_Init(zPlatform* plat, xEntAsset* asset)
         plat->fmrt = (zPlatFMRunTime*)xMemAlloc(gActiveHeap, sizeof(zPlatFMRunTime), 0);
     }
 
-    xEntMotionInit(&plat->motion, plat, (xEntMotionAsset*)(asset + 1));
+    xEntMotionInit(&plat->motion, plat,
+                   (xEntMotionAsset*)((char*)asset + sizeof(xEntAsset) + sizeof(xPlatformAsset)));
     xEntDriveInit(&plat->drv, plat);
 
     if (plat->asset->modelInfoID == xStrHash("teeter_totter_pat") ||
@@ -193,9 +203,8 @@ void zPlatform_Load(zPlatform* ent, xSerial* s)
     zEntLoad(ent, s);
 }
 
-void zPlatform_Update(xEnt* ent, xScene* sc, float dt) 
+void zPlatform_Update(xEnt* ent, xScene* sc, float dt)
 {
-    
 }
 
 void zPlatform_Move(xEnt* entPlat, xScene* s, float dt, xEntFrame* frame)
@@ -386,7 +395,7 @@ U32 zMechIsStartingBack(zPlatform* ent, U16 param_2)
     }
 }
 
-S32 zPlatformEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* base3) 
+S32 zPlatformEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* base3)
 {
     return 1;
 }
