@@ -99,6 +99,7 @@ xAnimTable* ZNPC_AnimTable_Duplotron()
                        xAnimDefaultBeforeEnter, NULL, NULL);
 
     NPCC_BuildStandardAnimTran(table, g_strz_dupoanim, ourAnims, 1, 0.2);
+    return table;
 }
 
 void zNPCDuplotron::ParseINI()
@@ -128,7 +129,8 @@ void zNPCDuplotron::SelfSetup()
 S32 zNPCDuplotron::IsAlive()
 {
     xPsyche* psy = this->psy_instinct;
-    psy->GIDOfActive();
+    //psy->GIDOfActive();
+    return psy->GIDOfActive();
 }
 
 // non-matching: scheduling?

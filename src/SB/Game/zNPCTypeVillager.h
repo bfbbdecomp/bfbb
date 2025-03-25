@@ -18,7 +18,7 @@ struct HiThere : ztaskbox::callback
 struct zNPCVillager : zNPCCommon
 {
     HiThere hithere;
-    ztaskbox* converse;
+    ztaskbox* converse; //0x2a8
     S32 current_talk_anim;
 
     zNPCVillager(S32 myType);
@@ -26,6 +26,18 @@ struct zNPCVillager : zNPCCommon
     void FindMyConverse();
     U8 ColPenByFlags() const;
     U8 ColChkByFlags() const;
+    U8 ColPenFlags() const;
+    U8 PhysicsFlags() const;
+    void Init(xEntAsset*);
+    void Reset();
+    void ParseINI();
+    void ParseNonRandTalk();
+    void Process(xScene* xscn, float dt);
+    void SelfSetup();
+    void SpeakBegin();
+    void SpeakEnd();
+    void TossMyConverse();
+    void ChkCheatSize();
     F32 GenShadCacheRad();
 };
 
@@ -37,6 +49,8 @@ struct zNPCFish : zNPCVillager
     xEntDrive raw_drvdata;
 
     zNPCFish(S32 myType);
+    void ParseINI();
+    void FishSoundTables();
     void CheckDoChat();
 };
 
@@ -77,6 +91,7 @@ struct zNPCMerManChair : zNPCVillager
     S32 flg_mermanchair;
 
     zNPCMerManChair(S32 myType);
+    void Init(xEntAsset*);
     U8 PhysicsFlags() const;
     U8 ColPenFlags() const;
     U8 ColChkFlags() const;
@@ -192,5 +207,17 @@ void ZNPC_Villager_Startup();
 void ZNPC_Villager_Shutdown();
 xFactoryInst* ZNPC_Create_Villager(S32 who, RyzMemGrow* growCtxt, void*);
 void ZNPC_Destroy_Villager(xFactoryInst* inst);
+NPCSndTrax g_sndTrax_Villager;
+S32 zParamGetFloatList(xModelAssetParam* parmdata, U32 pdatsize, const char* str32, S32 found,
+                       F32* non_choices, F32 len_mvptspline);
+
+extern NPCSndTrax g_sndTrax_VillagerMale;
+extern NPCSndTrax g_sndTrax_VillagerFemale;
+extern NPCSndTrax g_sndTrax_VillagerElder;
+extern NPCSndTrax g_sndTrax_VillagerEldess;
+extern NPCSndTrax g_sndTrax_VillagerBoy;
+extern NPCSndTrax g_sndTrax_VillagerGirl;
+extern NPCSndTrax g_sndTrax_VillagerCoStar;
+extern NPCSndTrax g_sndTrax_Squidward;
 
 #endif
