@@ -135,13 +135,13 @@ struct zPlatform : zEnt
 {
     xPlatformAsset* passet; // 0xD4
     xEntMotion motion;
-    U16 state;
-    U16 plat_flags;
-    F32 tmr;
-    S32 ctr;
-    xMovePoint* src;
-    xModelInstance* am;
-    xModelInstance* bm;
+    U16 state; // 0x144
+    U16 plat_flags; // 0x146
+    F32 tmr; // 0x148
+    S32 ctr; // 0x14C
+    xMovePoint* src; // 0x150
+    xModelInstance* am; // 0x154
+    xModelInstance* bm; // 0x158
     S32 moving;
     xEntDrive drv;
     zPlatFMRunTime* fmrt;
@@ -162,7 +162,7 @@ struct zPlatform : zEnt
 #define ZPLATFORM_SUBTYPE_FM 13
 
 #define ZPLATFORM_STATE_UNK1 0x3
-#define ZPLATFORM_STATE_UNK2 0x0
+#define ZPLATFORM_STATE_INIT 0x0
 #define ZPLATFORM_STATE_UNK3 0x2
 
 void zPlatform_Init(void* plat, void* asset);
@@ -171,7 +171,9 @@ void zPlatform_Setup(zPlatform* plat, xScene* sc);
 void zPlatform_Save(zPlatform* ent, xSerial* s);
 void zPlatform_Load(zPlatform* ent, xSerial* s);
 void zPlatform_Reset(zPlatform* plat, xScene* sc);
+void zPlatform_Update(xEnt* ent, xScene* sc, float dt);
 U32 zPlatform_PaddleCollide(xCollis* coll, const xVec3* hitsource, const xVec3* hitvel,
                             U32 worldSpaceNorm);
+S32 zPlatformEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* base3);
 
 #endif

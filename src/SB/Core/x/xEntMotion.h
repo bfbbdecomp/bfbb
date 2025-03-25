@@ -147,7 +147,7 @@ struct xEntPenData
     xMat4x3 omat;
 };
 
-struct xEntMotion
+struct xEntMotion // Size: 0x70
 {
     xEntMotionAsset* asset;
     U8 type;
