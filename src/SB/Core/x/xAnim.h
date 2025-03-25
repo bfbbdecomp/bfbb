@@ -201,6 +201,7 @@ void xAnimDefaultBeforeEnter(xAnimPlay* play, xAnimState* state);
 void xAnimPoolInit(xMemPool* pool, U32 count, U32 singles, U32 blendFlags, U32 effectMax);
 xAnimPlay* xAnimPoolAlloc(xMemPool* pool, void* object, xAnimTable* table,
                           xModelInstance* modelInst);
+void xAnimPoolFree(xAnimPlay*);
 xAnimState* xAnimTableGetState(xAnimTable* table, const char* name);
 void xAnimTableAddTransition(xAnimTable* table, xAnimTransition* tran, const char* source);
 void xAnimTableAddFile(xAnimTable* table, xAnimFile* file, const char* states);
@@ -208,6 +209,7 @@ xAnimState* xAnimTableAddFileID(xAnimTable* table, xAnimFile* file, U32 stateID,
                                 U32 subStateCount);
 xAnimState* xAnimTableGetStateID(xAnimTable* table, U32 ID);
 void xAnimPlaySetState(xAnimSingle* single, xAnimState* state, F32 startTime);
+void xAnimPlayChooseTransition(xAnimPlay* play);
 void xAnimPlayStartTransition(xAnimPlay* play, xAnimTransition* transition);
 void xAnimPlayUpdate(xAnimPlay* play, F32 timeDelta);
 void xAnimPlayEval(xAnimPlay* play);

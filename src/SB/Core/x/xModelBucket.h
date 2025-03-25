@@ -21,6 +21,8 @@ struct xModelAlphaBucket
     U32 Layer;
 };
 
+extern S32 xModelBucketEnabled;
+
 void xModelBucket_RenderAlpha();
 
 S32 CmpAlphaBucket(const void* _a, const void* _b);
