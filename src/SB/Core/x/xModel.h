@@ -9,6 +9,7 @@
 #include "xSurface.h"
 #include "xMath3.h"
 #include "xMath2.h"
+#include "xModelBucket.h"
 
 struct xModelBucket;
 
@@ -138,6 +139,7 @@ xModelInstance* xModelInstanceAlloc(RpAtomic* data, void* object, U16 flags, U8 
 void xModelInstanceFree(xModelInstance* modelInst);
 void xModelInstanceAttach(xModelInstance* inst, xModelInstance* parent);
 void xModelRender(xModelInstance* modelInst);
+void xModelRenderSingle(xModelInstance * modelInst);
 void xModelRender2D(const xModelInstance& model, const basic_rect<F32>& r, const xVec3& from,
                     const xVec3& to);
 void xModelSetMaterialAlpha(xModelInstance* modelInst, U8 alpha);
