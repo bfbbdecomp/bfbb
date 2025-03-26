@@ -1,4 +1,5 @@
 #include "zNPCMgr.h"
+#include "xRMemData.h"
 #include "zNPCTypeCommon.h"
 #include "zNPCTypeRobot.h"
 #include "zNPCTypeVillager.h"
@@ -8,7 +9,9 @@
 #include "zNPCTypes.h"
 #include "zNPCSpawner.h"
 #include "zNPCMessenger.h"
+#include "zNPCGoals.h"
 #include "zGlobals.h"
+#include "xFactory.h"
 
 #include "xBehaveMgr.h"
 
@@ -56,7 +59,7 @@ void zNPCMgr_Startup()
     if (g_modinit++ == 0)
     {
         xBehaveMgr_Startup();
-        zNPCMgr* npc = new (0x4e50434d, NULL) zNPCMgr(); //NPCM
+        zNPCMgr* npc = new ('NPCM', NULL) zNPCMgr();
         g_npcmgr = npc;
         npc->Startup();
     }
@@ -228,7 +231,6 @@ S32 zNPCMgr_OrdComp_npcid(void* vkey, void* vitem)
     return rc;
 }
 
-
 zNPCMgr::zNPCMgr()
 {
 }
@@ -260,4 +262,19 @@ void zNPCCommon::RenderExtra()
 
 void zNPCCommon::RenderExtraPostParticles()
 {
+}
+
+void zNPCMgr::Startup()
+{
+    PrepTypeTable();
+    selfbase.id = 'NPCM';
+    selfbase.baseType = 0xAB;
+    npcFactory = new ('NPCM', NULL) xFactory(0x60);
+    zNPCMsg_Startup();
+    zNPCSpawner_Startup();
+    zNPCTypes_StartupTypes();
+    zNPCTypes_RegisterTypes(npcFactory);
+    bmgr = xBehaveMgr_GetSelf();
+    xFactory* behaveMgrFactory = bmgr->GetFactory();
+    zNPCGoals_RegisterTypes(behaveMgrFactory);
 }
