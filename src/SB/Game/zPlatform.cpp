@@ -443,6 +443,54 @@ void zPlatform_PaddleStartRotate(xEnt* entplat, S32 direction, S32 stutter)
     plat->tmr = time[0] + time[1] + time[2];
 }
 
+static void zPlatFM_EventSetup(zPlatform* plat, const F32* toParam, S32 idx)
+{
+    F32 ds, atm, ttm, dtm;
+
+    // FIXME: Register issues from order of operations?
+    if (plat->fmrt->flags & (1 << idx))
+    {
+        return;
+    }
+
+    ds = toParam[0];
+    atm = toParam[1];
+    ttm = toParam[2];
+    dtm = toParam[3];
+
+    if (atm <= 0.0f)
+    {
+        return;
+    }
+
+    if (ttm > atm)
+    {
+        ttm = atm;
+    }
+    else if (ttm < 0.0f)
+    {
+        ttm = 0.0f;
+    }
+
+    ttm = atm - ttm;
+    if (dtm > ttm)
+    {
+        dtm = ttm;
+    }
+    else if (dtm < 0.0f)
+    {
+        dtm = 0.0f;
+    }
+
+    zPlatFMRunTime* fmrt = plat->fmrt;
+    fmrt->tmrs[idx] = atm;
+    fmrt->ttms[idx] = atm;
+    fmrt->atms[idx] = ttm;
+    fmrt->dtms[idx] = dtm;
+    fmrt->vms[idx] = 2.0f * ds / (atm - dtm + ttm);
+    fmrt->dss[idx] = ds;
+}
+
 S32 zPlatformEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* base3)
 {
     return 1;
