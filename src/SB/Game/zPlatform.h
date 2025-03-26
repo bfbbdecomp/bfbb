@@ -175,6 +175,7 @@ void zPlatform_Load(zPlatform* ent, xSerial* s);
 void zPlatform_Reset(zPlatform* plat, xScene* sc);
 void zPlatform_PaddleStartRotate(class xEnt* entplat, S32 direction, S32 stutter);
 void zPlatform_Update(xEnt* ent, xScene* sc, float dt);
+void zPlatform_Shake(zPlatform* plat, F32 _unused, F32 ampl, F32 freq);
 U32 zPlatform_PaddleCollide(xCollis* coll, const xVec3* hitsource, const xVec3* hitvel,
                             U32 worldSpaceNorm);
 S32 zPlatformEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* base3);

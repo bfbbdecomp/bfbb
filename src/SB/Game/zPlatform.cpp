@@ -269,6 +269,36 @@ void zPlatformTranslate(xEnt* xent, xVec3* dpos, xMat4x3* dmat)
     xEntMotionTranslate(&plat->motion, dpos, dmat);
 }
 
+void zPlatform_Shake(zPlatform* plat, F32 _unused, F32 ampl, F32 freq)
+{
+    xFFXShakeState* ss;
+    xFFX* sfkt;
+
+    ss = xFFXShakeAlloc();
+    if (ss != NULL)
+    {
+        sfkt = xFFXAlloc();
+        if (sfkt == NULL)
+        {
+            xFFXShakeFree(ss);
+            ss = NULL;
+        }
+        else
+        {
+            ss->disp.x = 0.0f;
+            ss->disp.y = -ampl;
+            ss->disp.z = 0.0f;
+            ss->dur = 1.0f;
+            ss->alpha = -7.0f / ss->dur;
+            ss->freq = freq;
+            ss->tmr = 0.0f;
+            sfkt->doEffect = xFFXShakeUpdateEnt;
+            sfkt->fdata = ss;
+            xFFXAddEffect(plat, sfkt);
+        }
+    }
+}
+
 void zPlatform_BreakawayFallFX(zPlatform* ent, F32 dt)
 {
     if (sEmitBreakaway != NULL)
