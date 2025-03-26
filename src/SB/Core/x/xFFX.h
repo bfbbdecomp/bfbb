@@ -45,6 +45,7 @@ xFFX* xFFXAlloc();
 void xFFXFree(xFFX* ffx);
 void xFFXTurnOn(xFFX* f);
 void xFFXTurnOff(xFFX* f);
+S16 xFFXAddEffect(xEnt* ent, xFFX* f);
 S16 xFFXAddEffect(xEnt* ent, void (*dof)(xEnt*, xScene*, F32, void*), void* fd);
 U32 xFFXRemoveEffectByFData(xEnt* ent, void* fdata);
 void xFFXApplyOne(xFFX* ffx, xEnt* ent, xScene* sc, F32 dt);
