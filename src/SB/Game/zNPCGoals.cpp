@@ -43,7 +43,7 @@ void zNPCGoals_RegisterTypes(xFactory* fac)
         NPC_GOAL_TALK, GOALCreate_Villager, GOALDestroy_Goal,
         NPC_GOAL_CHATTER, GOALCreate_Villager, GOALDestroy_Goal,
         NPC_GOAL_SPEAK, GOALCreate_Villager, GOALDestroy_Goal,
-        NPC_GOAL_BALLOON, GOALCreate_Villager, GOALDestroy_Goal,
+        NPC_GOAL_BALLOON, GOALCreate_Villager, GOALDestroy_Goal, //0x533e
         NPC_GOAL_BOYRIDE, GOALCreate_Villager, GOALDestroy_Goal,
         NPC_GOAL_BOYFALL, GOALCreate_Villager, GOALDestroy_Goal,
         NPC_GOAL_BOYWEEP, GOALCreate_Villager, GOALDestroy_Goal,

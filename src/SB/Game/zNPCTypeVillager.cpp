@@ -315,6 +315,9 @@ void zNPCVillager::Init(xEntAsset* asset)
 //         this->psy_instinct->GoalSet(NPC_GOAL_IDLE, 1);
 //     }
 // }
+void zNPCVillager::Reset()
+{
+}
 
 void zNPCVillager::ParseINI()
 {
@@ -372,6 +375,10 @@ void zNPCVillager::SpeakEnd() //80%
 void zNPCVillager::TossMyConverse()
 {
     converse = 0;
+}
+
+void zNPCFish::Reset()
+{
 }
 
 void zNPCFish::ParseINI()
@@ -434,6 +441,104 @@ void zNPCMerManChair::Init(xEntAsset*) //Seems to load an extra value?
     flg_move = 1;
     flg_vuln = -1;
     flg_vuln = flg_vuln & 0x9effffff;
+}
+
+void zNPCNewsFish::SpeakStop()
+{
+    S32 tempvar = zNPCNewsFish::IsTalking();
+    if (tempvar != 0)
+    {
+        xSndStop(soundHandle);
+    }
+    currSoundID = 0;
+    nextSoundID = 0;
+    soundHandle = 0;
+    jawData = 0;
+}
+
+S32 zNPCNewsFish::IsTalking()
+{
+    return (soundHandle) ? xSndIsPlayingByHandle(soundHandle) : false;
+}
+
+void zNPCNewsFish::TalkOnScreen(S32 talkOnScreen)
+{
+    if (talkOnScreen != 0)
+    {
+        newsfishFlags = newsfishFlags | 1;
+        return;
+    }
+    newsfishFlags = newsfishFlags & 0xfffffffe;
+    return;
+}
+
+void zNPCNewsFish::reset_said()
+{
+    //
+}
+
+void zNPCSandyBikini::Reset() //100% code match
+{
+    zNPCVillager::Reset();
+    tmr_leakCycle = 0.0;
+}
+
+void zNPCSandyBikini::Process(xScene* xscn, float dt) //100% code match
+{
+    zNPCVillager::Process(xscn, dt);
+    zNPCSandyBikini::VFXLeakyFaucet(dt);
+}
+
+void zNPCBalloonBoy::Init(xEntAsset* asset) //68%
+{
+    zNPCFish::Init(asset);
+    rast_shadBalloon = 0;
+    bound.type = 0;
+
+    //cg_npc 0x1d8
+    //bound.type 0x84
+}
+
+void zNPCBalloonBoy::SelfSetup() //100% code match
+{
+    xPsyche* psy;
+    zNPCFish::SelfSetup();
+    psy = psy_instinct;
+    psy->BrainExtend();
+    zNPCBalloonBoy::AddBallooning(psy);
+    psy->BrainEnd();
+}
+
+void zNPCBalloonBoy::Render()
+{
+    xNPCBasic::Render();
+    zNPCBalloonBoy::PlatShadRend();
+}
+
+void zNPCBalloonBoy::AddBallooning(xPsyche* psy)
+{
+    psy->AddGoal(NPC_GOAL_BALLOON, NULL);
+    psy->AddGoal(NPC_GOAL_BOYRIDE, NULL);
+    psy->AddGoal(NPC_GOAL_BOYFALL, NULL);
+    psy->AddGoal(NPC_GOAL_BOYWEEP, NULL);
+    psy->AddGoal(NPC_GOAL_BOYSWIM, NULL);
+}
+
+void zNPCBalloonBoy::PlatAnimSet(en_BBOY_PLATANIM platanim)
+{
+    F32 fvals[4];
+}
+
+void zNPCBalloonBoy::PlatAnimSync()
+{
+    zNPCCommon::AnimCurState();
+}
+
+void zNPCBubbleBuddy::Reset() // possible scheduling meme?
+{
+    zNPCFish::Reset();
+    // flags = flags | 0x40;
+    flags |= 0x40;
 }
 
 void ztaskbox::callback::on_talk_start()
