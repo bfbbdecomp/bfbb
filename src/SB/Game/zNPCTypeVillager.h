@@ -52,11 +52,15 @@ struct zNPCFish : zNPCVillager
     void ParseINI();
     void FishSoundTables();
     void CheckDoChat();
+    void Reset();
+    void SelfSetup();
 };
 
 struct zNPCBubbleBuddy : zNPCFish
 {
     zNPCBubbleBuddy(S32 myType);
+
+    void Reset();
 };
 
 enum en_BBOY_PLATANIM
@@ -72,18 +76,27 @@ struct zNPCBalloonBoy : zNPCFish
     S32 specialBalloon;
     zPlatform* plat_balloons;
     xShadowCache* shadCache;
+    RwRaster* rast_shadBalloon;
 
     zNPCBalloonBoy(S32 myType);
 
+    void Init(xEntAsset* asset);
+    void SelfSetup();
+    void Render();
+    void PlatShadRend();
+    void AddBallooning(xPsyche* psy);
     void PlatAnimSet(en_BBOY_PLATANIM anim);
     void PlatAnimSync();
 };
 
 struct zNPCSandyBikini : zNPCVillager
 {
-    F32 tmr_leakCycle;
+    F32 tmr_leakCycle; //0xac
 
     zNPCSandyBikini(S32 myType);
+    void Reset();
+    void Process(xScene* xscn, float dt);
+    void VFXLeakyFaucet(float dt);
 };
 
 struct zNPCMerManChair : zNPCVillager
@@ -107,12 +120,12 @@ struct zNPCNewsFish : zNPCVillager
 
     say_data said[71];
     U8 was_reset;
-    U32 soundHandle;
-    U32 currSoundID;
-    U32 nextSoundID;
-    F32 jawTime;
+    U32 soundHandle; //0x4ec
+    U32 currSoundID; //0x4f0
+    U32 nextSoundID; //0x4f4
+    F32 jawTime; //0x4f8
     void* jawData;
-    U32 newsfishFlags;
+    U32 newsfishFlags; //0x500
     xVec2 onScreenCoords;
     xVec2 offScreenCoords;
     xVec2 screenCoords;
@@ -121,6 +134,8 @@ struct zNPCNewsFish : zNPCVillager
     F32 appearSpeed;
     F32 disappearSpeed;
     F32 screenLerp;
+    S32 IsTalking();
+    void reset_said();
 
     zNPCNewsFish(S32 myType);
 
