@@ -29,6 +29,7 @@ char* str10 = "Check1";
 
 void zPlatformTranslate(xEnt* xent, xVec3* dpos, xMat4x3* dmat);
 void zPlatform_Move(xEnt* entPlat, xScene* s, float dt, xEntFrame* frame);
+static void zPlatform_Tremble(zPlatform* plat, F32 ampl, F32 freq, F32 dur);
 
 static void genericPlatRender(xEnt* ent)
 {
@@ -269,6 +270,75 @@ void zPlatformTranslate(xEnt* xent, xVec3* dpos, xMat4x3* dmat)
     xEntMotionTranslate(&plat->motion, dpos, dmat);
 }
 
+void zPlatform_Shake(zPlatform* plat, F32 _unused, F32 ampl, F32 freq)
+{
+    xFFXShakeState* ss;
+    xFFX* sfkt;
+
+    ss = xFFXShakeAlloc();
+    if (ss != NULL)
+    {
+        sfkt = xFFXAlloc();
+        if (sfkt == NULL)
+        {
+            xFFXShakeFree(ss);
+            ss = NULL;
+        }
+        else
+        {
+            ss->disp.x = 0.0f;
+            ss->disp.y = -ampl;
+            ss->disp.z = 0.0f;
+            ss->dur = 1.0f;
+            ss->alpha = -7.0f / ss->dur;
+            ss->freq = freq;
+            ss->tmr = 0.0f;
+            sfkt->doEffect = xFFXShakeUpdateEnt;
+            sfkt->fdata = ss;
+            xFFXAddEffect(plat, sfkt);
+        }
+    }
+}
+
+static void zPlatform_Tremble(zPlatform* plat, F32 ampl, F32 freq, F32 dur)
+{
+    xFFXShakeState* ss;
+    xFFX* sfkt;
+    xParEmitterCustomSettings info;
+    S32 i;
+
+    ss = xFFXShakeAlloc();
+    if (ss != NULL)
+    {
+        sfkt = xFFXAlloc();
+        if (sfkt == NULL)
+        {
+            xFFXShakeFree(ss);
+            return;
+        }
+
+        xVec3SMul(&ss->disp, (xVec3*)&globals.camera.mat, ampl);
+        ss->dur = dur;
+        ss->alpha = 1.0f / dur;
+        ss->freq = freq;
+        ss->tmr = 0.0f;
+        sfkt->doEffect = xFFXShakeUpdateEnt;
+        sfkt->fdata = ss;
+        xFFXAddEffect(plat, sfkt);
+    }
+
+    if (sEmitTremble != NULL)
+    {
+        info.custom_flags = 0x100;
+        info.pos = *xEntGetCenter(plat);
+        for (i = 0; i < 25; i++)
+        {
+            // Emit a particle at every 30 frames?
+            xParEmitterEmitCustom(sEmitTremble, 1.0f / 30, &info);
+        }
+    }
+}
+
 void zPlatform_BreakawayFallFX(zPlatform* ent, F32 dt)
 {
     if (sEmitBreakaway != NULL)
@@ -441,6 +511,54 @@ void zPlatform_PaddleStartRotate(xEnt* entplat, S32 direction, S32 stutter)
 
     SolvePaddleMotion(plat, time, -1.0f);
     plat->tmr = time[0] + time[1] + time[2];
+}
+
+static void zPlatFM_EventSetup(zPlatform* plat, const F32* toParam, S32 idx)
+{
+    F32 ds, atm, ttm, dtm;
+
+    zPlatFMRunTime* fmrt = plat->fmrt;
+    if (fmrt->flags & (1 << idx))
+    {
+        return;
+    }
+
+    ds = toParam[0];
+    atm = toParam[1];
+    ttm = toParam[2];
+    dtm = toParam[3];
+
+    if (atm <= 0.0f)
+    {
+        return;
+    }
+
+    if (ttm > atm)
+    {
+        ttm = atm;
+    }
+    else if (ttm < 0.0f)
+    {
+        ttm = 0.0f;
+    }
+
+    ttm = atm - ttm;
+    if (dtm > ttm)
+    {
+        dtm = ttm;
+    }
+    else if (dtm < 0.0f)
+    {
+        dtm = 0.0f;
+    }
+
+    fmrt->tmrs[idx] = atm;
+    fmrt->ttms[idx] = atm;
+    fmrt->atms[idx] = ttm;
+    fmrt->dtms[idx] = dtm;
+    fmrt->vms[idx] = 2.0f * ds / (atm - dtm + ttm);
+    fmrt->dss[idx] = ds;
+    fmrt->flags |= (1 << idx);
 }
 
 S32 zPlatformEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* base3)
