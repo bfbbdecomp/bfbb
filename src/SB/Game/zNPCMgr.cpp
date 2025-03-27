@@ -280,6 +280,7 @@ void zNPCCommon::RenderExtra()
 void zNPCCommon::RenderExtraPostParticles()
 {
 }
+
 void zNPCMgr::ScenePostRender()
 {
     xLightKit_Enable(globals.player.ent.lightKit, globals.currWorld);
