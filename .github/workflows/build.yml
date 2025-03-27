@@ -73,6 +73,14 @@ jobs:
           name: ${{ matrix.version }}_previous
           path: build/${{ matrix.version }}/report.json
 
+      # Build and link non-matching files to verify lack of errors
+      - name: Build non-matching
+        run: |
+          python configure.py --non-matching --map \
+              --version ${{ matrix.version }} \
+              --binutils /binutils --compilers /compilers
+          ninja all_source
+
   website:
     runs-on: ubuntu-latest
     permissions:
