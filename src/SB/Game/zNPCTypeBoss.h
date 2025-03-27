@@ -30,6 +30,7 @@ void ZNPC_Boss_Startup();
 void ZNPC_Boss_Shutdown();
 xFactoryInst* ZNPC_Create_Boss(S32 who, RyzMemGrow* grow, void*);
 void ZNPC_Destroy_Boss(xFactoryInst* inst);
+void zNPCBoss_SceneFinish();
 
 xAnimTable* ZNPC_AnimTable_BossSBobbyArm();
 

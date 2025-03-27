@@ -43,5 +43,6 @@ void ZNPC_Destroy_Duplotron(xFactoryInst* inst);
 xAnimTable* ZNPC_AnimTable_Duplotron();
 void DUPO_KillEffects();
 void DUPO_InitEffects();
+void zNPCDuplotron_SceneFinish();
 
 #endif
