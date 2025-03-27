@@ -12,6 +12,7 @@
 #include "zNPCGoals.h"
 #include "zGlobals.h"
 #include "xFactory.h"
+#include "zRenderState.h"
 
 #include "xBehaveMgr.h"
 
@@ -19,6 +20,9 @@
 
 extern S32 g_modinit;
 extern zNPCMgr* g_npcmgr;
+
+extern xLightKit* DAT_803c0c68;
+extern RpWorld* DAT_803c0bb0;
 
 S32 g_firstFrameUpdateAllNPC;
 
@@ -125,6 +129,21 @@ void zNPCMgr_scenePostParticleRender()
 xEnt* zNPCMgr_createNPCInst(S32, xEntAsset* assdat)
 {
     return zNPCMgrSelf()->CreateNPC(assdat);
+}
+
+void zNPCMgr::Startup()
+{
+    PrepTypeTable();
+    selfbase.id = 'NPCM';
+    selfbase.baseType = 0xAB;
+    npcFactory = new ('NPCM', NULL) xFactory(0x60);
+    zNPCMsg_Startup();
+    zNPCSpawner_Startup();
+    zNPCTypes_StartupTypes();
+    zNPCTypes_RegisterTypes(npcFactory);
+    bmgr = xBehaveMgr_GetSelf();
+    xFactory* behaveMgrFactory = bmgr->GetFactory();
+    zNPCGoals_RegisterTypes(behaveMgrFactory);
 }
 
 void zNPCMgr::Shutdown()
@@ -263,18 +282,23 @@ void zNPCCommon::RenderExtra()
 void zNPCCommon::RenderExtraPostParticles()
 {
 }
-
-void zNPCMgr::Startup()
+void zNPCMgr::ScenePostRender()
 {
-    PrepTypeTable();
-    selfbase.id = 'NPCM';
-    selfbase.baseType = 0xAB;
-    npcFactory = new ('NPCM', NULL) xFactory(0x60);
-    zNPCMsg_Startup();
-    zNPCSpawner_Startup();
-    zNPCTypes_StartupTypes();
-    zNPCTypes_RegisterTypes(npcFactory);
-    bmgr = xBehaveMgr_GetSelf();
-    xFactory* behaveMgrFactory = bmgr->GetFactory();
-    zNPCGoals_RegisterTypes(behaveMgrFactory);
+    xLightKit_Enable(DAT_803c0c68, DAT_803c0bb0);
+    enum _SDRenderState old_rendstat = zRenderStateCurrent();
+    zRenderState(SDRS_NPCVisual);
+    for (int i = 0; i < npclist.cnt; i++)
+    {
+        zNPCCommon* npc = (zNPCCommon*)npclist.list[i];
+        if (npc->flg_xtrarend & 0x1 && (npc->flg_xtrarend = npc->flg_xtrarend & 0xfffffffe),
+            !(npc->baseFlags & 0x40))
+        {
+            if (npc->model == NULL || !(npc->model->Flags & 0x400))
+            {
+                npc->RenderExtra();
+            }
+        }
+    }
+    xLightKit_Enable(0, DAT_803c0bb0);
+    zRenderState(old_rendstat);
 }
