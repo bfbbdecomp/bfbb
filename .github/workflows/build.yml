@@ -76,10 +76,10 @@ jobs:
       # Build and link non-matching files to verify lack of errors
       - name: Build non-matching
         run: |
-          python configure.py --non-matching --map \
+          python configure.py --non-matching \
               --version ${{ matrix.version }} \
               --binutils /binutils --compilers /compilers
-          ninja all_source
+          ninja
 
   website:
     runs-on: ubuntu-latest
