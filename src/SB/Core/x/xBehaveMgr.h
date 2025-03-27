@@ -31,6 +31,7 @@ void xBehaveMgr_ScenePrepare();
 void xBehaveMgr_SceneReset();
 void xBehaveMgr_Startup();
 void xBehaveMgr_Shutdown();
+void xBehaveMgr_SceneFinish();
 xBehaveMgr* xBehaveMgr_GetSelf();
 
 #endif

@@ -53,6 +53,7 @@ void zNPCMgr_scenePostSetup();
 void zNPCMgr_sceneTimestep(xScene* xscn, F32 dt);
 void zNPCMgr_scenePostRender();
 void zNPCMgr_scenePostParticleRender();
+void zNPCMsg_SceneFinish();
 xEnt* zNPCMgr_createNPCInst(S32, xEntAsset* assdat);
 
 S32 zNPCMgr_OrdComp_npcid(void* vkey, void* vitem);

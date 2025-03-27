@@ -224,6 +224,25 @@ void zNPCMgr::ScenePrepare(S32 npccnt)
     g_firstFrameUpdateAllNPC = 1;
 }
 
+void zNPCMgr::SceneFinish()
+{
+    for (int i = 0; i < npclist.cnt; i++)
+    {
+        ((zNPCCommon*)npclist.list[i])->Destroy();
+    }
+    XOrdDone(&npclist, 0);
+    npcFactory->DestroyAll();
+    zNPCBoss_SceneFinish();
+    zNPCSubBoss_SceneFinish();
+    zNPCDuplotron_SceneFinish();
+    zNPCRobot_SceneFinish();
+    zNPCVillager_SceneFinish();
+    zNPCCommon_SceneFinish();
+    zNPCSpawner_SceneFinish();
+    zNPCMsg_SceneFinish();
+    xBehaveMgr_SceneFinish();
+}
+
 S32 zNPCMgr_OrdComp_npcid(void* vkey, void* vitem)
 {
     S32 rc;
