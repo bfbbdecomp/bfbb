@@ -290,13 +290,23 @@ void zNPCMgr::ScenePostRender()
     for (int i = 0; i < npclist.cnt; i++)
     {
         zNPCCommon* npc = (zNPCCommon*)npclist.list[i];
-        if (npc->flg_xtrarend & 0x1 && (npc->flg_xtrarend = npc->flg_xtrarend & 0xfffffffe),
-            !(npc->baseFlags & 0x40))
+        if (npc->flg_xtrarend & 0x1)
         {
-            if (npc->model == NULL || !(npc->model->Flags & 0x400))
-            {
-                npc->RenderExtra();
-            }
+            npc->flg_xtrarend &= ~0x1;
+        }
+        else
+        {
+            continue;
+        }
+
+        if (npc->baseFlags & 0x40)
+        {
+            continue;
+        }
+
+        if (npc->model == NULL || !(npc->model->Flags & 0x400))
+        {
+            npc->RenderExtra();
         }
     }
     xLightKit_Enable(0, DAT_803c0bb0);
