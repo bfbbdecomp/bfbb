@@ -22,8 +22,6 @@
 extern S32 g_modinit;
 extern zNPCMgr* g_npcmgr;
 
-extern xLightKit* DAT_803c0c68;
-
 S32 g_firstFrameUpdateAllNPC;
 
 struct NPCMTypeTable
