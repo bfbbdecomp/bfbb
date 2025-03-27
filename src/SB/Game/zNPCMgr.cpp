@@ -1,4 +1,5 @@
 #include "zNPCMgr.h"
+#include "xLightKit.h"
 #include "xRMemData.h"
 #include "zNPCTypeCommon.h"
 #include "zNPCTypeRobot.h"
@@ -22,7 +23,6 @@ extern S32 g_modinit;
 extern zNPCMgr* g_npcmgr;
 
 extern xLightKit* DAT_803c0c68;
-extern RpWorld* DAT_803c0bb0;
 
 S32 g_firstFrameUpdateAllNPC;
 
@@ -284,7 +284,7 @@ void zNPCCommon::RenderExtraPostParticles()
 }
 void zNPCMgr::ScenePostRender()
 {
-    xLightKit_Enable(DAT_803c0c68, DAT_803c0bb0);
+    xLightKit_Enable(globals.player.ent.lightKit, globals.currWorld);
     enum _SDRenderState old_rendstat = zRenderStateCurrent();
     zRenderState(SDRS_NPCVisual);
     for (int i = 0; i < npclist.cnt; i++)
@@ -309,6 +309,6 @@ void zNPCMgr::ScenePostRender()
             npc->RenderExtra();
         }
     }
-    xLightKit_Enable(0, DAT_803c0bb0);
+    xLightKit_Enable(0, globals.currWorld);
     zRenderState(old_rendstat);
 }
