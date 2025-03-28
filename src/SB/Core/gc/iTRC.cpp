@@ -6,6 +6,17 @@
 namespace ResetButton
 {
     bool mResetEnabled = 1;
+    void (*mSndKill)();
+}
+
+namespace iTRCDisk
+{
+    void (*mSndSuspend)();
+    void (*mSndResume)();
+    void (*mPadStopRumbling)();
+    void (*mSndKill)();
+    void (*mMovieSuspendFunction)();
+    void (*mMovieResumeFunction)();
 }
 
 bool ROMFont::Init()

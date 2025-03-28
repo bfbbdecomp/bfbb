@@ -29,12 +29,12 @@ namespace ROMFont
 namespace iTRCDisk
 {
     char mMessage[];
-    void (*mPadStopRumbling)();
-    void (*mSndSuspend)();
-    void (*mSndResume)();
-    void (*mSndKill)();
-    void (*mMovieSuspendFunction)();
-    void (*mMovieResumeFunction)();
+    extern void (*mSndSuspend)();
+    extern void (*mSndResume)();
+    extern void (*mPadStopRumbling)();
+    extern void (*mSndKill)();
+    extern void (*mMovieSuspendFunction)();
+    extern void (*mMovieResumeFunction)();
 
     void SetPadStopRumblingFunction(void (*)(void));
     void SetSndSuspendFunction(void (*)(void));
@@ -53,7 +53,7 @@ namespace iTRCDisk
 
 namespace ResetButton
 {
-    void (*mSndKill)();
+    extern void (*mSndKill)();
 
     void EnableReset();
     void DisableReset();
