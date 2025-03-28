@@ -33,14 +33,6 @@ jobs:
       - name: Prepare
         run: cp -R /orig .
 
-      # Build and link non-matching files to verify lack of errors
-      - name: Build non-matching
-        run: |
-          python configure.py --non-matching \
-              --version ${{ matrix.version }} \
-              --binutils /binutils --compilers /compilers
-          ninja
-
       # Build the project
       - name: Build
         run: |
@@ -67,10 +59,76 @@ jobs:
             build/${{ matrix.version }}/report.json
             build/${{ matrix.version }}/progress-commit.json
 
+  verifyNonMatching:
+    # This is a *private* build container.
+    # See docs/github_actions.md for more information.
+    container: ghcr.io/bfbbdecomp/bfbb-build:main
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Add game versions here
+        version: [GQPE78]
+
+    steps:
+      # Checkout the repository
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          submodules: recursive
+
+      # Set Git config
+      - name: Git config
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      # Copy the original files to the workspace
+      - name: Prepare
+        run: cp -R /orig .
+
+      # Build and link non-matching files to verify lack of errors
+      - name: Build non-matching
+        run: |
+          python configure.py --non-matching \
+              --version ${{ matrix.version }} \
+              --binutils /binutils --compilers /compilers
+          ninja
+
+  generatePreviousReport:
+    # This is a *private* build container.
+    # See docs/github_actions.md for more information.
+    container: ghcr.io/bfbbdecomp/bfbb-build:main
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Add game versions here
+        version: [GQPE78]
+
+    steps:
+      # Checkout the repository
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          submodules: recursive
+
+      # Set Git config
+      - name: Git config
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      # Copy the original files to the workspace
+      - name: Prepare
+        run: cp -R /orig .
+
       # Generate report for previous commit
       - name: Generate previous report
         continue-on-error: true
         run: |
+          python configure.py --version ${{ matrix.version }} \
+                --binutils /binutils --compilers /compilers
           git checkout HEAD^
           ninja build/${{ matrix.version }}/report.json
 
@@ -85,7 +143,10 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    needs: build
+    needs: 
+      - build
+      - verifyNonMatching
+      - generatePreviousReport
     if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout website code
