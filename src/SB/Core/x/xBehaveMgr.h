@@ -12,8 +12,14 @@ struct xBehaveMgr : RyzMemData
     xPsyche* psypool;
     st_XORDEREDARRAY psylist;
 
-    xBehaveMgr();
-    ~xBehaveMgr();
+    xBehaveMgr()
+    {
+    }
+
+    ~xBehaveMgr()
+    {
+    }
+
     void Startup(S32, S32);
     void RegBuiltIn();
     xPsyche* Subscribe(xBase* owner, S32 i);
@@ -22,9 +28,6 @@ struct xBehaveMgr : RyzMemData
     void SceneFinish();
     void SceneReset();
     xFactory* GetFactory();
-
-    void* operator new(size_t amt, U32, RyzMemGrow*);
-    void operator delete(void*, U16);
 };
 
 void xBehaveMgr_ScenePrepare();
