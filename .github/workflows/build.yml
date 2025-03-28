@@ -33,6 +33,14 @@ jobs:
       - name: Prepare
         run: cp -R /orig .
 
+      # Build and link non-matching files to verify lack of errors
+      - name: Build non-matching
+        run: |
+          python configure.py --non-matching \
+              --version ${{ matrix.version }} \
+              --binutils /binutils --compilers /compilers
+          ninja
+
       # Build the project
       - name: Build
         run: |
@@ -72,14 +80,6 @@ jobs:
         with:
           name: ${{ matrix.version }}_previous
           path: build/${{ matrix.version }}/report.json
-
-      # Build and link non-matching files to verify lack of errors
-      - name: Build non-matching
-        run: |
-          python configure.py --non-matching \
-              --version ${{ matrix.version }} \
-              --binutils /binutils --compilers /compilers
-          ninja
 
   website:
     runs-on: ubuntu-latest
