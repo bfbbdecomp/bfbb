@@ -5,7 +5,6 @@
 
 [![Perfect Match]][progress]
 [![Fuzzy Match]][progress]
-
 [![Functions]][progress]
 
 [progress]: https://bfbbdecomp.github.io/bfbb/
