@@ -235,6 +235,8 @@ jobs:
           cat pr.txt
 
       - name: Post comment to PR
+        with:
+          github_token: ${{ secrets.WEBSITE_TOKEN }}
         run: |
           PR_NUMBER=$(jq --raw-output .pull_request.number $GITHUB_EVENT_PATH)
           COMMENT_BODY=$(cat pr.txt)
