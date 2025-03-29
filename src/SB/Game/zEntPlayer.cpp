@@ -277,7 +277,8 @@ void zEntPlayerKillCarry()
             zEntEvent(globals.player.carry.grabbed, eEventDestroy);
         }
         else if (globals.player.carry.grabbed->baseType == eBaseTypeNPC &&
-                 (((xNPCBasic*)globals.player.carry.grabbed)->SelfType() & 0xffffff00) == 'NTT\0')
+                 (((xNPCBasic*)globals.player.carry.grabbed)->SelfType() & 0xffffff00) ==
+                     NPC_TYPE_TIKI_WOOD)
         {
             zNPCTiki* tiki = (zNPCTiki*)globals.player.carry.grabbed;
             tiki->Damage(DMGTYP_THUNDER_TIKI_EXPLOSION, NULL, NULL);
@@ -3196,7 +3197,8 @@ static U32 LassoStartCB(xAnimTransition*, xAnimSingle*, void* object)
 
     xEnt* ent = (xEnt*)object;
     zNPCCommon* npc = (zNPCCommon*)sLassoInfo->target;
-    if (sLassoInfo->target->baseType == eBaseTypeNPC && (npc->SelfType() & 0xffffff00) != 'NTT\0')
+    if (sLassoInfo->target->baseType == eBaseTypeNPC &&
+        (npc->SelfType() & 0xffffff00) != NPC_TYPE_TIKI_WOOD)
     {
         sLassoInfo->targetGuide = 1;
         sCurrentNPCInfo = npc->GimmeLassInfo();
@@ -3686,9 +3688,9 @@ static void load_player_ini()
 void zEntPlayer_RestoreSounds()
 {
     sPlayerIgnoreSound--;
-    if (sPlayerIgnoreSound < 0) 
-	{
-		sPlayerIgnoreSound = 0;
+    if (sPlayerIgnoreSound < 0)
+    {
+        sPlayerIgnoreSound = 0;
     }
 }
 
@@ -3706,12 +3708,12 @@ void zEntPlayerUpdateModelSB();
 
 void zEntPlayerUpdateModel()
 {
-	zPlayerGlobals* pg = &globals.player;
-	
-	if (pg->ent.model == pg->model_spongebob)
-	{
-	    zEntPlayerUpdateModelSB();
-	}
+    zPlayerGlobals* pg = &globals.player;
+
+    if (pg->ent.model == pg->model_spongebob)
+    {
+        zEntPlayerUpdateModelSB();
+    }
 }
 
 S32 zEntPlayer_Damage(xBase* src, U32 damage, const xVec3* knockback)

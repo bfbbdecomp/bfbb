@@ -393,10 +393,10 @@ void zNPCFish::ParseINI()
 //     tempR = xNPCBasic::SelfType();
 //     switch (tempR)
 //     {
-//     case 'NTF0':
+//     case NPC_TYPE_FISH:
 //     {
 //     }
-//     case 'NPC_TYPE_FISH_MALE':
+//     case NPC_TYPE_FISH_MALE:
 //     {
 //     }
 // }

@@ -228,7 +228,7 @@ S32 zNPCCommon::SomethingWonderful()
         flg_wonder |= 0b00000100;
     }
 
-    if (cruise_bubble::active() && (this->SelfType() & 0xffffff00) == 'NTF\0')
+    if (cruise_bubble::active() && (this->SelfType() & 0xffffff00) == NPC_TYPE_FISH)
     {
         flg_wonder |= 0b01000000;
     }
