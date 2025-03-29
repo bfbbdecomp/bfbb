@@ -139,7 +139,7 @@ xVec3* zNPCKingJelly::get_bottom()
 
 void zNPCKingJelly::Setup()
 {
-    this->children_size = 0; //Called for address 0x88C, Started plugging things in till it matched.
+    this->children_size = 0; //0x88C
     load_model();
     load_curtain_model();
     zNPCSubBoss::Setup();
@@ -163,6 +163,11 @@ void zNPCKingJelly::BUpdate(xVec3* pos)
     // (xVec3&)this->model->Mat->pos = (xVec3&)this->model->Mat->pos + *pos;
 
     zNPCCommon::BUpdate(pos);
+}
+
+void zNPCKingJelly::RenderExtra()
+{
+    zNPCKingJelly::render_debug();
 }
 
 void zNPCKingJelly::SelfSetup()
@@ -302,6 +307,36 @@ void zNPCKingJelly::create_tentacle_lightning()
 {
 }
 
+void zNPCKingJelly::destroy_tentacle_lightning()
+{
+    for (S32 i = 0; i < 7; i++)
+    {
+        if (tentacle_lightning[i])
+        {
+            zLightningKill(tentacle_lightning[i]);
+            tentacle_lightning[i] = NULL;
+        }
+    }
+}
+
+void zNPCKingJelly::refresh_tentacle_points()
+{
+    S32 tempvar = 0;
+    do
+    {
+        refresh_tentacle_points(tempvar);
+        tempvar = tempvar + 1;
+    } while (tempvar < 7);
+}
+
+void zNPCKingJelly::destroy_ambient_rings()
+{
+    for (S32 i = 0; i < 3; i++)
+    {
+        ambient_rings[i].destroy();
+    }
+}
+
 void zNPCKingJelly::generate_spawn_particles()
 {
 }
@@ -324,10 +359,35 @@ void zNPCKingJelly::load_curtain_model()
 
 // }
 
+// void zNPCKingJelly::start_blink()
+// {
+//     blink.active = 1;
+//     blink.delay = 0;
+//     blink.count = 0;
+//     model = 0;
+//     render = 0;
+//     this = 0;
+
+//     // 0x24 model
+//     // 0x44 render
+// }
+
 S32 zNPCGoalKJDamage::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
 {
     // TODO
     return 0;
+}
+
+S32 zNPCGoalKJShockGround::Exit(F32 dt, void* updCtxt)
+{
+    zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
+    if (kj.flag.charging != 0)
+    {
+        kj.end_charge();
+    }
+    kj.create_ambient_rings();
+    kj.disable_tentacle_damage = 0;
+    return xGoal::Exit(dt, updCtxt);
 }
 
 S32 zNPCGoalKJDamage::Enter(F32 dt, void* updCtxt)
