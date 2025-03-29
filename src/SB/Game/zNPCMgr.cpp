@@ -304,7 +304,7 @@ void zNPCCommon::RenderExtraPostParticles()
 void zNPCMgr::ScenePostRender()
 {
     xLightKit_Enable(globals.player.ent.lightKit, globals.currWorld);
-    enum _SDRenderState old_rendstat = zRenderStateCurrent();
+    _SDRenderState old_rendstat = zRenderStateCurrent();
     zRenderState(SDRS_NPCVisual);
     for (int i = 0; i < npclist.cnt; i++)
     {
@@ -335,7 +335,7 @@ void zNPCMgr::ScenePostRender()
 void zNPCMgr::ScenePostParticleRender()
 {
     xLightKit_Enable(globals.player.ent.lightKit, globals.currWorld);
-    enum _SDRenderState old_rendstat = zRenderStateCurrent();
+    _SDRenderState old_rendstat = zRenderStateCurrent();
     zRenderState(SDRS_NPCVisual);
     for (int i = 0; i < npclist.cnt; i++)
     {
@@ -390,4 +390,35 @@ void zNPCMgr::BackdoorUpdateAllNPCsOnce(xScene* xscn, F32 dt)
             npc->update(npc, xscn, 1.0f / 60);
         }
     }
+}
+
+en_NPCTYPES zNPCMgr::NPCTypeForModel(U32 brainID, U32 mdl_hash)
+{
+    if (brainID != NULL)
+    {
+        for (int i = 0; i < sizeof(g_brainTable) / sizeof(g_brainTable[0]); i++)
+        {
+            if (brainID == g_brainTable[i].id)
+            {
+                return g_brainTable[i].type;
+            }
+        }
+    }
+
+    en_NPCTYPES usetype = NPC_TYPE_UNKNOWN;
+    for (NPCMTypeTable* rec = g_tbltype; rec->useNPCType != NPC_TYPE_UNKNOWN; rec++)
+    {
+        if (rec->hashOfName == mdl_hash)
+        {
+            usetype = rec->useNPCType;
+            break;
+        }
+    }
+
+    if (usetype == NPC_TYPE_UNKNOWN)
+    {
+        usetype = (en_NPCTYPES)'NT01';
+    }
+
+    return usetype;
 }
