@@ -270,21 +270,7 @@ namespace
         { "hud:text", eBaseTypeHUD_text, sizeof(xBase) + sizeof(xhud::text_widget), false, xhud::text_widget::load },
         { "game_object:bungee_hook", eBaseTypeBungeeHook, sizeof(bungee_state::hook_type), false, bungee_state::load },
         { "game_object:Flythrough", eBaseTypeCameraFly, sizeof(zCameraFly), false, zCameraFly_Init },
-#if 1 // include the rest of the strings here until their parent functions are decomped
-        { "game_object:Camera_Tweak\0"
-          "... scene preload ...\n\0"
-          "... scene loading ...\n\0"
-          "... scene asset queue ...\n\0"
-          "...initializing scene - sound\n\0"
-          "...initializing scene - base types\n\0"
-          "PAREMIT_FIREWORKS_TRAIL\0"
-          "PAREMIT_FIREWORKS1\0"
-          "PAREMIT_FIREWORKS2\0"
-          "Fireworks_explode\0"
-          "Fireworks_trail", eBaseTypeCameraTweak, sizeof(zCameraTweak), false, zCameraTweak_Init }
-#else
         { "game_object:Camera_Tweak", eBaseTypeCameraTweak, sizeof(zCameraTweak), false, zCameraTweak_Init }
-#endif
     };
     // clang-format on
 
@@ -3512,8 +3498,8 @@ void zSceneEnableScreenAdj(U32 enable)
 
 void zSceneSetOldScreenAdj()
 {
-    oldOffsetx = offsetx;
-    oldOffsety = offsety;
+    *(volatile F32*)(&oldOffsetx) = offsetx;
+    *(volatile F32*)(&oldOffsety) = offsety;
 }
 
 U32 zScene_ScreenAdjustMode()
