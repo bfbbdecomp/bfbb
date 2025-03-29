@@ -233,6 +233,10 @@ jobs:
         run: |
           ./ok --previous artifacts/previous.json --current artifacts/progress.json pr > pr.txt
           cat pr.txt
+      - name: PR comment with file
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          file-path: pr.txt
 
       - name: Post comment to PR
         run: |
