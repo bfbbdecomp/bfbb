@@ -68,6 +68,7 @@ void zNPCTiki_InitFX(zScene*);
 void zNPCTiki_ExplodeFX(zNPCTiki* tiki);
 xFactoryInst* ZNPC_Create_Tiki(S32 who, RyzMemGrow* grow, void*);
 void ZNPC_Destroy_Tiki(xFactoryInst* inst);
+void zNPCTiki_Timestep(xScene* xscn, F32 dt);
 
 xAnimTable* ZNPC_AnimTable_Tiki();
 
