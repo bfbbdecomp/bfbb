@@ -1257,22 +1257,20 @@ S32 zNPCGoalAttackTarTar::Enter(F32 dt, void* updCtxt)
 
 S32 zNPCGoalAttackChomper::Enter(F32 dt, void* updCtxt)
 {
-    zNPCCommon* com = ((zNPCCommon*)(psyche->clt_owner));
-    com->VelStop();
-    com->SndPlayRandom(NPC_STYP_ATTACK);
+    zNPCCommon* npc = ((zNPCCommon*)(psyche->clt_owner));
+    npc->VelStop();
+    npc->SndPlayRandom(NPC_STYP_ATTACK);
 
     return zNPCGoalPushAnim::Enter(dt, updCtxt);
 }
 
 S32 zNPCGoalEvilPat::Enter(F32 dt, void* updCtxt)
 {
-    zNPCCommon* com = ((zNPCCommon*)(psyche->clt_owner));
+    zNPCCommon* npc = ((zNPCCommon*)(psyche->clt_owner));
 
-    S32 typ = com->SelfType();
-
-    if ((typ - 'NT\0\0') == 'R3')
+    if (npc->SelfType() == NPC_TYPE_GLOVE)
     {
-        com->flg_vuln |= 0x80000000;
+        npc->flg_vuln |= 0x80000000;
     }
 
     GlyphStart();
@@ -1282,16 +1280,14 @@ S32 zNPCGoalEvilPat::Enter(F32 dt, void* updCtxt)
 
 S32 zNPCGoalEvilPat::Exit(F32 dt, void* updCtxt)
 {
-    zNPCCommon* com = ((zNPCCommon*)(psyche->clt_owner));
+    zNPCCommon* npc = ((zNPCCommon*)(psyche->clt_owner));
 
-    S32 typ = com->SelfType();
-
-    if ((typ - 'NT\0\0') == 'R3')
+    if (npc->SelfType() == NPC_TYPE_GLOVE)
     {
-        com->flg_vuln &= 0x7FFFFFFF;
+        npc->flg_vuln &= 0x7FFFFFFF;
     }
 
-    *(F32*)(&com->snd_queue[6].flg_snd) = -1.0f;
+    *(F32*)(&npc->snd_queue[6].flg_snd) = -1.0f;
 
     GlyphStop();
 
