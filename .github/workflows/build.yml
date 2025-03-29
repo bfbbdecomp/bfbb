@@ -231,8 +231,6 @@ jobs:
           ./ok --previous artifacts/previous.json --current artifacts/progress.json pr > pr.txt
           cat pr.txt
       - name: PR comment with file
-        permissions:
-          pull-requests: write
         uses: thollander/actions-comment-pull-request@v3
         with:
           file-path: pr.txt
