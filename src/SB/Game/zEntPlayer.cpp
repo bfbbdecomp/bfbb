@@ -277,8 +277,7 @@ void zEntPlayerKillCarry()
             zEntEvent(globals.player.carry.grabbed, eEventDestroy);
         }
         else if (globals.player.carry.grabbed->baseType == eBaseTypeNPC &&
-                 (((xNPCBasic*)globals.player.carry.grabbed)->SelfType() & 0xffffff00) ==
-                     NPC_TYPE_TIKI_WOOD)
+                 (((xNPCBasic*)globals.player.carry.grabbed)->SelfType() & 0xffffff00) == 'NTT\0')
         {
             zNPCTiki* tiki = (zNPCTiki*)globals.player.carry.grabbed;
             tiki->Damage(DMGTYP_THUNDER_TIKI_EXPLOSION, NULL, NULL);
@@ -3197,8 +3196,7 @@ static U32 LassoStartCB(xAnimTransition*, xAnimSingle*, void* object)
 
     xEnt* ent = (xEnt*)object;
     zNPCCommon* npc = (zNPCCommon*)sLassoInfo->target;
-    if (sLassoInfo->target->baseType == eBaseTypeNPC &&
-        (npc->SelfType() & 0xffffff00) != NPC_TYPE_TIKI_WOOD)
+    if (sLassoInfo->target->baseType == eBaseTypeNPC && (npc->SelfType() & 0xffffff00) != 'NTT\0')
     {
         sLassoInfo->targetGuide = 1;
         sCurrentNPCInfo = npc->GimmeLassInfo();
