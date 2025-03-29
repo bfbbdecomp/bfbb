@@ -17,6 +17,7 @@
 #include "zRenderState.h"
 
 #include "xBehaveMgr.h"
+#include "xstransvc.h"
 
 #include <types.h>
 
@@ -421,4 +422,28 @@ en_NPCTYPES zNPCMgr::NPCTypeForModel(U32 brainID, U32 mdl_hash)
     }
 
     return usetype;
+}
+
+xEnt* zNPCMgr::CreateNPC(xEntAsset* asset)
+{
+    zNPCCommon* npc;
+    en_NPCTYPES nt;
+    U32 size;
+    xModelAssetInfo* modelAsset = (xModelAssetInfo*)xSTFindAsset(asset->modelInfoID, &size);
+
+    // FIXME: Replace with actually getting the right model hash from the packed data
+    nt = this->NPCTypeForModel(modelAsset->BrainID, *(&asset->modelInfoID + 3));
+    npc = (zNPCCommon*)npcFactory->CreateItem(nt, NULL, NULL);
+
+    npc->Init(asset);
+    XOrdAppend(&npclist, npc);
+
+    if (npclist.cnt == npclist.max)
+    {
+        XOrdSort(&npclist, zNPCMgr_OrdComp_npcid);
+    }
+
+    this->DBG_Reset();
+
+    return npc;
 }
