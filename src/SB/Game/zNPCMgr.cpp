@@ -330,3 +330,34 @@ void zNPCMgr::ScenePostRender()
     xLightKit_Enable(0, globals.currWorld);
     zRenderState(old_rendstat);
 }
+
+void zNPCMgr::ScenePostParticleRender()
+{
+    xLightKit_Enable(globals.player.ent.lightKit, globals.currWorld);
+    enum _SDRenderState old_rendstat = zRenderStateCurrent();
+    zRenderState(SDRS_NPCVisual);
+    for (int i = 0; i < npclist.cnt; i++)
+    {
+        zNPCCommon* npc = (zNPCCommon*)npclist.list[i];
+        if (npc->flg_xtrarend & 0x2)
+        {
+            npc->flg_xtrarend &= ~0x2;
+        }
+        else
+        {
+            continue;
+        }
+
+        if (npc->baseFlags & 0x40)
+        {
+            continue;
+        }
+
+        if (npc->model == NULL || !(npc->model->Flags & 0x400))
+        {
+            npc->RenderExtraPostParticles();
+        }
+    }
+    xLightKit_Enable(0, globals.currWorld);
+    zRenderState(old_rendstat);
+}
