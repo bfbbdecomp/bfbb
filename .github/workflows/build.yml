@@ -207,16 +207,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Download Progress Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./artifacts
+
+      - name: Download OK bot
+        id: download-ok
+        run: |
+          python ./tools/download_tool.py ok . --tag v0.1.1
+
       - name: Run OK command
         id: ok-command
         run: |
-          OK --previous build/${{ matrix.version }}/previous.json --current build/${{ matrix.version }}/progress.json pr > result.txt
-          cat result.txt
+          ./ok --previous artifacts/previous.json --current artifacts/progress.json pr > pr.txt
+          cat pr.txt
 
       - name: Post comment to PR
         run: |
           PR_NUMBER=$(jq --raw-output .pull_request.number $GITHUB_EVENT_PATH)
-          COMMENT_BODY=$(cat result.txt)
+          COMMENT_BODY=$(cat pr.txt)
           curl -X POST \
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             -H "Content-Type: application/json" \
