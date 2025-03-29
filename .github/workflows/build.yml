@@ -199,15 +199,12 @@ jobs:
           branch: ${{ github.ref }}
   pr-comment:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      issues: write
-      pull-requests: write
-      repository-projects: write
     needs:
       - build
       - build-previous
     if: github.event_name == 'pull_request'
+    permissions:
+      pull-requests: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
