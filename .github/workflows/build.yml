@@ -215,7 +215,7 @@ jobs:
       - name: Download OK bot
         id: download-ok
         run: |
-          python ./tools/download_tool.py ok . --tag v0.1.1
+          python ./tools/download_tool.py OK ok --tag v0.1.1
 
       - name: Run OK command
         id: ok-command
