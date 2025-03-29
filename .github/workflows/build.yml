@@ -238,6 +238,16 @@ jobs:
         run: |
           PR_NUMBER=$(jq --raw-output .pull_request.number $GITHUB_EVENT_PATH)
           COMMENT_BODY=$(cat pr.txt)
+
+          # Print the URL
+          echo "Posting comment to: $URL"
+
+          curl --fail-with-body -X POST \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            --data "{\"body\":\"$COMMENT_BODY\"}" \
+            "$URL"
+
           curl --fail-with-body -X POST \
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             -H "Content-Type: application/json" \
