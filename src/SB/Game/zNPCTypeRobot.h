@@ -542,6 +542,7 @@ void ZNPC_Destroy_Robot(xFactoryInst* inst);
 void ROBO_KillEffects();
 void zNPCFodBzzt_ResetDanceParty();
 void ROBO_InitEffects();
+void zNPCRobot_Timestep(xScene* xscn, F32 dt);
 xAnimTable* ZNPC_AnimTable_ArfArf();
 xAnimTable* ZNPC_AnimTable_ArfDog();
 xAnimTable* ZNPC_AnimTable_Chuck();

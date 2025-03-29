@@ -11,6 +11,7 @@
 #include "zNPCSpawner.h"
 #include "zNPCMessenger.h"
 #include "zNPCGoals.h"
+#include "zNPCTypeTiki.h"
 #include "zGlobals.h"
 #include "xFactory.h"
 #include "zRenderState.h"
@@ -360,4 +361,33 @@ void zNPCMgr::ScenePostParticleRender()
     }
     xLightKit_Enable(0, globals.currWorld);
     zRenderState(old_rendstat);
+}
+
+void zNPCMgr::SceneTimestep(xScene* xscn, F32 dt)
+{
+    DBG_PerfTrack();
+    if (g_firstFrameUpdateAllNPC != 0)
+    {
+        BackdoorUpdateAllNPCsOnce(xscn, dt);
+        g_firstFrameUpdateAllNPC = 0;
+    }
+    zNPCMsg_Timestep(xscn, dt);
+    zNPCTiki_Timestep(xscn, dt);
+    zNPCCommon_Timestep(xscn, dt);
+    zNPCRobot_Timestep(xscn, dt);
+    zNPCVillager_SceneTimestep(xscn, dt);
+}
+
+void zNPCMgr::BackdoorUpdateAllNPCsOnce(xScene* xscn, F32 dt)
+{
+    for (int i = 0; i < npclist.cnt; i++)
+    {
+        zNPCCommon* npc = (zNPCCommon*)npclist.list[i];
+        xSceneID2Name(globals.sceneCur, npc->id);
+
+        if (npc->baseFlags & 0x40 && npc->update != NULL)
+        {
+            npc->update(npc, xscn, 1.0f / 60);
+        }
+    }
 }
