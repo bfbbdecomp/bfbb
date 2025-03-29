@@ -233,5 +233,5 @@ jobs:
       - name: PR comment with file
         uses: thollander/actions-comment-pull-request@v3
         with:
-          github_token: ${{ secrets.OK_BOT_PR_TOKEN }}
+          github-token: ${{ secrets.OK_BOT_PR_TOKEN }}
           file-path: pr.txt
