@@ -417,7 +417,7 @@ en_NPCTYPES zNPCMgr::NPCTypeForModel(U32 brainID, U32 mdl_hash)
 
     if (usetype == NPC_TYPE_UNKNOWN)
     {
-        usetype = (en_NPCTYPES)'NT01';
+        usetype = NPC_TYPE_COMMON;
     }
 
     return usetype;
