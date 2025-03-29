@@ -212,6 +212,12 @@ jobs:
         with:
           path: ./artifacts
 
+      - name: Rename Artifacts
+        run: |
+          mv artifacts/GQPE78_report/report.json artifacts/progress.json
+          mv artifacts/GQPE78_report/progress-commit.json artifacts/progress-commit.json
+          mv artifacts/GQPE78_previous/report.json artifacts/previous.json
+
       - name: Download OK bot
         id: download-ok
         run: |
