@@ -58,7 +58,7 @@ jobs:
             build/${{ matrix.version }}/report.json
             build/${{ matrix.version }}/progress-commit.json
 
-  verifyNonMatching:
+  build-non-matching:
     # This is a *private* build container.
     # See docs/github_actions.md for more information.
     container: ghcr.io/bfbbdecomp/bfbb-build:main
@@ -93,7 +93,7 @@ jobs:
               --binutils /binutils --compilers /compilers
           ninja
 
-  generatePreviousReport:
+  build-previous:
     # This is a *private* build container.
     # See docs/github_actions.md for more information.
     container: ghcr.io/bfbbdecomp/bfbb-build:main
@@ -143,8 +143,7 @@ jobs:
       contents: write
     needs: 
       - build
-      - verifyNonMatching
-      - generatePreviousReport
+      - build-previous
     if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout website code
