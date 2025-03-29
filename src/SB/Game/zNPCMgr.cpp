@@ -1,4 +1,6 @@
 #include "zNPCMgr.h"
+#include "xLightKit.h"
+#include "xRMemData.h"
 #include "zNPCTypeCommon.h"
 #include "zNPCTypeRobot.h"
 #include "zNPCTypeVillager.h"
@@ -8,7 +10,10 @@
 #include "zNPCTypes.h"
 #include "zNPCSpawner.h"
 #include "zNPCMessenger.h"
+#include "zNPCGoals.h"
 #include "zGlobals.h"
+#include "xFactory.h"
+#include "zRenderState.h"
 
 #include "xBehaveMgr.h"
 
@@ -56,7 +61,7 @@ void zNPCMgr_Startup()
     if (g_modinit++ == 0)
     {
         xBehaveMgr_Startup();
-        zNPCMgr* npc = new (0x4e50434d, NULL) zNPCMgr(); //NPCM
+        zNPCMgr* npc = new ('NPCM', NULL) zNPCMgr();
         g_npcmgr = npc;
         npc->Startup();
     }
@@ -122,6 +127,21 @@ void zNPCMgr_scenePostParticleRender()
 xEnt* zNPCMgr_createNPCInst(S32, xEntAsset* assdat)
 {
     return zNPCMgrSelf()->CreateNPC(assdat);
+}
+
+void zNPCMgr::Startup()
+{
+    PrepTypeTable();
+    selfbase.id = 'NPCM';
+    selfbase.baseType = 0xAB;
+    npcFactory = new ('NPCM', NULL) xFactory(0x60);
+    zNPCMsg_Startup();
+    zNPCSpawner_Startup();
+    zNPCTypes_StartupTypes();
+    zNPCTypes_RegisterTypes(npcFactory);
+    bmgr = xBehaveMgr_GetSelf();
+    xFactory* behaveMgrFactory = bmgr->GetFactory();
+    zNPCGoals_RegisterTypes(behaveMgrFactory);
 }
 
 void zNPCMgr::Shutdown()
@@ -204,6 +224,25 @@ void zNPCMgr::ScenePrepare(S32 npccnt)
     g_firstFrameUpdateAllNPC = 1;
 }
 
+void zNPCMgr::SceneFinish()
+{
+    for (int i = 0; i < npclist.cnt; i++)
+    {
+        ((zNPCCommon*)npclist.list[i])->Destroy();
+    }
+    XOrdDone(&npclist, 0);
+    npcFactory->DestroyAll();
+    zNPCBoss_SceneFinish();
+    zNPCSubBoss_SceneFinish();
+    zNPCDuplotron_SceneFinish();
+    zNPCRobot_SceneFinish();
+    zNPCVillager_SceneFinish();
+    zNPCCommon_SceneFinish();
+    zNPCSpawner_SceneFinish();
+    zNPCMsg_SceneFinish();
+    xBehaveMgr_SceneFinish();
+}
+
 S32 zNPCMgr_OrdComp_npcid(void* vkey, void* vitem)
 {
     S32 rc;
@@ -227,7 +266,6 @@ S32 zNPCMgr_OrdComp_npcid(void* vkey, void* vitem)
 
     return rc;
 }
-
 
 zNPCMgr::zNPCMgr()
 {
@@ -260,4 +298,35 @@ void zNPCCommon::RenderExtra()
 
 void zNPCCommon::RenderExtraPostParticles()
 {
+}
+
+void zNPCMgr::ScenePostRender()
+{
+    xLightKit_Enable(globals.player.ent.lightKit, globals.currWorld);
+    enum _SDRenderState old_rendstat = zRenderStateCurrent();
+    zRenderState(SDRS_NPCVisual);
+    for (int i = 0; i < npclist.cnt; i++)
+    {
+        zNPCCommon* npc = (zNPCCommon*)npclist.list[i];
+        if (npc->flg_xtrarend & 0x1)
+        {
+            npc->flg_xtrarend &= ~0x1;
+        }
+        else
+        {
+            continue;
+        }
+
+        if (npc->baseFlags & 0x40)
+        {
+            continue;
+        }
+
+        if (npc->model == NULL || !(npc->model->Flags & 0x400))
+        {
+            npc->RenderExtra();
+        }
+    }
+    xLightKit_Enable(0, globals.currWorld);
+    zRenderState(old_rendstat);
 }

@@ -467,6 +467,7 @@ U32 zMechIsStartingBack(zPlatform* ent, U16 param_2)
 
 static F32 SolvePaddleMotion(zPlatform* plat, F32* time, F32 tmr)
 {
+    return 0.0f;
 }
 
 void zPlatform_PaddleStartRotate(xEnt* entplat, S32 direction, S32 stutter)
