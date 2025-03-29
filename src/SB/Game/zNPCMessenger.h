@@ -15,10 +15,10 @@ void zNPCMsg_Timestep(xScene* xscn, F32 dt);
 struct NPCPSClt
 {
     // total size: 0x10
-    void (*notify)(void*, class NPCMsg*); // offset 0x0, size 0x4
+    void (*notify)(void*, NPCMsg*); // offset 0x0, size 0x4
     void* notedata; // offset 0x4, size 0x4
     signed int flg_filter; // offset 0x8, size 0x4
-    class NPCPSClt* next; // offset 0xC, size 0x4
+    NPCPSClt* next; // offset 0xC, size 0x4
 };
 
 struct NPCPSData
