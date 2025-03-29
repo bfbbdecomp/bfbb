@@ -202,7 +202,7 @@ jobs:
     needs:
       - build
       - build-previous
-    if: github.event_name == 'pull_request_target'
+    if: github.event_name == 'pull_request'
     permissions:
       pull-requests: write
     steps:
