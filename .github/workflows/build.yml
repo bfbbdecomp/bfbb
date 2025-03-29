@@ -240,13 +240,8 @@ jobs:
           COMMENT_BODY=$(cat pr.txt)
 
           # Print the URL
-          echo "Posting comment to: $URL"
-
-          curl --fail-with-body -X POST \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            --data "{\"body\":\"$COMMENT_BODY\"}" \
-            "$URL"
+          # Print the URL as you requested
+          echo "URL: https://api.github.com/repos/${{ github.repository }}/issues/$PR_NUMBER/comments"
 
           curl --fail-with-body -X POST \
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
