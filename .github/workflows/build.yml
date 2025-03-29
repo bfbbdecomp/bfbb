@@ -141,7 +141,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    needs: 
+    needs:
       - build
       - build-previous
     if: github.ref == 'refs/heads/main'
@@ -197,3 +197,38 @@ jobs:
           github_token: ${{ secrets.WEBSITE_TOKEN }}
           repository: bfbbdecomp/website
           branch: ${{ github.ref }}
+  pr-comment:
+    runs-on: ubuntu-latest
+    needs:
+      - build
+      - build-previous
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download Progress Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./artifacts
+
+      - name: Download OK bot
+        id: download-ok
+        run: |
+          python ./tools/download_tool.py ok . --tag v0.1.0
+
+      - name: Run OK command
+        id: ok-command
+        run: |
+          ./ok --previous artifacts/previous.json --current artifacts/progress.json pr > pr.txt
+          cat pr.txt
+
+      - name: Post comment to PR
+        run: |
+          PR_NUMBER=$(jq --raw-output .pull_request.number $GITHUB_EVENT_PATH)
+          COMMENT_BODY=$(cat pr.txt)
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            --data "{\"body\":\"$COMMENT_BODY\"}" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/$PR_NUMBER/comments"
