@@ -431,6 +431,7 @@ xEnt* zNPCMgr::CreateNPC(xEntAsset* asset)
     U32 size;
     xModelAssetInfo* modelAsset = (xModelAssetInfo*)xSTFindAsset(asset->modelInfoID, &size);
 
+    // FIXME: Replace with actually getting the right model hash from the packed data
     nt = this->NPCTypeForModel(modelAsset->BrainID, *(&asset->modelInfoID + 3));
     npc = (zNPCCommon*)npcFactory->CreateItem(nt, NULL, NULL);
 
