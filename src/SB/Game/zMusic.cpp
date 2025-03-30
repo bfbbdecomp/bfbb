@@ -193,6 +193,13 @@ static S32 getCurrLevelMusicEnum()
     return snd_enum;
 }
 
+static void zMusicDo(S32 track)
+{
+    S32 snd_enum;
+    F32 vol;
+    F32 pitch;
+}
+
 // Probably floating point memes idk
 void zMusicNotify(S32 situation)
 {
