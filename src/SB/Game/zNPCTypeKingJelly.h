@@ -16,7 +16,7 @@ struct lightning_ring
     F32 segment_length;
     F32 min_height;
     F32 max_height;
-    F32 min_radius;
+    F32 min_radius; //0x1c?
     F32 max_radius; //0x20?
     F32 delay;
     F32 accel;
@@ -38,11 +38,14 @@ struct lightning_ring
         F32 rot_radius;
         F32 degrees; //0x58?
     } property;
-    zLightning* arcs[8];
+    zLightning* arcs[8]; //0x78
     U32 arcs_size; //0x7c
+
     void (*update_callback)(lightning_ring&, F32);
 
     void create();
+    void destroy();
+    static void destroy(S32);
 };
 
 struct zNPCKingJelly : zNPCSubBoss
@@ -110,7 +113,7 @@ struct zNPCKingJelly : zNPCSubBoss
         U8 active; //0x2EC
         S32 count; //0x2f0
         F32 intensity;
-        F32 delay;
+        F32 delay; //0x2f8
     } blink;
     struct
     {
@@ -120,7 +123,7 @@ struct zNPCKingJelly : zNPCSubBoss
     child_data children[32];
     U32 children_size; //0x88C
     F32 last_tentacle_shock;
-    zLightning* tentacle_lightning[7];
+    zLightning* tentacle_lightning[7]; //0x894 [0]
     xVec3 tentacle_points[13][7];
     lightning_ring ambient_rings[3];
     lightning_ring wave_rings[4];
@@ -136,6 +139,7 @@ struct zNPCKingJelly : zNPCSubBoss
     void Destroy();
     U32 AnimPick(S32 rawgoal, en_NPC_GOAL_SPOT gspot, xGoal* goal);
     void BUpdate(xVec3*);
+    void RenderExtra();
     void SelfSetup();
     void init_child(zNPCKingJelly::child_data&, zNPCCommon&, int);
     void disable_child(zNPCKingJelly::child_data&);
@@ -144,6 +148,7 @@ struct zNPCKingJelly : zNPCSubBoss
     void load_model();
     void load_curtain_model();
     void reset_curtain();
+    void start_blink();
     void decompose();
     void post_decompose();
     void vanish();
@@ -153,10 +158,14 @@ struct zNPCKingJelly : zNPCSubBoss
     void on_change_fade_obstructions(const tweak_info&);
     void render_debug();
     void create_tentacle_lightning();
+    void destroy_tentacle_lightning();
     void refresh_tentacle_points();
     void refresh_tentacle_points(S32);
+    void destroy_ambient_rings();
     void generate_spawn_particles();
     void update_round();
+    void end_charge();
+    void create_ambient_rings();
 };
 
 struct zNPCGoalKJIdle : zNPCGoalCommon
@@ -204,6 +213,15 @@ struct zNPCGoalKJShockGround : zNPCGoalCommon
     zNPCGoalKJShockGround(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    S32 Enter(F32 dt, void* updCtxt);
+    S32 Exit(F32 dt, void* updCtxt);
+    S32 Process(en_trantype*, float, void*, xScene*);
+    S32 update_start(float);
+    S32 update_warm_up(float);
+    S32 update_release(float);
+    S32 update_cool_down(float);
+    S32 update_stop(float);
 };
 
 struct zNPCGoalKJDamage : zNPCGoalCommon
