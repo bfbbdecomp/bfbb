@@ -2,7 +2,7 @@ name: Build
 
 on:
   push:
-  pull_request:
+  pull_request_target:
 
 jobs:
   build:
@@ -202,7 +202,7 @@ jobs:
     needs:
       - build
       - build-previous
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request_target'
     permissions:
       pull-requests: write
     steps:
