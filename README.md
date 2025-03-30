@@ -6,7 +6,6 @@
 [![Perfect Match]][progress]
 [![Fuzzy Match]][progress]
 [![Functions]][progress]
-asdfjads;fj
 
 [progress]: https://bfbbdecomp.github.io/bfbb/
 [Fuzzy Match]: https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fbfbbdecomp.github.io%2Fbfbb%2Fapi.json&query=fuzzy_match&label=Close%20Match&color=yellowgreen
