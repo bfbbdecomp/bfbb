@@ -223,6 +223,45 @@ void zMusicNotify(S32 situation)
     sMusicQueueData[s->track]->game_state = gGameMode == eGameMode_Game;
 }
 
+void volume_update(F32 vol)
+{
+    F32 oldVol = volume.cur;
+    if (volume.inc >= 1e-5f && volume.inc <= -1e-5f)
+    {
+        volume.cur = volume.end;
+    }
+    else
+    {
+        volume.cur = volume.inc * vol + volume.cur;
+    }
+
+    // FIXME: compiler is optimizing out some conditional logic here, figure out how to make a match
+    if ((volume.inc < 0.0f && volume.cur <= volume.end) ||
+        (0.0f <= volume.inc && volume.end <= volume.cur))
+    {
+        volume.cur = volume.end;
+        volume.inc = 0.0f;
+    }
+
+    zMusicTrackInfo* track = sMusicTrack;
+    for (S32 trackIdx = 0; trackIdx < TRACK_COUNT; trackIdx++)
+    {
+        if (track->snd_id != 0 &&
+            (oldVol != volume.cur || volume.adjusted[trackIdx] != track->snd_id))
+        {
+            F32 setVol = volume.cur * track->lastVol;
+            if (setVol > 1.0f)
+            {
+                setVol = 1.0f;
+            }
+
+            xSndSetVol(track->snd_id, setVol);
+            volume.adjusted[trackIdx] = track->snd_id;
+        }
+        track++;
+    }
+}
+
 // Stop all tracks and set them to null.
 void zMusicKill()
 {
