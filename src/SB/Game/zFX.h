@@ -165,11 +165,10 @@ void update_entrails(F32 dt);
 void xDebugAddTweak(const char* unk1, const char* unk2, const tweak_callback* unk3, void* unk4,
                     U32 unk5);
 
-void xMat3x3RMulVec(xVec3* result, const xMat3x3* mat, const xVec3* vec);
-
 xFXRing* zFXMuscleArmWave(const xVec3* pos);
 
-void zFX_SpawnBubbleTrail(const xVec3* pos, unsigned int num, const xVec3* pos_rnd, const xVec3* vel_rnd);
+void zFX_SpawnBubbleTrail(const xVec3* pos, unsigned int num, const xVec3* pos_rnd,
+                          const xVec3* vel_rnd);
 void zFX_SpawnBubbleMenuTrail(const xVec3* pos, U32 num, const xVec3* pos_rnd,
                               const xVec3* vel_rnd);
 

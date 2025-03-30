@@ -263,4 +263,24 @@ void xEntSceneExit();
 void xEntSceneInit();
 void xEntSetTimePassed(F32 sec);
 
+inline void xEntHide(xEnt* ent)
+{
+    ent->flags &= ~0x1;
+}
+
+inline void xEntShow(xEnt* ent)
+{
+    ent->flags |= 0x1;
+}
+
+inline xVec3* xEntGetPos(const xEnt* ent)
+{
+    return &xModelGetFrame(ent->model)->pos;
+}
+
+inline xVec3* xEntGetCenter(const xEnt* ent)
+{
+    return (xVec3*)xBoundCenter(&ent->bound);
+}
+
 #endif
