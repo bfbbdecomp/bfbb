@@ -144,7 +144,7 @@ jobs:
     needs:
       - build
       - build-previous
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && github.event_name != 'pull_request_target'
     steps:
       - name: Checkout website code
         uses: actions/checkout@v4
