@@ -40,6 +40,8 @@ extern const char zMusic_strings[];
 
 static const F32 minDelay = 0.001f;
 
+void volume_update(F32 vol);
+
 void volume_reset()
 {
     volume.cur = 0.0f;
@@ -228,6 +230,42 @@ void zMusicNotify(S32 situation)
     sMusicQueueData[s->track] = s;
     sMusicTimer[s->track] = s->punchDelay;
     sMusicQueueData[s->track]->game_state = gGameMode == eGameMode_Game;
+}
+
+void zMusicUpdate(F32 dt)
+{
+    S32 i;
+    if (sMusicPaused == FALSE)
+    {
+        for (i = 0; i < 8; i++)
+        {
+            sMusicInfo[i].elapsedTime += dt;
+        }
+
+        for (i = 0; i < TRACK_COUNT; i++)
+        {
+            // FIXME: This conditional isn't quite right
+            if ((sMusicTimer[i] != 0.0f || sMusicQueueData[i] != NULL) &&
+                gGameMode & 0xC == sMusicQueueData[i]->game_state)
+            {
+                if (sMusicTimer[i] < 0.0f)
+                {
+                    sMusicTimer[i] -= dt;
+                    if (sMusicTimer[i] < 0.0f)
+                    {
+                        sMusicTimer[i] = 0.0f;
+                    }
+                }
+
+                if (sMusicTimer[i] == 0.0f && sMusicQueueData[i] != NULL)
+                {
+                    zMusicDo(i);
+                }
+            }
+        }
+
+        volume_update(dt);
+    }
 }
 
 void volume_update(F32 vol)
