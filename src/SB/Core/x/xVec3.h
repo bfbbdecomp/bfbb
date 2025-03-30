@@ -26,9 +26,24 @@ struct xVec3
     xVec3 operator-(const xVec3&) const;
     xVec3 operator*(F32) const;
     xVec3& operator+=(const xVec3&);
-    xVec3& operator+=(F32);
+    xVec3& operator+=(F32 f)
+    {
+        this->x += f;
+        this->y += f;
+        this->z += f;
+
+        return *this;
+    }
     xVec3& operator-=(const xVec3&);
-    xVec3& operator-=(F32);
+    xVec3& operator-=(F32 f)
+    {
+        this->x -= f;
+        this->y -= f;
+        this->z -= f;
+
+        return *this;
+    }
+
     xVec3& operator*=(F32);
     xVec3& operator/=(F32);
 

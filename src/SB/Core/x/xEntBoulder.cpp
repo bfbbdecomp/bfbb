@@ -6,14 +6,10 @@
 
 void xEntBoulder_FitToModel(xEntBoulder* ent)
 {
-    xVec3Copy
-    (
-    &ent->bound.cyl.center,
-    (xVec3 *)(&ent->model->Data->boundingSphere.center)
-    );
+    xVec3Copy(&ent->bound.cyl.center, (xVec3*)(&ent->model->Data->boundingSphere.center));
     ent->bound.cyl.r = ent->model->Data->boundingSphere.radius;
     xVec3Copy(&ent->localCenter, &ent->bound.cyl.center);
-    xVec3AddTo(&ent->bound.cyl.center,(xVec3*)&ent->model->Mat->pos);
+    xVec3AddTo(&ent->bound.cyl.center, (xVec3*)&ent->model->Mat->pos);
 }
 
 void xEntBoulder_Init(void* ent, void* asset)
@@ -42,17 +38,6 @@ void xEntBoulder_AddForce(xEntBoulder* ent, xVec3* force)
 void xEntBoulder_BUpdate()
 {
     //For some reason this seems to be a completely empty function
-}
-
-void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
-{
-    F32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
-    F32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
-    F32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
-
-    o->x = x;
-    o->y = y;
-    o->z = z;
 }
 
 void xEntBoulder_BUpdate(xEnt*, xVec3*)

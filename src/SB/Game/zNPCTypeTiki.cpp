@@ -21,6 +21,8 @@ extern F32 _867;
 extern NPCSndTrax g_sndTrax_TikiShared[3];
 extern NPCSndTrax g_sndTrax_TikiThunder[2];
 
+static zNPCTiki* orphanList;
+
 // Taken from zNPCTypeTiki.s
 // Defining these here makes the stringBase0 offsets match in the later functions.
 char* str1 = "Unknown";
@@ -287,4 +289,43 @@ U8 ColPenByFlags()
 U8 PhysicsFlags()
 {
     return 0;
+}
+
+void zNPCTiki::FindParents(zScene* zsc)
+{
+    return;
+}
+
+void zNPCTiki_InitStacking(zScene* zsc)
+{
+    for (int i = 0; i < zsc->num_npcs; i++)
+    {
+        xNPCBasic* npc = (xNPCBasic*)zsc->npcs[i];
+
+        U32 type = npc->SelfType() & ~0xFF;
+        if (type != 'NTT\0') // NPC_TYPE_TIKI_WOOD
+        {
+            continue;
+        }
+
+        zNPCTiki* tiki = (zNPCTiki*)(npc);
+        if (npc->SelfType() != NPC_TYPE_TIKI_LOVEY)
+        {
+            tiki->FindParents(zsc);
+
+            if (tiki->numParents == 0)
+            {
+                F32 dh = tiki->landHt - tiki->bound.box.box.lower.y;
+
+                tiki->bound.box.box.lower.y += dh;
+                tiki->bound.box.box.upper.y += dh;
+                tiki->bound.box.center.y += dh;
+                tiki->model->Mat->pos.y += dh;
+            }
+        }
+
+        tiki->tikiFlag &= ~1;
+    }
+
+    orphanList = NULL;
 }

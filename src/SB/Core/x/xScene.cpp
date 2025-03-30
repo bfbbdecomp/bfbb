@@ -41,8 +41,7 @@ void xSceneInit(xScene* sc, U16 num_trigs, U16 num_stats, U16 num_dyns, U16 num_
     sc->dyns = (xEnt**)xMemAllocSize(num_dyns * sizeof(xEnt*));
     sc->num_npcs_allocd = num_npcs;
     sc->npcs = (xEnt**)xMemAllocSize(num_npcs * sizeof(xEnt*));
-    sc->num_ents_allocd =
-        (U32)num_trigs + (U32)num_stats + (U32)num_dyns + (U32)num_npcs;
+    sc->num_ents_allocd = (U32)num_trigs + (U32)num_stats + (U32)num_dyns + (U32)num_npcs;
     sc->num_act_ents = 0;
     sc->act_ents = (xEnt**)xMemAllocSize(sc->num_ents_allocd * sizeof(xEnt*));
     sc->num_nact_ents = 0;
@@ -289,21 +288,21 @@ void ProjectTriangle(xVec3* param_1, xVec3* param_2, float* param_3, float* para
 void ProjectBox(xVec3* param_1, xBox* param_2, float* param_3, float* param_4)
 {
     F32 fVar7 = lbl_803CCF78 * (param_1->x * ((param_2->upper).x + (param_2->lower).x) +
-                                    param_1->y * ((param_2->upper).y + (param_2->lower).y) +
-                                    param_1->z * ((param_2->upper).z + (param_2->lower).z));
+                                param_1->y * ((param_2->upper).y + (param_2->lower).y) +
+                                param_1->z * ((param_2->upper).z + (param_2->lower).z));
     F32 fVar1 = lbl_803CCF78 * (iabs(param_1->x * ((param_2->upper).x - (param_2->lower).x)) +
-                                    iabs(param_1->y * ((param_2->upper).y - (param_2->lower).y)) +
-                                    iabs(param_1->z * ((param_2->upper).z - (param_2->lower).z)));
+                                iabs(param_1->y * ((param_2->upper).y - (param_2->lower).y)) +
+                                iabs(param_1->z * ((param_2->upper).z - (param_2->lower).z)));
     *param_3 = fVar7 - fVar1;
     *param_4 = fVar7 + fVar1;
 }
 
-static RpCollisionTriangle* nearestFloorCB(RpIntersection*, RpCollisionTriangle* collTriangle,
-                                           F32, void* data);
+static RpCollisionTriangle* nearestFloorCB(RpIntersection*, RpCollisionTriangle* collTriangle, F32,
+                                           void* data);
 
 static RpCollisionTriangle* sectorNearestFloorCB(RpIntersection* intersection, RpWorldSector*,
-                                                 RpCollisionTriangle* collTriangle,
-                                                 F32 distance, void* data)
+                                                 RpCollisionTriangle* collTriangle, F32 distance,
+                                                 void* data)
 {
     return nearestFloorCB(intersection, collTriangle, distance, data);
 }
@@ -431,15 +430,4 @@ void xBoxFromLine(xBox& box, const xLine3& line)
     box.lower.x = MIN(line.p1.x, line.p2.x);
     box.lower.y = MIN(line.p1.y, line.p2.y);
     box.lower.z = MIN(line.p1.z, line.p2.z);
-}
-
-void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
-{
-    F32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
-    F32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
-    F32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
-
-    o->x = x;
-    o->y = y;
-    o->z = z;
 }

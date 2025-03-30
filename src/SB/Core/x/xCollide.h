@@ -130,4 +130,9 @@ xVec3 xCollisTriHit(const xCollis::tri_data& tri, const xModelInstance& model);
 bool xModelAnimCollDirty(const xModelInstance& cm);
 void xModelAnimCollRefresh(const xModelInstance& cm);
 
+inline bool xSphereHitsVCircle(const xSphere& s, const xVec3& c, F32 r)
+{
+    return xSphereHitsVCircle(s.center, s.r, c, r);
+}
+
 #endif

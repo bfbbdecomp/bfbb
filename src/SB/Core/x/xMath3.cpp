@@ -55,15 +55,7 @@ void xMat3x3Euler(xMat3x3* m, F32 yaw, F32 pitch, F32 roll)
     m->flags = 0;
 }
 
-void xRotCopy(xRot* o, const xRot* r)
-{
-}
-
 void xMat4x3Toworld(xVec3* o, const xMat4x3* m, const xVec3* v)
-{
-}
-
-void xMat3x3Rot(xMat3x3* m, const xVec3* a, F32 t)
 {
 }
 
