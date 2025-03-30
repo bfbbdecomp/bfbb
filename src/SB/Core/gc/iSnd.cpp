@@ -1,10 +1,10 @@
 #include "iSnd.h"
 
+#include <types.h>
+#include <dolphin/ax.h>
+
 #include "intrin.h"
 
-#include <types.h>
-
-#include "dolphin/dolphin.h"
 #include "iMix.h"
 #include "xCutscene.h"
 #include "xSnd.h"

@@ -361,14 +361,16 @@ void zNPCVillager::SpeakBegin()
     psy_instinct->GoalSet(NPC_GOAL_SPEAK, 1);
 }
 
-void zNPCVillager::SpeakEnd() //80%
+void zNPCVillager::SpeakEnd()
 {
     xPsyche* psy = psy_instinct;
-    psy->GIDInStack(NPC_GOAL_LIMBO);
-
-    if ((psy == 0) && (psy->GIDOfSafety() != 0))
+    if ((psy->GIDInStack(NPC_GOAL_LIMBO) == 0))
     {
-        psy->GoalSet(NPC_GOAL_LIMBO, 1);
+        S32 safetyGid = psy->GIDOfSafety();
+        if (safetyGid != 0)
+        {
+            psy->GoalSet(safetyGid, 1);
+        }
     }
 }
 
@@ -393,10 +395,10 @@ void zNPCFish::ParseINI()
 //     tempR = xNPCBasic::SelfType();
 //     switch (tempR)
 //     {
-//     case 'NTF0':
+//     case NPC_TYPE_FISH:
 //     {
 //     }
-//     case 'NPC_TYPE_FISH_MALE':
+//     case NPC_TYPE_FISH_MALE:
 //     {
 //     }
 // }
@@ -489,13 +491,14 @@ void zNPCSandyBikini::Process(xScene* xscn, float dt) //100% code match
     zNPCSandyBikini::VFXLeakyFaucet(dt);
 }
 
-void zNPCBalloonBoy::Init(xEntAsset* asset) //68%
+void zNPCBalloonBoy::Init(xEntAsset* asset)
 {
     zNPCFish::Init(asset);
     rast_shadBalloon = 0;
-    bound.type = 0;
+    cfg_npc->dst_castShadow = -1;
+    return;
 
-    //cg_npc 0x1d8
+    //cfg_npc 0x1d8
     //bound.type 0x84
 }
 

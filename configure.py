@@ -242,7 +242,6 @@ cflags_bfbb = [
     "-i include/bink",
     "-i include/PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Include",
     "-i include/PowerPC_EABI_Support/MSL/MSL_C++/MSL_Common/Include",
-    "-i include/dolphin",
     "-i include/inline",
     "-i include/rwsdk",
     "-i src/SB/Core/gc",

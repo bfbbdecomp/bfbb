@@ -37,6 +37,7 @@ struct zNPCVillager : zNPCCommon
     void SpeakBegin();
     void SpeakEnd();
     void TossMyConverse();
+    S32 PlayerIsStaring();
     void ChkCheatSize();
     F32 GenShadCacheRad();
 };
@@ -49,6 +50,7 @@ struct zNPCFish : zNPCVillager
     xEntDrive raw_drvdata;
 
     zNPCFish(S32 myType);
+    void Init(xEntAsset*);
     void ParseINI();
     void FishSoundTables();
     void CheckDoChat();
@@ -76,7 +78,7 @@ struct zNPCBalloonBoy : zNPCFish
     S32 specialBalloon;
     zPlatform* plat_balloons;
     xShadowCache* shadCache;
-    RwRaster* rast_shadBalloon;
+    static RwRaster* rast_shadBalloon;
 
     zNPCBalloonBoy(S32 myType);
 
@@ -213,6 +215,7 @@ xAnimTable* ZNPC_AnimTable_BalloonBoy();
 xAnimTable* ZNPC_AnimTable_BalloonBoy(xAnimTable* callerTable);
 xAnimTable* ZNPC_AnimTable_SuperFriend();
 xAnimTable* ZNPC_AnimTable_SuperFriend(xAnimTable* callerTable);
+S32 FOLK_grul_goAlert(xGoal*, void*, en_trantype*, float, void*);
 void FOLK_KillEffects();
 void FOLK_InitEffects();
 void zNPCVillager_ScenePostInit();
@@ -226,6 +229,7 @@ NPCSndTrax g_sndTrax_Villager;
 S32 zParamGetFloatList(xModelAssetParam* parmdata, U32 pdatsize, const char* str32, S32 found,
                        F32* non_choices, F32 len_mvptspline);
 void zNPCVillager_SceneFinish();
+void zNPCVillager_SceneTimestep(xScene* xscn, F32 dt);
 
 extern NPCSndTrax g_sndTrax_VillagerMale;
 extern NPCSndTrax g_sndTrax_VillagerFemale;

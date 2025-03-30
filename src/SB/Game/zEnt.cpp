@@ -13,6 +13,7 @@
 #include "iModel.h"
 #include "xSnd.h"
 #include "xCollide.h"
+#include "zNPCTypes.h"
 #include <cstring>
 #include <stdio.h>
 
@@ -855,11 +856,11 @@ S32 zParamGetVector(xModelAssetParam* param, U32 size, char* tok, xVec3 vec1, xV
 
 // clang-format off
 _ShadowParams gShadowParams[] = {
-    {'NTR0', 0.33f, 2.0f},
-    {'NTR3', 0.0f, 1.25f},
-    {'NTFA', -0.25f, 0.75f},
-    {'NTR5', 0.5f, 1.0f},
-    {'NTB0', 1.0f, 2.0f},
+    {NPC_TYPE_HAMMER, 0.33f, 2.0f},
+    {NPC_TYPE_GLOVE, 0.0f, 1.25f},
+    {NPC_TYPE_PLANKNPC, -0.25f, 0.75f},
+    {NPC_TYPE_SLEEPY, 0.5f, 1.0f},
+    {NPC_TYPE_BOSSSANDY, 1.0f, 2.0f},
 };
 // clang-format on
 

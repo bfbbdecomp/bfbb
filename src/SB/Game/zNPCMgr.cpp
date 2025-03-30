@@ -11,11 +11,13 @@
 #include "zNPCSpawner.h"
 #include "zNPCMessenger.h"
 #include "zNPCGoals.h"
+#include "zNPCTypeTiki.h"
 #include "zGlobals.h"
 #include "xFactory.h"
 #include "zRenderState.h"
 
 #include "xBehaveMgr.h"
+#include "xstransvc.h"
 
 #include <types.h>
 
@@ -303,7 +305,7 @@ void zNPCCommon::RenderExtraPostParticles()
 void zNPCMgr::ScenePostRender()
 {
     xLightKit_Enable(globals.player.ent.lightKit, globals.currWorld);
-    enum _SDRenderState old_rendstat = zRenderStateCurrent();
+    _SDRenderState old_rendstat = zRenderStateCurrent();
     zRenderState(SDRS_NPCVisual);
     for (int i = 0; i < npclist.cnt; i++)
     {
@@ -329,4 +331,119 @@ void zNPCMgr::ScenePostRender()
     }
     xLightKit_Enable(0, globals.currWorld);
     zRenderState(old_rendstat);
+}
+
+void zNPCMgr::ScenePostParticleRender()
+{
+    xLightKit_Enable(globals.player.ent.lightKit, globals.currWorld);
+    _SDRenderState old_rendstat = zRenderStateCurrent();
+    zRenderState(SDRS_NPCVisual);
+    for (int i = 0; i < npclist.cnt; i++)
+    {
+        zNPCCommon* npc = (zNPCCommon*)npclist.list[i];
+        if (npc->flg_xtrarend & 0x2)
+        {
+            npc->flg_xtrarend &= ~0x2;
+        }
+        else
+        {
+            continue;
+        }
+
+        if (npc->baseFlags & 0x40)
+        {
+            continue;
+        }
+
+        if (npc->model == NULL || !(npc->model->Flags & 0x400))
+        {
+            npc->RenderExtraPostParticles();
+        }
+    }
+    xLightKit_Enable(0, globals.currWorld);
+    zRenderState(old_rendstat);
+}
+
+void zNPCMgr::SceneTimestep(xScene* xscn, F32 dt)
+{
+    DBG_PerfTrack();
+    if (g_firstFrameUpdateAllNPC != 0)
+    {
+        BackdoorUpdateAllNPCsOnce(xscn, dt);
+        g_firstFrameUpdateAllNPC = 0;
+    }
+    zNPCMsg_Timestep(xscn, dt);
+    zNPCTiki_Timestep(xscn, dt);
+    zNPCCommon_Timestep(xscn, dt);
+    zNPCRobot_Timestep(xscn, dt);
+    zNPCVillager_SceneTimestep(xscn, dt);
+}
+
+void zNPCMgr::BackdoorUpdateAllNPCsOnce(xScene* xscn, F32 dt)
+{
+    for (int i = 0; i < npclist.cnt; i++)
+    {
+        zNPCCommon* npc = (zNPCCommon*)npclist.list[i];
+        xSceneID2Name(globals.sceneCur, npc->id);
+
+        if (npc->baseFlags & 0x40 && npc->update != NULL)
+        {
+            npc->update(npc, xscn, 1.0f / 60);
+        }
+    }
+}
+
+en_NPCTYPES zNPCMgr::NPCTypeForModel(U32 brainID, U32 mdl_hash)
+{
+    if (brainID != NULL)
+    {
+        for (int i = 0; i < sizeof(g_brainTable) / sizeof(g_brainTable[0]); i++)
+        {
+            if (brainID == g_brainTable[i].id)
+            {
+                return g_brainTable[i].type;
+            }
+        }
+    }
+
+    en_NPCTYPES usetype = NPC_TYPE_UNKNOWN;
+    for (NPCMTypeTable* rec = g_tbltype; rec->useNPCType != NPC_TYPE_UNKNOWN; rec++)
+    {
+        if (rec->hashOfName == mdl_hash)
+        {
+            usetype = rec->useNPCType;
+            break;
+        }
+    }
+
+    if (usetype == NPC_TYPE_UNKNOWN)
+    {
+        usetype = NPC_TYPE_COMMON;
+    }
+
+    return usetype;
+}
+
+xEnt* zNPCMgr::CreateNPC(xEntAsset* asset)
+{
+    zNPCCommon* npc;
+    en_NPCTYPES nt;
+    U32 size;
+    xModelAssetInfo* modelAsset = (xModelAssetInfo*)xSTFindAsset(asset->modelInfoID, &size);
+
+    // FIXME: Replace with actually getting the right model hash from the packed data
+    nt = this->NPCTypeForModel(modelAsset->BrainID, *(&asset->modelInfoID + 3));
+    npc = (zNPCCommon*)npcFactory->CreateItem(nt, NULL, NULL);
+
+    npc->Init(asset);
+    XOrdAppend(&npclist, npc);
+
+    if (npclist.cnt == npclist.max)
+    {
+        XOrdSort(&npclist, zNPCMgr_OrdComp_npcid);
+    }
+
+    this->DBG_Reset();
+
+    return npc;
 }
