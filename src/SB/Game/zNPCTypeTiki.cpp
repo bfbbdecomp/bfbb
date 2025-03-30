@@ -21,7 +21,7 @@ extern F32 _867;
 extern NPCSndTrax g_sndTrax_TikiShared[3];
 extern NPCSndTrax g_sndTrax_TikiThunder[2];
 
-static class zNPCTiki* orphanList;
+static zNPCTiki* orphanList;
 
 // Taken from zNPCTypeTiki.s
 // Defining these here makes the stringBase0 offsets match in the later functions.
@@ -289,6 +289,11 @@ U8 ColPenByFlags()
 U8 PhysicsFlags()
 {
     return 0;
+}
+
+void zNPCTiki::FindParents(zScene* zsc)
+{
+    return;
 }
 
 void zNPCTiki_InitStacking(zScene* zsc)
