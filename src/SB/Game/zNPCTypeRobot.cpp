@@ -534,7 +534,7 @@ void zNPCRobot::Reset()
         flg_vuln |= 0x1000000;
     }
 
-    if (xNPCBasic::SelfType() != 'NTR:')
+    if (xNPCBasic::SelfType() != NPC_TYPE_TUBESLAVE)
     {
         zNPCGoalDead* goal;
         xPsyche* psy = psy_instinct;

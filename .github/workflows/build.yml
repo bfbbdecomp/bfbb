@@ -2,7 +2,7 @@ name: Build
 
 on:
   push:
-  pull_request:
+  pull_request_target:
 
 jobs:
   build:
@@ -144,7 +144,7 @@ jobs:
     needs:
       - build
       - build-previous
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && github.event_name != 'pull_request_target'
     steps:
       - name: Checkout website code
         uses: actions/checkout@v4
@@ -202,7 +202,9 @@ jobs:
     needs:
       - build
       - build-previous
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request_target'
+    permissions:
+      pull-requests: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -212,23 +214,24 @@ jobs:
         with:
           path: ./artifacts
 
+      - name: Rename Artifacts
+        run: |
+          mv artifacts/GQPE78_report/report.json artifacts/progress.json
+          mv artifacts/GQPE78_report/progress-commit.json artifacts/progress-commit.json
+          mv artifacts/GQPE78_previous/report.json artifacts/previous.json
+
       - name: Download OK bot
         id: download-ok
         run: |
-          python ./tools/download_tool.py OK ok --tag v0.1.1
+          python ./tools/download_tool.py OK ok --tag v0.1.2
 
       - name: Run OK command
         id: ok-command
         run: |
           ./ok --previous artifacts/previous.json --current artifacts/progress.json pr > pr.txt
           cat pr.txt
-
-      - name: Post comment to PR
-        run: |
-          PR_NUMBER=$(jq --raw-output .pull_request.number $GITHUB_EVENT_PATH)
-          COMMENT_BODY=$(cat pr.txt)
-          curl -X POST \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            --data "{\"body\":\"$COMMENT_BODY\"}" \
-            "https://api.github.com/repos/${{ github.repository }}/issues/$PR_NUMBER/comments"
+      - name: PR comment with file
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          file-path: pr.txt

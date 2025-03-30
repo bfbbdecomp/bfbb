@@ -3686,9 +3686,9 @@ static void load_player_ini()
 void zEntPlayer_RestoreSounds()
 {
     sPlayerIgnoreSound--;
-    if (sPlayerIgnoreSound < 0) 
-	{
-		sPlayerIgnoreSound = 0;
+    if (sPlayerIgnoreSound < 0)
+    {
+        sPlayerIgnoreSound = 0;
     }
 }
 
@@ -3706,12 +3706,12 @@ void zEntPlayerUpdateModelSB();
 
 void zEntPlayerUpdateModel()
 {
-	zPlayerGlobals* pg = &globals.player;
-	
-	if (pg->ent.model == pg->model_spongebob)
-	{
-	    zEntPlayerUpdateModelSB();
-	}
+    zPlayerGlobals* pg = &globals.player;
+
+    if (pg->ent.model == pg->model_spongebob)
+    {
+        zEntPlayerUpdateModelSB();
+    }
 }
 
 S32 zEntPlayer_Damage(xBase* src, U32 damage, const xVec3* knockback)

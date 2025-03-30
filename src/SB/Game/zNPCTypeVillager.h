@@ -229,6 +229,7 @@ NPCSndTrax g_sndTrax_Villager;
 S32 zParamGetFloatList(xModelAssetParam* parmdata, U32 pdatsize, const char* str32, S32 found,
                        F32* non_choices, F32 len_mvptspline);
 void zNPCVillager_SceneFinish();
+void zNPCVillager_SceneTimestep(xScene* xscn, F32 dt);
 
 extern NPCSndTrax g_sndTrax_VillagerMale;
 extern NPCSndTrax g_sndTrax_VillagerFemale;
