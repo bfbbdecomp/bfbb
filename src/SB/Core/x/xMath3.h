@@ -83,20 +83,11 @@ extern xVec3 g_Z3;
 extern xMat4x3 g_I3;
 extern xVec3 g_Onez;
 
-// For some reason, this function is copied across 29 object files...
-//   and each instance of this function has a LOCAL symbol (see symbols.txt)
-// Declaring the function as 'static' here will both give it a LOCAL symbol
-//   and allow it to be defined in multiple .cpp files without any link errors.
-// We could also define it as static in each .cpp file, but it's not required.
-static void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v);
-
 void xMat3x3Copy(xMat3x3* o, const xMat3x3* m); // TODO: These functions should be inline
 void xMat4x3Copy(xMat4x3* o, const xMat4x3* m);
 void xMat4x3Mul(xMat4x3* o, const xMat4x3* a, const xMat4x3* b);
 void xMat3x3Euler(xMat3x3* m, F32 yaw, F32 pitch, F32 roll);
-void xRotCopy(xRot* o, const xRot* r);
 void xMat4x3Toworld(xVec3* o, const xMat4x3* m, const xVec3* v);
-void xMat3x3Rot(xMat3x3* m, const xVec3* a, F32 t);
 void xMat3x3RotC(xMat3x3* m, F32 _x, F32 _y, F32 _z, F32 t);
 void xMat3x3RotY(xMat3x3* m, F32 t);
 void xMat3x3MulRotC(xMat3x3* o, xMat3x3* m, F32 _x, F32 _y, F32 _z, F32 t);
@@ -138,5 +129,29 @@ void xQuatAdd(xQuat* q, const xQuat* a, const xQuat* b);
 F32 xQuatDot(const xQuat* a, const xQuat* b);
 
 F32 fabs(F32 x); // Unsure where this should come from.
+
+inline void xRotCopy(xRot* o, const xRot* r)
+{
+    o->axis.x = r->axis.x;
+    o->axis.y = r->axis.y;
+    o->axis.z = r->axis.z;
+    o->angle = r->angle;
+}
+
+static inline void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
+{
+    F32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
+    F32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
+    F32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
+
+    o->x = x;
+    o->y = y;
+    o->z = z;
+}
+
+inline void xMat3x3Rot(xMat3x3* m, const xVec3* a, F32 t)
+{
+    xMat3x3RotC(m, a->x, a->y, a->z, t);
+}
 
 #endif

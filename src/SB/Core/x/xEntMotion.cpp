@@ -4,17 +4,6 @@
 
 #include <types.h>
 
-void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
-{
-    F32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
-    F32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
-    F32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
-
-    o->x = x;
-    o->y = y;
-    o->z = z;
-}
-
 // Artificial
 enum en_MOTIONTYPE
 {
@@ -37,9 +26,9 @@ void xEntMotionInit(xEntMotion* a, xEnt* b, xEntMotionAsset* c)
         xVec3Copy(&a->er.a, &c->er.ret_pos);
         xVec3Add(&a->er.b, &c->er.ret_pos, &c->er.ext_dpos);
 
-        a->er.et  = c->er.ext_tm;
+        a->er.et = c->er.ext_tm;
         a->er.wet = c->er.ext_wait_tm;
-        a->er.rt  = c->er.ret_tm;
+        a->er.rt = c->er.ret_tm;
         a->er.wrt = c->er.ret_wait_tm;
 
         if (a->er.p <= 0)
@@ -47,16 +36,16 @@ void xEntMotionInit(xEntMotion* a, xEnt* b, xEntMotionAsset* c)
             a->er.p = 10.0f;
         }
 
-        a->er.brt = a->er.et  + a->er.wet;
+        a->er.brt = a->er.et + a->er.wet;
         a->er.ert = a->er.brt + a->er.rt;
-        a->er.p   = a->er.ert + a->er.wrt;
+        a->er.p = a->er.ert + a->er.wrt;
     }
     else if (a->type == MOTION_TYPE_ORBT)
     {
         xVec3Copy((xVec3*)(&a->er.b), &c->er.ret_pos);
 
-        a->orb.a  = c->orb.w;
-        a->orb.b  = c->orb.h;
+        a->orb.a = c->orb.w;
+        a->orb.b = c->orb.h;
 
         if (c->orb.period <= 0.0f)
         {
@@ -74,7 +63,7 @@ void xEntMotionInit(xEntMotion* a, xEnt* b, xEntMotionAsset* c)
     {
         if (c->pen.period <= 1e-5f)
         {
-             c->pen.period = 0;
+            c->pen.period = 0;
         }
 
         a->pen.w = (2 * PI) / c->pen.period;
@@ -83,14 +72,12 @@ void xEntMotionInit(xEntMotion* a, xEnt* b, xEntMotionAsset* c)
     {
         if (c->mp.speed < 1e-5f)
         {
-             c->mp.speed = 0;
+            c->mp.speed = 0;
         }
 
         if (c->mech.sld_acc_tm + c->mech.sld_dec_tm > c->mech.sld_tm)
         {
-            c->mech.sld_dec_tm =
-            c->mech.sld_acc_tm =
-            c->mech.sld_tm * 0.5f;
+            c->mech.sld_dec_tm = c->mech.sld_acc_tm = c->mech.sld_tm * 0.5f;
         }
 
         if (c->mech.rot_tm < 3.0f)
@@ -100,17 +87,15 @@ void xEntMotionInit(xEntMotion* a, xEnt* b, xEntMotionAsset* c)
 
         if (c->mech.type == 2)
         {
-            if ( c->mech.rot_tm != c->mech.sld_tm )
+            if (c->mech.rot_tm != c->mech.sld_tm)
             {
-                 c->mech.rot_tm = c->mech.sld_tm;
+                c->mech.rot_tm = c->mech.sld_tm;
             }
-            }
-            if (c->mech.rot_acc_tm + c->mech.rot_dec_tm > c->mech.rot_tm)
-            {
-                c->mech.rot_dec_tm =
-                c->mech.rot_acc_tm =
-                c->mech.rot_tm * 0.5f;
-            }
+        }
+        if (c->mech.rot_acc_tm + c->mech.rot_dec_tm > c->mech.rot_tm)
+        {
+            c->mech.rot_dec_tm = c->mech.rot_acc_tm = c->mech.rot_tm * 0.5f;
+        }
     }
 
     a->owner = b;
@@ -142,7 +127,8 @@ void xEntMechForward(xEntMotion* motion)
             motion->tmr = mkasst->mech.rot_tm - motion->tmr;
             motion->mech.state = 1;
         }
-        else if ((motion->mech.state != 5) && (motion->mech.state != 6) && (motion->mech.state == 7))
+        else if ((motion->mech.state != 5) && (motion->mech.state != 6) &&
+                 (motion->mech.state == 7))
         {
             motion->mech.ss = -motion->mech.ss;
             motion->mech.sr = -motion->mech.sr;
@@ -181,7 +167,8 @@ void xEntMechReverse(xEntMotion* motion)
         motion->tmr = mkasst->mech.rot_tm - motion->tmr;
         motion->mech.state = 4;
     }
-    else if ((motion->mech.state != 2) && (motion->mech.state != 3) && (motion->mech.state != 4) && (motion->mech.state != 5) && (motion->mech.state == 6))
+    else if ((motion->mech.state != 2) && (motion->mech.state != 3) && (motion->mech.state != 4) &&
+             (motion->mech.state != 5) && (motion->mech.state == 6))
     {
         motion->mech.ss = -motion->mech.ss;
         motion->mech.sr = -motion->mech.sr;

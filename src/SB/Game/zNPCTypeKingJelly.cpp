@@ -1,5 +1,6 @@
 #include "zNPCTypeKingJelly.h"
 
+#include "zNPCGoalCommon.h"
 #include <types.h>
 #include "string.h"
 
@@ -31,9 +32,17 @@
 
 namespace
 {
-    void tweak()
+    S32 kill_sound(int)
     {
+        return 0; //to do
     }
+    S32 play_sound(int, const xVec3*)
+    {
+        return 0; //todo
+    }
+    // void tweak()
+    // {
+    // }
 } // namespace
 
 void lightning_ring::create()
@@ -349,25 +358,53 @@ void zNPCKingJelly::load_curtain_model()
 {
 }
 
-// void zNPCKingJelly::reset_curtain()
-// {
-//     // f0 = data shit
-//     // r4 = 0x10b0
-//     // 0x24 = f0
-//     // r3 = 0x10a8
-//     // 0x24 = f0        // 0x24 model???
+void zNPCKingJelly::show_shower_model()
+{
+}
 
-// }
+void zNPCKingJelly::reset_curtain()
+{
+    // f0 = data shit
+    // r4 = 0x10b0
+    // 0x24 = f0
+    // r3 = 0x10a8
+    // 0x24 = f0        // 0x24 model???
+}
+
+S32 zNPCGoalKJIdle::Exit(float dt, void* updCtxt)
+{
+    zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
+    kill_sound(6);
+    kj.flag.stop_moving = 1;
+    return xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalKJBored::Enter(float dt, void* updCtxt)
+{
+    zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
+    //play_sound(int, const xVec3*);
+    play_sound(3, kj.model->anim_coll.verts); // kind of correct
+    play_sound(3, kj.model->anim_coll.verts); //kind of correct
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalKJBored::Exit(float dt, void* updCtxt)
+{
+    return xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalKJSpawnKids::Enter(float dt, void* updCtxt)
+{
+    zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
+    count_children(kj.round);
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
 
 // void zNPCKingJelly::start_blink()
 // {
 //     blink.active = 1;
 //     blink.delay = 0;
 //     blink.count = 0;
-//     model = 0;
-//     render = 0;
-//     this = 0;
-
 //     // 0x24 model
 //     // 0x44 render
 // }

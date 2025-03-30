@@ -23,8 +23,8 @@ struct zNPCGoalJellyBirth : zNPCGoalCommon
 
 struct zNPCGoalJellyAttack : zNPCGoalPushAnim
 {
-    class zLightning* zap_lytnin[3];
-    U32 lastAnimTime;
+    S32 flg_attack;
+    zLightning* zap_lytnin[3];
     S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);
     S32 Process(en_trantype* trantyp, F32 dt, void* updCxt, xScene* xscn);

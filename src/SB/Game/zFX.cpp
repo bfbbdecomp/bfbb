@@ -127,8 +127,12 @@ void zFXUpdate(F32 dt)
 
 namespace
 {
-    void add_popper_tweaks() { }
-    void add_entrail_tweaks() { }
+    void add_popper_tweaks()
+    {
+    }
+    void add_entrail_tweaks()
+    {
+    }
 
     S32 count_faces(xModelInstance* mdl)
     {
@@ -202,7 +206,7 @@ namespace
         p->Flags |= 0x4000;
         p->PipeFlags = (p->PipeFlags & ~0xc) | 8;
     }
-}
+} // namespace
 
 void update_entrails(F32 val)
 {
@@ -224,30 +228,19 @@ void reset_entrails()
     }
 }
 
-void zFX_SpawnBubbleHit(const xVec3* pos, unsigned int num, xVec3* pos_rnd, xVec3* vel_rnd, float vel_scale);
-void zFX_SpawnBubbleTrail(const xVec3* pos, unsigned int num, const xVec3* pos_rnd, const xVec3* vel_rnd);
+void zFX_SpawnBubbleHit(const xVec3* pos, unsigned int num, xVec3* pos_rnd, xVec3* vel_rnd,
+                        float vel_scale);
+void zFX_SpawnBubbleTrail(const xVec3* pos, unsigned int num, const xVec3* pos_rnd,
+                          const xVec3* vel_rnd);
 
 void zFX_SpawnBubbleHit(const xVec3* pos, U32 num)
 {
-    zFX_SpawnBubbleHit
-    (
-    pos,
-    num,
-    &bubblehit_pos_rnd,
-    &bubblehit_vel_rnd,
-    bubblehit_vel_scale
-    );
+    zFX_SpawnBubbleHit(pos, num, &bubblehit_pos_rnd, &bubblehit_vel_rnd, bubblehit_vel_scale);
 }
 
 void zFX_SpawnBubbleTrail(const xVec3* pos, U32 num)
 {
-    zFX_SpawnBubbleTrail
-    (
-    pos,
-    num,
-    &bubblehit_pos_rnd,
-    &bubblehit_vel_rnd
-    );
+    zFX_SpawnBubbleTrail(pos, num, &bubblehit_pos_rnd, &bubblehit_vel_rnd);
 }
 
 void init_poppers()
@@ -274,7 +267,7 @@ void zFXGooUpdate(F32 dt)
     int i;
     zFXGooInstance* pGoo = &zFXGooInstances[0];
 
-    for (i = 0 ; i < 0x18; i++)
+    for (i = 0; i < 0x18; i++)
     {
         if (pGoo->state != zFXGooStateInactive)
         {
@@ -292,15 +285,4 @@ void xDebugAddTweak(const char* unk1, const char* unk2, const tweak_callback* un
 xVec3& xVec3::up_normalize()
 {
     return safe_normalize(xVec3::m_UnitAxisY);
-}
-
-void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
-{
-    F32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
-    F32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
-    F32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
-
-    o->x = x;
-    o->y = y;
-    o->z = z;
 }

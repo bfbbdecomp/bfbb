@@ -39,4 +39,14 @@ void xSphereHitsBound(const xSphere* o, const xBound* b, xCollis* c);
 void xVecHitsBound(const xVec3* v, const xBound* b, xCollis* c);
 F32 xsqrt(F32 x);
 
+inline xVec3* xBoundCenter(xBound* bound)
+{
+    return &bound->sph.center;
+}
+
+inline const xVec3* xBoundCenter(const xBound* bound)
+{
+    return &bound->sph.center;
+}
+
 #endif

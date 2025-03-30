@@ -96,7 +96,7 @@ struct zNPCKingJelly : zNPCSubBoss
         bool fighting;
         bool died;
         bool charging;
-        bool stop_moving;
+        bool stop_moving; //0x2b8
         bool updated;
     } flag;
     S32 round; //0x2BC
@@ -147,6 +147,7 @@ struct zNPCKingJelly : zNPCSubBoss
     S32 max_strikes();
     void load_model();
     void load_curtain_model();
+    void show_shower_model();
     void reset_curtain();
     void start_blink();
     void decompose();
@@ -175,6 +176,8 @@ struct zNPCGoalKJIdle : zNPCGoalCommon
     zNPCGoalKJIdle(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    S32 Exit(float, void*);
 };
 
 struct zNPCGoalKJBored : zNPCGoalCommon
@@ -182,6 +185,9 @@ struct zNPCGoalKJBored : zNPCGoalCommon
     zNPCGoalKJBored(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    S32 Enter(float, void*);
+    S32 Exit(float, void*);
 };
 
 struct zNPCGoalKJSpawnKids : zNPCGoalCommon
@@ -196,6 +202,8 @@ struct zNPCGoalKJSpawnKids : zNPCGoalCommon
     zNPCGoalKJSpawnKids(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+    S32 Enter(float, void*);
+    S32 count_children(int);
 };
 
 struct zNPCGoalKJTaunt : zNPCGoalCommon

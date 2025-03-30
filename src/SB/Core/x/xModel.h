@@ -139,7 +139,7 @@ xModelInstance* xModelInstanceAlloc(RpAtomic* data, void* object, U16 flags, U8 
 void xModelInstanceFree(xModelInstance* modelInst);
 void xModelInstanceAttach(xModelInstance* inst, xModelInstance* parent);
 void xModelRender(xModelInstance* modelInst);
-void xModelRenderSingle(xModelInstance * modelInst);
+void xModelRenderSingle(xModelInstance* modelInst);
 void xModelRender2D(const xModelInstance& model, const basic_rect<F32>& r, const xVec3& from,
                     const xVec3& to);
 void xModelSetMaterialAlpha(xModelInstance* modelInst, U8 alpha);
@@ -150,5 +150,15 @@ void xModel_SceneEnter(RpWorld* world);
 void xModel_SceneExit(RpWorld* world);
 xSphere* xModelGetLocalSBound(xModelInstance* model);
 void xModelGetBoneMat(xMat4x3& mat, const xModelInstance& model, size_t index);
+
+inline void xModelSetFrame(xModelInstance* modelInst, const xMat4x3* frame)
+{
+    xMat4x3Copy((xMat4x3*)modelInst->Mat, frame);
+}
+
+inline xMat4x3* xModelGetFrame(xModelInstance* modelInst)
+{
+    return (xMat4x3*)modelInst->Mat;
+}
 
 #endif
