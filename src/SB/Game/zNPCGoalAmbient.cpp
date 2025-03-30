@@ -18,11 +18,11 @@ void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 
 S32 zNPCGoalJellyAttack::Enter(F32 arg0, void* arg1)
 {
-    zNPCJelly* temp_r31 = (zNPCJelly*)psyche->clt_owner;
+    zNPCJelly* npc = (zNPCJelly*)psyche->clt_owner;
 
-    temp_r31->SndPlayRandom(NPC_STYP_ENCOUNTER);
-    temp_r31->VelStop();
-    lastAnimTime = 0;
+    npc->SndPlayRandom(NPC_STYP_ENCOUNTER);
+    npc->VelStop();
+    flg_attack = 0;
     zNPCGoalJellyAttack::ZapperStart();
     return zNPCGoalPushAnim::Enter(arg0, arg1);
 }
@@ -41,8 +41,8 @@ S32 zNPCGoalJellyAttack::Process(en_trantype* arg0, F32 arg1, void* arg2, xScene
 
 void zNPCGoalJellyAttack::ZapperStop()
 {
-    zNPC_SNDStop((_tageNPCSnd)4);
-    for (S32 i = 0; i < 3; ++i)
+    zNPC_SNDStop(eNPCSnd_JellyfishAttack);
+    for (S32 i = 0; i < 3; i++)
     {
         if (zap_lytnin[i] != NULL)
         {
