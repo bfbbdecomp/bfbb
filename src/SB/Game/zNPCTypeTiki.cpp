@@ -293,9 +293,9 @@ U8 PhysicsFlags()
 
 void zNPCTiki_InitStacking(zScene* zsc)
 {
-    for (int i = 0; i < zsc->num_ents; i++)
+    for (int i = 0; i < zsc->num_npcs; i++)
     {
-        xNPCBasic* npc = (xNPCBasic*)zsc->ents[i];
+        xNPCBasic* npc = (xNPCBasic*)zsc->npcs[i];
 
         U32 type = npc->SelfType() & ~0xFF;
         if (type != 'NTT\0') // NPC_TYPE_TIKI_WOOD
