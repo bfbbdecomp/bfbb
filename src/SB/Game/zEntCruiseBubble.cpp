@@ -3626,17 +3626,6 @@ cruise_bubble::state_enum cruise_bubble::state_camera_restore::update(F32 dt)
     return STATE_CAMERA_RESTORE;
 }
 
-void xMat3x3RMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
-{
-    F32 x = m->right.x * v->x + m->up.x * v->y + m->at.x * v->z;
-    F32 y = m->right.y * v->x + m->up.y * v->y + m->at.y * v->z;
-    F32 z = m->right.z * v->x + m->up.z * v->y + m->at.z * v->z;
-
-    o->x = x;
-    o->y = y;
-    o->z = z;
-}
-
 S32 zNPCCommon::IsHealthy()
 {
     return 1;

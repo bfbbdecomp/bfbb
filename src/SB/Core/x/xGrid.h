@@ -77,4 +77,99 @@ void xGridCheckPosition(xGrid* grid, xVec3* pos, xQCData* qcd, GridEntCallback h
 S32 xGridEntIsTooBig(xGrid* grid, const xEnt* ent);
 S32 xGridAdd(xGrid* grid, xEnt* ent);
 
+inline xGridBound* xGridIterFirstCell(xGridBound** head, xGridIterator& it)
+{
+    xGridBound* cell = *head;
+
+    if (!cell)
+    {
+        return NULL;
+    }
+
+    it.delfound = 0;
+    it.listhead = head;
+    it.curcell = cell;
+
+    gGridIterActive++;
+
+    return cell;
+}
+
+inline xGridBound* xGridIterFirstCell(xGrid* grid, S32 grx, S32 grz, xGridIterator& iter)
+{
+    if (grx < 0 || grx >= grid->nx)
+    {
+        return NULL;
+    }
+
+    if (grz < 0 || grz >= grid->nz)
+    {
+        return NULL;
+    }
+
+    return xGridIterFirstCell(grid->cells + grz * grid->nx + grx, iter);
+}
+
+inline xGridBound* xGridIterNextCell(xGridIterator& it)
+{
+    if (it.curcell)
+    {
+        it.curcell = it.curcell->next;
+    }
+
+    while (it.curcell)
+    {
+        if (!it.curcell->deleted)
+        {
+            return it.curcell;
+        }
+
+        it.delfound = 1;
+        it.curcell = it.curcell->next;
+    }
+
+    xGridIterClose(it);
+    return NULL;
+}
+
+inline void xGridIterClose(xGridIterator& it)
+{
+    if (it.listhead)
+    {
+        gGridIterActive--;
+
+        if (it.delfound && !gGridIterActive)
+        {
+            xGridBound* cell = *it.listhead;
+            xGridBound** head = it.listhead;
+
+            while (cell)
+            {
+                if (cell->deleted)
+                {
+                    *head = cell->next;
+
+                    cell->next = NULL;
+                    cell->head = NULL;
+                    cell->ingrid = 0;
+                    cell->deleted = 0;
+                    cell->gx = 0xFFFF;
+                    cell->gz = 0xFFFF;
+
+                    cell = *head;
+                }
+                else
+                {
+                    head = &cell->next;
+                    cell = cell->next;
+                }
+            }
+        }
+
+        it.listhead = NULL;
+        it.curcell = NULL;
+        it.delfound = 0;
+    }
+}
+
 #endif
