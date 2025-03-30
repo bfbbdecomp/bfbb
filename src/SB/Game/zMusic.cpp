@@ -8,14 +8,30 @@
 #include "zScene.h"
 #include <string.h>
 
-extern zMusicTrackInfo sMusicTrack[2];
-extern zVolumeInfo volume;
-extern U32 sMusicPaused;
-extern S32 sMusicLastEnum[2];
-extern U32 sMusicSoundID[24][2];
-extern zMusicSituation sMusicInfo[8];
-extern zMusicSituation* sMusicQueueData[2];
-extern F32 sMusicTimer[2];
+#define TRACK_COUNT 2
+
+static zMusicTrackInfo sMusicTrack[TRACK_COUNT];
+static zVolumeInfo volume;
+static U32 sMusicSoundID[24][TRACK_COUNT];
+
+// clang-format off
+static zMusicSituation sMusicInfo[8] = {
+    { 0, 0, 0, 0.0f, 0.0f, 0, 0, 0, 0, 0},
+    { 1, 0, 0, 0.0f, 0.0f, 0, 0, 0, 0, 0},
+    { 2, 0, 0, 0.0f, 0.0f, 0, 0, 0, 0, 0},
+    { 3, 0, 0, 0.0f, 0.0f, 0, 0, 0, 0, 0},
+    { 4, 0, 0, 0.0f, 0.0f, 0, 0, 0, 0, 0},
+    { 5, 0, 0, 0.0f, 0.0f, 0, 0, 0, 0, 0},
+    { 6, 0, 0, 0.0f, 0.0f, 0, 0, 0, 0, 0},
+    { 7, 0, 0, 0.0f, 0.0f, 0, 0, 0, 0, 0},
+};
+// clang-format on
+
+static U32 sMusicPaused;
+static zMusicSituation* sMusicQueueData[TRACK_COUNT];
+
+static S32 sMusicLastEnum[TRACK_COUNT] = { 0.0f, 0.0f };
+static F32 sMusicTimer[TRACK_COUNT] = { 0.0f, 0.0f };
 
 extern eGameMode gGameMode;
 extern zGlobals globals;
