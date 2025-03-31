@@ -39,6 +39,7 @@ struct zMusicTrackInfo
 void volume_reset();
 void zMusicRefreshVolume();
 void zMusicNotify(S32 situation);
+void zMusicNotifyEvent(const F32* toParam, xBase* base);
 void zMusicSetVolume(F32 vol, F32 delay);
 void zMusicKill();
 void zMusicPause();
@@ -46,6 +47,5 @@ void zMusicUnpause(S32 kill);
 void zMusicReset();
 void zMusicInit();
 void zMusicUpdate(F32 dt);
-void zMusicNotifyEvent(const F32* toParam, xBase*);
 
 #endif

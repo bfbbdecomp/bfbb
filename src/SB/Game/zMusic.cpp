@@ -232,6 +232,41 @@ void zMusicNotify(S32 situation)
     sMusicQueueData[s->track]->game_state = gGameMode == eGameMode_Game;
 }
 
+void zMusicNotifyEvent(const F32* toParam, xBase* base)
+{
+    S32 track;
+    zMusicSituation* s;
+    size_t musicInfoIdx;
+    S32 musicEnum;
+
+    if (sMusicPaused)
+    {
+        return;
+    }
+
+    if (toParam[1] == 0.0f)
+    {
+        musicInfoIdx = 5;
+    }
+    else
+    {
+        musicInfoIdx = 6;
+    }
+    musicEnum = toParam[0];
+    s = &sMusicInfo[musicInfoIdx];
+    track = s->track;
+
+    // FIXME: Body (and maybe conditions) aren't quite right
+    if (musicEnum != sMusicLastEnum[track] && sMusicQueueData[track] == NULL &&
+        (s->countMax == 0 || s->count < s->countMax) && !(s->delay > s->elapsedTime))
+    {
+        sMusicTimer[track] = s->punchDelay;
+        sMusicQueueData[track] = s;
+        sMusicQueueData[track]->game_state = (gGameMode == eGameMode_Game);
+        sMusicQueueData[track]->music_enum = musicEnum;
+    }
+}
+
 void zMusicUpdate(F32 dt)
 {
     S32 i;
