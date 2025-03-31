@@ -36,7 +36,6 @@ struct zMusicTrackInfo
     F32 lastVol;
 };
 
-void volume_reset();
 void zMusicRefreshVolume();
 void zMusicNotify(S32 situation);
 void zMusicNotifyEvent(const F32* toParam, xBase* base);

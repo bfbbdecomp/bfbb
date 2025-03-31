@@ -42,7 +42,7 @@ static const F32 minDelay = 0.001f;
 
 void volume_update(F32 vol);
 
-void volume_reset()
+static void volume_reset()
 {
     volume.cur = 0.0f;
     volume.end = 1.0f;
