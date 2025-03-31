@@ -10,9 +10,9 @@
 
 #define TRACK_COUNT 2
 
+static U32 sMusicSoundID[24][TRACK_COUNT];
 static zMusicTrackInfo sMusicTrack[TRACK_COUNT];
 static zVolumeInfo volume;
-static U32 sMusicSoundID[24][TRACK_COUNT];
 
 // clang-format off
 static zMusicSituation sMusicInfo[8] = {
