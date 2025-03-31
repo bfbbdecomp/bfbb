@@ -150,6 +150,7 @@ void xModel_SceneEnter(RpWorld* world);
 void xModel_SceneExit(RpWorld* world);
 xSphere* xModelGetLocalSBound(xModelInstance* model);
 void xModelGetBoneMat(xMat4x3& mat, const xModelInstance& model, size_t index);
+void xModelInstanceUpgradeBrotherShared(xModelInstance* inst, U32 flags);
 
 inline void xModelSetFrame(xModelInstance* modelInst, const xMat4x3* frame)
 {

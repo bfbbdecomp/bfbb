@@ -406,6 +406,8 @@ U8 zEntPlayer_MinimalUpdate(xEnt* ent, xScene* sc, F32 dt, xVec3& drive_motion);
 S32 zEntPlayer_MoveInfo();
 
 void zEntPlayer_SNDPlay(_tagePlayerSnd player_snd, F32 delay);
+void zEntPlayer_SNDPlayRandom(_tagePlayerSnd player_snd_start, _tagePlayerSnd player_snd_end,
+                              F32 delay);
 void zEntPlayer_SNDPlayStream(_tagePlayerStreamSnd player_snd);
 void zEntPlayer_SNDPlayStream(_tagePlayerStreamSnd player_snd, U32 flags);
 // Only plays sound if player's spatula count is between lower and upper
