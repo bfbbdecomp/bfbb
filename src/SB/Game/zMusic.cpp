@@ -205,6 +205,7 @@ static void zMusicDo(S32 track)
 void zMusicNotify(S32 situation)
 {
     zMusicSituation* s;
+    S32 track;
 
     if (sMusicPaused)
     {
@@ -213,22 +214,20 @@ void zMusicNotify(S32 situation)
 
     s = &sMusicInfo[situation];
 
-    if (s->countMax == NULL)
+    if (s->countMax != NULL && s->count >= s->countMax)
     {
         return;
     }
-    if (s->count >= s->countMax)
-    {
-        return;
-    }
+
     if (s->delay > s->elapsedTime)
     {
         return;
     }
 
-    sMusicQueueData[s->track] = s;
-    sMusicTimer[s->track] = s->punchDelay;
-    sMusicQueueData[s->track]->game_state = gGameMode == eGameMode_Game;
+    track = s->track;
+    sMusicQueueData[track] = &sMusicInfo[situation];
+    sMusicTimer[track] = s->punchDelay;
+    sMusicQueueData[track]->game_state = (gGameMode == eGameMode_Game);
 }
 
 void zMusicNotifyEvent(const F32* toParam, xBase* base)
