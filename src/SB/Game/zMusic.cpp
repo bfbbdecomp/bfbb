@@ -44,7 +44,8 @@ static void volume_reset()
 {
     volume.cur = 0.0f;
     volume.end = 1.0f;
-    volume.inc = 0.5f;
+    volume.inc = 0.0f;
+
     memset(volume.adjusted, 0, sizeof(volume.adjusted));
 }
 
