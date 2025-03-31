@@ -8,6 +8,7 @@
 #include "containers.h"
 #include "xBehaviour.h"
 #include "zNPCTypeAmbient.h"
+#include "xCamera.h"
 
 struct lightning_ring
 {
@@ -138,12 +139,16 @@ struct zNPCKingJelly : zNPCSubBoss
     void Setup();
     void Destroy();
     U32 AnimPick(S32 rawgoal, en_NPC_GOAL_SPOT gspot, xGoal* goal);
+    void Init(xEntAsset*);
     void BUpdate(xVec3*);
     void RenderExtra();
+    void ParseINI();
     void SelfSetup();
+    S32 max_strikes() const;
     void init_child(zNPCKingJelly::child_data&, zNPCCommon&, int);
     void disable_child(zNPCKingJelly::child_data&);
     void enable_child(zNPCKingJelly::child_data& child);
+    void spawn_children(int, int);
     S32 max_strikes();
     void load_model();
     void load_curtain_model();
@@ -167,6 +172,8 @@ struct zNPCKingJelly : zNPCSubBoss
     void update_round();
     void end_charge();
     void create_ambient_rings();
+    NPCSndTrax g_sndTrax_KingJelly;
+    xBinaryCamera bossCam;
 };
 
 struct zNPCGoalKJIdle : zNPCGoalCommon
@@ -196,13 +203,14 @@ struct zNPCGoalKJSpawnKids : zNPCGoalCommon
     S32 cycle;
     U8 spawned;
     U8 spewed;
-    S32 child_count;
+    S32 child_count; //0x58
     S32 spawn_count;
 
     zNPCGoalKJSpawnKids(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
     S32 Enter(float, void*);
+    S32 Exit(float, void*);
     S32 count_children(int);
 };
 
@@ -211,6 +219,9 @@ struct zNPCGoalKJTaunt : zNPCGoalCommon
     zNPCGoalKJTaunt(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    S32 Enter(float, void*);
+    S32 Exit(float, void*);
 };
 
 struct zNPCGoalKJShockGround : zNPCGoalCommon
