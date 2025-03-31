@@ -233,34 +233,23 @@ void tweak_group::register_tweaks(bool init, xModelAssetParam* ap, U32 apsize)
 void aqua_beam::reset() // I don't know whats wrong here. Probably a simple error
 {
     firing = 0;
-    bool bvar;
+    bool tempBvar;
 
     while (true)
     {
-        bvar = ring.queue.empty();
-        if (bvar)
-            break;
         aqua_beam::kill_ring();
+        tempBvar = ring.queue.empty();
+        if (tempBvar)
+            break;
     }
     ring_sounds = 0;
-
-    // Ghidra output
-    //      bool bVar1;
-    //   *(undefined *)(param_1 + 0x3c) = 0;
-    //   while( true ) {
-    //     bVar1 = empty__42fixed_queue<>CFv((int *)(param_1 + 0xa4));
-    //     if (bVar1) break;
-    //     kill_ring__9aqua_beamFv(param_1);
-    //   }
-    //   *(undefined4 *)(param_1 + 0xf54) = 0;
-    //   return;
 }
 
 void aqua_beam::start() //100% code match, data does not match
 {
     firing = 1;
-    time = 0;
-    ring.emit_time = 0;
+    time = 0.0f;
+    ring.emit_time = -1000000000.0f;
 }
 
 void aqua_beam::stop()
