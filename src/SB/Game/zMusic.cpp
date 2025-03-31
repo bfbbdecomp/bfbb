@@ -313,30 +313,27 @@ static void volume_update(F32 vol)
         volume.cur = volume.inc * vol + volume.cur;
     }
 
-    // FIXME: compiler is optimizing out some conditional logic here, figure out how to make a match
     if ((volume.inc < 0.0f && volume.cur <= volume.end) ||
-        (0.0f <= volume.inc && volume.end <= volume.cur))
+        (!(volume.inc < 0.0f) && volume.cur >= volume.end))
     {
-        volume.cur = volume.end;
+        volume.end = volume.cur;
         volume.inc = 0.0f;
     }
 
-    zMusicTrackInfo* track = sMusicTrack;
     for (S32 trackIdx = 0; trackIdx < TRACK_COUNT; trackIdx++)
     {
-        if (track->snd_id != 0 &&
-            (oldVol != volume.cur || volume.adjusted[trackIdx] != track->snd_id))
+        if (sMusicTrack[trackIdx].snd_id != 0 &&
+            (oldVol != volume.cur || volume.adjusted[trackIdx] != sMusicTrack[trackIdx].snd_id))
         {
-            F32 setVol = volume.cur * track->lastVol;
+            F32 setVol = volume.cur * sMusicTrack[trackIdx].lastVol;
             if (setVol > 1.0f)
             {
                 setVol = 1.0f;
             }
 
-            xSndSetVol(track->snd_id, setVol);
-            volume.adjusted[trackIdx] = track->snd_id;
+            xSndSetVol(sMusicTrack[trackIdx].snd_id, setVol);
+            volume.adjusted[trackIdx] = sMusicTrack[trackIdx].snd_id;
         }
-        track++;
     }
 }
 
