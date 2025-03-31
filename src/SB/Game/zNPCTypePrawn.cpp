@@ -248,8 +248,8 @@ void aqua_beam::reset() // I don't know whats wrong here. Probably a simple erro
 void aqua_beam::start() //100% code match, data does not match
 {
     firing = 1;
-    time = 0.0;
-    ring.emit_time = -1000000000.0;
+    time = 0.0f;
+    ring.emit_time = -1000000000.0f;
 }
 
 void aqua_beam::stop()
