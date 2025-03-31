@@ -175,6 +175,7 @@ struct aqua_beam
         F32 alpha;
         F32 scale;
     } squiggle;
+
     S32 ring_sounds; //0xf54
     void reset();
     void start();

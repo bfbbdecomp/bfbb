@@ -32,17 +32,41 @@
 
 namespace
 {
-    S32 kill_sound(int)
+    S32 boss_cam()
     {
-        return 0; //to do
+        return 0; //todo
     }
+
     S32 play_sound(int, const xVec3*)
     {
         return 0; //todo
     }
-    // void tweak()
-    // {
-    // }
+
+    S32 kill_sound(int)
+    {
+        return 0; //to do
+    }
+
+    void kill_sounds()
+    {
+        for (S32 i = 0; i < 11; i++)
+        {
+            kill_sound(i);
+        }
+    }
+
+    void reset_model_color(xModelInstance* submodel) //25% matching. will need rewritten
+    {
+        while (submodel != NULL)
+        {
+            submodel = submodel->Next;
+        }
+    }
+
+    void tweak()
+    {
+    }
+
 } // namespace
 
 void lightning_ring::create()
@@ -52,6 +76,16 @@ void lightning_ring::create()
     arcs_size = 0;
 
     //store 0 into 0x7c
+}
+
+void lightning_ring::destroy()
+{
+    for (S32 i = 0; i < arcs_size; i++)
+    {
+        zLightningKill(arcs[i]);
+    }
+    arcs_size = 0;
+    active = 0;
 }
 
 xAnimTable* ZNPC_AnimTable_KingJelly()
@@ -141,6 +175,13 @@ xAnimTable* ZNPC_AnimTable_KingJelly()
     return table;
 }
 
+void zNPCKingJelly::Init(xEntAsset* asset)
+{
+    zNPCCommon::Init(asset);
+    memset(&flag.fighting, 0, 5);
+    this->bossCam.init();
+}
+
 xVec3* zNPCKingJelly::get_bottom()
 {
     return (xVec3*)&this->model->Mat->pos;
@@ -179,6 +220,15 @@ void zNPCKingJelly::RenderExtra()
     zNPCKingJelly::render_debug();
 }
 
+void zNPCKingJelly::ParseINI()
+{
+    zNPCCommon::ParseINI();
+    cfg_npc->snd_traxShare = &g_sndTrax_KingJelly;
+    NPCS_SndTablePrepare((NPCSndTrax*)&g_sndTrax_KingJelly);
+    cfg_npc->snd_trax = &g_sndTrax_KingJelly;
+    NPCS_SndTablePrepare((NPCSndTrax*)&g_sndTrax_KingJelly);
+}
+
 void zNPCKingJelly::SelfSetup()
 {
     xBehaveMgr* bmgr;
@@ -198,6 +248,11 @@ void zNPCKingJelly::SelfSetup()
     psy->AddGoal(NPC_GOAL_LIMBO, NULL);
     psy->BrainEnd();
     psy->SetSafety(NPC_GOAL_KJIDLE);
+}
+
+S32 zNPCKingJelly::max_strikes() const
+{
+    return round + 1;
 }
 
 void zNPCKingJelly::init_child(zNPCKingJelly::child_data& child, zNPCCommon& npc, int wave)
@@ -383,8 +438,8 @@ S32 zNPCGoalKJBored::Enter(float dt, void* updCtxt)
 {
     zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
     //play_sound(int, const xVec3*);
-    play_sound(3, kj.model->anim_coll.verts); // kind of correct
-    play_sound(3, kj.model->anim_coll.verts); //kind of correct
+    play_sound(3, kj.model->anim_coll.verts); // kj.model is correct? dont know the xVec3*
+    play_sound(3, kj.model->anim_coll.verts); // same as above
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
@@ -398,6 +453,31 @@ S32 zNPCGoalKJSpawnKids::Enter(float dt, void* updCtxt)
     zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
     count_children(kj.round);
     return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalKJSpawnKids::Exit(float dt, void* updCtxt)
+{
+    zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
+    if (spawn_count < child_count) //0x58 child_count
+    {
+        kj.generate_spawn_particles();
+        kj.spawn_children(kj.round, child_count - spawn_count);
+    }
+    return zNPCGoalCommon::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalKJTaunt::Enter(float dt, void* updCtxt)
+{
+    zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
+    //play_sound(int, const xVec3*);
+    play_sound(9, kj.model->anim_coll.verts); // kj.model is correct? dont know the xVec3*
+    play_sound(9, kj.model->anim_coll.verts); // same as above
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalKJTaunt::Exit(float dt, void* updCtxt)
+{
+    return xGoal::Exit(dt, updCtxt);
 }
 
 // void zNPCKingJelly::start_blink()
@@ -429,8 +509,12 @@ S32 zNPCGoalKJShockGround::Exit(F32 dt, void* updCtxt)
 
 S32 zNPCGoalKJDamage::Enter(F32 dt, void* updCtxt)
 {
-    // TODO
-    return 0;
+    zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
+    //play_sound(int, const xVec3*);
+    play_sound(4, kj.model->anim_coll.verts); // kj.model is correct? dont know the xVec3*
+    play_sound(4, kj.model->anim_coll.verts); // same as above
+    kj.disable_tentacle_damage = 1;
+    return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
 S32 zNPCGoalKJDamage::Exit(F32 dt, void* updCtxt)
