@@ -38,7 +38,7 @@ extern zGlobals globals;
 
 static const F32 minDelay = 0.001f;
 
-void volume_update(F32 vol);
+static void volume_update(F32 vol);
 
 static void volume_reset()
 {
@@ -301,7 +301,7 @@ void zMusicUpdate(F32 dt)
     }
 }
 
-void volume_update(F32 vol)
+static void volume_update(F32 vol)
 {
     F32 oldVol = volume.cur;
     if (volume.inc >= 1e-5f && volume.inc <= -1e-5f)
