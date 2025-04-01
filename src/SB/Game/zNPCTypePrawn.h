@@ -216,7 +216,7 @@ struct zNPCPrawn : zNPCSubBoss
     S32 floor_state_index; //0x2e4
     U32 floor_state_counter;
     F32 floor_time;
-    F32 delay;
+    F32 delay; //0x2f0
     U8 first_update;
     U8 fighting;
     struct
@@ -271,6 +271,9 @@ struct zNPCGoalPrawnIdle : zNPCGoalCommon
     zNPCGoalPrawnIdle(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    S32 Enter(float, void*);
+    S32 Exit(float, void*);
 };
 
 struct zNPCGoalPrawnBeam : zNPCGoalCommon

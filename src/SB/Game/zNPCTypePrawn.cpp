@@ -398,6 +398,20 @@ void zNPCGoalPrawnBeam::update_aim(float dt) //Needs clrlwi and cntlzw to be fin
     prawn.turning();
 }
 
+S32 zNPCGoalPrawnIdle::Enter(float dt, void* updCtxt)
+{
+    zNPCPrawn& prawn = *((zNPCPrawn*)this->psyche->clt_owner);
+    prawn.face_player = 1;
+    prawn.delay = 0;
+    prawn.set_floor_state(prawn.FS_DANGER, false, false);
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalPrawnIdle::Exit(float dt, void* updCtxt)
+{
+    return xGoal::Exit(dt, updCtxt);
+}
+
 S32 zNPCGoalPrawnDamage::Enter(float dt, void* updCtxt)
 {
     zNPCPrawn& prawn = *(zNPCPrawn*)psyche->clt_owner;
@@ -405,12 +419,15 @@ S32 zNPCGoalPrawnDamage::Enter(float dt, void* updCtxt)
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
-// S32 zNPCGoalPrawnBowl::Enter(float dt, void* updCtxt)
-// {
-//     zNPCPrawn& prawn = *(zNPCPrawn*)psyche->clt_owner;
-//     prawn.set_floor_state(prawn.FS_DANGER, false, false);
-//     zNPCGoalCommon::Enter(dt, updCtxt);
-// }
+S32 zNPCGoalPrawnBowl::Enter(float dt, void* updCtxt)
+{
+    zNPCPrawn& prawn = *((zNPCPrawn*)this->psyche->clt_owner);
+    prawn.face_player = 1;
+    prawn.set_floor_state(prawn.FS_AIM_LANE, false, false);
+    prawn.delay = 0;
+    aiming = 1;
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
 
 S32 zNPCGoalPrawnBowl::Exit(float dt, void* updCtxt)
 {
