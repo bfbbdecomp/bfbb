@@ -194,14 +194,83 @@ static S32 getCurrLevelMusicEnum()
     return snd_enum;
 }
 
-static void zMusicDo(S32 track)
+static S32 zMusicDo(S32 track)
 {
     S32 snd_enum;
     F32 vol;
     F32 pitch;
+
+    vol = 1.0f;
+    if (globals.NoMusic != FALSE)
+    {
+        return 0;
+    }
+
+    snd_enum = xrand() % 0x18;
+    switch (sMusicQueueData[track]->situation)
+    {
+    case 3:
+    case 5:
+        snd_enum = sMusicQueueData[track]->music_enum;
+        break;
+    case 6:
+        snd_enum = sMusicQueueData[track]->music_enum;
+        break;
+    case 0:
+        snd_enum = getCurrLevelMusicEnum();
+        break;
+    case 7:
+        snd_enum = sMusicLastEnum[0];
+        break;
+    case 2:
+        snd_enum = 1;
+        break;
+    case 4:
+        break;
+    default:
+        snd_enum = xrand() % 0x18;
+    }
+
+    if (sMusicTrack[track].snd_id != 0)
+    {
+        xSndStop(sMusicTrack[track].snd_id);
+        sMusicTrack[track].snd_id = 0;
+    }
+
+    sMusicTrack[track].loop = sMusicSoundID[snd_enum][1];
+
+    pitch = 0.0f;
+    if (snd_enum == 9 && globals.scenePreload->sceneID == 'KF04')
+    {
+        pitch = -12.0f;
+        vol *= 0.7f;
+    }
+
+    // FIXME: loop operator
+    U32 snd_id = sMusicSoundID[snd_enum][track];
+    sMusicTrack[track].snd_id =
+        xSndPlay(snd_id, vol, pitch, 0xFF, sMusicTrack[track].loop, 0, SND_CAT_MUSIC, 0.0f);
+
+    // FIXME: This isn't quite right
+    if (sMusicTrack[track].snd_id != 0)
+    {
+        sMusicTrack[track].snd_id = snd_id;
+        sMusicTrack[track].assetID = sMusicSoundID[snd_enum][track];
+        sMusicTrack[track].lastVol = vol;
+        if (sMusicQueueData[track] != NULL)
+        {
+            sMusicQueueData[track]->sndid = snd_id;
+            sMusicQueueData[track]->elapsedTime = 0.0f;
+            sMusicQueueData[track]->count += 1;
+            sMusicQueueData[track] = NULL;
+        }
+        sMusicLastEnum[track] = snd_enum;
+        return 1;
+    }
+
+    return 0;
 }
 
-// Probably floating point memes idk
 void zMusicNotify(S32 situation)
 {
     zMusicSituation* s;
