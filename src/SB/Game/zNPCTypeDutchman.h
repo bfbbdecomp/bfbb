@@ -6,6 +6,7 @@
 #include "containers.h"
 #include "xBehaviour.h"
 #include "zNPCTypeCommon.h"
+#include "zNPCGoals.h"
 
 struct zNPCDutchman : zNPCSubBoss
 {
@@ -82,11 +83,11 @@ struct zNPCDutchman : zNPCSubBoss
         move_enum move;
         fade_enum fade;
     } flag;
-    S32 life; //0x2B4
-    S32 round; //0x2B8
-    S32 stage; //0x2BC
-    F32 delay; //0x2C0
-    F32 alpha; //0x2d0
+    S32 life; //0x2C4
+    S32 round; //0x2C8
+    S32 stage; //0x2CC
+    F32 delay; //0x2d0
+    F32 alpha; //0x2d4
     struct
     {
         xVec2 dir; //0x2d4
@@ -142,24 +143,34 @@ struct zNPCDutchman : zNPCSubBoss
     void Setup();
     void Destroy();
     void Render();
+    void SelfSetup();
     void render_debug();
     void update_animation(float);
     void kill_wave(zNPCDutchman::wave_data&);
     void add_splash(const xVec3&, float);
     void vanish();
     void reappear();
+    void turn_to_face(const xVec3&);
     void face_player();
     void start_beam();
     void stop_beam();
     void start_flames();
     void stop_flames();
+    void get_hand_loc(S32) const;
+    void start_hand_trail();
     void stop_hand_trail();
     void reset_lasso_anim();
     void reset_speed();
     void Damage(en_NPC_DAMAGE_TYPE, xBase*, const xVec3*);
+    U32 AnimPick(S32 rawgoal, en_NPC_GOAL_SPOT gspot, xGoal* goal);
+    void LassoNotify(en_LASSO_EVENT);
     S32 LassoSetup();
+    void update_round();
+    void next_goal();
+    void goal_delay();
     void start_eye_glow();
     void stop_eye_glow();
+    void get_orbit() const; //Weak
     U8 PhysicsFlags() const;
     U8 ColPenByFlags() const;
     U8 ColChkByFlags() const;
@@ -185,6 +196,7 @@ struct zNPCGoalDutchmanIdle : zNPCGoalCommon
     zNPCDutchman& owner;
     S32 Enter(float, void*);
     S32 Exit(float, void*);
+    S32 Process(en_trantype*, float, void*, xScene*);
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
@@ -260,6 +272,7 @@ struct zNPCGoalDutchmanFlame : zNPCGoalCommon
     xVec2 move_dir;
     U8 stopped;
     zNPCDutchman& owner;
+    S32 Enter(float, void*);
     S32 Exit(float, void*);
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
@@ -287,7 +300,7 @@ struct zNPCGoalDutchmanDamage : zNPCGoalCommon
     zNPCDutchman& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
-    S32 Exit(F32 dt, void* updCtxt); 
+    S32 Exit(F32 dt, void* updCtxt);
 };
 
 struct delay_goal
