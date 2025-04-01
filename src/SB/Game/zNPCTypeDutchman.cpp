@@ -121,11 +121,91 @@ void zNPCDutchman::Render()
     zNPCDutchman::render_debug();
 }
 
+void zNPCDutchman::SelfSetup()
+{
+    xBehaveMgr* bmgr = xBehaveMgr_GetSelf();
+    this->psy_instinct = bmgr->Subscribe(this, 0);
+    xPsyche* psy = this->psy_instinct;
+    psy->BrainBegin();
+    S32 i;
+    for (i = NPC_GOAL_DUTCHMANNIL; i <= NPC_GOAL_DUTCHMANDEATH; i++)
+    {
+        psy->AddGoal(i, this);
+    }
+    psy->BrainEnd();
+    psy->SetSafety(NPC_GOAL_DUTCHMANIDLE);
+}
+
 void zNPCDutchman::Damage(en_NPC_DAMAGE_TYPE, xBase*, const xVec3*)
 {
     xPsyche* psy = this->psy_instinct;
     psy->GIDOfActive();
 }
+
+U32 zNPCDutchman::AnimPick(S32 rawgoal, en_NPC_GOAL_SPOT gspot, xGoal* goal)
+{
+    S32 index = -1;
+    U32 animId = 0;
+
+    switch (rawgoal)
+    {
+    case NPC_GOAL_DUTCHMANNIL:
+    case NPC_GOAL_DUTCHMANDAMAGE:
+    case NPC_GOAL_DUTCHMANDEATH:
+        index = -1;
+        break;
+    case NPC_GOAL_DUTCHMANINITIATE:
+    case NPC_GOAL_DUTCHMANIDLE:
+    case NPC_GOAL_DUTCHMANDISAPPEAR:
+    case NPC_GOAL_DUTCHMANTELEPORT:
+        index = 1;
+        break;
+    case NPC_GOAL_DUTCHMANREAPPEAR:
+        index = 5;
+        break;
+    case NPC_GOAL_DUTCHMANBEAM:
+        index = 0xC;
+        break;
+    case NPC_GOAL_DUTCHMANFLAME:
+        index = 0x10;
+        break;
+    case NPC_GOAL_DUTCHMANPOSTFLAME:
+        if (flag.hurting != false)
+        {
+            index = 4;
+        }
+        else
+        {
+            index = 6;
+        }
+        break;
+    case NPC_GOAL_DUTCHMANCAUGHT:
+        index = 0x13;
+        break;
+
+    default:
+        index = 1;
+        break;
+    }
+
+    if (index > -1)
+    {
+        animId = g_hash_subbanim[index];
+    }
+
+    return animId;
+}
+
+void zNPCDutchman::LassoNotify(en_LASSO_EVENT event)
+{
+    if ((event != 3) && (event < 3) && (event > 1))
+    {
+        // xPsyche::GoalSet(NPC_GOAL_DUTCHMANCAUGHT, 1);
+    }
+
+    zNPCCommon::LassoNotify(event);
+}
+//NPC_GOAL_DUTCHMANCAUGHT
 
 // double zNPCDutchman::goal_delay()
 // {
@@ -138,6 +218,25 @@ S32 zNPCDutchman::LassoSetup()
 {
     zNPCCommon::LassoUseGuides(1, 1);
     return zNPCCommon::LassoSetup();
+}
+
+void zNPCDutchman::update_round()
+{
+    S32 roundCntr = round;
+    if (life == 0)
+    {
+        round = 3;
+    }
+    else
+    {
+        round = 2 - ((life + -1) * 3) / 3;
+    }
+    if (round == roundCntr)
+    {
+        return;
+    }
+
+    stage = -1;
 }
 
 void zNPCDutchman::render_debug()
@@ -164,9 +263,26 @@ void zNPCDutchman::stop_eye_glow()
     flag.eye_glow = false;
 }
 
+void zNPCDutchman::start_hand_trail()
+{
+    flag.hand_trail = true;
+    for (S32 i = 0; i < 2; i++)
+    {
+        get_hand_loc(i);
+        hand_trail.loc[i] = hand_trail.loc[i];
+    }
+
+    // hand_trail.loc[0] // 0x5cc
+}
+
 void zNPCDutchman::stop_hand_trail()
 {
     flag.hand_trail = false;
+}
+
+void zNPCDutchman::reset_lasso_anim()
+{
+    xAnimPlaySetState(0, lassdata->holdGuideAnim, 0);
 }
 
 void zNPCDutchman::add_splash(const xVec3&, float)
@@ -252,6 +368,23 @@ S32 zNPCGoalDutchmanIdle::Exit(F32 dt, void* updCtxt)
     return xGoal::Exit(dt, updCtxt);
 }
 
+S32 zNPCGoalDutchmanIdle::Process(en_trantype* trantype, float dt, void* updCtxt, xScene* xscn)
+{
+    owner.goal_delay();
+    if (owner.delay < owner.delay)
+    {
+        xGoal::Process(trantype, dt, updCtxt, xscn);
+    }
+    else
+    {
+        trantype = 0;
+        owner.next_goal();
+    }
+    return 0;
+
+    //return xGoal::Process(trantype, dt, updCtxt, xscn);
+}
+
 S32 zNPCGoalDutchmanDisappear::Exit(F32 dt, void* updCtxt)
 {
     return xGoal::Exit(dt, updCtxt);
@@ -276,6 +409,16 @@ S32 zNPCGoalDutchmanReappear::Exit(F32 dt, void* updCtxt)
 S32 zNPCGoalDutchmanBeam::Exit(F32 dt, void* updCtxt)
 {
     return xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalDutchmanFlame::Enter(F32 dt, void* updCtxt)
+{
+    owner.reset_lasso_anim();
+    owner.get_orbit();
+    owner.turn_to_face(owner.flames.splash_loc); //dont know the correct xVec3&
+    owner.delay = 0;
+    owner.collis = 0;
+    return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
 S32 zNPCGoalDutchmanFlame::Exit(F32 dt, void* updCtxt)
