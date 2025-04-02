@@ -384,9 +384,9 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
     xEntDrive* drv_data;
     xPsyche* psy_instinct; // 0x228
     zNPCCommon* npc_duplodude;
-    F32 spd_throttle;
+    F32 spd_throttle; //0x230
     S32 flg_xtrarend;
-    F32 tmr_fidget;
+    F32 tmr_fidget; //0x238
     F32 tmr_invuln; // 0x23C
     zShrapnelAsset* explosion; // 0x240
     xModelAssetParam* parmdata; // 0x244
