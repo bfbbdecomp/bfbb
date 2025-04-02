@@ -127,22 +127,12 @@ void zFXUpdate(F32 dt)
 
 namespace
 {
-    void add_popper_tweaks()
+    enum state_enum
     {
-    }
-    void add_entrail_tweaks()
-    {
-    }
-
-    S32 count_faces(xModelInstance* mdl)
-    {
-        int i = 0;
-        for (; mdl != NULL; mdl = mdl->Next)
-        {
-            i += mdl->Data->geometry->numTriangles;
-        }
-        return i;
-    }
+        STATE_NONE,
+        STATE_OFF,
+        STATE_ON
+    };
 
     struct entrail_data
     {
@@ -155,13 +145,6 @@ namespace
 
         void reset();
         void update(F32);
-    };
-
-    enum state_enum
-    {
-        STATE_NONE,
-        STATE_OFF,
-        STATE_ON
     };
 
     struct popper_data
@@ -191,6 +174,41 @@ namespace
     popper_data poppers[8];
     entrail_data* entrails;
     U32 entrails_size;
+
+    // FIXME: This is not close to correct but I need something to trigger CI
+    popper_data* find_popper(xEnt* ent)
+    {
+        popper_data* puVar1;
+
+        puVar1 = poppers;
+        while (puVar1->ent == ent)
+        {
+            if (puVar1 == &poppers[8])
+            {
+                return NULL;
+            }
+
+            puVar1 = puVar1 + sizeof(popper_data) / 8;
+        }
+        return puVar1;
+    }
+
+    void add_popper_tweaks()
+    {
+    }
+    void add_entrail_tweaks()
+    {
+    }
+
+    S32 count_faces(xModelInstance* mdl)
+    {
+        int i = 0;
+        for (; mdl != NULL; mdl = mdl->Next)
+        {
+            i += mdl->Data->geometry->numTriangles;
+        }
+        return i;
+    }
 
     void entrail_data::reset()
     {
