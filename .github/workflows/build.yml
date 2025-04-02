@@ -33,6 +33,7 @@ jobs:
         with:
           submodules: recursive
           ref: ${{ github.event.pull_request_target.head.sha }}
+          repository: ${{github.event.pull_request_target.head.repo.full_name}}
 
       # Set Git config
       - name: Git config
@@ -96,6 +97,7 @@ jobs:
         with:
           submodules: recursive
           ref: ${{ github.event.pull_request_target.head.sha }}
+          repository: ${{github.event.pull_request_target.head.repo.full_name}}
 
       # Set Git config
       - name: Git config
