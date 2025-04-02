@@ -16,11 +16,11 @@ struct _tagiTRCPadInfo
 
 namespace ROMFont
 {
-    OSFontHeader* mFontData;
-    void* mXFBs[2];
-    void* mCurrentFrameBuffer;
-    GXRenderModeObj* mRenderMode;
-    bool mFirstFrame = true;
+    extern OSFontHeader* mFontData;
+    extern void* mXFBs[2];
+    extern void* mCurrentFrameBuffer;
+    extern GXRenderModeObj* mRenderMode;
+    extern bool mFirstFrame;
 
     BOOL Init();
     void InitGX();
@@ -38,7 +38,7 @@ namespace ROMFont
 // Yes, this is a namespace, not a class.
 namespace iTRCDisk
 {
-    char mMessage[];
+    extern char mMessage[256];
     extern void (*mSndSuspend)();
     extern void (*mSndResume)();
     extern void (*mPadStopRumbling)();
@@ -63,9 +63,9 @@ namespace iTRCDisk
 
 namespace ResetButton
 {
-    bool mResetEnabled = 1;
-    BOOL mWasResetButtonPressed;
-    void (*mSndKill)();
+    extern bool mResetEnabled;
+    extern BOOL mWasResetButtonPressed;
+    extern void (*mSndKill)();
 
     void EnableReset();
     void DisableReset();

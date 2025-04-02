@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include "xString.h"
 #include "xutil.h"
-#include "iTRC.h"
+#include "xTRC.h"
 #include "iFile.h"
 
 static st_STRAN_DATA g_xstdata = {};

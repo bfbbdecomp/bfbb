@@ -18,8 +18,26 @@
 extern void GXPosition3s16(S32, S32, S32);
 extern void GXTexCoord2s16(S32, S32);
 
+namespace ROMFont
+{
+    OSFontHeader* mFontData;
+    void* mXFBs[2];
+    void* mCurrentFrameBuffer;
+    GXRenderModeObj* mRenderMode;
+    bool mFirstFrame = true;
+} // namespace ROMFont
+
+namespace ResetButton
+{
+    bool mResetEnabled = 1;
+    BOOL mWasResetButtonPressed;
+    void (*mSndKill)();
+} // namespace ResetButton
+
 namespace iTRCDisk
 {
+    char mMessage[256];
+
     void (*mSndSuspend)();
     void (*mSndResume)();
     void (*mPadStopRumbling)();
