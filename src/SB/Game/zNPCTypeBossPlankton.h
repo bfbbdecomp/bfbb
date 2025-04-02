@@ -108,6 +108,7 @@ struct zNPCBPlankton : zNPCBoss
     zNPCBPlankton(S32 myType);
     void render_debug();
     void update_animation(float);
+    void here_boy();
     S32 IsAlive();
     U8 ColPenFlags() const;
     U8 ColChkFlags() const;
@@ -237,6 +238,6 @@ struct zNPCGoalBPlanktonBomb : zNPCGoalCommon
     S32 Process(en_trantype*, float, void*, xScene*);
 };
 
-xAnimTable * ZNPC_AnimTable_BossPlankton();
+xAnimTable* ZNPC_AnimTable_BossPlankton();
 
 #endif

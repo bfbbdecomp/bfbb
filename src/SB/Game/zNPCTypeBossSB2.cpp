@@ -1,5 +1,6 @@
 
 #include "zNPCTypeBossSB2.h"
+#include "zNPCGoalCommon.h"
 #include <types.h>
 #include "string.h"
 #include "iModel.h"
@@ -17,7 +18,6 @@
 #include "zGrid.h"
 #include "zNPCTypeBossPatrick.h"
 #include "zRenderState.h"
-#include "zNPCGoals.h"
 #include "zLightning.h"
 #include "zNPCTypeRobot.h"
 #include <xMathInlines.h>
@@ -49,6 +49,34 @@
 #define ANIM_KarateStart 63
 #define ANIM_KarateLoop 64
 #define ANIM_KarateEnd 65
+
+namespace
+{
+    S32 set_alpha_blend(xModelInstance*)
+    {
+        return 0; // to-do
+    }
+
+    F32 max(float maxFloat1, float maxFloat2) //Temp names till file is further
+    {
+        if (maxFloat1 > maxFloat2)
+        {
+            return maxFloat1;
+        }
+        return maxFloat2;
+    }
+
+    S32 tweak()
+    {
+        return 0; // to-do
+    }
+
+    S32 play_sound(int, const xVec3*, float)
+    {
+        return 0; // to-do
+    }
+
+} // namespace
 
 xAnimTable* ZNPC_AnimTable_BossSB2()
 {
@@ -197,6 +225,28 @@ xAnimTable* ZNPC_AnimTable_BossSB2()
     return table;
 }
 
+void zNPCB_SB2::SelfSetup()
+{
+    xBehaveMgr* bmgr = xBehaveMgr_GetSelf();
+    xPsyche* psy = 0;
+    this->psy_instinct = bmgr->Subscribe(this, NULL);
+    this->psy_instinct->BrainBegin();
+    for (S32 i = NPC_GOAL_BOSSSB2INTRO; i <= NPC_GOAL_BOSSSB2DEATH; i++)
+    {
+        psy_instinct->AddGoal(i, this);
+    }
+    psy_instinct->AddGoal(NPC_GOAL_LIMBO, this);
+    psy_instinct->BrainEnd();
+    psy_instinct->SetSafety(NPC_GOAL_BOSSSB2IDLE);
+}
+
+void zNPCB_SB2::Destroy()
+{
+    zNPCB_SB2::destroy_glow_light();
+    zNPCCommon::Destroy();
+}
+
+
 void zNPCB_SB2::render_debug()
 {
 }
@@ -205,8 +255,222 @@ void zNPCB_SB2::decompose()
 {
 }
 
+void zNPCB_SB2::Render()
+{
+    xNPCBasic::Render();
+    zNPCB_SB2::render_debug();
+}
+
+F32 zNPCB_SB2::AttackTimeLeft()
+{
+    if (flag.dizzy != false)
+    {
+        return 0.0f;
+    }
+    return 1e38f;
+}
+
 void zNPCB_SB2::HoldUpDude()
 {
+}
+
+void zNPCB_SB2::ThanksImDone()
+{
+    flag.dizzy = false;
+}
+
+void zNPCB_SB2::reset_speed() //tweak in .bss
+{
+    turn.accel = 0;
+    turn.max_vel = 0;
+}
+
+S32 zNPCB_SB2::player_platform()
+{
+    return 0; // to-do
+}
+
+void zNPCB_SB2::activate_hand(zNPCB_SB2::hand_enum, bool)
+{
+   hands[0].hurt_player = 1;
+   hands[0].hit_platforms = 0x10;
+   penby = 0x10;
+}
+
+void zNPCB_SB2::deactivate_hand(zNPCB_SB2::hand_enum)
+{
+   hands[0].hit_platforms = 0;
+   hands[0].hurt_player = 0x10;
+   penby = 0x10;
+}
+
+S32 zNPCB_SB2::player_on_ground() const
+{
+    return 0;
+    // to-do
+}
+
+void zNPCB_SB2::abandon_slugs()
+{
+   
+}
+
+void zNPCB_SB2::reset_stage()
+{
+    stage = -1;
+    stage_delay = 0;
+}
+
+S32 zNPCGoalBossSB2Intro::Enter(float dt, void* updCtxt)
+{
+    if (owner.said_intro == 0)
+    {
+        owner.say(0);
+        owner.said_intro = 1;
+    }
+    owner.delay = 0.0f;
+    zEntPlayerControlOff(CONTROL_OWNER_BOSS);
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+    
+}
+
+S32 zNPCGoalBossSB2Intro::Exit(float dt, void* updCtxt)
+{
+    zEntPlayerControlOn(CONTROL_OWNER_BOSS);
+    return xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSB2Idle::Enter(float dt, void* updCtxt)
+{
+    transitioning = 1;
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSB2Idle::Exit(float dt, void* updCtxt)
+{
+    return xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSB2Taunt::Enter(float dt, void* updCtxt)
+{
+    ::play_sound(0, &owner.sound_loc.mouth , 1.0f);
+    owner.flag.face_player = 1;
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSB2Taunt::Exit(float dt, void* updCtxt)
+{
+    return xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSB2Dizzy::Enter(float dt, void* updCtxt)
+{
+    sicked = 0;
+    owner.flag.face_player = 0;
+    owner.delay = 0;
+    owner.set_vulnerable(false);
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSB2Dizzy::Exit(float dt, void* updCtxt)
+{
+    S32 tempDizzy;
+    owner.set_vulnerable(true);
+    if (sicked != false && owner.player_on_ground() == 0)  //Not compared correctly
+    {
+        owner.plankton->here_boy();
+    }
+    if (owner.life == 1)
+    {
+        owner.say(6);
+    }
+    else if (owner.flag.dizzy == false)
+    {
+        owner.say(0xb);
+    }
+    return xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSB2Hit::Enter(float dt, void* updCtxt) 
+{
+    // Function needs set up differently
+    // im just dumb
+
+    S32 tempHitVar;
+
+    owner.flag.face_player = 1;
+    owner.set_vulnerable(false);
+
+    if (owner.flag.dizzy == false) {
+    if (owner.life < 4){
+        if (owner.life < 2){
+            if (owner.life > 0){
+                owner.say(9);
+            }
+        }
+        else {
+            owner.say(2);
+        }
+    }
+    else {
+        owner.say(3);
+    }
+    }
+    else {
+    owner.say(4);
+    }
+
+return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSB2Hit::Exit(float dt, void* updCtxt)
+{
+    owner.set_vulnerable(true);
+    return xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSB2Swipe::Exit(float dt, void* updCtxt)
+{
+    owner.flag.face_player = true;
+    owner.deactivate_hand(owner.active_hand);
+    return xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSB2Swipe::can_start() const
+{
+    S32 tempStart;
+    tempStart = owner.player_platform();
+    return tempStart != 0;
+}
+
+S32 zNPCGoalBossSB2Chop::Exit(float dt, void* updCtxt)
+{
+    owner.deactivate_hand(owner.active_hand);
+    return xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSB2Karate::Exit(float dt, void* updCtxt)
+{
+    owner.abandon_slugs();
+    return xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSB2Karate::can_start() const
+{
+    S32 tempStart;
+    tempStart = owner.player_platform();
+    return tempStart != 0;
+}
+
+S32 zNPCGoalBossSB2Death::Enter(float dt, void* updCtxt)
+{
+    owner.decompose();
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSB2Death::Exit(float dt, void* updCtxt)
+{
+    return xGoal::Exit(dt, updCtxt);
 }
 
 S32 zNPCGoalBossSB2Death::Process(en_trantype*, F32, void*, xScene*)
