@@ -2,12 +2,21 @@
 
 #include <types.h>
 #include <string.h>
+#include <dolphin/gx/GXCull.h>
+#include <dolphin/gx/GXFrameBuffer.h>
+#include <dolphin/gx/GXGeometry.h>
+#include <dolphin/gx/GXManage.h>
+#include <dolphin/gx/GXPixel.h>
+#include <dolphin/gx/GXTexture.h>
+#include <dolphin/gx/GXTransform.h>
+#include <dolphin/mtx.h>
+#include <dolphin/vi/vifuncs.h>
 
-namespace ResetButton
-{
-    bool mResetEnabled = 1;
-    void (*mSndKill)();
-}
+#define FONT_MATRIX_ID 0x1E
+#define TEXTBOX_MAX_TEXT_LENGTH 256
+
+extern void GXPosition3s16(S32, S32, S32);
+extern void GXTexCoord2s16(S32, S32);
 
 namespace iTRCDisk
 {
@@ -17,63 +26,232 @@ namespace iTRCDisk
     void (*mSndKill)();
     void (*mMovieSuspendFunction)();
     void (*mMovieResumeFunction)();
-}
+} // namespace iTRCDisk
 
-bool ROMFont::Init()
+BOOL ROMFont::Init()
 {
-    return false;
+    if (OSGetFontEncode() == 1)
+    {
+        ROMFont::mFontData = (OSFontHeader*)OSAllocFromHeap(__OSCurrHeap, 0xF00 + 0x12);
+    }
+    else
+    {
+        ROMFont::mFontData = (OSFontHeader*)OSAllocFromHeap(__OSCurrHeap, 0x2 + 0x120);
+    }
+
+    return OSInitFont(ROMFont::mFontData);
 }
 
 void ROMFont::InitGX()
 {
+    U16 scaledHeight;
+    GXSetViewport(0.0f, 0.0f, mRenderMode->fbWidth, mRenderMode->efbHeight, 0.0f, 1.0f);
+    GXSetScissor(0, 0, mRenderMode->fbWidth, mRenderMode->efbHeight);
+
+    scaledHeight =
+        GXSetDispCopyYScale(GXGetYScaleFactor(mRenderMode->efbHeight, mRenderMode->xfbHeight));
+    GXSetDispCopySrc(0, 0, mRenderMode->fbWidth, mRenderMode->efbHeight);
+    GXSetDispCopyDst(mRenderMode->fbWidth, scaledHeight);
+
+    GXSetCopyFilter(mRenderMode->aa, mRenderMode->sample_pattern, TRUE, mRenderMode->vfilter);
+
+    if (mRenderMode->aa != FALSE)
+    {
+        GXSetPixelFmt(GX_PF_RGB565_Z16, GX_ZC_LINEAR);
+    }
+    else
+    {
+        GXSetPixelFmt(GX_PF_RGB8_Z24, GX_ZC_LINEAR);
+    }
+
+    GXCopyDisp(mCurrentFrameBuffer, 1);
+    GXSetDispCopyGamma(GX_GM_1_0);
+    GXSetCullMode(GX_CULL_NONE);
 }
 
 void ROMFont::InitVI()
 {
+    VISetNextFrameBuffer(mXFBs[0]);
+    mCurrentFrameBuffer = mXFBs[1];
+    VIFlush();
+    VIWaitForRetrace();
+    if (mRenderMode->viTVmode & 1)
+    {
+        VIWaitForRetrace();
+    }
 }
 
 void ROMFont::RenderBegin()
 {
+    if (mRenderMode->field_rendering != FALSE)
+    {
+        GXSetViewportJitter(0.0f, 0.0f, mRenderMode->fbWidth, mRenderMode->efbHeight, 0.0f, 1.0f,
+                            VIGetNextField());
+    }
+    else
+    {
+        GXSetViewport(0.0f, 0.0f, mRenderMode->fbWidth, mRenderMode->efbHeight, 0.0f, 1.0f);
+    }
+
+    GXInvalidateVtxCache();
+    GXInvalidateTexAll();
 }
 
 void ROMFont::RenderEnd()
 {
+    GXSetZMode(TRUE, GX_LEQUAL, TRUE);
+    GXSetColorUpdate(TRUE);
+    GXCopyDisp(mCurrentFrameBuffer, TRUE);
+    GXDrawDone();
+    SwapBuffers();
 }
 
 void ROMFont::SwapBuffers()
 {
+    void* buffer;
+
+    VISetNextFrameBuffer(mCurrentFrameBuffer);
+
+    if (mFirstFrame != false)
+    {
+        VISetBlack(TRUE);
+        mFirstFrame = false;
+    }
+    else
+    {
+        VISetBlack(FALSE);
+    }
+
+    VIFlush();
+    VIWaitForRetrace();
+
+    mCurrentFrameBuffer = mCurrentFrameBuffer == mXFBs[0] ? mXFBs[1] : mXFBs[0];
 }
 
-void ROMFont::DrawCell(int, int, int, int)
+// FIXME: Revisit after GXTexCoord2s16 and GXPosition3s16 have been decompiled, looks like they were inlined
+void ROMFont::DrawCell(S32 param_1, S32 param_2, S32 param_3, S32 param_4)
 {
+    U16 uVar1;
+    U16 uVar2;
+    S16 sVar3;
+    S32 iVar4;
+    S32 iVar5;
+    S32 iVar6;
+
+    uVar1 = mFontData->cellWidth;
+    uVar2 = mFontData->cellHeight;
+    iVar5 = (int)(short)(param_1 + uVar1);
+    iVar4 = (int)(short)(param_2 + uVar2);
+
+    GXBegin(GX_LINESTRIP, GX_VTXFMT0, 4);
+
+    GXPosition3s16((int)param_1, (int)param_2, 0);
+    GXTexCoord2s16((int)param_3, param_4);
+
+    GXPosition3s16(iVar5, (int)param_2, 0);
+
+    iVar6 = (int)(short)(param_3 + uVar1);
+
+    GXTexCoord2s16(iVar6, param_4);
+    GXPosition3s16(iVar5, iVar4, 0);
+
+    sVar3 = param_4 + uVar2;
+
+    GXTexCoord2s16(iVar6, sVar3);
+    GXPosition3s16((int)param_1, iVar4, 0);
+    GXTexCoord2s16((int)param_3, sVar3);
+
+    GXEnd();
 }
 
-void GXEnd()
+void ROMFont::LoadSheet(void* image_ptr)
 {
+    GXAnisotropy max_aniso;
+    GXTexObj GStack_68;
+    F32 afStack_48[3][4];
+    U32 uStack_14;
+    U32 uStack_c;
+
+    max_aniso = GX_ANISO_1;
+    GXInitTexObj(&GStack_68, image_ptr, mFontData->sheetWidth, mFontData->sheetHeight,
+                 (GXTexFmt)mFontData->sheetFormat, GX_CLAMP, GX_CLAMP, NULL);
+    GXInitTexObjLOD(&GStack_68, GX_LINEAR, GX_LINEAR, 0.0f, 0.0f, 0.0f, FALSE, FALSE, max_aniso);
+    GXLoadTexObj(&GStack_68, GX_TEXMAP0);
+    uStack_14 = mFontData->sheetWidth;
+    uStack_c = mFontData->sheetHeight;
+    PSMTXScale(afStack_48, 1.0f / uStack_14, 1.0f / uStack_c, 1.0f);
+    GXLoadTexMtxImm(afStack_48, FONT_MATRIX_ID, GX_MTX2x4);
+    GXSetNumTexGens(1);
+    GXSetTexCoordGen(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, FONT_MATRIX_ID);
 }
 
-void GXPosition3s16()
+S32 ROMFont::DrawString(S32 param_1, S32 param_2, char* string)
 {
+    S32 iVar1;
+    S32 x;
+    S32 y;
+    S32 width;
+    void* image[3];
+
+    iVar1 = 0;
+    while (*string != '\0')
+    {
+        string = OSGetFontTexture(string, image, (s32*)&x, (s32*)&y, (s32*)&width);
+        ROMFont::LoadSheet(image[0]);
+        ROMFont::DrawCell(param_1 + iVar1, param_2, x, y);
+        iVar1 = iVar1 + width;
+    }
+    return iVar1;
 }
 
-void ROMFont::LoadSheet(void*)
+S32 ROMFont::GetWidth(char* string)
 {
+    S32 iVar1;
+    void* image[1];
+    S32 x;
+    S32 y;
+    S32 width;
+
+    iVar1 = 0;
+    while (*string != '\0')
+    {
+        string = OSGetFontTexture(string, image, (s32*)&x, (s32*)&y, (s32*)&width);
+        iVar1 = iVar1 + width;
+    }
+    return iVar1;
 }
 
-void GXSetTexCoordGen()
+void ROMFont::DrawTextBox(S32 param_1, S32 param_2, S32 param_3, S32 param_4, char* str)
 {
-}
+    char* tokenizedString;
+    S32 baseWidth;
+    S32 tokWidth;
+    S32 iVar4;
+    S32 iVar5;
+    char acStack_128[TEXTBOX_MAX_TEXT_LENGTH];
 
-void ROMFont::DrawString(int, int, char*)
-{
-}
-
-void ROMFont::GetWidth(char*)
-{
-}
-
-void ROMFont::DrawTextBox(int, int, int, int, char*)
-{
+    if (str != NULL)
+    {
+        RenderBegin();
+        strcpy(acStack_128, str);
+        tokenizedString = strtok(acStack_128, " ");
+        baseWidth = GetWidth(" ");
+        iVar4 = param_2 + param_4;
+        iVar5 = param_1;
+        while ((tokenizedString != NULL && (param_2 < iVar4)))
+        {
+            tokWidth = GetWidth(tokenizedString);
+            if (param_1 + param_3 < iVar5 + tokWidth)
+            {
+                param_2 = param_2 + mFontData->cellHeight;
+                iVar5 = param_1;
+            }
+            DrawString(iVar5, param_2, tokenizedString);
+            tokenizedString = strtok(NULL, " ");
+            iVar5 = tokWidth + baseWidth + iVar5;
+        }
+        RenderEnd();
+    }
 }
 
 void ResetButton::EnableReset()
