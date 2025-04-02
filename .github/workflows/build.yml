@@ -32,7 +32,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: recursive
-          ref: ci
+          ref: ${{ github.event.pull_request_target.head.sha }}
           repository: ${{github.event.pull_request_target.head.repo.full_name}}
 
       # Set Git config
