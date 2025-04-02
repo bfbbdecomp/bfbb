@@ -121,11 +121,11 @@ jobs:
       - name: Prepare
         run: cp -R /orig .
 
-      # Generate report for previous commit
+      # Generate report for previous repo state
       - name: Generate previous report
         continue-on-error: true
         run: |
-          git checkout HEAD^
+          git checkout main
           python configure.py --version ${{ matrix.version }} \
                 --binutils /binutils --compilers /compilers
           ninja build/${{ matrix.version }}/report.json
