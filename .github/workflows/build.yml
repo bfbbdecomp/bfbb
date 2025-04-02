@@ -18,11 +18,22 @@ jobs:
         version: [GQPE78]
 
     steps:
-      # Checkout the repository
+      # Checkout the repository (Push)
       - name: Checkout
+        if: ${{ github.event_name == 'push' }}
         uses: actions/checkout@v4
         with:
           submodules: recursive
+          ref: ${{ github.event.push.head.sha }}
+
+      # Checkout the repository (PR from forked repo)
+      - name: Checkout
+        if: ${{ github.event_name == 'pull_request_target'}}
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          ref: ${{ github.event.pull_request_target.head.sha }}
+          repository: ${{github.event.pull_request_target.head.repo.full_name}}
 
       # Set Git config
       - name: Git config
@@ -71,11 +82,22 @@ jobs:
         version: [GQPE78]
 
     steps:
-      # Checkout the repository
+      # Checkout the repository (Push)
       - name: Checkout
+        if: ${{ github.event_name == 'push' }}
         uses: actions/checkout@v4
         with:
           submodules: recursive
+          ref: ${{ github.event.push.head.sha }}
+
+      # Checkout the repository (PR from forked repo)
+      - name: Checkout
+        if: ${{ github.event_name == 'pull_request_target'}}
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          ref: ${{ github.event.pull_request_target.head.sha }}
+          repository: ${{github.event.pull_request_target.head.repo.full_name}}
 
       # Set Git config
       - name: Git config
@@ -121,11 +143,11 @@ jobs:
       - name: Prepare
         run: cp -R /orig .
 
-      # Generate report for previous commit
+      # Generate report for previous repo state
       - name: Generate previous report
         continue-on-error: true
         run: |
-          git checkout HEAD^
+          git checkout main
           python configure.py --version ${{ matrix.version }} \
                 --binutils /binutils --compilers /compilers
           ninja build/${{ matrix.version }}/report.json
