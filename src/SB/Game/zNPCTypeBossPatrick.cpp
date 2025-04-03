@@ -4,6 +4,7 @@
 #include "iModel.h"
 
 #include "xCollide.h"
+#include "xDebug.h"
 #include "xMath.h"
 #include "xMath3.h"
 #include "xstransvc.h"

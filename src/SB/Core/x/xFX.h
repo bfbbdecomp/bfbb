@@ -8,6 +8,8 @@
 #include <rwcore.h>
 #include <rpworld.h>
 
+class xModelInstance;
+
 struct xFXRing
 {
     U32 texture;
@@ -120,6 +122,7 @@ void xFXRibbonRender();
 void xFXAuraInit();
 void xFXAuraUpdate(F32 dt);
 void xFXAuraRender();
+void xFXRenderProximityFade(const xModelInstance& model, F32 near_dist, F32 far_dist);
 void xFXSceneInit();
 void xFXSceneSetup();
 void xFXSceneReset();

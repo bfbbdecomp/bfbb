@@ -57,13 +57,6 @@ struct zEntDestructObj : zEnt
     xSFXAsset* sfx_hit; // 0x110
 };
 
-static zParEmitter* sEmitDust;
-static zParEmitter* sEmitFire;
-static zParEmitter* sEmitSmoke;
-static zParEmitter* sEmitWeb;
-static zParEmitter* sEmitXplo;
-static zParEmitter* sShrapDefault;
-
 void zEntDestructObj_FindFX();
 void zEntDestructObj_Init(void* ent, void* asset);
 void zEntDestructObj_Init(zEntDestructObj* ent, xEntAsset* asset);

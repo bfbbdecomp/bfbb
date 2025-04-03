@@ -876,57 +876,51 @@ void xEntRender(xEnt* ent)
     S32 shadowOutside;
     xVec3 shadVec;
 
-    if (ent->model && xEntIsVisible(ent))
+    if (ent->model == NULL || !xEntIsVisible(ent) || ent->model->Flags & 0x400)
     {
-        if (ent->model->Flags & 0x400)
+        return;
+    }
+
+    ent->isCulled = 0;
+
+    if (ent->baseType == eBaseTypePlayer || (ent->baseType == eBaseTypeNPC && !(ent->flags & 0x40)))
+    {
+        // non-matching: 10.0f is loaded too early
+
+        shadVec.x = ent->model->Mat->pos.x;
+        shadVec.y = ent->model->Mat->pos.y - 10.0f;
+        shadVec.z = ent->model->Mat->pos.z;
+
+        if (iModelCullPlusShadow(ent->model->Data, ent->model->Mat, &shadVec, &shadowOutside))
         {
-            // non-matching: can't seem to get the compiler to generate this extra branch.
-            return;
-        }
-
-        ent->isCulled = 0;
-
-        if (ent->baseType == eBaseTypePlayer ||
-            (ent->baseType == eBaseTypeNPC && !(ent->flags & 0x40)))
-        {
-            // non-matching: 10.0f is loaded too early
-
-            shadVec.x = ent->model->Mat->pos.x;
-            shadVec.y = ent->model->Mat->pos.y - 10.0f;
-            shadVec.z = ent->model->Mat->pos.z;
-
-            if (iModelCullPlusShadow(ent->model->Data, ent->model->Mat, &shadVec, &shadowOutside))
-            {
-                if (shadowOutside)
-                {
-                    ent->isCulled = 1;
-                    return;
-                }
-                else
-                {
-                    goto postrender;
-                }
-            }
-        }
-        else
-        {
-            if (iModelCull(ent->model->Data, ent->model->Mat))
+            if (shadowOutside)
             {
                 ent->isCulled = 1;
                 return;
             }
+            else
+            {
+                goto postrender;
+            }
         }
-
-        xModelRender(ent->model);
-
-    postrender:
-
-        if ((ent->baseType == eBaseTypeNPC && !(ent->flags & 0x40)) ||
-            ent->baseType == eBaseTypePlayer)
+    }
+    else
+    {
+        if (iModelCull(ent->model->Data, ent->model->Mat))
         {
-            zLightAddLocal(ent);
-            xShadow_ListAdd(ent);
+            ent->isCulled = 1;
+            return;
         }
+    }
+
+    xModelRender(ent->model);
+
+postrender:
+
+    if ((ent->baseType == eBaseTypeNPC && !(ent->flags & 0x40)) || ent->baseType == eBaseTypePlayer)
+    {
+        zLightAddLocal(ent);
+        xShadow_ListAdd(ent);
     }
 }
 
@@ -1935,19 +1929,16 @@ void xEntAnimateCollision(xEnt& ent, bool on)
     }
 }
 
-U8 xEntValidType(U8 type)
+bool xEntValidType(U8 type)
 {
-    // I have no idea how to match this lol
-
-    return (type == eBaseTypeTrigger || type == eBaseTypePlayer || type == eBaseTypePickup ||
-            type == eBaseTypePlatform || type == eBaseTypeDoor || type == eBaseTypeSavePoint ||
-            type == eBaseTypeItem || type == eBaseTypeStatic || type == eBaseTypeDynamic ||
-            type == eBaseTypeBubble || type == eBaseTypePendulum || type == eBaseTypeHangable ||
-            type == eBaseTypeButton || type == eBaseTypeProjectile ||
-            type == eBaseTypeDestructObj || type == eBaseTypeUI || type == eBaseTypeUIFont ||
-            type == eBaseTypeProjectileType || type == eBaseTypeEGenerator ||
-            type == eBaseTypeNPC || type == eBaseTypeBoulder || type == eBaseTypeTeleportBox ||
-            type == eBaseTypeZipLine);
+    return type == eBaseTypeTrigger || type == eBaseTypeVillain || type == eBaseTypePlayer ||
+           type == eBaseTypePickup || type == eBaseTypePlatform || type == eBaseTypeDoor ||
+           type == eBaseTypeSavePoint || type == eBaseTypeItem || type == eBaseTypeStatic ||
+           type == eBaseTypeDynamic || type == eBaseTypeBubble || type == eBaseTypePendulum ||
+           type == eBaseTypeHangable || type == eBaseTypeButton || type == eBaseTypeProjectile ||
+           type == eBaseTypeDestructObj || type == eBaseTypeUI || type == eBaseTypeUIFont ||
+           type == eBaseTypeProjectileType || type == eBaseTypeEGenerator || type == eBaseTypeNPC ||
+           type == eBaseTypeBoulder || type == eBaseTypeTeleportBox || type == eBaseTypeZipLine;
 }
 
 void xEntReposition(xEnt& ent, const xMat4x3& mat)

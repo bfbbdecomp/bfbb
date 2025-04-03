@@ -1,5 +1,6 @@
 
 #include "zNPCTypeBossSB2.h"
+#include "xLightKit.h"
 #include "zNPCGoalCommon.h"
 #include <types.h>
 #include "string.h"
@@ -255,6 +256,34 @@ void zNPCB_SB2::decompose()
 {
 }
 
+void zNPCB_SB2::show_nodes() 
+{
+    // Haven't found 0x74
+    S32 i;
+    for (i = 0; i < 9; i++)
+    {
+        if (nodes->ent != 0){
+        xEntShow(nodes->ent);
+        }
+    }
+
+}
+
+void zNPCB_SB2::ouchie()
+{
+    xPsyche* psy = psy_instinct;
+    S32 tempOuch;
+    tempOuch = psy_instinct->GIDOfActive();
+    if (tempOuch != NPC_GOAL_BOSSSB2HIT)
+    {
+        set_vulnerable(false);
+        psy_instinct->GoalSet(NPC_GOAL_BOSSSB2HIT, 1);
+    }
+    
+}
+
+
+
 void zNPCB_SB2::Render()
 {
     xNPCBasic::Render();
@@ -319,6 +348,11 @@ void zNPCB_SB2::reset_stage()
 {
     stage = -1;
     stage_delay = 0;
+}
+
+void zNPCB_SB2::destroy_glow_light()
+{
+    xLightKit_Destroy(&glow_light.kit);
 }
 
 S32 zNPCGoalBossSB2Intro::Enter(float dt, void* updCtxt)
@@ -476,4 +510,13 @@ S32 zNPCGoalBossSB2Death::Exit(float dt, void* updCtxt)
 S32 zNPCGoalBossSB2Death::Process(en_trantype*, F32, void*, xScene*)
 {
     return 0;
+}
+
+// WEAK
+
+void zNPCB_SB2::choose_hand() //53%
+{
+    S32 rand;
+    rand = xrand() >> 0xd & 1;
+
 }

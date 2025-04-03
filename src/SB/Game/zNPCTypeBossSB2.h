@@ -191,6 +191,8 @@ struct zNPCB_SB2 : zNPCBoss
     void Destroy();
     void render_debug();
     void decompose();
+    void show_nodes();
+    void ouchie();
     void destroy_glow_light();
     void Render();
     F32 AttackTimeLeft();
@@ -201,10 +203,14 @@ struct zNPCB_SB2 : zNPCBoss
     void activate_hand(zNPCB_SB2::hand_enum, bool);
     void deactivate_hand(zNPCB_SB2::hand_enum);
     S32 player_on_ground() const;
+    S32 slugs_ready() const;
     void reset_stage();
     void abandon_slugs();
     void set_vulnerable(bool);
     void say(int);
+
+    // WEAK
+    void choose_hand();
 };
 
 struct zNPCGoalBossSB2Intro : zNPCGoalCommon

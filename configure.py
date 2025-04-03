@@ -463,7 +463,7 @@ config.libs = [
             Object(Matching, "SB/Core/x/xRMemData.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/x/xFactory.cpp"),
             Object(NonMatching, "SB/Core/x/xNPCBasic.cpp"),
-            Object(NonMatching, "SB/Game/zEntPlayerBungeeState.cpp"),
+            Object(NonMatching, "SB/Game/zEntPlayerBungeeState.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zCollGeom.cpp"),
             Object(NonMatching, "SB/Core/x/xParSys.cpp"),
             Object(NonMatching, "SB/Core/x/xParEmitter.cpp"),
