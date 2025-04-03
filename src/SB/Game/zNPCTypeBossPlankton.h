@@ -8,6 +8,7 @@
 #include "xDecal.h"
 #include "xLaserBolt.h"
 #include "xTimer.h"
+#include "zNPCGoals.h"
 
 struct zNPCNewsFish;
 
@@ -57,16 +58,16 @@ struct zNPCBPlankton : zNPCBoss
 
     struct
     {
-        bool updated;
-        bool face_player;
-        bool attacking;
-        bool hunt;
+        bool updated; //0x2b4
+        bool face_player; //0x2b5
+        bool attacking; //0x2b6
+        bool hunt; //0x2b7
         bool aim_gun;
         move_enum move;
         follow_enum follow;
     } flag;
     mode_enum mode;
-    F32 delay;
+    F32 delay; //0x2c8
     xQuat gun_tilt;
     F32 ambush_delay;
     F32 beam_duration;
@@ -95,19 +96,35 @@ struct zNPCBPlankton : zNPCBoss
     } follow;
     struct
     {
-        U8 moreFlags;
+        U8 moreFlags; //0x4ac
     } old;
     zNPCBoss* crony;
     territory_data territory[8];
-    S32 territory_size;
+    S32 territory_size; //0x694
     S32 active_territory;
     zNPCNewsFish* newsfish;
-    U32 old_player_health;
-    U8 played_intro;
+    U32 old_player_health; //0x6a0
+    U8 played_intro; //0x6a4
 
     zNPCBPlankton(S32 myType);
+    void Init(xEntAsset*);
+    void Destroy();
+    void Process(xScene*, float);
+    void Render();
+    void SelfSetup();
+    U32 AnimPick(int, en_NPC_GOAL_SPOT, xGoal*);
     void render_debug();
+    void update_turn(float);
+    void update_move(float);
+    void check_player_damage();
     void update_animation(float);
+    void update_follow(float);
+    void update_aim_gun(float);
+    void update_dialog(float);
+    void init_beam();
+    S32 player_left_territory();
+    void say(int, int, bool);
+    void aim_gun(xAnimPlay*, xQuat*, xVec3*, int);
     void here_boy();
     S32 IsAlive();
     U8 ColPenFlags() const;
