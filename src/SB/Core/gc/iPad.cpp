@@ -1,9 +1,6 @@
 #include <types.h>
 #include <dolphin.h>
 
-#include "iPad.h"
-#include "xGlobals.h"
-#include "xPad.h"
 #include "xTRC.h"
 #include "zGlobals.h"
 
@@ -11,7 +8,6 @@ extern xGlobals* xglobals;
 extern zGlobals globals;
 
 PADStatus sPadData[PAD_MAX_CONTROLLERS];
-
 
 S32 iPadInit()
 {
@@ -79,10 +75,12 @@ S32 iPadUpdate(_tagxPad* pad, U32* on)
         PADReset(0x80000000 >> pad->port);
         goto defaultError;
 
-    case PAD_ERR_NOT_READY: case PAD_ERR_TRANSFER:
+    case PAD_ERR_NOT_READY:
+    case PAD_ERR_TRANSFER:
         return 0;
 
-    default: defaultError:
+    default:
+    defaultError:
         return 0;
 
     case PAD_ERR_NONE:
@@ -127,9 +125,9 @@ S32 iPadUpdate(_tagxPad* pad, U32* on)
         temp_on |= iPadConvFromGCN(sPadData[pad->port].button, 0x1000, 0x1);
         (*on) = temp_on;
 
-        pad->analog1.x =  iPadConvStick(sPadData[pad->port].stickX);
-        pad->analog1.y = -iPadConvStick(sPadData[pad->port].stickY);    // Scheduling memes.
-        pad->analog2.x =  iPadConvStick(sPadData[pad->port].substickX);
+        pad->analog1.x = iPadConvStick(sPadData[pad->port].stickX);
+        pad->analog1.y = -iPadConvStick(sPadData[pad->port].stickY); // Scheduling memes.
+        pad->analog2.x = iPadConvStick(sPadData[pad->port].substickX);
         pad->analog2.y = -iPadConvStick(sPadData[pad->port].substickY); // Same as above.
         if (gTrcPad[pad->port].state != TRC_PadInserted)
         {
