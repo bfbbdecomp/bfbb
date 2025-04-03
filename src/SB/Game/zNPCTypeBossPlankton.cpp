@@ -240,6 +240,7 @@ void zNPCBPlankton::SelfSetup()
 
 U32 zNPCBPlankton::AnimPick(int, en_NPC_GOAL_SPOT, xGoal*)
 {
+    return 0;
 }
 
 void zNPCBPlankton::render_debug()
