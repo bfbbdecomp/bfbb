@@ -6,8 +6,8 @@
 
 #include "zActionLine.h"
 
-_tagActionLine* sActionLine[8];
-RwRaster* sActionLineRaster;
+static _tagActionLine* sActionLine[8];
+static RwRaster* sActionLineRaster;
 
 // Equivalent. Compiler doesn't generate the stwu instruction unless we remove `sActionLineRaster = NULL`, but we need it.
 void zActionLineInit()
