@@ -8,6 +8,9 @@
 #include <rwcore.h>
 #include <rpworld.h>
 
+struct tweak_info;
+struct tweak_callback;
+
 enum zFXGooState
 {
     zFXGooStateNormal,
@@ -39,88 +42,6 @@ struct zFXGooInstance
     F32 max;
     xVec3* ref_parentPos;
     xVec3 pos_parentOnFreeze;
-};
-
-struct tweak_callback;
-
-struct uint_data
-{
-    U32 value_def;
-    U32 value_min;
-    U32 value_max;
-};
-
-struct float_data
-{
-    F32 value_def;
-    F32 value_min;
-    F32 value_max;
-};
-
-struct bool_data
-{
-    U8 value_def;
-};
-
-struct select_data
-{
-    U32 value_def;
-    U32 labels_size;
-    char** labels;
-    void* values;
-};
-
-struct flag_data
-{
-    U32 value_def;
-    U32 mask;
-};
-
-struct raw_data
-{
-    U8 pad[16];
-};
-
-struct int_data
-{
-    S32 value_def;
-    S32 value_min;
-    S32 value_max;
-};
-
-struct tweak_info
-{
-    substr name;
-    void* value;
-    tweak_callback* cb;
-    void* context;
-    U8 type;
-    U8 value_size;
-    U16 flags;
-    union
-    {
-        int_data int_context;
-        uint_data uint_context;
-        float_data float_context;
-        bool_data bool_context;
-        select_data select_context;
-        flag_data flag_context;
-        raw_data all_context;
-    };
-};
-
-struct tweak_callback
-{
-    void (*on_change)(tweak_info&);
-    void (*on_select)(tweak_info&);
-    void (*on_unselect)(tweak_info&);
-    void (*on_start_edit)(tweak_info&);
-    void (*on_stop_edit)(tweak_info&);
-    void (*on_expand)(tweak_info&);
-    void (*on_collapse)(tweak_info&);
-    void (*on_update)(tweak_info&);
-    void (*convert_mem_to_tweak)(tweak_info&, void*);
-    void (*convert_tweak_to_mem)(tweak_info&, void*);
 };
 
 extern U32 gFXSurfaceFlags;

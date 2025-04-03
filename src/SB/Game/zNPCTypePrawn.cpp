@@ -1,5 +1,7 @@
 #include "zNPCTypePrawn.h"
 
+#include "xDebug.h"
+
 #include <types.h>
 
 #define f1052 1.0f

@@ -2,6 +2,8 @@
 
 #define ZENTCRUISEBUBBLE_H
 
+#include "xDebug.h"
+
 #include "zNPCHazard.h"
 #include "zShrapnel.h"
 #include <types.h>
@@ -14,6 +16,7 @@
 // probably working on one of the bosses which also seem to use this.
 // As of now I'm not sure if you should include this declaration,
 // define your own or find a good place for shared use.
+// NOTE (Square): pretty sure this is from xDebug
 namespace auto_tweak
 {
     template <class T1, class T2>
@@ -26,29 +29,29 @@ namespace cruise_bubble
     {
         enum state_enum
         {
-           BEGIN_STATE_PLAYER,
-           STATE_PLAYER_HALT = 0x0,
-           STATE_PLAYER_AIM,
-           STATE_PLAYER_FIRE,
-           STATE_PLAYER_WAIT,
-           END_STATE_PLAYER,
-           BEGIN_STATE_MISSLE = 0x4,
-           BACKUP_STATE_MISSLE = 0x3,
-           STATE_MISSLE_APPEAR,
-           STATE_MISSLE_FLY,
-           STATE_MISSLE_EXPLODE,
-           END_STATE_MISSLE,
-           BEGIN_STATE_CAMERA = 0x7,
-           BACKUP_STATE_CAMERA = 0x6,
-           STATE_CAMERA_AIM,
-           STATE_CAMERA_SEIZE,
-           STATE_CAMERA_ATTACH,
-           STATE_CAMERA_SURVEY,
-           STATE_CAMERA_RESTORE,
-           END_STATE_CAMERA,
-           MAX_STATE = 0xc,
-           BACKUP_STATE_PLAYER = 0xffffffff,
-           STATE_INVALID = 0xffffffff
+            BEGIN_STATE_PLAYER,
+            STATE_PLAYER_HALT = 0x0,
+            STATE_PLAYER_AIM,
+            STATE_PLAYER_FIRE,
+            STATE_PLAYER_WAIT,
+            END_STATE_PLAYER,
+            BEGIN_STATE_MISSLE = 0x4,
+            BACKUP_STATE_MISSLE = 0x3,
+            STATE_MISSLE_APPEAR,
+            STATE_MISSLE_FLY,
+            STATE_MISSLE_EXPLODE,
+            END_STATE_MISSLE,
+            BEGIN_STATE_CAMERA = 0x7,
+            BACKUP_STATE_CAMERA = 0x6,
+            STATE_CAMERA_AIM,
+            STATE_CAMERA_SEIZE,
+            STATE_CAMERA_ATTACH,
+            STATE_CAMERA_SURVEY,
+            STATE_CAMERA_RESTORE,
+            END_STATE_CAMERA,
+            MAX_STATE = 0xc,
+            BACKUP_STATE_PLAYER = 0xffffffff,
+            STATE_INVALID = 0xffffffff
         };
 
         enum thread_enum
@@ -307,21 +310,21 @@ namespace cruise_bubble
             {
                 F32 life;
                 F32 hit_dist; // 0x18
-                F32 crash_angle;  // 0x1c
-                F32 collide_twist;  // 0x20
-                S32 hit_tests;  // 0x24
+                F32 crash_angle; // 0x1c
+                F32 collide_twist; // 0x20
+                S32 hit_tests; // 0x24
                 struct _class_27
                 {
-                    F32 delay_show;  // 0x28
-                    F32 delay_fly;  // 0x2c
-                    xVec3 offset;  // 0x30
+                    F32 delay_show; // 0x28
+                    F32 delay_fly; // 0x2c
+                    xVec3 offset; // 0x30
                 } appear;
                 struct _class_32
                 {
-                    F32 accel;  // 0x3c
-                    F32 max_vel;  // 0x40
-                    F32 engine_pitch_max;  // 0x44
-                    F32 engine_pitch_sensitivity;  // 0x48
+                    F32 accel; // 0x3c
+                    F32 max_vel; // 0x40
+                    F32 engine_pitch_max; // 0x44
+                    F32 engine_pitch_sensitivity; // 0x48
                     // Offset: 0x4c
                     F32 flash_interval;
                     struct _class_38
@@ -385,7 +388,7 @@ namespace cruise_bubble
             struct _class_48
             {
                 F32 env_alpha;
-                F32 env_coeff;  // 0xd0
+                F32 env_coeff; // 0xd0
                 U32 env_texture; // 0xd4
                 F32 fresnel_alpha; // 0xd8
                 F32 fresnel_coeff; // 0xdc
@@ -554,7 +557,7 @@ namespace cruise_bubble
 
             missle_record_data(const xVec3& loc, F32 roll);
         };
-    }
+    } // namespace
 
     void init_sound();
     void stop_sound(S32 which, U32 handle);

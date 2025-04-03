@@ -98,6 +98,7 @@ void xMat3x3Tolocal(xVec3* o, const xMat3x3* m, const xVec3* v);
 void xMat4x3MoveLocalRight(xMat4x3* m, F32 mag);
 void xMat4x3MoveLocalAt(xMat4x3* m, F32 mag);
 void xMat4x3MoveLocalUp(xMat4x3* m, F32 mag);
+void xMat4x3OrthoInv(xMat4x3* o, const xMat4x3* m);
 void xMat3x3GetEuler(const xMat3x3* m, xVec3* a);
 void xMat3x3Euler(xMat3x3* m, const xVec3* ypr);
 void xQuatToMat(const xQuat* q, xMat3x3* m);

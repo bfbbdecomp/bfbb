@@ -220,7 +220,7 @@ void xEntHide(xEnt* ent);
 void xEntShow(xEnt* ent);
 void xEntInitShadow(xEnt& ent, xEntShadow& shadow);
 void xEntReposition(xEnt& ent, const xMat4x3& mat);
-U8 xEntValidType(U8 type);
+bool xEntValidType(U8 type);
 void xEntAnimateCollision(xEnt& ent, bool on);
 xBox* xEntGetAllEntsBox();
 void xEntSetNostepNormAngle(F32 angle);

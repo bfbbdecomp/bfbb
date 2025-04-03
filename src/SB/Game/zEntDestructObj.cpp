@@ -2,6 +2,13 @@
 
 #include <types.h>
 
+static zParEmitter* sEmitDust;
+static zParEmitter* sEmitFire;
+static zParEmitter* sEmitSmoke;
+static zParEmitter* sEmitWeb;
+static zParEmitter* sEmitXplo;
+static zParEmitter* sShrapDefault;
+
 namespace
 {
     static void SwapModel(zEntDestructObj* ent, xModelInstance* modelInst)
@@ -31,11 +38,11 @@ namespace
             RwMatrixCopyMacro(modelInst->Mat, ent->model->Mat);
 
             modelInst->Flags &= 0xBBFC;
-            modelInst->Flags |= (u16) (ent->model->Flags & 0x4403);
+            modelInst->Flags |= (u16)(ent->model->Flags & 0x4403);
             ent->model = modelInst;
             iBoxForModelLocal(&ent->bound.box.box, modelInst);
-            zCollGeom_EntSetup((xEnt *) ent);
-            
+            zCollGeom_EntSetup((xEnt*)ent);
+
             sfxDestroy = ent->sfx_destroy;
             if (sfxDestroy != NULL)
             {
