@@ -1,57 +1,106 @@
 #include "zEntPlayerBungeeState.h"
 
+#include "xBound.h"
+#include "xDebug.h"
+#include "xFX.h"
+#include "xMath.h"
+#include "xMathInlines.h"
 #include "xMath3.h"
+#include "xMarkerAsset.h"
 #include "xModel.h"
+#include "xShadow.h"
 #include "xVec3.h"
 
+#include "zEntCruiseBubble.h"
 #include "zEntPlayer.h"
 #include "zGameExtras.h"
 #include "zGlobals.h"
 
+#include "zLightning.h"
 #include <types.h>
 
 namespace bungee_state
 {
     namespace
     {
-        static class /* @class */
+        struct drop_asset : xDynAsset
         {
-            // total size: 0x19C
-        public:
-            signed int flags; // offset 0x0, size 0x4
-            class state_type* state; // offset 0x4, size 0x4
-            class state_type* states[2]; // offset 0x8, size 0x8
-            class /* @class */
+            U32 marker;
+            U32 set_view_angle;
+            F32 view_angle;
+        };
+
+        static struct
+        {
+            F32 bottom_anim_frac;
+            F32 top_anim_frac;
+            F32 bottom_anim_time;
+            F32 top_anim_time;
+            F32 hit_anim_time;
+            F32 damage_rot;
+            F32 death_time;
+            F32 vel_blur;
+            F32 fade_dist;
+            F32 player_radius;
+            F32 hook_fade_alpha;
+            F32 hook_fade_time;
+            struct
             {
-                // total size: 0x2C
-            public:
-                class xAnimTransition* start; // offset 0x0, size 0x4
-                class xAnimTransition* rise; // offset 0x4, size 0x4
-                class xAnimTransition* fall; // offset 0x8, size 0x4
-                class xAnimTransition* stop; // offset 0xC, size 0x4
-                class xAnimTransition* dive_start; // offset 0x10, size 0x4
-                class xAnimTransition* dive_stop; // offset 0x14, size 0x4
-                class xAnimTransition* top_start; // offset 0x18, size 0x4
-                class xAnimTransition* top_stop; // offset 0x1C, size 0x4
-                class xAnimTransition* bottom_start; // offset 0x20, size 0x4
-                class xAnimTransition* bottom_stop; // offset 0x24, size 0x4
-                class xAnimTransition* hit; // offset 0x28, size 0x4
+                F32 edge_zone;
+                F32 sway;
+                F32 decay;
+            } horizontal; // offset 0x30, size 0xC
+            struct
+            {
+                F32 time;
+                F32 anim_out_time;
+                F32 min_dist;
+                F32 max_dist;
+            } dive; // offset 0x3C, size 0x10
+            struct
+            {
+                F32 speed;
+            } camera; // offset 0x4C, size 0x4
+            struct
+            {
+                F32 spring;
+                F32 decay;
+            } turn; // offset 0x50, size 0x8
+        } fixed;
+        static struct
+        {
+            S32 flags;
+            class state_type* state;
+            class state_type* states[2];
+            struct
+            {
+                xAnimTransition* start;
+                xAnimTransition* rise;
+                xAnimTransition* fall;
+                xAnimTransition* stop;
+                xAnimTransition* dive_start;
+                xAnimTransition* dive_stop;
+                xAnimTransition* top_start;
+                xAnimTransition* top_stop;
+                xAnimTransition* bottom_start;
+                xAnimTransition* bottom_stop;
+                xAnimTransition* hit;
             } anim_tran; // offset 0x10, size 0x2C
-            class hook_type* hook; // offset 0x3C, size 0x4
-            class hook_type* hook_cache[8]; // offset 0x40, size 0x20
-            class drop_asset* drop_cache[32]; // offset 0x60, size 0x80
-            class xMarkerAsset* drop_marker_cache[32]; // offset 0xE0, size 0x80
-            signed int hook_cache_size; // offset 0x160, size 0x4
-            signed int drop_cache_size; // offset 0x164, size 0x4
-            class xModelInstance* root_model; // offset 0x168, size 0x4
-            class xModelInstance* ass_model; // offset 0x16C, size 0x4
-            class xModelInstance* pants_model; // offset 0x170, size 0x4
-            class xVec3 hook_loc; // offset 0x174, size 0xC
-            class xVec3 drop_loc; // offset 0x180, size 0xC
-            unsigned char drop_set_view_angle; // offset 0x18C, size 0x1
-            float drop_view_angle; // offset 0x190, size 0x4
-            float dismount_delay; // offset 0x194, size 0x4
-            signed int anim_state; // offset 0x198, size 0x4
+            class hook_type* hook;
+            class hook_type* hook_cache[8];
+            drop_asset* drop_cache[32];
+            xMarkerAsset* drop_marker_cache[32];
+            S32 hook_cache_size;
+            S32 drop_cache_size;
+            xModelInstance* root_model;
+            xModelInstance* ass_model;
+            xModelInstance* pants_model;
+            xVec3 hook_loc;
+            xVec3 drop_loc;
+            bool drop_set_view_angle;
+            F32 drop_view_angle;
+            F32 dismount_delay;
+            S32 anim_state;
         } shared = { 1 }; // size: 0x19C, address: 0x4DF7E0
 
         static F32 old_pants_clip_radius;
@@ -175,7 +224,6 @@ namespace bungee_state
         {
             shared.pants_model->Flags &= 0xffdc;
             shared.pants_model->Flags |= 0x8;
-            // old_pants_clip_radius = shared.pants_model->Data->boundingSphere.radius;
             shared.pants_model->Data->boundingSphere.radius = old_pants_clip_radius;
 
             if (zGameExtras_CheatFlags() & 0x10000000)
@@ -185,6 +233,485 @@ namespace bungee_state
             else
             {
                 shared.ass_model->Flags &= ~0x3;
+            }
+        }
+        static void render_player(bool fade)
+        {
+            xShadowRender(&globals.player.ent, 100.0f);
+            xEntRender(&globals.player.ent);
+
+            if (fade)
+            {
+                xFXRenderProximityFade(*shared.pants_model, 1.0f, fixed.fade_dist);
+            }
+        }
+        static void move_wedgie(const xVec3& stretch_loc)
+        {
+            if (shared.ass_model == NULL || shared.pants_model == NULL)
+            {
+                return;
+            }
+            shared.pants_model->Mat[2] = shared.root_model->Mat[2];
+
+            xMat4x3 tm;
+            xMat4x3 mworld;
+            xMat4x3 mlocal;
+            xMat4x3OrthoInv(&tm, (const xMat4x3*)shared.root_model->Mat);
+            xMat3x3Identity(&mworld);
+            mworld.pos = stretch_loc;
+
+            static xVec3 tweak_cord_off = { 0 };
+            static bool registered = false;
+            if (!registered)
+            {
+                registered = true;
+                xDebugAddTweak("Bungee|Hook|temp xoff", &tweak_cord_off.x, -10000.0f, 10000.0f,
+                               NULL, NULL, 0);
+                xDebugAddTweak("Bungee|Hook|temp yoff", &tweak_cord_off.y, -10000.0f, 10000.0f,
+                               NULL, NULL, 0);
+                xDebugAddTweak("Bungee|Hook|temp zoff", &tweak_cord_off.z, -10000.0f, 10000.0f,
+                               NULL, NULL, 0);
+            }
+            mworld.pos += tweak_cord_off;
+            xMat4x3Mul(&mlocal, &mworld, &tm);
+            shared.pants_model->Mat[34] = *(RwMatrix*)&mlocal;
+        }
+
+        static void update_hook_loc()
+        {
+            if (shared.hook == NULL || shared.hook->ent == NULL)
+            {
+                return;
+            }
+
+            xVec3* hook_pos = xEntGetPos(shared.hook->ent);
+            shared.hook_loc = *hook_pos + shared.hook->asset->center;
+        }
+
+        static bool find_drop_off()
+        {
+            S32 idx = -1;
+            F32 closest = SQR(shared.hook->asset->detach.dist);
+            for (S32 i = 0; i < shared.drop_cache_size; ++i)
+            {
+                xVec3 d = shared.drop_marker_cache[i]->pos - shared.hook_loc;
+                F32 len2 = d.length2();
+                if (len2 >= closest)
+                {
+                    continue;
+                }
+                idx = i;
+                closest = len2;
+            }
+
+            if (idx != -1)
+            {
+                shared.drop_loc = shared.drop_marker_cache[idx]->pos;
+                shared.drop_set_view_angle = shared.drop_cache[idx]->set_view_angle;
+                shared.drop_view_angle = shared.drop_cache[idx]->view_angle;
+                return true;
+            }
+            return false;
+        }
+        static void trigger(U32 toEvent)
+        {
+            zEntEvent(shared.hook, shared.hook, toEvent);
+        }
+
+        enum state_enum
+        {
+            STATE_INVALID = -1,
+            BEGIN_STATE = 0,
+            STATE_ATTACHING = 0,
+            STATE_HANGING = 1,
+            END_STATE = 2,
+            MAX_STATE = 2,
+        };
+        class state_type
+        {
+            // total size: 0x8
+        public:
+            enum state_enum type; // offset 0x0, size 0x4
+
+            virtual void need_vtable(); // FIXME: fake func
+        };
+        class ent_info
+        {
+            // total size: 0x8
+        public:
+            class xEnt* ent; // offset 0x0, size 0x4
+            signed int hits; // offset 0x4, size 0x4
+        };
+        class env_info
+        {
+            // total size: 0xC
+        public:
+            class xEnv* env; // offset 0x0, size 0x4
+            unsigned char collide; // offset 0x4, size 0x1
+            signed int hits; // offset 0x8, size 0x4
+        };
+        class hanging_state_type : public state_type
+        {
+        public:
+            xVec3 loc;
+            xVec3 vel;
+            xVec3 last_loc;
+            xVec3 last_hook_loc;
+            xVec3 cam_loc;
+            xVec3 cam_vel;
+            xVec3 cam_dir;
+            xVec3 cam_dir_vel;
+            F32 dive_remaining;
+            F32 rot;
+            F32 rot_vel;
+            xVec2 stick_loc;
+            F32 stick_ang;
+            F32 stick_mag;
+            F32 stick_frac;
+            xVec3 collide_accel;
+            F32 roll_offset;
+            bool detaching;
+            xVec3 drop_off_vel;
+            F32 max_yvel;
+            bool dying;
+            F32 control_lag_timer;
+            F32 control_lag_max;
+            bool has_dived;
+            bool can_dive;
+            U32 last_health;
+            struct
+            {
+                F32 time;
+                F32 end_time;
+                xVec3 start_loc;
+                xVec3 end_loc;
+                xQuat start_dir;
+                xQuat end_dir;
+            } detach; // offset 0xC0, size 0x40
+            xModelInstance* root_model;
+            xModelInstance* ass_model;
+            xModelInstance* pants_model;
+            hook_asset h;
+            struct
+            {
+                struct
+                {
+                    float rest_dist;
+                    float emax;
+                    float spring;
+                    float alpha;
+                    float omega;
+                } vertical; // offset 0x0, size 0x14
+                struct
+                {
+                    float vscale;
+                    float hscale;
+                    float roll_decay;
+                } camera; // offset 0x14, size 0xC
+            } eh; // offset 0x198, size 0x20
+            ent_info ent_cache[256];
+            S32 ent_cache_size;
+            env_info env_cache;
+
+            static void on_tweak_collision(const tweak_info& ti);
+            void reset_props_collision();
+            static void on_tweak_camera(const tweak_info& ti);
+            void reset_props_camera();
+            static void on_tweak_horizontal(const tweak_info& ti);
+            void reset_props_horizontal();
+            static void on_tweak_vertical(const tweak_info& ti);
+            void reset_props_vertical();
+
+            F32 spring_velocity(F32 x, F32 v, F32 e, F32 k, F32 g, F32 xc) const;
+            F32 spring_potential_energy(F32 x, F32 k, F32 g, F32 xc) const;
+            F32 spring_potential_energy(F32, F32) const;
+            F32 kinetic_energy(F32 v) const;
+            F32 find_spring_min(F32 min_dist, F32 max_dist, F32 gravity, F32 damp) const;
+
+            F32 spring_energy(F32 x, F32 v, F32 k, F32 g, F32 xc) const;
+        };
+        void hanging_state_type::on_tweak_collision(const tweak_info& ti)
+        {
+            reinterpret_cast<hanging_state_type*>(ti.context)->reset_props_collision();
+        }
+        void hanging_state_type::reset_props_collision()
+        {
+            if (shared.hook == NULL)
+            {
+                return;
+            }
+            h.collision = shared.hook->asset->collision;
+
+            if (h.collision.damage_velocity == 0.0f)
+            {
+                h.collision.damage_velocity = FLOAT_MIN;
+            }
+            else
+            {
+                h.collision.damage_velocity *= max_yvel;
+            }
+
+            if (h.collision.hit_velocity == 0.0f)
+            {
+                h.collision.hit_velocity = FLOAT_MIN;
+            }
+            else
+            {
+                h.collision.hit_velocity *= max_yvel;
+            }
+        }
+        void hanging_state_type::on_tweak_camera(const tweak_info& ti)
+        {
+            reinterpret_cast<hanging_state_type*>(ti.context)->reset_props_camera();
+        }
+        void hanging_state_type::reset_props_camera()
+        {
+            if (shared.hook == NULL)
+            {
+                return;
+            }
+            h.camera = shared.hook->asset->camera;
+
+            h.camera.vel_scale /= max_yvel;
+            h.camera.view_angle *= DEG2RAD(1.0f);
+            h.camera.offset_dir *= DEG2RAD(1.0f);
+            h.camera.offset_dir -= h.camera.view_angle;
+            eh.camera.roll_decay = 1.0f - h.camera.roll_speed;
+        }
+        void hanging_state_type::on_tweak_horizontal(const tweak_info& ti)
+        {
+            reinterpret_cast<hanging_state_type*>(ti.context)->reset_props_horizontal();
+        }
+        void hanging_state_type::reset_props_horizontal()
+        {
+            if (shared.hook == NULL)
+            {
+                return;
+            }
+            h.horizontal = shared.hook->asset->horizontal;
+        }
+        void hanging_state_type::on_tweak_vertical(const tweak_info& ti)
+        {
+            reinterpret_cast<hanging_state_type*>(ti.context)->reset_props_horizontal();
+        }
+        void hanging_state_type::reset_props_vertical()
+        {
+            if (shared.hook == NULL)
+            {
+                return;
+            }
+            h.vertical = shared.hook->asset->vertical;
+
+            h.vertical.gravity *= -1.0f * h.vertical.frequency * h.vertical.frequency;
+            h.vertical.dive *= h.vertical.gravity;
+            h.vertical.damp = range_limit(h.vertical.damp, 0.0f, 1.0f);
+            h.vertical.min_dist *= -1.0f;
+            h.vertical.max_dist *= -1.0f;
+            h.vertical.min_dist = find_spring_min(h.vertical.min_dist, h.vertical.max_dist,
+                                                  h.vertical.gravity, h.vertical.damp);
+            eh.vertical.rest_dist = 0.5f * (h.vertical.max_dist + h.vertical.min_dist);
+            eh.vertical.spring = h.vertical.gravity / eh.vertical.rest_dist;
+            eh.vertical.alpha = -h.vertical.damp * xsqrt(eh.vertical.spring);
+            eh.vertical.omega = xsqrt(eh.vertical.spring - eh.vertical.alpha * eh.vertical.alpha);
+            eh.vertical.emax = spring_energy(h.vertical.max_dist, 0.0f, eh.vertical.spring,
+                                             h.vertical.gravity, eh.vertical.rest_dist);
+            max_yvel =
+                spring_velocity(eh.vertical.rest_dist, 1.0f, eh.vertical.emax, eh.vertical.spring,
+                                h.vertical.gravity, eh.vertical.rest_dist);
+            h.camera.vel_scale = shared.hook->asset->camera.vel_scale / max_yvel;
+        }
+
+        F32 hanging_state_type::spring_velocity(F32 x, F32 v, F32 e, F32 k, F32 g, F32 xc) const
+        {
+            F32 ret = e - spring_potential_energy(x, k, g, xc);
+            if (ret <= 0.0f)
+            {
+                return 0.0f;
+            }
+            ret = xsqrt(2.0f * ret);
+
+            if (v < 0.0f)
+            {
+                if (ret > 0.0f)
+                {
+                    return -ret;
+                }
+            }
+            else
+            {
+                if (ret < 0.0f)
+                {
+                    return -ret;
+                }
+            }
+            return ret;
+        }
+        F32 hanging_state_type::spring_potential_energy(F32 x, F32 k, F32 g, F32 xc) const
+        {
+            return -(g * -(0.5f * xc - x) - spring_potential_energy(x, k));
+        }
+        F32 hanging_state_type::spring_potential_energy(F32 x, F32 k) const
+        {
+            return 0.5f * k * x * x;
+        }
+        F32 hanging_state_type::spring_energy(F32 x, F32 v, F32 k, F32 g, F32 xc) const
+        {
+            return kinetic_energy(v) + spring_potential_energy(x, k, g, xc);
+        }
+        F32 hanging_state_type::kinetic_energy(F32 v) const
+        {
+            return 0.5f * v * v;
+        }
+        F32 hanging_state_type::find_spring_min(F32 min_dist, F32 max_dist, F32 gravity,
+                                                F32 damp) const
+        {
+            F32 e = xexp(-PI * damp * xsqrt(-(damp * damp - 1.0f)));
+            return (2.0f * min_dist + max_dist * (e - 1.0f)) / (1.0f + e);
+        }
+        U32 check_anim_start(xAnimTransition*, xAnimSingle*, void*)
+        {
+            return 0;
+        }
+        U32 check_anim_hit_to_dive(xAnimTransition*, xAnimSingle*, void*)
+        {
+            shared.anim_state &= ~0x40;
+            return shared.anim_state & 0x2 && (shared.anim_state & 0x80) == 0;
+        }
+        U32 check_anim_hit_to_top(xAnimTransition*, xAnimSingle*, void*)
+        {
+            shared.anim_state &= ~0x40;
+            return shared.anim_state & 0x8 && (shared.anim_state & 0x80) == 0;
+        }
+        U32 check_anim_hit_to_bottom(xAnimTransition*, xAnimSingle*, void*)
+        {
+            shared.anim_state &= ~0x40;
+            return shared.anim_state & 0x20 && (shared.anim_state & 0x80) == 0;
+        }
+        U32 check_anim_hit_to_cycle(xAnimTransition*, xAnimSingle*, void*)
+        {
+            shared.anim_state &= ~0x40;
+            return (shared.anim_state & 0x2a) == 0 && (shared.anim_state & 0x80) == 0;
+        }
+        U32 check_anim_hit_to_death(xAnimTransition*, xAnimSingle*, void*)
+        {
+            shared.anim_state &= ~0x40;
+            if (shared.anim_state & 0x80)
+            {
+                play_sound(SOUND_DEATH, 1.0f);
+                return 1;
+            }
+            return 0;
+        }
+        static S32 find_nearest_hook(const xVec3& loc)
+        {
+            S32 found = -1;
+            F32 closest = 10000000000.0f;
+            for (S32 i = 0; i < shared.hook_cache_size; ++i)
+            {
+                F32 attach_dist = shared.hook_cache[i]->asset->attach.dist;
+                xVec3* p = xEntGetPos(shared.hook_cache[i]->ent);
+                xVec3 dloc = *p + shared.hook_cache[i]->asset->center - loc;
+                F32 len2 = dloc.length2();
+                if (len2 <= SQR(attach_dist) && len2 < closest)
+                {
+                    found = i;
+                    closest = len2;
+                }
+            }
+            return found;
+        }
+        static void init_sounds()
+        {
+        }
+        static xModelInstance* get_hook_model()
+        {
+            if (shared.hook == NULL || shared.hook->ent == NULL)
+            {
+                return NULL;
+            }
+            return shared.hook->ent->model;
+        }
+        static void fade_hook_reset()
+        {
+            if ((shared.flags & 0x60) == 0)
+            {
+                return;
+            }
+
+            shared.flags &= ~0x60;
+            xModelInstance* hook = get_hook_model();
+            if (hook != NULL)
+            {
+                hook->Alpha = 1.0f;
+                hook->Flags &= 0xbfff;
+                hook->PipeFlags &= ~0x30;
+            }
+        }
+        static void fade_hook_out()
+        {
+            if (shared.flags & 0x40)
+            {
+                return;
+            }
+
+            shared.flags &= ~0x60;
+            xModelInstance* hook = get_hook_model();
+            if (hook != NULL)
+            {
+                hook->Flags |= 0x4000;
+                hook->PipeFlags = hook->PipeFlags & ~0x30 | 0x30;
+                shared.flags |= 0x40;
+            }
+        }
+        static void fade_hook_in()
+        {
+            if (shared.flags & 0x20)
+            {
+                return;
+            }
+
+            shared.flags &= ~0x60;
+            xModelInstance* hook = get_hook_model();
+            if (hook != NULL)
+            {
+                hook->Flags |= 0x4000;
+                hook->PipeFlags = hook->PipeFlags & ~0x30 | 0x30;
+                shared.flags |= 0x20;
+            }
+        }
+        static void fade_hook_update(float dt)
+        {
+            if ((shared.flags & 0x60) == 0)
+            {
+                return;
+            }
+
+            xModelInstance* hook = get_hook_model();
+            if (hook == NULL)
+            {
+                return;
+            }
+
+            float vel = (1.0f - fixed.hook_fade_alpha) / fixed.hook_fade_time;
+            if (shared.flags & 0x40)
+            {
+                hook->Alpha = -(vel * dt - hook->Alpha);
+                if (hook->Alpha <= fixed.hook_fade_alpha)
+                {
+                    hook->Alpha = fixed.hook_fade_alpha;
+                    shared.flags &= ~0x40;
+                }
+            }
+            else
+            {
+                hook->Alpha = vel * dt + hook->Alpha;
+                if (hook->Alpha >= 1.0f)
+                {
+                    hook->Alpha = 1.0f;
+                    shared.flags &= ~0x20;
+                    hook->Flags &= 0xbfff;
+                    hook->PipeFlags &= ~0x30;
+                }
             }
         }
     } // namespace
