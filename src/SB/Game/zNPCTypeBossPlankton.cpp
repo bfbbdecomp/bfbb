@@ -238,9 +238,101 @@ void zNPCBPlankton::SelfSetup()
     psy->SetSafety(NPC_GOAL_BPLANKTONIDLE);
 }
 
-U32 zNPCBPlankton::AnimPick(int, en_NPC_GOAL_SPOT, xGoal*)
+U32 zNPCBPlankton::AnimPick(S32 rawgoal, en_NPC_GOAL_SPOT gspot, xGoal* goal)
 {
-    return 0;
+    U32 animId = 0;
+    S32 index = 1;
+
+    switch (rawgoal)
+    {
+    case NPC_GOAL_BPLANKTONIDLE:
+    case NPC_GOAL_BPLANKTONATTACK:
+    case NPC_GOAL_BPLANKTONAMBUSH:
+    case NPC_GOAL_BPLANKTONFLANK:
+    case NPC_GOAL_BPLANKTONEVADE:
+    case NPC_GOAL_BPLANKTONHUNT:
+    {
+        index = 1;
+        break;
+    }
+    case NPC_GOAL_BPLANKTONTAUNT:
+    {
+        index = 3;
+        break;
+    }
+    case NPC_GOAL_BPLANKTONMOVE:
+    {
+        index = 0x42;
+        break;
+    }
+    case NPC_GOAL_BPLANKTONSTUN:
+    case NPC_GOAL_BPLANKTONFALL:
+    case NPC_GOAL_BPLANKTONDIZZY:
+    {
+        index = 0x43;
+        break;
+    }
+    case NPC_GOAL_BPLANKTONBEAM:
+    {
+        index = 0x46;
+        break;
+    }
+    case NPC_GOAL_BPLANKTONWALL:
+    {
+        index = 0x49;
+        break;
+    }
+    case NPC_GOAL_BPLANKTONMISSLE:
+    {
+        index = 0x4c;
+        break;
+    }
+    case NPC_GOAL_BPLANKTONBOMB:
+    {
+        index = 0x4d;
+        break;
+    }
+
+    default:
+        index = 1;
+        break;
+    }
+
+    if (index > -1)
+    {
+        return animId = g_hash_bossanim[index];
+    }
+
+    return animId;
+}
+
+S32 zNPCBPlankton::next_goal()
+{
+    // Not in the correct order?
+    S32 tempR;
+    U32 cronyAttack;
+
+    if (mode == 0)
+    {
+        if (flag.hunt == false)
+        {
+            cronyAttack = crony_attacking();
+            tempR =
+                ((0 - (cronyAttack & 0xff) | cronyAttack & 0xff) >> 0x1f) + NPC_GOAL_BPLANKTONHUNT;
+            //NPC_GOAL_BPLANKTONATTACK
+        }
+        else
+        {
+            tempR = NPC_GOAL_BPLANKTONATTACK;
+            //NPC_GOAL_BPLANKTONHUNT
+        }
+    }
+    else
+    {
+        tempR = NPC_GOAL_BPLANKTONEVADE;
+        //NPC_GOAL_BPLANKTONHUNT
+    }
+    return tempR;
 }
 
 void zNPCBPlankton::render_debug()
@@ -248,6 +340,10 @@ void zNPCBPlankton::render_debug()
 }
 
 void zNPCBPlankton::update_animation(float)
+{
+}
+
+void zNPCBPlankton::vanish()
 {
 }
 
