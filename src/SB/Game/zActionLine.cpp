@@ -48,27 +48,19 @@ void zActionLineUpdate(F32 seconds)
 
 static void RenderActionLine(_tagActionLine* l)
 {
-    RxObjSpace3DVertex* vert;
-    S32 i;
-    RwRGBA* _col;
     static RxObjSpace3DVertex sStripVert[4];
 
-    for (i = 0; i < 4; i++)
+    for (S32 i = 0; i < 4; i++)
     {
-        vert = &sStripVert[i];
-        _col = &vert->c.color;
-
-        vert->objVertex.x = l->pos[i].x;
-        vert->objVertex.y = l->pos[i].y;
-        vert->objVertex.z = l->pos[i].z;
-
-        _col->red = 0xff;
-        _col->blue = 0xff;
-        _col->green = 0xff;
-        _col->alpha = 0x80;
-
-        vert->u = 0.0f;
-        vert->v = 1.0f;
+        sStripVert[i].objVertex.y = l->pos[i].y;
+        sStripVert[i].objVertex.z = l->pos[i].z;
+        sStripVert[i].objVertex.x = l->pos[i].x;
+        sStripVert[i].u = 0.0f;
+        sStripVert[i].v = 0.0f;
+        sStripVert[i].c.color.red = 0xFF;
+        sStripVert[i].c.color.green = 0xFF;
+        sStripVert[i].c.color.blue = 0xFF;
+        sStripVert[i].c.color.alpha = 0x80;
     }
 
     if (RwIm3DTransform(sStripVert, 4, NULL, 0x19) != NULL)
