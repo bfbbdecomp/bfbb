@@ -13,6 +13,5 @@ struct _tagActionLine
 void zActionLineInit();
 void zActionLineUpdate(F32 seconds);
 void zActionLineRender();
-void RenderActionLine(_tagActionLine* l);
 
 #endif
