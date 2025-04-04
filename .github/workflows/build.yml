@@ -143,11 +143,21 @@ jobs:
       - name: Prepare
         run: cp -R /orig .
 
-      # Generate report for previous repo state
-      - name: Generate previous report
-        continue-on-error: true
+      # Checkout the commit to generate OK bot report used for website build
+      - name: Checkout previous report repo state
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          git checkout HEAD^
+
+      # Checkout the commit to generate CI progress report for PR comment report
+      - name: Checkout previous report repo state
+        if: ${{ github.event_name == 'pull_request_target' }}
         run: |
           git checkout main
+
+      # Generate report for previous repo state
+      - name: Generate previous report
+        run: |
           python configure.py --version ${{ matrix.version }} \
                 --binutils /binutils --compilers /compilers
           ninja build/${{ matrix.version }}/report.json
