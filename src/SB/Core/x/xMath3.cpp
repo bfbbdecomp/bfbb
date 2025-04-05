@@ -1,6 +1,8 @@
 #include "xMath3.h"
+#include "iMath3.h"
 
 #include <types.h>
+#include <intrin.h>
 
 #include "iMath.h" // icos and isin
 #include "xClimate.h" // xMat3x3Identity
@@ -9,8 +11,36 @@
 
 xVec3 g_O3 = { 0, 0, 0 };
 
+S32 xPointInBox(const xBox* b, const xVec3* p)
+{
+    S32 ret = 0;
+    if ((p->x >=b->lower.x) && (p->x <= b->upper.x))
+    {
+        if ((p->y>= b->lower.y) && (p->y <= b->upper.y))
+        {
+            if ((p->z >= b->lower.z) && (p->z <= b->upper.z))
+            {
+                ret = 1;
+            }
+        }
+    }
+    return (char)ret;
+}
+
 void xMat4x3Copy(xMat4x3* o, const xMat4x3* m)
 {
+}
+
+void xMat4x3Rot(xMat4x3* m, const xVec3* a, F32 t, const xVec3* p)
+{
+    xMat4x3 temp;
+
+    xMat3x3RotC(m, a->x, a->y, a->z, t);
+    xVec3Copy(&m->pos, p);
+    xMat3x3Identity(&temp);
+    xVec3Inv(&temp.pos, p);
+    xMat4x3Mul(m, &temp, m);
+
 }
 
 /* xMat4x3Mul (xMat4x3 *, xMat4x3 const *, xMat4x3 const *) */
@@ -18,9 +48,9 @@ void xMat4x3Mul(xMat4x3* o, const xMat4x3* a, const xMat4x3* b)
 {
     xVec3 sp8;
 
-    xMat4x3Toworld(&sp8, b, (xVec3*)&a->pad3);
+    xMat4x3Toworld(&sp8, b, &a->pos);
     xMat3x3Mul((xMat3x3*)o, (xMat3x3*)a, (xMat3x3*)b);
-    xVec3Copy((xVec3*)&o->pad3, &sp8);
+    xVec3Copy(&o->pos, &sp8);
 }
 
 /* xMat3x3Euler (xMat3x3 *, float, float, float) */
@@ -102,17 +132,38 @@ void xMat3x3RotC(xMat3x3* m, F32 _x, F32 _y, F32 _z, F32 t)
     m->flags = 0;
 }
 
-/* xMat3x3RotY (xMat3x3 *, float) */
+void xMat3x3RotX(xMat3x3* m, F32 t)
+{
+    F32 cos = icos(t);
+    F32 sin = isin(t);
+
+    xVec3Copy(&m->right, &g_X3);
+    xVec3Init(&m->up, 0.0f, cos, sin);
+    xVec3Init(&m->at, 0.0f, -sin, cos);
+    m->flags = 0;
+}
+
 void xMat3x3RotY(xMat3x3* m, F32 t)
 {
-    F32 temp_f1;
     F32 temp_f31;
+    F32 temp_f1;
 
     temp_f31 = icos(t);
     temp_f1 = isin(t);
     xVec3Init((xVec3*)m, temp_f31, 0.0f, -temp_f1);
-    xVec3Copy(&m->right, &g_Y3);
-    xVec3Init(&m->up, temp_f1, 0.0f, temp_f31);
+    xVec3Copy(&m->up, &g_Y3);
+    xVec3Init(&m->at, temp_f1, 0.0f, temp_f31);
+    m->flags = 0;
+}
+
+void xMat3x3RotZ(xMat3x3* m, F32 t)
+{
+    F32 cos = icos(t);
+    F32 sin = isin(t);
+
+    xVec3Init(&m->right, cos, sin, 0.0f);
+    xVec3Init(&m->up, -sin, cos, 0.0f);
+    xVec3Copy(&m->at, &g_Z3);
     m->flags = 0;
 }
 
@@ -128,8 +179,8 @@ void xMat4x3Identity(xMat4x3* m)
 void xMat3x3Normalize(xMat3x3* o, const xMat3x3* m)
 {
     xVec3Normalize((xVec3*)o, (xVec3*)m);
-    xVec3Normalize(&o->right, &m->right);
     xVec3Normalize(&o->up, &m->up);
+    xVec3Normalize(&o->at, &m->at);
 }
 
 void xMat4x3Tolocal(xVec3* o, const xMat4x3* m, const xVec3* v)
@@ -470,8 +521,7 @@ F32 xMat3x3LookVec(xMat3x3* m, const xVec3* at)
     temp_f31 = xVec3Normalize(&m->at, at);
     temp_r3 = &m->at;
     xVec3Inv(temp_r3, temp_r3);
-    temp_f2 = m->at.y;
-    if ((F32)fabs(1.0f - temp_f2) < 0.00001f)
+    if ((F32)__fabs(1.0f -  m->at.y) < 0.00001f)
     {
         m->right.x = 1.0f;
         m->right.y = 0.0f;
@@ -484,7 +534,7 @@ F32 xMat3x3LookVec(xMat3x3* m, const xVec3* at)
         m->at.z = 0.0f;
         return temp_f31;
     }
-    if ((F32)fabs(1.0f + temp_f2) < 0.00001f)
+    if ((F32)__fabs(1.0f +  m->at.y) < 0.00001f)
     {
         m->right.x = -1.0f;
         m->right.y = 0.0f;
@@ -497,7 +547,7 @@ F32 xMat3x3LookVec(xMat3x3* m, const xVec3* at)
         m->at.z = 0.0f;
         return temp_f31;
     }
-    if (((F32)fabs(at->z) < 0.00001f) && ((F32)fabs(at->x) < 0.00001f))
+    if (((F32)__fabs(at->z) < 0.00001f) && ((F32)__fabs(at->x) < 0.00001f))
     {
         m->right.x = 1.0f;
         m->right.y = 0.0f;
@@ -507,7 +557,7 @@ F32 xMat3x3LookVec(xMat3x3* m, const xVec3* at)
         m->up.z = 0.0f;
         m->at.x = 0.0f;
         m->at.y = 0.0f;
-        m->at.y = 1.0f;
+        m->at.z = 1.0f;
         return 0.0f;
     }
     m->right.x = m->at.z;
