@@ -113,6 +113,7 @@ struct zNPCBPlankton : zNPCBoss
     void Render();
     void SelfSetup();
     U32 AnimPick(int, en_NPC_GOAL_SPOT, xGoal*);
+    S32 next_goal();
     void render_debug();
     void update_turn(float);
     void update_move(float);
@@ -122,6 +123,8 @@ struct zNPCBPlankton : zNPCBoss
     void update_aim_gun(float);
     void update_dialog(float);
     void init_beam();
+    void vanish();
+    U32 crony_attacking() const;
     S32 player_left_territory();
     void say(int, int, bool);
     void aim_gun(xAnimPlay*, xQuat*, xVec3*, int);
