@@ -1,14 +1,16 @@
 #include "zNPCMessenger.h"
 
+#include "xordarray.h"
 #include <types.h>
 
 static NPCPSData g_postoffice;
 
-void zNPCCommon::Stun(F32)
+NPCPSData* NPCPS_postOffice()
 {
+    return &g_postoffice;
 }
 
-void zNPCMSg_Startup()
+void zNPCCommon::Stun(F32)
 {
 }
 
@@ -43,6 +45,13 @@ void NPCPS_copyMsgInfo(NPCMsg*, NPCMsg*, float)
 
 void NPCPS_queMessage(NPCMsg*)
 {
+    // LW - 50% match
+    // probably a simple fix
+    NPCPSData* tempQue;
+
+    tempQue = NPCPS_postOffice();
+
+    XOrdAppend(((st_XORDEREDARRAY*)tempQue + 0x2), NULL);
 }
 
 S32 NPCPS_flagForMID(en_NPC_MSG_ID)
@@ -68,11 +77,6 @@ void NPCPS_CltPoolReset(NPCPSData*)
 {
 }
 
-NPCPSData* NPCPS_postOffice()
-{
-    return &g_postoffice;
-}
-
 void NPCPS_grabMsg()
 {
 }
@@ -81,12 +85,22 @@ void NPCPS_freeMsg(NPCMsg*)
 {
 }
 
+void zNPCMsg_Startup()
+{
+    NPCPSData* tempStartup;
+
+    tempStartup = NPCPS_postOffice();
+    NPCPS_CltPoolInit(tempStartup, 0x20);
+    NPCPS_MsgPoolInit(tempStartup, 0x40);
+}
+
 void zNPCMsg_SceneReset()
 {
-    //  57% there but not quite
-    NPCPS_CltPoolReset(NPCPS_postOffice());
-    NPCPS_MsgPoolReset(NPCPS_postOffice());
-    return;
+    NPCPSData* tempReset;
+
+    tempReset = NPCPS_postOffice();
+    NPCPS_CltPoolReset(tempReset);
+    NPCPS_MsgPoolReset(tempReset);
 }
 
 void zNPCMsg_Timestep(xScene*, float)
