@@ -94,7 +94,7 @@ static F32 rewardTiltTime = 1.5f;
 static F32 rewardTiltAmount = -0.22f;
 
 extern zGlobals globals;
-extern xVec3 g_O3;
+extern const xVec3 g_O3;
 extern F32 gSkipTimeFlythrough;
 
 extern F32 zCamera_f_75_0; // 75.0

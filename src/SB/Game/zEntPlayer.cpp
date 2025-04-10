@@ -3890,7 +3890,7 @@ void zEntPlayer_GiveLevelPickupCurrentLevel(S32 quantity)
 
 xVec3* GetPosVec(xBase* base)
 {
-    xVec3* vec = &g_O3;
+    xVec3* vec = (xVec3*)&g_O3;
 
     switch (base->baseType)
     {
