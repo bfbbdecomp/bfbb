@@ -110,6 +110,7 @@ void xFXFireworksLaunch(F32 countdownTime, const xVec3* pos, F32 fuelTime);
 void xFXFireworksUpdate(F32 dt);
 void xFXStreakInit();
 void xFXStreakUpdate(F32 dt);
+void xFXStreakUpdate(U32 streakID, const xVec3*, const xVec3*);
 void xFXStreakRender();
 void xFXStreakStop(U32);
 void xFXShineInit();
