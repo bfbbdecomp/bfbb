@@ -418,6 +418,7 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
     bool IsMountableType(en_ZBASETYPE type);
     void MvptReset(zMovePoint* nav_goto);
     S32 MvptCycle();
+    S32 HaveLOSToPos(xVec3*, float, xScene*, xBase*, xCollis*);
     void ModelScaleSet(F32 x, F32 y, F32 z);
     void ModelScaleSet(F32 unk);
     void ModelScaleSet(const xVec3* vec);
