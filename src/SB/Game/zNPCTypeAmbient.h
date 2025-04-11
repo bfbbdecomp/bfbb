@@ -47,10 +47,12 @@ struct zNPCJelly : zNPCAmbient
     void PlayWithAlpha(F32 unk);
     void PlayWithAnimSpd();
     void PumpFaster();
+    xVec3* JellyBoneWorldPos(xVec3* pos, S32 idx_request) const;
     void PlayWithLightnin();
     void SetAlpha(F32 alpha);
 
     U32 AnimPick(S32 animID, en_NPC_GOAL_SPOT gspot, xGoal* goal);
+    void ActLikeOctopus();
 };
 
 struct zNPCNeptune : zNPCAmbient

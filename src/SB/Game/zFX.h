@@ -88,8 +88,11 @@ void xDebugAddTweak(const char* unk1, const char* unk2, const tweak_callback* un
 
 xFXRing* zFXMuscleArmWave(const xVec3* pos);
 
+void zFX_SpawnBubbleTrail(const xVec3*, unsigned int);
 void zFX_SpawnBubbleTrail(const xVec3* pos, unsigned int num, const xVec3* pos_rnd,
                           const xVec3* vel_rnd);
+void zFX_SpawnBubbleTrail(const xVec3*, const xVec3*, const xVec3*, const xVec3*, unsigned int,
+                          const xVec3*, const xVec3*, float);
 void zFX_SpawnBubbleMenuTrail(const xVec3* pos, U32 num, const xVec3* pos_rnd,
                               const xVec3* vel_rnd);
 
