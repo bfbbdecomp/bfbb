@@ -761,10 +761,6 @@ void xBoxUnion(xBox& a, const xBox& b, const xBox& c)
     a.lower.z = MIN(b.lower.z, c.lower.z);
 }
 
-// Equivalent: regalloc(?)
 void xMat3x3LMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
 {
-    o->x = (v->x * m->right.x) + (v->y * m->right.y) + (v->z * m->right.z);
-    o->y = (m->up.x    * v->x) + (m->up.y    * v->y) + (m->up.z    * v->z);
-    o->z = (m->at.x    * v->x) + (m->at.y    * v->y) + (m->at.z    * v->z);
 }
