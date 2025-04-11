@@ -184,7 +184,7 @@ F32 zNPCGoalJellyBumped::CalcEndPoint(xVec3* pos_end, const xVec3* dir_aim)
     F32 dst_toEndPnt = 4.0f;
     zNPCJelly* npc = (zNPCJelly*)psyche->clt_owner;
     xVec3 vec = *dir_aim * dst_toEndPnt;
-    xVec3 pos = vec + *npc->Pos();
+    xVec3 pos = *npc->Pos() + vec;
 
     memset(&colrec, 0, sizeof(colrec));
     colrec.flags = 0x1F00;
