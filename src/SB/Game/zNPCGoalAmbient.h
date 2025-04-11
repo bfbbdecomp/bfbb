@@ -33,4 +33,23 @@ struct zNPCGoalJellyAttack : zNPCGoalPushAnim
     S32 ZapperUpdate();
 };
 
+struct zNPCGoalJellyBumped : zNPCGoalPushAnim
+{
+    xVec3 pos_bumper;
+    xVec3 pos_bumpin;
+    xVec3 pos_grindin;
+    U32 streakID;
+
+    S32 Enter(F32 dt, void* updCtxt);
+    S32 Exit(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantyp, F32 dt, void* updCxt, xScene* xscn);
+    void MoveSwoosh(F32 dt);
+    void PlayWithAnimSpd();
+    void StreakPrep();
+    void StreakDone();
+    void StreakUpdate();
+    void ExtractAimDir(xVec3* dir);
+    F32 CalcEndPoint(xVec3* pos_end, const xVec3* dir_aim);
+};
+
 #endif
