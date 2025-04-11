@@ -4,12 +4,14 @@
 #include <types.h>
 #include <intrin.h>
 
-#include "iMath.h" // icos and isin
+#include "iMath.h"
+#include "xMath.h" // icos and isin
 #include "xClimate.h" // xMat3x3Identity
 #include "xMathInlines.h" // xasin, xatan2
 //#include "xVec3Inlines.h" // xVec3Init, imported, realized xClimate has a declaration as well though.
 
-xVec3 g_O3 = { 0, 0, 0 };
+const xVec3 g_O3 = { 0, 0, 0 };
+const xQuat g_IQ = { 0.0f, 0.0f, 0.0f, 1.0f };
 
 S32 xPointInBox(const xBox* b, const xVec3* p)
 {
@@ -248,32 +250,33 @@ void xMat4x3MoveLocalUp(xMat4x3* m, F32 mag)
 /* xMat3x3GetEuler (xMat3x3 const *, xVec3 *) */
 void xMat3x3GetEuler(const xMat3x3* m, xVec3* a)
 {
-    F32 temp_f31;
-    F32 var_f1;
-    F32 var_f30;
+    F32 yaw = -xasin(m->at.y);
 
-    temp_f31 = -xasin(m->at.y);
-    if (temp_f31 < 1.5707964f)
+    F32 roll;
+    F32 pitch;
+
+    if (yaw < (PI / 2))
     {
-        if (temp_f31 > -1.5707964f)
+        if (yaw > -(PI / 2))
         {
-            var_f30 = xatan2(m->at.x, m->at.z);
-            var_f1 = xatan2(m->right.y, m->up.y);
+            pitch = xatan2(m->at.x, m->at.z);
+            roll = xatan2(m->right.y, m->up.y);
         }
         else
         {
-            var_f30 = -xatan2(-m->up.x, m->up.x);
-            var_f1 = 0.0f;
+            pitch = -xatan2(-m->up.x, m->right.x);
+            roll = 0.0f;
         }
     }
     else
     {
-        var_f1 = 0.0f;
-        var_f30 = xatan2(-m->up.x, m->right.x);
+        pitch = xatan2(-m->up.x, m->right.x);
+        roll = 0.0f;
     }
-    a->x = var_f30;
-    a->y = temp_f31;
-    a->z = var_f1;
+
+    a->x = pitch;
+    a->y = yaw;
+    a->z = roll;
 }
 
 /* xMat3x3Euler (xMat3x3 *, xVec3 const *) */
@@ -285,48 +288,31 @@ void xMat3x3Euler(xMat3x3* m, const xVec3* ypr)
 /* xQuatToMat (xQuat const *, xMat3x3 *) */
 void xQuatToMat(const xQuat* q, xMat3x3* m)
 {
-    F32 temp_f10;
-    F32 temp_f11;
-    F32 temp_f12;
-    F32 temp_f13;
-    F32 temp_f1;
-    F32 temp_f2;
-    F32 temp_f3;
-    F32 temp_f3_2;
-    F32 temp_f4;
-    F32 temp_f4_2;
-    F32 temp_f5;
-    F32 temp_f5_2;
-    F32 temp_f6;
-    F32 temp_f7;
-    F32 temp_f8;
-    F32 temp_f9;
+    F32 tx = (2.0f * q->v.x);
+    F32 ty = (2.0f * q->v.y);
+    F32 tz = (2.0f * q->v.z);
+    F32 tsx = tx * q->s;
+    F32 tsy = ty * q->s;
+    F32 tsz = tz * q->s;
+    F32 txx = tx * q->v.x;
+    F32 txy = ty * q->v.x;
+    F32 txz = tz * q->v.x;
+    F32 tyy = ty * q->v.y;
+    F32 tyz = tz * q->v.y;
+    F32 tzz = tz * q->v.z;
 
-    temp_f5 = q->v.y;
-    temp_f1 = q->v.z;
-    temp_f2 = 2.0f * temp_f5;
-    temp_f4 = q->v.x;
-    temp_f7 = 2.0f * temp_f1;
-    temp_f3 = q->s;
-    temp_f6 = 2.0f * temp_f4;
-    temp_f12 = temp_f2 * temp_f5;
-    temp_f13 = temp_f7 * temp_f1;
-    temp_f9 = temp_f7 * temp_f3;
-    temp_f10 = temp_f2 * temp_f4;
-    temp_f8 = temp_f2 * temp_f3;
-    temp_f11 = temp_f7 * temp_f4;
-    m->right.x = (1.0f - temp_f12) - temp_f13;
-    temp_f4_2 = temp_f6 * temp_f4;
-    m->right.y = temp_f10 - temp_f9;
-    temp_f3_2 = temp_f6 * temp_f3;
-    temp_f5_2 = temp_f7 * temp_f5;
-    m->right.z = temp_f11 + temp_f8;
-    m->up.x = temp_f10 + temp_f9;
-    m->up.y = (1.0f - temp_f13) - temp_f4_2;
-    m->up.z = temp_f5_2 - temp_f3_2;
-    m->at.x = temp_f11 - temp_f8;
-    m->at.y = temp_f5_2 + temp_f3_2;
-    m->at.z = (1.0f - temp_f4_2) - temp_f12;
+    m->right.x = (1.0f - tyy) - tzz;
+    m->right.y = txy - tsz;
+    m->right.z = txz + tsy;
+
+    m->up.x = txy + tsz;
+    m->up.y = (1.0f - tzz) - txx;
+    m->up.z = tyz - tsx;
+
+    m->at.x = txz - tsy;
+    m->at.y = tyz + tsx;
+    m->at.z = (1.0f - txx) - tyy;
+
     m->flags = 0;
 }
 
@@ -402,6 +388,28 @@ void xQuatFromMat(xQuat* q, const xMat3x3* m)
     // if (q->unkC < 0.0f) {
     //     xQuatFlip(q, q);
     // }
+}
+
+void xQuatFromAxisAngle(xQuat* q, const xVec3* a, F32 t)
+{
+    F32 t_2;
+
+    if (t == 0.0f)
+    {
+        xQuatCopy(q, &g_IQ);
+    }
+    else
+    {
+        t_2 = isin(t * 0.5f);
+        q->s = icos((t * 0.5f));
+        xVec3SMul(&q->v, a, t_2);
+    }
+}
+
+void xQuatToAxisAngle(const xQuat* q, xVec3* a, F32* t)
+{
+    *t = 2.0f * xacos(q->s);
+    xVec3Normalize(a, &q->v);
 }
 
 /* xQuatSlerp (xQuat *, xQuat const *, xQuat const *, float) */
@@ -589,6 +597,74 @@ void xMat3x3ScaleC(xMat3x3* m, F32 x, F32 y, F32 z)
 
 void xMat3x3RMulRotY(xMat3x3* o, const xMat3x3* m, F32 t)
 {
+    F32 cos = icos(t);
+    F32 sin = isin(t);
+    if (o == m)
+    {
+        F32 temp = o->right.z;
+        o->right.z = ((cos * o->right.z) - (sin * o->right.x));
+        o->right.x = ((cos * o->right.x) + (sin * temp));
+
+        temp = o->up.z;
+        o->up.z = ((cos * temp) - (sin * o->up.x));
+        o->up.x = ((cos * o->up.x) + (sin * temp));
+
+        temp = o->at.z;
+        o->at.z = ((cos * temp) - (sin * o->at.x));
+        o->at.x = ((cos * o->at.x) + (sin * temp));
+    }
+    else
+    {
+        o->right.x = (cos * m->right.x + (sin * m->right.z));
+        o->right.y = m->right.y;
+        o->right.z = (cos * m->right.z - (sin * m->right.x));
+
+        o->up.x = (cos * m->up.x + (sin * m->up.z));
+        o->up.y = m->up.y;
+        o->up.z = (cos * m->up.z - (sin * m->up.x));
+
+        o->at.x = (cos * m->at.x + (sin * m->at.z));
+        o->at.y = m->at.y;
+        o->at.z = (cos * m->at.z - (sin * m->at.x));
+
+        o->flags = 0;
+    }
+}
+
+void xMat3x3Transpose(xMat3x3* o, const xMat3x3* m)
+{
+    F32 temp;
+
+    if (o == m)
+    {
+        temp = o->right.y;
+        o->right.y = o->up.x;
+        o->up.x = temp;
+
+        temp = o->right.z;
+        o->right.z = o->at.x;
+        o->at.x = temp;
+
+        temp = o->up.z;
+        o->up.z = o->at.y;
+        o->at.y = temp;
+
+        return;
+    }
+
+    o->right.x = m->right.x;
+    o->right.y = m->up.x;
+    o->right.z = m->at.x;
+
+    o->up.x = m->right.y;
+    o->up.y = m->up.y;
+    o->up.z = m->at.y;
+
+    o->at.x = m->right.z;
+    o->at.y = m->up.z;
+    o->at.z = m->at.z;
+
+    o->flags = 0;
 }
 
 /* xMat3x3Mul (xMat3x3 *, xMat3x3 const *, xMat3x3 const *) */
@@ -672,6 +748,17 @@ void xBoxFromLine(xBox& box, const xLine3& line)
 
 void xBoxFromRay(xBox& box, const xRay3& ray)
 {
+}
+
+void xBoxUnion(xBox& a, const xBox& b, const xBox& c)
+{
+    a.upper.x = MAX(b.upper.x, c.upper.x);
+    a.upper.y = MAX(b.upper.y, c.upper.y);
+    a.upper.z = MAX(b.upper.z, c.upper.z);
+
+    a.lower.x = MIN(b.lower.x, c.lower.x);
+    a.lower.y = MIN(b.lower.y, c.lower.y);
+    a.lower.z = MIN(b.lower.z, c.lower.z);
 }
 
 void xMat3x3LMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
