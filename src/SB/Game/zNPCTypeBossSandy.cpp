@@ -11,6 +11,7 @@
 #include "zGlobals.h"
 #include "zNPCSndTable.h"
 #include "zNPCTypeBossSandy.h"
+#include "xMarkerAsset.h"
 
 extern const char bossSandyStrings[];
 
@@ -43,104 +44,68 @@ extern const char bossSandyStrings[];
 #define NoHeadReplace01 27
 #define NoHeadHit01 28
 
-extern F32 __830; // 0.0   0
-extern F32 __831; // 1.0   3f800000
-extern F32 __842; // 0.20000000298023224   3e4ccccd
-extern F32 _843; // 3.3333332538604736   40555555
-extern F32 _864; // 0.25   3e800000
-extern F32 _1029; // 6.2831854820251465   40c90fdb
-extern F32 _1030; // 0.0625   3d800000
-extern F32 _1031; // 255.0   437f0000
-extern F32 _1032; // 0.5   3f000000
-extern F32 _1033; // -1.0   bf800000
-extern F32 _1034; // 20.0   41a00000
-extern F32 _1035; // 10.0   41200000
-extern F32 _1036; // 1000000000.0   4e6e6b28
-extern F32 _1037; // 2.25   40100000
-extern F32 _1039; // 176.0   43300000
-extern F32 _1061_1; // 6.0   40c00000
-extern F32 _1062_1; // 1.2999999523162842   3fa66666
-extern F32 _1063; // 2.0   40000000
-extern F32 _1064; // 3.0   40400000
-extern F32 _1065; // 8.199999809265137   41033333
-extern F32 _1066; // 4.0   40800000
-extern F32 _1067; // 4.5   40900000
-extern F32 _1068; // 0.15000000596046448   3e19999a
-extern F32 _1069; // -0.4000000059604645   becccccd
-extern F32 _1070; // 9.699999809265137   411b3333
-extern F32 _1071; // 7.0   40e00000
-extern F32 _1072; // 5.0   40a00000
-extern F32 _1188_1; // -0.30000001192092896   be99999a
-extern F32 _1189; // 1.25   3fa00000
-extern F32 _1190; // 0.035999998450279236   3d1374bc
-extern F32 _1191; // 0.10999999940395355   3de147ae
-extern F32 _1192_1; // 0.10000000149011612   3dcccccd
-extern F32 _1193; // -10.0   c1200000
-extern F32 _1194; // 6.041999816894531   40c15810
-extern F32 _1195; // 0.125   3e000000
-extern F32 _1196; // 100.0   42c80000
-extern F32 _1209; // 9.999999747378752e-06   3727c5ac
-extern F32 _1378; // 478.0   43ef0000
-extern F32 _1379; // 0.6000000238418579   3f19999a
-extern F32 _1380; // 0.8999999761581421   3f666666
-extern F32 _1381; // 1.100000023841858   3f8ccccd
-extern F32 _1462; // 9.0   41100000
-extern F32 _1463; // 0.30000001192092896   3e99999a
-extern F32 _1464; // 0.699999988079071   3f333333
-extern F32 _1465; // 3.1415927410125732   40490fdb
-extern F32 _1466; // 0.75   3f400000
-extern F32 _1521; // 0.800000011920929   3f4ccccd
-extern F32 _1522; // -0.800000011920929   bf4ccccd
-extern F32 _1523; // -2.0   c0000000
-extern F32 _1524; // 66.0   42840000
-extern F32 _1525; // -2500.0   c51c4000
-extern F32 _1526_0; // -1.5   bfc00000
-extern F32 _1527; // 13.0   41500000
-extern F32 _1528; // 3.5   40600000
-extern F32 _1529; // -2.5   c0200000
-extern F32 _1530; // 25.0   41c80000
-extern F32 _1531; // 15.0   41700000
-extern F32 _1666; // 0.4000000059604645   3ecccccd
-extern F32 _1667; // -3.1415927410125732   c0490fdb
-extern F32 _1935; // 60.0   42700000
-extern F32 _1936; // 0.9900000095367432   3f7d70a4
-extern F32 _1937; // 0.009999999776482582   3c23d70a
-extern F32 _1938; // 2.950000047683716   403ccccd
-extern F32 _1939; // 15.5   41780000
-extern F32 _1940; // 1.5   3fc00000
-extern F32 _1941; // 40.0   42200000
-extern F32 _1942; // 0.8100000023841858   3f4f5c29
-extern F32 _2154; // 30.0   41f00000
-extern F32 _2155; // -9.999999747378752e-06   b727c5ac
-extern F32 _2156; // 2.309999942779541   4013d70a
-extern F32 _2173; // 12.0   41400000
-extern F32 _2236; // 0.7070000171661377   3f34fdf4
-extern F32 _2237; // 2.5   40200000
-extern F32 _2264; // 1.7000000476837158   3fd9999a
-extern F32 _2265; // 0.7699999809265137   3f451eb8
-extern F32 _2376; // 0.9800000190734863   3f7ae148
-extern F32 _2377; // 0.019999999552965164   3ca3d70a
-extern F32 _2517; // 1.1549999713897705   3f93d70a
-extern F32 _2518; // 80.0   42a00000
-extern F32 _2519; // 31.0   41f80000
-extern F32 _2520; // 42.0   42280000
-extern F32 _2525; // 0.6499999761581421   3f266666
-extern F32 _2582; // -3.0   c0400000
-extern F32 _2633; // 5.25   40a80000
-extern F32 _2741; // 0.0010000000474974513   3a83126f
-extern F32 _2742; // 4.71238899230957   4096cbe4
-extern F32 _2818; // 1.75   3fe00000
-extern F32 _2903; // 0.05000000074505806   3d4ccccd
-extern F32 _2904; // -0.05000000074505806   bd4ccccd
+static F32 sSinTable[16];
+static SandyLimbSpring sLeftArmSpring;
+static SandyLimbSpring sRightArmSpring;
+static SandyLimbSpring sLeftLegSpring;
+static SandyLimbSpring sRightLegSpring;
+static xVec3 sCamSubTargetFixed;
+static U32 sNFSoundValue[30];
+static BossDamageEffectRecord BDErecord[4];
+
+static U8 sOthersHaventBeenAdded;
+static U8 sPCWasBubbleBouncing;
+static F32 sRadiusOfRing;
+static F32 sElbowDropTimer;
+static F32 sChaseTimer;
+static F32 sNumAttacks;
+static F32 sDidClothesline;
+static F32 sElbowDropThreshold;
+static zNPCBSandy* sSandyPtr;
+static xVec3* sCamSubTarget;
+static F32 sCurrYaw;
+static F32 sCurrHeight;
+static F32 sCurrRadius;
+static F32 sCurrPitch;
+static U32 sCurrNFSound;
+
+static U8 sUseBossCam = TRUE;
+static U8 sWasUsingBossCam = TRUE;
+static F32 sPCHeightDiff = -1.0f;
+static F32 sHeadPopOffFactor = -1.0f;
+static S32 sLeftFootBones[2] = { 0x2B, 0x2C };
+static S32 sRightFootBones[2] = { 0x30, 0x31 };
+
+static S32 sBone[13] = {
+    0x3, 0x5, 0x12, 0x14, 0x19, 0x1B, 0x22, 0x24, 0x26, 0x29, 0x2B, 0x2E, 0x30
+};
+static S32 sLeftHandBones[4] = { 0x14, 0x15, 0x16, 0x17 };
+static S32 sRightHandBones[4] = { 0x1B, 0x1C, 0x1D, 0x1E };
+static F32 sBoundRadius[13] = { 1.4f,        1.3f, -1.0f, 0.6f,        -1.0f, 0.6f,       0.6f,
+                                0.69999999f, 0.8f, -1.0f, 0.89999999f, -1.0f, 0.89999999f };
+static xVec3 sBoneOffset[13] = { {},
+                                 { 0.0f, 1.1f, 0.0f },
+                                 {},
+                                 { 0.3f, 0.0f, 0.0f },
+                                 {},
+                                 { -0.3f, 0.0f, 0.0f },
+                                 { 0.0f, 0.2f, 0.0f },
+                                 { 0.0f, 0.2f, 0.0f },
+                                 {},
+                                 {},
+                                 { 0.0f, -0.6f, 0.3f },
+                                 {},
+                                 { 0.0f, -0.6f, 0.3f } };
+static char* sNFSoundLabel[30] = {
+    "FAB1006", "FAB1007", "FAB1008", "FAB1009", "FAB1010", "FAB1011", "FAB1012", "FAB1013",
+    "FAB1014", "FAB1015", "FAB1016", "FAB1017", "FAB1018", "FAB1018", "FAB1018", "FAB1018",
+    "FAB1018", "FAB1018", "FAB1019", "FAB1020", "FAB1021", "FAB1022", "FAB1023", "FAB1024",
+    "FAB1025", "FAB1026", "FAB1027", "FAB1028", "FAB1029", "FAB1030"
+};
 
 extern zGlobals globals;
 
-extern zNPCBSandy* sSandyPtr;
-extern U32 sCurrNFSound;
-
 extern NPCSndTrax g_sndTrax_BossSandy[1];
-
-extern BossDamageEffectRecord BDErecord[4];
 
 void on_change_newsfish(const tweak_info& tweak)
 {
@@ -154,8 +119,8 @@ void on_change_shockwave(const tweak_info& tweak)
     xVec3Copy((xVec3*)(&sSandyPtr->shockwaveEmitter->tasset->pos),
               (xVec3*)(&sSandyPtr->model->Mat->pos));
 
-    sSandyPtr->shockwaveEmitter->tasset->pos.y = __830;
-    sSandyPtr->shockRadius = __831;
+    sSandyPtr->shockwaveEmitter->tasset->pos.y = 0.0f;
+    sSandyPtr->shockRadius = 1.0f;
 }
 
 xAnimTable* ZNPC_AnimTable_BossSandy()
@@ -196,54 +161,54 @@ xAnimTable* ZNPC_AnimTable_BossSandy()
     //Missing like 2 logic lines or something, too tired to figure it out
     xAnimTable* table = xAnimTableNew("zNPCBSandy", NULL, 0);
 
-    xAnimTableNewState(table, g_strz_bossanim[Unknown], 0x10, 0x40, __831, NULL, NULL, __830, NULL,
+    xAnimTableNewState(table, g_strz_bossanim[Unknown], 0x10, 0x40, 1.0f, NULL, NULL, 0.0f, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[Idle02], 0x10, 0x40, __831, NULL, NULL, __830, NULL,
+    xAnimTableNewState(table, g_strz_bossanim[Idle02], 0x10, 0x40, 1.0f, NULL, NULL, 0.0f, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[Taunt01], 0x10, 0, __831, NULL, NULL, __830, NULL,
-                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[Run01], 0x10, 0, __831, NULL, NULL, __830, NULL, NULL,
+    xAnimTableNewState(table, g_strz_bossanim[Taunt01], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
                        xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[Walk01], 0x10, 0, __831, NULL, NULL, __830, NULL,
-                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[Dizzy01], 0x10, 0, __831, NULL, NULL, __830, NULL,
-                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[ElbowDrop01], 0x10, 0, __831, NULL, NULL, __830, NULL,
-                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[Leap01], 0x10, 0, __831, NULL, NULL, __830, NULL,
-                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[Leap02], 0x10, 0, __831, NULL, NULL, __830, NULL,
-                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[Leap03], 0x10, 0, __831, NULL, NULL, __830, NULL,
-                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[Leap04], 0x10, 0, __831, NULL, NULL, __830, NULL,
-                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[Sit01], 0x10, 0, __831, NULL, NULL, __830, NULL, NULL,
+    xAnimTableNewState(table, g_strz_bossanim[Run01], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
                        xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[Hit02], 0x10, 0, __831, NULL, NULL, __830, NULL, NULL,
+    xAnimTableNewState(table, g_strz_bossanim[Walk01], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
                        xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[SitShock01], 0x10, 0, __831, NULL, NULL, __830, NULL,
+    xAnimTableNewState(table, g_strz_bossanim[Dizzy01], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[ElbowDrop01], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[CLBegin01], 0x10, 0, __831, NULL, NULL, __830, NULL,
+    xAnimTableNewState(table, g_strz_bossanim[Leap01], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[Leap02], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[Leap03], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[Leap04], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[Sit01], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[Hit02], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[SitShock01], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[CLLoop01], 0x10, 0, __831, NULL, NULL, __830, NULL,
+    xAnimTableNewState(table, g_strz_bossanim[CLBegin01], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[CLEnd01], 0x10, 0, __831, NULL, NULL, __830, NULL,
+    xAnimTableNewState(table, g_strz_bossanim[CLLoop01], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[NoHeadIdle01], 0x10, 0, __831, NULL, NULL, __830,
+    xAnimTableNewState(table, g_strz_bossanim[CLEnd01], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[NoHeadIdle01], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[NoHeadWaving01], 0x10, 0, 1.0f, NULL, NULL, 0.0f,
                        NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[NoHeadWaving01], 0x10, 0, __831, NULL, NULL, __830,
+    xAnimTableNewState(table, g_strz_bossanim[NoHeadGetUp01], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[NoHeadShotUp01], 0x10, 0, 1.0f, NULL, NULL, 0.0f,
                        NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[NoHeadGetUp01], 0x10, 0, __831, NULL, NULL, __830,
-                       NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[NoHeadShotUp01], 0x10, 0, __831, NULL, NULL, __830,
-                       NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[NoHeadShock01], 0x10, 0, __831, NULL, NULL, __830,
-                       NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[NoHeadReplace01], 0x10, 0, __831, NULL, NULL, __830,
+    xAnimTableNewState(table, g_strz_bossanim[NoHeadShock01], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL,
+                       NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_bossanim[NoHeadReplace01], 0x10, 0, 1.0f, NULL, NULL, 0.0f,
                        NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
 
-    NPCC_BuildStandardAnimTran(table, g_strz_bossanim, ourAnims, 1, __842);
+    NPCC_BuildStandardAnimTran(table, g_strz_bossanim, ourAnims, 1, 0.20000000298023224f);
 
     return table;
 }
@@ -279,21 +244,21 @@ xAnimTable* ZNPC_AnimTable_BossSandyHead()
 
     table = xAnimTableNew(str_SandyBossHead, NULL, 0);
 
-    xAnimTableNewState(table, str_Idle01, 0x10, 0, __831, NULL, NULL, __830, NULL, NULL,
+    xAnimTableNewState(table, str_Idle01, 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
                        xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, str_Carried01, 0x10, 0, __831, NULL, NULL, __830, NULL, NULL,
+    xAnimTableNewState(table, str_Carried01, 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
                        xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, str_Shocked01, 0x10, 0, __831, NULL, NULL, __830, NULL, NULL,
+    xAnimTableNewState(table, str_Shocked01, 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
                        xAnimDefaultBeforeEnter, NULL, NULL);
 
-    xAnimTableNewTransition(table, str_Idle01, str_Carried01, HeadIsCarried, NULL, 0, 0, __830,
-                            __830, 0, 0, _864, NULL);
-    xAnimTableNewTransition(table, str_Carried01, str_Idle01, HeadNotCarried, NULL, 0, 0, __830,
-                            __830, 0, 0, _864, NULL);
-    xAnimTableNewTransition(table, str_Idle01, str_Shocked01, HeadIsShocked, NULL, 0, 0, __830,
-                            __830, 0, 0, _864, NULL);
-    xAnimTableNewTransition(table, str_Shocked01, str_Idle01, HeadNotShocked, NULL, 0, 0, __830,
-                            __830, 0, 0, _864, NULL);
+    xAnimTableNewTransition(table, str_Idle01, str_Carried01, HeadIsCarried, NULL, 0, 0, 0.0f, 0.0f,
+                            0, 0, 0.25f, NULL);
+    xAnimTableNewTransition(table, str_Carried01, str_Idle01, HeadNotCarried, NULL, 0, 0, 0.0f,
+                            0.0f, 0, 0, 0.25f, NULL);
+    xAnimTableNewTransition(table, str_Idle01, str_Shocked01, HeadIsShocked, NULL, 0, 0, 0.0f, 0.0f,
+                            0, 0, 0.25f, NULL);
+    xAnimTableNewTransition(table, str_Shocked01, str_Idle01, HeadNotShocked, NULL, 0, 0, 0.0f,
+                            0.0f, 0, 0, 0.25f, NULL);
 
     return table;
 }
@@ -347,7 +312,7 @@ void zNPCBSandy::hiddenByCutscene()
     {
         this->underwear[i]->state = (this->underwear[i]->state & 0xffffffc0) | 1;
         zEntEvent(this->underwear[i], eEventCollision_Visible_On);
-        this->underwear[i]->timer = __830; // 0.0
+        this->underwear[i]->timer = 0.0f; // 0.0
     }
 
     switch (this->round)
@@ -447,13 +412,13 @@ S32 idleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32, void*)
     xVec3Sub(&tempVector, (xVec3*)&globals.player.ent.model->Mat->pos,
              (xVec3*)&sandy->model->Mat->pos);
 
-    tempVector.y = __830; // 0.0
+    tempVector.y = 0.0f; // 0.0
 
     F32 length = xVec3Length2(&tempVector);
 
-    if (idle->timeInGoal > _1463) // 0.3
+    if (idle->timeInGoal > 0.30000001192092896f) // 0.3
     {
-        if (length > _2173) // 12.0
+        if (length > 12.0f) // 12.0
         {
             *trantype = GOAL_TRAN_SET;
             nextgoal = 'NGB3';
@@ -475,7 +440,7 @@ S32 tauntCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
     S32 nextgoal = 0;
     xVec3 tempVector;
 
-    if (taunt->timeInGoal > _1463) // 0.3
+    if (taunt->timeInGoal > 0.30000001192092896f) // 0.3
     {
         if (sandy->bossFlags & 0x400)
         {
@@ -487,18 +452,18 @@ S32 tauntCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
     xVec3Sub(&tempVector, (xVec3*)&globals.player.ent.model->Mat->pos,
              (xVec3*)&sandy->model->Mat->pos);
 
-    tempVector.y = __830; // 0.0
+    tempVector.y = 0.0f; // 0.0
 
     F32 length = xVec3Length2(&tempVector);
 
-    if (sandy->AnimTimeRemain(NULL) < _1381 * dt) // 1.1
+    if (sandy->AnimTimeRemain(NULL) < 1.100000023841858f * dt) // 1.1
     {
         if (globals.player.ControlOff)
         {
             *trantype = GOAL_TRAN_SET;
             nextgoal = 'NGB1';
         }
-        else if (length > _2173) // 12.0
+        else if (length > 12.0f) // 12.0
         {
             *trantype = GOAL_TRAN_SET;
             nextgoal = 'NGB3';
@@ -521,7 +486,7 @@ S32 noHeadCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 
     if (noHead->stage == 4 || noHead->stage == 5)
     {
-        if (sandy->AnimTimeRemain(NULL) < _2264 * dt) // 1.7
+        if (sandy->AnimTimeRemain(NULL) < 1.7000000476837158f * dt) // 1.7
         {
             *trantype = GOAL_TRAN_SET;
             nextgoal = 'NGB1';
@@ -538,7 +503,7 @@ S32 elbowDropCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
     S32 nextgoal = 0;
     xVec3 tempVector;
 
-    if (edrop->timeInGoal > _1463) // 0.3
+    if (edrop->timeInGoal > 0.30000001192092896f) // 0.3
     {
         if (sandy->bossFlags & 0x400)
         {
@@ -550,11 +515,11 @@ S32 elbowDropCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
     xVec3Sub(&tempVector, (xVec3*)&globals.player.ent.model->Mat->pos,
              (xVec3*)&sandy->model->Mat->pos);
 
-    tempVector.y = __830; // 0.0
+    tempVector.y = 0.0f; // 0.0
 
     F32 length = xVec3Length2(&tempVector);
 
-    if (sandy->AnimTimeRemain(NULL) < _2264 * dt) // 1.7
+    if (sandy->AnimTimeRemain(NULL) < 1.7000000476837158f * dt) // 1.7
     {
         if (globals.player.ControlOff)
         {
@@ -567,7 +532,7 @@ S32 elbowDropCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
             *trantype = GOAL_TRAN_SET;
             nextgoal = 'NGB2';
         }
-        else if (length < _2173) // 12.0
+        else if (length < 12.0f) // 12.0
         {
             *trantype = GOAL_TRAN_SET;
             nextgoal = 'NGB4';
@@ -590,7 +555,7 @@ S32 leapCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 
     if (leap->stage == 3)
     {
-        if (sandy->AnimTimeRemain(NULL) < _2264 * dt) // 1.7
+        if (sandy->AnimTimeRemain(NULL) < 1.7000000476837158f * dt) // 1.7
         {
             if (sandy->bossFlags & 2)
             {
