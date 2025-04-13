@@ -57,9 +57,3 @@ void NPARMgmt::KillAll()
     this->cnt_active = 0;
 }
 
-//zNPCB_SB2* zNPCB_SB2::singleton()
-//{
-    //return _singleton__9zNPCB_SB2;
-//}
-
-
