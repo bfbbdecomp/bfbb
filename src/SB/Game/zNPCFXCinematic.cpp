@@ -6,11 +6,12 @@
 #include <types.h>
 #include "xCutscene.h"
 
+static S32 init = 0;
+
 void zNPCFXShutdown()
 {
 }
 
-static S32 init = 0;
 void zNPCFXCinematic_Init()
 {
     if (!init)
