@@ -226,7 +226,14 @@ xAnimTable* ZNPC_AnimTable_BossSandy()
     xAnimTableNewState(table, g_strz_bossanim[NoHeadReplace01], 0x10, 0, 1.0f, NULL, NULL, 0.0f,
                        NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
 
-    NPCC_BuildStandardAnimTran(table, g_strz_bossanim, ourAnims, 1, 0.20000000298023224f);
+    NPCC_BuildStandardAnimTran(table, g_strz_bossanim, ourAnims, 1, 0.2f);
+
+    xAnimTransition* tList = table->TransitionList;
+    while (tList != NULL)
+    {
+        tList->BlendRecip = 3.3333333f;
+        tList = tList->Next;
+    }
 
     return table;
 }
