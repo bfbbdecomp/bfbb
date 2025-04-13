@@ -225,12 +225,12 @@ void ZNPC_Villager_Startup();
 void ZNPC_Villager_Shutdown();
 xFactoryInst* ZNPC_Create_Villager(S32 who, RyzMemGrow* growCtxt, void*);
 void ZNPC_Destroy_Villager(xFactoryInst* inst);
-NPCSndTrax g_sndTrax_Villager;
 S32 zParamGetFloatList(xModelAssetParam* parmdata, U32 pdatsize, const char* str32, S32 found,
                        F32* non_choices, F32 len_mvptspline);
 void zNPCVillager_SceneFinish();
 void zNPCVillager_SceneTimestep(xScene* xscn, F32 dt);
 
+extern NPCSndTrax g_sndTrax_Villager;
 extern NPCSndTrax g_sndTrax_VillagerMale;
 extern NPCSndTrax g_sndTrax_VillagerFemale;
 extern NPCSndTrax g_sndTrax_VillagerElder;
