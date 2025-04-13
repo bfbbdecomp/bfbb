@@ -32,13 +32,13 @@ void NPCCone::TextureSet(RwRaster* raster)
 void NPCCone::UVSliceSet(F32 u, F32 v)
 {
     this->uv_tip[2] = u;
-    this->uv_slice[1]  = v; 
+    this->uv_slice[1] = v; 
 }
 
 void NPCCone::UVBaseSet(F32 u, F32 v)
 {
     this->uv_tip[0] = u;
-    this->uv_tip[1]  = v;
+    this->uv_tip[1] = v;
 }
 
 void NPCCone::ColorSet(RwRGBA top, RwRGBA bot)
