@@ -6,18 +6,18 @@
 #include <types.h>
 #include "xCutscene.h"
 
+static S32 init = 0;
+
 void zNPCFXShutdown()
 {
 }
 
-static S32 init = 0;
 void zNPCFXCinematic_Init()
 {
     if (!init)
     {
         init = 1;
     }
-    //g_noz_ncin = &nozey_npc_cinematics;
 }
 
 void clamp_bone_index(NCINEntry*, RpAtomic*)
@@ -56,10 +56,4 @@ void NPARMgmt::KillAll()
 {
     this->cnt_active = 0;
 }
-
-//zNPCB_SB2* zNPCB_SB2::singleton()
-//{
-    //return _singleton__9zNPCB_SB2;
-//}
-
 
