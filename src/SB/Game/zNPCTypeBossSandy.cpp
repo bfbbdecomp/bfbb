@@ -5,6 +5,7 @@
 #include "xEvent.h"
 #include "xCamera.h"
 #include "xMath3.h"
+#include "xDebug.h"
 
 #include "zEnt.h"
 #include "zFX.h"
@@ -12,6 +13,8 @@
 #include "zNPCSndTable.h"
 #include "zNPCTypeBossSandy.h"
 #include "xMarkerAsset.h"
+#include "zCamera.h"
+#include "zGrid.h"
 
 extern const char bossSandyStrings[];
 
@@ -103,9 +106,24 @@ static char* sNFSoundLabel[30] = {
     "FAB1025", "FAB1026", "FAB1027", "FAB1028", "FAB1029", "FAB1030"
 };
 
+static const tweak_callback newsfish_cb = {};
+static const tweak_callback shockwave_cb = {};
+
 extern zGlobals globals;
 
 extern NPCSndTrax g_sndTrax_BossSandy[1];
+
+static S32 idleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 tauntCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 noHeadCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 elbowDropCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 leapCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 chaseCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 meleeCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 sitCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 getUpCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 runToRopeCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 clotheslineCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
 
 void on_change_newsfish(const tweak_info& tweak)
 {
@@ -263,6 +281,140 @@ xAnimTable* ZNPC_AnimTable_BossSandyHead()
     return table;
 }
 
+void zNPCBSandy::Init(xEntAsset* asset)
+{
+    S32 i;
+    xEnt* ent;
+    char objName[32];
+    xMarkerAsset* laserMarker;
+    U32 colorPicker;
+    RwRGBA* _col;
+    // RwRGBA* _col;
+    // RwRGBA* _col;
+    // RwRGBA* _col;
+
+    zNPCCommon::Init(asset);
+    sSandyPtr = this;
+
+    round = 1;
+    firstTimeR1Csn = 1;
+    boundFlags = (U32*)xMemAlloc(gActiveHeap, 13 * sizeof(U32), 0x0);
+    boundList = (xEnt**)xMemAlloc(gActiveHeap, 13 * sizeof(xEnt*), 0x0);
+
+    for (i = 0; i < 13; i++)
+    {
+    }
+}
+
+void zNPCBSandy::Setup()
+{
+    S32 i;
+    char objName[32];
+
+    newsfish = (zNPCNewsFish*)zSceneFindObject(xStrHash("NPC_NEWSCASTER"));
+    newsfish->TalkOnScreen(1);
+
+    strcpy(objName, "HEALTH_00");
+    for (i = 0; i < 3; i++)
+    {
+        objName[8] = '1' + (char)i;
+        underwear[i] = (zEntPickup*)zSceneFindObject(xStrHash(objName));
+    }
+
+    // Configure and initialize bossCam
+    bossCam.cfg.zone_rest.distance = 6.0f;
+    bossCam.cfg.zone_rest.height = 1.3f;
+    bossCam.cfg.zone_rest.height_focus = 2.0f;
+
+    bossCam.cfg.zone_above.distance = 3.0f;
+    bossCam.cfg.zone_above.height = 8.2f;
+    bossCam.cfg.zone_above.height_focus = 4.0f;
+
+    bossCam.cfg.zone_below.distance = 4.5f;
+    bossCam.cfg.zone_below.height = 0.15f;
+    bossCam.cfg.zone_below.height_focus = 2.0f;
+
+    bossCam.cfg.move_speed = 10.0f;
+    bossCam.cfg.turn_speed = 10.0f;
+    bossCam.cfg.stick_speed = 10.0f;
+    bossCam.cfg.stick_yaw_vel = 10.0f;
+    bossCam.cfg.max_yaw_vel = 10.0f;
+    bossCam.cfg.margin_angle = -0.4f;
+
+    bossCam.init();
+    bossCam.add_tweaks("NPC|zNPCBSandy|Boss Cam|");
+
+    // Configure and initialize specialBossCam
+    specialBossCam.cfg.zone_rest.distance = 9.7f;
+    specialBossCam.cfg.zone_rest.height = 4.0f;
+    specialBossCam.cfg.zone_rest.height_focus = 4.0f;
+
+    specialBossCam.cfg.zone_above.distance = 10.0f;
+    specialBossCam.cfg.zone_above.height = 7.0f;
+    specialBossCam.cfg.zone_above.height_focus = 0.15f;
+
+    specialBossCam.cfg.zone_below.distance = 10.0f;
+    specialBossCam.cfg.zone_below.height = 0.5f;
+    specialBossCam.cfg.zone_below.height_focus = 5.0f;
+
+    specialBossCam.cfg.move_speed = 10.0f;
+    specialBossCam.cfg.turn_speed = 10.0f;
+    specialBossCam.cfg.stick_speed = 10.0f;
+    specialBossCam.cfg.stick_yaw_vel = 10.0f;
+    specialBossCam.cfg.max_yaw_vel = 10.0f;
+    specialBossCam.cfg.margin_angle = -0.4f;
+
+    specialBossCam.init();
+    specialBossCam.add_tweaks("NPC|zNPCBSandy|Mat Smash Cam|");
+
+    zNPCCommon::Setup();
+}
+
+void zNPCBSandy::SelfSetup()
+{
+    xBehaveMgr* bmgr = xBehaveMgr_GetSelf();
+    psy_instinct = bmgr->Subscribe(this, 0);
+
+    xPsyche* psy = psy_instinct;
+    psy->BrainBegin();
+
+    xGoal* goal = psy->AddGoal('NGB1', NULL);
+    goal->SetCallbacks(idleCB, NULL, NULL, NULL);
+
+    goal = psy->AddGoal('NGB2', NULL);
+    goal->SetCallbacks(tauntCB, NULL, NULL, NULL);
+
+    goal = psy->AddGoal('NGB3', NULL);
+    goal->SetCallbacks(chaseCB, NULL, NULL, NULL);
+
+    goal = psy->AddGoal('NGB4', NULL);
+    goal->SetCallbacks(meleeCB, NULL, NULL, NULL);
+
+    goal = psy->AddGoal('NGB5', NULL);
+    goal->SetCallbacks(noHeadCB, NULL, NULL, NULL);
+
+    goal = psy->AddGoal('NGB6', NULL);
+    goal->SetCallbacks(elbowDropCB, NULL, NULL, NULL);
+
+    goal = psy->AddGoal('NGB7', NULL);
+    goal->SetCallbacks(leapCB, NULL, NULL, NULL);
+
+    goal = psy->AddGoal('NGB8', NULL);
+    goal->SetCallbacks(sitCB, NULL, NULL, NULL);
+
+    goal = psy->AddGoal('NGB9', NULL);
+    goal->SetCallbacks(getUpCB, NULL, NULL, NULL);
+
+    goal = psy->AddGoal('NGB:', NULL);
+    goal->SetCallbacks(runToRopeCB, NULL, NULL, NULL);
+
+    goal = psy->AddGoal('NGB;', NULL);
+    goal->SetCallbacks(clotheslineCB, NULL, NULL, NULL);
+
+    psy->BrainEnd();
+    psy->SetSafety('NGB1');
+}
+
 void zNPCBSandy::ParseINI()
 {
     zNPCCommon::ParseINI();
@@ -273,11 +425,194 @@ void zNPCBSandy::ParseINI()
     NPCS_SndTablePrepare(g_sndTrax_BossSandy);
 }
 
+U32 zNPCBSandy::AnimPick(S32 gid, en_NPC_GOAL_SPOT param_2, xGoal* rawgoal)
+{
+    S32 index = -1;
+    U32 animID = 0;
+    zNPCGoalBossSandyClothesline* cl;
+
+    switch (gid)
+    {
+    case 'NGB1':
+        index = 1;
+        break;
+    case 'NGB2':
+        index = 3;
+        break;
+    case 'NGB3':
+        index = 5;
+        break;
+    case 'NGB4':
+        index = 6;
+        break;
+    case 'NGB5':
+        zNPCGoalBossSandyNoHead* noHeadGoal = (zNPCGoalBossSandyNoHead*)rawgoal;
+        U32 anid = noHeadGoal->stage;
+        if (anid == 0)
+        {
+            if (round == 2)
+            {
+                index = 23;
+            }
+            else
+            {
+                index = 24;
+            }
+        }
+        else if (anid == 1)
+        {
+            if (round == 2)
+            {
+                index = 21;
+            }
+            else
+            {
+                index = 22;
+            }
+        }
+        else if (anid == 2)
+        {
+            index = 25;
+        }
+        else if (anid == 3)
+        {
+            index = 21;
+        }
+        else if (anid == 4)
+        {
+            index = 26;
+        }
+        else if (anid == 5)
+        {
+            index = 27;
+        }
+        break;
+    case 'NGB6':
+        index = 11;
+        break;
+    case 'NGB7':
+        index = 12;
+        break;
+    case 'NGB8':
+        zNPCGoalBossSandySit* sitGoal = (zNPCGoalBossSandySit*)rawgoal;
+        if ((sitGoal->sitFlags & 2) != 0x0)
+        {
+            index = 17;
+        }
+        else
+        {
+            index = 16;
+        }
+        break;
+    case 'NGB:':
+        index = 4;
+        break;
+    case 'NGB;':
+        cl = (zNPCGoalBossSandyClothesline*)rawgoal;
+        if (cl->stage == 0)
+        {
+            index = 18;
+        }
+        else if (cl->stage == 1 && cl->playedAnimEarly == FALSE)
+        {
+            index = 19;
+        }
+        else
+        {
+            index = 20;
+        }
+        break;
+    case 'NGB9':
+        index = 9;
+        break;
+    default:
+        index = 1;
+        break;
+    }
+
+    if (index > -1)
+    {
+        animID = g_hash_bossanim[index];
+    }
+
+    return animID;
+}
+
 void zNPCBSandy_BossDamageEffect_Init()
 {
     for (S32 i = 0; i < 4; i++)
     {
         BDErecord[i].BDEminst = NULL;
+    }
+}
+
+static void UpdateSandyBossCam(zNPCBSandy* sandy, F32 dt)
+{
+    S32 needToCallStart = 0;
+    xVec3 tempTarget;
+
+    if ((zCameraIsTrackingDisabled() & 0x8) == 0)
+    {
+        needToCallStart = 1;
+    }
+
+    zCameraDisableTracking(CO_BOSS);
+
+    if (needToCallStart)
+    {
+        sandy->bossCam.start(globals.camera);
+    }
+
+    if (sandy->bossFlags & 0x40)
+    {
+        if ((sandy->bossFlags & 0x2000) == 0)
+        {
+            sandy->specialBossCam.start(globals.camera);
+        }
+
+        tempTarget.x = globals.player.ent.model->Mat->pos.x;
+        tempTarget.y = 0.0f;
+        tempTarget.z = globals.player.ent.model->Mat->pos.z;
+        sandy->specialBossCam.set_targets(tempTarget, (xVec3&)sCamSubTarget, 2.0f);
+
+        if ((sandy->bossFlags & 0x4000))
+        {
+            sandy->specialBossCam.update(10.0f);
+            sandy->bossFlags &= ~0x4000;
+        }
+        else
+        {
+            sandy->specialBossCam.update(dt);
+        }
+    }
+    else
+    {
+        if (sandy->bossFlags & 0x2000)
+        {
+            sandy->bossCam.start(globals.camera);
+        }
+
+        sandy->bossCam.set_targets(*((xVec3*)&globals.player.ent.model->Mat->pos),
+                                   (xVec3&)sCamSubTarget, 10.0f);
+
+        if (sandy->bossFlags & 0x4000)
+        {
+            sandy->bossCam.update(10.0f);
+            sandy->bossFlags &= ~0x4000;
+        }
+        else
+        {
+            sandy->bossCam.update(dt);
+        }
+    }
+
+    if (sandy->bossFlags & 0x40)
+    {
+        sandy->bossFlags |= 0x2000;
+    }
+    else
+    {
+        sandy->bossFlags &= ~0x2000;
     }
 }
 
@@ -375,6 +710,54 @@ void zNPCBSandy::Damage(en_NPC_DAMAGE_TYPE damtype, xBase*, const xVec3*)
     }
 }
 
+void zNPCBSandy_AddBoundEntsToGrid(zScene* scn)
+{
+    S32 i;
+    S32 isLimb;
+    xEnt* ent;
+
+    if (sOthersHaventBeenAdded)
+    {
+        sOthersHaventBeenAdded = 0;
+
+        for (i = 0; i < 13; i++)
+        {
+            ent = sSandyPtr->boundList[i];
+            if (i == 2 || i == 4 || i == 9 || i == 11)
+            {
+                isLimb = TRUE;
+            }
+            else
+            {
+                isLimb = FALSE;
+            }
+
+            if (isLimb || xGridEntIsTooBig(&colls_grid, ent) != FALSE)
+            {
+                xGridAdd(&colls_oso_grid, ent);
+
+                if (isLimb || xGridEntIsTooBig(&colls_oso_grid, ent) != FALSE)
+                {
+                    ent->gridb.oversize = 0x2;
+                }
+                else
+                {
+                    ent->gridb.oversize = 0x1;
+                }
+            }
+            else
+            {
+                xGridAdd(&colls_grid, ent);
+                ent->gridb.oversize = 0x0;
+            }
+        }
+    }
+    else
+    {
+        sSandyPtr = NULL;
+    }
+}
+
 void zNPCBSandy_GameIsPaused(zScene*)
 {
     if (sSandyPtr)
@@ -387,7 +770,7 @@ void zNPCBSandy_GameIsPaused(zScene*)
     }
 }
 
-S32 idleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32, void*)
+static S32 idleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32, void*)
 {
     zNPCGoalBossSandyIdle* idle = (zNPCGoalBossSandyIdle*)rawgoal;
     zNPCBSandy* sandy = (zNPCBSandy*)idle->psyche->clt_owner;
@@ -433,7 +816,7 @@ S32 idleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32, void*)
     return nextgoal;
 }
 
-S32 tauntCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
+static S32 tauntCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 {
     zNPCGoalBossSandyTaunt* taunt = (zNPCGoalBossSandyTaunt*)rawgoal;
     zNPCBSandy* sandy = (zNPCBSandy*)taunt->psyche->clt_owner;
@@ -478,7 +861,10 @@ S32 tauntCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
     return nextgoal;
 }
 
-S32 noHeadCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
+static S32 chaseCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 meleeCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+
+static S32 noHeadCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 {
     zNPCGoalBossSandyNoHead* noHead = (zNPCGoalBossSandyNoHead*)rawgoal;
     zNPCBSandy* sandy = (zNPCBSandy*)noHead->psyche->clt_owner;
@@ -496,7 +882,7 @@ S32 noHeadCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
     return nextgoal;
 }
 
-S32 elbowDropCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
+static S32 elbowDropCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 {
     zNPCGoalBossSandyElbowDrop* edrop = (zNPCGoalBossSandyElbowDrop*)rawgoal;
     zNPCBSandy* sandy = (zNPCBSandy*)edrop->psyche->clt_owner;
@@ -547,7 +933,7 @@ S32 elbowDropCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
     return nextgoal;
 }
 
-S32 leapCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
+static S32 leapCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 {
     zNPCGoalBossSandyLeap* leap = (zNPCGoalBossSandyLeap*)rawgoal;
     zNPCBSandy* sandy = (zNPCBSandy*)leap->psyche->clt_owner;
@@ -571,6 +957,20 @@ S32 leapCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
     }
 
     return nextgoal;
+}
+
+static S32 sitCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 getUpCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 runToRopeCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 clotheslineCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+
+S32 zNPCGoalBossSandyIdle::Enter(F32 dt, void* updCtxt)
+{
+    zNPCBSandy* sandy;
+
+    // xVec3Init();
+
+    return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
 void xBinaryCamera::add_tweaks(char const*)

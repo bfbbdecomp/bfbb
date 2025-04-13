@@ -186,6 +186,10 @@ struct zNPCGoalBossSandyIdle : zNPCGoalCommon
     zNPCGoalBossSandyIdle(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    virtual S32 Enter(F32 dt, void* updCtxt);
+    virtual S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
+    virtual S32 Exit(F32 dt, void* updCtxt);
 };
 
 struct zNPCGoalBossSandyTaunt : zNPCGoalCommon
@@ -195,6 +199,9 @@ struct zNPCGoalBossSandyTaunt : zNPCGoalCommon
     zNPCGoalBossSandyTaunt(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    virtual S32 Enter(F32 dt, void* updCtxt);
+    virtual S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
 };
 
 struct zNPCGoalBossSandyChase : zNPCGoalCommon
@@ -204,6 +211,10 @@ struct zNPCGoalBossSandyChase : zNPCGoalCommon
     zNPCGoalBossSandyChase(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    virtual S32 Enter(F32 dt, void* updCtxt);
+    virtual S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
+    virtual S32 Exit(F32 dt, void* updCtxt);
 };
 
 struct zNPCGoalBossSandyMelee : zNPCGoalCommon
@@ -213,6 +224,10 @@ struct zNPCGoalBossSandyMelee : zNPCGoalCommon
     zNPCGoalBossSandyMelee(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    virtual S32 Enter(F32 dt, void* updCtxt);
+    virtual S32 Exit(F32 dt, void* updCtxt);
+    virtual S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
 };
 
 struct zNPCGoalBossSandyNoHead : zNPCGoalCommon
@@ -224,6 +239,9 @@ struct zNPCGoalBossSandyNoHead : zNPCGoalCommon
     zNPCGoalBossSandyNoHead(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    virtual S32 Enter(F32 dt, void* updCtxt);
+    virtual S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
 };
 
 struct zNPCGoalBossSandyElbowDrop : zNPCGoalCommon
@@ -234,6 +252,10 @@ struct zNPCGoalBossSandyElbowDrop : zNPCGoalCommon
     zNPCGoalBossSandyElbowDrop(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    virtual S32 Enter(F32 dt, void* updCtxt);
+    virtual S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
+    virtual S32 Exit(F32 dt, void* updCtxt);
 };
 
 struct zNPCGoalBossSandyLeap : zNPCGoalCommon
@@ -249,6 +271,9 @@ struct zNPCGoalBossSandyLeap : zNPCGoalCommon
     {
     }
 
+    virtual S32 Enter(F32 dt, void* updCtxt);
+    virtual S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
+    virtual S32 Exit(F32 dt, void* updCtxt);
     S32 Name();
 };
 
@@ -261,6 +286,10 @@ struct zNPCGoalBossSandySit : zNPCGoalCommon
     zNPCGoalBossSandySit(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    virtual S32 Enter(F32 dt, void* updCtxt);
+    virtual S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
+    virtual S32 Exit(F32 dt, void* updCtxt);
 };
 
 struct zNPCGoalBossSandyGetUp : zNPCGoalCommon
@@ -270,6 +299,9 @@ struct zNPCGoalBossSandyGetUp : zNPCGoalCommon
     zNPCGoalBossSandyGetUp(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    virtual S32 Enter(F32 dt, void* updCtxt);
+    virtual S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
 };
 
 struct zNPCGoalBossSandyRunToRope : zNPCGoalCommon
@@ -279,6 +311,10 @@ struct zNPCGoalBossSandyRunToRope : zNPCGoalCommon
     zNPCGoalBossSandyRunToRope(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    virtual S32 Enter(F32 dt, void* updCtxt);
+    virtual S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
+    virtual S32 Exit(F32 dt, void* updCtxt);
 };
 
 struct zNPCGoalBossSandyClothesline : zNPCGoalCommon
@@ -292,6 +328,9 @@ struct zNPCGoalBossSandyClothesline : zNPCGoalCommon
     zNPCGoalBossSandyClothesline(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }
+
+    virtual S32 Enter(F32 dt, void* updCtxt);
+    virtual S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
 };
 
 struct SandyLimbSpring
