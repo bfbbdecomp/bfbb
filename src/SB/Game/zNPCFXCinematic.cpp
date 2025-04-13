@@ -29,6 +29,24 @@ void NPCCone::TextureSet(RwRaster* raster)
     rast_cone = raster;
 }
 
+void NPCCone::UVSliceSet(F32 u, F32 v)
+{
+    this->uv_tip[2] = u;
+    this->uv_slice[1]  = v; 
+}
+
+void NPCCone::UVBaseSet(F32 u, F32 v)
+{
+    this->uv_tip[0] = u;
+    this->uv_tip[1]  = v;
+}
+
+void NPCCone::ColorSet(RwRGBA top, RwRGBA bot)
+{
+    this->rgba_top = top;
+    this->rgba_bot = bot;
+}
+
 void NPCCone::RadiusSet(F32 conefloat)
 {
     rad_cone = conefloat;
@@ -38,3 +56,10 @@ void NPARMgmt::KillAll()
 {
     this->cnt_active = 0;
 }
+
+//zNPCB_SB2* zNPCB_SB2::singleton()
+//{
+    //return _singleton__9zNPCB_SB2;
+//}
+
+

@@ -8,6 +8,10 @@
 #include "zNPCHazard.h"
 #include "zParEmitter.h"
 #include "zShrapnel.h"
+#include "rwcore.h"
+
+
+//#include "iColor.h"
 
 void zNPCFXStartup();
 void zNPCFXShutdown();
@@ -35,7 +39,6 @@ enum en_nparptyp
 
 struct NPARData 
 {
-public:
     xVec3 pos;
     F32 xy_size[2];
     F32 uv_tl[2];
@@ -242,6 +245,9 @@ struct NPCCone
     F32 uv_tip[2];
     F32 uv_slice[2];
     void TextureSet(RwRaster* raster);
+    void UVSliceSet(F32, F32);
+    void UVBaseSet(F32, F32);
+    void ColorSet(RwRGBA, RwRGBA);
     void RadiusSet(F32);
 };
 
