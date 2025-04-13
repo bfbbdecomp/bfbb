@@ -11,8 +11,6 @@
 #include "rwcore.h"
 
 
-//#include "iColor.h"
-
 void zNPCFXStartup();
 void zNPCFXShutdown();
 S32 zNPCFXCutscenePrep(const xScene*, F32, const zCutsceneMgr* csnmgr);
