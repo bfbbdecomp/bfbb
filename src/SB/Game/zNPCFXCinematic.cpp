@@ -18,7 +18,6 @@ void zNPCFXCinematic_Init()
     {
         init = 1;
     }
-    //g_noz_ncin = &nozey_npc_cinematics;
 }
 
 void clamp_bone_index(NCINEntry*, RpAtomic*)
