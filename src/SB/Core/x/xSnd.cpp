@@ -15,6 +15,8 @@ extern F32 _598;
 extern F32 _599;
 extern xSndGlobals gSnd;
 
+static S32 faders_active;
+
 void xSndInit()
 {
     iSndInit();
@@ -86,6 +88,49 @@ void xSndResume()
     sDelayedPaused = 0;
 }
 
+void xSndPauseAll(U32 pause_effects, U32 pause_streams)
+{
+    sDelayedPaused = pause_effects;
+
+    for (U32 i = 0; i < 0x40; i++)
+    {
+        if (gSnd.voice[i].flags & 1)
+        {
+            if (gSnd.voice[i].flags & 2)
+            {
+                iSndPause(gSnd.voice[i].sndID, pause_effects);
+            }
+            else if (gSnd.voice[i].flags & 4)
+            {
+                iSndPause(gSnd.voice[i].sndID, pause_streams);
+            }
+        }
+    }
+}
+
+void xSndPauseCategory(U32 mask, U32 pause)
+{
+    for (U32 i = 0; i < 0x40; i++)
+    {
+        if ((gSnd.voice[i].flags & 1) && (mask & 1 << gSnd.voice[i].category))
+        {
+            iSndPause(gSnd.voice[i].sndID, pause);
+        }
+    }
+}
+
+void xSndStopAll(U32 mask)
+{
+    for (U32 i = 0; i < 0x40; i++)
+    {
+        if ((gSnd.voice[i].flags & 1) && (mask & 1 << gSnd.voice[i].category))
+        {
+            iSndStop(gSnd.voice[i].sndID);
+        }
+    }
+    xSndDelayedInit();
+}
+
 void xSndSetCategoryVol(sound_category category, F32 vol)
 {
     gSnd.categoryVolFader[category] = vol;
@@ -99,6 +144,32 @@ void xSndDelayedInit()
         sDelayedSnd[i].delay = *(volatile F32*)&_598;
     }
     sDelayedPaused = 0;
+}
+
+void xSndAddDelayed(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, U32 parentID, xEnt* parentEnt, xVec3* pos, F32 innerRadius, F32 outerRadius, sound_category category, F32 delay)
+{
+    _xSndDelayed* snd = &sDelayedSnd[0];
+
+    for (U32 i = 0x10; i != 0; i--)
+    {
+        if (snd->delay <= 0.0f)
+        {
+            snd->id = id;
+            snd->vol = vol;
+            snd->pitch = pitch;
+            snd->priority = priority;
+            snd->flags = flags;
+            snd->parentID = parentID;
+            snd->parentEnt = parentEnt;
+            snd->pos = pos;
+            snd->innerRadius = innerRadius;
+            snd->outerRadius = outerRadius;
+            snd->category = category;
+            snd->delay = delay;
+            return;
+        }
+        snd++;
+    }
 }
 
 void xSndCalculateListenerPosition()
@@ -129,53 +200,36 @@ void xSndCalculateListenerPosition()
 
 void xSndInternalUpdateVoicePos(xSndVoiceInfo* pVoice)
 {
-    U32 flags = pVoice->flags;
-    xVec3* ent;
-
-    if ((flags & 1) != 0)
+    if ((pVoice->flags & 1) && (pVoice->flags & 8))
     {
-        // FIXME: WIP
-        // if ((flags & 8) != 0)
-        // {
-        //     if ((flags & 0x10) != 0)
-        //     {
-        //         if (pVoice->parentPos == (xVec3*)0x0)
-        //         {
-        //             if (pVoice->parentID == 0)
-        //             {
-        //                 if ((flags & 8) == 0)
-        //                 {
-        //                     pVoice->actualPos = gSnd.pos;
-        //                 }
-        //             }
-        //             else
-        //             {
-        //                 ent = pVoice->parentID & 0xfffffffc);
-        //                 if ((flags & 0x800) == 0)
-        //                 {
-        //                     if ((? & 1) == 0)
-        //                     {
-        //                         pVoice->flags = flags & 0xffffffef;
-        //                     }
-        //                     else
-        //                     {
-        //                         pxVar2 = (xVec3*)xEntGetPos((xEnt*)ent);
-        //                         xVec3Copy(pVoice->actualPos, ent);
-        //                     }
-        //                 }
-        //                 else
-        //                 {
-        //                     pVoice->actualPos = ent;
-        //                 }
-        //             }
-        //         }
-        //         else
-        //         {
-        //             pVoice->actualPos = pVoice->parentPos;
-        //         }
-        //     }
-        //     xSndProcessSoundPos(pVoice->actualPos, pVoice->playPos);
-        // }
+        if (pVoice->flags & 0x10)
+        {
+            if (pVoice->parentPos != NULL)
+            {
+                pVoice->actualPos = *pVoice->parentPos;
+            }
+            else if (pVoice->parentID != 0)
+            {
+                xEnt* ent = (xEnt*)(pVoice->parentID & 0xfffffffc); // uhh...
+                if (pVoice->flags & 0x800)
+                {
+                    pVoice->actualPos = *(xVec3*)(ent);
+                }
+                else if (ent->baseFlags & 1)
+                {
+                    xVec3Copy(&pVoice->actualPos, xEntGetPos(ent));
+                }
+                else
+                {
+                    pVoice->flags &= 0xffffffef;
+                }
+            }
+            else if (!(pVoice->flags & 8))
+            {
+                pVoice->actualPos = gSnd.pos;
+            }
+        }
+        xSndProcessSoundPos(&pVoice->actualPos, &pVoice->playPos);
     }
 }
 
@@ -193,7 +247,7 @@ void xSndSetListenerData(sound_listener_type listenerType, const xMat4x3* matrix
     * This code appears to be correct but there appears to be a possibility
     * of accessing this array out of bounds.
     * It may be possible the dwarf data for sound_listener_type is incorrect
-    * Otherwise it could be a potential bug 
+    * Otherwise it could be a potential bug
     * (Gamecube audio bug source????)
     */
     int i = (int)listenerType;
@@ -304,6 +358,34 @@ void xSndSetExternalCallback(void (*callback)(U32))
     iSndSetExternalCallback(callback);
 }
 
+void reset_faders()
+{
+    faders_active = 0;
+}
+
+class fade_data {
+    // total size: 0x18
+public:
+    unsigned char in; // offset 0x0, size 0x1
+    unsigned int handle; // offset 0x4, size 0x4
+    float start_delay; // offset 0x8, size 0x4
+    float time; // offset 0xC, size 0x4
+    float end_time; // offset 0x10, size 0x4
+    float volume; // offset 0x14, size 0x4
+
+    void operator=(const fade_data& rhs);
+};
+
+void fade_data::operator=(const fade_data& rhs)
+{
+    in          = rhs.in;
+    handle      = rhs.handle;
+    start_delay = rhs.start_delay;
+    time        = rhs.time;
+    end_time    = rhs.end_time;
+    volume      = rhs.volume;
+}
+
 U32 xSndStreamReady(U32 owner)
 {
     xSndVoiceInfo* begin = gSnd.voice;
@@ -313,7 +395,14 @@ U32 xSndStreamReady(U32 owner)
     {
         if (v->lock_owner == owner)
         {
-            return (v->flags & 1) >> 5; // FIXME: Missing cntlzw instruction.
+            if (v->flags & 1)
+            {
+                return 0;
+            }
+            else
+            {
+                return 1;
+            }
         }
     }
 
