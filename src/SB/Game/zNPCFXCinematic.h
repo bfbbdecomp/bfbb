@@ -53,7 +53,6 @@ struct NPARData
 
 struct NPARXtraData 
 {
-
 };
 
 struct NPARMgmt
