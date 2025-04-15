@@ -17,7 +17,7 @@ extern S32 g_cnt_activehaz;
 extern NPCHazard* g_haz_uvAnimQue[27];
 extern RpAtomic* g_hazard_rawModel[30];
 extern xAnimTable* g_haz_animTable[30];
-extern xVec3 g_O3;
+extern const xVec3 g_O3;
 extern F32 _958_Hazard; // 0.0f
 extern F32 _959_Hazard; // 1.0f
 extern F32 _1041_Hazard; // -1.0f

@@ -8,12 +8,64 @@
 #include "zNPCHazard.h"
 #include "zParEmitter.h"
 #include "zShrapnel.h"
+#include "rwcore.h"
+
 
 void zNPCFXStartup();
 void zNPCFXShutdown();
 S32 zNPCFXCutscenePrep(const xScene*, F32, const zCutsceneMgr* csnmgr);
 void zNPCFXCutscene(const xScene*, F32, const zCutsceneMgr* csnmgr);
 void zNPCFXCutsceneDone(const xScene*, F32, const zCutsceneMgr* csnmgr);
+
+enum en_nparptyp 
+{
+    NPAR_TYP_UNKNOWN,
+    NPAR_TYP_OILBUB,
+    NPAR_TYP_TUBESPIRAL,
+    NPAR_TYP_TUBECONFETTI,
+    NPAR_TYP_GLOVEDUST ,
+    NPAR_TYP_MONSOONRAIN,
+    NPAR_TYP_SLEEPYZEEZ,
+    NPAR_TYP_CHUCKSPLASH,
+    NPAR_TYP_TARTARGUNK,
+    NPAR_TYP_DOGBREATH,
+    NPAR_TYP_VISSPLASH,
+    NPAR_TYP_FIREWORKS,
+    NPAR_TYP_NOMORE,
+    NPAR_TYP_FORCE = 2147483647
+};
+
+struct NPARData 
+{
+    xVec3 pos;
+    F32 xy_size[2];
+    F32 uv_tl[2];
+    F32 uv_br[2];
+    RwRGBA color;
+    F32 tmr_remain;
+    F32 tym_exist;
+    F32 fac_abuse;
+    xVec3 vel; 
+    S32 flg_popts : 24;
+    S32 nparmode : 8;
+    F32 unused[3]; 
+};
+
+struct NPARXtraData 
+{
+};
+
+struct NPARMgmt
+{ 
+   en_nparptyp typ_npar;
+   S32 flg_npar;
+   NPARData * par_buf;
+   S32 cnt_active;
+   S32 num_max;
+   RwTexture * txtr;
+   NPARXtraData * xtra_data;
+   void KillAll();
+};
 
 struct NCINLyt
 {
@@ -190,6 +242,9 @@ struct NPCCone
     F32 uv_tip[2];
     F32 uv_slice[2];
     void TextureSet(RwRaster* raster);
+    void UVSliceSet(F32 u, F32 v);
+    void UVBaseSet(F32 u, F32 v);
+    void ColorSet(RwRGBA top, RwRGBA bot);
     void RadiusSet(F32);
 };
 

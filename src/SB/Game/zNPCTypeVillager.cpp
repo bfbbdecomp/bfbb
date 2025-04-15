@@ -21,7 +21,7 @@ extern char* g_strz_platanim[2];
 extern U32 g_hash_platanim[2];
 extern zParEmitter* g_pemit_aqualeak;
 extern xParEmitterCustomSettings g_parf_aqualeak;
-extern xVec3 g_O3;
+extern const xVec3 g_O3;
 
 // Taken from zNPCTypeVillager.s
 // Defining these here makes the stringBase0 offsets match in the later functions.
