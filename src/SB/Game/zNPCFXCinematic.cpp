@@ -39,7 +39,7 @@ void NCIN_Par_BPLANK_JET_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 
         if (fxrec->fxdata.pardata.emitter->tasset)
         {
-            if (((U8*)fxrec->fxdata.pardata.emitter->tasset)[9] != 15)
+            if (fxrec->fxdata.pardata.emitter->tasset->emit_type != 15)
             {
                 fxrec->fxdata.pardata.emitter = NULL;
             }
@@ -52,15 +52,15 @@ void NCIN_Par_BPLANK_JET_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
         return;
     }
 
-    F32 & float_accum = *(F32*)((U8*)fxrec + 40);
+    F32& float_accum = fxrec->pos_A[1].y;
 
-    if (float_accum < zero)
+    if (float_accum <  0.0f)
     {
-        U8 val = ((U8*)fxrec->fxdata.pardata.emitter)[18];
-        float_accum = addVal + (F32)(val);
+        U8 val = fxrec->fxdata.pardata.emitter->emit_pad[0];
+        float_accum = 20.0f + val;
     }
 
-    *((xVec3*)((U8*)fxrec + 48)) = fillVec3Val;
+    fxrec->pos_B[0] = 5.0f;
 }
 
 void NCIN_Par_BPLANK_JET_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
@@ -77,7 +77,7 @@ void NCIN_Par_BPLANK_JET_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 
         if (fxrec->fxdata.pardata.emitter->tasset)
         {
-            if (((U8*)fxrec->fxdata.pardata.emitter->tasset)[9] != 15)
+            if (fxrec->fxdata.pardata.emitter->tasset->emit_type != 15)
             {
                 fxrec->fxdata.pardata.emitter = NULL;
             }
@@ -90,15 +90,15 @@ void NCIN_Par_BPLANK_JET_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
         return;
     }
 
-    F32 & float_accum = *(F32*)((U8*)fxrec + 40);
+    F32& float_accum = fxrec->pos_A[1].y;
 
-    if (float_accum < zero)
+    if (float_accum <  0.0f)
     {
-        U8 val = ((U8*)fxrec->fxdata.pardata.emitter)[18];
-        float_accum = addVal + val;
+        U8 val = fxrec->fxdata.pardata.emitter->emit_pad[0];
+        float_accum = 20.0f + val;
     }
 
-    *((xVec3*)((U8*)fxrec + 48)) = fillVec3Val;
+    fxrec->pos_B[0] = 5.0f;
 }
 
 void NCIN_Par_BPLANK_SBB_FLAMES_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
@@ -115,7 +115,7 @@ void NCIN_Par_BPLANK_SBB_FLAMES_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32
 
         if (fxrec->fxdata.pardata.emitter->tasset)
         {
-            if (((U8*)fxrec->fxdata.pardata.emitter->tasset)[9] != 15)
+            if (fxrec->fxdata.pardata.emitter->tasset->emit_type != 15)
             {
                 fxrec->fxdata.pardata.emitter = NULL;
             }
@@ -128,15 +128,15 @@ void NCIN_Par_BPLANK_SBB_FLAMES_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32
         return;
     }
 
-    F32 & float_accum = *(F32*)((U8*)fxrec + 40);
+    F32& float_accum = fxrec->pos_A[1].y;
 
-    if (float_accum < zero)
+    if (float_accum <  0.0f)
     {
-        U8 val = ((U8*)fxrec->fxdata.pardata.emitter)[18];
-        float_accum = addVal + val;
+        U8 val = fxrec->fxdata.pardata.emitter->emit_pad[0];
+        float_accum = 20.0f + val;
     }
 
-    *((xVec3*)((U8*)fxrec + 48)) = fillVec3Val;
+    fxrec->pos_B[0] = 5.0f;
 }
 
 void NCIN_Par_BPLANK_SBB_FLAMES_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
@@ -153,7 +153,7 @@ void NCIN_Par_BPLANK_SBB_FLAMES_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32
 
         if (fxrec->fxdata.pardata.emitter->tasset)
         {
-            if (((U8*)fxrec->fxdata.pardata.emitter->tasset)[9] != 15)
+            if (fxrec->fxdata.pardata.emitter->tasset->emit_type != 15)
             {
                 fxrec->fxdata.pardata.emitter = NULL;
             }
@@ -166,15 +166,15 @@ void NCIN_Par_BPLANK_SBB_FLAMES_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32
         return;
     }
 
-    F32 & float_accum = *(F32*)((U8*)fxrec + 40);
+    F32& float_accum = fxrec->pos_A[1].y;
 
-    if (float_accum < zero)
+    if (float_accum <  0.0f)
     {
-        U8 val = ((U8*)fxrec->fxdata.pardata.emitter)[18];
-        float_accum = addVal + val;
+        U8 val = fxrec->fxdata.pardata.emitter->emit_pad[0];
+        float_accum = 20.0f + val;
     }
 
-    *((xVec3*)((U8*)fxrec + 48)) = fillVec3Val;
+    fxrec->pos_B[0] = 5.0f;
 }
 
 void NCIN_Par_BPLANK_SBB_JET_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
@@ -191,7 +191,7 @@ void NCIN_Par_BPLANK_SBB_JET_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 pa
 
         if (fxrec->fxdata.pardata.emitter->tasset)
         {
-            if (((U8*)fxrec->fxdata.pardata.emitter->tasset)[9] != 15)
+            if (fxrec->fxdata.pardata.emitter->tasset->emit_type != 15)
             {
                 fxrec->fxdata.pardata.emitter = NULL;
             }
@@ -204,15 +204,15 @@ void NCIN_Par_BPLANK_SBB_JET_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 pa
         return;
     }
 
-    F32 & float_accum = *(F32*)((U8*)fxrec + 40);
+    F32& float_accum = fxrec->pos_A[1].y;
 
-    if (float_accum < zero)
+    if (float_accum <  0.0f)
     {
-        U8 val = ((U8*)fxrec->fxdata.pardata.emitter)[18];
-        float_accum = addVal + val;
+        U8 val = fxrec->fxdata.pardata.emitter->emit_pad[0];
+        float_accum = 20.0f + val;
     }
 
-    *((xVec3*)((U8*)fxrec + 48)) = fillVec3Val;
+    fxrec->pos_B[0] = 5.0f;
 }
 
 void NCIN_Par_BPLANK_SBB_JET_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
@@ -229,7 +229,7 @@ void NCIN_Par_BPLANK_SBB_JET_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 pa
 
         if (fxrec->fxdata.pardata.emitter->tasset)
         {
-            if (((U8*)fxrec->fxdata.pardata.emitter->tasset)[9] != 15)
+            if (fxrec->fxdata.pardata.emitter->tasset->emit_type != 15)
             {
                 fxrec->fxdata.pardata.emitter = NULL;
             }
@@ -242,15 +242,15 @@ void NCIN_Par_BPLANK_SBB_JET_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 pa
         return;
     }
 
-    F32 & float_accum = *(F32*)((U8*)fxrec + 40);
+    F32& float_accum = fxrec->pos_A[1].y;
 
-    if (float_accum < zero)
+    if (float_accum <  0.0f)
     {
-        U8 val = ((U8*)fxrec->fxdata.pardata.emitter)[18];
-        float_accum = addVal + val;
+        U8 val = fxrec->fxdata.pardata.emitter->emit_pad[0];
+        float_accum = 20.0f + val;
     }
 
-    *((xVec3*)((U8*)fxrec + 48)) = fillVec3Val;
+    fxrec->pos_B[0] = 5.0f;
 }
 
 void NCIN_Par_BPLANK_SBB_SMOKE_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
@@ -267,7 +267,7 @@ void NCIN_Par_BPLANK_SBB_SMOKE_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 
 
         if (fxrec->fxdata.pardata.emitter->tasset)
         {
-            if (((U8*)fxrec->fxdata.pardata.emitter->tasset)[9] != 15)
+            if (fxrec->fxdata.pardata.emitter->tasset->emit_type != 15)
             {
                 fxrec->fxdata.pardata.emitter = NULL;
             }
@@ -280,15 +280,15 @@ void NCIN_Par_BPLANK_SBB_SMOKE_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 
         return;
     }
 
-    F32 & float_accum = *(F32*)((U8*)fxrec + 40);
+    F32& float_accum = fxrec->pos_A[1].y;
 
-    if (float_accum < zero)
+    if (float_accum <  0.0f)
     {
-        U8 val = ((U8*)fxrec->fxdata.pardata.emitter)[18];
-        float_accum = addVal + val;
+        U8 val = fxrec->fxdata.pardata.emitter->emit_pad[0];
+        float_accum = 20.0f + val;
     }
 
-    *((xVec3*)((U8*)fxrec + 48)) = fillVec3Val;
+    fxrec->pos_B[0] = 5.0f;
 }
 
 void NCIN_Par_BPLANK_SBB_SMOKE_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
@@ -305,7 +305,7 @@ void NCIN_Par_BPLANK_SBB_SMOKE_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 
 
         if (fxrec->fxdata.pardata.emitter->tasset)
         {
-            if (((U8*)fxrec->fxdata.pardata.emitter->tasset)[9] != 15)
+            if (fxrec->fxdata.pardata.emitter->tasset->emit_type != 15)
             {
                 fxrec->fxdata.pardata.emitter = NULL;
             }
@@ -318,15 +318,15 @@ void NCIN_Par_BPLANK_SBB_SMOKE_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 
         return;
     }
 
-    F32 & float_accum = *(F32*)((U8*)fxrec + 40);
+    F32& float_accum = fxrec->pos_A[1].y;
 
-    if (float_accum < zero)
+    if (float_accum <  0.0f)
     {
-        U8 val = ((U8*)fxrec->fxdata.pardata.emitter)[18];
-        float_accum = addVal + val;
+        U8 val = fxrec->fxdata.pardata.emitter->emit_pad[0];
+        float_accum = 20.0f + val;
     }
 
-    *((xVec3*)((U8*)fxrec + 48)) = fillVec3Val;
+    fxrec->pos_B[0] = 5.0f;
 }
 
 void NCIN_Par_CIN_BIGDUP_SMOKE_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
@@ -343,7 +343,7 @@ void NCIN_Par_CIN_BIGDUP_SMOKE_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 pa
 
         if (fxrec->fxdata.pardata.emitter->tasset)
         {
-            if (((U8*)fxrec->fxdata.pardata.emitter->tasset)[9] != 15)
+            if (fxrec->fxdata.pardata.emitter->tasset->emit_type != 15)
             {
                 fxrec->fxdata.pardata.emitter = NULL;
             }
@@ -356,15 +356,15 @@ void NCIN_Par_CIN_BIGDUP_SMOKE_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 pa
         return;
     }
 
-    F32 & float_accum = *(F32*)((U8*)fxrec + 40);
+    F32& float_accum = fxrec->pos_A[1].y;
 
-    if (float_accum < zero)
+    if (float_accum <  0.0f)
     {
-        U8 val = ((U8*)fxrec->fxdata.pardata.emitter)[18];
-        float_accum = addVal + val;
+        U8 val = fxrec->fxdata.pardata.emitter->emit_pad[0];
+        float_accum = 20.0f + val;
     }
 
-    *((xVec3*)((U8*)fxrec + 48)) = fillVec3Val;
+    fxrec->pos_B[0] = 5.0f;
 }
 
 void NCIN_Par_CIN_BIGDUP_SPAWN_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
@@ -381,7 +381,7 @@ void NCIN_Par_CIN_BIGDUP_SPAWN_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 pa
 
         if (fxrec->fxdata.pardata.emitter->tasset)
         {
-            if (((U8*)fxrec->fxdata.pardata.emitter->tasset)[9] != 15)
+            if (fxrec->fxdata.pardata.emitter->tasset->emit_type != 15)
             {
                 fxrec->fxdata.pardata.emitter = NULL;
             }
@@ -394,15 +394,15 @@ void NCIN_Par_CIN_BIGDUP_SPAWN_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 pa
         return;
     }
 
-    F32 & float_accum = *(F32*)((U8*)fxrec + 40);
+    F32& float_accum = fxrec->pos_A[1].y;
 
-    if (float_accum < zero)
+    if (float_accum <  0.0f)
     {
-        U8 val = ((U8*)fxrec->fxdata.pardata.emitter)[18];
-        float_accum = addVal + val;
+        U8 val = fxrec->fxdata.pardata.emitter->emit_pad[0];
+        float_accum = 20.0f + val;
     }
 
-    *((xVec3*)((U8*)fxrec + 48)) = fillVec3Val;
+    fxrec->pos_B[0] = 5.0f;
 }
 
 void NCIN_Par_CIN_PLATFORM_JETS_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
@@ -419,7 +419,7 @@ void NCIN_Par_CIN_PLATFORM_JETS_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 p
 
         if (fxrec->fxdata.pardata.emitter->tasset)
         {
-            if (((U8*)fxrec->fxdata.pardata.emitter->tasset)[9] != 15)
+            if (fxrec->fxdata.pardata.emitter->tasset->emit_type != 15)
             {
                 fxrec->fxdata.pardata.emitter = NULL;
             }
@@ -432,15 +432,15 @@ void NCIN_Par_CIN_PLATFORM_JETS_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 p
         return;
     }
 
-    F32 & float_accum = *(F32*)((U8*)fxrec + 40);
+    F32& float_accum = fxrec->pos_A[1].y;
 
-    if (float_accum < zero)
+    if (float_accum <  0.0f)
     {
-        U8 val = ((U8*)fxrec->fxdata.pardata.emitter)[18];
-        float_accum = addVal + val;
+        U8 val = fxrec->fxdata.pardata.emitter->emit_pad[0];
+        float_accum = 20.0f + val;
     }
 
-    *((xVec3*)((U8*)fxrec + 48)) = fillVec3Val;
+    fxrec->pos_B[0] = 5.0f;
 }
 
 void NCIN_Generic_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
@@ -468,10 +468,10 @@ void NCIN_BubSlam(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
     switch (fxrec->typ_ncinfx)
     {
     case 3:
-        zFX_SpawnBubbleSlam(&fxrec->pos_A[0], (U32)64, fxrec->tym_beg, fxrec->tym_end, fxrec->tym_end);
+        zFX_SpawnBubbleSlam(&fxrec->pos_A[0], 64, fxrec->tym_beg, fxrec->tym_end, fxrec->tym_end);
         break;
     case 2:
-        zFX_SpawnBubbleSlam(&fxrec->pos_A[0], (U32)128, fxrec->tym_beg, fxrec->tym_end, fxrec->tym_end);
+        zFX_SpawnBubbleSlam(&fxrec->pos_A[0], 128, fxrec->tym_beg, fxrec->tym_end, fxrec->tym_end);
         break;
     default:
         break;
@@ -480,22 +480,19 @@ void NCIN_BubSlam(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 
 void NCIN_BubTrailBone_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic*, RwMatrixTag*, U32 num_1, U32 num_2)
 {
-    F32 fx = *(F32*)((S8*)fxrec + 36);
-    F32 fy = *(F32*)((S8*)fxrec + 40);
-
-    S32 ifx = fx;
-    S32 ify = fy;
+    S32 ifx = fxrec->pos_A[1].x;
+    S32 ify = fxrec->pos_A[1].y;
 
     if (num_1 != ifx)
     {
         return;
     }
 
-    xVec3 pos = *(xVec3*)((S8*)fxrec + 48);
+    xVec3 pos = fxrec->pos_A[2];
 
     if (ify > 0)
     {
-        xVec3& offset = *(xVec3*)((S8*)fxrec + 48 + (ify << 6));
+        xVec3& offset = fxrec->pos_B[ify];
         pos += offset;
     }
 
@@ -514,10 +511,10 @@ void NCIN_BubHit(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
     {
         if (fxrec->flg_stat & 2)
         {
-            zFX_SpawnBubbleHit((xVec3*)&fxrec->pos_A[0], 0x10);
+            zFX_SpawnBubbleHit(&fxrec->pos_A[0], 16);
         }
 
-        zFX_SpawnBubbleHit((xVec3*)&fxrec->pos_A[0], 3);
+        zFX_SpawnBubbleHit(&fxrec->pos_A[0], 3);
     }
 }
 
