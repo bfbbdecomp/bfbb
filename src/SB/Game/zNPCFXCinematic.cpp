@@ -8,11 +8,6 @@
 
 static S32 init = 0;
 
-static const F32 zero = 0.0f;            
-static const F32 addVal = 20.0f;         
-static const F32 fillVec3Val = 5.0f;
-
-
 void zNPCFXShutdown()
 {
 }
