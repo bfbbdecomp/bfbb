@@ -460,7 +460,8 @@ void NCIN_BubSlam(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
     return;
     }
 
-    switch (fxrec->typ_ncinfx)
+    en_nparptyp type = NPAR_TYP_UNKNOWN; //FIXME: Unsure of what type goes here
+    switch (type)
     {
     case 3:
         zFX_SpawnBubbleSlam(&fxrec->pos_A[0], 64, fxrec->tym_beg, fxrec->tym_end, fxrec->tym_end);
@@ -555,6 +556,138 @@ void NCIN_HammerShock(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
         zFXHammer(&fxrec->pos_A[0]);
         fxrec->flg_stat |= 4;
     }
+}
+
+void NCIN_HammerStreak_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
+{
+    if (param != 0)
+    {
+        fxrec->flg_stat |= 4;
+
+        xFXStreakStop(fxrec->fxdata.strkdata.sid_horz); 
+        xFXStreakStop(fxrec->fxdata.strkdata.sid_vert);
+        
+        fxrec->fxdata.strkdata.sid_horz = 57005;
+        fxrec->fxdata.strkdata.sid_vert = 57005;
+
+        return;
+    }
+
+    if (fxrec->flg_stat & 2)
+    {
+        en_npcstreak styp_h = NPC_STRK_HAMMERSMASH_HORZ;
+        en_npcstreak styp_v = NPC_STRK_HAMMERSMASH_VERT;
+
+        fxrec->fxdata.strkdata.sid_horz = NPCC_StreakCreate(styp_h);
+        fxrec->fxdata.strkdata.sid_vert = NPCC_StreakCreate(styp_v);
+    }
+}
+
+void NCIN_HammerStreak_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic*, RwMatrixTag*, U32 num_1, U32 num_2)
+{
+    if (num_2 != 2)
+    {
+        return;
+    }
+
+    U32 sid_vert = fxrec->fxdata.strkdata.sid_vert;
+    U32 sid_horz = fxrec->fxdata.strkdata.sid_horz;
+
+}
+
+void NCIN_WaterSplash(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
+{
+    if (param != 0)
+    {
+        fxrec->flg_stat |= 4;
+        return;
+    }
+
+    if (fxrec->flg_stat & 2)
+    {
+        const F32 splash_radius = -1.0f;
+
+        NPCC_MakeASplash(&fxrec->pos_A[0], splash_radius);
+        fxrec->flg_stat |= 4;
+    }
+}
+
+void NCIN_HazProjShoot(const zCutsceneMgr* mgr, NCINEntry* fxrec, S32 param)
+{
+    if (param != 0)
+    {
+        fxrec->flg_stat |= 4;
+
+        if (fxrec->fxdata.hazdata.npchaz->flg_hazard)
+        {
+            fxrec->fxdata.hazdata.npchaz->MarkForRecycle();
+        }
+        return;
+    }
+
+    if (fxrec->flg_stat & 2)
+    {
+        S32 type = fxrec->fxdata.hazdata.npchaz->typ_hazard;
+        S32 haztype = 10;
+
+        if (type == 11)
+        {
+            haztype = 18;
+        }
+        else if (type >= 10 && type < 13)
+        {
+            haztype = (type == 12) ? 16 : 10;
+        }
+
+        NPCHazard* haz = HAZ_Acquire();
+
+        if (!haz)
+        {
+            return;
+        }
+
+        if (!haz->ConfigHelper((en_npchaz)haztype))
+        {
+            return;
+        }
+
+        haz->SetNPCOwner(NULL);
+        fxrec->fxdata.hazdata.npchaz = haz;
+        haz->flg_hazard &= ~128;
+
+        xVec3 delta = fxrec->pos_B[0] - fxrec->pos_A[0];
+        F32 len = delta.length();
+
+        F32 height = fxrec->tym_beg - fxrec->tym_end;
+
+        if (height < 0.01f)
+        {
+            height = 1.0f;
+        }
+
+        haz->pos_hazard = delta;
+        haz->Start(&fxrec->pos_A[0], height);
+    }
+
+    if (fxrec->fxdata.hazdata.npchaz)
+    {
+        if (fxrec->fxdata.hazdata.npchaz->typ_hazard != 11)
+        {
+            fxrec->fxdata.hazdata.npchaz->flg_hazard &= ~0xF000;
+        }
+        else
+        {
+            fxrec->flg_stat |= 4;
+        }
+    }
+}
+
+void NCIN_HazTTSteam_Upd(const zCutsceneMgr* manager, NCINEntry* fxrec, S32 param)
+{
+}
+
+void NCIN_HazTTSteam_AR(const zCutsceneMgr* cutsceneMgr, NCINEntry* fxrec, RpAtomic* atomic, RwMatrixTag* matrix, U32 num_1, U32 num_2)
+{
 }
 
 

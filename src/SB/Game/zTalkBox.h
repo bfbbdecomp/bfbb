@@ -84,10 +84,10 @@ struct ztalkbox : xBase
     static void update_all(xScene& s, F32 dt);
     static void render_all();
     static void reset_all();
+    static void clear_layout();
     static void permit(U32 add_flags, U32 remove_flags);
-
-
     static ztalkbox* get_active();
+
     void start_talk(U32 textID, callback*, zNPCCommon*); // FIXME: params not verified
     void stop_talk();
 
