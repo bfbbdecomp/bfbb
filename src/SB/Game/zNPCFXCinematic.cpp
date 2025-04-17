@@ -460,12 +460,8 @@ void NCIN_BubSlam(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
     return;
     }
 
-<<<<<<< HEAD
     en_nparptyp type = NPAR_TYP_UNKNOWN; //FIXME: Unsure of what type goes here
     switch (type)
-=======
-    switch (fxrec->typ_ncinfx)
->>>>>>> ad7d5ecc7f38e247ec6ca1eef14e833ac41801aa
     {
     case 3:
         zFX_SpawnBubbleSlam(&fxrec->pos_A[0], 64, fxrec->tym_beg, fxrec->tym_end, fxrec->tym_end);
@@ -562,7 +558,6 @@ void NCIN_HammerShock(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
     }
 }
 
-<<<<<<< HEAD
 void NCIN_HammerStreak_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
