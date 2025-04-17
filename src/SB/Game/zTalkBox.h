@@ -88,6 +88,8 @@ struct ztalkbox : xBase
     static void permit(U32 add_flags, U32 remove_flags);
     static ztalkbox* get_active();
 
+
+    static ztalkbox* get_active();
     void start_talk(U32 textID, callback*, zNPCCommon*); // FIXME: params not verified
     void stop_talk();
 

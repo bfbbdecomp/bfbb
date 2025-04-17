@@ -13,6 +13,7 @@ namespace
     SharedTalkboxState ztalkbox_shared;
 }
 
+<<<<<<< HEAD
 void ztalkbox::reset_all() 
 {
     volatile int* sharedMemory = reinterpret_cast<volatile int*>(ztalkbox_shared.active);
@@ -29,8 +30,13 @@ void ztalkbox::reset_all()
     return;
 }
 
+=======
+>>>>>>> ad7d5ecc7f38e247ec6ca1eef14e833ac41801aa
 ztalkbox* ztalkbox::get_active()
 {
     return ztalkbox_shared.active;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> ad7d5ecc7f38e247ec6ca1eef14e833ac41801aa
