@@ -89,7 +89,6 @@ struct ztalkbox : xBase
     static ztalkbox* get_active();
 
 
-    static ztalkbox* get_active();
     void start_talk(U32 textID, callback*, zNPCCommon*); // FIXME: params not verified
     void stop_talk();
 
