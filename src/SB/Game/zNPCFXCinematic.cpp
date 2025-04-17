@@ -460,8 +460,7 @@ void NCIN_BubSlam(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
     return;
     }
 
-    en_nparptyp type = NPAR_TYP_UNKNOWN; //FIXME: Unsure of what type goes here
-    switch (type)
+   switch(fxrec->typ_ncinfx)
     {
     case 3:
         zFX_SpawnBubbleSlam(&fxrec->pos_A[0], 64, fxrec->tym_beg, fxrec->tym_end, fxrec->tym_end);
