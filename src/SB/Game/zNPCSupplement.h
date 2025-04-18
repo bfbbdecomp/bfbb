@@ -76,6 +76,7 @@ struct NPARMgmt
     RwTexture* txtr;
     NPARXtraData* xtra_data;
     void** user_data;
+    void KillAll();
 
     void Init(en_nparptyp parType, void** userData, NPARXtraData* xtraData);
     void Clear();
