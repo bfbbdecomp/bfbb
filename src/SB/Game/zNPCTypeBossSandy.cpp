@@ -1167,6 +1167,166 @@ S32 zNPCGoalBossSandyIdle::Exit(F32 dt, void* updCtxt)
     return xGoal::Exit(dt, updCtxt);
 }
 
+S32 zNPCGoalBossSandyTaunt::Enter(F32 dt, void* updCtxt)
+{
+    zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
+
+    timeInGoal = 0.0f;
+
+    xVec3Init(&sandy->frame->vel, 0.0f, 0.0f, 0.0f);
+    xSndPlay3D(xStrHash("B101_SC_taunt"), 0.77f, 0.0f, 0x0, 0x0, sandy, 30.0f, SND_CAT_GAME, 0.6f);
+
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSandyTaunt::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
+
+    timeInGoal += dt;
+
+    xVec3 newAt;
+    xVec3Sub(&newAt, (xVec3*)&globals.player.ent.model->Mat->pos, (xVec3*)&sandy->model->Mat->pos);
+
+    newAt.y = 0.0f;
+
+    xVec3Normalize(&newAt, &newAt);
+    xVec3SMul((xVec3*)&sandy->frame->mat.at, (xVec3*)&sandy->model->Mat->at, 0.98f);
+
+    xVec3AddScaled((xVec3*)&sandy->frame->mat.at, &newAt, 0.02f);
+
+    sandy->frame->mat.at.y = 0.0f;
+    xVec3Normalize(&sandy->frame->mat.at, &sandy->frame->mat.at);
+    xVec3Cross(&sandy->frame->mat.right, &sandy->frame->mat.up, &sandy->frame->mat.at);
+
+    sandy->frame->mat.pos.y = 0.0f;
+
+    return zNPCGoalCommon::Process(trantype, dt, updCtxt, xscn);
+}
+
+S32 zNPCGoalBossSandyChase::Enter(F32 dt, void* updCtxt)
+{
+    zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
+
+    sandy->bossFlags |= 0x20;
+    timeInGoal = 0.0f;
+
+    sandy->boundFlags[10] |= 0x10;
+    sandy->boundFlags[12] |= 0x10;
+
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSandyChase::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
+
+    sChaseTimer += dt;
+    timeInGoal += dt;
+
+    xVec3 newAt;
+    xVec3Sub(&newAt, (xVec3*)&globals.player.ent.model->Mat->pos, (xVec3*)&sandy->model->Mat->pos);
+
+    newAt.y = 0.0f;
+
+    xVec3Normalize(&newAt, &newAt);
+    xVec3SMul((xVec3*)&sandy->frame->mat.at, (xVec3*)&sandy->model->Mat->at, 0.98f);
+
+    xVec3AddScaled((xVec3*)&sandy->frame->mat.at, &newAt, 0.02f);
+
+    sandy->frame->mat.at.y = 0.0f;
+    xVec3Normalize(&sandy->frame->mat.at, &sandy->frame->mat.at);
+    xVec3Cross(&sandy->frame->mat.right, &sandy->frame->mat.up, &sandy->frame->mat.at);
+
+    sandy->frame->mat.pos.y = 0.0f;
+    xVec3SMul(&sandy->frame->vel, &sandy->frame->mat.at, sandy->cfg_npc->spd_moveMax);
+
+    return zNPCGoalCommon::Process(trantype, dt, updCtxt, xscn);
+}
+
+S32 zNPCGoalBossSandyChase::Exit(F32 dt, void* updCtxt)
+{
+    zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
+
+    sandy->bossFlags &= ~0x20;
+    sandy->boundFlags[10] &= ~0x10;
+    sandy->boundFlags[12] &= ~0x10;
+
+    return zNPCGoalCommon::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSandyMelee::Enter(F32 dt, void* updCtxt)
+{
+    zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
+
+    timeInGoal = 0.0f;
+    sandy->bossFlags &= ~0x2;
+
+    xVec3Init(&sandy->frame->vel, 0.0f, 0.0f, 0.0f);
+
+    sandy->boundList[2]->penby = 0x0;
+    sandy->boundList[3]->penby = 0x0;
+    sandy->boundList[4]->penby = 0x0;
+    sandy->boundList[5]->penby = 0x0;
+    sandy->boundList[6]->penby = 0x0;
+    sandy->boundList[7]->penby = 0x0;
+    sandy->boundList[8]->penby = 0x0;
+
+    xSndPlay3D(xStrHash("B101_SC_chop"), 0.77f, 0.0f, 0x0, 0x0, sandy, 30.0f, SND_CAT_GAME, 0.6f);
+
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSandyMelee::Exit(F32 dt, void* updCtxt)
+{
+    zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
+
+    sandy->boundList[2]->penby = 0x10;
+    sandy->boundList[3]->penby = 0x10;
+    sandy->boundList[4]->penby = 0x10;
+    sandy->boundList[5]->penby = 0x10;
+    sandy->boundList[6]->penby = 0x10;
+    sandy->boundList[7]->penby = 0x10;
+    sandy->boundList[8]->penby = 0x10;
+
+    return zNPCGoalCommon::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSandyMelee::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
+    timeInGoal += dt;
+
+    if (timeInGoal > 0.1f && timeInGoal < 0.75f)
+    {
+        xVec3 newAt;
+        xVec3Sub(&newAt, (xVec3*)&globals.player.ent.model->Mat->pos,
+                 (xVec3*)&sandy->model->Mat->pos);
+
+        newAt.y = 0.0f;
+        xVec3Normalize(&newAt, &newAt);
+        xVec3SMul((xVec3*)&sandy->frame->mat.at, (xVec3*)&sandy->model->Mat->at, 0.9f);
+
+        xVec3AddScaled((xVec3*)&sandy->frame->mat.at, &newAt, 0.1f);
+
+        sandy->frame->mat.at.y = 0.0f;
+        xVec3Normalize(&sandy->frame->mat.at, &sandy->frame->mat.at);
+        xVec3Cross(&sandy->frame->mat.right, &sandy->frame->mat.up, &sandy->frame->mat.at);
+    }
+
+    sandy->boundFlags[2] |= 0x1;
+    sandy->boundFlags[3] |= 0x1;
+    sandy->boundFlags[4] |= 0x1;
+    sandy->boundFlags[5] |= 0x1;
+    sandy->boundFlags[6] |= 0x1;
+    sandy->boundFlags[7] |= 0x1;
+    sandy->boundFlags[8] |= 0x1;
+
+    sandy->bossFlags |= 0x1;
+
+    return zNPCGoalCommon::Process(trantype, dt, updCtxt, xscn);
+}
+
 void xBinaryCamera::add_tweaks(char const*)
 {
 }
