@@ -15,6 +15,7 @@
 #include "xMarkerAsset.h"
 #include "zCamera.h"
 #include "zGrid.h"
+#include "zAssetTypes.h"
 
 extern const char bossSandyStrings[];
 
@@ -966,10 +967,148 @@ static S32 leapCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
     return nextgoal;
 }
 
-static S32 sitCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
-static S32 getUpCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
-static S32 runToRopeCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
-static S32 clotheslineCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 sitCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
+{
+    zNPCGoalBossSandySit* sit = (zNPCGoalBossSandySit*)rawgoal;
+    zNPCBSandy* sandy = (zNPCBSandy*)sit->psyche->clt_owner;
+    S32 nextgoal = 0;
+
+    if (sandy->round == 3 && sHeadPopOffFactor > 0.0f)
+    {
+        xSndPlay3D(xStrHash("B101_SC_headoff1"), 2.31f, 0.0f, 0x0, 0x0, sandy, 30.0f, SND_CAT_GAME,
+                   0.0f);
+        *trantype = GOAL_TRAN_SET;
+        nextgoal = 'NGB5';
+    }
+    else if (sit->sitFlags & 0x1)
+    {
+        if (sit->timeInGoal > sit->totalTime)
+        {
+            if (sandy->round == 1)
+            {
+                nextgoal = 'NGB9';
+                *trantype = GOAL_TRAN_SET;
+            }
+            else
+            {
+                nextgoal = 'NGB5';
+                *trantype = GOAL_TRAN_SET;
+            }
+        }
+    }
+    else if (sit->timeInGoal > 5.0f)
+    {
+        nextgoal = 'NGB9';
+        *trantype = GOAL_TRAN_SET;
+    }
+
+    return nextgoal;
+}
+
+static S32 getUpCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
+{
+    zNPCGoalBossSandyRunToRope* runGoal = (zNPCGoalBossSandyRunToRope*)rawgoal;
+    zNPCBSandy* sandy = (zNPCBSandy*)runGoal->psyche->clt_owner;
+    S32 nextgoal = 0;
+    xVec3 pcFuturePos;
+    F32 futureDist;
+
+    xVec3Sub(&pcFuturePos, (xVec3*)&globals.player.ent.model->Mat->pos,
+             (xVec3*)&sandy->model->Mat->pos);
+
+    pcFuturePos.y = 0.0f;
+    futureDist = xVec3Length2(&pcFuturePos);
+
+    if (sandy->AnimTimeRemain(NULL) < 1.7f * dt)
+    {
+        if ((sandy->round == 1 && !(sandy->hitPoints > 6)) ||
+            (sandy->round == 2 && !(sandy->hitPoints > 3)) ||
+            (sandy->round == 3 && !(sandy->hitPoints > 0)) || (globals.player.ControlOff))
+        {
+            nextgoal = 'NGB1';
+            *trantype = GOAL_TRAN_SET;
+        }
+        else if (sandy->bossFlags & 0x2)
+        {
+            sandy->bossFlags &= ~0x2;
+            nextgoal = 'NGB2';
+            *trantype = GOAL_TRAN_SET;
+        }
+        else if (futureDist < 12.0f)
+        {
+            nextgoal = 'NGB4';
+            *trantype = GOAL_TRAN_SET;
+        }
+        else
+        {
+            nextgoal = 'NGB3';
+            *trantype = GOAL_TRAN_SET;
+        }
+    }
+
+    return nextgoal;
+}
+
+static S32 runToRopeCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
+{
+    zNPCGoalBossSandyRunToRope* runGoal = (zNPCGoalBossSandyRunToRope*)rawgoal;
+    zNPCBSandy* sandy = (zNPCBSandy*)runGoal->psyche->clt_owner;
+    S32 nextgoal = 0;
+    F32 projection;
+    xVec3 newPos;
+
+    xVec3Sub(&newPos, &sandy->bouncePoint[sandy->fromRope], (xVec3*)&sandy->model->Mat->pos);
+
+    newPos.y = 0.0f;
+    projection = xVec3Dot(&newPos, &sandy->ropeNormal[sandy->fromRope]);
+
+    if (globals.player.ControlOff != FALSE)
+    {
+        nextgoal = 'NGB1';
+        *trantype = GOAL_TRAN_SET;
+    }
+    else if (projection > 0.0f)
+    {
+        nextgoal = 'NGB;';
+        *trantype = GOAL_TRAN_SET;
+        sandy->boundFlags[10] &= ~0x10;
+        sandy->boundFlags[12] &= ~0x10;
+    }
+
+    return nextgoal;
+}
+
+static S32 clotheslineCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
+{
+    zNPCGoalBossSandyClothesline* cl = (zNPCGoalBossSandyClothesline*)rawgoal;
+    zNPCBSandy* sandy = (zNPCBSandy*)cl->psyche->clt_owner;
+    S32 nextgoal = 0;
+
+    if (cl->stage == 2 && sandy->AnimTimeRemain(NULL) < 1.7f * dt)
+    {
+        sandy->boundFlags[10] &= ~0x10;
+        sandy->boundFlags[12] &= ~0x10;
+
+        if (globals.player.ControlOff)
+        {
+            nextgoal = 'NGB1';
+            *trantype = GOAL_TRAN_SET;
+        }
+        else if (sandy->bossFlags & 0x2)
+        {
+            sandy->bossFlags &= ~0x2;
+            nextgoal = 'NGB2';
+            *trantype = GOAL_TRAN_SET;
+        }
+        else
+        {
+            nextgoal = 'NGB3';
+            *trantype = GOAL_TRAN_SET;
+        }
+    }
+
+    return nextgoal;
+}
 
 S32 zNPCGoalBossSandyIdle::Enter(F32 dt, void* updCtxt)
 {
