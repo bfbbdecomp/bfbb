@@ -1112,11 +1112,59 @@ static S32 clotheslineCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, v
 
 S32 zNPCGoalBossSandyIdle::Enter(F32 dt, void* updCtxt)
 {
-    zNPCBSandy* sandy;
+    zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
 
-    // xVec3Init();
+    timeInGoal = 0.0f;
+    sandy->bossFlags |= 0x20;
+
+    xVec3Init(&sandy->frame->vel, 0.0f, 0.0f, 0.0f);
+
+    sandy->boundFlags[10] |= 0x10;
+    sandy->boundFlags[12] |= 0x10;
 
     return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSandyIdle::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
+
+    timeInGoal += dt;
+
+    xVec3 newAt;
+    xVec3Sub(&newAt, (xVec3*)&globals.player.ent.model->Mat->pos, (xVec3*)&sandy->model->Mat->pos);
+
+    newAt.y = 0.0f;
+
+    xVec3Normalize(&newAt, &newAt);
+    xVec3SMul((xVec3*)&sandy->frame->mat.at, (xVec3*)&sandy->model->Mat->at, 0.98f);
+
+    xVec3AddScaled((xVec3*)&sandy->frame->mat.at, &newAt, 0.02f);
+
+    sandy->frame->mat.at.y = 0.0f;
+    xVec3Normalize(&sandy->frame->mat.at, &sandy->frame->mat.at);
+    xVec3Cross(&sandy->frame->mat.right, &sandy->frame->mat.up, &sandy->frame->mat.at);
+
+    sandy->frame->mat.pos.y = 0.0f;
+    xVec3Dot(&newAt, (xVec3*)&sandy->model->Mat->right);
+
+    F32 lerp = 1.0f;
+    lerp -= 0.02f;
+    sandy->model->Anim->Single->BilinearLerp[0] = lerp;
+    sandy->model->Anim->Single->Blend->BilinearLerp[0] = lerp;
+
+    return xGoal::Process(trantype, dt, updCtxt, xscn);
+}
+
+S32 zNPCGoalBossSandyIdle::Exit(F32 dt, void* updCtxt)
+{
+    zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
+
+    sandy->bossFlags &= ~0x20;
+    sandy->boundFlags[10] &= ~0x10;
+    sandy->boundFlags[12] &= ~0x10;
+
+    return xGoal::Exit(dt, updCtxt);
 }
 
 void xBinaryCamera::add_tweaks(char const*)
