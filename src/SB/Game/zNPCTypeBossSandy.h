@@ -342,15 +342,6 @@ struct SandyLimbSpring
     xBound* bound;
 };
 
-struct SandyLimbSpring
-{
-    F32 node1;
-    F32 vel1;
-    F32 node2;
-    F32 vel2;
-    xBound* bound;
-};
-
 void zNPCBSandy_AddBoundEntsToGrid(zScene*);
 void zNPCBSandy_GameIsPaused(zScene*);
 
