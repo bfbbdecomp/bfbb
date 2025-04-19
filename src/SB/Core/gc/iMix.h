@@ -1,11 +1,23 @@
 #ifndef IMIX_H
 #define IMIX_H
 
-#include "iSnd.h"
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 struct _AXVPB;
 
-extern "C" {
-void MIXUnMute(_AXVPB* p);
+void MIXUnMute(int* param_1, int param_2);
+
+// No DWARF data for this structure so this is entirely guesswork.
+struct MIXChannel
+{
+	int data[24];
+};
+
+#ifdef __cplusplus
 }
+#endif
 
 #endif
