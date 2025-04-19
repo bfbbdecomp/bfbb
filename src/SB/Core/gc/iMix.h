@@ -8,7 +8,7 @@ extern "C"
 
 struct _AXVPB;
 
-void MIXUnMute(int* param_1, int param_2);
+void MIXUnMute(int* param_1);
 
 // No DWARF data for this structure so this is entirely guesswork.
 struct MIXChannel

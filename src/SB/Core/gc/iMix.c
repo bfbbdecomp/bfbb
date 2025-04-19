@@ -670,7 +670,7 @@ int MIXGetPan(int* param_1)
     return handle[5];
 }
 
-void MIXUnMute(int* param_1, int param_2)
+void MIXUnMute(int* param_1)
 {
     int* handle = &__MIXChannel[*(param_1 + 6)].data[0];
     handle[1] &= ~4;
