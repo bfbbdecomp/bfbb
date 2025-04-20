@@ -1327,6 +1327,135 @@ S32 zNPCGoalBossSandyMelee::Process(en_trantype* trantype, F32 dt, void* updCtxt
     return zNPCGoalCommon::Process(trantype, dt, updCtxt, xscn);
 }
 
+S32 zNPCGoalBossSandyNoHead::Enter(F32 dt, void* updCtxt)
+{
+    zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
+
+    sandy->bossFlags &= ~0x100;
+    timeInGoal = 0.0f;
+
+    xVec3Init(&sandy->frame->vel, 0.0f, 0.0f, 0.0f);
+
+    if (sandy->round == 2)
+    {
+        sandy->headBoulder->collis_chk = 0x26;
+        sandy->headBoulder->collis_pen = 0x0;
+    }
+
+    stage = 0;
+    secsSincePatWasCarryingHead = 1.0f;
+
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSandyNoHead::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
+    U32 numHints;
+    xVec3 newAt;
+    float lerpFactor;
+    xMat4x3 boneMat;
+    xQuat q;
+
+    timeInGoal += dt;
+    if (globals.player.carry.grabbed == sandy->headBoulder)
+    {
+        secsSincePatWasCarryingHead = 0.0f;
+    }
+    else
+    {
+        secsSincePatWasCarryingHead += dt;
+    }
+
+    if (stage == 0)
+    {
+        if (sandy->AnimTimeRemain(NULL) < 1.7f * dt)
+        {
+            stage = 1;
+            DoAutoAnim(NPC_GSPOT_START, FALSE);
+            timeInGoal = 0.0f;
+
+            if (sandy->round == 3)
+            {
+                sandy->boundFlags[10] |= 0x10;
+                sandy->boundFlags[12] |= 0x10;
+            }
+
+            if ((sandy->nfFlags & 0x4) == 0 && (sandy->round == 2 || sandy->round == 3))
+            {
+                if (((sandy->nfFlags >> 3) & 3) < 3 || (xrand() & 0x300) == 0)
+                {
+                    numHints = 2;
+                    if (((sandy->nfFlags >> 3) & 3) < 3)
+                    {
+                        numHints = (sandy->nfFlags >> 3) & 3;
+                    }
+
+                    if (sandy->round == 2)
+                    {
+                        sandy->newsfish->SpeakStart(sNFSoundValue[numHints + 12], 0, 0xFFFFFFFF);
+                    }
+                    else
+                    {
+                        sandy->newsfish->SpeakStart(sNFSoundValue[numHints + 21], 0, 0xFFFFFFFF);
+                    }
+
+                    sandy->nfFlags &= ~0x18;
+                    sandy->nfFlags |= (numHints + 1) * 8;
+                }
+            }
+        }
+
+        if (sandy->round == 2)
+        {
+            if (secsSincePatWasCarryingHead > 0.5f)
+            {
+                sCamSubTarget = &sandy->headBoulder->localCenter;
+            }
+            else
+            {
+                sCamSubTarget = &sandy->bouncePoint[0];
+            }
+        }
+    }
+    else if (stage == 1)
+    {
+        if (sandy->round == 2)
+        {
+        }
+        else if (secsSincePatWasCarryingHead <= 15.0f)
+        {
+            if (((sandy->boundFlags[0] + 4) & 4) == 0)
+            {
+                sandy->bossFlags |= 0x80;
+            }
+            else
+            {
+            }
+        }
+        else
+        {
+            stage = 4;
+            sandy->boundFlags[10] &= 0x100;
+            sandy->boundFlags[12] &= 0x100;
+
+            xSndPlay3D(xStrHash("B101_SC_headback"), 1.155f, 0.0f, 0x0, 0x0, sandy, 30.0f,
+                       SND_CAT_GAME, 0.8f);
+            DoAutoAnim(NPC_GSPOT_START, FALSE);
+            timeInGoal = 0.0f;
+            sandy->bossFlags &= ~0x80;
+        }
+    }
+    else if (stage == 2)
+    {
+    }
+    else if (stage == 3)
+    {
+    }
+
+    return zNPCGoalCommon::Process(trantype, dt, updCtxt, xscn);
+}
+
 void xBinaryCamera::add_tweaks(char const*)
 {
 }
