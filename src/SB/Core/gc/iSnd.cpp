@@ -61,7 +61,7 @@ U32 iVolFromX(F32 param1)
 
 void iSndVolUpdate(xSndVoiceInfo* info, vinfo* vinfo)
 {
-    MIXUnMute(vinfo->voice);
+    MIXUnMute((int*)vinfo->voice);
     xSndInternalUpdateVoicePos(info);
     if ((info->flags & 8) != 0)
     {
