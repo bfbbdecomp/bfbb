@@ -1167,6 +1167,295 @@ S32 zNPCGoalBossSandyIdle::Exit(F32 dt, void* updCtxt)
     return xGoal::Exit(dt, updCtxt);
 }
 
+S32 zNPCGoalBossSandyTaunt::Enter(F32 dt, void* updCtxt)
+{
+    zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
+
+    timeInGoal = 0.0f;
+
+    xVec3Init(&sandy->frame->vel, 0.0f, 0.0f, 0.0f);
+    xSndPlay3D(xStrHash("B101_SC_taunt"), 0.77f, 0.0f, 0x0, 0x0, sandy, 30.0f, SND_CAT_GAME, 0.6f);
+
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSandyTaunt::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
+
+    timeInGoal += dt;
+
+    xVec3 newAt;
+    xVec3Sub(&newAt, (xVec3*)&globals.player.ent.model->Mat->pos, (xVec3*)&sandy->model->Mat->pos);
+
+    newAt.y = 0.0f;
+
+    xVec3Normalize(&newAt, &newAt);
+    xVec3SMul((xVec3*)&sandy->frame->mat.at, (xVec3*)&sandy->model->Mat->at, 0.98f);
+
+    xVec3AddScaled((xVec3*)&sandy->frame->mat.at, &newAt, 0.02f);
+
+    sandy->frame->mat.at.y = 0.0f;
+    xVec3Normalize(&sandy->frame->mat.at, &sandy->frame->mat.at);
+    xVec3Cross(&sandy->frame->mat.right, &sandy->frame->mat.up, &sandy->frame->mat.at);
+
+    sandy->frame->mat.pos.y = 0.0f;
+
+    return zNPCGoalCommon::Process(trantype, dt, updCtxt, xscn);
+}
+
+S32 zNPCGoalBossSandyChase::Enter(F32 dt, void* updCtxt)
+{
+    zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
+
+    sandy->bossFlags |= 0x20;
+    timeInGoal = 0.0f;
+
+    sandy->boundFlags[10] |= 0x10;
+    sandy->boundFlags[12] |= 0x10;
+
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSandyChase::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
+
+    sChaseTimer += dt;
+    timeInGoal += dt;
+
+    xVec3 newAt;
+    xVec3Sub(&newAt, (xVec3*)&globals.player.ent.model->Mat->pos, (xVec3*)&sandy->model->Mat->pos);
+
+    newAt.y = 0.0f;
+
+    xVec3Normalize(&newAt, &newAt);
+    xVec3SMul((xVec3*)&sandy->frame->mat.at, (xVec3*)&sandy->model->Mat->at, 0.98f);
+
+    xVec3AddScaled((xVec3*)&sandy->frame->mat.at, &newAt, 0.02f);
+
+    sandy->frame->mat.at.y = 0.0f;
+    xVec3Normalize(&sandy->frame->mat.at, &sandy->frame->mat.at);
+    xVec3Cross(&sandy->frame->mat.right, &sandy->frame->mat.up, &sandy->frame->mat.at);
+
+    sandy->frame->mat.pos.y = 0.0f;
+    xVec3SMul(&sandy->frame->vel, &sandy->frame->mat.at, sandy->cfg_npc->spd_moveMax);
+
+    return zNPCGoalCommon::Process(trantype, dt, updCtxt, xscn);
+}
+
+S32 zNPCGoalBossSandyChase::Exit(F32 dt, void* updCtxt)
+{
+    zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
+
+    sandy->bossFlags &= ~0x20;
+    sandy->boundFlags[10] &= ~0x10;
+    sandy->boundFlags[12] &= ~0x10;
+
+    return zNPCGoalCommon::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSandyMelee::Enter(F32 dt, void* updCtxt)
+{
+    zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
+
+    timeInGoal = 0.0f;
+    sandy->bossFlags &= ~0x2;
+
+    xVec3Init(&sandy->frame->vel, 0.0f, 0.0f, 0.0f);
+
+    sandy->boundList[2]->penby = 0x0;
+    sandy->boundList[3]->penby = 0x0;
+    sandy->boundList[4]->penby = 0x0;
+    sandy->boundList[5]->penby = 0x0;
+    sandy->boundList[6]->penby = 0x0;
+    sandy->boundList[7]->penby = 0x0;
+    sandy->boundList[8]->penby = 0x0;
+
+    xSndPlay3D(xStrHash("B101_SC_chop"), 0.77f, 0.0f, 0x0, 0x0, sandy, 30.0f, SND_CAT_GAME, 0.6f);
+
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSandyMelee::Exit(F32 dt, void* updCtxt)
+{
+    zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
+
+    sandy->boundList[2]->penby = 0x10;
+    sandy->boundList[3]->penby = 0x10;
+    sandy->boundList[4]->penby = 0x10;
+    sandy->boundList[5]->penby = 0x10;
+    sandy->boundList[6]->penby = 0x10;
+    sandy->boundList[7]->penby = 0x10;
+    sandy->boundList[8]->penby = 0x10;
+
+    return zNPCGoalCommon::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSandyMelee::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
+    timeInGoal += dt;
+
+    if (timeInGoal > 0.1f && timeInGoal < 0.75f)
+    {
+        xVec3 newAt;
+        xVec3Sub(&newAt, (xVec3*)&globals.player.ent.model->Mat->pos,
+                 (xVec3*)&sandy->model->Mat->pos);
+
+        newAt.y = 0.0f;
+        xVec3Normalize(&newAt, &newAt);
+        xVec3SMul((xVec3*)&sandy->frame->mat.at, (xVec3*)&sandy->model->Mat->at, 0.9f);
+
+        xVec3AddScaled((xVec3*)&sandy->frame->mat.at, &newAt, 0.1f);
+
+        sandy->frame->mat.at.y = 0.0f;
+        xVec3Normalize(&sandy->frame->mat.at, &sandy->frame->mat.at);
+        xVec3Cross(&sandy->frame->mat.right, &sandy->frame->mat.up, &sandy->frame->mat.at);
+    }
+
+    sandy->boundFlags[2] |= 0x1;
+    sandy->boundFlags[3] |= 0x1;
+    sandy->boundFlags[4] |= 0x1;
+    sandy->boundFlags[5] |= 0x1;
+    sandy->boundFlags[6] |= 0x1;
+    sandy->boundFlags[7] |= 0x1;
+    sandy->boundFlags[8] |= 0x1;
+
+    sandy->bossFlags |= 0x1;
+
+    return zNPCGoalCommon::Process(trantype, dt, updCtxt, xscn);
+}
+
+S32 zNPCGoalBossSandyNoHead::Enter(F32 dt, void* updCtxt)
+{
+    zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
+
+    sandy->bossFlags &= ~0x100;
+    timeInGoal = 0.0f;
+
+    xVec3Init(&sandy->frame->vel, 0.0f, 0.0f, 0.0f);
+
+    if (sandy->round == 2)
+    {
+        sandy->headBoulder->collis_chk = 0x26;
+        sandy->headBoulder->collis_pen = 0x0;
+    }
+
+    stage = 0;
+    secsSincePatWasCarryingHead = 1.0f;
+
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSandyNoHead::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
+    U32 numHints;
+    xVec3 newAt;
+    float lerpFactor;
+    xMat4x3 boneMat;
+    xQuat q;
+
+    timeInGoal += dt;
+    if (globals.player.carry.grabbed == sandy->headBoulder)
+    {
+        secsSincePatWasCarryingHead = 0.0f;
+    }
+    else
+    {
+        secsSincePatWasCarryingHead += dt;
+    }
+
+    if (stage == 0)
+    {
+        if (sandy->AnimTimeRemain(NULL) < 1.7f * dt)
+        {
+            stage = 1;
+            DoAutoAnim(NPC_GSPOT_START, FALSE);
+            timeInGoal = 0.0f;
+
+            if (sandy->round == 3)
+            {
+                sandy->boundFlags[10] |= 0x10;
+                sandy->boundFlags[12] |= 0x10;
+            }
+
+            if ((sandy->nfFlags & 0x4) == 0 && (sandy->round == 2 || sandy->round == 3))
+            {
+                if (((sandy->nfFlags >> 3) & 3) < 3 || (xrand() & 0x300) == 0)
+                {
+                    numHints = 2;
+                    if (((sandy->nfFlags >> 3) & 3) < 3)
+                    {
+                        numHints = (sandy->nfFlags >> 3) & 3;
+                    }
+
+                    if (sandy->round == 2)
+                    {
+                        sandy->newsfish->SpeakStart(sNFSoundValue[numHints + 12], 0, 0xFFFFFFFF);
+                    }
+                    else
+                    {
+                        sandy->newsfish->SpeakStart(sNFSoundValue[numHints + 21], 0, 0xFFFFFFFF);
+                    }
+
+                    sandy->nfFlags &= ~0x18;
+                    sandy->nfFlags |= (numHints + 1) * 8;
+                }
+            }
+        }
+
+        if (sandy->round == 2)
+        {
+            if (secsSincePatWasCarryingHead > 0.5f)
+            {
+                sCamSubTarget = &sandy->headBoulder->localCenter;
+            }
+            else
+            {
+                sCamSubTarget = &sandy->bouncePoint[0];
+            }
+        }
+    }
+    else if (stage == 1)
+    {
+        if (sandy->round == 2)
+        {
+        }
+        else if (secsSincePatWasCarryingHead <= 15.0f)
+        {
+            if (((sandy->boundFlags[0] + 4) & 4) == 0)
+            {
+                sandy->bossFlags |= 0x80;
+            }
+            else
+            {
+            }
+        }
+        else
+        {
+            stage = 4;
+            sandy->boundFlags[10] &= 0x100;
+            sandy->boundFlags[12] &= 0x100;
+
+            xSndPlay3D(xStrHash("B101_SC_headback"), 1.155f, 0.0f, 0x0, 0x0, sandy, 30.0f,
+                       SND_CAT_GAME, 0.8f);
+            DoAutoAnim(NPC_GSPOT_START, FALSE);
+            timeInGoal = 0.0f;
+            sandy->bossFlags &= ~0x80;
+        }
+    }
+    else if (stage == 2)
+    {
+    }
+    else if (stage == 3)
+    {
+    }
+
+    return zNPCGoalCommon::Process(trantype, dt, updCtxt, xscn);
+}
+
 void xBinaryCamera::add_tweaks(char const*)
 {
 }
