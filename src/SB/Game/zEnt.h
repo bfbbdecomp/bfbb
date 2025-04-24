@@ -4,7 +4,6 @@
 #include "xEnt.h"
 #include "xAnim.h"
 
-#include "zEntHangable.h"
 #include "zScene.h"
 #include "zEvent.h"
 
