@@ -60,6 +60,24 @@ void zEntHangable_SetShaggy(zEntHangable* ent, zEnt* b)
 {
 }
 
+void zEntHangable_FollowUpdate(class zEntHangable* ent /* r2 */)
+{
+    // Blocks
+    /* anonymous block */ {
+        // Range: 0x136EE0 -> 0x137058
+        class xVec3* center; // r2
+    }
+}
+
 void zEntHangable_SetFollow(zEntHangable* ent, zEnt* b)
 {
+    if (b)
+    {
+        ent->follow = b;
+        zEntHangable_FollowUpdate(ent);
+    }
+    else if (ent->follow)
+    {
+        ent->follow = NULL;
+    }
 }
