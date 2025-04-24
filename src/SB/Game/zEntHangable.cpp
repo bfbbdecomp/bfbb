@@ -3,6 +3,11 @@
 
 #include "zEntHangable.h"
 
+static zParEmitter* sCandleEmitter;
+static zParEmitter* sCandleSmokeEmitter;
+static U32 sChandelierHash;
+static zParEmitter* sMountEmitter;
+
 static void HangableSetup(zEntHangable* ent, xEntAsset* asset)
 {
     xEntHangableAsset* hangAsset;
