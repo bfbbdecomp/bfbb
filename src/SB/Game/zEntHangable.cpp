@@ -1,3 +1,4 @@
+#include "xBase.h"
 #include "xEnt.h"
 #include "xLinkAsset.h"
 #include "xString.h"
@@ -46,6 +47,41 @@ void zEntHangable_Init(zEntHangable* ent, xEntAsset* asset)
     }
 
     HangableSetup(ent, asset);
+}
+
+static void zEntHangable_UpdateFX(class zEntHangable* ent)
+{
+    xVec3 offset_rlii0006[8];
+    xVec3* local_offset;
+    xParEmitterCustomSettings info;
+    zParEmitter* emitter;
+    S32 i;
+}
+
+void zEntHangable_Update(zEntHangable* ent, xScene*, F32 dt)
+{
+    xVec3 unitHang;
+}
+
+static void zEntHangableMountFX(zEntHangable*)
+{
+}
+
+S32 zEntHangableEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase*)
+{
+    zEntHangable* ent; // r20
+    zEnt* follow; // r2
+    // FloatAndVoid dist; // r29+0x20C
+    return 0;
+}
+
+static bool HangableIsMovingTooMuch(xVec3* a, xVec3* b, xVec3* c, xVec3* d)
+{
+    return false;
+}
+
+void zEntHangable_SetMatrix(zEntHangable* ent, F32 f)
+{
 }
 
 void zEntHangable_Save(zEntHangable* ent, xSerial* s)
