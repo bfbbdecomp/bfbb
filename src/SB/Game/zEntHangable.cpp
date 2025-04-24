@@ -4,7 +4,10 @@
 
 #include <types.h>
 
-// zEntHangable_Load__FP12zEntHangableP7xSerial
+void zEntHangable_Save(zEntHangable* ent, xSerial* s)
+{
+    zEntSave(ent, s);
+}
 
 void zEntHangable_Load(zEntHangable* ent, xSerial* s)
 {
