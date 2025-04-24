@@ -49,7 +49,7 @@ void zEntHangable_Init(zEntHangable* ent, xEntAsset* asset)
     HangableSetup(ent, asset);
 }
 
-static void zEntHangable_UpdateFX(class zEntHangable* ent)
+static void zEntHangable_UpdateFX(zEntHangable* ent)
 {
     xVec3 offset_rlii0006[8];
     xVec3* local_offset;
@@ -106,13 +106,9 @@ void zEntHangable_SetShaggy(zEntHangable* ent, zEnt* b)
 {
 }
 
-void zEntHangable_FollowUpdate(class zEntHangable* ent /* r2 */)
+void zEntHangable_FollowUpdate(zEntHangable* ent)
 {
-    // Blocks
-    /* anonymous block */ {
-        // Range: 0x136EE0 -> 0x137058
-        class xVec3* center; // r2
-    }
+    xVec3* center;
 }
 
 void zEntHangable_SetFollow(zEntHangable* ent, zEnt* b)
