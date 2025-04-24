@@ -1,5 +1,7 @@
 #include "xEnt.h"
 #include "xLinkAsset.h"
+#include "xString.h"
+#include "zParEmitter.h"
 #include <types.h>
 
 #include "zEntHangable.h"
@@ -8,6 +10,14 @@ static zParEmitter* sCandleEmitter;
 static zParEmitter* sCandleSmokeEmitter;
 static U32 sChandelierHash;
 static zParEmitter* sMountEmitter;
+
+void zEntHangable_SetupFX()
+{
+    sCandleEmitter = zParEmitterFind("PAREMIT_CHAND_CANDLE");
+    sCandleSmokeEmitter = zParEmitterFind("PAREMIT_CHAND_CANDLE_SMOKE");
+    sChandelierHash = xStrHash("rlii0006");
+    sMountEmitter = zParEmitterFind("PAREMIT_HANGABLE_MOUNT");
+}
 
 static void HangableSetup(zEntHangable* ent, xEntAsset* asset)
 {
