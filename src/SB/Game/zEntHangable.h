@@ -39,5 +39,7 @@ void zEntHangable_Init(zEntHangable*, xEntAsset*);
 void zEntHangable_Save(zEntHangable* ent, xSerial* s);
 void zEntHangable_Load(zEntHangable* ent, xSerial* s);
 void zEntHangable_Reset(zEntHangable* ent);
+void zEntHangable_SetShaggy(zEntHangable* ent, zEnt* b);
+void zEntHangable_SetFollow(zEntHangable* ent, zEnt* b);
 
 #endif

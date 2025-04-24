@@ -1,3 +1,4 @@
+#include "xEnt.h"
 #include "xLinkAsset.h"
 #include <types.h>
 
@@ -45,4 +46,20 @@ void zEntHangable_Save(zEntHangable* ent, xSerial* s)
 void zEntHangable_Load(zEntHangable* ent, xSerial* s)
 {
     zEntLoad(ent, s);
+}
+
+void zEntHangable_Reset(zEntHangable* ent)
+{
+    zEntHangable_SetShaggy(ent, NULL);
+    zEntHangable_SetFollow(ent, NULL);
+    xEntReset(ent);
+    HangableSetup(ent, ent->asset);
+}
+
+void zEntHangable_SetShaggy(zEntHangable* ent, zEnt* b)
+{
+}
+
+void zEntHangable_SetFollow(zEntHangable* ent, zEnt* b)
+{
 }
