@@ -287,6 +287,118 @@ static F32 MatrixSpeed(zFlyKey keys[])
     return xacos(m) * zCamera_f_114_592 * zCamera_f_30_0;
 }
 
+static S32 zCameraFlyUpdate(xCamera* cam, F32 dt)
+{
+    S32 i;
+    S32 flyIdx;
+    S32 numKeys;
+    S32 flySize;
+    F32 flyLerp;
+    F32 flyFrame;
+    zFlyKey keys[4];
+    F32 matdiff1;
+    F32 matdiff2;
+    F32 matdiff3;
+    xMat3x3 tmpMat;
+    xQuat quats[2];
+    xQuat qresult;
+
+    if ((globals.pad0->pressed & 0x50000) && zcam_flytime > gSkipTimeFlythrough)
+    {
+        zcam_flytime = 0.033333335f * zcam_flysize;
+    }
+
+    flyFrame = 30.0f * zcam_flytime;
+    numKeys = std::floorf(flyFrame);
+    flyLerp = flyFrame - std::floorf(flyFrame);
+
+    flySize = (S32)(zcam_flysize >> 6) - 1;
+    if (!(numKeys < flySize))
+    {
+        return 0;
+    }
+
+    flyIdx = numKeys;
+    if (numKeys - 1 >= 0)
+    {
+        flyIdx = numKeys - 1;
+    }
+
+    keys[0] = *((zFlyKey*)zcam_flydata + flyIdx);
+    keys[1] = *((zFlyKey*)zcam_flydata + numKeys);
+    keys[2] = *((zFlyKey*)zcam_flydata + (numKeys + 1));
+
+    flyIdx = numKeys + 1;
+    if (numKeys + 2 < flySize)
+    {
+        flyIdx = numKeys + 2;
+    }
+
+    keys[3] = *((zFlyKey*)zcam_flydata + flyIdx);
+
+    // Reverses the byte order (endianness) of 64 4-byte blocks
+    U8* framePtr = (U8*)&keys[0].frame;
+    for (i = 64; i > 0; i--)
+    {
+        S8 tmp1 = *framePtr;
+        S8 tmp2 = *(framePtr + 1);
+        *framePtr = *(framePtr + 3);
+        *(framePtr + 1) = *(framePtr + 2);
+        *(framePtr + 2) = tmp2;
+        *(framePtr + 3) = tmp1;
+
+        framePtr += 4;
+    }
+
+    if (0 < numKeys)
+    {
+        matdiff1 = TranSpeed(&keys[0]);
+        matdiff2 = TranSpeed(&keys[1]);
+        matdiff3 = TranSpeed(&keys[2]);
+
+        if (matdiff2 > 10.0f && matdiff2 > 5.0f * matdiff1 && matdiff2 > 5.0f * matdiff3)
+        {
+            flyLerp = 0.0f;
+        }
+        else
+        {
+            matdiff1 = MatrixSpeed(&keys[0]);
+            matdiff2 = MatrixSpeed(&keys[1]);
+            matdiff3 = MatrixSpeed(&keys[2]);
+
+            if (matdiff2 > 45.0f && matdiff2 > matdiff1 * 5.0f && matdiff2 > matdiff3 * 5.0f)
+            {
+                flyLerp = 0.0f;
+            }
+        }
+    }
+
+    for (i = 0; i < 2; i++)
+    {
+        tmpMat.right.x = -keys[i + 1].matrix[0];
+        tmpMat.right.y = -keys[i + 1].matrix[1];
+        tmpMat.right.z = -keys[i + 1].matrix[2];
+
+        tmpMat.up.x = keys[i + 1].matrix[3];
+        tmpMat.up.y = keys[i + 1].matrix[4];
+        tmpMat.up.z = keys[i + 1].matrix[5];
+
+        tmpMat.at.x = -keys[i + 1].matrix[6];
+        tmpMat.at.y = -keys[i + 1].matrix[7];
+        tmpMat.at.z = -keys[i + 1].matrix[8];
+
+        xQuatFromMat(&quats[i], &tmpMat);
+    }
+
+    xQuatSlerp(&qresult, &quats[0], &quats[1], flyLerp);
+    xQuatToMat(&qresult, &cam->mat);
+    xVec3Lerp(&cam->mat.pos, (xVec3*)&keys[1].matrix[9], (xVec3*)&keys[2].matrix[9], flyLerp);
+
+    zcam_flytime += dt;
+
+    return 1;
+}
+
 void zCameraFlyStart(U32 assetID)
 {
     st_PKR_ASSET_TOCINFO info;
