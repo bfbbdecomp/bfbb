@@ -43,6 +43,37 @@ enum en_npcstreak
     NPC_STRK_FORCE = 0x7fffffff
 };
 
+enum en_nparmode {
+    NPAR_MODE_STD = 0,
+    NPAR_MODE_ALT_A = 1,
+    NPAR_MODE_ALT_B = 2,
+    NPAR_MODE_ALT_C = 3,
+    NPAR_MODE_ALT_D = 4,
+    NPAR_MODE_ALT_E = 5,
+    NPAR_MODE_SPIRALNORM = 1,
+    NPAR_MODE_SPIRALCALT = 2,
+    NPAR_MODE_SPIRALCINE = 3,
+    NPAR_MODE_OIL_TRAIL = 1,
+    NPAR_MODE_OIL_VAPOR = 2,
+    NPAR_MODE_OIL_SPLASH = 3,
+    NPAR_MODE_FETTI_SPARKLIES = 1,
+    NPAR_MODE_DRIP = 1,
+    NPAR_MODE_DROP = 2,
+    NPAR_MODE_SPLASH = 3,
+    NPAR_MODE_TRAIL = 4,
+    NPAR_MODE_TTNOZZLE = 1,
+    NPAR_MODE_TTTRAIL = 2,
+    NPAR_MODE_TTSPLASH = 3,
+    NPAR_MODE_TTSPOIL = 4,
+    NPAR_MODE_TTSMOKE = 5,
+    NPAR_MODE_DOGGYWISP = 1,
+    NPAR_MODE_DOGGYATTACK = 2,
+    NPAR_MODE_FWEXHAUST = 1,
+    NPAR_MODE_FWSTARBURST = 2,
+    NPAR_MODE_FWGLITTER = 3,
+    NPAR_MODE_NOMORE = 4,
+};
+
 struct NPARData
 {
     xVec3 pos;
@@ -66,6 +97,137 @@ struct NPARXtraData
 {
 };
 
+class NPARParmVisSplash {
+    // total size: 0x20
+public:
+    F32 tym_lifespan; // offset 0x0, size 0x4
+    RwRGBA colr_base; // offset 0x4, size 0x4
+    F32 siz_base[2]; // offset 0x8, size 0x8
+    xVec3 acc_base; // offset 0x10, size 0xC
+    S32 pct_keep; // offset 0x1C, size 0x4
+
+    void ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos, const xVec3* vel) const;
+};
+
+class NPARParmTarTarGunk {
+    // total size: 0x28
+public:
+    F32 tym_lifespan; // offset 0x0, size 0x4
+    RwRGBA colr_base; // offset 0x4, size 0x4
+    F32 siz_base[2]; // offset 0x8, size 0x8
+    xVec3 acc_base; // offset 0x10, size 0xC
+    F32 uv_scroll[2]; // offset 0x1C, size 0x8
+    U8 row_uvstart; // offset 0x24, size 0x1
+    U8 num_uvcell[2]; // offset 0x25, size 0x2
+    U8 pct_keep; // offset 0x27, size 0x1
+
+    void ConfigPar(NPARData*, en_nparmode, const xVec3*, const xVec3*) const;
+};
+
+class NPARParmFahrwerkz {
+    // total size: 0x28
+public:
+    F32 tym_lifespan; // offset 0x0, size 0x4
+    RwRGBA colr_base; // offset 0x4, size 0x4
+    F32 siz_base[2]; // offset 0x8, size 0x8
+    xVec3 acc_base; // offset 0x10, size 0xC
+    F32 uv_scroll[2]; // offset 0x1C, size 0x8
+    U8 row_uvstart; // offset 0x24, size 0x1
+    U8 num_uvcell[2]; // offset 0x25, size 0x2
+    U8 pct_keep; // offset 0x27, size 0x1
+
+    void ConfigPar(NPARData*, en_nparmode, const xVec3*, const xVec3*) const;
+};
+
+class NPARParmSleepyZeez {
+    // total size: 0x28
+public:
+    F32 tym_lifespan; // offset 0x0, size 0x4
+    RwRGBA colr_base; // offset 0x4, size 0x4
+    F32 siz_base[2]; // offset 0x8, size 0x8
+    xVec3 acc_base; // offset 0x10, size 0xC
+    F32 uv_scroll[2]; // offset 0x1C, size 0x8
+    U8 row_uvstart; // offset 0x24, size 0x1
+    U8 num_uvcell[2]; // offset 0x25, size 0x2
+    U8 pct_keep; // offset 0x27, size 0x1
+
+    void ConfigPar(NPARData*, en_nparmode, const xVec3*, const xVec3*) const;
+};
+
+class NPARParmDogBreath {
+    // total size: 0x20
+public:
+    F32 tym_lifespan; // offset 0x0, size 0x4
+    RwRGBA colr_base; // offset 0x4, size 0x4
+    F32 siz_base[2]; // offset 0x8, size 0x8
+    xVec3 acc_base; // offset 0x10, size 0xC
+    U8 pct_keep; // offset 0x1C, size 0x1
+    U8 unused[3]; // offset 0x1D, size 0x3
+
+    void ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos, const xVec3* vel) const;
+};
+
+class NPARParmGloveDust {
+    // total size: 0x1C
+public:
+    F32 tym_lifespan; // offset 0x0, size 0x4
+    RwRGBA colr_base; // offset 0x4, size 0x4
+    F32 siz_base[2]; // offset 0x8, size 0x8
+    xVec3 acc_base; // offset 0x10, size 0xC
+
+    void ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos, const xVec3* vel) const;
+};
+
+class NPARParmOilBub
+{
+    // total size: 0x1C
+public:
+    F32 tym_lifespan; // offset 0x0, size 0x4
+    RwRGBA colr_base; // offset 0x4, size 0x4
+    xVec3 acc_oilBubble; // offset 0x8, size 0xC
+    F32 siz_base[2]; // offset 0x14, size 0x8
+
+    void ConfigPar(NPARData*, en_nparmode, const xVec3*, const xVec3*) const;
+};
+
+class NPARParmTubeConfetti
+{
+    // total size: 0x28
+public:
+    F32 tym_lifespan; // offset 0x0, size 0x4
+    RwRGBA colr_base; // offset 0x4, size 0x4
+    F32 siz_base[2]; // offset 0x8, size 0x8
+    xVec3 acc_base; // offset 0x10, size 0xC
+    F32 uv_scroll[2]; // offset 0x1C, size 0x8
+    U8 row_uvstart; // offset 0x24, size 0x1
+    U8 num_uvcell[2]; // offset 0x25, size 0x2
+    U8 pct_keep; // offset 0x27, size 0x1
+
+    void ConfigPar(NPARData*, en_nparmode, const xVec3*, const xVec3*) const;
+};
+
+class NPARParmTubeSpiral
+{
+    // total size: 0xC
+public:
+    RwRGBA colr_base; // offset 0x0, size 0x4
+    F32 siz_base[2]; // offset 0x4, size 0x8
+
+    void ConfigPar(NPARData*, en_nparmode, const xVec3*, const xVec3*, F32 dt) const;
+};
+
+class NPARParmChuckSplash {
+    // total size: 0x20
+public:
+    F32 tym_lifespan; // offset 0x0, size 0x4
+    RwRGBA colr_base; // offset 0x4, size 0x4
+    F32 siz_base[2]; // offset 0x8, size 0x8
+    xVec3 acc_base; // offset 0x10, size 0xC
+    S32 pct_keep; // offset 0x1C, size 0x4
+
+    void ConfigPar(NPARData*, en_nparmode, const xVec3*, const xVec3*) const;
+};
+
 struct NPARMgmt
 {
     en_nparptyp typ_npar;
@@ -86,6 +248,7 @@ struct NPARMgmt
     void UpdateAndRender(F32 param_1);
     void XtraDataSet(NPARXtraData* param_1);
     void UserDataSet(void** user_data);
+    NPARData* NextAvail();
 };
 
 struct NPARInfo
@@ -120,8 +283,9 @@ void NPAR_SceneFinish();
 void NPAR_EmitTarTarTrail(const xVec3*, const xVec3*);
 NPARMgmt* NPAR_PartySetup(en_nparptyp parType, void** userData, NPARXtraData* xtraData);
 void NPAR_SceneReset();
-void NPCC_ShadowCacheReset();
+static void NPCC_ShadowCacheReset();
 void NPAR_Timestep(F32 dt);
+void NPAR_EmitDroplets(en_nparmode, const xVec3*, const xVec3*);
 void NPCC_MakeStreakInfo(en_npcstreak styp, StreakInfo* info);
 U32 xFXStreakStart(StreakInfo* styp);
 U32 NPCC_StreakCreate(en_npcstreak styp);
