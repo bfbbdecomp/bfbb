@@ -35,6 +35,8 @@ struct xCutsceneMgr : xBase
     U32 stop; // 0x18
     xCutsceneZbufferHack* zhack;
     F32 oldfov;
+
+    void UpdateAndRender(F32);
 };
 
 #endif
