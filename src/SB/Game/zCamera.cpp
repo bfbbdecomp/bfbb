@@ -427,6 +427,8 @@ void zCameraFlyStart(U32 assetID)
     }
 }
 
+static void zCameraFlyRestoreBackup(xCamera* cam);
+
 void zCameraFreeLookSetGoals(xCamera* cam, F32 pitch_s, F32& dgoal, F32& hgoal, F32& pitch_goal,
                              F32& lktm, F32 dt)
 {
@@ -623,6 +625,65 @@ S32 zCameraGetConvers()
     return zcam_convers;
 }
 
+void zCameraSetConvers(S32 on)
+{
+    xCamera& cam = globals.camera;
+    zcam_convers = on;
+    static U8 saved = 0;
+
+    if (on)
+    {
+        cam = zcam_backupconvers;
+        saved = 1;
+        zcam_dest = NULL;
+        zcam_tmr = 0.0f;
+    }
+    else
+    {
+        xCameraSetFOV(&cam, 75.0f);
+        zcam_fovcurr = 75.0f;
+
+        if (saved)
+        {
+            zCameraFlyRestoreBackup(&zcam_backupconvers);
+            xCameraMove(&cam, 0x2E, cam.dcur, cam.hcur, cam.pcur, 0.0f, 0.0f, 0.0f);
+            saved = 0;
+        }
+    }
+}
+
+void zCameraDoTrans(xCamAsset* asset, F32 ttime)
+{
+    xMat3x3 m;
+
+    zcam_dest = asset;
+
+    ttime = ttime > 0.0f ? ttime : asset->trans_time;
+
+    zcam_tmr = ttime;
+    zcam_ttm = ttime;
+
+    if (ttime <= 0.0f)
+    {
+        globals.camera.mat.right = asset->right;
+        globals.camera.mat.up = asset->up;
+        globals.camera.mat.at = asset->at;
+        globals.camera.mat.pos = asset->pos;
+
+        zcam_fovcurr = asset->fov;
+        zcam_fovdest = asset->fov;
+    }
+    else
+    {
+        m.right = asset->right;
+        m.up = asset->up;
+        m.at = asset->at;
+
+        xQuatFromMat(&zcam_quat, &m);
+        zcam_fovdest = asset->fov;
+    }
+}
+
 void zCameraTranslate(xCamera* cam, F32 x, F32 y, F32 z)
 {
     cam->mat.pos.x += x;
@@ -631,6 +692,24 @@ void zCameraTranslate(xCamera* cam, F32 x, F32 y, F32 z)
     cam->tran_accum.x += x;
     cam->tran_accum.y += y;
     cam->tran_accum.z += z;
+}
+
+void zCameraEnableWallJump(xCamera* cam, const xVec3& collNormal)
+{
+    if (wall_jump_enabled != WJVS_ENABLED)
+    {
+        wall_jump_enabled = WJVS_ENABLING;
+    }
+
+    xVec3 up = { 0.0f, 0.0f, 0.0f };
+
+    xVec3Cross(&wall_jump_view, &collNormal, &up);
+    xVec3Normalize(&wall_jump_view, &wall_jump_view);
+
+    if (xVec3Dot(&wall_jump_view, &globals.camera.mat.at) < 0.0f)
+    {
+        xVec3Sub(&wall_jump_view, &g_O3, &wall_jump_view);
+    }
 }
 
 void zCameraDisableWallJump(xCamera* cam)
