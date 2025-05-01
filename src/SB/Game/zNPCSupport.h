@@ -27,7 +27,9 @@ enum _tageNPCSnd
 
 enum en_NPC_UI_WIDGETS
 {
-    NPC_UI_WIDGETS_unk // Come back after more data is put in
+    NPC_WIDGE_TALK = 0,
+    NPC_WIDGE_NOMORE = 1,
+    NPC_WIDGE_FORCE = 2,
 };
 
 enum en_fwstate
@@ -65,6 +67,9 @@ struct NPCTarget
     zNPCCommon* npc_owner;
 
     void TargetClear();
+    void PosGet(xVec3* pos);
+    void TargetSet(xEnt* ent, int b);
+    S32 IsDead();
 };
 
 struct NPCBlinker
@@ -73,6 +78,8 @@ struct NPCBlinker
     S32 idx_uvcell;
 
     void Reset();
+    void IndexToUVCoord(int param_1, float* param_2, float* param_3);
+    void Update(F32 dt, F32 ratio, F32 tym_slow, F32 tym_fast);
 };
 
 struct NPCWidget
@@ -81,16 +88,22 @@ struct NPCWidget
     xBase* base_widge;
     zNPCCommon* npc_ownerlock;
 
-    U32 NPCIsTheLocker(zNPCCommon* npc_lock);
-    U32 IsVisible();
+    S32 NPCIsTheLocker(const zNPCCommon* npc_lock);
+    U32 IsLocked();
+    S32 IsVisible();
     U32 Off(zNPCCommon* npc, U32 theman);
-    U32 On(zNPCCommon* npc, U32 theman);
+    U32 On(const zNPCCommon* npc, S32 theman);
     void Reset();
     void Init(en_NPC_UI_WIDGETS);
+    S32 Lock(const zNPCCommon*);
+    S32 Unlock(const zNPCCommon*);
 };
 
 struct Firework
 {
+    static F32 acc_thrust;
+    static F32 acc_gravity;
+
     struct
     {
         en_fwstate fwstate : 8;
@@ -105,6 +118,7 @@ struct Firework
     void FlyFlyFly(F32 dt);
     void Update(F32 dt);
     void Cleanup();
+    void Detonate();
 };
 
 bool NPCC_ForceTalkOk();
@@ -115,7 +129,7 @@ void NPCWidget_SceneFinish();
 void NPCWidget_SceneReset();
 void NPCWidget_ScenePostInit();
 void NPCSupport_Startup();
-bool NPCSupport_ScenePrepare();
+void NPCSupport_ScenePrepare();
 void NPCSupport_SceneFinish();
 void NPCSupport_Timestep(F32 dt);
 void NPCSupport_SceneReset();
@@ -138,6 +152,7 @@ xVec3* NPCC_faceDir(xEnt* ent);
 void NPCC_ang_toXZDir(F32 angle, xVec3* dir);
 F32 NPCC_aimVary(xVec3* dir_aim, xVec3* pos_src, xVec3* pos_tgt, F32 dst_vary, S32 flg_vary,
                  xVec3* pos_aimPoint);
+void NPCC_aimMiss(xVec3*, xVec3*, xVec3*, float, xVec3*);
 F32 NPCC_ds2_toCam(const xVec3* pos_from, xVec3* delta);
 void zNPC_SNDStop(_tageNPCSnd snd);
 void zNPC_SNDPlay3D(_tageNPCSnd snd, xEnt*);
