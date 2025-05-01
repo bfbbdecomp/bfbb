@@ -13,6 +13,9 @@ F32 xpow(F32 x, F32 y);
 
 F32 SQ(F32 x);
 
+F32 LERP(F32 x, F32 y, F32 z);
+U8 LERP(float x, U8 y, U8 z);
+
 void xsqrtfast(F32& out, F32 x);
 
 #endif
