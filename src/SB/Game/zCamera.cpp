@@ -287,6 +287,118 @@ static F32 MatrixSpeed(zFlyKey keys[])
     return xacos(m) * zCamera_f_114_592 * zCamera_f_30_0;
 }
 
+static S32 zCameraFlyUpdate(xCamera* cam, F32 dt)
+{
+    S32 i;
+    S32 flyIdx;
+    S32 numKeys;
+    S32 flySize;
+    F32 flyLerp;
+    F32 flyFrame;
+    zFlyKey keys[4];
+    F32 matdiff1;
+    F32 matdiff2;
+    F32 matdiff3;
+    xMat3x3 tmpMat;
+    xQuat quats[2];
+    xQuat qresult;
+
+    if ((globals.pad0->pressed & 0x50000) && zcam_flytime > gSkipTimeFlythrough)
+    {
+        zcam_flytime = 0.033333335f * zcam_flysize;
+    }
+
+    flyFrame = 30.0f * zcam_flytime;
+    numKeys = std::floorf(flyFrame);
+    flyLerp = flyFrame - std::floorf(flyFrame);
+
+    flySize = (S32)(zcam_flysize >> 6) - 1;
+    if (!(numKeys < flySize))
+    {
+        return 0;
+    }
+
+    flyIdx = numKeys;
+    if (numKeys - 1 >= 0)
+    {
+        flyIdx = numKeys - 1;
+    }
+
+    keys[0] = *((zFlyKey*)zcam_flydata + flyIdx);
+    keys[1] = *((zFlyKey*)zcam_flydata + numKeys);
+    keys[2] = *((zFlyKey*)zcam_flydata + (numKeys + 1));
+
+    flyIdx = numKeys + 1;
+    if (numKeys + 2 < flySize)
+    {
+        flyIdx = numKeys + 2;
+    }
+
+    keys[3] = *((zFlyKey*)zcam_flydata + flyIdx);
+
+    // Reverses the byte order (endianness) of 64 4-byte blocks
+    U8* framePtr = (U8*)&keys[0].frame;
+    for (i = 64; i > 0; i--)
+    {
+        S8 tmp1 = *framePtr;
+        S8 tmp2 = *(framePtr + 1);
+        *framePtr = *(framePtr + 3);
+        *(framePtr + 1) = *(framePtr + 2);
+        *(framePtr + 2) = tmp2;
+        *(framePtr + 3) = tmp1;
+
+        framePtr += 4;
+    }
+
+    if (0 < numKeys)
+    {
+        matdiff1 = TranSpeed(&keys[0]);
+        matdiff2 = TranSpeed(&keys[1]);
+        matdiff3 = TranSpeed(&keys[2]);
+
+        if (matdiff2 > 10.0f && matdiff2 > 5.0f * matdiff1 && matdiff2 > 5.0f * matdiff3)
+        {
+            flyLerp = 0.0f;
+        }
+        else
+        {
+            matdiff1 = MatrixSpeed(&keys[0]);
+            matdiff2 = MatrixSpeed(&keys[1]);
+            matdiff3 = MatrixSpeed(&keys[2]);
+
+            if (matdiff2 > 45.0f && matdiff2 > matdiff1 * 5.0f && matdiff2 > matdiff3 * 5.0f)
+            {
+                flyLerp = 0.0f;
+            }
+        }
+    }
+
+    for (i = 0; i < 2; i++)
+    {
+        tmpMat.right.x = -keys[i + 1].matrix[0];
+        tmpMat.right.y = -keys[i + 1].matrix[1];
+        tmpMat.right.z = -keys[i + 1].matrix[2];
+
+        tmpMat.up.x = keys[i + 1].matrix[3];
+        tmpMat.up.y = keys[i + 1].matrix[4];
+        tmpMat.up.z = keys[i + 1].matrix[5];
+
+        tmpMat.at.x = -keys[i + 1].matrix[6];
+        tmpMat.at.y = -keys[i + 1].matrix[7];
+        tmpMat.at.z = -keys[i + 1].matrix[8];
+
+        xQuatFromMat(&quats[i], &tmpMat);
+    }
+
+    xQuatSlerp(&qresult, &quats[0], &quats[1], flyLerp);
+    xQuatToMat(&qresult, &cam->mat);
+    xVec3Lerp(&cam->mat.pos, (xVec3*)&keys[1].matrix[9], (xVec3*)&keys[2].matrix[9], flyLerp);
+
+    zcam_flytime += dt;
+
+    return 1;
+}
+
 void zCameraFlyStart(U32 assetID)
 {
     st_PKR_ASSET_TOCINFO info;
@@ -313,6 +425,161 @@ void zCameraFlyStart(U32 assetID)
     {
         zMusicSetVolume(zCamera_f_0_5, zCamera_f_0_1);
     }
+}
+
+static void zCameraFlyRestoreBackup(xCamera* backup)
+{
+    globals.camera.mat = backup->mat;
+    globals.camera.omat = backup->omat;
+    globals.camera.mbasis = backup->mbasis;
+    globals.camera.bound = backup->bound;
+    globals.camera.focus = backup->focus;
+
+    globals.camera.flags = backup->flags;
+    globals.camera.tmr = backup->tmr;
+    globals.camera.tm_acc = backup->tm_acc;
+    globals.camera.tm_dec = backup->tm_dec;
+    globals.camera.ltmr = backup->ltmr;
+    globals.camera.ltm_acc = backup->ltm_acc;
+    globals.camera.ltm_dec = backup->ltm_dec;
+    globals.camera.dmin = backup->dmin;
+    globals.camera.dmax = backup->dmax;
+    globals.camera.dcur = backup->dcur;
+    globals.camera.dgoal = backup->dgoal;
+    globals.camera.hmin = backup->hmin;
+    globals.camera.hmax = backup->hmax;
+    globals.camera.hcur = backup->hcur;
+    globals.camera.hgoal = backup->hgoal;
+    globals.camera.pmin = backup->pmin;
+    globals.camera.pmax = backup->pmax;
+    globals.camera.pcur = backup->pcur;
+    globals.camera.pgoal = backup->pgoal;
+    globals.camera.depv = backup->depv;
+    globals.camera.hepv = backup->hepv;
+    globals.camera.pepv = backup->pepv;
+    globals.camera.orn_epv = backup->orn_epv;
+    globals.camera.yaw_epv = backup->yaw_epv;
+    globals.camera.pitch_epv = backup->pitch_epv;
+    globals.camera.roll_epv = backup->roll_epv;
+    globals.camera.orn_cur = backup->orn_cur;
+    globals.camera.orn_goal = backup->orn_goal;
+    globals.camera.orn_diff = backup->orn_diff;
+    globals.camera.yaw_cur = backup->yaw_cur;
+    globals.camera.yaw_goal = backup->yaw_goal;
+    globals.camera.pitch_cur = backup->pitch_cur;
+    globals.camera.pitch_goal = backup->pitch_goal;
+    globals.camera.roll_cur = backup->roll_cur;
+    globals.camera.roll_goal = backup->roll_goal;
+    globals.camera.dct = backup->dct;
+    globals.camera.dcd = backup->dcd;
+    globals.camera.dccv = backup->dccv;
+    globals.camera.dcsv = backup->dcsv;
+    globals.camera.hct = backup->hct;
+    globals.camera.hcd = backup->hcd;
+    globals.camera.hccv = backup->hccv;
+    globals.camera.hcsv = backup->hcsv;
+    globals.camera.pct = backup->pct;
+    globals.camera.pcd = backup->pcd;
+    globals.camera.pccv = backup->pccv;
+    globals.camera.pcsv = backup->pcsv;
+    globals.camera.orn_ct = backup->orn_ct;
+    globals.camera.orn_cd = backup->orn_cd;
+    globals.camera.orn_ccv = backup->orn_ccv;
+    globals.camera.orn_csv = backup->orn_csv;
+    globals.camera.yaw_ct = backup->yaw_ct;
+    globals.camera.yaw_cd = backup->yaw_cd;
+    globals.camera.yaw_ccv = backup->yaw_ccv;
+    globals.camera.yaw_csv = backup->yaw_csv;
+    globals.camera.pitch_ct = backup->pitch_ct;
+    globals.camera.pitch_cd = backup->pitch_cd;
+    globals.camera.pitch_ccv = backup->pitch_ccv;
+    globals.camera.pitch_csv = backup->pitch_csv;
+    globals.camera.roll_ct = backup->roll_ct;
+    globals.camera.roll_cd = backup->roll_cd;
+    globals.camera.roll_ccv = backup->roll_ccv;
+    globals.camera.roll_csv = backup->roll_csv;
+}
+
+static S32 zCameraRewardUpdate(xCamera* cam, F32 dt)
+{
+    xCameraUpdate(cam, dt);
+
+    xVec3 v = { 0.0f, 0.0f, 0.0f };
+
+    xVec3Copy(&v, (xVec3*)&globals.player.ent.model->Mat->pos);
+    v.y -= 0.7f;
+
+    if (zcam_near)
+    {
+        if (globals.player.s->pcType == ePlayer_SB)
+        {
+            rewardMove = 1.3f;
+            rewardMoveSpeed = 0.68f;
+            rewardZoomSpeed = 7.1f;
+            rewardZoomAmount = 108.0f;
+            rewardTiltTime = 1.5f;
+            rewardTiltAmount = -0.22f;
+        }
+        else if (globals.player.s->pcType == ePlayer_Patrick)
+        {
+            rewardMove = 1.6f;
+            rewardMoveSpeed = 0.68f;
+            rewardZoomSpeed = 7.1f;
+            rewardZoomAmount = 108.0f;
+            rewardTiltTime = 1.0f;
+            rewardTiltAmount = -0.25f;
+        }
+        else if (globals.player.s->pcType == ePlayer_Sandy)
+        {
+            rewardMove = 1.3f;
+            rewardMoveSpeed = 0.68f;
+            rewardZoomSpeed = 7.1f;
+            rewardZoomAmount = 108.0f;
+            rewardTiltTime = 1.5f;
+            rewardTiltAmount = -0.22f;
+        }
+    }
+    else
+    {
+        if (globals.player.s->pcType == ePlayer_SB)
+        {
+            rewardMove = 1.5f;
+            rewardMoveSpeed = 1.1f;
+            rewardZoomSpeed = 5.9f;
+            rewardZoomAmount = 100.0f;
+            rewardTiltTime = 1.5f;
+            rewardTiltAmount = -0.2f;
+        }
+        else if (globals.player.s->pcType == ePlayer_Patrick)
+        {
+            rewardMove = 1.5f;
+            rewardMoveSpeed = 1.1f;
+            rewardZoomSpeed = 5.9f;
+            rewardZoomAmount = 100.0f;
+            rewardTiltTime = 1.5f;
+            rewardTiltAmount = -0.2f;
+        }
+        else if (globals.player.s->pcType == ePlayer_Sandy)
+        {
+            rewardMove = 1.5f;
+            rewardMoveSpeed = 1.1f;
+            rewardZoomSpeed = 5.9f;
+            rewardZoomAmount = 100.0f;
+            rewardTiltTime = 1.5f;
+            rewardTiltAmount = -0.2f;
+        }
+    }
+
+    if (xVec3Dist2((xVec3*)&globals.player.ent.model->Mat->pos, &globals.camera.mat.pos) >
+        SQR(rewardMove))
+    {
+        xCameraMove(cam, v, rewardMoveSpeed * dt);
+        xCameraFOV(cam, rewardZoomAmount, rewardZoomSpeed, dt);
+        xCameraLookYPR(cam, 0x0, globals.camera.yaw_cur, rewardTiltAmount, globals.camera.roll_cur,
+                       rewardTiltTime, 0.1f, 0.1f);
+    }
+
+    return 1;
 }
 
 void zCameraFreeLookSetGoals(xCamera* cam, F32 pitch_s, F32& dgoal, F32& hgoal, F32& pitch_goal,
@@ -511,6 +778,65 @@ S32 zCameraGetConvers()
     return zcam_convers;
 }
 
+void zCameraSetConvers(S32 on)
+{
+    xCamera& cam = globals.camera;
+    zcam_convers = on;
+    static U8 saved = 0;
+
+    if (on)
+    {
+        cam = zcam_backupconvers;
+        saved = 1;
+        zcam_dest = NULL;
+        zcam_tmr = 0.0f;
+    }
+    else
+    {
+        xCameraSetFOV(&cam, 75.0f);
+        zcam_fovcurr = 75.0f;
+
+        if (saved)
+        {
+            zCameraFlyRestoreBackup(&zcam_backupconvers);
+            xCameraMove(&cam, 0x2E, cam.dcur, cam.hcur, cam.pcur, 0.0f, 0.0f, 0.0f);
+            saved = 0;
+        }
+    }
+}
+
+void zCameraDoTrans(xCamAsset* asset, F32 ttime)
+{
+    xMat3x3 m;
+
+    zcam_dest = asset;
+
+    ttime = ttime > 0.0f ? ttime : asset->trans_time;
+
+    zcam_tmr = ttime;
+    zcam_ttm = ttime;
+
+    if (ttime <= 0.0f)
+    {
+        globals.camera.mat.right = asset->right;
+        globals.camera.mat.up = asset->up;
+        globals.camera.mat.at = asset->at;
+        globals.camera.mat.pos = asset->pos;
+
+        zcam_fovcurr = asset->fov;
+        zcam_fovdest = asset->fov;
+    }
+    else
+    {
+        m.right = asset->right;
+        m.up = asset->up;
+        m.at = asset->at;
+
+        xQuatFromMat(&zcam_quat, &m);
+        zcam_fovdest = asset->fov;
+    }
+}
+
 void zCameraTranslate(xCamera* cam, F32 x, F32 y, F32 z)
 {
     cam->mat.pos.x += x;
@@ -519,6 +845,24 @@ void zCameraTranslate(xCamera* cam, F32 x, F32 y, F32 z)
     cam->tran_accum.x += x;
     cam->tran_accum.y += y;
     cam->tran_accum.z += z;
+}
+
+void zCameraEnableWallJump(xCamera* cam, const xVec3& collNormal)
+{
+    if (wall_jump_enabled != WJVS_ENABLED)
+    {
+        wall_jump_enabled = WJVS_ENABLING;
+    }
+
+    xVec3 up = { 0.0f, 0.0f, 0.0f };
+
+    xVec3Cross(&wall_jump_view, &collNormal, &up);
+    xVec3Normalize(&wall_jump_view, &wall_jump_view);
+
+    if (xVec3Dot(&wall_jump_view, &globals.camera.mat.at) < 0.0f)
+    {
+        xVec3Sub(&wall_jump_view, &g_O3, &wall_jump_view);
+    }
 }
 
 void zCameraDisableWallJump(xCamera* cam)

@@ -130,18 +130,287 @@ void zNPCSpawner::Reset()
 
 void zNPCSpawner::MapPreferred()
 {
-    for (S32 i = 0; i < 0x10; i++)
+    for (S32 i = 0; i < 16; i++)
     {
         SMNPCStatus* npc_stat = &this->npcpool[i];
         if (npc_stat->npc != NULL)
         {
-            // FIXME
-            // zMovePoint* sp = (zMovePoint*)npc_stat->npc->FirstAssigned();
-            // if (sp != NULL&& /*TODO*/)
-            // {
-            //     npc_stat->sp_prefer = sp;
-            // }
+            zMovePoint* sp = (zMovePoint*)npc_stat->npc->FirstAssigned();
+            if (sp != NULL)
+            {
+                SMSPStatus* sp_stat = StatForSP(sp, 0);
+                if (sp_stat != NULL)
+                {
+                    npc_stat->sp_prefer = sp;
+                    sp_stat->npc_prefer = npc_stat->npc;
+                }
+            }
         }
+    }
+}
+
+void zNPCSpawner::Timestep(F32 dt)
+{
+    if (flg_spawner & 0x8)
+    {
+        ChildHeartbeat(dt);
+    }
+
+    if (flg_spawner & 0x10)
+    {
+        ChildCleanup(dt);
+    }
+
+    if (!(flg_spawner & 0x4))
+    {
+        tmr_wave = -1.0f > tmr_wave - dt ? -1.0f : tmr_wave - dt;
+
+        switch (wavemode)
+        {
+        case SM_WAVE_DISCREET:
+            UpdateDiscreet(dt);
+            break;
+        case SM_WAVE_CONTINUOUS:
+            UpdateContinuous(dt);
+            break;
+        }
+    }
+}
+
+void zNPCSpawner::UpdateDiscreet(F32 dt)
+{
+    SMSPStatus* spstat = NULL;
+
+    switch (wavestat)
+    {
+    case SM_STAT_BEGIN:
+        FillPending();
+
+        if (pendlist.cnt > 0)
+        {
+            wavestat = SM_STAT_INPROG;
+            zEntEvent(npc_owner, eEventDuploWaveBegin);
+
+            flg_spawner &= ~0x20;
+        }
+
+        tmr_wave = tym_delay;
+
+        break;
+    case SM_STAT_INPROG:
+        if (pendlist.cnt < 1)
+        {
+            wavestat = SM_STAT_MARKTIME;
+        }
+        else if (max_spawn > 0 && !(cnt_spawn < max_spawn))
+        {
+            wavestat = SM_STAT_ABORT;
+        }
+        else if (tmr_wave < 0.0f)
+        {
+            SMNPCStatus* npcstat = NextPendingNPC(0);
+            if (npcstat != NULL)
+            {
+                spstat = SelectSP(npcstat);
+            }
+
+            if (!(spstat == NULL))
+            {
+                SpawnBeastie(npcstat, spstat);
+            }
+
+            tmr_wave = tym_delay * (0.25f * (xurand() - 0.5f)) + tym_delay;
+        }
+
+        break;
+    case SM_STAT_MARKTIME:
+        if (actvlist.cnt < 1)
+        {
+            wavestat = SM_STAT_DONE;
+        }
+        else if (max_spawn > 0 && !(cnt_spawn < max_spawn))
+        {
+            wavestat = SM_STAT_ABORT;
+        }
+
+        break;
+    case SM_STAT_ABORT:
+        if (actvlist.cnt < 1)
+        {
+            wavestat = SM_STAT_DONE;
+        }
+
+        ClearPending();
+
+        break;
+    case SM_STAT_DONE:
+        if (!(flg_spawner & 0x20))
+        {
+            zEntEvent(npc_owner, eEventDuploWaveComplete);
+        }
+
+        if (max_spawn > 0 && !(cnt_spawn < max_spawn))
+        {
+            if (!(flg_spawner & 0x20))
+            {
+                flg_spawner |= 0x20;
+
+                zEntEvent(npc_owner, eEventDuploExpiredMaxNPC);
+                zEntEvent(npc_owner, eEventDuploSuperDuperDone);
+
+                if (flg_spawner & 0x2)
+                {
+                    zEntEvent(npc_owner, eEventDuploDuperIsDoner);
+                }
+            }
+        }
+        else
+        {
+            if (flg_spawner & 0x2)
+            {
+                if (!(flg_spawner & 0x20))
+                {
+                    flg_spawner |= 0x20;
+
+                    zEntEvent(npc_owner, eEventDuploSuperDuperDone);
+                    zEntEvent(npc_owner, eEventDuploDuperIsDoner);
+                }
+            }
+            else
+            {
+                wavestat = SM_STAT_BEGIN;
+            }
+        }
+
+        break;
+    default:
+        break;
+    }
+}
+
+void zNPCSpawner::UpdateContinuous(F32 dt)
+{
+    SMSPStatus* spstat = NULL;
+
+    switch (wavestat)
+    {
+    case SM_STAT_BEGIN:
+        FillPending();
+
+        if (pendlist.cnt > 0)
+        {
+            wavestat = SM_STAT_INPROG;
+            zEntEvent(npc_owner, eEventDuploWaveBegin);
+
+            flg_spawner &= ~0x20;
+        }
+
+        tmr_wave = tym_delay;
+
+        break;
+    case SM_STAT_INPROG:
+        if (pendlist.cnt < 1)
+        {
+            wavestat = SM_STAT_MARKTIME;
+        }
+        else if (max_spawn > 0 && !(cnt_spawn < max_spawn))
+        {
+            wavestat = SM_STAT_ABORT;
+        }
+        else if (tmr_wave < 0.0f)
+        {
+            SMNPCStatus* npcstat = NextPendingNPC(0);
+            if (npcstat != NULL)
+            {
+                spstat = SelectSP(npcstat);
+            }
+
+            if (!(spstat == NULL))
+            {
+                SpawnBeastie(npcstat, spstat);
+            }
+
+            tmr_wave = tym_delay * (0.25f * (xurand() - 0.5f)) + tym_delay;
+        }
+
+        break;
+    // MarkTime case is the significantly different one between this function and UpdateDiscreet
+    case SM_STAT_MARKTIME:
+        if (flg_spawner & 0x2)
+        {
+            wavestat = SM_STAT_ABORT;
+        }
+        else if (max_spawn > 0 && !(cnt_spawn < max_spawn))
+        {
+            wavestat = SM_STAT_ABORT;
+        }
+        else
+        {
+            if (tmr_wave < 0.0f)
+            {
+                tmr_wave = tym_delay * (0.25f * (xurand() - 0.5f)) + tym_delay;
+
+                ReFillPending();
+
+                if (pendlist.cnt > 0)
+                {
+                    wavestat = SM_STAT_INPROG;
+                }
+            }
+            else if (pendlist.cnt > 0)
+            {
+                wavestat = SM_STAT_INPROG;
+            }
+        }
+
+        break;
+    case SM_STAT_ABORT:
+        if (actvlist.cnt < 1)
+        {
+            wavestat = SM_STAT_DONE;
+        }
+
+        ClearPending();
+
+        break;
+    case SM_STAT_DONE:
+        if (!(flg_spawner & 0x20))
+        {
+            zEntEvent(npc_owner, eEventDuploWaveComplete);
+        }
+
+        if (max_spawn > 0 && !(cnt_spawn < max_spawn))
+        {
+            if (!(flg_spawner & 0x20))
+            {
+                flg_spawner |= 0x20;
+
+                zEntEvent(npc_owner, eEventDuploExpiredMaxNPC);
+                zEntEvent(npc_owner, eEventDuploSuperDuperDone);
+
+                if (flg_spawner & 0x2)
+                {
+                    zEntEvent(npc_owner, eEventDuploDuperIsDoner);
+                }
+            }
+        }
+        else
+        {
+            if (flg_spawner & 0x2)
+            {
+                if (!(flg_spawner & 0x20))
+                {
+                    flg_spawner |= 0x20;
+
+                    zEntEvent(npc_owner, eEventDuploSuperDuperDone);
+                    zEntEvent(npc_owner, eEventDuploDuperIsDoner);
+                }
+            }
+        }
+
+        break;
+    default:
+        break;
     }
 }
 

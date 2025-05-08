@@ -449,6 +449,7 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
                      int (*)(xGoal*, void*, en_trantype*, float, void*),
                      int (*)(xGoal*, void*, en_trantype*, float, void*),
                      int (*)(xGoal*, void*, en_trantype*, float, void*));
+    zMovePoint* FirstAssigned();
 
     // defined from zNPCGoalRobo.cpp
     xVec3* Center();
