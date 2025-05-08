@@ -1,11 +1,11 @@
 {
   "[c]": {
     "files.encoding": "utf8",
-    "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+    "editor.defaultFormatter": "xaver.clang-format"
   },
   "[cpp]": {
     "files.encoding": "utf8",
-    "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+    "editor.defaultFormatter": "xaver.clang-format"
   },
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
@@ -19,5 +19,5 @@
     ".clangd": "yaml"
   },
   // Disable C/C++ IntelliSense, use clangd instead
-  "C_Cpp.intelliSenseEngine": "disabled",
+  "C_Cpp.intelliSenseEngine": "default",
 }

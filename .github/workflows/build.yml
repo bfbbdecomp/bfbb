@@ -18,11 +18,22 @@ jobs:
         version: [GQPE78]
 
     steps:
-      # Checkout the repository
+      # Checkout the repository (Push)
       - name: Checkout
+        if: ${{ github.event_name == 'push' }}
         uses: actions/checkout@v4
         with:
           submodules: recursive
+          ref: ${{ github.event.push.head.sha }}
+
+      # Checkout the repository (PR from forked repo)
+      - name: Checkout
+        if: ${{ github.event_name == 'pull_request_target'}}
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          ref: ${{ github.event.pull_request.head.sha }}
+          repository: ${{github.event.pull_request.head.repo.full_name}}
 
       # Set Git config
       - name: Git config
@@ -71,11 +82,22 @@ jobs:
         version: [GQPE78]
 
     steps:
-      # Checkout the repository
+      # Checkout the repository (Push)
       - name: Checkout
+        if: ${{ github.event_name == 'push' }}
         uses: actions/checkout@v4
         with:
           submodules: recursive
+          ref: ${{ github.event.push.head.sha }}
+
+      # Checkout the repository (PR from forked repo)
+      - name: Checkout
+        if: ${{ github.event_name == 'pull_request_target'}}
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          ref: ${{ github.event.pull_request.head.sha }}
+          repository: ${{github.event.pull_request.head.repo.full_name}}
 
       # Set Git config
       - name: Git config
@@ -121,11 +143,21 @@ jobs:
       - name: Prepare
         run: cp -R /orig .
 
-      # Generate report for previous commit
-      - name: Generate previous report
-        continue-on-error: true
+      # Checkout the commit to generate OK bot report used for website build
+      - name: Checkout previous report repo state
+        if: ${{ github.event_name == 'push' }}
         run: |
           git checkout HEAD^
+
+      # Checkout the commit to generate CI progress report for PR comment report
+      - name: Checkout previous report repo state
+        if: ${{ github.event_name == 'pull_request_target' }}
+        run: |
+          git checkout main
+
+      # Generate report for previous repo state
+      - name: Generate previous report
+        run: |
           python configure.py --version ${{ matrix.version }} \
                 --binutils /binutils --compilers /compilers
           ninja build/${{ matrix.version }}/report.json
@@ -223,7 +255,7 @@ jobs:
       - name: Download OK bot
         id: download-ok
         run: |
-          python ./tools/download_tool.py OK ok --tag v0.1.2
+          python ./tools/download_tool.py OK ok --tag v0.1.4
 
       - name: Run OK command
         id: ok-command

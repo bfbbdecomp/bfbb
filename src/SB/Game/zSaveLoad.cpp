@@ -15,8 +15,8 @@
 #include "xParMgr.h"
 #include "xCutscene.h"
 #include "xDebug.h"
-#include "xTRC.h"
 #include "xString.h"
+#include "xTRC.h"
 #include "xutil.h"
 
 U32 saveSuccess;
@@ -983,7 +983,7 @@ S32 zSaveLoad_CardCheckGamesSingle(S32 cardNumber)
 }
 
 S32 zSaveLoad_CardCheckSlotEmpty_hasGame_doCheck(st_XSAVEGAME_DATA* xsgdata, S32 cardNumber,
-                                                   S32 gameNumber)
+                                                 S32 gameNumber)
 {
     S32 rc;
 
@@ -1204,13 +1204,13 @@ S32 zSaveLoad_CardCheckSlotOverwrite(S32 cardNumber, S32 gameNumber)
     // NOTE (Square): I'm not sure that this is supposed to be a loop. It doesn't make
     // sense to just break at the end and the condition feels like it should be an early return
     // but this matches and I don't know how else to generate the `b` instruction at 0x18
-    while(iVar1 != 1 || iVar1 == 10)
+    while (iVar1 != 1 || iVar1 == 10)
     {
         if (iVar1 == -1 || iVar1 == 10)
         {
             return iVar1;
         }
-        
+
         if (IsValidName(zSaveLoadGameTable[gameNumber].label))
         {
             iVar1 = zSaveLoad_CardPromptOverwrite();
@@ -1220,12 +1220,12 @@ S32 zSaveLoad_CardCheckSlotOverwrite(S32 cardNumber, S32 gameNumber)
             iVar1 = zSaveLoad_CardPromptOverwriteDamaged();
         }
 
-        if(iVar1 == 5)
+        if (iVar1 == 5)
         {
             return iVar1;
         }
 
-        if(iVar1 == 2 || iVar1 == 4)
+        if (iVar1 == 2 || iVar1 == 4)
         {
             return 2;
         }
@@ -2126,8 +2126,8 @@ U32 zSaveLoad_LoadLoop()
     }
 
     zSendEventToThumbIcon(eEventInvisible);
-    return (U32)sceneRead[0] << 0x18 | (U32)sceneRead[1] << 0x10 |
-           (U32)sceneRead[2] << 0x8 | (U32)sceneRead[3];
+    return (U32)sceneRead[0] << 0x18 | (U32)sceneRead[1] << 0x10 | (U32)sceneRead[2] << 0x8 |
+           (U32)sceneRead[3];
 }
 
 // Scheduling meme on the return
@@ -2340,8 +2340,8 @@ S32 xSGT_SaveProcPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRIT
     return sum + 1;
 }
 
-S32 xSGT_LoadLoadCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt,
-                      U32 ui, S32 i)
+S32 xSGT_LoadLoadCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, U32 ui,
+                    S32 i)
 {
     char bigbuf[32] = {};
     S32 compdiff = 0;
@@ -2359,8 +2359,8 @@ S32 xSGT_LoadLoadCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTE
     return compdiff == 0;
 }
 
-S32 xSGT_LoadPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt,
-                       U32 ui, S32 i)
+S32 xSGT_LoadPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, U32 ui,
+                     S32 i)
 {
     U32 stereo;
 

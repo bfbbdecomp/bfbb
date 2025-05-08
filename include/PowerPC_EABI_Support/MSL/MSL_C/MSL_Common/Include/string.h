@@ -18,6 +18,7 @@ int strcmp(const char* a, const char* b);
 int stricmp(const char* a, const char* b);
 int strcmpi(const char* a, const char* b);
 char* strstr(const char* haystack, const char* needle);
+char* strtok(char* str, const char* delimiters);
 int atoi(const char* s);
 
 #ifdef __cplusplus

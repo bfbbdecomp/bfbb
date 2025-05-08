@@ -384,9 +384,9 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
     xEntDrive* drv_data;
     xPsyche* psy_instinct; // 0x228
     zNPCCommon* npc_duplodude;
-    F32 spd_throttle;
+    F32 spd_throttle; //0x230
     S32 flg_xtrarend;
-    F32 tmr_fidget;
+    F32 tmr_fidget; //0x238
     F32 tmr_invuln; // 0x23C
     zShrapnelAsset* explosion; // 0x240
     xModelAssetParam* parmdata; // 0x244
@@ -418,6 +418,7 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
     bool IsMountableType(en_ZBASETYPE type);
     void MvptReset(zMovePoint* nav_goto);
     S32 MvptCycle();
+    S32 HaveLOSToPos(xVec3*, float, xScene*, xBase*, xCollis*);
     void ModelScaleSet(F32 x, F32 y, F32 z);
     void ModelScaleSet(F32 unk);
     void ModelScaleSet(const xVec3* vec);
@@ -448,6 +449,7 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
                      int (*)(xGoal*, void*, en_trantype*, float, void*),
                      int (*)(xGoal*, void*, en_trantype*, float, void*),
                      int (*)(xGoal*, void*, en_trantype*, float, void*));
+    zMovePoint* FirstAssigned();
 
     // defined from zNPCGoalRobo.cpp
     xVec3* Center();

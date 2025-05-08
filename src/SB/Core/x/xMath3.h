@@ -1,6 +1,8 @@
 #ifndef XMATH3_H
 #define XMATH3_H
 
+#include "xMath.h"
+
 #include "xVec3.h"
 #include "xVec3Inlines.h"
 
@@ -76,9 +78,11 @@ struct xLine3
 
 struct xRay3;
 
-extern xVec3 g_O3;
+extern const xQuat g_IQ;
+extern const xVec3 g_O3;
 extern xVec3 g_X3;
 extern xVec3 g_Y3;
+extern xVec3 g_NY3;
 extern xVec3 g_Z3;
 extern xMat4x3 g_I3;
 extern xVec3 g_Onez;
@@ -89,7 +93,9 @@ void xMat4x3Mul(xMat4x3* o, const xMat4x3* a, const xMat4x3* b);
 void xMat3x3Euler(xMat3x3* m, F32 yaw, F32 pitch, F32 roll);
 void xMat4x3Toworld(xVec3* o, const xMat4x3* m, const xVec3* v);
 void xMat3x3RotC(xMat3x3* m, F32 _x, F32 _y, F32 _z, F32 t);
+void xMat3x3RotX(xMat3x3* m, F32 t);
 void xMat3x3RotY(xMat3x3* m, F32 t);
+void xMat3x3RotZ(xMat3x3* m, F32 t);
 void xMat3x3MulRotC(xMat3x3* o, xMat3x3* m, F32 _x, F32 _y, F32 _z, F32 t);
 void xMat4x3Identity(xMat4x3* m);
 void xMat3x3Normalize(xMat3x3* o, const xMat3x3* m);
@@ -98,6 +104,7 @@ void xMat3x3Tolocal(xVec3* o, const xMat3x3* m, const xVec3* v);
 void xMat4x3MoveLocalRight(xMat4x3* m, F32 mag);
 void xMat4x3MoveLocalAt(xMat4x3* m, F32 mag);
 void xMat4x3MoveLocalUp(xMat4x3* m, F32 mag);
+void xMat4x3OrthoInv(xMat4x3* o, const xMat4x3* m);
 void xMat3x3GetEuler(const xMat3x3* m, xVec3* a);
 void xMat3x3Euler(xMat3x3* m, const xVec3* ypr);
 void xQuatToMat(const xQuat* q, xMat3x3* m);
@@ -106,9 +113,11 @@ F32 xQuatGetAngle(const xQuat* q);
 void xQuatFromMat(xQuat* q, const xMat3x3* m);
 void xQuatSlerp(xQuat* q, const xQuat* a, const xQuat* b, F32 t);
 void xQuatConj(xQuat* o, const xQuat* q);
+void xQuatCopy(xQuat*, const xQuat*);
 void xMat3x3LookAt(xMat3x3* m, const xVec3* pos, const xVec3* at);
 F32 xMat3x3LookVec(xMat3x3* m, const xVec3* at);
 void xBoxInitBoundOBB(xBox* o, const xBox* b, const xMat4x3* m);
+void xBoxUnion(xBox& a, const xBox& b, const xBox& c);
 void xMat3x3Scale(xMat3x3* m, const xVec3* s);
 void xMat3x3ScaleC(xMat3x3* m, F32 x, F32 y, F32 z);
 void xMat3x3RMulRotY(xMat3x3* o, const xMat3x3* m, F32 t);

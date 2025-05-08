@@ -3,17 +3,21 @@
 
 #include <types.h>
 #include "zCutsceneMgr.h"
+#include "zNPCSupplement.h"
 #include "xVec3.h"
 #include "zLightning.h"
 #include "zNPCHazard.h"
 #include "zParEmitter.h"
 #include "zShrapnel.h"
+#include "rwcore.h"
+
 
 void zNPCFXStartup();
 void zNPCFXShutdown();
 S32 zNPCFXCutscenePrep(const xScene*, F32, const zCutsceneMgr* csnmgr);
 void zNPCFXCutscene(const xScene*, F32, const zCutsceneMgr* csnmgr);
 void zNPCFXCutsceneDone(const xScene*, F32, const zCutsceneMgr* csnmgr);
+
 
 struct NCINLyt
 {
@@ -190,6 +194,9 @@ struct NPCCone
     F32 uv_tip[2];
     F32 uv_slice[2];
     void TextureSet(RwRaster* raster);
+    void UVSliceSet(F32 u, F32 v);
+    void UVBaseSet(F32 u, F32 v);
+    void ColorSet(RwRGBA top, RwRGBA bot);
     void RadiusSet(F32);
 };
 

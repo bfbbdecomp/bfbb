@@ -11,11 +11,16 @@ union RxColorUnion
     RwRGBA color;
 };
 
+// TODO: Determine whether c should go before or after objNormal
+// Context: These headers came from an official header source (unsure of release platform)
+//          However, currently decomped functions seem to pack the struct
+//          in this particular way so it's like this for now.
+//          See: zActionLIne.cpp
 struct _RxObjSpace3DVertex
 {
     RwV3d objVertex;
-    RxColorUnion c;
     RwV3d objNormal;
+    RxColorUnion c;
     RwReal u;
     RwReal v;
 };

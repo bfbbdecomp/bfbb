@@ -8,6 +8,8 @@
 #include <rwcore.h>
 #include <rpworld.h>
 
+class xModelInstance;
+
 struct xFXRing
 {
     U32 texture;
@@ -108,6 +110,7 @@ void xFXFireworksLaunch(F32 countdownTime, const xVec3* pos, F32 fuelTime);
 void xFXFireworksUpdate(F32 dt);
 void xFXStreakInit();
 void xFXStreakUpdate(F32 dt);
+void xFXStreakUpdate(U32 streakID, const xVec3*, const xVec3*);
 void xFXStreakRender();
 void xFXStreakStop(U32);
 void xFXShineInit();
@@ -120,6 +123,7 @@ void xFXRibbonRender();
 void xFXAuraInit();
 void xFXAuraUpdate(F32 dt);
 void xFXAuraRender();
+void xFXRenderProximityFade(const xModelInstance& model, F32 near_dist, F32 far_dist);
 void xFXSceneInit();
 void xFXSceneSetup();
 void xFXSceneReset();

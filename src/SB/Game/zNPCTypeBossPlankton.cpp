@@ -23,6 +23,15 @@
 #define ANIM_attack_missle 76 //0x4c
 #define ANIM_attack_bomb 77 //0x4d
 
+namespace
+{
+    S32 init_sound()
+    {
+        return 0;
+    }
+
+} // namespace
+
 xAnimTable* ZNPC_AnimTable_BossPlankton()
 {
     // clang-format off
@@ -130,11 +139,211 @@ xAnimTable* ZNPC_AnimTable_BossPlankton()
     return table;
 }
 
+void zNPCBPlankton::Init(xEntAsset* asset) //66%
+{
+    ::init_sound();
+    zNPCCommon::Init(asset);
+    flg_move = 1;
+    flg_vuln = 1;
+    xNPCBasic::RestoreColFlags();
+    territory_size = 0;
+    played_intro = 0;
+    zNPCBPlankton::init_beam();
+    xAnimPlay* play = 0;
+
+    // Is being called incorrectly.
+    // play is a temp fix to get it to build
+    zNPCBPlankton::aim_gun(play, &gun_tilt, &move.dest, 0);
+}
+
+void zNPCBPlankton::Destroy()
+{
+    zNPCCommon::Destroy();
+}
+
+void zNPCBPlankton::Process(xScene* xscn, float dt)
+{
+    // This function needs a lot of work, writing most of these comments
+    // so that i can resume where i left off when i return to it
+
+    // territory_data& t ;
+    //xCollis& coll;
+    xEnt* platform;
+    S32 i;
+
+    //xVec3& player_loc;
+    xPsyche* psy = psy_instinct;
+
+    if ((flag.updated == false) && (flag.updated = 1, played_intro == false))
+    {
+        zNPCBPlankton::say(0, 0, true);
+        played_intro = true;
+    }
+    beam.update(dt);
+    delay = delay + dt;
+    if ((mode == 1) && (territory->fuse_detected = player_left_territory(), psy_instinct != 0))
+    {
+        stun_duration = 0.0f;
+        psy_instinct->GoalSet(NPC_GOAL_BPLANKTONAMBUSH, 1);
+    }
+    // uvar1 = zNPCCommon::SomethingWonderful();
+    //if ((uVar1 & 0x23) == 0)
+    // {
+    //     psy_instinct->xPsyche::Timestep(dt, 0)
+    // }
+    if (flag.face_player = false)
+    {
+        // iVar4 = *(int *)(DAT_803c0c5c + 0x4c);
+        // pfVar2 = (float *)location__13zNPCBPlanktonCFv(param_9);
+        // param_3 = (double)*(float *)(iVar4 + 0x30);
+        // param_2 = (double)(*(float *)(iVar4 + 0x38) - pfVar2[2]);
+        // assign__5xVec2Fff((double)(float)(param_3 - (double)*pfVar2),param_2,(float *)(param_9 + 0x460));
+        // normalize__5xVec2Fv((float *)(param_9 + 0x460));
+    }
+    update_follow(dt);
+    update_turn(dt);
+    update_move(dt);
+    update_animation(dt); //uvar5 = update anim
+    check_player_damage(); //uvar1 = check_player_damage
+    if (psy_instinct != 0) //psy_instinct isnt right, needs (uvar1 & 0xff)
+    {
+        zEntPlayer_Damage(0, 1); //needs xBase* instead of 0
+    }
+    update_aim_gun(dt);
+    update_dialog(dt);
+    //bVar3 = visible__17xLaserBoltEmitterCFv(param_9 + 0x3b8);
+    //if (bVar3) {
+    //  *(uint *)(param_9 + 0x234) = *(uint *)(param_9 + 0x234) | 2;
+    //}
+    //Process__10zNPCCommonFP6xScenef(param_1,param_9,param_10);
+}
+
+void zNPCBPlankton::Render()
+{
+    xNPCBasic::Render();
+    zNPCBPlankton::render_debug();
+}
+
+void zNPCBPlankton::SelfSetup()
+{
+    xBehaveMgr* bmgr = xBehaveMgr_GetSelf();
+    this->psy_instinct = bmgr->Subscribe(this, NULL);
+    xPsyche* psy = this->psy_instinct;
+    psy->BrainBegin();
+    for (S32 i = NPC_GOAL_BPLANKTONIDLE; i <= NPC_GOAL_BPLANKTONBOMB; i++)
+    {
+        psy->AddGoal(i, this);
+    }
+    psy->BrainEnd();
+    psy->SetSafety(NPC_GOAL_BPLANKTONIDLE);
+}
+
+U32 zNPCBPlankton::AnimPick(S32 rawgoal, en_NPC_GOAL_SPOT gspot, xGoal* goal)
+{
+    U32 animId = 0;
+    S32 index = 1;
+
+    switch (rawgoal)
+    {
+    case NPC_GOAL_BPLANKTONIDLE:
+    case NPC_GOAL_BPLANKTONATTACK:
+    case NPC_GOAL_BPLANKTONAMBUSH:
+    case NPC_GOAL_BPLANKTONFLANK:
+    case NPC_GOAL_BPLANKTONEVADE:
+    case NPC_GOAL_BPLANKTONHUNT:
+    {
+        index = 1;
+        break;
+    }
+    case NPC_GOAL_BPLANKTONTAUNT:
+    {
+        index = 3;
+        break;
+    }
+    case NPC_GOAL_BPLANKTONMOVE:
+    {
+        index = 0x42;
+        break;
+    }
+    case NPC_GOAL_BPLANKTONSTUN:
+    case NPC_GOAL_BPLANKTONFALL:
+    case NPC_GOAL_BPLANKTONDIZZY:
+    {
+        index = 0x43;
+        break;
+    }
+    case NPC_GOAL_BPLANKTONBEAM:
+    {
+        index = 0x46;
+        break;
+    }
+    case NPC_GOAL_BPLANKTONWALL:
+    {
+        index = 0x49;
+        break;
+    }
+    case NPC_GOAL_BPLANKTONMISSLE:
+    {
+        index = 0x4c;
+        break;
+    }
+    case NPC_GOAL_BPLANKTONBOMB:
+    {
+        index = 0x4d;
+        break;
+    }
+
+    default:
+        index = 1;
+        break;
+    }
+
+    if (index > -1)
+    {
+        return animId = g_hash_bossanim[index];
+    }
+
+    return animId;
+}
+
+S32 zNPCBPlankton::next_goal()
+{
+    // Not in the correct order?
+    S32 tempR;
+    U32 cronyAttack;
+
+    if (mode == 0)
+    {
+        if (flag.hunt == false)
+        {
+            cronyAttack = crony_attacking();
+            tempR =
+                ((0 - (cronyAttack & 0xff) | cronyAttack & 0xff) >> 0x1f) + NPC_GOAL_BPLANKTONHUNT;
+            //NPC_GOAL_BPLANKTONATTACK
+        }
+        else
+        {
+            tempR = NPC_GOAL_BPLANKTONATTACK;
+            //NPC_GOAL_BPLANKTONHUNT
+        }
+    }
+    else
+    {
+        tempR = NPC_GOAL_BPLANKTONEVADE;
+        //NPC_GOAL_BPLANKTONHUNT
+    }
+    return tempR;
+}
+
 void zNPCBPlankton::render_debug()
 {
 }
 
 void zNPCBPlankton::update_animation(float)
+{
+}
+
+void zNPCBPlankton::vanish()
 {
 }
 
