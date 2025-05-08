@@ -371,18 +371,37 @@ S32 zNPCGoalDutchmanIdle::Exit(F32 dt, void* updCtxt)
 S32 zNPCGoalDutchmanIdle::Process(en_trantype* trantype, float dt, void* updCtxt, xScene* xscn)
 {
     owner.goal_delay();
-    if (owner.delay < owner.delay)
+    if (owner.delay == owner.delay)
     {
-        xGoal::Process(trantype, dt, updCtxt, xscn);
+        owner.delay = 1;
+
+        owner.next_goal();
     }
     else
     {
-        trantype = 0;
-        owner.next_goal();
+        xGoal::Process(trantype, dt, updCtxt, xscn);
     }
     return 0;
 
     //return xGoal::Process(trantype, dt, updCtxt, xscn);
+}
+
+xFactoryInst* zNPCGoalDutchmanDisappear::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    zNPCGoalDutchmanDisappear* tempVar;
+    tempVar = new (who, grow) zNPCGoalDutchmanDisappear(who, (zNPCDutchman&)*info);
+    // tempVar = new (who, grow) RyzMemGrow(grow);
+    if (tempVar != NULL)
+    {
+        //tempVar = zNPCGoalDutchmanDisappear(0, (zNPCDutchman&)*info);
+        // tempVar = new (who, grow) zNPCGoalDutchmanDisappear(who, (zNPCDutchman&)*info);
+
+        //goal = new (who, growCtxt) xGoalEmpty(who);
+    }
+    // if ()
+    // {
+    // }
+    return 0;
 }
 
 S32 zNPCGoalDutchmanDisappear::Exit(F32 dt, void* updCtxt)
@@ -433,7 +452,7 @@ S32 zNPCGoalDutchmanFlame::Exit(F32 dt, void* updCtxt)
     return xGoal::Exit(dt, updCtxt);
 }
 
-S32 zNPCGoalDutchmanCaught::Exit(float dt, void* updCtxt)
+S32 zNPCGoalDutchmanCaught::Exit(F32 dt, void* updCtxt)
 {
     return xGoal::Exit(dt, updCtxt);
 }
@@ -442,6 +461,24 @@ S32 zNPCGoalDutchmanDeath::Enter(F32 dt, void* updCtxt)
 {
     owner.delay = 0.0f;
     return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalDutchmanDeath::Exit(F32 dt, void* updCtxt)
+{
+    // Not sure how this is supposed to be called?
+    // dwarf dats shows:    xVec3& up = dt;
+    owner.move.dest.assign(dt, 0.0f, 1.0f);
+    return xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalDutchmanDeath::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    if (owner.delay >= 2.0f)
+    {
+        owner.decompose();
+        owner.vanish();
+    }
+    return xGoal::Process(trantype, dt, updCtxt, xscn);
 }
 
 U8 zNPCDutchman::PhysicsFlags() const
