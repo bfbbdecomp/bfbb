@@ -65,7 +65,7 @@ struct ztalkbox : xBase
     {
         bool visible : 1;
     } flag;
-    asset_type* asset;
+    const asset_type* asset;
     ztextbox* dialog_box;
     ztextbox* prompt_box;
     ztextbox* quit_box;
@@ -90,9 +90,17 @@ struct ztalkbox : xBase
 
 
     void start_talk(U32 textID, callback*, zNPCCommon*); // FIXME: params not verified
-    void stop_talk();
 
+    void load(const asset_type& tasset);
+    void reset();
+    void set_text(const char* text);
     void set_text(U32 textID);
+    void add_text(U32 textID);
+    void clear_text();
+    void stop_talk();
+    void stop_wait(U32 unk);
+    void show();
+    void hide();
 };
 
 #endif
