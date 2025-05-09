@@ -9,6 +9,7 @@
 #include "xLaserBolt.h"
 #include "xTimer.h"
 #include "zNPCGoals.h"
+#include "xParEmitter.h"
 
 struct zNPCNewsFish;
 
@@ -124,15 +125,23 @@ struct zNPCBPlankton : zNPCBoss
     void update_dialog(float);
     void init_beam();
     void vanish();
+    void reappear();
     U32 crony_attacking() const;
     S32 player_left_territory();
     void say(int, int, bool);
     void aim_gun(xAnimPlay*, xQuat*, xVec3*, int);
     void here_boy();
+    void follow_camera();
+    void reset_speed();
+    void refresh_orbit();
     S32 IsAlive();
+    void give_control();
     U8 ColPenFlags() const;
     U8 ColChkFlags() const;
     U8 ColChkByFlags() const;
+
+    // Not yet organized
+    void enable_emitter(xParEmitter&) const;
 };
 
 struct zNPCGoalBPlanktonIdle : zNPCGoalCommon
@@ -178,6 +187,9 @@ struct zNPCGoalBPlanktonHunt : zNPCGoalCommon
     zNPCBPlankton& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
+
+    S32 Enter(float, void*);
+    S32 Exit(float, void*);
 };
 
 struct zNPCGoalBPlanktonTaunt : zNPCGoalCommon
@@ -201,6 +213,9 @@ struct zNPCGoalBPlanktonStun : zNPCGoalCommon
     zNPCBPlankton& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
+    S32 Enter(float, void*);
+    S32 Exit(float, void*);
+    S32 Process(en_trantype*, float, void*, xScene*);
 };
 
 struct zNPCGoalBPlanktonFall : zNPCGoalCommon
@@ -215,6 +230,8 @@ struct zNPCGoalBPlanktonDizzy : zNPCGoalCommon
     zNPCBPlankton& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
+    S32 Enter(float, void*);
+    S32 Exit(float, void*);
 };
 
 struct zNPCGoalBPlanktonBeam : zNPCGoalCommon
@@ -232,6 +249,7 @@ struct zNPCGoalBPlanktonBeam : zNPCGoalCommon
     zNPCBPlankton& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
+    S32 Enter(float, void*);
 };
 
 struct zNPCGoalBPlanktonWall : zNPCGoalCommon
@@ -255,6 +273,8 @@ struct zNPCGoalBPlanktonBomb : zNPCGoalCommon
     zNPCBPlankton& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
+    S32 Enter(float, void*);
+    S32 Exit(float, void*);
     S32 Process(en_trantype*, float, void*, xScene*);
 };
 

@@ -30,6 +30,15 @@ namespace
         return 0;
     }
 
+    F32 get_player_loc()
+    {
+        return 0;
+    }
+
+    void play_sound(int, const xVec3*, float)
+    {
+    }
+
 } // namespace
 
 xAnimTable* ZNPC_AnimTable_BossPlankton()
@@ -385,6 +394,75 @@ S32 zNPCGoalBPlanktonWall::Process(en_trantype*, F32, void*, xScene*)
 S32 zNPCGoalBPlanktonMove::Process(en_trantype*, F32, void*, xScene*)
 {
     return 0;
+}
+
+xFactoryInst* zNPCGoalBPlanktonBomb::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return 0; // To-Do
+}
+
+S32 zNPCGoalBPlanktonStun::Enter(float dt, void* updCtxt)
+{
+    owner.reappear();
+    owner.delay = 0.0f;
+    owner.flag.follow = owner.FOLLOW_NONE;
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBPlanktonStun::Exit(float dt, void* updCtxt)
+{
+    owner.give_control();
+    owner.flag.follow = owner.FOLLOW_PLAYER;
+    return xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalBPlanktonDizzy::Enter(float dt, void* updCtxt)
+{
+    owner.give_control();
+    owner.delay = 0.0f;
+    owner.flag.follow = owner.FOLLOW_NONE;
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBPlanktonBeam::Enter(float dt, void* updCtxt)
+{
+    xParEmitter parE;
+    xParEmitter& pEmit = parE; // this is one of the codes of all time
+    owner.reappear();
+    owner.delay = 0.0f;
+    emitted = 0.0f;
+    owner.flag.follow = owner.FOLLOW_NONE;
+    owner.enable_emitter(pEmit);
+    void play_sound(S32, const xVec3*, F32); // dunno how to get this to call properly
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBPlanktonBomb::Enter(float dt, void* updCtxt)
+{
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBPlanktonHunt::Enter(float dt, void* updCtxt)
+{
+    owner.reappear();
+    get_player_loc();
+    owner.flag.attacking = true;
+    owner.delay = 0.0f;
+    owner.reset_speed();
+    owner.refresh_orbit();
+    owner.follow_camera();
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBPlanktonHunt::Exit(float dt, void* updCtxt)
+{
+    owner.refresh_orbit();
+    return xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalBPlanktonBomb::Exit(float dt, void* updCtxt)
+{
+    return xGoal::Exit(dt, updCtxt);
 }
 
 S32 zNPCGoalBPlanktonTaunt::Process(en_trantype*, F32, void*, xScene*)
