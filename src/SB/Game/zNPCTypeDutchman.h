@@ -166,6 +166,7 @@ struct zNPCDutchman : zNPCSubBoss
     void LassoNotify(en_LASSO_EVENT);
     S32 LassoSetup();
     void update_round();
+    void decompose();
     void next_goal();
     void goal_delay();
     void start_eye_glow();
@@ -204,8 +205,12 @@ struct zNPCGoalDutchmanIdle : zNPCGoalCommon
 struct zNPCGoalDutchmanDisappear : zNPCGoalCommon
 {
     zNPCDutchman& owner;
-    S32 Exit(float, void*);
 
+    zNPCGoalDutchmanDisappear(S32 goalID, zNPCDutchman& npc) : zNPCGoalCommon(goalID), owner(npc)
+    {
+    }
+
+    S32 Exit(float, void*);
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 
@@ -324,6 +329,8 @@ struct zNPCGoalDutchmanDeath : zNPCGoalCommon
     F32 min_y;
     F32 max_y;
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Exit(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
     zNPCDutchman& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
