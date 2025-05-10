@@ -351,12 +351,68 @@ void zNPCPrawn::Render()
     zNPCPrawn::render_debug();
 }
 
-void zNPCPrawn::update_round()
-{
+// void zNPCPrawn::update_round()
+// {
+// }
+/* zNPCPrawn::update_round (void) */
+void zNPCPrawn::update_round() {
+    S32 var_r4;
+    S32 temp_r3;
+    S32 var_r30;
+    zNPCPrawn *var_r31;
+    zNPCSpawner **temp_r3_2;
+
+    temp_r3 = this->life;
+    if (temp_r3 == 0) {
+        this->round = 3;
+    } else {
+        this->round = 2 - ((S32) ((temp_r3 - 1) * 3) / (s32) this->cfg_npc->useBoxBound);
+    }
+    var_r30 = 0;
+    var_r31 = this;
+    do {
+        temp_r3_2 = var_r31->spawner;
+        if (temp_r3_2 != NULL) {
+            var_r4 = 4;
+            if (var_r30 > (s32) this->round) {
+                var_r4 = 3;
+            }
+            //Notify__11zNPCSpawnerF13en_SM_NOTICESPv(temp_r3_2, (en_SM_NOTICES) var_r4, NULL);
+        }
+        var_r30 += 1;
+        var_r31 += 4;
+    } while (var_r30 < 3);
 }
 
-void zNPCPrawn::decompose()
-{
+// void zNPCPrawn::decompose()
+// {
+// }
+/* zNPCPrawn::decompose (void) */
+void zNPCPrawn::decompose() {
+    S32 var_r30;
+    zNPCPrawn *var_r31;
+    zNPCSpawner **temp_r3;
+
+    var_r31 = this;
+    vanish();
+    if ((U8) var_r31->fighting != 0) {
+        var_r31->fighting = 0;
+        //set_floor_state(var_r31, (zNPCPrawn::floor_state_enum) 0, 1, 1);
+        //hide_model(var_r31);
+        var_r30 = 0;
+        do {
+            temp_r3 = var_r31->spawner;
+            if (temp_r3 != NULL) {
+                //Notify__11zNPCSpawnerF13en_SM_NOTICESPv(temp_r3, (en_SM_NOTICES) 6, NULL);
+                //Notify__11zNPCSpawnerF13en_SM_NOTICESPv(var_r31->unk2D0, (en_SM_NOTICES) 7, NULL);
+                0; //pass
+            }
+            var_r30 += 1;
+            var_r31 += 4;
+        } while (var_r30 < 3);
+        //zCameraEnableTracking((camera_owner_enum) 8);
+        //stop__13xBinaryCameraFv((xBinaryCamera *) &boss_cam__27@unnamed@zNPCTypePrawn_cpp@);
+    }
 }
 
 void zNPCPrawn::update_particles(float)
