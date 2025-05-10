@@ -352,10 +352,20 @@ void zNPCDutchman::reset_speed()
 {
 }
 
-//S32 zNPCGoalDutchmanInitiate::Exit(F32 dt, void* updCtxt)
-//{
-// return xGoal::Exit(dt, updCtxt);
-//}
+xFactoryInst* zNPCGoalDutchmanInitiate::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalDutchmanInitiate(who, (zNPCDutchman&)*info);
+}
+
+S32 zNPCGoalDutchmanInitiate::Exit(F32 dt, void* updCtxt)
+{
+    return xGoal::Exit(dt, updCtxt);
+}
+
+xFactoryInst* zNPCGoalDutchmanIdle::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalDutchmanIdle(who, (zNPCDutchman&)*info);
+}
 
 S32 zNPCGoalDutchmanIdle::Enter(F32 dt, void* updCtxt)
 {
@@ -396,14 +406,29 @@ S32 zNPCGoalDutchmanDisappear::Exit(F32 dt, void* updCtxt)
     return xGoal::Exit(dt, updCtxt);
 }
 
+xFactoryInst* zNPCGoalDutchmanDamage::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalDutchmanDamage(who, (zNPCDutchman&)*info);
+}
+
 S32 zNPCGoalDutchmanDamage::Exit(F32 dt, void* updCtxt)
 {
     return xGoal::Exit(dt, updCtxt);
 }
 
+xFactoryInst* zNPCGoalDutchmanTeleport::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalDutchmanTeleport(who, (zNPCDutchman&)*info);
+}
+
 S32 zNPCGoalDutchmanTeleport::Exit(F32 dt, void* updCtxt)
 {
     return xGoal::Exit(dt, updCtxt);
+}
+
+xFactoryInst* zNPCGoalDutchmanReappear::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalDutchmanReappear(who, (zNPCDutchman&)*info);
 }
 
 S32 zNPCGoalDutchmanReappear::Exit(F32 dt, void* updCtxt)
@@ -412,9 +437,19 @@ S32 zNPCGoalDutchmanReappear::Exit(F32 dt, void* updCtxt)
     return xGoal::Exit(dt, updCtxt);
 }
 
+xFactoryInst* zNPCGoalDutchmanBeam::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalDutchmanBeam(who, (zNPCDutchman&)*info);
+}
+
 S32 zNPCGoalDutchmanBeam::Exit(F32 dt, void* updCtxt)
 {
     return xGoal::Exit(dt, updCtxt);
+}
+
+xFactoryInst* zNPCGoalDutchmanFlame::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalDutchmanFlame(who, (zNPCDutchman&)*info);
 }
 
 S32 zNPCGoalDutchmanFlame::Enter(F32 dt, void* updCtxt)
@@ -439,6 +474,29 @@ S32 zNPCGoalDutchmanFlame::Exit(F32 dt, void* updCtxt)
     return xGoal::Exit(dt, updCtxt);
 }
 
+xFactoryInst* zNPCGoalDutchmanPostFlame::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalDutchmanPostFlame(who, (zNPCDutchman&)*info);
+}
+
+
+S32 zNPCGoalDutchmanPostFlame::Exit(F32 dt, void* updCtxt)
+{
+    owner.flag.hurting = 0;
+    return xGoal::Exit(dt, updCtxt);
+}
+
+xFactoryInst* zNPCGoalDutchmanCaught::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalDutchmanCaught(who, (zNPCDutchman&)*info);
+}
+
+S32 zNPCGoalDutchmanCaught::Enter(float dt, void* updCtxt)
+{
+    // TODO
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
 S32 zNPCGoalDutchmanCaught::Exit(F32 dt, void* updCtxt)
 {
     return xGoal::Exit(dt, updCtxt);
@@ -452,10 +510,13 @@ S32 zNPCGoalDutchmanDeath::Enter(F32 dt, void* updCtxt)
 
 S32 zNPCGoalDutchmanDeath::Exit(F32 dt, void* updCtxt)
 {
-    // Not sure how this is supposed to be called?
-    // dwarf dats shows:    xVec3& up = dt;
-    owner.move.dest.assign(dt, 0.0f, 1.0f);
+    owner.move.dest.assign(dt, 1.0f, 0.0f);
     return xGoal::Exit(dt, updCtxt);
+}
+
+xFactoryInst* zNPCGoalDutchmanDeath::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalDutchmanDeath(who, (zNPCDutchman&)*info);
 }
 
 S32 zNPCGoalDutchmanDeath::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)

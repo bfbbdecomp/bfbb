@@ -187,6 +187,11 @@ struct zNPCGoalDutchmanNil : zNPCGoalCommon
 struct zNPCGoalDutchmanInitiate : zNPCGoalCommon
 {
     zNPCDutchman& owner;
+
+    zNPCGoalDutchmanInitiate(S32 goalID, zNPCDutchman& npc) : zNPCGoalCommon(goalID), owner(npc)
+    {
+    }
+
     S32 Exit(float, void*);
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
@@ -195,6 +200,11 @@ struct zNPCGoalDutchmanInitiate : zNPCGoalCommon
 struct zNPCGoalDutchmanIdle : zNPCGoalCommon
 {
     zNPCDutchman& owner;
+
+    zNPCGoalDutchmanIdle(S32 goalID, zNPCDutchman& npc) : zNPCGoalCommon(goalID), owner(npc)
+    {
+    }
+
     S32 Enter(float, void*);
     S32 Exit(float, void*);
     S32 Process(en_trantype*, float, void*, xScene*);
@@ -217,6 +227,11 @@ struct zNPCGoalDutchmanDisappear : zNPCGoalCommon
 struct zNPCGoalDutchmanTeleport : zNPCGoalCommon
 {
     zNPCDutchman& owner;
+
+    zNPCGoalDutchmanTeleport(S32 goalID, zNPCDutchman& npc) : zNPCGoalCommon(goalID), owner(npc)
+    {
+    }
+
     S32 Exit(float, void*);
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
@@ -225,6 +240,11 @@ struct zNPCGoalDutchmanTeleport : zNPCGoalCommon
 struct zNPCGoalDutchmanReappear : zNPCGoalCommon
 {
     zNPCDutchman& owner;
+
+    zNPCGoalDutchmanReappear(S32 goalID, zNPCDutchman& npc) : zNPCGoalCommon(goalID), owner(npc)
+    {
+    }
+
     S32 Exit(float, void*);
     void reset_speed();
 
@@ -259,6 +279,11 @@ struct zNPCGoalDutchmanBeam : zNPCGoalCommon
     S32 shots;
     beam_data beam[2];
     zNPCDutchman& owner;
+
+    zNPCGoalDutchmanBeam(S32 goalID, zNPCDutchman& npc) : zNPCGoalCommon(goalID), owner(npc)
+    {
+    }
+
     S32 Exit(float, void*);
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
@@ -277,6 +302,11 @@ struct zNPCGoalDutchmanFlame : zNPCGoalCommon
     xVec2 move_dir;
     U8 stopped;
     zNPCDutchman& owner;
+
+    zNPCGoalDutchmanFlame(S32 goalID, zNPCDutchman& npc) : zNPCGoalCommon(goalID), owner(npc)
+    {
+    }
+
     S32 Enter(float, void*);
     S32 Exit(float, void*);
 
@@ -287,13 +317,24 @@ struct zNPCGoalDutchmanPostFlame : zNPCGoalCommon
 {
     zNPCDutchman& owner;
 
+    zNPCGoalDutchmanPostFlame(S32 goalID, zNPCDutchman& npc) : zNPCGoalCommon(goalID), owner(npc)
+    {
+    }
+
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
+    S32 Exit(F32 dt, void* updCtxt);
 };
 
 struct zNPCGoalDutchmanCaught : zNPCGoalCommon
 {
     U8 grabbed;
     zNPCDutchman& owner;
+
+    zNPCGoalDutchmanCaught(S32 goalID, zNPCDutchman& npc) : zNPCGoalCommon(goalID), owner(npc)
+    {
+    }
+
+    S32 Enter(float, void*);
     S32 Exit(float, void*);
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
@@ -303,6 +344,10 @@ struct zNPCGoalDutchmanDamage : zNPCGoalCommon
 {
     U8 moving;
     zNPCDutchman& owner;
+
+    zNPCGoalDutchmanDamage(S32 goalID, zNPCDutchman& npc) : zNPCGoalCommon(goalID), owner(npc)
+    {
+    }
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
     S32 Exit(F32 dt, void* updCtxt);
@@ -323,6 +368,10 @@ struct zNPCGoalDutchmanDeath : zNPCGoalCommon
         SS_WINK,
         SS_DONE
     };
+
+    zNPCGoalDutchmanDeath(S32 goalID, zNPCDutchman& npc) : zNPCGoalCommon(goalID), owner(npc)
+    {
+    }
 
     substate_enum substate;
     F32 emit_frac;
