@@ -43,8 +43,7 @@ struct xMovePoint : xBase
 };
 
 xVec3* xMovePointGetPos(xMovePoint* m);
-F32 xMovePointGetNext(const xMovePoint* m, const xMovePoint* prev, xMovePoint** next,
-                          xVec3* hdng);
+F32 xMovePointGetNext(const xMovePoint* m, const xMovePoint* prev, xMovePoint** next, xVec3* hdng);
 void xMovePointSplineDestroy(xMovePoint* m);
 void xMovePointSplineSetup(xMovePoint* m);
 void xMovePointSetup(xMovePoint* m, xScene* sc);
