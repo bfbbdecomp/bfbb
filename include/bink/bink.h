@@ -38,7 +38,18 @@ struct BINK
 
 typedef struct BINK* HBINK;
 
-struct RAD3DIMAGE;
+struct RAD3DIMAGE
+{
+    int a;
+    int b;
+    unsigned int c;
+    int d;
+    int e;
+    void* f;
+    int g;
+    int h;
+};
+
 typedef struct RAD3DIMAGE* HRAD3DIMAGE;
 
 #ifdef __cplusplus
@@ -69,3 +80,4 @@ extern void BinkClose(HBINK bink);
 #endif
 
 #endif
+
