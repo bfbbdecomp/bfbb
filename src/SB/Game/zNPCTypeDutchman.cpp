@@ -493,7 +493,7 @@ xFactoryInst* zNPCGoalDutchmanCaught::create(S32 who, RyzMemGrow* grow, void* in
 
 S32 zNPCGoalDutchmanCaught::Enter(float dt, void* updCtxt)
 {
-    // To-Do
+    // TODO
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
