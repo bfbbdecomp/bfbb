@@ -388,20 +388,7 @@ S32 zNPCGoalDutchmanIdle::Process(en_trantype* trantype, float dt, void* updCtxt
 
 xFactoryInst* zNPCGoalDutchmanDisappear::create(S32 who, RyzMemGrow* grow, void* info)
 {
-    zNPCGoalDutchmanDisappear* tempVar;
-    tempVar = new (who, grow) zNPCGoalDutchmanDisappear(who, (zNPCDutchman&)*info);
-    // tempVar = new (who, grow) RyzMemGrow(grow);
-    if (tempVar != NULL)
-    {
-        //tempVar = zNPCGoalDutchmanDisappear(0, (zNPCDutchman&)*info);
-        // tempVar = new (who, grow) zNPCGoalDutchmanDisappear(who, (zNPCDutchman&)*info);
-
-        //goal = new (who, growCtxt) xGoalEmpty(who);
-    }
-    // if ()
-    // {
-    // }
-    return 0;
+    return new (who, grow) zNPCGoalDutchmanDisappear(who, (zNPCDutchman&)*info);
 }
 
 S32 zNPCGoalDutchmanDisappear::Exit(F32 dt, void* updCtxt)
