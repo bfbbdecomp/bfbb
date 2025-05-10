@@ -3,8 +3,15 @@
 #include <types.h>
 
 #include "zEvent.h"
+#include "xDraw.h"
+#include "zNPCSupport.h"
+#include "zGlobals.h"
+#include "xMathInlines.h"
+#include "zNPCTypeRobot.h"
 
-extern SMDepot g_smdepot;
+static SMDepot g_smdepot = {};
+static S32 g_drawSpawnBounds;
+
 extern F32 _805_Spawner; // 5.0f
 
 void zNPCSpawner_Startup()
@@ -414,30 +421,171 @@ void zNPCSpawner::UpdateContinuous(F32 dt)
     }
 }
 
-void zNPCSpawner::SetNPCStatus(zNPCCommon* npc, en_SM_NPC_STATUS status)
+void zNPCSpawner::Notify(en_SM_NOTICES note, void* data)
 {
-    SMNPCStatus* stat = this->StatForNPC(npc);
-    if (stat != NULL)
+    zNPCCommon* npcdata = (zNPCCommon*)data;
+    switch (note)
     {
-        stat->status = status;
+    case SM_NOTE_NPCDIED:
+        ToastedBeastie(npcdata);
+        SetNPCStatus(npcdata, SM_NPC_DEAD);
+        break;
+    case SM_NOTE_NPCSTANDBY:
+        SetNPCStatus(npcdata, SM_NPC_READY);
+        break;
+    case SM_NOTE_NPCALIVE:
+        SetNPCStatus(npcdata, SM_NPC_ACTIVE);
+        break;
+    case SM_NOTE_DUPPAUSE:
+        flg_spawner |= 0x4;
+        break;
+    case SM_NOTE_DUPRESUME:
+        if ((flg_spawner & 0x2) == 0)
+        {
+            flg_spawner &= ~0x4;
+        }
+        break;
+    case SM_NOTE_DUPSETDELAY:
+        tym_delay = *(F32*)npcdata;
+        tym_delay = tym_delay > -1.0f ? tym_delay : -1.0f;
+
+        break;
+    case SM_NOTE_DUPDEAD:
+        if ((flg_spawner & 0x2) == 0)
+        {
+            ClearPending();
+            flg_spawner |= 0x2;
+            if ((wavestat == SM_STAT_DONE) && (flg_spawner & 0x20) == 0)
+            {
+                zEntEvent(npc_owner, eEventDuploDuperIsDoner);
+            }
+        }
+        break;
+    case SM_NOTE_KILLKIDS:
+        ClearPending();
+        flg_spawner |= 0x2;
+        flg_spawner |= 0x10;
     }
 }
 
-SMNPCStatus* zNPCSpawner::ToastedBeastie(zNPCCommon* npc)
+U8 zNPCSpawner::Owned(zNPCCommon* npc) const
 {
-    SMNPCStatus* ret = this->StatForNPC(npc);
-    XOrdRemove(&this->actvlist, ret, -1);
-    zEntEvent((xBase*)this->npc_owner, eEventDuploNPCKilled);
-    return ret;
+    S32 i;
+    for (i = 0; i < 16; i++)
+    {
+        if (npcpool[i].npc == npc)
+        {
+            return 1;
+        }
+    }
+
+    return 0;
 }
 
-void zNPCSpawner::ChildHeartbeat(F32 dt)
+U8 zNPCSpawner::Receivable(en_SM_NOTICES note, void* data) const
 {
+    switch (note)
+    {
+    case SM_NOTE_NPCDIED:
+    case SM_NOTE_NPCSTANDBY:
+    case SM_NOTE_NPCALIVE:
+        return Owned((zNPCCommon*)data);
+    case SM_NOTE_DUPPAUSE:
+    case SM_NOTE_DUPRESUME:
+    case SM_NOTE_DUPSETDELAY:
+    case SM_NOTE_DUPDEAD:
+        return 1;
+    default:
+        return 0;
+    }
 }
 
-U8 zMovePoint::IsOn()
+SMSPStatus* zNPCSpawner::SelectSP(const SMNPCStatus* npcstat)
 {
-    return this->on;
+    SMSPStatus* sp_stat;
+
+    if (npcstat->sp_prefer != NULL)
+    {
+        sp_stat = StatForSP(npcstat->sp_prefer, 1);
+        if (!sp_stat->sp->IsOn())
+        {
+            return NULL;
+        }
+
+        if (!IsSPLZClear(sp_stat->sp))
+        {
+            return NULL;
+        }
+
+        return sp_stat;
+    }
+    else
+    {
+        S32 rc = 0;
+        S32 cnt = 0;
+
+        SMSPStatus* splist[16] = {};
+
+        for (S32 i = 0; i < 16; i++)
+        {
+            SMSPStatus* tmp_stat = &sppool[i];
+            if (tmp_stat->sp != NULL && tmp_stat->sp->on && splist[i] == NULL &&
+                IsSPLZClear(sppool[i].sp))
+            {
+                splist[i] = tmp_stat;
+                cnt += 1;
+            }
+
+            rc++;
+        }
+
+        if (!cnt)
+        {
+            sp_stat = NULL;
+        }
+        else
+        {
+            sp_stat = xUtil_select<SMSPStatus>(splist, rc, NULL);
+        }
+    }
+
+    return sp_stat;
+}
+
+SMNPCStatus* zNPCSpawner::NextPendingNPC(S32 arg0)
+{
+    S32 temp_r4;
+    const F32* temp_ptr = NULL;
+
+    temp_r4 = this->pendlist.cnt;
+    if (temp_r4 < 1)
+    {
+        return NULL;
+    }
+    return xUtil_select<SMNPCStatus>((SMNPCStatus**)this->pendlist.list, temp_r4, temp_ptr);
+}
+
+void zNPCSpawner::ClearActive()
+{
+    for (S32 i = 0; i < actvlist.cnt; i++)
+    {
+        if (pendlist.list[i] != NULL)
+        {
+            ((st_XORDEREDARRAY*)pendlist.list[i])->cnt = 1;
+        }
+    }
+
+    XOrdReset(&actvlist);
+}
+
+void zNPCSpawner::ClearPending()
+{
+    for (S32 i = 0; i < pendlist.cnt; i++)
+    {
+        ((st_XORDEREDARRAY*)pendlist.list[i])->cnt = 1;
+    }
+
+    XOrdReset(&pendlist);
 }
 
 st_XORDEREDARRAY* zNPCSpawner::FillPending()
@@ -469,38 +617,116 @@ st_XORDEREDARRAY* zNPCSpawner::ReFillPending()
     return &this->actvlist;
 }
 
-// void zNPCSpawner::ClearActive()
-// {
-//     s32 var_r6;
-//     s32 var_r7;
-//     void *temp_r5;
-
-//     var_r7 = 0;
-//     var_r6 = 0;
-// loop_4:
-//     if (var_r7 < (s32) this->cnt_cleanup) {
-//         temp_r5 = *(this->pendlist->list + var_r6);
-//         if (temp_r5 != NULL) {
-//             (u32) temp_r5[1] = 1;
-//         }
-//         var_r6 += 4;
-//         var_r7 += 1;
-//         goto loop_4;
-//     }
-//     XOrdReset__FP16st_XORDEREDARRAY(&this->unk1B0);
-// }
-
-SMNPCStatus* zNPCSpawner::NextPendingNPC(S32 arg0)
+S32 zNPCSpawner::IsSPLZClear(zMovePoint* sp)
 {
-    S32 temp_r4;
-    const F32* temp_ptr = NULL;
+    xVec3 pos_sp;
+    S32 rc;
+    xBound bnd;
+    xVec3 delt;
 
-    temp_r4 = this->pendlist.cnt;
-    if (temp_r4 < 1)
+    memset(&bnd, FALSE, sizeof(xBound));
+
+    bnd.type = 0;
+    xVec3Copy(&pos_sp, zMovePointGetPos(sp));
+
+    bnd.type = 1;
+    bnd.sph.r = 3.5f;
+    xVec3Copy(&bnd.box.center, &pos_sp);
+
+    xQuickCullForBound(&bnd.qcd, &bnd);
+
+    if (g_drawSpawnBounds)
     {
-        return NULL;
+        xDrawSetColor(g_CYAN);
+        xBoundDraw(&bnd);
     }
-    return xUtil_select<SMNPCStatus>((SMNPCStatus**)this->pendlist.list, temp_r4, temp_ptr);
+
+    if (NPCC_chk_hitPlyr(&bnd, NULL))
+    {
+        return 0;
+    }
+
+    xVec3Sub(&delt, xEntGetPos(&globals.player.ent), &pos_sp);
+
+    if (SQ(delt.x) + SQ(delt.z) < SQ(3.5f))
+    {
+        return 0;
+    }
+
+    return IsNearbyMover(&bnd, TRUE, NULL);
+}
+
+S32 zNPCSpawner::IsNearbyMover(xBound* bnd, S32 usecyl, xCollis* caller_colrec)
+{
+    S32 hitthing = 0;
+    zNPCCommon* npc;
+    S32 i;
+    xCollis local_colrec;
+    xCollis* colrec = caller_colrec;
+    xVec3 delt = { 0.0f, 0.0f, 0.0f };
+
+    for (i = 10; i > 0; i--)
+    {
+        // ???
+    }
+
+    if (caller_colrec == NULL)
+    {
+        colrec = &local_colrec;
+    }
+
+    for (i = 0; i < globals.sceneCur->num_npcs; i++)
+    {
+        npc = (zNPCCommon*)globals.sceneCur->npcs[i];
+        if (npc->chkby & 0x8 && npc->SelfType() != 'NTD0' && (npc->SelfType() & ~0xFF) != 'NTT\0')
+        {
+            xBoundHitsBound(bnd, &npc->bound, colrec);
+
+            if (!(colrec->flags & 0x1) && !usecyl)
+            {
+                NPCC_pos_ofBase(npc, &delt);
+
+                xVec3SubFrom(&delt, &bnd->sph.center);
+
+                if (SQ(delt.x) + SQ(delt.z) < SQ(bnd->cyl.r))
+                {
+                    hitthing++;
+                }
+            }
+
+            if (hitthing)
+            {
+                break;
+            }
+        }
+    }
+
+    return hitthing;
+}
+
+void zNPCSpawner::SetNPCStatus(zNPCCommon* npc, en_SM_NPC_STATUS status)
+{
+    SMNPCStatus* stat = this->StatForNPC(npc);
+    if (stat != NULL)
+    {
+        stat->status = status;
+    }
+}
+
+SMSPStatus* zNPCSpawner::StatForSP(zMovePoint* sp, S32 arg1)
+{
+    SMSPStatus* spstat = NULL;
+
+    S32 i;
+    for (i = 0; i < 16; i++)
+    {
+        if (sppool[i].sp != NULL && sppool[i].sp == sp)
+        {
+            spstat = &sppool[i];
+        }
+    }
+
+    return spstat;
 }
 
 /* zNPCSpawner::StatForNPC (zNPCCommon *) */
@@ -509,13 +735,6 @@ SMNPCStatus* zNPCSpawner::StatForNPC(zNPCCommon* npc)
     s32 var_ctr;
     SMNPCStatus* var_r6;
     zNPCCommon* temp_r0;
-    zNPCCommon* temp_r0_2;
-    zNPCCommon* temp_r0_3;
-    zNPCCommon* temp_r0_4;
-    zNPCCommon* temp_r0_5;
-    zNPCCommon* temp_r0_6;
-    zNPCCommon* temp_r0_7;
-    zNPCCommon* temp_r0_8;
 
     var_r6 = NULL;
     var_ctr = 2;
@@ -530,4 +749,156 @@ SMNPCStatus* zNPCSpawner::StatForNPC(zNPCCommon* npc)
     }
 
     return var_r6;
+}
+
+S32 zNPCSpawner::SpawnBeastie(SMNPCStatus* npcstat, SMSPStatus* spstat)
+{
+    zNPCCommon* npc;
+    zMovePoint* sp;
+    xVec3 pos_sp = { 0, 0, 0 };
+    zMovePoint* nav_dest = NULL;
+
+    npc = npcstat->npc;
+    sp = spstat->sp;
+    zMovePointGetNext(sp, sp, &nav_dest, NULL);
+
+    if (nav_dest == NULL)
+    {
+        nav_dest = sp;
+    }
+
+    xVec3Copy(&pos_sp, sp->PosGet());
+
+    npcstat->status = SM_NPC_SPAWNED;
+    XOrdRemove(&pendlist, npcstat, -1);
+    XOrdAppend(&actvlist, npcstat);
+
+    npc->Respawn(&pos_sp, nav_dest, sp);
+
+    cnt_spawn++;
+
+    zEntEvent(npc_owner, eEventDuploNPCBorn);
+
+    return 1;
+}
+
+SMNPCStatus* zNPCSpawner::ToastedBeastie(zNPCCommon* npc)
+{
+    SMNPCStatus* ret = this->StatForNPC(npc);
+    XOrdRemove(&this->actvlist, ret, -1);
+    zEntEvent((xBase*)this->npc_owner, eEventDuploNPCKilled);
+    return ret;
+}
+
+void zNPCSpawner::ChildHeartbeat(F32 dt)
+{
+}
+
+void zNPCSpawner::ChildCleanup(F32 dt)
+{
+    S32 i;
+    SMNPCStatus* npc_stat;
+    S32 cnt_know;
+    S32 cnt_dead;
+
+    if (wavestat == SM_STAT_DONE || wavestat == SM_STAT_ABORT)
+    {
+        for (i = actvlist.cnt - 1; i >= 0; i--)
+        {
+            zNPCCommon* npc = *(zNPCCommon**)actvlist.list[i];
+            npc->Damage(DMGTYP_INSTAKILL, NULL, NULL);
+        }
+
+        if (actvlist.cnt == 0 && pendlist.cnt == 0)
+        {
+            cnt_know = 0;
+            cnt_dead = 0;
+            for (i = 0; i < 16; i++)
+            {
+                npc_stat = &npcpool[i];
+                if (npc_stat->npc != NULL)
+                {
+                    cnt_know = 1;
+                    if (npc_stat->status == SM_NPC_READY)
+                    {
+                        cnt_dead = 1;
+                    }
+                    break;
+                }
+            }
+
+            if (cnt_dead == cnt_know)
+            {
+                flg_spawner &= ~0x10;
+            }
+        }
+
+        cnt_cleanup++;
+    }
+}
+
+S32 zMovePoint::IsOn()
+{
+    // Cast is required by calling functions to occur in here
+    // even though a single byte is moved into the return register
+    return (S32)this->on;
+}
+
+template <typename T> T* xUtil_select(T** data, S32 size, const F32* arg2)
+{
+    T* selected = NULL;
+    S32 selectIdx = 0;
+
+    F32 randOffset;
+
+    if (data == NULL)
+    {
+        return NULL;
+    }
+    else if (size < 1)
+    {
+        return NULL;
+    }
+
+    randOffset = xurand();
+    if (arg2 == NULL)
+    {
+        selectIdx = (S32)(randOffset * (F32)size);
+    }
+    else
+    {
+        F32* roundingData = (F32*)arg2;
+        F32 threshold = 0.0f;
+        S32 counter = 0;
+
+        // TODO: Fix float arithmetic and symbols
+        for (S32 i = size; i > 0; i--)
+        {
+            F32 tempValue = threshold;
+            threshold += *roundingData;
+
+            if (randOffset >= threshold)
+            {
+                if (randOffset <= tempValue)
+                {
+                    selectIdx = counter;
+                    break;
+                }
+            }
+            roundingData++;
+            counter++;
+        }
+    }
+
+    if (selectIdx >= size)
+    {
+        selectIdx = size - 1;
+    }
+
+    if (selectIdx < 0)
+    {
+        selectIdx = 0;
+    }
+
+    return data[selectIdx];
 }
