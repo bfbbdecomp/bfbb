@@ -427,8 +427,33 @@ void zNPCPrawn::apply_pending()
     disco->set_state_delay(pending.state_delay);
 }
 
-void zNPCPrawn::set_floor_state(zNPCPrawn::floor_state_enum, bool, bool)
-{
+// void zNPCPrawn::set_floor_state(zNPCPrawn::floor_state_enum, bool, bool)
+// {
+// }
+/* zNPCPrawn::set_floor_state (zNPCPrawn::floor_state_enum, bool, bool) */
+void zNPCPrawn::set_floor_state(zNPCPrawn::floor_state_enum arg0, bool arg1, bool arg2) {
+    U32 var_r5;
+    U32 temp_r0;
+    U32 temp_r3;
+    z_disco_floor *temp_r4;
+
+    if (((S32) arg0 != (S32) this->floor_state) || (arg2 != 0)) {
+        this->floor_state = (floor_state_enum) arg0;
+        //get_floor_info(this, arg0, (zNPCPrawn::range_type *) &this->unk304, &this->unk30C, &this->unk310);
+        if (arg1 != 0) {
+            apply_pending();
+            return;
+        }
+        temp_r4 = this->disco;
+        temp_r3 = temp_r4->state;
+        if ((temp_r3 < (U32) temp_r4->min_state || (temp_r0 = temp_r4->max_state, ((temp_r3 > temp_r0) != 0)))) {
+            var_r5 = 1;
+        } else {
+            var_r5 = (temp_r0 - temp_r3) + 1;
+        }
+        this->pending.counter = temp_r4->state_counter + var_r5;
+        this->pending.change = 1;
+    }
 }
 
 // void zNPCPrawn::vanish() //Didn't figure out how to finish it
