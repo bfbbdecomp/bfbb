@@ -153,6 +153,8 @@ void NPCC_ang_toXZDir(F32 angle, xVec3* dir);
 F32 NPCC_aimVary(xVec3* dir_aim, xVec3* pos_src, xVec3* pos_tgt, F32 dst_vary, S32 flg_vary,
                  xVec3* pos_aimPoint);
 void NPCC_aimMiss(xVec3*, xVec3*, xVec3*, float, xVec3*);
+S32 NPCC_chk_hitPlyr(xBound* bnd, xCollis* collide);
+S32 NPCC_pos_ofBase(xBase* tgt, xVec3* pos);
 F32 NPCC_ds2_toCam(const xVec3* pos_from, xVec3* delta);
 void zNPC_SNDStop(_tageNPCSnd snd);
 void zNPC_SNDPlay3D(_tageNPCSnd snd, xEnt*);
