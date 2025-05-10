@@ -84,8 +84,8 @@ struct zNPCSpawner : RyzMemData
     void UpdateDiscreet(F32 dt);
     void UpdateContinuous(F32 dt);
     void Notify(en_SM_NOTICES note, void* data);
-    S32 Owned(zNPCCommon* npc);
-    U8 Receivable(en_SM_NOTICES note, void* data);
+    U8 Owned(zNPCCommon* npc) const;
+    U8 Receivable(en_SM_NOTICES note, void* data) const;
     SMSPStatus* SelectSP(const SMNPCStatus* npcstat);
     // NextPendingNPC.
     void ClearActive();
@@ -97,7 +97,9 @@ struct zNPCSpawner : RyzMemData
     void SetNPCStatus(zNPCCommon* npc, en_SM_NPC_STATUS status);
 
     SMNPCStatus* StatForNPC(zNPCCommon* npc);
-    SMSPStatus* StatForSP(zMovePoint* mp, S32 arg0);
+    SMSPStatus* StatForSP(zMovePoint* mp, S32 arg1);
+    S32 IsSPLZClear(zMovePoint* sp);
+    S32 IsNearbyMover(xBound* bnd, S32 usecyl, xCollis* caller_colrec);
     S32 SpawnBeastie(SMNPCStatus* npcstat, SMSPStatus* spstat);
     SMNPCStatus* ToastedBeastie(zNPCCommon* npc);
     void ChildHeartbeat(F32 dt);
