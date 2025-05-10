@@ -467,8 +467,23 @@ void zNPCPrawn::set_floor_state(zNPCPrawn::floor_state_enum arg0, bool arg1, boo
 //     flags2.flg_penCheck = 0; // 0xf1
 // }
 
-void zNPCPrawn::reappear()
-{
+// void zNPCPrawn::reappear()
+// {
+// }
+/* zNPCPrawn::reappear (void) */
+void zNPCPrawn::reappear() {
+    xModelInstance *temp_r6;
+
+    temp_r6 = this->model;
+    temp_r6->Flags |= 3;
+    this->flags |= 1;
+    this->flags &= 0xBF;
+    this->pflags = 0;
+    this->moreFlags = 0x10;
+    this->chkby = 0x10;
+    this->penby = 0x10;
+    this->flags2.flg_colCheck = 0;
+    this->flags2.flg_penCheck = 0;
 }
 
 void zNPCPrawn::render_closeup()
