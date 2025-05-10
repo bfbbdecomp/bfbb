@@ -359,7 +359,7 @@ xFactoryInst* zNPCGoalDutchmanInitiate::create(S32 who, RyzMemGrow* grow, void* 
 
 S32 zNPCGoalDutchmanInitiate::Exit(F32 dt, void* updCtxt)
 {
-return xGoal::Exit(dt, updCtxt);
+    return xGoal::Exit(dt, updCtxt);
 }
 
 xFactoryInst* zNPCGoalDutchmanIdle::create(S32 who, RyzMemGrow* grow, void* info)
