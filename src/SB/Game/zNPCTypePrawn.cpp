@@ -389,7 +389,7 @@ void zNPCPrawn::update_round() {
 // }
 /* zNPCPrawn::decompose (void) */
 void zNPCPrawn::decompose() {
-    S32 var_r30;
+    S32 i;
     zNPCPrawn *var_r31;
     zNPCSpawner **temp_r3;
 
@@ -399,7 +399,7 @@ void zNPCPrawn::decompose() {
         var_r31->fighting = 0;
         //set_floor_state(var_r31, (zNPCPrawn::floor_state_enum) 0, 1, 1);
         //hide_model(var_r31);
-        var_r30 = 0;
+        i = 0;
         do {
             temp_r3 = var_r31->spawner;
             if (temp_r3 != NULL) {
@@ -407,9 +407,9 @@ void zNPCPrawn::decompose() {
                 //Notify__11zNPCSpawnerF13en_SM_NOTICESPv(var_r31->unk2D0, (en_SM_NOTICES) 7, NULL);
                 0; //pass
             }
-            var_r30 += 1;
+            i += 1;
             var_r31 += 4;
-        } while (var_r30 < 3);
+        } while (i < 3);
         //zCameraEnableTracking((camera_owner_enum) 8);
         //stop__13xBinaryCameraFv((xBinaryCamera *) &boss_cam__27@unnamed@zNPCTypePrawn_cpp@);
     }
@@ -432,7 +432,7 @@ void zNPCPrawn::apply_pending()
 // }
 /* zNPCPrawn::set_floor_state (zNPCPrawn::floor_state_enum, bool, bool) */
 void zNPCPrawn::set_floor_state(zNPCPrawn::floor_state_enum arg0, bool arg1, bool arg2) {
-    U32 var_r5;
+    U32 offset;
     U32 temp_r0;
     U32 temp_r3;
     z_disco_floor *temp_r4;
@@ -447,11 +447,11 @@ void zNPCPrawn::set_floor_state(zNPCPrawn::floor_state_enum arg0, bool arg1, boo
         temp_r4 = this->disco;
         temp_r3 = temp_r4->state;
         if ((temp_r3 < (U32) temp_r4->min_state || (temp_r0 = temp_r4->max_state, ((temp_r3 > temp_r0) != 0)))) {
-            var_r5 = 1;
+            offset = 1;
         } else {
-            var_r5 = (temp_r0 - temp_r3) + 1;
+            offset = (temp_r0 - temp_r3) + 1;
         }
-        this->pending.counter = temp_r4->state_counter + var_r5;
+        this->pending.counter = temp_r4->state_counter + offset;
         this->pending.change = 1;
     }
 }
