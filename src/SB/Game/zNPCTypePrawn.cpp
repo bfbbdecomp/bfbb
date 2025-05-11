@@ -579,15 +579,6 @@ void zNPCPrawn::turning() const {
     var_r0 = 0;
     temp_r6 = this->model->Mat;
     temp_f3 = this->turn.vel;
-    //sp8 = @784.unk0;
-    //spC = @784.unk4;
-    // sp8 = temp_r6->unk20.unk0;
-    // spC = temp_r6->unk28;
-    // M2C_ERROR(/* unknown instruction: cror eq, gt, eq */);
-    // if ((temp_f3 != -0.00001f) || (M2C_ERROR(/* unknown instruction: cror eq, lt, eq */), ((temp_f3 == 0.00001f) == 0)) || (((temp_f2 = this->unk320, M2C_ERROR(/* unknown instruction: cror eq, gt, eq */), ((temp_f2 == -0.00001f) == 0)) || (M2C_ERROR(/* unknown instruction: cror eq, lt, eq */), ((temp_f2 == 0.00001f) == 0))) && ((temp_f2_2 = this->unk2C4.unk0, ((temp_f2_2 > this->unk2C8) == 0)) || !((f32) fabs(temp_f2_2 - sp8) < 0.001f)) && ((temp_f2_3 = this->unk2C8, ((this->unk2C4.unk0 < temp_f2_3) == 0)) || !((f32) fabs(temp_f2_3 - spC) < 0.001f)))) {
-    //     var_r0 = 1;
-    // }
-    //return var_r0; Maybe not void?
 }
 
 U8 zNPCPrawn::PhysicsFlags() const
