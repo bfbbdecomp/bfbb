@@ -351,12 +351,68 @@ void zNPCPrawn::Render()
     zNPCPrawn::render_debug();
 }
 
-void zNPCPrawn::update_round()
-{
+// void zNPCPrawn::update_round()
+// {
+// }
+/* zNPCPrawn::update_round (void) */
+void zNPCPrawn::update_round() {
+    S32 var_r4;
+    S32 temp_r3;
+    S32 var_r30;
+    zNPCPrawn *var_r31;
+    zNPCSpawner **temp_r3_2;
+
+    temp_r3 = this->life;
+    if (temp_r3 == 0) {
+        this->round = 3;
+    } else {
+        this->round = 2 - ((S32) ((temp_r3 - 1) * 3) / (s32) this->cfg_npc->useBoxBound);
+    }
+    var_r30 = 0;
+    var_r31 = this;
+    do {
+        temp_r3_2 = var_r31->spawner;
+        if (temp_r3_2 != NULL) {
+            var_r4 = 4;
+            if (var_r30 > (s32) this->round) {
+                var_r4 = 3;
+            }
+            //Notify__11zNPCSpawnerF13en_SM_NOTICESPv(temp_r3_2, (en_SM_NOTICES) var_r4, NULL);
+        }
+        var_r30 += 1;
+        var_r31 += 4;
+    } while (var_r30 < 3);
 }
 
-void zNPCPrawn::decompose()
-{
+// void zNPCPrawn::decompose()
+// {
+// }
+/* zNPCPrawn::decompose (void) */
+void zNPCPrawn::decompose() {
+    S32 i;
+    zNPCPrawn *var_r31;
+    zNPCSpawner **temp_r3;
+
+    var_r31 = this;
+    vanish();
+    if ((U8) var_r31->fighting != 0) {
+        var_r31->fighting = 0;
+        //set_floor_state(var_r31, (zNPCPrawn::floor_state_enum) 0, 1, 1);
+        //hide_model(var_r31);
+        i = 0;
+        do {
+            temp_r3 = var_r31->spawner;
+            if (temp_r3 != NULL) {
+                //Notify__11zNPCSpawnerF13en_SM_NOTICESPv(temp_r3, (en_SM_NOTICES) 6, NULL);
+                //Notify__11zNPCSpawnerF13en_SM_NOTICESPv(var_r31->unk2D0, (en_SM_NOTICES) 7, NULL);
+                0; //pass
+            }
+            i += 1;
+            var_r31 += 4;
+        } while (i < 3);
+        //zCameraEnableTracking((camera_owner_enum) 8);
+        //stop__13xBinaryCameraFv((xBinaryCamera *) &boss_cam__27@unnamed@zNPCTypePrawn_cpp@);
+    }
 }
 
 void zNPCPrawn::update_particles(float)
@@ -371,8 +427,33 @@ void zNPCPrawn::apply_pending()
     disco->set_state_delay(pending.state_delay);
 }
 
-void zNPCPrawn::set_floor_state(zNPCPrawn::floor_state_enum, bool, bool)
-{
+// void zNPCPrawn::set_floor_state(zNPCPrawn::floor_state_enum, bool, bool)
+// {
+// }
+/* zNPCPrawn::set_floor_state (zNPCPrawn::floor_state_enum, bool, bool) */
+void zNPCPrawn::set_floor_state(zNPCPrawn::floor_state_enum arg0, bool arg1, bool arg2) {
+    U32 offset;
+    U32 temp_r0;
+    U32 temp_r3;
+    z_disco_floor *temp_r4;
+
+    if (((S32) arg0 != (S32) this->floor_state) || (arg2 != 0)) {
+        this->floor_state = (floor_state_enum) arg0;
+        //get_floor_info(this, arg0, (zNPCPrawn::range_type *) &this->unk304, &this->unk30C, &this->unk310);
+        if (arg1 != 0) {
+            apply_pending();
+            return;
+        }
+        temp_r4 = this->disco;
+        temp_r3 = temp_r4->state;
+        if ((temp_r3 < (U32) temp_r4->min_state || (temp_r0 = temp_r4->max_state, ((temp_r3 > temp_r0) != 0)))) {
+            offset = 1;
+        } else {
+            offset = (temp_r0 - temp_r3) + 1;
+        }
+        this->pending.counter = temp_r4->state_counter + offset;
+        this->pending.change = 1;
+    }
 }
 
 // void zNPCPrawn::vanish() //Didn't figure out how to finish it
@@ -386,8 +467,23 @@ void zNPCPrawn::set_floor_state(zNPCPrawn::floor_state_enum, bool, bool)
 //     flags2.flg_penCheck = 0; // 0xf1
 // }
 
-void zNPCPrawn::reappear()
-{
+// void zNPCPrawn::reappear()
+// {
+// }
+/* zNPCPrawn::reappear (void) */
+void zNPCPrawn::reappear() {
+    xModelInstance *temp_r6;
+
+    temp_r6 = this->model;
+    temp_r6->Flags |= 3;
+    this->flags |= 1;
+    this->flags &= 0xBF;
+    this->pflags = 0;
+    this->moreFlags = 0x10;
+    this->chkby = 0x10;
+    this->penby = 0x10;
+    this->flags2.flg_colCheck = 0;
+    this->flags2.flg_penCheck = 0;
 }
 
 void zNPCPrawn::render_closeup()
@@ -466,8 +562,23 @@ void xDebugAddTweak(const char*, xVec3*, const tweak_callback*, void*, U32)
 {
 }
 
-void zNPCPrawn::turning() const
-{
+// void zNPCPrawn::turning() const
+// {
+// }
+/* zNPCPrawn::turning (void) const */
+void zNPCPrawn::turning() const {
+    F32 spC;
+    F32 sp8;
+    F32 temp_f2;
+    F32 temp_f2_2;
+    F32 temp_f2_3;
+    F32 temp_f3;
+    S8 var_r0;
+    RwMatrix *temp_r6;
+
+    var_r0 = 0;
+    temp_r6 = this->model->Mat;
+    temp_f3 = this->turn.vel;
 }
 
 U8 zNPCPrawn::PhysicsFlags() const

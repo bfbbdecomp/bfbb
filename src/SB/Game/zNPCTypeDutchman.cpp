@@ -352,10 +352,20 @@ void zNPCDutchman::reset_speed()
 {
 }
 
-//S32 zNPCGoalDutchmanInitiate::Exit(F32 dt, void* updCtxt)
-//{
-// return xGoal::Exit(dt, updCtxt);
-//}
+xFactoryInst* zNPCGoalDutchmanInitiate::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalDutchmanInitiate(who, (zNPCDutchman&)*info);
+}
+
+S32 zNPCGoalDutchmanInitiate::Exit(F32 dt, void* updCtxt)
+{
+    return xGoal::Exit(dt, updCtxt);
+}
+
+xFactoryInst* zNPCGoalDutchmanIdle::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalDutchmanIdle(who, (zNPCDutchman&)*info);
+}
 
 S32 zNPCGoalDutchmanIdle::Enter(F32 dt, void* updCtxt)
 {
@@ -371,18 +381,24 @@ S32 zNPCGoalDutchmanIdle::Exit(F32 dt, void* updCtxt)
 S32 zNPCGoalDutchmanIdle::Process(en_trantype* trantype, float dt, void* updCtxt, xScene* xscn)
 {
     owner.goal_delay();
-    if (owner.delay < owner.delay)
+    if (owner.delay == owner.delay)
     {
-        xGoal::Process(trantype, dt, updCtxt, xscn);
+        owner.delay = 1;
+
+        owner.next_goal();
     }
     else
     {
-        trantype = 0;
-        owner.next_goal();
+        xGoal::Process(trantype, dt, updCtxt, xscn);
     }
     return 0;
 
     //return xGoal::Process(trantype, dt, updCtxt, xscn);
+}
+
+xFactoryInst* zNPCGoalDutchmanDisappear::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalDutchmanDisappear(who, (zNPCDutchman&)*info);
 }
 
 S32 zNPCGoalDutchmanDisappear::Exit(F32 dt, void* updCtxt)
@@ -390,14 +406,29 @@ S32 zNPCGoalDutchmanDisappear::Exit(F32 dt, void* updCtxt)
     return xGoal::Exit(dt, updCtxt);
 }
 
+xFactoryInst* zNPCGoalDutchmanDamage::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalDutchmanDamage(who, (zNPCDutchman&)*info);
+}
+
 S32 zNPCGoalDutchmanDamage::Exit(F32 dt, void* updCtxt)
 {
     return xGoal::Exit(dt, updCtxt);
 }
 
+xFactoryInst* zNPCGoalDutchmanTeleport::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalDutchmanTeleport(who, (zNPCDutchman&)*info);
+}
+
 S32 zNPCGoalDutchmanTeleport::Exit(F32 dt, void* updCtxt)
 {
     return xGoal::Exit(dt, updCtxt);
+}
+
+xFactoryInst* zNPCGoalDutchmanReappear::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalDutchmanReappear(who, (zNPCDutchman&)*info);
 }
 
 S32 zNPCGoalDutchmanReappear::Exit(F32 dt, void* updCtxt)
@@ -406,9 +437,19 @@ S32 zNPCGoalDutchmanReappear::Exit(F32 dt, void* updCtxt)
     return xGoal::Exit(dt, updCtxt);
 }
 
+xFactoryInst* zNPCGoalDutchmanBeam::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalDutchmanBeam(who, (zNPCDutchman&)*info);
+}
+
 S32 zNPCGoalDutchmanBeam::Exit(F32 dt, void* updCtxt)
 {
     return xGoal::Exit(dt, updCtxt);
+}
+
+xFactoryInst* zNPCGoalDutchmanFlame::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalDutchmanFlame(who, (zNPCDutchman&)*info);
 }
 
 S32 zNPCGoalDutchmanFlame::Enter(F32 dt, void* updCtxt)
@@ -433,7 +474,30 @@ S32 zNPCGoalDutchmanFlame::Exit(F32 dt, void* updCtxt)
     return xGoal::Exit(dt, updCtxt);
 }
 
-S32 zNPCGoalDutchmanCaught::Exit(float dt, void* updCtxt)
+xFactoryInst* zNPCGoalDutchmanPostFlame::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalDutchmanPostFlame(who, (zNPCDutchman&)*info);
+}
+
+
+S32 zNPCGoalDutchmanPostFlame::Exit(F32 dt, void* updCtxt)
+{
+    owner.flag.hurting = 0;
+    return xGoal::Exit(dt, updCtxt);
+}
+
+xFactoryInst* zNPCGoalDutchmanCaught::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalDutchmanCaught(who, (zNPCDutchman&)*info);
+}
+
+S32 zNPCGoalDutchmanCaught::Enter(float dt, void* updCtxt)
+{
+    // TODO
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalDutchmanCaught::Exit(F32 dt, void* updCtxt)
 {
     return xGoal::Exit(dt, updCtxt);
 }
@@ -442,6 +506,27 @@ S32 zNPCGoalDutchmanDeath::Enter(F32 dt, void* updCtxt)
 {
     owner.delay = 0.0f;
     return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalDutchmanDeath::Exit(F32 dt, void* updCtxt)
+{
+    owner.move.dest.assign(dt, 1.0f, 0.0f);
+    return xGoal::Exit(dt, updCtxt);
+}
+
+xFactoryInst* zNPCGoalDutchmanDeath::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalDutchmanDeath(who, (zNPCDutchman&)*info);
+}
+
+S32 zNPCGoalDutchmanDeath::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    if (owner.delay >= 2.0f)
+    {
+        owner.decompose();
+        owner.vanish();
+    }
+    return xGoal::Process(trantype, dt, updCtxt, xscn);
 }
 
 U8 zNPCDutchman::PhysicsFlags() const

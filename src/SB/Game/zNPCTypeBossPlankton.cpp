@@ -2,6 +2,8 @@
 
 #include <types.h>
 
+// pr comment retry
+
 #define f1585 1.0f
 #define f1586 0.0f
 #define f1657 0.2f
@@ -28,6 +30,15 @@ namespace
     S32 init_sound()
     {
         return 0;
+    }
+
+    F32 get_player_loc()
+    {
+        return 0;
+    }
+
+    void play_sound(int, const xVec3*, float)
+    {
     }
 
 } // namespace
@@ -367,19 +378,67 @@ U8 zNPCBPlankton::ColChkByFlags() const
     return 16;
 }
 
-S32 zNPCGoalBPlanktonBomb::Process(en_trantype*, F32, void*, xScene*)
+xFactoryInst* zNPCGoalBPlanktonIdle::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBPlanktonIdle(who, (zNPCBPlankton&)*info);
+}
+
+xFactoryInst* zNPCGoalBPlanktonAttack::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBPlanktonAttack(who, (zNPCBPlankton&)*info);
+}
+
+xFactoryInst* zNPCGoalBPlanktonAmbush::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBPlanktonAmbush(who, (zNPCBPlankton&)*info);
+}
+
+xFactoryInst* zNPCGoalBPlanktonFlank::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBPlanktonFlank(who, (zNPCBPlankton&)*info);
+}
+
+xFactoryInst* zNPCGoalBPlanktonEvade::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBPlanktonEvade(who, (zNPCBPlankton&)*info);
+}
+
+xFactoryInst* zNPCGoalBPlanktonHunt::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBPlanktonHunt(who, (zNPCBPlankton&)*info);
+}
+
+S32 zNPCGoalBPlanktonHunt::Enter(float dt, void* updCtxt)
+{
+    owner.reappear();
+    get_player_loc();
+    owner.flag.attacking = true;
+    owner.delay = 0.0f;
+    owner.reset_speed();
+    owner.refresh_orbit();
+    owner.follow_camera();
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBPlanktonHunt::Exit(float dt, void* updCtxt)
+{
+    owner.refresh_orbit();
+    return xGoal::Exit(dt, updCtxt);
+}
+
+xFactoryInst* zNPCGoalBPlanktonTaunt::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBPlanktonTaunt(who, (zNPCBPlankton&)*info);
+}
+
+S32 zNPCGoalBPlanktonTaunt::Process(en_trantype*, F32, void*, xScene*)
 {
     return 0;
 }
 
-S32 zNPCGoalBPlanktonMissle::Process(en_trantype*, F32, void*, xScene*)
+xFactoryInst* zNPCGoalBPlanktonMove::create(S32 who, RyzMemGrow* grow, void* info)
 {
-    return 0;
-}
-
-S32 zNPCGoalBPlanktonWall::Process(en_trantype*, F32, void*, xScene*)
-{
-    return 0;
+    return new (who, grow) zNPCGoalBPlanktonMove(who, (zNPCBPlankton&)*info);
 }
 
 S32 zNPCGoalBPlanktonMove::Process(en_trantype*, F32, void*, xScene*)
@@ -387,7 +446,141 @@ S32 zNPCGoalBPlanktonMove::Process(en_trantype*, F32, void*, xScene*)
     return 0;
 }
 
-S32 zNPCGoalBPlanktonTaunt::Process(en_trantype*, F32, void*, xScene*)
+xFactoryInst* zNPCGoalBPlanktonStun::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBPlanktonStun(who, (zNPCBPlankton&)*info);
+}
+
+S32 zNPCGoalBPlanktonStun::Enter(float dt, void* updCtxt)
+{
+    owner.reappear();
+    owner.delay = 0.0f;
+    owner.flag.follow = owner.FOLLOW_NONE;
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBPlanktonStun::Exit(float dt, void* updCtxt)
+{
+    owner.give_control();
+    owner.flag.follow = owner.FOLLOW_PLAYER;
+    return xGoal::Exit(dt, updCtxt);
+}
+
+xFactoryInst* zNPCGoalBPlanktonFall::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBPlanktonFall(who, (zNPCBPlankton&)*info);
+}
+
+xFactoryInst* zNPCGoalBPlanktonDizzy::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBPlanktonDizzy(who, (zNPCBPlankton&)*info);
+}
+
+S32 zNPCGoalBPlanktonDizzy::Enter(float dt, void* updCtxt)
+{
+    owner.give_control();
+    owner.delay = 0.0f;
+    owner.flag.follow = owner.FOLLOW_NONE;
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+xFactoryInst* zNPCGoalBPlanktonBeam::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBPlanktonBeam(who, (zNPCBPlankton&)*info);
+}
+
+S32 zNPCGoalBPlanktonBeam::Enter(float dt, void* updCtxt)
+{
+    xParEmitter parE;
+    xParEmitter& pEmit = parE; // this is one of the codes of all time
+    owner.reappear();
+    owner.delay = 0.0f;
+    emitted = 0.0f;
+    owner.flag.follow = owner.FOLLOW_NONE;
+    owner.enable_emitter(pEmit);
+    void play_sound(S32, const xVec3*, F32); // dunno how to get this to call properly
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBPlanktonBeam::Exit(float dt, void* updCtxt)
+{
+    xParEmitter parE;
+    xParEmitter& pEmit = parE; // this is one of the codes of all time
+    owner.flag.aim_gun = false;
+    owner.flag.follow = owner.FOLLOW_NONE;
+    owner.disable_emitter(pEmit);
+    return xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalBPlanktonBeam::Process(en_trantype* trantype, F32 dt, void* unk,
+                                   xScene* xscn) // void* should be someting else.
+// cross reference other files for the answer
+
+// Im probably just dumb, but i dont get how this should be written.
+{
+    S32 tempProcess;
+    tempProcess = emitted;
+    if (tempProcess != 2)
+    {
+        zNPCGoalBPlanktonBeam::update_warm_up(dt);
+    }
+    else if (tempProcess < 2)
+    {
+        if (tempProcess == 0)
+        {
+            zNPCGoalBPlanktonBeam::update_fire(dt);
+        }
+        else
+        {
+            zNPCGoalBPlanktonBeam::update_cool_down(dt);
+        }
+    }
+    else if (tempProcess < 4)
+    {
+        unk = 0;
+        tempProcess = owner.next_goal();
+        return tempProcess;
+    }
+
+    return 0;
+}
+
+xFactoryInst* zNPCGoalBPlanktonWall::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBPlanktonWall(who, (zNPCBPlankton&)*info);
+}
+
+S32 zNPCGoalBPlanktonWall::Process(en_trantype*, F32, void*, xScene*)
+{
+    return 0;
+}
+
+xFactoryInst* zNPCGoalBPlanktonMissle::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBPlanktonMissle(who, (zNPCBPlankton&)*info);
+}
+
+S32 zNPCGoalBPlanktonMissle::Process(en_trantype*, F32, void*, xScene*)
+{
+    return 0;
+}
+
+xFactoryInst* zNPCGoalBPlanktonBomb::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBPlanktonBomb(who, (zNPCBPlankton&)*info);
+}
+
+S32 zNPCGoalBPlanktonBomb::Enter(float dt, void* updCtxt)
+{
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBPlanktonBomb::Exit(float dt, void* updCtxt)
+{
+    return xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalBPlanktonBomb::Process(en_trantype*, F32, void*, xScene*)
 {
     return 0;
 }
