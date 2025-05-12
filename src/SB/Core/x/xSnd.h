@@ -85,6 +85,16 @@ template <S32 N> struct sound_queue
     U32 _playing[N + 1];
     S32 head;
     S32 tail;
+
+    sound_queue()
+    {
+        head = 0;
+        tail = 0;
+    }
+
+    void play(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, U32 parentID,
+              sound_category snd_category);
+    void push(U32 id);
 };
 
 enum sound_effect
