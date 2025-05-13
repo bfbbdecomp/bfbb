@@ -897,7 +897,7 @@ void zCameraMinTargetHeightSet(F32 min_height)
 
 void zCameraMinTargetHeightClear()
 {
-    zcam_mintgtheight = -1.0e38;
+    zcam_mintgtheight = -1.0e38f;
 }
 
 F32 xVec3Dist2(const xVec3* vecA, const xVec3* vecB)
