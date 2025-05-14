@@ -98,6 +98,80 @@ U32 xMathSolveQuadratic(F32 a, F32 b, F32 c, F32* x1, F32* x2)
     return 2;
 }
 
+U32 xMathSolveCubic(F32 a, F32 b, F32 c, F32 d, F32* x1, F32* x2, F32* x3) {
+    F32 arecip; //
+    F32 fA; // p
+    F32 fB; // q
+    F32 fOffset; //
+    F32 fDiscr; //
+    F32 fHalfB; //
+    F32 fTemp;
+    F32 fDist;
+    F32 fAngle;
+    F32 fCos; //
+    F32 fSin; //
+    
+    F32 temp_f1;
+    F32 temp_f1_2;
+    F32 temp_f1_3;
+    F32 temp_f28_2;
+    F32 temp_f29;
+    F32 var_f1;
+    
+    if (a == 0.0f) {
+        return xMathSolveQuadratic(b, c, d, x1, x2);
+    }
+    if (a != 1.0f) {
+        arecip = 1.0f / a;
+        b *= arecip;
+        c *= arecip;
+        d *= arecip;
+    }
+    fA = 0.33333334f * ((3.0f * c) - b * b);
+    fB = 0.037037037f * ((27.0f * d) + ((2.0f * (b * b * b)) - (9.0f * b * c)));
+    fOffset = 0.33333334f * b;
+    fDiscr = (0.25f * (fB * fB)) + (0.037037037f * (fA * (fA * fA)));
+    fHalfB = 0.5f * fB;
+    if ((F32) __fabs(fDiscr) < 0.000001f) {
+        fDiscr = 0.0f;
+    }
+    if (fDiscr > 0.0f) {
+        temp_f1 = xsqrt(fDiscr);
+        temp_f1_2 = -fHalfB + temp_f1;
+        if (temp_f1_2 >= 0.0f) {
+            *x1 = xpow(temp_f1_2, 0.33333334f);
+        } else {
+            *x1 = -xpow(-temp_f1_2, 0.33333334f);
+        }
+        temp_f1_3 = -fHalfB - temp_f1;
+        if (temp_f1_3 >= 0.0f) {
+            *x1 += xpow(temp_f1_3, 0.33333334f);
+        } else {
+            *x1 -= xpow(-temp_f1_3, 0.33333334f);
+        }
+        *x1 -= fOffset;
+        return 1;
+    }
+    if (fDiscr < 0.0f) {
+        temp_f29 = xsqrt(-0.33333334f * fA);
+        temp_f28_2 = 0.33333334f * xatan2(xsqrt(-fDiscr), -fHalfB);
+        fCos = icos(temp_f28_2);
+        fSin = isin(temp_f28_2);
+        *x1 = (2.0f * temp_f29 * fCos) - fOffset;
+        *x2 = (-temp_f29 * (fCos + 1.7320508f * fSin)) - fOffset;
+        *x3 = (-temp_f29 * (fCos - 1.7320508f * fSin)) - fOffset;
+        return 3;
+    }
+    if (fHalfB >= 0.0f) {
+        var_f1 = -xpow(fHalfB, 0.33333334f);
+    } else {
+        var_f1 = xpow(-fHalfB, 0.33333334f);
+    }
+    *x1 = (2.0f * var_f1) - fOffset;
+    *x2 = -var_f1 - fOffset;
+    return 2;
+}
+
 F32 xAngleClamp(F32 a)
 {
     F32 rad360 = 2 * PI;
