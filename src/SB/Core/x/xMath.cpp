@@ -231,3 +231,81 @@ F32 xAccelMoveTime(F32 dx, F32 a, F32, F32 maxv)
 
     return 2.0f * dx;
 }
+
+void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 maxv) {
+    U32 bn; // r10
+    U32 bp; // r7
+    U32 aa; // r29+0xC
+    F32 diff;
+    F32 dv;
+    
+    if ((F32) __fabs(v) > (F32) __fabs(maxv)) {
+        if (v < 0.0f) {
+            if (a > 0.0f) {
+                a = -a;
+            }
+        } else if (a < 0.0f) {
+            a = -a;
+        }
+        a = -a;
+    }
+    if (a < 0.0f) {
+        if (maxv > 0.0f) {
+            maxv = -maxv;
+        }
+    } else if (maxv < 0.0f) {
+        maxv = -maxv;
+    }
+    diff = maxv - v;
+    dv = a * dt;
+    if ((F32) __fabs(diff) < (F32) __fabs(dv)) {
+        x += (v * dt) + ((0.5f * diff * diff) / a);
+        v = maxv;
+        return;
+    }
+    x += (dt * (0.5f * a * dt)) + (v * dt);
+    v += dv;
+}
+
+void xAccelStop(F32& x, F32& v, F32 a, F32 dt) {
+    S32 aa; // From DWARF, currently unused.
+    F32 oldv;
+
+    S32 var_r0;
+    S32 var_r5;
+
+    oldv = v;
+    if (!(oldv >= -0.00001f) || !(oldv <= 0.00001f)) {
+        if (oldv < 0.0f) {
+            if (a > 0.0f) {
+                a = -a;
+            }
+        } else if (a < 0.0f) {
+            a = -a;
+        }
+
+        v += -a * dt;
+
+        if (v < 0.0f) {
+            var_r5 = 1;
+        } else {
+            var_r5 = 0;
+        }
+
+        if (oldv < 0.0f) {
+            var_r0 = 1;
+        } else {
+            var_r0 = 0;
+        }
+
+        if (var_r0 == var_r5) {
+            x += (-a * (0.5f * dt * dt)) + (oldv * dt);
+            return;
+        }
+
+        if (!(-a >= -0.00001f) || !(-a <= 0.00001f)) {
+            x -= (0.5f * oldv * oldv) / -a;
+        }
+        v = 0.0f;
+    }
+}
