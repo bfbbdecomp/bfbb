@@ -220,6 +220,133 @@ F32 xDangleClamp(F32 a)
     return rem;
 }
 
+void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv) {
+    F32 offset;
+    F32 t1;
+    F32 t2;
+    F32 oldv; //
+    F32 dv; //
+    F32 newv; //
+    F32 adx;
+    F32 diff;
+    F32 dx;
+
+    F32 temp_f1_2;
+    F32 temp_f28;
+    F32 temp_f29;
+    F32 var_f0;
+    F32 var_f2;
+    F32 var_f31;
+    S32 var_r0;
+    S32 var_r0_2;
+    S32 var_r0_3;
+    S32 var_r0_4;
+    S32 var_r3_2;
+    S32 var_r3_3;
+    S32 var_r3_4;
+    S32 var_r4;
+    S8 var_r3;
+
+    temp_f29 = endx - x;
+    var_r3 = 1;
+    if (!((F32) __fabs(v) < 0.001f)) {
+        if (v < 0.0f) {
+            var_r4 = 1;
+        } else {
+            var_r4 = 0;
+        }
+        if (temp_f29 < 0.0f) {
+            var_r0 = 1;
+        } else {
+            var_r0 = 0;
+        }
+        if (var_r0 == var_r4) {
+            var_r3 = 0;
+        }
+    }
+    if (var_r3 != 0) {
+        var_f31 = 1e38f;
+    } else {
+        var_f31 = temp_f29 / v;
+    }
+    temp_f28 = (F32) __fabs(v / a);
+    if (var_f31 < temp_f28) {
+        a *= -1.0f;
+    }
+    if (temp_f29 < 0.0f) {
+        a *= -1.0f;
+    }
+    dv = a * dt;
+    oldv = v;
+    newv = oldv + dv;
+
+    if ((F32) __fabs(newv) == maxv) {
+        v = newv;
+        var_f0 = 0.5f * dv * dt;
+    } else {
+
+        if ((F32) __fabs(oldv) == maxv) {
+            v = range_limit(newv, -maxv, maxv);
+            if (oldv != v) {
+                temp_f1_2 = v - oldv;
+                var_f0 = (0.5f * temp_f1_2 * temp_f1_2) / a;
+            } else {
+                var_f0 = 0.0f;
+            }
+        } else {
+            if (dv < 0.0f) {
+                var_r3_2 = 1;
+            } else {
+                var_r3_2 = 0;
+            }
+            if (newv < 0.0f) {
+                var_r0_2 = 1;
+            } else {
+                var_r0_2 = 0;
+            }
+            if (var_r0_2 != var_r3_2) {
+                v = newv;
+                var_f0 = 0.5f * dv * dt;
+            } else {
+                var_f0 = 0.0f;
+            }
+        }
+    }
+    var_f2 = (oldv * dt) + var_f0;
+    if (var_f31 > temp_f28) {
+        if (temp_f29 < 0.0f) {
+            var_r3_3 = 1;
+        } else {
+            var_r3_3 = 0;
+        }
+        if (var_f2 < 0.0f) {
+            var_r0_3 = 1;
+        } else {
+            var_r0_3 = 0;
+        }
+        if ((var_r0_3 == var_r3_3) && ((F32) __fabs(var_f2) > (F32) __fabs(temp_f29))) {
+            var_f2 = temp_f29;
+            v = 0.0f;
+        }
+    } else {
+        if (temp_f29 < 0.0f) {
+            var_r3_4 = 1;
+        } else {
+            var_r3_4 = 0;
+        }
+        if (var_f2 < 0.0f) {
+            var_r0_4 = 1;
+        } else {
+            var_r0_4 = 0;
+        }
+        if (var_r0_4 != var_r3_4) {
+            var_f2 = temp_f29;
+            v = 0.0f;
+        }
+    }
+    x += var_f2;
+}
+
 F32 xAccelMoveTime(F32 dx, F32 a, F32, F32 maxv)
 {
     float time = a;
