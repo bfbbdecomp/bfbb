@@ -208,19 +208,6 @@ int compare_ptanks(const void* e1, const void* e2)
 
 }
 
-void ptank_pool::flush()
-{
-    if (!this->valid())
-    {
-        goto cleanup;
-    }
-
-    RpPTankAtomicUnlock(this->ptank);
-
-cleanup:
-    return;
-}
-
 void xPTankPoolRender()
 {
     RwRenderStateSet(rwRENDERSTATECULLMODE, (void *) true);
