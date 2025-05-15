@@ -93,6 +93,7 @@ RpAtomic* AtomicDisableMatFX(RpAtomic* atomic);
 void xFXPreAllocMatFX(RpClump* clump);
 
 RpAtomic* xFXBubbleRender(RpAtomic* atomic);
+RpAtomic* xFXShinyRender(RpAtomic* atomic);
 
 void xFXanimUV2PSetTexture(RwTexture* texture);
 void xFXanimUVSetTranslation(const xVec3* trans);

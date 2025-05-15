@@ -2,6 +2,7 @@
 #define XCUTSCENE_H
 
 #include "xFile.h"
+#include "rpworld.h"
 
 struct xCutsceneInfo
 {
@@ -92,6 +93,13 @@ struct xCutscene
     void NoseySet(XCSNNosey* nosey);
 };
 
+struct CutsceneShadowModel
+{
+    RpAtomic* model;
+    RwMatrixTag* animMat;
+    U32 shadowBits;
+};
+
 struct xEnt;
 
 extern U32 gFrameCount;
@@ -103,6 +111,9 @@ U32 iCSFileOpen(xCutscene* csn);
 xCutscene* xCutscene_Create(U32 id);
 S32 xCutscene_Destroy(xCutscene* csn);
 S32 xCutscene_LoadStart(xCutscene* csn);
+void xCutscene_SetSpeed(xCutscene* csn, F32 speed);
+F32 xCutsceneConvertBreak(float time, xCutsceneBreak* breaklist, U32 breakcount, int idx);
 S32 xCutscene_Update(xCutscene* csn, F32 dt);
+void CutsceneShadowRender(CutsceneShadowModel* smod);
 
 #endif
