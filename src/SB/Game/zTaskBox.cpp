@@ -1,6 +1,7 @@
 #include "zTaskBox.h"
 
 #include "xEvent.h"
+#include "xGroup.h"
 #include "xstransvc.h"
 
 #include "zBase.h"
@@ -9,33 +10,34 @@
 
 #include <types.h>
 
-extern ztaskbox* shared;
+ztaskbox::talk_callback* ztaskbox::tcb;
+
+namespace
+{
+    static ztaskbox* shared;
+}
 
 void ztaskbox::load(const ztaskbox::asset_type& a)
 {
     xBaseInit((xBase*)this, &(xBaseAsset)a);
-    this->baseType = eBaseTypeEnv;
-    // FIXME: can't force const to non-const?
-    // this->asset = &a;
-
-    // FIXME: Define cb_dispatch
-    // this->eventFunc = cb_dispatch;
+    this->baseType = eBaseTypeTaskBox;
+    this->asset = &a;
+    this->eventFunc = cb_dispatch;
     if (this->linkCount != 0)
     {
         this->link = (xLinkAsset*)(&a + 1);
     }
-    bool enabled = a.enable;
     this->state = STATE_INVALID;
-    if (!enabled)
-    {
-        this->flag.enabled = false;
-        this->current = NULL;
-    }
-    else
+    if (a.enable)
     {
         this->flag.enabled = true;
         this->set_state(STATE_BEGIN);
         this->current = this;
+    }
+    else
+    {
+        this->flag.enabled = false;
+        this->current = NULL;
     }
     if (a.persistent)
     {
@@ -56,31 +58,39 @@ void ztaskbox::write(xSerial& s)
     s.Write((U8)this->state);
 }
 
-// WIP.
+// Equivalent: branching weirdness
 void ztaskbox::start_talk(zNPCCommon* npc)
 {
     ztaskbox* curr = this->current;
     if (curr != NULL)
     {
-        if (curr == this)
-        {
-            if (this->flag.enabled && this->state != STATE_INVALID)
-            {
-                //TODO!!!
-            }
-        }
-        else
+        if (curr != this)
         {
             curr->set_callback(this->cb);
             this->current->start_talk(NULL);
         }
+        else
+        {
+            if (this->flag.enabled && this->state != STATE_INVALID)
+            {
+                if (shared != NULL && shared != this)
+                {
+                    shared->stop_talk();
+                }
+                ztalkbox* talkbox = (ztalkbox*)zSceneFindObject(asset->talk_box);
+                if (talkbox != NULL)
+                {
+                    U32 text = current->get_text(asset->stages[state]);
+                    if (text != 0)
+                    {
+                        shared = this;
+                        tcb->reset(*this);
+                        talkbox->start_talk(text, tcb, npc);
+                    }
+                }
+            }
+        }
     }
-}
-
-void ztaskbox::talk_callback::reset(ztaskbox& task)
-{
-    this->task = &task;
-    this->answer = ztalkbox::ANSWER_CONTINUE;
 }
 
 void ztaskbox::stop_talk()
@@ -191,15 +201,13 @@ void ztaskbox::set_callback(callback* cb)
     this->cb = cb;
 }
 
-// WIP.
+// Equivalent: scheduling
 void ztaskbox::init()
 {
     shared = NULL;
-    // STUFF.
-}
 
-ztaskbox::talk_callback::talk_callback()
-{
+    static talk_callback tcb;
+    ztaskbox::tcb = &tcb;
 }
 
 void ztaskbox::load(xBase& data, xDynAsset& asset, size_t num)
@@ -210,7 +218,46 @@ void ztaskbox::load(xBase& data, xDynAsset& asset, size_t num)
 bool ztaskbox::exists(state_enum stage)
 {
     U32 state = this->asset->stages[stage];
-    return state != STATE_BEGIN && xSTFindAsset(state, NULL);
+    return state != STATE_BEGIN && xSTFindAsset(state, NULL) != NULL;
+}
+
+void ztaskbox::set_state(state_enum stage)
+{
+    this->state = stage;
+    this->current = this;
+
+    switch (stage)
+    {
+        case STATE_BEGIN:
+            if (!exists(stage))
+            {
+                set_state(STATE_DESCRIPTION);
+            }
+            break;
+        case STATE_DESCRIPTION:
+            if (!exists(stage))
+            {
+                set_state(STATE_REMINDER);
+            }
+            break;
+        case STATE_REMINDER:
+        case STATE_SUCCESS:
+        case STATE_FAILURE:
+            if (!exists(stage))
+            {
+                set_state(STATE_END);
+            }
+            break;
+        case STATE_END:
+            if (!exists(stage))
+            {
+                set_state(STATE_INVALID);
+            }
+            break;
+        default:
+            complete();
+            break;
+    }
 }
 
 void ztaskbox::on_talk_start()
@@ -218,6 +265,76 @@ void ztaskbox::on_talk_start()
     if (this->cb != NULL)
     {
         cb->on_talk_start();
+    }
+}
+
+void ztaskbox::on_talk_stop(ztalkbox::answer_enum answer)
+{
+    switch (state)
+    {
+    case ztalkbox::ANSWER_YES:
+        set_state(STATE_REMINDER);
+        break;
+    case ztalkbox::ANSWER_3:
+        set_state(STATE_END);
+        break;
+    case ztalkbox::ANSWER_4:
+        if (asset->retry != 0)
+        {
+            set_state(STATE_DESCRIPTION);
+        }
+        else
+        {
+            set_state(STATE_END);
+        }
+        break;
+    default:
+        if (asset->loop != 0)
+        {
+            set_state(STATE_BEGIN);
+        }
+        break;
+    case ztalkbox::ANSWER_CONTINUE:
+    case ztalkbox::ANSWER_NO:
+    case ztalkbox::ANSWER_5:
+        break;
+    }
+
+    if (cb != NULL)
+    {
+        cb->on_talk_stop();
+    }
+}
+
+U32 ztaskbox::get_text(U32 textID)
+{
+    U32 id = textID;
+    xGroup* group = (xGroup*)zSceneFindObject(textID);
+    if (group != NULL)
+    {
+        if (group->baseType != eBaseTypeGroup)
+        {
+            return 0;
+        }
+
+        id = group->get_any();
+    }
+
+    if (id == 0)
+    {
+        return 0;
+    }
+
+    // What type is this?
+    void* asset = xSTFindAsset(id, NULL);
+    if (asset == NULL)
+    {
+        return 0;
+    }
+    else
+    {
+        // HACK
+        return (U32)asset + 4;
     }
 }
 
@@ -252,19 +369,4 @@ S32 ztaskbox::cb_dispatch(xBase*, xBase* to, U32 event, const F32*, xBase*)
     }
 
     return 1;
-}
-
-void ztaskbox::talk_callback::on_start()
-{
-    this->task->on_talk_start();
-}
-
-void ztaskbox::talk_callback::on_stop()
-{
-    this->task->on_talk_stop(answer);
-}
-
-void ztaskbox::talk_callback::on_answer(ztalkbox::answer_enum answer)
-{
-    this->answer = answer;
 }

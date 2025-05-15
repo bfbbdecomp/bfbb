@@ -50,6 +50,8 @@ struct ztalkbox : xBase
         ANSWER_YES,
         ANSWER_NO,
         ANSWER_3,
+        ANSWER_4,
+        ANSWER_5,
     };
 
     struct callback
