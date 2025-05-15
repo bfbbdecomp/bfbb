@@ -221,6 +221,39 @@ void ztaskbox::on_talk_start()
     }
 }
 
+S32 ztaskbox::cb_dispatch(xBase*, xBase* to, U32 event, const F32*, xBase*)
+{
+    ztaskbox& taskbox = *(ztaskbox*)to;
+
+    switch (event)
+    {
+    case eEventReset:
+        taskbox.reset();
+        break;
+    case eEventStartConversation:
+        taskbox.start_talk(NULL);
+        break;
+    case eEventEndConversation:
+        taskbox.stop_talk();
+        break;
+    case eEventTaskBox_Initiate:
+        taskbox.initiate();
+        break;
+    case eEventTaskBox_SetSuccess:
+        taskbox.succeed();
+        break;
+    case eEventTaskBox_SetFailure:
+        taskbox.fail();
+        break;
+    case eEventTaskBox_OnAccept:
+    case eEventTaskBox_OnDecline:
+    case eEventTaskBox_OnComplete:
+        break;
+    }
+
+    return 1;
+}
+
 void ztaskbox::talk_callback::on_start()
 {
     this->task->on_talk_start();
