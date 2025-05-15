@@ -40,11 +40,30 @@ struct ztaskbox : xBase
         ztaskbox* task;
         ztalkbox::answer_enum answer;
 
-        talk_callback();
-        void reset(ztaskbox& task);
-        void on_start();
-        void on_stop();
-        void on_answer(ztalkbox::answer_enum answer);
+        talk_callback()
+        {
+        }
+
+        void reset(ztaskbox& task)
+        {
+            this->task = &task;
+            this->answer = ztalkbox::ANSWER_CONTINUE;
+        }
+
+        void on_start()
+        {
+            task->on_talk_start();
+        }
+
+        void on_stop()
+        {
+            task->on_talk_stop(answer);
+        }
+
+        void on_answer(ztalkbox::answer_enum answer)
+        {
+            this->answer = answer;
+        }
     };
 
     struct asset_type : xDynAsset
@@ -59,10 +78,12 @@ struct ztaskbox : xBase
     };
 
     flagData flag;
-    asset_type* asset;
+    const asset_type* asset;
     state_enum state;
     callback* cb;
     ztaskbox* current;
+
+    static talk_callback* tcb;
 
     void on_talk_start();
     void on_talk_stop(ztalkbox::answer_enum answer);
@@ -84,6 +105,7 @@ struct ztaskbox : xBase
     void complete();
     static void init();
     bool exists(state_enum stage);
+    static U32 get_text(U32);
 };
 
 #endif

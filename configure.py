@@ -492,7 +492,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zNPCSupport.cpp"),
             Object(NonMatching, "SB/Game/zTalkBox.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zTextBox.cpp"),
-            Object(NonMatching, "SB/Game/zTaskBox.cpp"),
+            Object(Equivalent, "SB/Game/zTaskBox.cpp"),
             Object(Matching, "SB/Core/gc/iCutscene.cpp"),
             Object(Matching, "SB/Game/zNPCTypeTest.cpp"),
             Object(NonMatching, "SB/Game/zNPCTypeSubBoss.cpp"),
