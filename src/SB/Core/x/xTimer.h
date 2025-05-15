@@ -25,7 +25,7 @@ void xTimerInit(xBase* b, xTimerAsset* tasset);
 void xTimerReset(xTimer* ent);
 void xTimerSave(xTimer* ent, xSerial* s);
 void xTimerLoad(xTimer* ent, xSerial* s);
-S32 xTimerEventCB(xBase*, xBase* to, U32 toEvent, const F32* toParam, xBase*);
+S32 xTimerEventCB(xBase* from , xBase* to, U32 toEvent, const F32* toParam, xBase* toParamWidget);
 void xTimerUpdate(xBase* to, xScene*, F32 dt);
 
 #endif
