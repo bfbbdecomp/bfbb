@@ -4,9 +4,6 @@
 
 #include "xEvent.h"
 
-extern F32 _742_2;
-extern F32 _780_1;
-
 struct zGooParams
 {
     F32 depth;
@@ -14,9 +11,9 @@ struct zGooParams
     xEnt* goo_ent;
 };
 
-extern zGooParams* zgoo_gps;
-extern S32 zgoo_ngps;
-extern S32 zgoo_nused;
+static zGooParams* zgoo_gps;
+static S32 zgoo_ngps;
+static S32 zgoo_nused;
 
 void zGooInit(S32 nobj)
 {
@@ -110,10 +107,9 @@ void zGooCollsBegin()
         if (gooey->transl)
         {
             // non-matching: instruction order
-
-            change.x = _742_2;
+            change.x = 0.0f;
             change.y = -zgoo_gps[i].depth;
-            change.z = _742_2;
+            change.z = 0.0f;
 
             gooey->transl(gooey, &change, NULL);
         }
@@ -132,9 +128,9 @@ void zGooCollsEnd()
 
         if (gooey->transl)
         {
-            change.x = _742_2;
+            change.x = 0.0f;
             change.y = zgoo_gps[i].depth;
-            change.z = _742_2;
+            change.z = 0.0f;
 
             gooey->transl(gooey, &change, NULL);
         }
@@ -147,7 +143,7 @@ void zGooStopTide()
 
     for (i = 0; i < zgoo_nused; i++)
     {
-        zEntEvent(zgoo_gps[i].goo_ent, eEventPlatPause, _742_2, _742_2, _742_2, _742_2);
+        zEntEvent(zgoo_gps[i].goo_ent, eEventPlatPause, 0.0f, 0.0f, 0.0f, 0.0f);
     }
 }
 
@@ -162,7 +158,7 @@ void zGooMeltFinished(RpAtomic* atomic)
 
         if (gooey->model->Data == atomic)
         {
-            zEntEvent(gooey, eEventPlatUnpause, _780_1, _742_2, _742_2, _742_2);
+            zEntEvent(gooey, eEventPlatUnpause, 0.25f, 0.0f, 0.0f, 0.0f);
         }
     }
 }
