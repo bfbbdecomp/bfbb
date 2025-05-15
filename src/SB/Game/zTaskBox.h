@@ -66,6 +66,7 @@ struct ztaskbox : xBase
 
     void on_talk_start();
     void on_talk_stop(ztalkbox::answer_enum answer);
+    static S32 cb_dispatch(xBase*, xBase* to, U32 event, const F32* argf, xBase*);
     void set_state(state_enum state);
     void set_callback(callback* cb);
     void stop_talk();
