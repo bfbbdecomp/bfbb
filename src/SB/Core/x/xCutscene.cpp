@@ -148,6 +148,105 @@ S32 xCutscene_LoadStart(xCutscene* csn)
     return 1;
 }
 
+S32 xCutscene_Update(xCutscene *csn, F32 dt)
+{
+    if ((csn->SndStarted == 0) && (csn->SndNumChannel != 0))
+    {
+        if (csn->SndNumChannel == 1)
+        {
+            xSndSetPitch(csn->SndHandle[0], 0.0f);
+        }
+        else if (csn->SndNumChannel == 2)
+        {
+            xSndStartStereo(csn->SndHandle[0], csn->SndHandle[1], 0.0f);
+        }
+        csn->SndStarted = 1;
+    }
+
+    csn->Time = csn->PlaybackSpeed * dt + csn->Time;
+    csn->CamTime = xCutsceneConvertBreak(csn->Time, csn->BreakList, csn->Info->BreakCount, -1);
+    
+    if ((csn->Time > csn->Play->EndTime) || (csn->BadReadPause != 0))
+    {
+        if (csn->PlayIndex == csn->Info->NumTime - 1)
+        {
+            csn->Time = csn->Play->EndTime;
+            return 0;
+        }
+
+        if ((csn->BadReadPause != 0) && (csn->Waiting == 0))
+        {
+            csn->BadReadPause = 0;
+            xCutscene_SetSpeed(csn, csn->BadReadSpeed);
+        }
+
+        if (csn->CamTime != csn->Time)
+        {
+            return 1;
+        }
+
+        if (csn->Waiting != 0)
+        {
+            csn->Time = csn->Play->EndTime;
+            csn->CamTime = xCutsceneConvertBreak(csn->Time, csn->BreakList, csn->Info->BreakCount, -1);
+
+            if (csn->BadReadPause == 0)
+            {
+                csn->BadReadSpeed = csn->PlaybackSpeed;
+                xCutscene_SetSpeed(csn, 0.0f);
+                csn->BadReadPause = 1;
+            }
+
+            return 1;
+        }
+
+        xCutsceneTime* oldChunk = csn->Play;
+        csn->Play = csn->Stream;
+        csn->Stream = oldChunk;
+        csn->PlayIndex = csn->PlayIndex + 1;
+
+        if (csn->PlayIndex + 1 < csn->Info->NumTime)
+        {
+            iCSFileAsyncRead(csn, csn->Stream, csn->TimeChunkOffs[csn->PlayIndex + 2] - csn->TimeChunkOffs[csn->PlayIndex + 1]);
+        }
+    }
+
+    return 1;
+}
+
+void xCutscene_SetSpeed(xCutscene* csn, F32 speed)
+{
+    if (csn->BadReadPause != 0)
+        return;
+
+    if (speed > 4.0f)
+    {
+        speed = 4.0f;
+    }
+
+    if (speed < 0.001f)
+    {
+        speed = 0.0f;
+    }
+
+    csn->PlaybackSpeed = speed;
+
+    F32 semitones;
+    if (speed != 0.0f)
+    {
+        semitones = xlog(speed) / 0.057762269f;
+    }
+    else
+    {
+        semitones = -99999.0f;
+    }
+
+    for (S32 i = 0; i < (S32)csn->SndNumChannel; i++)
+    {
+        xSndSetPitch(csn->SndHandle[i], semitones);
+    }
+}
+
 F32 xCutsceneConvertBreak(float param_1, xCutsceneBreak* param_2, U32 param_3, int param_4)
 {
     int i = 0;
@@ -177,6 +276,22 @@ F32 xCutsceneConvertBreak(float param_1, xCutsceneBreak* param_2, U32 param_3, i
         }
     }
     return param_2[i].Time - lbl_803CCB40;
+}
+
+void CutsceneShadowRender(CutsceneShadowModel* smod)
+{
+    RpAtomic* model = smod->model;
+    U32 bits = smod->shadowBits;
+
+    while (model != NULL)
+    {
+        if ((bits & 1) != 0)
+        {
+            iModelRender(model, smod->animMat);
+        }
+        model = iModelFile_RWMultiAtomic(model);
+        bits >>= 1;
+    }
 }
 
 xCutscene* xCutscene_CurrentCutscene()
