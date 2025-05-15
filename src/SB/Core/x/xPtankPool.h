@@ -9,6 +9,16 @@
 struct iColor_tag;
 struct xVec2;
 struct xVec3;
+struct RpAtomic;
+
+struct ptank_context
+{
+    ptank_context* next;
+    class RpAtomic* ptank;
+    U32 flags;
+    U32 src_blend;
+    U32 dst_blend;
+};
 
 enum ptank_group_type
 {
@@ -37,7 +47,11 @@ struct ptank_pool
     render_state rs;
     U32 used;
     RpAtomic* ptank;
-    _class hide;
+    struct {
+        U8* data;
+        S32 stride;
+        U32 size;
+    } hide;
 
     bool valid() const;
     void reset();
