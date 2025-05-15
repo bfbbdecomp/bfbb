@@ -150,7 +150,7 @@ S32 xCutscene_LoadStart(xCutscene* csn)
 
 S32 xCutscene_Update(xCutscene *csn, F32 dt)
 {
-    if ((csn->SndStarted == 0) && (csn->SndNumChannel != 0))
+    if ((csn->SndStarted == FALSE) && (csn->SndNumChannel != 0))
     {
         if (csn->SndNumChannel == 1)
         {
@@ -160,13 +160,13 @@ S32 xCutscene_Update(xCutscene *csn, F32 dt)
         {
             xSndStartStereo(csn->SndHandle[0], csn->SndHandle[1], 0.0f);
         }
-        csn->SndStarted = 1;
+        csn->SndStarted = TRUE;
     }
 
     csn->Time = csn->PlaybackSpeed * dt + csn->Time;
     csn->CamTime = xCutsceneConvertBreak(csn->Time, csn->BreakList, csn->Info->BreakCount, -1);
     
-    if ((csn->Time > csn->Play->EndTime) || (csn->BadReadPause != 0))
+    if (csn->Time > csn->Play->EndTime || csn->BadReadPause)
     {
         if (csn->PlayIndex == csn->Info->NumTime - 1)
         {
@@ -174,9 +174,9 @@ S32 xCutscene_Update(xCutscene *csn, F32 dt)
             return 0;
         }
 
-        if ((csn->BadReadPause != 0) && (csn->Waiting == 0))
+        if (csn->BadReadPause && csn->Waiting == FALSE)
         {
-            csn->BadReadPause = 0;
+            csn->BadReadPause = FALSE;
             xCutscene_SetSpeed(csn, csn->BadReadSpeed);
         }
 
@@ -185,16 +185,16 @@ S32 xCutscene_Update(xCutscene *csn, F32 dt)
             return 1;
         }
 
-        if (csn->Waiting != 0)
+        if (csn->Waiting)
         {
             csn->Time = csn->Play->EndTime;
             csn->CamTime = xCutsceneConvertBreak(csn->Time, csn->BreakList, csn->Info->BreakCount, -1);
 
-            if (csn->BadReadPause == 0)
+            if (csn->BadReadPause == FALSE)
             {
                 csn->BadReadSpeed = csn->PlaybackSpeed;
                 xCutscene_SetSpeed(csn, 0.0f);
-                csn->BadReadPause = 1;
+                csn->BadReadPause = TRUE;
             }
 
             return 1;
@@ -216,7 +216,7 @@ S32 xCutscene_Update(xCutscene *csn, F32 dt)
 
 void xCutscene_SetSpeed(xCutscene* csn, F32 speed)
 {
-    if (csn->BadReadPause != 0)
+    if (csn->BadReadPause)
         return;
 
     if (speed > 4.0f)
