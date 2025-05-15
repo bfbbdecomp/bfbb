@@ -361,7 +361,7 @@ config.libs = [
             Object(Equivalent, "SB/Core/x/xstransvc.cpp"),
             Object(NonMatching, "SB/Core/x/xString.cpp"),
             Object(Matching, "SB/Core/x/xSurface.cpp"),
-            Object(NonMatching, "SB/Core/x/xTimer.cpp"),
+            Object(Matching, "SB/Core/x/xTimer.cpp"),
             Object(NonMatching, "SB/Core/x/xTRC.cpp"),
             Object(Matching, "SB/Core/x/xutil.cpp"),
             Object(Matching, "SB/Core/x/xVec3.cpp"),
