@@ -356,6 +356,15 @@ namespace bungee_state
         class hanging_state_type : public state_type
         {
         public:
+            struct cb_cache_collisions
+            {
+                xSphere& o;
+                ent_info* ent_cache;
+                S32& ent_cache_size;
+
+                S32 operator()(xEnt&, xGridBound&);
+            };
+
             xVec3 loc;
             xVec3 vel;
             xVec3 last_loc;
@@ -431,6 +440,9 @@ namespace bungee_state
             F32 kinetic_energy(F32 v) const;
             F32 find_spring_min(F32 min_dist, F32 max_dist, F32 gravity, F32 damp) const;
 
+            void start_detaching();
+            void calc_drop_off_velocity(xVec3& v, const xVec3& from, const xVec3& to, F32 g, F32 t);
+            void render();
             F32 spring_energy(F32 x, F32 v, F32 k, F32 g, F32 xc) const;
         };
         void hanging_state_type::on_tweak_collision(const tweak_info& ti)
@@ -820,6 +832,51 @@ namespace bungee_state
             zEntPlayerCollTrigger(&globals.player.ent, &sc);
         }
 
+        void hanging_state_type::calc_drop_off_velocity(xVec3& v, const xVec3& from,
+                                                        const xVec3& to, F32 g, F32 t)
+        {
+            v = (to - from) * (1.0f / t);
+            v.y = 0.5f * g * t + v.y;
+        }
+
+        void hanging_state_type::render()
+        {
+            render_player(TRUE);
+        }
+
+        S32 hanging_state_type::cb_cache_collisions::operator()(xEnt& ent, xGridBound& bound)
+        {
+            xCollis coll;
+
+            if (!(ent.chkby & 0x10) || !(ent.penby & 0x10))
+            {
+                return 1;
+            }
+
+            coll.flags = 0x0;
+            xSphereHitsBound(&o, &ent.bound, &coll);
+
+            if (!(coll.flags & 0x1))
+            {
+                return 1;
+            }
+
+            if (ent.collLev == 0x5)
+            {
+                xSphereHitsModel(&o, ent.model, &coll);
+                if (!(coll.flags & 0x1))
+                {
+                    return 1;
+                }
+            }
+
+            ent_info& cache_item = ent_cache[ent_cache_size];
+            cache_item.ent = &ent;
+            cache_item.hits = 0;
+            ent_cache_size++;
+
+            return 1;
+        }
     } // namespace
 
     void load(class xBase& data, class xDynAsset& asset, unsigned long)
