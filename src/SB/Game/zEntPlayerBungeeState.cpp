@@ -3,32 +3,33 @@
 #include "xBound.h"
 #include "xDebug.h"
 #include "xFX.h"
+#include "xLinkAsset.h"
 #include "xMath.h"
 #include "xMathInlines.h"
 #include "xMath3.h"
 #include "xMarkerAsset.h"
 #include "xModel.h"
+#include "xPad.h"
 #include "xShadow.h"
+#include "xString.h"
 #include "xVec3.h"
 
+#include "xstransvc.h"
+#include "zBase.h"
 #include "zEntCruiseBubble.h"
 #include "zEntPlayer.h"
 #include "zGameExtras.h"
 #include "zGlobals.h"
 
 #include "zLightning.h"
+#include "zScene.h"
+#include <cstring>
 #include <types.h>
 
 namespace bungee_state
 {
     namespace
     {
-        struct drop_asset : xDynAsset
-        {
-            U32 marker;
-            U32 set_view_angle;
-            F32 view_angle;
-        };
 
         static struct
         {
@@ -88,7 +89,7 @@ namespace bungee_state
             } anim_tran; // offset 0x10, size 0x2C
             class hook_type* hook;
             class hook_type* hook_cache[8];
-            drop_asset* drop_cache[32];
+            const drop_asset* drop_cache[32];
             xMarkerAsset* drop_marker_cache[32];
             S32 hook_cache_size;
             S32 drop_cache_size;
@@ -333,7 +334,9 @@ namespace bungee_state
         public:
             enum state_enum type; // offset 0x0, size 0x4
 
-            virtual void need_vtable(); // FIXME: fake func
+            virtual void start()
+            {
+            }
         };
         class ent_info
         {
@@ -714,5 +717,120 @@ namespace bungee_state
                 }
             }
         }
+
+        void start()
+        {
+            if ((shared.flags & 0x7) != 0x3)
+            {
+                return;
+            }
+
+            xEnt& player = globals.player.ent;
+            const char* anim_name = player.model->Anim->Single->State->Name;
+            bool found = false;
+            if (shared.hook == NULL && globals.player.s->pcType == ePlayer_SB &&
+                (strcmp(anim_name, "JumpStart01") || strcmp(anim_name, "JumpLift01") ||
+                 strcmp(anim_name, "JumpApex01") || strcmp(anim_name, "DJumpStart01") ||
+                 strcmp(anim_name, "DJumpLift01") || strcmp(anim_name, "Fall01") ||
+                 strcmp(anim_name, "FallHigh01")) &&
+                globals.player.cheat_mode == 0 && (globals.player.ControlOff & ~0x4000) == 0)
+            {
+                found = true;
+            }
+
+            shared.hook = NULL;
+            if (found)
+            {
+                S32 i = find_nearest_hook(player.frame->mat.pos);
+                if (i >= 0)
+                {
+                    shared.hook = shared.hook_cache[i];
+                    shared.hook->ent = shared.hook_cache[i]->ent;
+                }
+            }
+
+            if (shared.hook == NULL)
+            {
+                return;
+            }
+
+            zEntPlayerControlOn(CONTROL_OWNER_SPRINGBOARD);
+            fade_hook_out();
+            init_sounds();
+            shared.flags |= 4;
+            shared.state = shared.states[0];
+            shared.state->start();
+        }
+
+        void cache_hook(hook_type& hook)
+        {
+            shared.hook_cache[shared.hook_cache_size] = &hook;
+            shared.hook_cache_size++;
+        }
+
+        void cache_drop(const drop_asset& drop, U32 size)
+        {
+            xMarkerAsset* marker = (xMarkerAsset*)xSTFindAsset(drop.marker, &size);
+            if (marker == NULL)
+            {
+                return;
+            }
+
+            if (size != sizeof(xMarkerAsset))
+            {
+                return;
+            }
+
+            shared.drop_cache[shared.drop_cache_size] = &drop;
+            shared.drop_marker_cache[shared.drop_cache_size] = marker;
+            shared.drop_cache_size++;
+        }
+
+        void init_cache()
+        {
+            shared.hook_cache_size = 0;
+            zScene& s = *globals.sceneCur;
+            hook_type* it = (hook_type*)s.baseList[eBaseTypeBungeeHook];
+            hook_type* end = it + s.baseCount[eBaseTypeBungeeHook];
+            for (; it != end; ++it)
+            {
+                cache_hook(*it);
+            }
+
+            shared.drop_cache_size = 0;
+            S32 imax = xSTAssetCountByType('DYNA');
+            U32 drop_type_id = xStrHash(drop_asset::type_name());
+            for (S32 i = 0; i < imax; ++i)
+            {
+                U32 size = 0;
+                xDynAsset* a = (xDynAsset*)xSTFindAssetByType('DYNA', i, &size);
+                if (a == NULL)
+                {
+                    continue;
+                }
+                if (a->type == drop_type_id)
+                {
+                    cache_drop(*(drop_asset*)a, size);
+                }
+            }
+        }
+
+        void common_update(xScene& sc, F32 dt)
+        {
+            zEntPlayerCollTrigger(&globals.player.ent, &sc);
+        }
+
     } // namespace
+
+    void load(class xBase& data, class xDynAsset& asset, unsigned long)
+    {
+        xBaseInit(&data, &asset);
+        hook_type& hook = (hook_type&)data;
+        hook.asset = (hook_asset*)&asset;
+        if (hook.linkCount != 0)
+        {
+            hook.link = (xLinkAsset*)(hook.asset + 1);
+        }
+        hook.ent = (xEnt*)zSceneFindObject(hook.asset->entity);
+    }
 } // namespace bungee_state
