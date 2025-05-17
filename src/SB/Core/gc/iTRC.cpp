@@ -332,43 +332,14 @@ void ResetButton::SetSndKillFunction(void (*Func)())
 void ResetButton::CheckResetButton()
 {
 // TODO
-// mainly just ghidra output
 
-  U32 uVar1;
-  U32 uVar2;
-  S32 iVar3;
-  bool tempblank = false;
-  bool mWasResetButtonPressed = false;
-  U64 uVar5; //ulonglong?
-  
-  uVar2 = OSGetResetButtonState();
-  uVar1 = uVar2;
-  if (((uVar2 == 0) && (mWasResetButtonPressed != 0)) &&
-     (uVar1 = mWasResetButtonPressed, mResetEnabled != '\0')) {
-    uVar5 = OSDisableInterrupts();
-    // if (mSndKill != (code *)0x0) {
-    //   (*mSndKill__11ResetButton)((int)(uVar5 >> 0x20),(int)uVar5);
-    // }
-    PADRecalibrate(0xf0000000);
-    VISetBlack(1);
-    VIFlush();
-    VIWaitForRetrace();
-    OSEnableInterrupts();
-    iVar3 = DVDGetDriveStatus();
-    if (((iVar3 == 6) || (iVar3 = DVDGetDriveStatus(), iVar3 == 5)) ||
-       ((iVar3 = DVDCheckDisk(), iVar3 == 0 && (iVar3 = DVDGetDriveStatus(), iVar3 == 0)))) {
-      OSResetSystem(1,0,0); // bool = osresetsystem
-      uVar2 = (U32)tempblank;
-      uVar1 = mWasResetButtonPressed;
-    }
-    else {
-      OSResetSystem(0,0,0); // bool = osresetsystem
-      uVar2 = (U32)tempblank;
-      uVar1 = mWasResetButtonPressed;
-    }
-  }
-  mWasResetButtonPressed = uVar1;
-  //return uVar2;
+  OSGetResetButtonState();
+  PADRecalibrate(0xf0000000);
+  VISetBlack(1);
+  VIFlush();
+  VIWaitForRetrace();
+  OSEnableInterrupts();
+  DVDGetDriveStatus();
 }
 
 void iTRCDisk::Init()
