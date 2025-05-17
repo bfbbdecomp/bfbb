@@ -1,8 +1,11 @@
 #include "zEntPlayerBungeeState.h"
 
+#include "iScrFX.h"
 #include "xBound.h"
+#include "xCamera.h"
 #include "xDebug.h"
 #include "xFX.h"
+#include "xIni.h"
 #include "xLinkAsset.h"
 #include "xMath.h"
 #include "xMathInlines.h"
@@ -16,6 +19,7 @@
 
 #include "xstransvc.h"
 #include "zBase.h"
+#include "zCamera.h"
 #include "zEntCruiseBubble.h"
 #include "zEntPlayer.h"
 #include "zGameExtras.h"
@@ -25,6 +29,55 @@
 #include "zScene.h"
 #include <cstring>
 #include <types.h>
+
+// FIXME: remove this when no longer needed for float data order
+static void __all_the_floats(F32* out)
+{
+#define FLOATDATA(n) out[__LINE__] = n
+    FLOATDATA(500.0f);
+    FLOATDATA(100.0f);
+    FLOATDATA(1.0f);
+    FLOATDATA(0.5f);
+    FLOATDATA(0.1f);
+    FLOATDATA(-10000.0f);
+    FLOATDATA(10000.0f);
+    FLOATDATA(3.57E-43f);
+    FLOATDATA(0.0f);
+    FLOATDATA(-9.9999997E+37f);
+    FLOATDATA(0.017453292f);
+    FLOATDATA(-1.0f);
+    FLOATDATA(2.0f);
+    FLOATDATA(3.0f);
+    FLOATDATA(100000.0f);
+    FLOATDATA(0.0000099999997f);
+    FLOATDATA(-3.1415927f);
+    FLOATDATA(1.0E+10f);
+    FLOATDATA(0.05f);
+    FLOATDATA(10.0f);
+    FLOATDATA(1000.0f);
+    FLOATDATA(1.5f);
+    FLOATDATA(20.0f);
+    FLOATDATA(0.3f);
+    FLOATDATA(0.0099999998f);
+    FLOATDATA(0.25f);
+    FLOATDATA(0.91f);
+    FLOATDATA(5.0f);
+    FLOATDATA(0.6f);
+    FLOATDATA(0.50999999f);
+    FLOATDATA(1.0E+9f);
+    FLOATDATA(25.0f);
+    FLOATDATA(0.94999999f);
+    FLOATDATA(200.0f);
+    FLOATDATA(360.0f);
+    FLOATDATA(3.1415927f);
+    FLOATDATA(6.2831855f);
+    FLOATDATA(0.70710677f);
+    FLOATDATA(0.57735026f);
+    FLOATDATA(0.000099999997f);
+    FLOATDATA(1.5707964f);
+    FLOATDATA(-0.0000099999997f);
+#undef FLOATDATA
+} // namespace all_the_floats
 
 namespace bungee_state
 {
@@ -332,7 +385,11 @@ namespace bungee_state
         {
             // total size: 0x8
         public:
-            enum state_enum type; // offset 0x0, size 0x4
+            state_type(state_enum type) : type(type)
+            {
+            }
+
+            state_enum type;
 
             virtual void start()
             {
@@ -364,6 +421,9 @@ namespace bungee_state
 
                 S32 operator()(xEnt&, xGridBound&);
             };
+            hanging_state_type() : state_type(STATE_HANGING)
+            {
+            }
 
             xVec3 loc;
             xVec3 vel;
@@ -445,6 +505,24 @@ namespace bungee_state
             void render();
             F32 spring_energy(F32 x, F32 v, F32 k, F32 g, F32 xc) const;
         };
+        class attaching_state_type : public state_type
+        {
+        public:
+            attaching_state_type() : state_type(STATE_ATTACHING)
+            {
+            }
+
+            xVec3* loc;
+            xVec3* vel;
+            xVec3 last_hook_loc;
+            xVec3 hook_vel;
+            F32 time_left;
+            F32 time;
+            F32 end_time;
+            xVec3 player_loc;
+            xVec3 player_vel;
+        };
+
         void hanging_state_type::on_tweak_collision(const tweak_info& ti)
         {
             reinterpret_cast<hanging_state_type*>(ti.context)->reset_props_collision();
@@ -889,5 +967,300 @@ namespace bungee_state
             hook.link = (xLinkAsset*)(hook.asset + 1);
         }
         hook.ent = (xEnt*)zSceneFindObject(hook.asset->entity);
+    }
+
+    void load_settings(xIniFile& ini)
+    {
+        fixed.bottom_anim_frac = xIniGetFloat(&ini, "SB.state.bungee.bottom_anim_frac", 0.05f);
+        if (fixed.bottom_anim_frac < 0.0f)
+        {
+            fixed.bottom_anim_frac = 0.0f;
+        }
+        if (fixed.bottom_anim_frac > 0.5f)
+        {
+            fixed.bottom_anim_frac = 0.5f;
+        }
+        xDebugAddTweak("Bungee|Globals|Anim Bottom Fraction", &fixed.bottom_anim_frac, 0.0f, 0.5f,
+                       NULL, NULL, 0);
+
+        fixed.top_anim_frac = xIniGetFloat(&ini, "SB.state.bungee.top_anim_frac", 0.1f);
+        if (fixed.top_anim_frac < 0.0f)
+        {
+            fixed.top_anim_frac = 0.0f;
+        }
+        if (fixed.top_anim_frac > 0.5f)
+        {
+            fixed.top_anim_frac = 0.5f;
+        }
+        xDebugAddTweak("Bungee|Globals|Anim Top Fraction", &fixed.top_anim_frac, 0.0f, 0.5f, NULL,
+                       NULL, NULL);
+
+        fixed.bottom_anim_time = xIniGetFloat(&ini, "SB.state.bungee.bottom_anim_time", 0.1f);
+        if (fixed.bottom_anim_time < 0.0f)
+        {
+            fixed.bottom_anim_time = 0.0f;
+        }
+        if (fixed.bottom_anim_time > 2.0f)
+        {
+            fixed.bottom_anim_time = 2.0f;
+        }
+        xDebugAddTweak("Bungee|Globals|Anim Trans Bottom-Time", &fixed.bottom_anim_time, 0.0f, 2.0f,
+                       NULL, NULL, NULL);
+
+        fixed.top_anim_time = xIniGetFloat(&ini, "SB.state.bungee.top_anim_time", 0.1f);
+        if (fixed.top_anim_time < 0.0f)
+        {
+            fixed.top_anim_time = 0.0f;
+        }
+        if (fixed.top_anim_time > 2.0f)
+        {
+            fixed.top_anim_time = 2.0f;
+        }
+        xDebugAddTweak("Bungee|Globals|Anim Trans Top-Time", &fixed.top_anim_time, 0.0f, 2.0f, NULL,
+                       NULL, NULL);
+
+        fixed.hit_anim_time = xIniGetFloat(&ini, "SB.state.bungee.hit_anim_time", 0.1f);
+        if (fixed.hit_anim_time < 0.0f)
+        {
+            fixed.hit_anim_time = 0.0f;
+        }
+        if (fixed.hit_anim_time > 2.0f)
+        {
+            fixed.hit_anim_time = 2.0f;
+        }
+        xDebugAddTweak("Bungee|Globals|Anim Trans Hit-Time", &fixed.hit_anim_time, 0.0f, 2.0f, NULL,
+                       NULL, NULL);
+
+        fixed.damage_rot = xIniGetFloat(&ini, "SB.state.bungee.damage_rot", 10.0f);
+        if (fixed.damage_rot < 10.0f)
+        {
+            fixed.damage_rot = 10.0f;
+        }
+        if (fixed.damage_rot > 1000.0f)
+        {
+            fixed.damage_rot = 1000.0f;
+        }
+        xDebugAddTweak("Bungee|Globals|Damage Rotation", &fixed.damage_rot, 10.0f, 1000.0f, NULL,
+                       NULL, NULL);
+
+        fixed.death_time = xIniGetFloat(&ini, "SB.state.bungee.death_time", 1.5f);
+        if (fixed.death_time < 0.0f)
+        {
+            fixed.death_time = 0.0f;
+        }
+        if (fixed.death_time > 20.0f)
+        {
+            fixed.death_time = 20.0f;
+        }
+        xDebugAddTweak("Bungee|Globals|Death Fade-Out Time", &fixed.death_time, 0.0f, 20.0f, NULL,
+                       NULL, NULL);
+
+        fixed.vel_blur = xIniGetFloat(&ini, "SB.state.bungee.vel_blur", 0.0f);
+        if (fixed.vel_blur < 0.0f)
+        {
+            fixed.vel_blur = 0.0f;
+        }
+        if (fixed.vel_blur > 1.0f)
+        {
+            fixed.vel_blur = 1.0f;
+        }
+        xDebugAddTweak("Bungee|Globals|Velocity Blur", &fixed.vel_blur, 0.0f, 1.0f, NULL, NULL,
+                       NULL);
+
+        fixed.fade_dist = xIniGetFloat(&ini, "SB.state.bungee.fade_dist", 2.0f);
+        if (fixed.fade_dist < 1.0f)
+        {
+            fixed.fade_dist = 1.0f;
+        }
+        if (fixed.fade_dist > 10000.0f)
+        {
+            fixed.fade_dist = 10000.0f;
+        }
+        xDebugAddTweak("Bungee|Globals|Cord Fade Distance", &fixed.fade_dist, 1.0f, 10000.0f, NULL,
+                       NULL, NULL);
+
+        fixed.player_radius = xIniGetFloat(&ini, "SB.state.bungee.player_radius", 1.0f);
+        if (fixed.player_radius < 0.0f)
+        {
+            fixed.player_radius = 0.0f;
+        }
+        if (fixed.player_radius > 10.0f)
+        {
+            fixed.player_radius = 10.0f;
+        }
+        xDebugAddTweak("Bungee|Globals|Player Radius", &fixed.player_radius, 0.0f, 10.0f, NULL,
+                       NULL, NULL);
+
+        fixed.hook_fade_alpha = xIniGetFloat(&ini, "SB.state.bungee.hook_fade_alpha", 0.3f);
+        if (fixed.hook_fade_alpha < 0.0f)
+        {
+            fixed.hook_fade_alpha = 0.0f;
+        }
+        if (fixed.hook_fade_alpha > 1.0f)
+        {
+            fixed.hook_fade_alpha = 1.0f;
+        }
+        xDebugAddTweak("Bungee|Globals|Hook Fade Alpha", &fixed.hook_fade_alpha, 0.0f, 1.0f, NULL,
+                       NULL, NULL);
+
+        fixed.hook_fade_time = xIniGetFloat(&ini, "SB.state.bungee.hook_fade_time", 1.0f);
+        if (fixed.hook_fade_time < 0.01f)
+        {
+            fixed.hook_fade_time = 0.01f;
+        }
+        if (fixed.hook_fade_time > 10.0f)
+        {
+            fixed.hook_fade_time = 10.0f;
+        }
+        xDebugAddTweak("Bungee|Globals|Hook Fade Time", &fixed.hook_fade_time, 0.01f, 10.0f, NULL,
+                       NULL, NULL);
+
+        fixed.horizontal.edge_zone =
+            xIniGetFloat(&ini, "SB.state.bungee.horizontal.edge_zone", 0.0f);
+        if (fixed.horizontal.edge_zone < 0.0f)
+        {
+            fixed.horizontal.edge_zone = 0.0f;
+        }
+        if (fixed.horizontal.edge_zone > 0.25f)
+        {
+            fixed.horizontal.edge_zone = 0.25f;
+        }
+        xDebugAddTweak("Bungee|Globals|Horz Edge Zone", &fixed.horizontal.edge_zone, 0.0f, 0.25f,
+                       NULL, NULL, NULL);
+
+        fixed.horizontal.sway = xIniGetFloat(&ini, "SB.state.bungee.horizontal.sway", 0.0f);
+        if (fixed.horizontal.sway < 0.0f)
+        {
+            fixed.horizontal.sway = 0.0f;
+        }
+        if (fixed.horizontal.sway > 10000.0f)
+        {
+            fixed.horizontal.sway = 10000.0f;
+        }
+        xDebugAddTweak("Bungee|Globals|Horz Sway Force", &fixed.horizontal.sway, 0.0f, 10000.0f,
+                       NULL, NULL, NULL);
+
+        fixed.horizontal.decay = xIniGetFloat(&ini, "SB.state.bungee.horizontal.decay", 0.91f);
+        if (fixed.horizontal.decay < 0.0f)
+        {
+            fixed.horizontal.decay = 0.0f;
+        }
+        if (fixed.horizontal.decay > 1.0f)
+        {
+            fixed.horizontal.decay = 1.0f;
+        }
+        xDebugAddTweak("Bungee|Globals|Horz Velocity Decay", &fixed.horizontal.decay, 0.0f, 1.0f,
+                       NULL, NULL, NULL);
+
+        fixed.dive.time = xIniGetFloat(&ini, "SB.state.bungee.dive.time", 0.5f);
+        if (fixed.dive.time < 0.01f)
+        {
+            fixed.dive.time = 0.01f;
+        }
+        if (fixed.dive.time > 5.0f)
+        {
+            fixed.dive.time = 5.0f;
+        }
+        xDebugAddTweak("Bungee|Globals|Dive Time", &fixed.dive.time, 0.01f, 5.0f, NULL, NULL, NULL);
+
+        fixed.dive.anim_out_time = xIniGetFloat(&ini, "SB.state.bungee.dive.anim_out_time", 0.5f);
+        if (fixed.dive.anim_out_time < 0.01f)
+        {
+            fixed.dive.anim_out_time = 0.01f;
+        }
+        if (fixed.dive.anim_out_time > 5.0f)
+        {
+            fixed.dive.anim_out_time = 5.0f;
+        }
+        xDebugAddTweak("Bungee|Globals|Dive Anim Out-Time", &fixed.dive.anim_out_time, 0.01f, 5.0f,
+                       NULL, NULL, NULL);
+
+        fixed.dive.min_dist = xIniGetFloat(&ini, "SB.state.bungee.dive.min_dist", 0.0f);
+        if (fixed.dive.min_dist < 0.0f)
+        {
+            fixed.dive.min_dist = 0.0f;
+        }
+        if (fixed.dive.min_dist > 1.0f)
+        {
+            fixed.dive.min_dist = 1.0f;
+        }
+        xDebugAddTweak("Bungee|Globals|Dive Min Distance", &fixed.dive.min_dist, 0.0f, 1.0f, NULL,
+                       NULL, NULL);
+
+        fixed.dive.max_dist = xIniGetFloat(&ini, "SB.state.bungee.dive.max_dist", 0.6f);
+        if (fixed.dive.max_dist < 0.51f)
+        {
+            fixed.dive.max_dist = 0.51f;
+        }
+        if (fixed.dive.max_dist > 1.0f)
+        {
+            fixed.dive.max_dist = 1.0f;
+        }
+        xDebugAddTweak("Bungee|Globals|Dive Max Distance", &fixed.dive.max_dist, 0.51f, 1.0f, NULL,
+                       NULL, NULL);
+
+        fixed.camera.speed = xIniGetFloat(&ini, "SB.state.bungee.camera.speed", 10.0f);
+        if (fixed.camera.speed < 0.0f)
+        {
+            fixed.camera.speed = 0.0f;
+        }
+        if (fixed.camera.speed > 1000000000.0f)
+        {
+            fixed.camera.speed = 1000000000.0f;
+        }
+        xDebugAddTweak("Bungee|Globals|Camera Speed", &fixed.camera.speed, 0.0f, 1000000000.0f,
+                       NULL, NULL, NULL);
+
+        fixed.turn.spring = xIniGetFloat(&ini, "SB.state.bungee.turn.spring", 25.0f);
+        if (fixed.turn.spring < 0.0f)
+        {
+            fixed.turn.spring = 0.0f;
+        }
+        if (fixed.turn.spring > 100000.0f)
+        {
+            fixed.turn.spring = 100000.0f;
+        }
+        xDebugAddTweak("Bungee|Globals|Turn Spring", &fixed.turn.spring, 0.0f, 100000.0f, NULL,
+                       NULL, NULL);
+
+        fixed.turn.decay = xIniGetFloat(&ini, "SB.state.bungee.turn.decay", 0.95f);
+        if (fixed.turn.decay < 0.0f)
+        {
+            fixed.turn.decay = 0.0f;
+        }
+        if (fixed.turn.decay > 1.0f)
+        {
+            fixed.turn.decay = 1.0f;
+        }
+        xDebugAddTweak("Bungee|Globals|Turn Decay", &fixed.turn.decay, 0.0f, 1.0f, NULL, NULL,
+                       NULL);
+    }
+
+    void init()
+    {
+        if ((shared.flags & 0x1) != 0x1)
+        {
+            return;
+        }
+
+        shared.flags = 3;
+        shared.state = NULL;
+        shared.hook = NULL;
+
+        static attaching_state_type attaching_state;
+        shared.states[0] = &attaching_state;
+        static hanging_state_type hanging_state;
+        shared.states[1] = &hanging_state;
+
+        init_cache();
+    }
+
+    void destroy()
+    {
+        stop();
+        iCameraSetBlurriness(0.0f);
+        zCameraEnableTracking(CO_BUNGEE);
+        xCameraDoCollisions(1, CO_BUNGEE);
+        shared.flags = 0x3;
     }
 } // namespace bungee_state
