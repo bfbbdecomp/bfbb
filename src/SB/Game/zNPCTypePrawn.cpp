@@ -11,7 +11,7 @@
 
 #define ANIM_Unknown 0 // 0x0
 #define ANIM_Idle01 1 // 0x04
-#define ANIM_Idle02 2 // 0x08       animtable new state
+#define ANIM_Idle02 2 // 0x08 
 #define ANIM_Idle03 3 // 0xC
 #define ANIM_Fidget01 4 //
 #define ANIM_Fidget02 5
@@ -247,7 +247,7 @@ void aqua_beam::reset() // I don't know whats wrong here. Probably a simple erro
     ring_sounds = 0;
 }
 
-void aqua_beam::start() //100% code match, data does not match
+void aqua_beam::start()
 {
     firing = 1;
     time = 0.0f;

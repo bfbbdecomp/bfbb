@@ -36,6 +36,22 @@ static inline void GXEnd(void) {
 #endif
 }
 
+static inline void GXTexCoord2s16(int r3, int r4) // possible inline req.
+{
+    int ptr = 0xcc010000;
+    *(short*)((char*)(ptr) - 0x8000) = r3;
+    *(short*)((char*)(ptr) - 0x8000) = r4;
+}
+
+
+static inline void GXPosition3s16(int r3, int r4, int r5) // possible inline req.
+{
+    int ptr = 0xcc010000;
+    *(short*)((char*)(ptr) - 0x8000) = r3;
+    *(short*)((char*)(ptr) - 0x8000) = r4;
+    *(short*)((char*)(ptr) - 0x8000) = r5;
+}
+
 void GXSetLineWidth(u8 width, GXTexOffset texOffsets);
 void GXSetPointSize(u8 pointSize, GXTexOffset texOffsets);
 void GXEnableTexOffsets(GXTexCoordID coord, u8 line_enable, u8 point_enable);

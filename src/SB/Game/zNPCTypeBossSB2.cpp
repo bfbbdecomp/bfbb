@@ -308,7 +308,7 @@ void zNPCB_SB2::ThanksImDone()
     flag.dizzy = false;
 }
 
-void zNPCB_SB2::reset_speed() //tweak in .bss
+void zNPCB_SB2::reset_speed()
 {
     turn.accel = 0;
     turn.max_vel = 0;
@@ -316,7 +316,7 @@ void zNPCB_SB2::reset_speed() //tweak in .bss
 
 S32 zNPCB_SB2::player_platform()
 {
-    return 0; // to-do
+    return 0; // TODO
 }
 
 void zNPCB_SB2::activate_hand(zNPCB_SB2::hand_enum, bool)
@@ -336,7 +336,7 @@ void zNPCB_SB2::deactivate_hand(zNPCB_SB2::hand_enum)
 S32 zNPCB_SB2::player_on_ground() const
 {
     return 0;
-    // to-do
+    // TODO
 }
 
 void zNPCB_SB2::abandon_slugs()
