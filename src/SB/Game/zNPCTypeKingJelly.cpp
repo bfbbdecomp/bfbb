@@ -11,7 +11,7 @@
 
 #define ANIM_Unknown 0 // 0x0
 #define ANIM_Idle01 1 // 0x04
-#define ANIM_Idle02 2 // 0x08       animetable new state
+#define ANIM_Idle02 2 // 0x08      
 #define ANIM_Idle03 3 // 0xC
 #define ANIM_Fidget01 4 //
 #define ANIM_Fidget02 5
@@ -285,48 +285,10 @@ void zNPCKingJelly::enable_child(zNPCKingJelly::child_data& child)
     }
 }
 
-// probably how many times the jellyfish can hit the player for that round
-// whatever round it is, add one.
-// Round = 0, max strikes = 1
-// Round = 1, max strikes = 2
-// Round = 2, max strikes = 3
 S32 zNPCKingJelly::max_strikes()
 {
     return round + 1;
 }
-
-//void zNPCKingJelly::update_round()
-//{
-//  if (life == 0)
-//  {
-// store zero in something??
-// 0x2bc
-//     round = 0;
-//     return;
-//  }
-
-//round = life-- * 3;
-
-// updating 0x2bc
-// round =
-
-/*
-        // Done
-        if (*(int *)(param_1 + 0x2c4) == 0) {
-            *(undefined4 *)(param_1 + 700) = 0;
-            return;
-        }
-        // 0x2BC
-
-        ????
-        *(int *)(param_1 + 700) = 2 - ((*(int *)(param_1 + 0x2c4) + -1) * 3) / DAT_80328544;
-        round = 2 - ((life) + -1) * 3) / DAT_80328544;
-    */
-// life--;
-// tweak();
-// tweak();
-//tweak();
-//}
 
 void zNPCKingJelly::on_change_ambient_ring(const tweak_info&)
 {
@@ -419,11 +381,6 @@ void zNPCKingJelly::show_shower_model()
 
 void zNPCKingJelly::reset_curtain()
 {
-    // f0 = data shit
-    // r4 = 0x10b0
-    // 0x24 = f0
-    // r3 = 0x10a8
-    // 0x24 = f0        // 0x24 model???
 }
 
 S32 zNPCGoalKJIdle::Exit(float dt, void* updCtxt)
