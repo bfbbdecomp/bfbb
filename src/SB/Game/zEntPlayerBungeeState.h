@@ -79,8 +79,9 @@ namespace bungee_state
     void load(xBase& data, xDynAsset& asset, size_t);
     bool active();
     bool landed();
-    bool destroy();
+    void destroy();
     void insert_animations(xAnimTable& table);
+    void stop();
 } // namespace bungee_state
 
 #endif
