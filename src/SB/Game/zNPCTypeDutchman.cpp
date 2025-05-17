@@ -252,7 +252,7 @@ void zNPCDutchman::kill_wave(zNPCDutchman::wave_data& wave)
     kill_sound(1, wave.sound_handle);
 }
 
-void zNPCDutchman::start_eye_glow() //Matches but the data is fucked
+void zNPCDutchman::start_eye_glow()
 {
     flag.eye_glow = true;
     eye_glow.size = 1;
