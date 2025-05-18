@@ -240,3 +240,18 @@ U32 xSphereHitsSphere(const xSphere* a, const xSphere* b, xCollis* coll)
     }
     return uVar1;
 }
+
+void xParabolaRecenter(xParabola* p, F32 newZeroT)
+{
+    xVec3 newPos;
+    xVec3 newVel;
+
+    xParabolaEvalPos(p, &newPos, newZeroT);
+    xParabolaEvalVel(p, &newVel, newZeroT);
+
+    xVec3Copy(&p->initPos, &newPos);
+    xVec3Copy(&p->initVel, &newVel);
+    
+    p->maxTime -= newZeroT;
+    p->minTime -= newZeroT;
+}

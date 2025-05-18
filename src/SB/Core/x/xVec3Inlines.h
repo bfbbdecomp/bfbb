@@ -18,6 +18,7 @@ F32 xVec3Dist(const xVec3* a, const xVec3* b);
 F32 xVec3Dist2(const xVec3* vecA, const xVec3* vecB);
 F32 xVec3Length2(const xVec3* vec);
 F32 xVec3LengthFast(F32 x, F32 y, F32 z);
+F32 xVec3LengthFast(const xVec3* vec);
 void xVec3AddScaled(xVec3* o, const xVec3* v, F32 s);
 
 inline void xVec3SMulBy(xVec3* v, F32 s)
