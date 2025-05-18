@@ -27,6 +27,8 @@
 
 S32 percentageDone;
 _tagxPad* gDebugPad;
+S32 sShowMenuOnBoot;
+S32 gGameSfxreport;
 char* strB ;
 
 void main(S32 argc, char** argv)
@@ -49,7 +51,7 @@ void main(S32 argc, char** argv)
     zMainShowProgressBar();
     xTRCInit();
     zMainReadINI();
-    iFuncProfileParse(temp = "string", globals.profile);
+    iFuncProfileParse(temp = "scooby.elf", globals.profile);
     xUtilStartup();
     xSerialStartup(0x80, (st_SERIAL_PERCID_SIZE*)&g_xser_sizeinfo);
     zDispatcher_Startup();
@@ -115,6 +117,7 @@ void zMainParseINIGlobals(xIniFile* ini)
     F32 *pfVar5 = 0;
     bool bVar6;
     double dVar7;
+    
 
     iVar2 = xIniGetInt(ini,"g.AnalogMin", 0x20);
     globals.player.g.AnalogMin = iVar2;
@@ -148,7 +151,7 @@ void zMainParseINIGlobals(xIniFile* ini)
     globals.player.g.ShinyValueCombo14 = xIniGetInt(ini,"g.ShinyValueCombo14", 0x4b);
     globals.player.g.ShinyValueCombo15 = xIniGetInt(ini,"g.ShinyValueCombo15", 100);
 
-    dVar7 = xIniGetFloat(ini,"g.Combotimer", 1.0f); // @1002
+    dVar7 = xIniGetFloat(ini,"g.ComboTimer", 1.0f); // @1002
     globals.player.g.ComboTimer = dVar7;
     dVar7 = xIniGetFloat(ini,"g.SundaeTime", 6.0f); // @1003
     globals.player.g.SundaeTime = dVar7;
@@ -369,7 +372,7 @@ void zMainParseINIGlobals(xIniFile* ini)
     zcam_overrot_max = dVar7;
 
     dVar7 = xIniGetFloat(ini,"zcam_overrot_rate", zcam_overrot_rate);
-    zcam_overrot_rate = dVar7;
+    zcam_overrot_rate = dVar7;        //Higher match% when these are commented out
     dVar7 = xIniGetFloat(ini,"zcam_overrot_tstart", zcam_overrot_tstart);
     zcam_overrot_tstart = dVar7;
     dVar7 = xIniGetFloat(ini,"zcam_overrot_tend", zcam_overrot_tend);
@@ -466,12 +469,11 @@ void zMainParseINIGlobals(xIniFile* ini)
     globals.player.g.PowerUp[1] = iVar2; // Not sure about this
 
     memcpy(&globals.player.g.PowerUp[2], &globals.player.g.PowerUp[0], 2);
+   
+   
     pbVar4 = xIniGetString(ini,"sb.MoveSpeed", NULL);
-
-    // fbuf section starts
-
     //pfVar5 = memcpy (&globals.player.AutoMoveSpeed, fbuf$915, 0x18);
-      ParseFloatList(pfVar5,pbVar4,6);
+    ParseFloatList(pfVar5,pbVar4,6);
     pbVar4 = xIniGetString(ini,"sb.AnimSneak",0);
     //pfVar5 = (float *)memcpy(&DAT_803c0f3c,fbuf$916,0xc);
     ParseFloatList(pfVar5,pbVar4,3);
@@ -492,10 +494,186 @@ void zMainParseINIGlobals(xIniFile* ini)
     dVar7 = xIniGetFloat(ini,"sb.ledge.animGrab", 3.0f); // @1007
     globals.player.sb.ledge.animGrab = dVar7;
 
-    //zLedgeAdjust(&globals.player.s->ledge);
+    //zLedgeAdjust(&globals.player.sb.ledge);
     //bungee_state::load_settings(xIniFile& ini);
     //oob_state::load_settings(xIniFile&)
     //ztalkbox::load_settings(xIniFile&)
+
+    pbVar4 = xIniGetString(ini,"sb.Jump",0); // DAT_8025df69
+    //pfVar5 = (float *)memcpy(&DAT_803c0f70,fbuf$919,0x10);
+    ParseFloatList(pfVar5,pbVar4,4);
+    pbVar4 = xIniGetString(ini,"sb.Double",0);
+    //pfVar5 = (float *)memcpy(&DAT_803c0fb0,fbuf$920,0x10);
+    ParseFloatList(pfVar5,pbVar4,4);
+    pbVar4 = xIniGetString(ini,"sb.Bounce",0);
+    //pfVar5 = (float *)memcpy(&DAT_803c0f80,fbuf$921,0x10);
+    ParseFloatList(pfVar5,pbVar4,4);
+    pbVar4 = xIniGetString(ini,"sb.Spring",0);
+    //pfVar5 = (float *)memcpy(&DAT_803c0f90,fbuf$922,0x10);
+    ParseFloatList(pfVar5,pbVar4,4);
+    pbVar4 = xIniGetString(ini,"sb.Wall",0); // DAT_8025df8f
+    //pfVar5 = (float *)memcpy(&DAT_803c0fa0,fbuf$923,0x10);
+    ParseFloatList(pfVar5,pbVar4,4);
+
+    dVar7 = xIniGetFloat(ini,"sb.WallJumpVelocity", 0.0f); // @1001
+    globals.player.sb.WallJumpVelocity = dVar7;
+    dVar7 = xIniGetFloat(ini,"sb.spin_damp_xz", 15.0f); // @1018
+    globals.player.sb.spin_damp_xz = dVar7;
+    dVar7 = xIniGetFloat(ini,"sb.spin_damp_y", 15.0f); // @1018
+    globals.player.sb.spin_damp_y = dVar7;
+    // DAT_803c0f1c = &DAT_803c0f20;
+
+    CalcJumpImpulse(&globals.player.sb.Jump, NULL);
+    CalcJumpImpulse(&globals.player.sb.Double, NULL);
+    CalcJumpImpulse(&globals.player.sb.Bounce, NULL);
+    CalcJumpImpulse(&globals.player.sb.Spring, NULL);
+    CalcJumpImpulse(&globals.player.sb.Wall, NULL);
+
+    iVar2 = xIniGetInt(ini,"SB.model_index.body", 0);
+    globals.player.sb_model_indices[0] = iVar2; // These next 13 are either "sb_models" or "sb_model_indices"
+    iVar2 = xIniGetInt(ini,"SB.model_index.arm_l", 1);
+    globals.player.sb_model_indices[1] = iVar2;
+    iVar2 = xIniGetInt(ini,"SB.model_index.arm_r", 2);
+    globals.player.sb_model_indices[2] = iVar2;
+    iVar2 = xIniGetInt(ini,"SB.model_index.ass", 3);
+    globals.player.sb_model_indices[3] = iVar2;
+    iVar2 = xIniGetInt(ini,"SB.model_index.underwear", 4);
+    globals.player.sb_model_indices[4] = iVar2;
+    iVar2 = xIniGetInt(ini,"SB.model_index.wand", 5);
+    globals.player.sb_model_indices[5] = iVar2;
+    iVar2 = xIniGetInt(ini,"SB.model_index.tongue", 6);
+    globals.player.sb_model_indices[6] = iVar2;
+    iVar2 = xIniGetInt(ini,"SB.model_index.bubble_helmet", 7);
+    globals.player.sb_model_indices[7] = iVar2;
+    iVar2 = xIniGetInt(ini,"SB.model_index.bubble_shoe_l", 8);
+    globals.player.sb_model_indices[8] = iVar2;
+    iVar2 = xIniGetInt(ini,"SB.model_index.bubble_shoe_r", 9);
+    globals.player.sb_model_indices[9] = iVar2;
+    iVar2 = xIniGetInt(ini,"SB.model_index.shadow_wand", 10);
+    globals.player.sb_model_indices[13] = iVar2;
+    iVar2 = xIniGetInt(ini,"SB.model_index.shadow_arm_l", 11);
+    globals.player.sb_model_indices[11] = iVar2;
+    iVar2 = xIniGetInt(ini,"SB.model_index.shadow_arm_r", 12);
+    globals.player.sb_model_indices[12] = iVar2;
+    iVar2 = xIniGetInt(ini,"SB.model_index.shadow_body", 13);
+    globals.player.sb_model_indices[10] = iVar2;
+
+    pbVar4 = xIniGetString(ini,"patrick.MoveSpeed",0);
+    //pfVar5 = memcpy(&DAT_803c136c,fbuf$924,0x18);
+    ParseFloatList(pfVar5,pbVar4,6);
+    pbVar4 = xIniGetString(ini,"patrick.AnimSneak",0);
+    //pfVar5 = (float *)memcpy(&DAT_803c1384,fbuf$925,0xc);
+    ParseFloatList(pfVar5,pbVar4,3);
+    pbVar4 = xIniGetString(ini,"patrick.AnimWalk",0);
+    //pfVar5 = (float *)memcpy(&DAT_803c1390,fbuf$926,0xc);
+    ParseFloatList(pfVar5,pbVar4,3);
+    pbVar4 = xIniGetString(ini,"patrick.AnimRun",0);
+    //pfVar5 = (float *)memcpy(&DAT_803c139c,fbuf$927,0xc);
+    ParseFloatList(pfVar5,pbVar4,3);
+
+    dVar7 = xIniGetFloat(ini,"patrick.JumpGravity", 7.0f); // @1034
+    globals.player.patrick.JumpGravity = dVar7;
+    dVar7 = xIniGetFloat(ini,"patrick.GravSmooth", 0.25f); // @1035
+    globals.player.patrick.GravSmooth = dVar7;
+    dVar7 = xIniGetFloat(ini,"patrick.FloatSpeed", 1.0f); // @1002
+    globals.player.patrick.FloatSpeed = dVar7;
+    dVar7 = xIniGetFloat(ini,"patrick.ButtsmashSpeed", 5.0f); // @1017
+    globals.player.patrick.ButtsmashSpeed = dVar7;
+    dVar7 = xIniGetFloat(ini,"patrick.ledge.animGrab", 3.0f); // @1007
+    globals.player.patrick.ledge.animGrab = dVar7;
+
+    //zLedgeAdjust(&globals.player.patrick.ledge);
+
+    pbVar4 = xIniGetString(ini,"patrick.Jump",0); // DAT_8025df69
+    //pfVar5 = (float *)memcpy(&DAT_803c0f70,fbuf$919,0x10);
+    ParseFloatList(pfVar5,pbVar4,4);
+    pbVar4 = xIniGetString(ini,"patrick.Double",0);
+    //pfVar5 = (float *)memcpy(&DAT_803c0fb0,fbuf$920,0x10);
+    ParseFloatList(pfVar5,pbVar4,4);
+    pbVar4 = xIniGetString(ini,"patrick.Bounce",0);
+    //pfVar5 = (float *)memcpy(&DAT_803c0f80,fbuf$921,0x10);
+    ParseFloatList(pfVar5,pbVar4,4);
+    pbVar4 = xIniGetString(ini,"patrick.Spring",0);
+    //pfVar5 = (float *)memcpy(&DAT_803c0f90,fbuf$922,0x10);
+    ParseFloatList(pfVar5,pbVar4,4);
+    pbVar4 = xIniGetString(ini,"patrick.Wall",0); // DAT_8025df8f
+    //pfVar5 = (float *)memcpy(&DAT_803c0fa0,fbuf$923,0x10);
+    ParseFloatList(pfVar5,pbVar4,4);
+
+    //DAT_803c0f1c = &DAT_803c0f20;
+
+    CalcJumpImpulse(&globals.player.patrick.Jump, NULL);
+    CalcJumpImpulse(&globals.player.patrick.Double, NULL);
+    CalcJumpImpulse(&globals.player.patrick.Bounce, NULL);
+    CalcJumpImpulse(&globals.player.patrick.Spring, NULL);
+    CalcJumpImpulse(&globals.player.patrick.Wall, NULL);
+
+    dVar7 = xIniGetFloat(ini,"patrick.WallJumpVelocity", 0.0f); // @1001
+    globals.player.patrick.WallJumpVelocity = dVar7;
+
+    pbVar4 = xIniGetString(ini,"sandy.MoveSpeed",0);
+    //pfVar5 = (float *)memcpy(&DAT_803c17b4,fbuf$933,0x18);
+    ParseFloatList(pfVar5,pbVar4,6);
+    pbVar4 = xIniGetString(ini,"sandy.AnimSneak",0);
+    //pfVar5 = (float *)memcpy(&DAT_803c17cc,fbuf$934,0xc);
+    ParseFloatList(pfVar5,pbVar4,3);
+    pbVar4 = xIniGetString(ini,"sandy.AnimWalk",0);
+    //pfVar5 = (float *)memcpy(&DAT_803c17d8,fbuf$935,0xc);
+    ParseFloatList(pfVar5,pbVar4,3);
+    pbVar4 = xIniGetString(ini,"sandy.AnimRun",0);
+    //pfVar5 = (float *)memcpy(&DAT_803c17e4,fbuf$936,0xc);
+    ParseFloatList(pfVar5,pbVar4,3);
+
+    dVar7 = xIniGetFloat(ini,"sandy.JumpGravity", 7.0f); // @1034
+    globals.player.sandy.JumpGravity = dVar7;
+    dVar7 = xIniGetFloat(ini,"sandy.GravSmooth", 0.25f); // @1035
+    globals.player.sandy.GravSmooth = dVar7;
+    dVar7 = xIniGetFloat(ini,"sandy.FloatSpeed", 1.0f); // @1002
+    globals.player.sandy.FloatSpeed = dVar7;
+    dVar7 = xIniGetFloat(ini,"sandy.ButtsmashSpeed", 5.0f); // @1017
+    globals.player.sandy.ButtsmashSpeed = dVar7;
+    dVar7 = xIniGetFloat(ini,"sandy.ledge.animGrab", 3.0f); // @1007
+    globals.player.sandy.ledge.animGrab = dVar7;
+
+    //zLedgeAdjust(&globals.player.sandy.ledge);
+
+    pbVar4 = xIniGetString(ini,"sandy.Jump",0); // DAT_8025df69
+    //pfVar5 = (float *)memcpy(&DAT_803c1800,fbuf$937,0x10);
+    ParseFloatList(pfVar5,pbVar4,4);
+    pbVar4 = xIniGetString(ini,"sandy.Double",0);
+    //pfVar5 = (float *)memcpy(&DAT_803c1840,fbuf$938,0x10);
+    ParseFloatList(pfVar5,pbVar4,4);
+    pbVar4 = xIniGetString(ini,"sandy.Bounce",0);
+    //pfVar5 = (float *)memcpy(&DAT_803c1810,fbuf$939,0x10);
+    ParseFloatList(pfVar5,pbVar4,4);
+    pbVar4 = xIniGetString(ini,"sandy.Spring",0);
+    //pfVar5 = (float *)memcpy(&DAT_803c1820,fbuf$940,0x10);
+    ParseFloatList(pfVar5,pbVar4,4);
+    pbVar4 = xIniGetString(ini,"sandy.Wall",0); // DAT_8025df8f
+    //pfVar5 = (float *)memcpy(&DAT_803c1830,fbuf$941,0x10);
+    ParseFloatList(pfVar5,pbVar4,4);
+    //DAT_803c0f1c = &DAT_803c0f20;
+
+    CalcJumpImpulse(&globals.player.sandy.Jump, NULL);
+    CalcJumpImpulse(&globals.player.sandy.Double, NULL);
+    CalcJumpImpulse(&globals.player.sandy.Bounce, NULL);
+    CalcJumpImpulse(&globals.player.sandy.Spring, NULL);
+    CalcJumpImpulse(&globals.player.sandy.Wall, NULL);
+
+    dVar7 = xIniGetFloat(ini,"sandy.WallJumpVelocity", 0.0f); // @1001
+    globals.player.sandy.WallJumpVelocity = dVar7;
+
+    sShowMenuOnBoot = xIniGetInt(ini,"ShowMenuOnBoot", 1);
+    gGameSfxreport = xIniGetInt(ini,"SFXReport", 0);
+
+    //  DAT_803c0f1c = &DAT_803c0f20;
+    //  DAT_803c0f20 = 0;
+    //  DAT_803c1368 = 1;
+    //  DAT_803c17b0 = 2;
+    globals.player.s->pcType = globals.player.sb.pcType;
+    //globals.player.sb.pcType = ePlayer_SB;
+    globals.player.patrick.pcType = ePlayer_Patrick;
+    globals.player.sandy.pcType = ePlayer_Sandy;
 
 
 }
