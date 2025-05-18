@@ -4,6 +4,7 @@
 #include "xMathInlines.h"
 #include "iMath.h"
 
+#include "zCamera.h"
 #include <types.h>
 
 static S32 sCamTweakCount;
@@ -19,19 +20,13 @@ static F32 sCamH;
 static F32 sCamPitch;
 static zCamTweakLook zcam_neartweak;
 static zCamTweakLook zcam_fartweak;
-extern F32 zcam_near_d;
-extern F32 zcam_near_h;
-extern F32 zcam_near_pitch;
-extern F32 zcam_far_d;
-extern F32 zcam_far_h;
-extern F32 zcam_far_pitch;
 
 static void zCameraTweak_LookPreCalc(zCamTweakLook* tlook, F32 d, F32 h, F32 pitch)
 {
     F32 tan = itan(pitch);
-    F32 unk = d*tan;
-    tlook->h = h-unk;
-    tlook->dist = xsqrt(unk*unk + d*d);
+    F32 unk = d * tan;
+    tlook->h = h - unk;
+    tlook->dist = xsqrt(unk * unk + d * d);
     tlook->pitch = pitch;
 }
 
@@ -77,8 +72,10 @@ void zCameraTweakGlobal_Add(U32 owner, F32 priority, F32 time, F32 pitch, F32 di
 
     if (i == 0)
     {
-        sCamTweakPitch[1] = sCamTweakPitch[1] * sCamTweakLerp + sCamTweakPitch[0] * (1.0f - sCamTweakLerp);
-        sCamTweakDistMult[1] = sCamTweakDistMult[1] * sCamTweakLerp + sCamTweakDistMult[0] * (1.0f - sCamTweakLerp);
+        sCamTweakPitch[1] =
+            sCamTweakPitch[1] * sCamTweakLerp + sCamTweakPitch[0] * (1.0f - sCamTweakLerp);
+        sCamTweakDistMult[1] =
+            sCamTweakDistMult[1] * sCamTweakLerp + sCamTweakDistMult[0] * (1.0f - sCamTweakLerp);
         sCamTweakLerp = 1.0f;
         sCamTweakTime = sCamTweakList[0].time;
         sCamTweakPitch[0] = sCamTweakList[0].pitch;
@@ -96,8 +93,10 @@ void zCameraTweakGlobal_Remove(U32 owner)
         {
             if (i == 0)
             {
-                sCamTweakPitch[1] = sCamTweakPitch[1] * sCamTweakLerp + sCamTweakPitch[0] * (1.0f - sCamTweakLerp);
-                sCamTweakDistMult[1] = sCamTweakDistMult[1] * sCamTweakLerp + sCamTweakDistMult[0] * (1.0f - sCamTweakLerp);
+                sCamTweakPitch[1] =
+                    sCamTweakPitch[1] * sCamTweakLerp + sCamTweakPitch[0] * (1.0f - sCamTweakLerp);
+                sCamTweakDistMult[1] = sCamTweakDistMult[1] * sCamTweakLerp +
+                                       sCamTweakDistMult[0] * (1.0f - sCamTweakLerp);
                 sCamTweakLerp = 1.0f;
                 sCamTweakTime = sCamTweakList[0].time;
                 sCamTweakPitch[0] = sCamTweakCount < 2 ? 0.0f : sCamTweakList[1].pitch;
@@ -131,7 +130,22 @@ void zCameraTweakGlobal_Reset()
 
 void zCameraTweakGlobal_Update(F32 dt)
 {
+    sCamTweakLerp -= dt / sCamTweakTime;
+    if (sCamTweakLerp < 0.0f)
+    {
+        sCamTweakLerp = 0.0f;
+    }
 
+    zCamTweakLook* tlook = &zcam_fartweak;
+    sCamTweakPitchCur =
+        sCamTweakPitch[1] * sCamTweakLerp + sCamTweakPitch[0] * (1.0f - sCamTweakLerp);
+    sCamTweakDistMultCur =
+        sCamTweakDistMult[1] * sCamTweakLerp + sCamTweakDistMult[0] * (1.0f - sCamTweakLerp);
+
+    tlook = zcam_near != 0 ? &zcam_neartweak : tlook;
+    sCamD = sCamTweakDistMultCur * tlook->dist * icos(tlook->pitch + sCamTweakPitchCur);
+    sCamH = sCamTweakDistMultCur * tlook->dist * isin(tlook->pitch + sCamTweakPitchCur) + tlook->h;
+    sCamPitch = tlook->pitch + sCamTweakPitchCur;
 }
 
 F32 zCameraTweakGlobal_GetD()
@@ -198,7 +212,8 @@ S32 zCameraTweak_EventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam
     case eEventRun:
         if (xBaseIsEnabled(tweak))
         {
-            zCameraTweakGlobal_Add(tweak->id, tweak->casset->priority, tweak->casset->time, tweak->casset->pitch_adjust, tweak->casset->dist_adjust);
+            zCameraTweakGlobal_Add(tweak->id, tweak->casset->priority, tweak->casset->time,
+                                   tweak->casset->pitch_adjust, tweak->casset->dist_adjust);
         }
         break;
 
