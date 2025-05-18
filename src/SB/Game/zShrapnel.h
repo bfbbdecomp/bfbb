@@ -214,11 +214,50 @@ struct zShrapnelAsset
     void (*initCB)(zShrapnelAsset*, xModelInstance*, xVec3*, void (*)(zFrag*, zFragAsset*));
 };
 
+struct zShrapnelInitTable
+{
+    char* name;
+    void (*initCB)(zShrapnelAsset*, xModelInstance*, xVec3*, void(*)(zFrag*, zFragAsset*));
+    U32 ID;
+};
+
+struct zShrapnelParentList
+{
+    U32 parentID;
+    xModelInstance* parentModel;
+};
+
 struct zScene;
 
-void zShrapnel_SceneInit(zScene*);
+zFrag* zFrag_Alloc(zFragType type);
+void zFrag_Free(zFrag* frag);
+void zShrapnel_GameInit();
+void zShrapnel_ProjectileSceneInit(zFragProjectileAsset* asset);
+void zShrapnel_ParticleSceneInit(zFragParticleAsset* asset);
+void zShrapnel_SetShrapnelAssetInitCB(zShrapnelAsset* sasset);
 void zShrapnel_Update(F32 dt);
 void zShrapnel_Reset();
 void zShrapnel_Render();
+void zShrapnel_CinematicInit(zShrapnelAsset* shrap, RpAtomic* cinModel, RwMatrixTag* animMat, xVec3* initVel, void(*cb)(zFrag*, zFragAsset*));
+void zFragLoc_Setup(zFragLocation* loc, xModelInstance* parent);
+void zFragLoc_InitDir(zFragLocation* loc, xVec3* vec, xModelInstance* parent);
+void zFrag_DefaultInit(zFrag* frag, zFragAsset* fasset);
+void zFrag_DefaultParticleUpdate(zFrag* frag, F32 param_2);
+void zFrag_ParticleManager(F32 dt);
+void zFrag_ProjectileCollData(zFrag* frag);
+void zFrag_DeleteProjectile(zFrag* frag);
+void zFrag_ProjectileManager(F32 dt);
+void zFrag_DefaultLightningUpdate(zFrag* frag, F32 param_2);
+void zFrag_LightningManager(F32 dt);
+void zFrag_DefaultSoundUpdate(zFrag* frag, F32 param_2);
+void zFrag_SoundManager(F32 dt);
+void zFrag_ProjectileRenderer();
+
+void zShrapnel_SceneInit(zScene*);
+void zFragLoc_InitMat(zFragLocation*, xMat4x3*, xModelInstance*);
+void zFragLoc_InitVec(zFragLocation*, xVec3*, xModelInstance*);
+void zShrapnel_DefaultInit(zShrapnelAsset* shrap, xModelInstance* parent, xVec3* initVel, void(*cb)(zFrag*, zFragAsset*));
+void zFrag_ProjectileSetupPath(zFrag* frag, zFragProjectileAsset* passet);
+void zFrag_DefaultProjectileUpdate(zFrag* frag, F32 param_2);
 
 #endif

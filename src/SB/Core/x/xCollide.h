@@ -124,6 +124,7 @@ U32 xSphereHitsModel(const xSphere* b, const xModelInstance* m, xCollis* coll);
 S32 xParabolaHitsEnv(xParabola* p, const xEnv* env, xCollis* colls);
 void xParabolaEvalPos(const xParabola*, xVec3*, F32);
 void xParabolaEvalVel(const xParabola*, xVec3*, F32);
+void xParabolaRecenter(xParabola* p, F32 newZeroT);
 
 void xVec3AddScaled(xVec3*, const xVec3*, F32);
 xVec3 xCollisTriHit(const xCollis::tri_data& tri, const xModelInstance& model);
