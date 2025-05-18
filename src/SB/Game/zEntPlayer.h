@@ -398,6 +398,8 @@ void zEntPlayer_GiveHealth(S32);
 void zEntPlayer_GiveSpatula(S32);
 void zEntPlayer_GivePatsSocksCurrentLevel(S32 quantity);
 
+static float CalcJumpImpulse(zJumpParam*, const zPlayerSettings*);
+
 void zEntPlayer_LoadCheckPoint();
 
 void zEntPlayer_MinimalRender(zEnt* ent);
