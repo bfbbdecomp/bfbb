@@ -197,9 +197,6 @@ void zShrapnel_SetShrapnelAssetInitCB(zShrapnelAsset* sasset)
     }
 }
 
-
-#include <types.h>
-
 void zShrapnel_Update(F32 dt)
 {
     if (sNumActiveFrags == 0)
