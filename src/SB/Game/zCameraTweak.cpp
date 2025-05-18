@@ -23,9 +23,9 @@ static zCamTweakLook zcam_fartweak;
 static void zCameraTweak_LookPreCalc(zCamTweakLook* tlook, F32 d, F32 h, F32 pitch)
 {
     F32 tan = itan(pitch);
-    F32 unk = d * tan;
-    tlook->h = h - unk;
-    tlook->dist = xsqrt(unk * unk + d * d);
+    F32 deltaH = d * tan;
+    tlook->h = h - deltaH;
+    tlook->dist = xsqrt(deltaH * deltaH + d * d);
     tlook->pitch = pitch;
 }
 
