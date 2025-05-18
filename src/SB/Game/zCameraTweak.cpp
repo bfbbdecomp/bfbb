@@ -3,7 +3,6 @@
 #include "xMath.h"
 #include "xMathInlines.h"
 #include "iMath.h"
-
 #include "zCamera.h"
 #include <types.h>
 
@@ -86,6 +85,7 @@ void zCameraTweakGlobal_Add(U32 owner, F32 priority, F32 time, F32 pitch, F32 di
 void zCameraTweakGlobal_Remove(U32 owner)
 {
     S32 i;
+    S32 j;
 
     for (i = 0; i < sCamTweakCount; i++)
     {
@@ -103,7 +103,7 @@ void zCameraTweakGlobal_Remove(U32 owner)
                 sCamTweakDistMult[0] = sCamTweakCount < 2 ? 1.0f : sCamTweakList[1].distMult;
             }
 
-            for (S32 j = i; j < sCamTweakCount; j--)
+            for (j = i; j < sCamTweakCount; j--)
             {
                 sCamTweakList[j] = sCamTweakList[j + 1];
             }
