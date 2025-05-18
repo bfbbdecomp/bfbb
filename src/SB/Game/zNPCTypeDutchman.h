@@ -386,7 +386,7 @@ struct zNPCGoalDutchmanDeath : zNPCGoalCommon
 };
 
 xAnimTable* ZNPC_AnimTable_Dutchman();
-U32 dutchman_count;
+
 void Exit();
 
 #endif

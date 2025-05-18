@@ -294,15 +294,15 @@ struct zPlayerGlobals
     U32 SlideTrackSliding;
     U32 SlideTrackCount;
     xEnt* SlideTrackEnt[111];
-    U32 SlideNotGroundedSinceSlide;
+    U32 SlideNotGroundedSinceSlide; //0x1f10
     xVec3 SlideTrackDir;
     xVec3 SlideTrackVel;
-    F32 SlideTrackDecay;
+    F32 SlideTrackDecay; //0x1f2c
     F32 SlideTrackLean;
-    F32 SlideTrackLand;
+    F32 SlideTrackLand; // 0x1f34
     U8 sb_model_indices[14];
     xModelInstance* sb_models[14];
-    U32 currentPlayer;
+    U32 currentPlayer; //0x1f80
     xVec3 PredictRotate;
     xVec3 PredictTranslate;
     F32 PredictAngV;
@@ -323,5 +323,6 @@ struct zGlobals : xGlobals
 
 extern zGlobals globals;
 extern xGlobals* xglobals;
+extern zGlobalSettings* sglobals;
 
 #endif

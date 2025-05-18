@@ -18,6 +18,8 @@ void** psGetMemoryFunctions();
 void iVSync();
 U16 my_dsc(U16 dsc);
 
+void iSystemInit(U32 options);
+void iSystemExit();
 void MemoryProtectionErrorHandler(U16 last, OSContext* ctx, U64 unk1, U64 unk2);
 void TRCInit();
 

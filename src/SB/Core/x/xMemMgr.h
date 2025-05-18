@@ -99,7 +99,7 @@ S32 xMemPushBase();
 S32 xMemPopBase(U32 heapID, S32 depth);
 S32 xMemPopBase(S32 depth);
 S32 xMemGetBase(U32 heapID);
-void xMemRegisterBaseNotifyFunc(void (*func)());
+void xMemRegisterBaseNotifyFunc(void (*)(void));
 S32 xMemGetBase();
 void xMemPoolAddElements(xMemPool* pool, void* buffer, U32 count);
 void xMemPoolSetup(xMemPool* pool, void* buffer, U32 nextOffset, U32 flags,
