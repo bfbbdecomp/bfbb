@@ -20,7 +20,7 @@ struct xGlobals
     _tagxPad* pad1;
     _tagxPad* pad2;
     _tagxPad* pad3;
-    S32 profile;
+    S32 profile; //0x32c
 
     // 0x330 in globals
     char profFunc[6][128];

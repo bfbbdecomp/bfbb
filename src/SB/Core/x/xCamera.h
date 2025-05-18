@@ -10,6 +10,64 @@
 
 #include <rwcore.h>
 
+struct cameraFXShake
+{
+    F32 magnitude;
+    xVec3 dir;
+    F32 cycleTime;
+    F32 cycleMax;
+    F32 dampen;
+    F32 dampenRate;
+    F32 rotate_magnitude;
+    F32 radius;
+    xVec3* epicenterP;
+    xVec3 epicenter;
+    xVec3* player;
+};
+
+struct cameraFXZoom
+{
+    F32 holdTime;
+    F32 vel;
+    F32 accel;
+    F32 distance;
+    U32 mode;
+    F32 velCur;
+    F32 distanceCur;
+    F32 holdTimeCur;
+};
+
+struct cameraFX
+{
+    S32 type;
+    S32 flags;
+    F32 elapsedTime;
+    F32 maxTime;
+    union
+    {
+        cameraFXShake shake;
+        cameraFXZoom zoom;
+    };
+};
+
+struct cameraFXTableEntry
+{
+    S32 type;
+    void (*func)(cameraFX*, F32, xMat4x3*, xMat4x3*);
+    void (*funcKill)(cameraFX*);
+};
+
+extern S32 sCamCollis;
+extern volatile S32 xcam_collis_owner_disable;
+extern S32 xcam_do_collis;
+extern F32 xcam_collis_radius;
+extern F32 xcam_collis_stiffness;
+extern RpAtomic* sInvisWallHack;
+extern xMat4x3 sCameraFXMatOld;
+extern cameraFX sCameraFX[10];
+extern cameraFXTableEntry sCameraFXTable[3];
+
+
 struct xScene;
 
 enum _tagTransType

@@ -12,6 +12,12 @@ struct st_SERIAL_CLIENTINFO
     S32 actsize;
 };
 
+struct st_SERIAL_PERCID_SIZE 
+{
+    U32 idtag;
+    S32 needsize; 
+};
+
 struct xSerial
 {
     U32 idtag;
@@ -44,6 +50,8 @@ struct xSerial
     void operator delete(void*);
 };
 
+void xSerialStartup(S32, st_SERIAL_PERCID_SIZE*);
+void xSerialShutdown();
 void xSerialTraverse(S32 (*func)(U32 clientID, xSerial* xser));
 void xSerialWipeMainBuffer();
 S32 xSerial_svgame_register(st_XSAVEGAME_DATA* sgctxt, en_SAVEGAME_MODE mode);

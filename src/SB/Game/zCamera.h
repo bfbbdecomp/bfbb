@@ -90,6 +90,8 @@ extern F32 zcam_overrot_velmax;
 extern F32 zcam_overrot_tmanual;
 extern F32 zcam_mintgtheight;
 
+extern F32 gSkipTimeFlythrough;
+
 void zCameraReset(xCamera* cam);
 void zCameraSetBbounce(S32 bbouncing);
 void zCameraSetHighbounce(S32 hbounce);

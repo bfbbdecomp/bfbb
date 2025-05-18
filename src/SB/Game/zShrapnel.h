@@ -216,6 +216,7 @@ struct zShrapnelAsset
 
 struct zScene;
 
+void zShrapnel_GameInit();
 void zShrapnel_SceneInit(zScene*);
 void zShrapnel_Update(F32 dt);
 void zShrapnel_Reset();

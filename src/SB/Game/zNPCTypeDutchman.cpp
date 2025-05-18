@@ -30,6 +30,8 @@ namespace
 #define ANIM_Attack02End01 18 //0x48
 #define ANIM_LassoGrab01 19 //0x4c
 
+U32 dutchman_count;
+
 //13 new states
 //8 new transitions
 xAnimTable* ZNPC_AnimTable_Dutchman()

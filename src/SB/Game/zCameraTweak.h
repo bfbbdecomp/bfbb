@@ -21,6 +21,7 @@ struct zCameraTweak : xBase
 F32 zCameraTweakGlobal_GetPitch();
 F32 zCameraTweakGlobal_GetH();
 F32 zCameraTweakGlobal_GetD();
+void zCameraTweakGlobal_Init();
 void zCameraTweakGlobal_Update(F32 dt);
 void zCameraTweakGlobal_Reset();
 void zCameraTweak_Init(xBase& data, xDynAsset& asset, size_t);

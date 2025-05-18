@@ -3,6 +3,8 @@
 
 #include "xDynAsset.h"
 #include "xEnt.h"
+#include "xIni.h"
+
 
 namespace bungee_state
 {
@@ -82,6 +84,7 @@ namespace bungee_state
     void destroy();
     void insert_animations(xAnimTable& table);
     void stop();
+    void load_settings(xIniFile& ini);
 } // namespace bungee_state
 
 #endif

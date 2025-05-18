@@ -48,6 +48,7 @@ struct var_type
 
 extern S32 bad_card_needed;
 
+void var_init();
 void zVarNewGame();
 void zVarInit(zVarEntry* table);
 U32 zVarEntryCB_VibrationOn(void* arg);
