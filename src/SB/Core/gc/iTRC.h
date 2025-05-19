@@ -12,9 +12,7 @@
 #include <dolphin/dvd.h>
 #include <dolphin/pad.h>
 
-
 #include "xPad.h"
-
 
 struct _tagiTRCPadInfo
 {

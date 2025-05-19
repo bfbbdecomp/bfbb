@@ -69,36 +69,36 @@ BOOL ROMFont::Init()
 
 void ROMFont::InitDisplay(_GXRenderModeObj* InRenderMode)
 {
-  GXColor clr = { 0 };
-  Mtx44 mtx;
-  Mtx idt;
-  
-  mRenderMode = InRenderMode;
-  void** xfb = &mXFBs[1];
-  RwGameCubeGetXFBs(&mXFBs[0], &mXFBs[1]);
-  mCurrentFrameBuffer = *xfb;
+    GXColor clr = { 0 };
+    Mtx44 mtx;
+    Mtx idt;
 
-  ROMFont::InitGX();
-  ROMFont::InitVI();
-  
-  GXSetCopyClear(clr,0xffffff);
-  C_MTXOrtho(mtx, 0.0f, mRenderMode->efbHeight, 0.0f, mRenderMode->fbWidth, 0.0f, 10000.0f);
-  GXSetProjection(mtx, GX_ORTHOGRAPHIC);
-  PSMTXIdentity(idt);
-  GXLoadPosMtxImm(idt, 0);
-  GXSetCurrentMtx(0);
-  GXSetZMode(TRUE, GX_ALWAYS, TRUE);
-  GXSetNumChans(0);
-  GXSetNumTevStages(1);
-  GXSetTevOp(GX_TEVSTAGE0, GX_REPLACE);
-  GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR_NULL);
-  GXSetBlendMode(GX_BM_BLEND, GX_BL_ONE, GX_BL_ONE, GX_LO_CLEAR);
-  GXClearVtxDesc();
-  GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
-  GXSetVtxDesc(GX_VA_TEX0, GX_DIRECT);
-  GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_NRM_NBT, GX_RGBA4, 0);
-  GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_NRM_NBT, GX_RGBA4, 0);
-  return;
+    mRenderMode = InRenderMode;
+    void** xfb = &mXFBs[1];
+    RwGameCubeGetXFBs(&mXFBs[0], &mXFBs[1]);
+    mCurrentFrameBuffer = *xfb;
+
+    ROMFont::InitGX();
+    ROMFont::InitVI();
+
+    GXSetCopyClear(clr, 0xffffff);
+    C_MTXOrtho(mtx, 0.0f, mRenderMode->efbHeight, 0.0f, mRenderMode->fbWidth, 0.0f, 10000.0f);
+    GXSetProjection(mtx, GX_ORTHOGRAPHIC);
+    PSMTXIdentity(idt);
+    GXLoadPosMtxImm(idt, 0);
+    GXSetCurrentMtx(0);
+    GXSetZMode(TRUE, GX_ALWAYS, TRUE);
+    GXSetNumChans(0);
+    GXSetNumTevStages(1);
+    GXSetTevOp(GX_TEVSTAGE0, GX_REPLACE);
+    GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR_NULL);
+    GXSetBlendMode(GX_BM_BLEND, GX_BL_ONE, GX_BL_ONE, GX_LO_CLEAR);
+    GXClearVtxDesc();
+    GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
+    GXSetVtxDesc(GX_VA_TEX0, GX_DIRECT);
+    GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_NRM_NBT, GX_RGBA4, 0);
+    GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_NRM_NBT, GX_RGBA4, 0);
+    return;
 }
 
 void ROMFont::InitGX()
@@ -186,7 +186,6 @@ void ROMFont::SwapBuffers()
 
     mCurrentFrameBuffer = mCurrentFrameBuffer == mXFBs[0] ? mXFBs[1] : mXFBs[0];
 }
-
 
 // FIXME: Revisit after GXTexCoord2s16 and GXPosition3s16 have been decompiled, looks like they were inlined
 void ROMFont::DrawCell(S32 param_1, S32 param_2, S32 param_3, S32 param_4)
@@ -331,15 +330,15 @@ void ResetButton::SetSndKillFunction(void (*Func)())
 
 void ResetButton::CheckResetButton()
 {
-// TODO
+    // TODO
 
-  OSGetResetButtonState();
-  PADRecalibrate(0xf0000000);
-  VISetBlack(1);
-  VIFlush();
-  VIWaitForRetrace();
-  OSEnableInterrupts();
-  DVDGetDriveStatus();
+    OSGetResetButtonState();
+    PADRecalibrate(0xf0000000);
+    VISetBlack(TRUE);
+    VIFlush();
+    VIWaitForRetrace();
+    OSEnableInterrupts();
+    DVDGetDriveStatus();
 }
 
 void iTRCDisk::Init()
@@ -389,41 +388,44 @@ void iTRCDisk::SetMovieResumeFunction(void (*Func)())
 
 bool iTRCDisk::IsDiskIDed()
 {
-  S32 diskChk;
-  bool diskIDed;
-  
-  diskIDed = 0;
-  diskChk = DVDCheckDisk();
+    S32 diskChk;
+    bool diskIDed;
 
-  if ((diskChk != 0) && (diskChk = DVDGetDriveStatus(), diskChk == 0)) {
-    diskIDed = 1;
-  }
-  return diskIDed;
+    diskIDed = FALSE;
+    diskChk = DVDCheckDisk();
+
+    if ((diskChk != FALSE) && (diskChk = DVDGetDriveStatus(), diskChk == FALSE))
+    {
+        diskIDed = TRUE;
+    }
+    return diskIDed;
 }
 
 void iTRCDisk::DisplayErrorMessage()
 {
-  S32 tempVar;
-  U32 local_18 [4];
-  GXCullMode* getMode = 0;
-  GXCullMode setMode = GX_CULL_ALL;
-  _GXRenderModeObj* gxRender = 0;
-  
-  tempVar = strcmp(mMessage,"");
-  
-  if (tempVar != 0) {
-    GXGetCullMode(getMode); // (local_18)
-    ROMFont::InitDisplay(gxRender);
-    iTRCDisk::SetDVDState();
-    while (tempVar != 0) {
-      ROMFont::DrawTextBox(0x32,0xaa,0x244,100,mMessage);
-      if (tempVar != -1) {
-        ResetButton::CheckResetButton();
-      }
-      iTRCDisk::SetDVDState();
-    }
-    iTRCDisk::ResetMessage();
-    GXSetCullMode(setMode);
+    S32 tempVar;
+    GXCullMode* getMode = 0;
+    GXCullMode setMode = GX_CULL_ALL;
+    _GXRenderModeObj* gxRender = 0;
+
+    tempVar = strcmp(mMessage, "");
+
+    if (tempVar != 0)
+    {
+        GXGetCullMode(getMode); // (local_18)
+        ROMFont::InitDisplay(gxRender);
+        iTRCDisk::SetDVDState();
+        while (tempVar != 0)
+        {
+            ROMFont::DrawTextBox(0x32, 0xaa, 0x244, 100, mMessage);
+            if (tempVar != -1)
+            {
+                ResetButton::CheckResetButton();
+            }
+            iTRCDisk::SetDVDState();
+        }
+        iTRCDisk::ResetMessage();
+        GXSetCullMode(setMode);
     }
 }
 

@@ -7,15 +7,15 @@
 
 st_SERIAL_PERCID_SIZE* g_xser_sizeinfo;
 
-
-enum eStartupErrors {
-    eNoError = 0,
-    eNoFormat = 1,
-    eDamagedCard = 2,
-    eWrongDevice = 3,
-    eNoCards = 4,
-    eCorruptFile = 5,
-    eNoController = 6,
+enum eStartupErrors
+{
+    eNoError,
+    eNoFormat,
+    eDamagedCard,
+    eWrongDevice,
+    eNoCards,
+    eCorruptFile,
+    eNoController,
 };
 
 void main(S32 argc, char** argv);
@@ -29,6 +29,5 @@ void zMainLoop();
 void zMainReadINI();
 void zMainFirstScreen(int);
 void zMainLoadFontHIP();
-
 
 #endif
