@@ -95,7 +95,7 @@ static F32 rewardTiltAmount = -0.22f;
 
 extern zGlobals globals;
 extern const xVec3 g_O3;
-extern F32 gSkipTimeFlythrough;
+
 
 namespace
 {

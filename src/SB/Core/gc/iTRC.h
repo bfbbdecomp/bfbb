@@ -3,9 +3,14 @@
 
 #include <types.h>
 #include <dolphin/types.h>
+#include <dolphin/os.h>
 #include <dolphin/os/OSAlloc.h>
 #include <dolphin/os/OSFont.h>
+#include <dolphin/os/OSReset.h>
 #include <dolphin/gx/GXStruct.h>
+#include <dolphin/gx/GXGet.h>
+#include <dolphin/dvd.h>
+#include <dolphin/pad.h>
 
 #include "xPad.h"
 
@@ -23,6 +28,7 @@ namespace ROMFont
     extern bool mFirstFrame;
 
     BOOL Init();
+    void InitDisplay(_GXRenderModeObj* gxRender);
     void InitGX();
     void InitVI();
     void RenderBegin();
@@ -53,7 +59,7 @@ namespace iTRCDisk
     void SetMovieSuspendFunction(void (*)(void));
     void SetMovieResumeFunction(void (*)(void));
     bool CheckDVDAndResetState();
-    bool Init();
+    void Init();
     void ResetMessage();
     void DisplayErrorMessage();
     void SetDVDState();

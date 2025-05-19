@@ -91,7 +91,6 @@ static S32 gCutsceneSkipOK;
 static S32 donpcfx;
 static U8 ents_hidden;
 static S32 s_atomicNumber;
-extern F32 gSkipTimeCutscene;
 
 void zCutsceneMgrInit(void* b, void* tasset)
 {

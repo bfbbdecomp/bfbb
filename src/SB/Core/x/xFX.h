@@ -83,6 +83,8 @@ struct xFXRibbon
 
 extern xFXRing ringlist[RING_COUNT];
 
+void xFXStartup();
+void xFXShutdown();
 void xFXInit();
 xFXRing* xFXRingCreate(const xVec3* pos, const xFXRing* params);
 void xFXRingRender();

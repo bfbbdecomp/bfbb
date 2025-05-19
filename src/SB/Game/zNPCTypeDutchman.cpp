@@ -30,6 +30,8 @@ namespace
 #define ANIM_Attack02End01 18 //0x48
 #define ANIM_LassoGrab01 19 //0x4c
 
+U32 dutchman_count;
+
 //13 new states
 //8 new transitions
 xAnimTable* ZNPC_AnimTable_Dutchman()
@@ -252,7 +254,7 @@ void zNPCDutchman::kill_wave(zNPCDutchman::wave_data& wave)
     kill_sound(1, wave.sound_handle);
 }
 
-void zNPCDutchman::start_eye_glow() //Matches but the data is fucked
+void zNPCDutchman::start_eye_glow()
 {
     flag.eye_glow = true;
     eye_glow.size = 1;

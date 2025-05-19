@@ -1,6 +1,5 @@
 #include "iTRC.h"
 
-#include <types.h>
 #include <string.h>
 #include <dolphin/gx/GXCull.h>
 #include <dolphin/gx/GXFrameBuffer.h>
@@ -9,6 +8,8 @@
 #include <dolphin/gx/GXPixel.h>
 #include <dolphin/gx/GXTexture.h>
 #include <dolphin/gx/GXTransform.h>
+#include <dolphin/gx/GXLighting.h>
+#include <dolphin/gx/GXTev.h>
 #include <dolphin/mtx.h>
 #include <dolphin/vi/vifuncs.h>
 
@@ -17,6 +18,12 @@
 
 extern void GXPosition3s16(S32, S32, S32);
 extern void GXTexCoord2s16(S32, S32);
+
+// FIXME: These should be in a RW header somewhere
+extern GXRenderModeObj* _RwDlRenderMode;
+extern "C" {
+void RwGameCubeGetXFBs(void*, void*);
+}
 
 namespace ROMFont
 {
@@ -58,6 +65,40 @@ BOOL ROMFont::Init()
     }
 
     return OSInitFont(ROMFont::mFontData);
+}
+
+void ROMFont::InitDisplay(_GXRenderModeObj* InRenderMode)
+{
+    GXColor clr = { 0 };
+    Mtx44 mtx;
+    Mtx idt;
+
+    mRenderMode = InRenderMode;
+    void** xfb = &mXFBs[1];
+    RwGameCubeGetXFBs(&mXFBs[0], &mXFBs[1]);
+    mCurrentFrameBuffer = *xfb;
+
+    ROMFont::InitGX();
+    ROMFont::InitVI();
+
+    GXSetCopyClear(clr, 0xffffff);
+    C_MTXOrtho(mtx, 0.0f, mRenderMode->efbHeight, 0.0f, mRenderMode->fbWidth, 0.0f, 10000.0f);
+    GXSetProjection(mtx, GX_ORTHOGRAPHIC);
+    PSMTXIdentity(idt);
+    GXLoadPosMtxImm(idt, 0);
+    GXSetCurrentMtx(0);
+    GXSetZMode(TRUE, GX_ALWAYS, TRUE);
+    GXSetNumChans(0);
+    GXSetNumTevStages(1);
+    GXSetTevOp(GX_TEVSTAGE0, GX_REPLACE);
+    GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR_NULL);
+    GXSetBlendMode(GX_BM_BLEND, GX_BL_ONE, GX_BL_ONE, GX_LO_CLEAR);
+    GXClearVtxDesc();
+    GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
+    GXSetVtxDesc(GX_VA_TEX0, GX_DIRECT);
+    GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_NRM_NBT, GX_RGBA4, 0);
+    GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_NRM_NBT, GX_RGBA4, 0);
+    return;
 }
 
 void ROMFont::InitGX()
@@ -289,11 +330,20 @@ void ResetButton::SetSndKillFunction(void (*Func)())
 
 void ResetButton::CheckResetButton()
 {
+    // TODO
+
+    OSGetResetButtonState();
+    PADRecalibrate(0xf0000000);
+    VISetBlack(TRUE);
+    VIFlush();
+    VIWaitForRetrace();
+    OSEnableInterrupts();
+    DVDGetDriveStatus();
 }
 
-bool iTRCDisk::Init(void)
+void iTRCDisk::Init()
 {
-    return ROMFont::Init();
+    ROMFont::Init();
 }
 
 void iTRCDisk::SetErrorMessage(const char* message)
@@ -338,11 +388,45 @@ void iTRCDisk::SetMovieResumeFunction(void (*Func)())
 
 bool iTRCDisk::IsDiskIDed()
 {
-    return false;
+    S32 diskChk;
+    bool diskIDed;
+
+    diskIDed = false;
+    diskChk = DVDCheckDisk();
+
+    if ((diskChk != FALSE) && (diskChk = DVDGetDriveStatus(), diskChk == FALSE))
+    {
+        diskIDed = true;
+    }
+    return diskIDed;
 }
 
 void iTRCDisk::DisplayErrorMessage()
 {
+    S32 tempVar;
+    GXCullMode* getMode = 0;
+    GXCullMode setMode = GX_CULL_ALL;
+    _GXRenderModeObj* gxRender = 0;
+
+    tempVar = strcmp(mMessage, "");
+
+    if (tempVar != 0)
+    {
+        GXGetCullMode(getMode); // (local_18)
+        ROMFont::InitDisplay(gxRender);
+        iTRCDisk::SetDVDState();
+        while (tempVar != 0)
+        {
+            ROMFont::DrawTextBox(0x32, 0xaa, 0x244, 100, mMessage);
+            if (tempVar != -1)
+            {
+                ResetButton::CheckResetButton();
+            }
+            iTRCDisk::SetDVDState();
+        }
+        iTRCDisk::ResetMessage();
+        GXSetCullMode(setMode);
+    }
 }
 
 void iTRCDisk::SetDVDState()

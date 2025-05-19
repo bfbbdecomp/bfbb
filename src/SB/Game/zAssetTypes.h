@@ -39,6 +39,8 @@ public:
     F32 radius;
 };
 
+void zAssetStartup();
+void zAssetShutdown();
 void FootstepHackSceneEnter();
 void jsp_shadow_hack(xJSPHeader* param_1);
 

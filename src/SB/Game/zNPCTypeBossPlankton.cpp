@@ -2,8 +2,6 @@
 
 #include <types.h>
 
-// pr comment retry
-
 #define f1585 1.0f
 #define f1586 0.0f
 #define f1657 0.2f
@@ -69,32 +67,46 @@ xAnimTable* ZNPC_AnimTable_BossPlankton()
 
     xAnimTableNewState(table, g_strz_bossanim[ANIM_Idle01], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    ourAnims[0] = 3;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_Taunt01], 0x20, 0, 1.0f, NULL, NULL, 0.0f, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    ourAnims[0] = 0x42;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_move], 0x10, 0, f1585, NULL, NULL, f1586, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    ourAnims[0] = 0x43;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_stun_begin], 0x20, 0, f1585, NULL, NULL, f1586,
                        NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    ourAnims[0] = 0x44;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_stun_loop], 0x10, 0, f1585, NULL, NULL, f1586,
                        NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    ourAnims[0] = 0x45;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_stun_end], 0x20, 0, f1585, NULL, NULL, f1586,
                        NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    ourAnims[0] = 0x46;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_attack_beam_begin], 0x20, 0, f1585, NULL, NULL,
                        f1586, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    ourAnims[0] = 0x47;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_attack_beam_loop], 0x10, 0, f1585, NULL, NULL,
                        f1586, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    ourAnims[0] = 0x48;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_attack_beam_end], 0x20, 0, f1585, NULL, NULL,
                        f1586, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    ourAnims[0] = 0x49;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_attack_wall_begin], 0x20, 0, f1585, NULL, NULL,
                        f1586, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    ourAnims[0] = 0x4a;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_attack_wall_loop], 0x10, 0, f1585, NULL, NULL,
                        f1586, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    ourAnims[0] = 0x4b;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_attack_wall_end], 0x20, 0, f1585, NULL, NULL,
                        f1586, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    ourAnims[0] = 0x4c;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_attack_missle], 0x20, 0, f1585, NULL, NULL,
                        f1586, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    ourAnims[0] = 0x4d;
     xAnimTableNewState(table, g_strz_bossanim[ANIM_attack_bomb], 0x20, 0, f1585, NULL, NULL, f1586,
                        NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    ourAnims[0] = 0;
 
     NPCC_BuildStandardAnimTran(table, g_strz_bossanim, ourAnims, 1, f1657);
 
