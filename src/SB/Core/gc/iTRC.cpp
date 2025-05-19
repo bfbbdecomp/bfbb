@@ -391,12 +391,12 @@ bool iTRCDisk::IsDiskIDed()
     S32 diskChk;
     bool diskIDed;
 
-    diskIDed = FALSE;
+    diskIDed = false;
     diskChk = DVDCheckDisk();
 
     if ((diskChk != FALSE) && (diskChk = DVDGetDriveStatus(), diskChk == FALSE))
     {
-        diskIDed = TRUE;
+        diskIDed = true;
     }
     return diskIDed;
 }
