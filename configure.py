@@ -345,7 +345,7 @@ config.libs = [
             Object(NonMatching, "SB/Core/x/xPad.cpp"),
             Object(NonMatching, "SB/Core/x/xPar.cpp"),
             Object(NonMatching, "SB/Core/x/xParCmd.cpp"),
-            Object(NonMatching, "SB/Core/x/xParGroup.cpp"),
+            Object(Matching, "SB/Core/x/xParGroup.cpp"),
             Object(Matching, "SB/Core/x/xParMgr.cpp"),
             Object(NonMatching, "SB/Core/x/xPartition.cpp"),
             Object(NonMatching, "SB/Core/x/xpkrsvc.cpp"),

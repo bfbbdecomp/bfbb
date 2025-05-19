@@ -4,12 +4,9 @@
 
 #define REG_TABLE_SIZE 255
 
-S32 sParGroupRegTableInit = 0;
-S32 sParGroupRegTableCount = 0;
-extern xParGroup* sParGroupRegTable[REG_TABLE_SIZE]; // todo: move from bss.s
-
-extern F32 _708;
-extern F32 _709;
+static S32 sParGroupRegTableInit = FALSE;
+static S32 sParGroupRegTableCount = 0;
+xParGroup* sParGroupRegTable[REG_TABLE_SIZE];
 
 void xParGroupInit(xParGroup* ps)
 {
@@ -38,7 +35,7 @@ static void xParGroupRegisterInit()
         sParGroupRegTable[i] = NULL;
     }
 
-    sParGroupRegTableInit = 1;
+    sParGroupRegTableInit = TRUE;
     sParGroupRegTableCount = 0;
 }
 
@@ -142,7 +139,7 @@ void xParGroupAnimate(xParGroup* ps, F32 dt)
 
     if (ps->m_flags & XPARGROUP_NOAGING)
     {
-        age = _708;
+        age = 0.0f;
     }
 
     if (!ps->m_root)
@@ -152,7 +149,7 @@ void xParGroupAnimate(xParGroup* ps, F32 dt)
 
     while (i)
     {
-        if (i->m_lifetime < _708)
+        if (i->m_lifetime < 0.0f)
         {
             tmp = i;
 
@@ -162,11 +159,10 @@ void xParGroupAnimate(xParGroup* ps, F32 dt)
         }
         else
         {
-            // non-matching: stack isn't resizing for each float-to-U8 conversion
-            i->m_c[0] = i->m_cfl[0] = clamp(i->m_cvel[0] * dt + i->m_cfl[0], _708, _709);
-            i->m_c[1] = i->m_cfl[1] = clamp(i->m_cvel[1] * dt + i->m_cfl[1], _708, _709);
-            i->m_c[2] = i->m_cfl[2] = clamp(i->m_cvel[2] * dt + i->m_cfl[2], _708, _709);
-            i->m_c[3] = i->m_cfl[3] = clamp(i->m_cvel[3] * dt + i->m_cfl[3], _708, _709);
+            i->m_c[0] = i->m_cfl[0] = clamp(i->m_cvel[0] * dt + i->m_cfl[0], 0.0f, 255.0f);
+            i->m_c[1] = i->m_cfl[1] = clamp(i->m_cvel[1] * dt + i->m_cfl[1], 0.0f, 255.0f);
+            i->m_c[2] = i->m_cfl[2] = clamp(i->m_cvel[2] * dt + i->m_cfl[2], 0.0f, 255.0f);
+            i->m_c[3] = i->m_cfl[3] = clamp(i->m_cvel[3] * dt + i->m_cfl[3], 0.0f, 255.0f);
             i->m_size += i->m_sizeVel * dt;
             i->m_lifetime -= age;
 
