@@ -2,7 +2,7 @@ The [Battle for Bikini Bottom Decompilation Project](https://github.com/bfbbdeco
 
 This documentation outlines our project contribution guidelines. Following these guidelines allows the maintainers review changes faster and give better feedback, and helps to ensure that future modding and PC port efforts are made as simple as possible.
 
-In addition to decompilation efforts, this project also welcomes tooling and [tutorial/knowledge resource](https://github.com/bfbbdecomp/bfbb-decomp-guide) contributions! Check out [our organization page](https://github.com/bfbbdecomp) to see all of the projects we ewlcome contributions to.
+In addition to decompilation efforts, this project also welcomes tooling and [tutorial/knowledge resource](https://github.com/bfbbdecomp/bfbb-decomp-guide) contributions! Check out [our organization page](https://github.com/bfbbdecomp) to see all of the projects we welcome contributions to.
 
 ## Contribution Guidelines
 
