@@ -436,3 +436,13 @@ void xAccelStop(F32& x, F32& v, F32 a, F32 dt) {
         v = 0.0f;
     }
 }
+
+void xFuncPiece_EndPoints(xFuncPiece* func, F32 pi, F32 pf, F32 fi, F32 ff) {
+    float xfinv;
+
+    func->end = pf - pi;
+    func->order = 1;
+    func->coef[0]= fi;
+    func->coef[1] = (ff - fi) * (1.0f / func->end);
+    xFuncPiece_ShiftPiece(func, func, -pi);
+}
