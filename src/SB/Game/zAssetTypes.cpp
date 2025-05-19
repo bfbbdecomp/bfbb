@@ -130,6 +130,86 @@ static HackModelRadius hackRadiusTable[3] = { { 0xFA77E6FAU, 20.0f },
                                               { 0x5BD0EDACU, 1000.0f },
                                               { 0xED21A1C6U, 50.0f } };
 
+extern xJSPHeader* sTempJSP;
+extern xJSPHeader sDummyEmptyJSP;
+
+static void* Model_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize)
+{
+    RpAtomic* model = (RpAtomic*)iModelFileNew(indata, insize);
+
+    *outsize = 0x70;
+
+    for (int i = 0; i < 3; i++)
+    {
+        if (param_2 != hackRadiusTable[i].assetid)
+        {
+            continue;
+        }
+        for (RpAtomic* tmpModel = model; tmpModel != NULL;
+             tmpModel = (RpAtomic*)iModelFile_RWMultiAtomic(tmpModel))
+        {
+            tmpModel->boundingSphere.radius = hackRadiusTable[i].radius;
+
+            tmpModel->boundingSphere.center.x = 0.0f;
+            tmpModel->boundingSphere.center.y = 0.0f;
+            tmpModel->boundingSphere.center.z = 0.0f;
+
+            tmpModel->interpolator.flags &= ~2;
+        }
+        break;
+    }
+
+    return model;
+}
+static void* Curve_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize)
+{
+    *outsize = insize;
+
+    void* __dest = RWSRCGLOBAL(memoryFuncs.rwmalloc(insize));
+    memcpy(__dest, indata, insize);
+
+    *(int*)((int)__dest + 0x10) = (int)__dest + 0x14;
+
+    return __dest;
+}
+
+static void Model_Unload(void* userdata, U32)
+{
+    if (userdata != NULL)
+    {
+        iModelUnload((RpAtomic*)userdata);
+    }
+}
+
+static void* BSP_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize)
+{
+    RwMemory rwmem = { (U8*)indata, insize };
+
+    RwStream* stream = RwStreamOpen(rwSTREAMMEMORY, rwSTREAMREAD, &rwmem);
+    if (stream == 0)
+    {
+        printf("BSP_Read RwStreamOpen failed\n");
+    }
+
+    if (RwStreamFindChunk(stream, 0xb, 0, 0) == 0)
+    {
+        RwChunkHeaderInfo chunkHeaderInfo;
+        RwStreamReadChunkHeaderInfo(stream, &chunkHeaderInfo);
+        *outsize = 0;
+        return 0;
+    }
+
+    RpWorld* bsp = RpWorldStreamRead(stream);
+    if (bsp == 0)
+    {
+        printf("BSP_Read RpWorldStreamRead failed\n");
+    }
+    RwStreamClose(stream, 0);
+    *outsize = 4;
+
+    return bsp;
+}
+
 static char* jsp_shadow_hack_textures[5] = {
     "beach_towel",  "wood_board_Nails_singleV2", "wood_board_Nails_singleV3",
     "glass_broken", "ground_path_alpha",
@@ -174,6 +254,47 @@ struct AnimTableList animTable[33] = {
         0,
     }
 };
+
+struct jsp_shadow_hack_atomic_context
+{
+    xJSPHeader* jsp;
+    S32 index;
+    S32 last_material;
+};
+
+static RpAtomic* jsp_shadow_hack_atomic_cb(RpAtomic* atomic, void* data)
+{
+    jsp_shadow_hack_atomic_context& context = *(jsp_shadow_hack_atomic_context*)data;
+    S32 index = context.index;
+    context.index++;
+
+    if (!jsp_shadow_hack_match(atomic))
+    {
+        return atomic;
+    }
+
+    xClumpCollBSPTree* colltree = context.jsp->colltree;
+    if (context.jsp->jspNodeList[index].originalMatIndex == context.last_material)
+    {
+        return atomic;
+    }
+
+    S32 material_index = context.jsp->jspNodeList[index].originalMatIndex;
+    context.last_material = material_index;
+
+    xClumpCollBSPTriangle* tri = colltree->triangles;
+    xClumpCollBSPTriangle* end_tri = colltree->triangles + colltree->numTriangles;
+
+    for (; tri != end_tri; ++tri)
+    {
+        if (tri->matIndex != material_index)
+        {
+            continue;
+        }
+        tri->flags |= 0x20;
+    }
+    return atomic;
+}
 
 static xAnimTable* (*tableFuncList[48])() = {
     zEntPlayer_AnimTable,
@@ -225,90 +346,6 @@ static xAnimTable* (*tableFuncList[48])() = {
     zEntPlayer_TreeDomeSBAnimTable,
     NULL,
 };
-
-extern xJSPHeader* sTempJSP;
-extern xJSPHeader sDummyEmptyJSP;
-
-static void* Model_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize)
-{
-    RpAtomic* model = (RpAtomic*)iModelFileNew(indata, insize);
-
-    *outsize = 0x70;
-
-    for (int i = 0; i < 3; i++)
-    {
-        if (param_2 != hackRadiusTable[i].assetid)
-        {
-            continue;
-        }
-        for (RpAtomic* tmpModel = model; tmpModel != NULL;
-             tmpModel = (RpAtomic*)iModelFile_RWMultiAtomic(tmpModel))
-        {
-            tmpModel->boundingSphere.radius = hackRadiusTable[i].radius;
-
-            tmpModel->boundingSphere.center.x = 0.0f;
-            tmpModel->boundingSphere.center.y = 0.0f;
-            tmpModel->boundingSphere.center.z = 0.0f;
-
-            tmpModel->interpolator.flags &= ~2;
-        }
-        break;
-    }
-
-    return model;
-}
-
-static void* Curve_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize)
-{
-    *outsize = insize;
-
-    void* __dest = RWSRCGLOBAL(memoryFuncs.rwmalloc(insize));
-    memcpy(__dest, indata, insize);
-
-    *(int*)((int)__dest + 0x10) = (int)__dest + 0x14;
-
-    return __dest;
-}
-
-static void Model_Unload(void* userdata, U32)
-{
-    if (userdata != NULL)
-    {
-        iModelUnload((RpAtomic*)userdata);
-    }
-}
-
-// Ghidra's output here is not helpful
-static void* BSP_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize)
-{
-    RwMemory rwmem;
-    RwChunkHeaderInfo chunkHeaderInfo;
-    RpWorld* bsp;
-
-    RwStream* stream = RwStreamOpen((RwStreamType)3, (RwStreamAccessType)1, indata);
-    if (stream == 0)
-    {
-        xprintf("BSP_Read RwStreamOpen failed\n");
-    }
-    if (RwStreamFindChunk(stream, 0xb, 0, 0) == 0)
-    {
-        // damn
-        // chunk header info is austack in ghidra :/
-        RwStreamReadChunkHeaderInfo(stream, &chunkHeaderInfo);
-        *outsize = 0;
-    }
-    else
-    {
-        bsp = RpWorldStreamRead(stream);
-        if (bsp == 0)
-        {
-            xprintf("BSP_Read RpWorldStreamRead failed\n");
-        }
-        RwStreamClose(stream, 0);
-        *outsize = 4;
-    }
-    return bsp;
-}
 
 static void BSP_Unload(void*, U32)
 {
