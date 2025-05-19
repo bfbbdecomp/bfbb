@@ -438,7 +438,7 @@ void xAccelStop(F32& x, F32& v, F32 a, F32 dt) {
 }
 
 void xFuncPiece_EndPoints(xFuncPiece* func, F32 pi, F32 pf, F32 fi, F32 ff) {
-    float xfinv;
+    F32 xfinv; // from DWARF data
 
     func->end = pf - pi;
     func->order = 1;
