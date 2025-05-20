@@ -8,7 +8,7 @@
 
 void xScrFxInit ();
 void xScrFxLetterBoxSetSize(F32);
-void xScrFxLetterBoxSetAlpha(F32);
+void xScrFxLetterBoxSetAlpha(U8);
 void xScrFxUpdate(RwCamera* cam, F32 dt);
 void xScrFxRender(RwCamera*);
 void xScrFxDrawScreenSizeRectangle();
