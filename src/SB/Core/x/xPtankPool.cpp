@@ -1,5 +1,7 @@
 #include "xPtankPool.h"
 
+#include "xMemMgr.h"
+
 #include <rpptank.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,8 +12,18 @@ extern RwInt32 _rpPTankAtomicDataOffset;
 namespace
 {
 
-#define NUM_GROUPS 2
 #define MAX_PARTICLES 64
+
+static U8 inited;
+
+struct ptank_context
+{
+    ptank_context* next;
+    class RpAtomic* ptank;
+    U32 flags;
+    U32 src_blend;
+    U32 dst_blend;
+};
 
 struct group_data
 {
@@ -24,7 +36,7 @@ struct group_data
     U32 buckets_used;
 };
 
-static group_data groups[NUM_GROUPS] = {
+static group_data groups[MAX_PGT] = {
     {
         4, 
         rpPTANKDFLAGVTX2TEXCOORDS | rpPTANKDFLAGMATRIX | rpPTANKDFLAGCOLOR,
@@ -45,7 +57,7 @@ static group_data groups[NUM_GROUPS] = {
     },
 };
 
-void sort_buckets(group_data& group)
+static void sort_buckets(group_data& group)
 {
     memset(group.buckets, 0, group.buckets_used * sizeof(ptank_context*));
     group.buckets_used = 2;
@@ -99,7 +111,46 @@ void sort_buckets(group_data& group)
     }
 }
 
-RpAtomic* create_ptank(U32 flags)
+static void init_groups()
+{
+    U32 total = 0;
+
+    {
+        group_data* it = groups;
+        group_data* end = groups + MAX_PGT;
+        while (it != end)
+        {
+            total += it->max_size;
+            it++;
+        }
+    }
+
+    total = total * sizeof(ptank_context) + (total + 4) * sizeof (ptank_context*);
+    U8* mem = (U8*) xMemAlloc(gActiveHeap, total, 0);
+
+    {
+        group_data* it = groups;
+        group_data* end = groups + MAX_PGT;
+        while (it != end)
+        {
+            it->buckets_used = 0;
+            it->used = 0;
+            it->size = 0;
+            it->ptanks = (ptank_context*) mem;
+
+            mem += it->max_size * sizeof(ptank_context);
+            it->buckets = (ptank_context**) mem;
+
+            it->buckets_used = it->max_size + 2;
+            mem += it->buckets_used * sizeof(ptank_context**);
+            sort_buckets(*it);
+            
+            it++;
+        }
+    }
+}
+
+static RpAtomic* create_ptank(U32 flags)
 {
     U32 dataFlags = flags | rpPTANKDFLAGSTRUCTURE;
     RpAtomic* ptank = RpPTankAtomicCreate(MAX_PARTICLES, dataFlags, rpPTANKDFLAGNONE);
@@ -167,7 +218,7 @@ void render_ptank(const ptank_context& context)
     ptank->renderCallBack(ptank);
 }
 
-int compare_ptanks(const void* e1, const void* e2)
+static S32 compare_ptanks(const void* e1, const void* e2)
 {
     ptank_context* p1 = (ptank_context*) e1;
     ptank_context* p2 = (ptank_context*) e2;
@@ -206,6 +257,71 @@ int compare_ptanks(const void* e1, const void* e2)
     return 0;
 }
 
+U32 create_ptanks(group_data& group, unsigned long count)
+{
+    U32 initial_size = group.size;
+    if (initial_size + count > group.max_size)
+    {
+        count = group.max_size - initial_size;
+    }
+
+    ptank_context* end = group.ptanks + initial_size + count;
+    ptank_context* it = group.ptanks + initial_size;
+    while (it < end)
+    {
+        RpAtomic* ptank = create_ptank(group.create_flags);
+        it->ptank = ptank;
+
+        if (it->ptank == NULL)
+        {
+            break;
+        }
+
+        it->flags = rpPTANKDFLAGPOSITION;
+        it->next = *group.buckets;
+        *group.buckets = it;
+        it++;
+        group.size++;
+    }
+
+    return group.size - initial_size;
+}
+
+}
+
+void xPTankPoolSceneEnter()
+{
+    inited = 1;
+    init_groups();
+
+    group_data* it = groups;
+    group_data* end = groups + MAX_PGT;
+    while (it != end)
+    {
+        double f = it->max_size - 0.f;
+        float scaled = float(f) * 0.25f + 0.5f;
+        create_ptanks(*it, (unsigned long) scaled);
+
+        it++;
+    }
+}
+
+void xPTankPoolSceneExit()
+{
+    inited = 0;
+    group_data* g = groups;
+    group_data* endg = g + MAX_PGT;
+    while (g != endg)
+    {
+        ptank_context* p = g->ptanks;
+        ptank_context* endp = p + g->size;
+        while (p != endp)
+        {
+            destroy_ptank(p->ptank);
+            p++;
+        }
+        g++;
+    }
 }
 
 void xPTankPoolRender()
@@ -214,7 +330,7 @@ void xPTankPoolRender()
     RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void *) false);
 
     group_data* g = groups;
-    group_data* endg = groups + NUM_GROUPS;
+    group_data* endg = groups + MAX_PGT;
     while (g != endg)
     {
         if (g->used != 0)
@@ -245,5 +361,92 @@ void xPTankPoolRender()
             
         }
         g++;
+    }
+}
+
+void ptank_pool::grab_block(ptank_group_type type)
+{
+    this->ptank = NULL;
+    group_data& group = groups[type];
+    if (group.used < group.size || create_ptanks(group, 1) >= 1)
+    {
+        ptank_context** end = group.buckets + group.buckets_used;
+
+        {
+            ptank_context** it = group.buckets + 2;
+            while (it < end)
+            {
+                if (*it != NULL) {
+                    if (
+                        (*it)->ptank->geometry->matList.materials[0]->texture == this->rs.texture
+                        && (*it)->dst_blend == this->rs.dst_blend
+                        && (*it)->src_blend == this->rs.src_blend
+                        && !(((*it)->flags ^ this->rs.flags) & 0x1))
+                    {
+                        this->ptank = (*it)->ptank;
+                        (*it)->flags |= rpPTANKDFLAGCNSNORMAL;
+                        *it = (*it)->next;
+                        group.used++;
+                        return;
+                    }
+                }
+                it++;
+            }
+        }
+        
+        {
+            ptank_context** it = group.buckets;
+            while (it < end)
+            {
+                if (*it != NULL) {
+                    if ((this->rs.flags & rpPTANKDFLAGPOSITION) && !((*it)->flags & rpPTANKDFLAGPOSITION)) {
+                        destroy_ptank((*it)->ptank);
+                        (*it)->ptank = create_ptank(group.create_flags);
+                    }
+                    this->ptank = (*it)->ptank;
+                    RpMaterialSetTexture(*this->ptank->geometry->matList.materials, this->rs.texture);
+                    RPATOMICPTANKPLUGINDATA(this->ptank)->publicData.srcBlend = this->rs.src_blend;
+                    RPATOMICPTANKPLUGINDATA(this->ptank)->publicData.dstBlend = this->rs.dst_blend;
+                    RPATOMICPTANKPLUGINDATA(this->ptank)->instFlags |= rpPTANKDFLAGARRAY;
+
+                    (*it)->src_blend = this->rs.src_blend;
+                    (*it)->dst_blend = this->rs.dst_blend;
+                    (*it)->flags = this->rs.flags | rpPTANKDFLAGCNSNORMAL;
+                    *it = (*it)->next;
+                    group.used++;
+                    return;
+                }
+
+                it++;
+            }
+        }
+    }
+}
+
+void ptank_pool::flush()
+{
+    if (this->valid() != 0) {
+        RpPTankAtomicUnlock(this->ptank);
+
+        S32 oldused = RPATOMICPTANKPLUGINDATA(this->ptank)->actPCount;
+        S32 expand =  ((S32) this->used < oldused) ? oldused - this->used : 0;
+        expand += 0xA;
+        
+        if ((S32) (expand + this->used) > 0x40) {
+            expand = 0x40 - this->used;
+        }
+        
+        S32 total = this->used + expand;
+    
+        U8* it = this->hide.data;
+        U8* end = it + this->hide.stride * expand;
+        while (it != end) {
+            memset(it, 0, this->hide.size);
+            it = (U8*) it + this->hide.stride;
+        }
+
+        RPATOMICPTANKPLUGINDATA(this->ptank)->instFlags |= 0x800000;
+        RPATOMICPTANKPLUGINDATA(this->ptank)->actPCount = total;
+        this->used = 0;
     }
 }
