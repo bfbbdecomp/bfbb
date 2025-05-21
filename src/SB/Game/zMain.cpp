@@ -24,13 +24,20 @@
 #include "zCamera.h"
 #include "zCutsceneMgr.h"
 #include "zEntPlayerBungeeState.h"
+#include "zEntPlayerOOBState.h"
+#include "zMenu.h"
+#include "iTime.h"
+#include "xstransvc.h"
 
 S32 percentageDone;
 _tagxPad* gDebugPad;
-S32 sShowMenuOnBoot;
+static S32 sShowMenuOnBoot;
 S32 gGameSfxReport;
+static st_SERIAL_PERCID_SIZE* g_xser_sizeinfo;
 
 void zLedgeAdjust(zLedgeGrabParams* params);
+void zMainMemCardRenderText(const char*, bool);
+void RenderText(const char*, bool);
 
 void main(S32 argc, char** argv)
 {
@@ -377,8 +384,8 @@ void zMainParseINIGlobals(xIniFile* ini)
 
     zLedgeAdjust(&globals.player.sb.ledge);
     bungee_state::load_settings(*ini);
-    //oob_state::load_settings(xIniFile&)
-    //ztalkbox::load_settings(*ini);
+    oob_state::load_settings(*ini);
+    ztalkbox::load_settings(*ini);
 
     {
         static F32 fbuf[] = { 2.0f, 0.7f, 0.35f, 0.0f };
@@ -590,10 +597,37 @@ void zLedgeAdjust(zLedgeGrabParams* params)
 
 void zMainShowProgressBar()
 {
+    S32 progBar;
+    size_t sVar2;
+    char loadingText[12];
+    char auStack_cc[64];
+    char acStack_8c[64];
+    char formattedStr[72];
+
+    if (zMenuIsFirstBoot() != 0)
+    {
+        if (100 < percentageDone)
+        {
+            percentageDone = 100;
+        }
+        progBar = percentageDone / 10;
+        strcpy(loadingText, "Loading...");
+        memset(formattedStr, 0, 0x40);
+        memset(acStack_8c, 0, 0x40);
+        strcpy(auStack_cc, loadingText);
+        auStack_cc[progBar] = '\0';
+        sVar2 = strlen(loadingText);
+        memcpy(auStack_cc, acStack_8c + progBar, progBar); // 3rd arg should have progBar - sVar2
+        sprintf(formattedStr, "{font=0}{h*2}{w*2}%s{color=FFFFFFFF}%s{~:c}", auStack_cc,
+                acStack_8c);
+        zMainMemCardRenderText(formattedStr, '\x01');
+        percentageDone = percentageDone + 10;
+    }
 }
 
 void zMainLoop()
 {
+    iTime time;
     S64 t;
     U32* preinit;
     RpAtomic* modl;
@@ -608,6 +642,92 @@ void zMainLoop()
     U32 preinit_bubble_matfx[6];
     U32 preinit_shiny_models[8];
     U32 preinit_ADC_models[10];
+
+    zMainShowProgressBar();
+    xMemPushBase();
+    time = iTimeGet();
+    xUtil_idtag2string(0x464f4e54, 0);
+    iTimeDiffSec(time);
+    xSTPreLoadScene(0x464f4e54, NULL, 0x1);
+    time = iTimeGet();
+    xUtil_idtag2string(0x464f4e54, 0);
+    iTimeDiffSec(time);
+    xSTQueueSceneAssets(0x464f4e54, 1);
+    time = iTimeGet();
+    xUtil_idtag2string(0x464f4e54, 0);
+    iTimeDiffSec(time);
+
+    do
+    {
+        xSTLoadStep(time);
+    } while (time < 1.0f);
+
+    xSTDisconnect(0x464f4e54, 1);
+    time = iTimeGet();
+    xUtil_idtag2string(0x464f4e54, 0);
+    iTimeDiffSec(time);
+    zMainShowProgressBar();
+    xSTPreLoadScene(0x504c4154, 0, 1);
+    xSTQueueSceneAssets(0x504c4154, 1);
+
+    do
+    {
+        xSTLoadStep(time);
+    } while (time < 1.0f);
+
+    xSTDisconnect(0x504c4154, 1);
+    zMainShowProgressBar();
+    iTimeGet();
+    xShadowSimple_Init();
+    globals.pickupTable = (zAssetPickupTable*)xSTFindAssetByType(0x5049434b, 0, 0);
+    // globals.pickupTable = zPickupTableInit();
+    // zPickupTableInit hasnt been implemented yet
+    xMemPushBase();
+    time = iTimeGet();
+    xUtil_idtag2string(0x4d4e5534, 0);
+    iTimeDiffSec(time);
+    xSTPreLoadScene(0x4d4e5534, 0, 1);
+    time = iTimeGet();
+    xUtil_idtag2string(0x4d4e5534, 0);
+    iTimeDiffSec(time);
+    xSTQueueSceneAssets(0x4d4e5534, 1);
+    time = iTimeGet();
+    xUtil_idtag2string(0x4d4e5534, 0);
+    iTimeDiffSec(time);
+    do
+    {
+        xSTLoadStep(time);
+    } while (time < 1.0f);
+    xSTDisconnect(0x4d4e5534, 1);
+    zMainShowProgressBar();
+    time = iTimeGet();
+    xUtil_idtag2string(0x4d4e5534, 0);
+    iTimeDiffSec(time);
+    xMemPushBase();
+    time = iTimeGet();
+    xUtil_idtag2string(0x4d4e5535, 0);
+    iTimeDiffSec(time);
+    xSTPreLoadScene(0x4d4e5535, 0, 1);
+    time = iTimeGet();
+    xUtil_idtag2string(0x4d4e5535, 0);
+    iTimeDiffSec(time);
+    xSTQueueSceneAssets(0x4d4e5535, 1);
+    time = iTimeGet();
+    xUtil_idtag2string(0x4d4e5535, 0);
+    iTimeDiffSec(time);
+    do
+    {
+        xSTLoadStep(time);
+    } while (time < 1.0f);
+    xSTDisconnect(0x4d4e5535, 1);
+    zMainShowProgressBar();
+    time = iTimeGet();
+    xUtil_idtag2string(0x4d4e5535, 0);
+    iTimeDiffSec(time);
+    xModelInit();
+    xModelPoolInit(0x20, 0x40);
+    xModelPoolInit(0x28, 8);
+    xModelPoolInit(0x38, 1);
 }
 
 void zMainReadINI()
@@ -635,8 +755,62 @@ void zMainMemCardSpaceQuery()
     S32 status;
 }
 
+void zMainMemCardQueryPost(S32 needed, S32 available, S32 neededFiles, S32 unk0)
+{
+    RwCamera* cam = 0;
+    RwRGBA* colour = 0;
+    RwInt32 clearMode = 3;
+
+    cam = iCameraCreate(0x280, 0x1e0, 0);
+    RwCameraClear(cam, colour, clearMode);
+    RwCameraBeginUpdate(cam);
+    render_mem_card_no_space(needed, available, neededFiles, unk0);
+    RwCameraEndUpdate(cam);
+    RwCameraShowRaster(cam, 0, 1);
+    iCameraDestroy(cam);
+}
+
+void zMainMemCardRenderText(const char* a, bool enabled)
+{
+    RwCamera* cam = 0;
+    RwRGBA* colour = 0;
+    RwInt32 clearMode = 3;
+
+    cam = iCameraCreate(0x280, 0x1e0, 0);
+    RwCameraClear(cam, colour, clearMode);
+    RwCameraBeginUpdate(cam);
+    RenderText(a, enabled);
+    RwCameraEndUpdate(cam);
+    RwCameraShowRaster(cam, 0, 1);
+    iCameraDestroy(cam);
+}
+
 void zMainLoadFontHIP()
 {
+    iTime time;
+
+    xMemPushBase();
+    time = iTimeGet();
+    xUtil_idtag2string(0x464f4e54, 0);
+    iTimeDiffSec(time);
+    xSTPreLoadScene(0x464f4e54, NULL, 0x1);
+    time = iTimeGet();
+    xUtil_idtag2string(0x464f4e54, 0);
+    iTimeDiffSec(time);
+    xSTQueueSceneAssets(0x464f4e54, 1);
+    time = iTimeGet();
+    xUtil_idtag2string(0x464f4e54, 0);
+    iTimeDiffSec(time);
+
+    do
+    {
+        xSTLoadStep(time);
+    } while (time < 1.0f);
+
+    xSTDisconnect(0x464f4e54, 1);
+    time = iTimeGet();
+    xUtil_idtag2string(0x464f4e54, 0);
+    iTimeDiffSec(time);
 }
 
 void iEnvStartup()
