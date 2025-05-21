@@ -38,7 +38,8 @@ struct ptank_pool
     render_state rs;
     U32 used;
     RpAtomic* ptank;
-    struct {
+    struct
+    {
         U8* data;
         S32 stride;
         U32 size;
