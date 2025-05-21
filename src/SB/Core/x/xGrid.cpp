@@ -10,6 +10,8 @@ extern float xGrid_float_0p001;
 extern float xGrid_float_one;
 extern float xGrid_float_one_quarter;
 
+volatile S32 gGridIterActive = 0;
+
 void xGridBoundInit(xGridBound* bound, void* data)
 {
     bound->data = data;

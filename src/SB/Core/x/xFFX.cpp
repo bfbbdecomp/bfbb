@@ -4,11 +4,15 @@
 
 #include <types.h>
 
-extern xFFX* alist;
-extern xFFXShakeState* shake_alist;
-extern U32 rot_match_psize;
-extern xFFXRotMatchState* rot_match_pool;
-extern xFFXRotMatchState* rot_match_alist;
+U32 psize;
+xFFX* pool;
+xFFX* alist;
+U32 shake_psize;
+void* shake_pool;
+xFFXShakeState* shake_alist;
+U32 rot_match_psize;
+xFFXRotMatchState* rot_match_pool;
+xFFXRotMatchState* rot_match_alist;
 
 // Structure same as the bottom function, get that one, you get this one.
 //void xFFXPoolInit(U32 num_ffx);
@@ -114,8 +118,18 @@ void xFFXApply(xEnt* ent, xScene* sc, F32 dt)
     }
 }
 
+void xFFXShakeUpdateEnt(xEnt* ent, xScene* scene, float value, void*)
+{
+}
+
+void xFFXPoolInit(U32 num)
+{
+}
+
 // The structure of this is identical to the pool init below. Figure out that one, you get this one as well.
-//void xFFXShakePoolInit(U32 num);
+void xFFXShakePoolInit(U32 num)
+{
+}
 
 xFFXShakeState* xFFXShakeAlloc()
 {

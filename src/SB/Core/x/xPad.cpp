@@ -3,6 +3,8 @@
 #include <types.h>
 #include <string.h>
 
+_tagxPad mPad[4];
+
 S32 xPadInit()
 {
     memset(mPad, 0, sizeof(mPad));

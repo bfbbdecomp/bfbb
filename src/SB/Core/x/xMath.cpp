@@ -5,9 +5,9 @@
 
 #include "xMathInlines.h"
 
-extern S32 xmath_inited;
-extern S32 xmath_exited;
-extern volatile U32 rndseed; // made this volatile so xrand() matches
+S32 xmath_inited;
+S32 xmath_exited;
+volatile U32 rndseed; // made this volatile so xrand() matches
 
 void xMathInit()
 {
@@ -110,14 +110,14 @@ U32 xMathSolveCubic(F32 a, F32 b, F32 c, F32 d, F32* x1, F32* x2, F32* x3) {
     F32 fAngle;
     F32 fCos; //
     F32 fSin; //
-    
+
     F32 temp_f1;
     F32 temp_f1_2;
     F32 temp_f1_3;
     F32 temp_f28_2;
     F32 temp_f29;
     F32 var_f1;
-    
+
     if (a == 0.0f) {
         return xMathSolveQuadratic(b, c, d, x1, x2);
     }
@@ -188,7 +188,7 @@ F32 xAngleClamp(F32 a)
 F32 xAngleClampFast(F32 a)
 {
     F32 rad360 = (2 * PI);
-    
+
     if (a < 0.0f)
     {
         return a + rad360;
@@ -206,7 +206,7 @@ F32 xDangleClamp(F32 a)
 {
     F32 rad360 = 2 * PI;
     F32 rem = xfmod(a, rad360);
-    
+
     if (rem >= PI)
     {
         return rem - rad360;
@@ -365,7 +365,7 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 maxv) {
     U32 aa; // r29+0xC
     F32 diff;
     F32 dv;
-    
+
     if ((F32) __fabs(v) > (F32) __fabs(maxv)) {
         if (v < 0.0f) {
             if (a > 0.0f) {

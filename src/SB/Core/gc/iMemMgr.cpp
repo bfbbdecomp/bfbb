@@ -6,14 +6,14 @@
 #include <stdlib.h>
 #include <dolphin.h>
 
+U32 mem_top_alloc;
+U32 mem_base_alloc;
+volatile OSHeapHandle the_heap;
+OSHeapHandle hs;
+OSHeapHandle he;
+U32 HeapSize;
 extern xMemInfo_tag gMemInfo;
-extern OSHeapHandle he;
-extern OSHeapHandle hs;
-extern volatile OSHeapHandle the_heap;
 extern unsigned char _stack_addr[];
-extern U32 HeapSize;
-extern U32 mem_top_alloc;
-extern U32 mem_base_alloc;
 
 // Starts going wrong after the if and else statement, everything else before looks fine.
 void iMemInit()

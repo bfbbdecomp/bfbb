@@ -10,17 +10,16 @@
 #include <types.h>
 #include <string.h>
 
-extern _zLight* sLight[32];
-extern S32 sLightTotal;
-extern _tagPartition sLightPart;
-extern zVolume* sPartitionVolume;
+static _zLight* sLight[32];
+S32 sLightTotal;
+static _tagPartition sLightPart;
+zVolume* sPartitionVolume;
 extern char zLight_strings[];
-extern S32 gNumTemporaryLights;
-extern _zLight* gTemporaryLights[32];
-extern F32 zLight_float;
-extern xVec3 sDefaultShadowVec;
-extern void (*sEffectFuncs[18])(_zLight*, F32);
-extern lightInitFunc sEffectInitFuncs[18];
+S32 gNumTemporaryLights;
+static _zLight* gTemporaryLights[32];
+void (*sEffectFuncs[18])(_zLight*, F32) = {};
+lightInitFunc sEffectInitFuncs[18] = {};
+static xVec3 sDefaultShadowVec = { 0, 1.0f, 0 };
 
 void zLightEffectSet(_zLight* zlight, S32 idx)
 {
@@ -213,7 +212,7 @@ void zLightUpdate(xBase* to, xScene* param_2, F32 dt)
     if (t->flags & 1 && t->attached_to)
     {
         xVec3 pos = *xEntGetPos((xEnt*)t->attached_to);
-        pos.y += zLight_float;
+        pos.y += 1.0f;
         iLightSetPos(&t->light, &pos);
         t->light.sph.center = pos;
         t->true_idx = xPartitionUpdate(&sLightPart, t, t->true_idx, &pos);
@@ -249,7 +248,7 @@ void zLightAddLocalEnv()
 void zLightAddLocal(xEnt* ent)
 {
     xVec3 default_light_pos = *xEntGetPos(ent);
-    default_light_pos.y += zLight_float;
+    default_light_pos.y += 1.0f;
     if (!ent->entShadow)
     {
         ent->entShadow = (xEntShadow*)xMemAlloc(gActiveHeap, 40, 0);
@@ -257,7 +256,7 @@ void zLightAddLocal(xEnt* ent)
         ent->entShadow->pos = default_light_pos;
         ent->entShadow->vec = sDefaultShadowVec;
     }
-    xShadowSetLight(&ent->entShadow->pos, &ent->entShadow->vec, zLight_float);
+    xShadowSetLight(&ent->entShadow->pos, &ent->entShadow->vec, 1.0f);
 }
 
 void zLightRemoveLocalEnv()
