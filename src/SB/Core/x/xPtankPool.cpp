@@ -58,7 +58,7 @@ namespace
             RwTexture* texture = it->ptank->geometry->matList.materials[0]->texture;
             if (texture == NULL)
             {
-                if ((it->flags & 0x1) != 0)
+                if ((it->flags & rpPTANKDFLAGPOSITION) != 0)
                 {
                     bucket++;
                 }
@@ -75,7 +75,7 @@ namespace
                     {
                         if (it->dst_blend == front->dst_blend &&
                             it->src_blend == front->src_blend &&
-                            ((it->flags ^ front->flags) & 0x1) == 0)
+                            ((it->flags ^ front->flags) & rpPTANKDFLAGPOSITION) == 0)
                         {
                             break;
                         }
@@ -199,7 +199,7 @@ namespace
 
     void render_ptank(const ptank_context& context)
     {
-        RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)!(context.flags & 1));
+        RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)!(context.flags & rpPTANKDFLAGPOSITION));
         RpAtomic* ptank = context.ptank;
         ptank->renderCallBack(ptank);
     }
@@ -419,11 +419,11 @@ void ptank_pool::flush()
 
         S32 oldused = RPATOMICPTANKPLUGINDATA(this->ptank)->actPCount;
         S32 expand = ((S32)this->used < oldused) ? oldused - this->used : 0;
-        expand += 0xA;
+        expand += 10;
 
-        if ((S32)(expand + this->used) > 0x40)
+        if ((S32)(expand + this->used) > 64)
         {
-            expand = 0x40 - this->used;
+            expand = 64 - this->used;
         }
 
         S32 total = this->used + expand;
@@ -436,7 +436,7 @@ void ptank_pool::flush()
             it = (U8*)it + this->hide.stride;
         }
 
-        RPATOMICPTANKPLUGINDATA(this->ptank)->instFlags |= 0x800000;
+        RPATOMICPTANKPLUGINDATA(this->ptank)->instFlags |= rpPTANKIFLAGACTNUMCHG;
         RPATOMICPTANKPLUGINDATA(this->ptank)->actPCount = total;
         this->used = 0;
     }
