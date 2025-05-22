@@ -304,7 +304,7 @@ RpCollBSPTree* _rpCollBSPTreeForAllCapsuleLeafNodeIntersections(
     return NULL;
 }
 
-void xSweptSpherePrepare(xSweptSphere*, xVec3*, xVec3*, float)
+void xSweptSpherePrepare(xSweptSphere*, xVec3*, xVec3*, F32)
 {
 }
 
@@ -317,7 +317,7 @@ S32 xSweptSphereToTriangle(xSweptSphere*, xVec3*, xVec3*, xVec3*)
     return 0;
 }
 
-void xsqrtfast(float& out, float in)
+void xsqrtfast(F32& out, F32 in)
 {
     out = std::sqrtf(in);
 }
@@ -454,12 +454,12 @@ bool xOBBHitsOBB(const xBox&, const xMat4x3&, const xBox&, const xMat4x3&)
     return false;
 }
 
-bool xSphereHitsVCylinder(const xVec3&, float, const xVec3&, float, float)
+bool xSphereHitsVCylinder(const xVec3&, F32, const xVec3&, F32, F32)
 {
     return false;
 }
 
-bool xSphereHitsVCircle(const xVec3&, float, const xVec3&, float)
+bool xSphereHitsVCircle(const xVec3&, F32, const xVec3&, F32)
 {
     return false;
 }
@@ -601,11 +601,11 @@ xVec3 xVec3::operator/(F32 f) const
     return vec;
 }
 
-void xParabolaEvalVel(const xParabola*, xVec3*, float)
+void xParabolaEvalVel(const xParabola*, xVec3*, F32)
 {
 }
 
-void xParabolaEvalPos(const xParabola*, xVec3*, float)
+void xParabolaEvalPos(const xParabola*, xVec3*, F32)
 {
 }
 
@@ -614,7 +614,7 @@ bool xSphereHitsOBB(const xSphere&, const xBox&, const xMat4x3&)
     return false;
 }
 
-bool xSphereHitsSphere(const xVec3&, float, const xVec3&, float)
+bool xSphereHitsSphere(const xVec3&, F32, const xVec3&, F32)
 {
     return false;
 }
@@ -627,7 +627,7 @@ void xQuickCullForBox(xQCData*, const xBox*)
 {
 }
 
-U8 xSphereHitsCapsule(const xVec3&, float, const xVec3&, const xVec3&, float)
+U8 xSphereHitsCapsule(const xVec3&, F32, const xVec3&, const xVec3&, F32)
 {
     return 0;
 }
