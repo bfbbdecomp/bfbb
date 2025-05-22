@@ -27,6 +27,7 @@ static void LightKit_Unload(void*, U32);
 static void MovePoint_Unload(void*, U32);
 
 static xJSPHeader sDummyEmptyJSP;
+static xJSPHeader* sTempJSP;
 
 static u32 s_sbFootSoundA;
 static u32 s_sbFootSoundB;
@@ -130,9 +131,6 @@ static HackModelRadius hackRadiusTable[3] = { { 0xFA77E6FAU, 20.0f },
                                               { 0x5BD0EDACU, 1000.0f },
                                               { 0xED21A1C6U, 50.0f } };
 
-extern xJSPHeader* sTempJSP;
-extern xJSPHeader sDummyEmptyJSP;
-
 static void* Model_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize)
 {
     RpAtomic* model = (RpAtomic*)iModelFileNew(indata, insize);
@@ -210,10 +208,17 @@ static void* BSP_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32*
     return bsp;
 }
 
-static char* jsp_shadow_hack_textures[5] = {
+static void BSP_Unload(void*, U32)
+{
+    xEnvFree(globals.sceneCur->env);
+}
+
+static char* jsp_shadow_hack_textures[] = {
     "beach_towel",  "wood_board_Nails_singleV2", "wood_board_Nails_singleV3",
     "glass_broken", "ground_path_alpha",
 };
+
+static char** jsp_shadow_hack_end_textures = &jsp_shadow_hack_textures[4];
 
 struct AnimTableList animTable[33] = {
     { "ZNPC_AnimTable_Test", ZNPC_AnimTable_Test, 0 },
@@ -262,6 +267,37 @@ struct jsp_shadow_hack_atomic_context
     S32 last_material;
 };
 
+inline bool jsp_shadow_hack_match(RpAtomic* atomic)
+{
+    RpGeometry* geom = RpAtomicGetGeometry(atomic);
+    S32 numMaterials = geom->matList.numMaterials;
+
+    char** hack = &jsp_shadow_hack_textures[0];
+    char** hack_end = jsp_shadow_hack_end_textures;
+    for (; hack != hack_end; ++hack)
+    {
+        char* name = *hack;
+        for (S32 i = 0; i < numMaterials; ++i)
+        {
+            RwTexture* texture = geom->matList.materials[i]->texture;
+            if (texture == NULL)
+            {
+                continue;
+            }
+            char* texname = texture->name;
+            if (texname == NULL)
+            {
+                continue;
+            }
+            if (stricmp(texname, name) == 0)
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 static RpAtomic* jsp_shadow_hack_atomic_cb(RpAtomic* atomic, void* data)
 {
     jsp_shadow_hack_atomic_context& context = *(jsp_shadow_hack_atomic_context*)data;
@@ -294,6 +330,17 @@ static RpAtomic* jsp_shadow_hack_atomic_cb(RpAtomic* atomic, void* data)
         tri->flags |= 0x20;
     }
     return atomic;
+}
+
+static void jsp_shadow_hack(xJSPHeader* header)
+{
+    if (header == NULL || header->clump == 0 || header->colltree == NULL)
+    {
+        return;
+    }
+
+    jsp_shadow_hack_atomic_context context = { NULL, 0, -1 };
+    RpClumpForAllAtomics(header->clump, jsp_shadow_hack_atomic_cb, &context);
 }
 
 static xAnimTable* (*tableFuncList[48])() = {
@@ -347,11 +394,6 @@ static xAnimTable* (*tableFuncList[48])() = {
     NULL,
 };
 
-static void BSP_Unload(void*, U32)
-{
-    xEnvFree(globals.sceneCur->env);
-}
-
 static void* JSP_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize)
 {
     xJSPHeader* retjsp = &sDummyEmptyJSP;
@@ -384,8 +426,53 @@ static RwTexture* TexCB(RwTexture* texture, void* data)
     return texture;
 }
 
-static void* RWTX_Read(void*, unsigned int, void*, unsigned int, unsigned int*)
+static void* RWTX_Read(void*, U32, void* indata, U32 insize, U32* outsize)
 {
+    RwTexDictionary* txd = NULL;
+    RwMemory rwmem;
+    RwStream* stream = NULL;
+    RwTexture* tex = NULL;
+    RwError error;
+
+    if (insize != 0)
+    {
+        rwmem.start = (U8*)indata;
+        rwmem.length = insize;
+        stream = RwStreamOpen(rwSTREAMMEMORY, rwSTREAMREAD, &rwmem);
+        if (stream != NULL)
+        {
+            if (!RwStreamFindChunk(stream, rwID_TEXDICTIONARY, NULL, NULL))
+            {
+                RwErrorGet(&error);
+                RwStreamFindChunk(stream, rwID_TEXDICTIONARY, NULL, NULL);
+                RwStreamClose(stream, NULL);
+            }
+            else
+            {
+                txd = RwTexDictionaryStreamRead(stream);
+                RwStreamClose(stream, NULL);
+                if (txd != NULL)
+                {
+                    RwTexDictionaryForAllTextures(txd, TexCB, &tex);
+                    if (tex == NULL)
+                    {
+                        RwTexDictionaryDestroy(txd);
+                    }
+                    else
+                    {
+                        RwTexDictionaryRemoveTexture(tex);
+                        RwTexDictionaryDestroy(txd);
+                        RwTextureAddRef(tex);
+                        RwTextureSetFilterMode(tex, rwFILTERLINEARMIPLINEAR);
+                        *outsize = sizeof(RwTexture);
+                        return tex;
+                    }
+                }
+            }
+        }
+    }
+
+    *outsize = insize;
     return NULL;
 }
 
