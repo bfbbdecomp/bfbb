@@ -17,12 +17,6 @@
 
 extern const char _stringBase0_7[];
 
-extern F32 _957_0;
-extern F32 _958;
-extern F32 _995;
-extern F32 _1132;
-extern F32 _1171;
-
 RpAtomicCallBackRender gAtomicRenderCallBack = NULL;
 F32 EnvMapShininess = 1.0f;
 RpLight* MainLight = NULL;
@@ -92,17 +86,17 @@ xFXRing* xFXRingCreate(const xVec3* pos, const xFXRing* params)
 
     for (S32 i = 0; i < RING_COUNT; i++, ring++)
     {
-        if (ring->time <= _957_0)
+        if (ring->time <= 0.0f)
         {
-            // non-matching: _958 is only loaded once
+            // non-matching: 1.0f is only loaded once
 
             memcpy(ring, params, sizeof(xFXRing));
 
-            ring->time = _995;
+            ring->time = 0.001f;
             ring->pos = *pos;
-            ring->ring_radius_delta *= _958 / ring->lifetime;
-            ring->ring_height_delta *= _958 / ring->lifetime;
-            ring->ring_tilt_delta *= _958 / ring->lifetime;
+            ring->ring_radius_delta *= 1.0f / ring->lifetime;
+            ring->ring_height_delta *= 1.0f / ring->lifetime;
+            ring->ring_tilt_delta *= 1.0f / ring->lifetime;
 
             return ring;
         }
@@ -115,14 +109,14 @@ static void xFXRingUpdate(F32 dt)
 {
     xFXRing* ring = &ringlist[0];
 
-    if ((F32)iabs(dt) < _995)
+    if ((F32)iabs(dt) < 0.001f)
     {
         return;
     }
 
     for (S32 i = 0; i < RING_COUNT; i++, ring++)
     {
-        if (ring->time <= _957_0)
+        if (ring->time <= 0.0f)
         {
             continue;
         }
@@ -140,9 +134,9 @@ static void xFXRingUpdate(F32 dt)
 
         // non-matching: float scheduling
 
-        if (t > _958)
+        if (t > 1.0f)
         {
-            ring->time = _957_0;
+            ring->time = 0.0f;
 
             if (ring->parent)
             {
@@ -161,7 +155,7 @@ void xFXRingRender()
 
     for (i = 0; i < RING_COUNT; i++, ring++)
     {
-        if (ring->time > _957_0)
+        if (ring->time > 0.0f)
         {
             DrawRing(ring);
         }
@@ -210,7 +204,7 @@ void xFX_SceneEnter(RpWorld* world)
                         }
 
                         MaterialSetEnvMap(mp, env);
-                        RpMatFXMaterialSetEnvMapCoefficient(mp, _1132 * fxp->shininess);
+                        RpMatFXMaterialSetEnvMapCoefficient(mp, 0.5f * fxp->shininess);
                     }
 
                     if (fxp->flags & 0x2)
@@ -308,8 +302,8 @@ static void LightResetFrame(RpLight* light)
 
     RwFrame* frame = RpLightGetFrame(light);
 
-    RwFrameRotate(frame, &v1, _1171, rwCOMBINEREPLACE);
-    RwFrameRotate(frame, &v2, _1171, rwCOMBINEPOSTCONCAT);
+    RwFrameRotate(frame, &v1, 45.0f, rwCOMBINEREPLACE);
+    RwFrameRotate(frame, &v2, 45.0f, rwCOMBINEPOSTCONCAT);
 }
 
 static RpMaterial* MaterialDisableMatFX(RpMaterial* material, void*)
@@ -367,6 +361,28 @@ static RpAtomic* AtomicSetShininess(RpAtomic* atomic, void* data)
     return atomic;
 }
 
+RpAtomic* xFXAtomicEnvMapSetup(RpAtomic*, U32, F32)
+{
+    return NULL;
+}
+
+void xFXAuraAdd(void*, xVec3*, iColor_tag*, F32)
+{
+}
+
+void xFXAuraInit()
+{
+}
+
+void xFXAuraUpdate(F32)
+{
+}
+
+U32 xFXanimUVCreate()
+{
+    return 0;
+}
+
 struct xFXBubbleParams
 {
     U32 pass1 : 1;
@@ -400,6 +416,8 @@ static xFXBubbleParams* BFX = &defaultBFX;
 static U32 sFresnelMap = 0;
 static U32 sEnvMap = 0;
 static S32 sTweaked = 0;
+
+xFXRing ringlist[RING_COUNT];
 
 static RxPipeline* xFXanimUVPipeline = NULL;
 F32 xFXanimUVRotMat0[2] = { 1.0f, 0.0f };
@@ -524,11 +542,229 @@ void xFXSceneInit()
 {
 }
 
+void xFXSceneSetup()
+{
+}
+
 void xFXSceneReset()
 {
 }
 
 void xFXScenePrepare()
+{
+}
+
+void xFXSceneFinish()
+{
+}
+
+void xFXanimUV2PSetTexture(RwTexture* tex)
+{
+    xFXanimUV2PTexture = tex;
+}
+
+void xFXanimUVSetAngle(F32 angle)
+{
+    F32 sin = isin(angle);
+    F32 cos = icos(angle);
+    xFXanimUVRotMat0[0] = cos;
+    xFXanimUVRotMat0[1] = -sin;
+    xFXanimUVRotMat1[0] = sin;
+    xFXanimUVRotMat1[1] = cos;
+}
+
+void xFXanimUV2PSetScale(const xVec3* scale)
+{
+    xFXanimUV2PScale[0] = scale->x;
+    xFXanimUV2PScale[1] = scale->y;
+}
+
+void xFXanimUVSetScale(const xVec3* scale)
+{
+    xFXanimUVScale[0] = scale->x;
+    xFXanimUVScale[1] = scale->y;
+}
+
+void xFXanimUVSetTranslation(const xVec3* translation)
+{
+    xFXanimUVTrans[0] = translation->x;
+    xFXanimUVTrans[1] = translation->y;
+}
+
+void xFXStreakUpdate(U32, const xVec3*, const xVec3*)
+{
+}
+
+void xFXStreakStart(F32, F32, F32, U32, const iColor_tag*, const iColor_tag*, S32)
+{
+}
+
+void xFXStreakStop(U32)
+{
+}
+
+void xFXStreakUpdate(F32)
+{
+}
+
+void xParInterp::set(F32 value1, F32 value2, F32 freq, U32 interp)
+{
+    this->val[0] = value1;
+    this->val[1] = value2;
+    this->freq = freq;
+    if (freq != 0.0f)
+    {
+        this->oofreq = 1.0f / freq;
+    }
+    else
+    {
+        this->oofreq = 0.0f;
+    }
+    this->interp = interp;
+}
+
+void xFXShineInit()
+{
+}
+
+void xFXShineStart(const xVec3*, F32, F32, F32, F32, U32, const iColor_tag*, const iColor_tag*, F32, S32)
+{
+}
+
+void xFXShineUpdate(F32)
+{
+}
+
+void xFXShineRender()
+{
+}
+
+void xFXAuraRender()
+{
+}
+
+void xFXFireworksInit(const char*, const char*, const char*, const char*, const char*)
+{
+}
+
+void xFXFireworksLaunch(F32 ,const xVec3*, F32)
+{
+}
+
+void xFXFireworksUpdate(F32)
+{
+}
+
+RpMaterial* MaterialSetBumpMap(RpMaterial*, void*)
+{
+    return NULL;
+}
+
+RpMaterial* MaterialSetEnvMap(RpMaterial*, void*)
+{
+    return NULL;
+}
+
+RpMaterial* MaterialSetBumpEnvMap(RpMaterial*, RwTexture*, F32, RwTexture*, F32)
+{
+    return NULL;
+}
+
+RpAtomic* xFXanimUVAtomicSetup(RpAtomic*)
+{
+    return NULL;
+}
+
+void xFXRenderProximityFade(const xModelInstance&, F32, F32)
+{
+}
+
+void xFXanimUV2PSetAngle(F32)
+{
+}
+
+void xFXanimUV2PSetTranslation(const xVec3*)
+{
+}
+
+RpAtomic* xFXShinyRender(RpAtomic* atom)
+{
+    return NULL;
+}
+
+RpAtomic* xFXBubbleRender(RpAtomic* atom)
+{
+    return NULL;
+}
+
+void xFXRibbonRender()
+{
+}
+
+void xFXStreakInit()
+{
+}
+
+void xFXStreakRender()
+{
+}
+
+void xFXRibbonSceneEnter()
+{
+}
+
+void xFXRibbonUpdate(F32)
+{
+}
+
+void xFXRibbon::init(const char*, const char*)
+{
+}
+
+void tier_queue<xFXRibbon::joint_data>::clear()
+{
+}
+
+void xFXRibbon::set_default_config()
+{
+    cfg.life_time = 0.0f;
+    cfg.blend_src = 5;
+    cfg.blend_dst = 6;
+    cfg.pivot = 0.5f;
+    refresh_config();
+}
+
+void xFXRibbon::refresh_config()
+{
+    ilife = 1.0f / cfg.life_time;
+    mlife = 1000.0f * cfg.life_time;
+    if (activated)
+    {
+        ribbons_dirty = true;
+    }
+}
+
+void xFXRibbon::set_texture(const char*)
+{
+}
+
+void xFXRibbon::set_texture(RwTexture*)
+{
+}
+
+void xFXRibbon::set_texture(U32)
+{
+}
+
+void xFXRibbon::insert(const xVec3&, const xVec3&, F32, F32, U32)
+{
+}
+
+void xFXRibbon::insert(const xVec3&, F32, F32, F32, U32)
+{
+}
+
+void xFXRibbon::set_curve(const xFXRibbon::curve_node*, unsigned long)
 {
 }
 
@@ -546,4 +782,9 @@ void xFXRibbon::debug_update_curve()
 
 void xFXRibbon::debug_update(F32)
 {
+}
+
+void tempInstantiateOperators(RwTexCoords& texcoords)
+{
+    texcoords = texcoords;
 }
