@@ -75,7 +75,7 @@ namespace
                     {
                         if (it->dst_blend == front->dst_blend &&
                             it->src_blend == front->src_blend &&
-                            (!(it->flags ^ front->flags) & rpPTANKDFLAGPOSITION))
+                            !((it->flags ^ front->flags) & rpPTANKDFLAGPOSITION))
                         {
                             break;
                         }
