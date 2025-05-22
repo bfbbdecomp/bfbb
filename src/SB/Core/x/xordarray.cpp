@@ -3,9 +3,6 @@
 
 #include <types.h>
 
-extern F32 lbl_803CCEE8; // 0.95f
-extern F32 lbl_803CCEF0; // 176f
-
 void XOrdInit(st_XORDEREDARRAY* array, S32 size, S32 tempAlloc)
 {
     U32 cnt = 1;
@@ -23,7 +20,7 @@ void XOrdInit(st_XORDEREDARRAY* array, S32 size, S32 tempAlloc)
     }
     array->cnt = 0;
     array->max = cnt;
-    array->warnlvl = lbl_803CCEE8 * (cnt ^ 0x80000000);
+    array->warnlvl = 0.95f * (cnt ^ 0x80000000);
     if (array->warnlvl == array->max)
     {
         cnt = array->max - 1;

@@ -7,9 +7,11 @@
 #include "iSystem.h"
 #include "iMemMgr.h"
 
-extern xMemInfo_tag gMemInfo;
-extern xMemHeap_tag gxHeap[3];
-extern void (*sMemBaseNotifyFunc)();
+xMemInfo_tag gMemInfo;
+xMemHeap_tag gxHeap[3];
+
+U32 gActiveHeap;
+void (*sMemBaseNotifyFunc)();
 
 void xMemDebug_SoakLog(const char*)
 {

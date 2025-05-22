@@ -19,7 +19,7 @@ struct file_queue_entry
     U32 asynckey;
 };
 
-extern file_queue_entry file_queue[4];
+file_queue_entry file_queue[4];
 
 static U32 tbuffer[1024 + 8];
 static U32* buffer32;

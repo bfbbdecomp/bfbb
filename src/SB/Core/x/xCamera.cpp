@@ -25,44 +25,15 @@
 
 
 
-extern F32 _764;
-extern F32 _765;
-extern F32 _766;
-extern F32 _785;
-extern F32 _786;
-extern F32 _787;
-extern F32 _788;
-extern F32 _789;
-extern F32 _790;
-extern F32 _830;
-extern F32 _831;
-extern F32 _873;
-extern F32 _874;
-extern F32 _880;
-extern F32 _888;
-extern F32 _895;
-extern F32 _1234;
-extern F32 _1235;
-extern F32 _1236;
-extern F32 _1237;
-extern F32 _1238;
-extern F32 _1239;
-extern F32 _1240;
-extern F32 _1241;
-extern F32 _1242;
-extern F32 _1283;
-extern F64 _1286;
-extern F32 _1404;
-extern F32 _1405;
-extern F32 _1534;
-extern F32 _1584;
-extern F32 _1585;
-extern F32 _1586;
-extern F32 _1757;
-extern F32 _1758;
-extern F32 _1766;
-extern F32 _1772;
-
+S32 sCamCollis;
+volatile S32 xcam_collis_owner_disable;
+S32 xcam_do_collis = 1;
+F32 xcam_collis_radius = 0.4f;
+F32 xcam_collis_stiffness = 0.3f;
+RpAtomic* sInvisWallHack;
+static xMat4x3 sCameraFXMatOld;
+cameraFX sCameraFX[10];
+cameraFXTableEntry sCameraFXTable[3] = {};
 
 static void xCameraFXInit();
 void add_camera_tweaks();
@@ -73,19 +44,19 @@ void xCameraInit(xCamera* cam, U32 width, U32 height)
 
     cam->lo_cam = iCameraCreate(width, height, 1);
 
-    xCameraSetFOV(cam, _764);
+    xCameraSetFOV(cam, 75.0f);
 
-    cam->bound.sph.center.x = _765;
-    cam->bound.sph.center.y = _765;
-    cam->bound.sph.center.z = _765;
-    cam->bound.sph.r = _766;
+    cam->bound.sph.center.x = 0.0f;
+    cam->bound.sph.center.y = 0.0f;
+    cam->bound.sph.center.z = 0.0f;
+    cam->bound.sph.r = 0.5f;
     cam->tgt_mat = NULL;
     cam->tgt_omat = NULL;
     cam->tgt_bound = NULL;
     cam->sc = NULL;
-    cam->tran_accum.x = _765;
-    cam->tran_accum.y = _765;
-    cam->tran_accum.z = _765;
+    cam->tran_accum.x = 0.0f;
+    cam->tran_accum.y = 0.0f;
+    cam->tran_accum.z = 0.0f;
 
     add_camera_tweaks();
 }
@@ -110,42 +81,42 @@ void xCameraReset(xCamera* cam, F32 d, F32 h, F32 pitch)
     xMat4x3Identity(&cam->mat);
 
     cam->omat = cam->mat;
-    cam->focus.x = _765;
-    cam->focus.y = _765;
-    cam->focus.z = _785;
-    cam->tran_accum.x = _765;
-    cam->tran_accum.y = _765;
-    cam->tran_accum.z = _765;
+    cam->focus.x = 0.0f;
+    cam->focus.y = 0.0f;
+    cam->focus.z = 10.0f;
+    cam->tran_accum.x = 0.0f;
+    cam->tran_accum.y = 0.0f;
+    cam->tran_accum.z = 0.0f;
     cam->flags = 0;
 
-    F32 goal_p = _786;
+    F32 goal_p = 3.1415927f;
 
     if (cam->tgt_mat)
     {
         goal_p += xatan2(cam->tgt_mat->at.x, cam->tgt_mat->at.z);
     }
 
-    xCameraMove(cam, 0x2E, d, h, goal_p, _765, _787, _787);
+    xCameraMove(cam, 0x2E, d, h, goal_p, 0.0f, 0.66666669f, 0.66666669f);
 
     cam->pitch_goal = pitch;
     cam->pitch_cur = pitch;
-    cam->roll_cur = _765;
+    cam->roll_cur = 0.0f;
 
     xMat3x3Euler(&cam->mat, cam->yaw_cur, cam->pitch_cur, cam->roll_cur);
 
     cam->omat = cam->mat;
-    cam->yaw_ct = _788;
-    cam->yaw_cd = _788;
-    cam->yaw_ccv = _789;
-    cam->yaw_csv = _788;
-    cam->pitch_ct = _788;
-    cam->pitch_cd = _788;
-    cam->pitch_ccv = _790;
-    cam->pitch_csv = _788;
-    cam->roll_ct = _788;
-    cam->roll_cd = _788;
-    cam->roll_ccv = _790;
-    cam->roll_csv = _788;
+    cam->yaw_ct = 1.0f;
+    cam->yaw_cd = 1.0f;
+    cam->yaw_ccv = 0.64999998f;
+    cam->yaw_csv = 1.0f;
+    cam->pitch_ct = 1.0f;
+    cam->pitch_cd = 1.0f;
+    cam->pitch_ccv = 0.7f;
+    cam->pitch_csv = 1.0f;
+    cam->roll_ct = 1.0f;
+    cam->roll_cd = 1.0f;
+    cam->roll_ccv = 0.7f;
+    cam->roll_csv = 1.0f;
     cam->flags |= 0x80;
 
     xcam_do_collis = 1;
@@ -163,40 +134,40 @@ static void xCam_buildbasis(xCamera* cam)
         F32 dist2 = SQR(dx__) + SQR(dz__);
         F32 dist_inv;
 
-        if ((F32)iabs(dist2 - _788) <= _830)
+        if ((F32)iabs(dist2 - 1.0f) <= 0.0000099999997f)
         {
             cam->mbasis.at.x = dx__;
             cam->mbasis.at.z = dz__;
 
-            d2d = _788;
+            d2d = 1.0f;
         }
-        else if ((F32)iabs(dist2) <= _830)
+        else if ((F32)iabs(dist2) <= 0.0000099999997f)
         {
-            cam->mbasis.at.x = _765;
-            cam->mbasis.at.z = _765;
+            cam->mbasis.at.x = 0.0f;
+            cam->mbasis.at.z = 0.0f;
 
-            d2d = _765;
+            d2d = 0.0f;
         }
         else
         {
             d2d = xsqrt(dist2);
-            dist_inv = _788 / d2d;
+            dist_inv = 1.0f / d2d;
 
             cam->mbasis.at.x = dx__ * dist_inv;
             cam->mbasis.at.z = dz__ * dist_inv;
         }
 
-        if (d2d < _830)
+        if (d2d < 0.0000099999997f)
         {
             cam->mbasis.at.x = cam->mat.at.x;
             cam->mbasis.at.z = cam->mat.at.z;
 
             dist2 = xsqrt(SQR(cam->mbasis.at.x) + SQR(cam->mbasis.at.z));
 
-            if (dist2 > _831)
+            if (dist2 > 0.001f)
             {
                 // non-matching: wrong registers
-                dist_inv = _788 / dist2;
+                dist_inv = 1.0f / dist2;
 
                 cam->mbasis.at.x *= dist_inv;
                 cam->mbasis.at.z *= dist_inv;
@@ -208,12 +179,12 @@ static void xCam_buildbasis(xCamera* cam)
             }
         }
 
-        cam->mbasis.at.y = _765;
-        cam->mbasis.up.x = _765;
-        cam->mbasis.up.y = _788;
-        cam->mbasis.up.z = _765;
+        cam->mbasis.at.y = 0.0f;
+        cam->mbasis.up.x = 0.0f;
+        cam->mbasis.up.y = 1.0f;
+        cam->mbasis.up.z = 0.0f;
         cam->mbasis.right.x = cam->mbasis.at.z;
-        cam->mbasis.right.y = _765;
+        cam->mbasis.right.y = 0.0f;
         cam->mbasis.right.z = -cam->mbasis.at.x;
     }
 }
@@ -254,21 +225,21 @@ static void xCam_worldtocyl(F32& d, F32& h, F32& p, const xMat4x3* tgt_mat, cons
     F32 dist2 = SQR(dx__) + SQR(dz__);
     F32 dist_inv;
 
-    if ((F32)iabs(dist2 - _788) <= _830)
+    if ((F32)iabs(dist2 - 1.0f) <= 0.0000099999997f)
     {
         lx = dx__;
         lz = dz__;
-        d = _788;
+        d = 1.0f;
     }
-    else if ((F32)iabs(dist2) <= _830)
+    else if ((F32)iabs(dist2) <= 0.0000099999997f)
     {
-        d = lz = lx = _765;
+        d = lz = lx = 0.0f;
     }
     else
     {
         d = xsqrt(dist2);
 
-        dist_inv = _788 / d;
+        dist_inv = 1.0f / d;
 
         lx = dx__ * dist_inv;
         lz = dz__ * dist_inv;
@@ -299,7 +270,7 @@ static void xCam_CorrectD(xCamera* r3, F32 f1, F32 f2, F32 f3)
 
     F32 tmp1, tmp2, tmp3;
 
-    tmp1 = _873 * (_874 * f1 - f2 * f3);
+    tmp1 = 1.4285715f * (2.0f * f1 - f2 * f3);
     tmp1 -= f2;
     tmp1 *= f3;
 
@@ -314,9 +285,9 @@ static void xCam_CorrectH(xCamera* r3, F32 f1, F32 f2, F32 f3)
 {
     F32 tmp;
 
-    f2 = _880 * f2;
+    f2 = 0.15f * f2;
 
-    tmp = _873 * -(f2 * f3 - f1);
+    tmp = 1.4285715f * -(f2 * f3 - f1);
     tmp -= f2;
     tmp *= f3;
 
@@ -327,9 +298,9 @@ static void xCam_CorrectP(xCamera* r3, F32 f1, F32 f2, F32 f3)
 {
     F32 tmp1, tmp2, tmp3;
 
-    f2 = _880 * f2;
+    f2 = 0.15f * f2;
 
-    tmp1 = _888 * (_874 * f1 - f2 * f3);
+    tmp1 = 2.5f * (2.0f * f1 - f2 * f3);
     tmp1 -= f2;
     tmp1 *= f3;
 
@@ -344,7 +315,7 @@ static void xCam_DampP(xCamera* r3, F32 f1, F32 f2)
 {
     F32 tmp1, tmp2;
 
-    f1 = _895 * f1;
+    f1 = -6.0f * f1;
     f2 = f1 * f2 * f2;
 
     tmp1 = r3->mbasis.right.x * f2;
@@ -359,9 +330,9 @@ static void xCam_CorrectYaw(xCamera* r3, F32 f1, F32 f2, F32 f3)
 
     F32 tmp1, tmp2;
 
-    tmp1 = _788 / r3->yaw_ct;
+    tmp1 = 1.0f / r3->yaw_ct;
 
-    tmp2 = _874 * r3->yaw_cd * f1 - f2 * f3;
+    tmp2 = 2.0f * r3->yaw_cd * f1 - f2 * f3;
     tmp2 = tmp1 * tmp2;
     tmp2 -= f2;
     tmp2 *= r3->yaw_csv * f3;
@@ -374,9 +345,9 @@ static void xCam_CorrectPitch(xCamera* r3, F32 f1, F32 f2, F32 f3)
 
     F32 tmp1, tmp2;
 
-    tmp1 = _788 / r3->pitch_ct;
+    tmp1 = 1.0f / r3->pitch_ct;
 
-    tmp2 = _874 * r3->pitch_cd * f1 - f2 * f3;
+    tmp2 = 2.0f * r3->pitch_cd * f1 - f2 * f3;
     tmp2 = tmp1 * tmp2;
     tmp2 -= f2;
     tmp2 *= r3->pitch_csv * f3;
@@ -390,9 +361,9 @@ static void xCam_CorrectRoll(xCamera* r3, F32 f1, F32 f2, F32 f3)
 
     F32 tmp1, tmp2;
 
-    tmp1 = _788 / r3->roll_ct;
+    tmp1 = 1.0f / r3->roll_ct;
 
-    tmp2 = _874 * r3->roll_cd * f1 - f2 * f3;
+    tmp2 = 2.0f * r3->roll_cd * f1 - f2 * f3;
     tmp2 = tmp1 * tmp2;
     tmp2 -= f2;
     tmp2 *= r3->roll_csv * f3;
@@ -511,7 +482,7 @@ void xCameraUpdate(xCamera* cam, F32 dt)
     S32 num_updates;
     F32 sdt;
 
-    num_updates = std::ceilf(_1283 * dt);
+    num_updates = std::ceilf(144.0f * dt);
 
     sdt = dt / num_updates;
 
@@ -570,11 +541,11 @@ cameraFX* xCameraFXAlloc()
 
         if (f->flags == 0)
         {
-            // non-matching: _765 is only loaded once
+            // non-matching: 0.0f is only loaded once
 
             f->flags = 0x1;
-            f->elapsedTime = _765;
-            f->maxTime = _765;
+            f->elapsedTime = 0.0f;
+            f->maxTime = 0.0f;
 
             return f;
         }
@@ -596,7 +567,7 @@ void xCameraFXZoomUpdate(cameraFX* f, F32 dt, const xMat4x3*, xMat4x3* m)
         {
             f->zoom.distanceCur = f->zoom.distance;
             f->zoom.mode = CAMERAFX_ZOOM_MODE_2;
-            f->zoom.holdTimeCur = _765;
+            f->zoom.holdTimeCur = 0.0f;
         }
 
         xMat4x3MoveLocalAt(m, f->zoom.distanceCur);
@@ -651,12 +622,12 @@ void xCameraFXShake(F32 maxTime, F32 magnitude, F32 cycleMax, F32 rotate_magnitu
         f->type = CAMERAFX_TYPE_SHAKE;
         f->maxTime = maxTime;
         f->shake.magnitude = magnitude;
-        f->shake.dir.x = _788;
-        f->shake.dir.y = _788;
+        f->shake.dir.x = 1.0f;
+        f->shake.dir.y = 1.0f;
         f->shake.cycleMax = cycleMax;
-        f->shake.cycleTime = _765;
-        f->shake.dampen = _765;
-        f->shake.dampenRate = _788 / maxTime;
+        f->shake.cycleTime = 0.0f;
+        f->shake.dampen = 0.0f;
+        f->shake.dampenRate = 1.0f / maxTime;
         f->shake.rotate_magnitude = rotate_magnitude;
         f->shake.radius = radius;
         f->shake.epicenterP = epicenter;
@@ -685,9 +656,9 @@ void xCameraFXShakeUpdate(cameraFX* f, F32 dt, const xMat4x3*, xMat4x3* m)
     }
 
     scale = f->shake.dampenRate * (f->maxTime - f->elapsedTime);
-    noise = _1404 * (xurand() - _766);
+    noise = 0.1f * (xurand() - 0.5f);
 
-    if (f->shake.radius > _765 && f->shake.player)
+    if (f->shake.radius > 0.0f && f->shake.player)
     {
         xVec3Sub(&var_4C, f->shake.player, &f->shake.epicenter);
 
@@ -695,21 +666,21 @@ void xCameraFXShakeUpdate(cameraFX* f, F32 dt, const xMat4x3*, xMat4x3* m)
 
         if (f1 > f->shake.radius)
         {
-            scale = _765;
+            scale = 0.0f;
         }
         else
         {
-            scale *= icos(f1 / f->shake.radius * _786 * _766);
+            scale *= icos(f1 / f->shake.radius * 3.1415927f * 0.5f);
         }
     }
 
     x = (f->shake.magnitude + noise) * f->shake.dir.x * scale / f->shake.cycleMax *
-        f->shake.cycleTime * isin(f->shake.cycleTime / f->shake.cycleMax * _786);
+        f->shake.cycleTime * isin(f->shake.cycleTime / f->shake.cycleMax * 3.1415927f);
 
-    noise = _1404 * (xurand() - _766);
+    noise = 0.1f * (xurand() - 0.5f);
 
     y = (f->shake.magnitude + noise) * f->shake.dir.y * scale / f->shake.cycleMax *
-        f->shake.cycleTime * isin(f->shake.cycleTime / f->shake.cycleMax * _786);
+        f->shake.cycleTime * isin(f->shake.cycleTime / f->shake.cycleMax * 3.1415927f);
 
     xMat4x3MoveLocalRight(m, x);
     xMat4x3MoveLocalUp(m, y);
@@ -717,7 +688,7 @@ void xCameraFXShakeUpdate(cameraFX* f, F32 dt, const xMat4x3*, xMat4x3* m)
     xMat3x3GetEuler(m, &e);
 
     e.z +=
-        f->shake.cycleTime / f->shake.cycleMax * _1405 * _1404 * scale * f->shake.rotate_magnitude;
+        f->shake.cycleTime / f->shake.cycleMax * 0.63661975f * 0.1f * scale * f->shake.rotate_magnitude;
 
     xMat3x3Euler(m, &e);
 }
@@ -736,9 +707,9 @@ void xCameraFXUpdate(xCamera* cam, F32 dt)
         {
             f->elapsedTime += dt;
 
-            // non-matching: _765 is loaded too early
+            // non-matching: 0.0f is loaded too early
 
-            if ((f->maxTime > _765 && f->elapsedTime > f->maxTime) || f->flags & 0x2)
+            if ((f->maxTime > 0.0f && f->elapsedTime > f->maxTime) || f->flags & 0x2)
             {
                 f->flags = 0;
 
@@ -818,7 +789,7 @@ void xCameraMove(xCamera* cam, U32 flags, F32 dgoal, F32 hgoal, F32 pgoal, F32 t
     cam->hgoal = hgoal;
     cam->pgoal = pgoal;
 
-    if (tm <= _765)
+    if (tm <= 0.0f)
     {
         if (cam->tgt_mat)
         {
@@ -829,7 +800,7 @@ void xCameraMove(xCamera* cam, U32 flags, F32 dgoal, F32 hgoal, F32 pgoal, F32 t
             xCam_cyltoworld(&cam->mat.pos, cam->tgt_mat, dgoal, hgoal, pgoal, cam->flags);
 
             cam->omat.pos = cam->mat.pos;
-            cam->yaw_cur = cam->yaw_goal = cam->pcur + ((cam->pcur >= _786) ? _1534 : _786);
+            cam->yaw_cur = cam->yaw_goal = cam->pcur + ((cam->pcur >= 3.1415927f) ? -3.1415927f : 3.1415927f);
         }
     }
     else
@@ -839,11 +810,11 @@ void xCameraMove(xCamera* cam, U32 flags, F32 dgoal, F32 hgoal, F32 pgoal, F32 t
         cam->tm_dec = tm_dec;
         cam->tmr = tm;
 
-        F32 s = _788 / (tm - _766 * (tm_acc - tm_dec));
+        F32 s = 1.0f / (tm - 0.5f * (tm_acc - tm_dec));
 
         cam->depv = s * (dgoal - cam->dcur);
         cam->hepv = s * (hgoal - cam->hcur);
-        cam->pepv = xDangleClamp(pgoal - cam->pcur) * s * _766 * (dgoal + cam->dcur);
+        cam->pepv = xDangleClamp(pgoal - cam->pcur) * s * 0.5f * (dgoal + cam->dcur);
     }
 }
 
@@ -851,7 +822,7 @@ void xCameraMove(xCamera* cam, const xVec3& loc)
 {
     cam->omat.pos = cam->mat.pos = loc;
     cam->flags &= ~0x3E;
-    cam->tm_acc = cam->tm_dec = cam->tmr = _765;
+    cam->tm_acc = cam->tm_dec = cam->tmr = 0.0f;
 }
 
 void xCameraMove(xCamera* cam, const xVec3& loc, F32 maxSpeed)
@@ -875,7 +846,7 @@ void xCameraMove(xCamera* cam, const xVec3& loc, F32 maxSpeed)
 
     cam->omat.pos = cam->mat.pos;
     cam->flags &= ~0x3E;
-    cam->tm_acc = cam->tm_dec = cam->tmr = _765;
+    cam->tm_acc = cam->tm_dec = cam->tmr = 0.0f;
 }
 
 void xCameraFOV(xCamera* cam, F32 fov, F32 maxSpeed, F32 dt)
@@ -885,7 +856,7 @@ void xCameraFOV(xCamera* cam, F32 fov, F32 maxSpeed, F32 dt)
 
     if (currentFOV != fov)
     {
-        if (speed != _765)
+        if (speed != 0.0f)
         {
             F32 len = fov - currentFOV;
 
@@ -913,7 +884,7 @@ void xCameraLook(xCamera* cam, U32 flags, const xQuat* orn_goal, F32 tm, F32 tm_
     cam->flags = (cam->flags & ~0xF80) | (flags & 0xF80);
     cam->orn_goal = *orn_goal;
 
-    if (tm <= _765)
+    if (tm <= 0.0f)
     {
         if (cam->tgt_mat)
         {
@@ -931,7 +902,7 @@ void xCameraLook(xCamera* cam, U32 flags, const xQuat* orn_goal, F32 tm, F32 tm_
 
         xQuatDiff(&cam->orn_diff, &cam->orn_cur, orn_goal);
 
-        cam->orn_epv = _788 / (tm - _766 * (tm_acc - tm_dec)) * xQuatGetAngle(&cam->orn_diff);
+        cam->orn_epv = 1.0f / (tm - 0.5f * (tm_acc - tm_dec)) * xQuatGetAngle(&cam->orn_diff);
     }
 }
 
@@ -943,7 +914,7 @@ void xCameraLookYPR(xCamera* cam, U32 flags, F32 yaw, F32 pitch, F32 roll, F32 t
     cam->pitch_goal = pitch;
     cam->roll_goal = roll;
 
-    if (tm <= _765)
+    if (tm <= 0.0f)
     {
         if (cam->tgt_mat)
         {
@@ -963,7 +934,7 @@ void xCameraLookYPR(xCamera* cam, U32 flags, F32 yaw, F32 pitch, F32 roll, F32 t
         cam->ltm_dec = tm_dec;
         cam->ltmr = tm;
 
-        F32 s = _788 / (tm - _766 * (tm_acc - tm_dec));
+        F32 s = 1.0f / (tm - 0.5f * (tm_acc - tm_dec));
 
         cam->yaw_epv = s * xDangleClamp(yaw - cam->yaw_cur);
         cam->pitch_epv = s * xDangleClamp(pitch - cam->pitch_cur);
@@ -983,7 +954,7 @@ void xCameraRotate(xCamera* cam, const xMat3x3& m, F32 time, F32 accel, F32 decl
     cam->pitch_goal = eu.y;
     cam->roll_goal = eu.z;
 
-    if (_765 == time)
+    if (0.0f == time)
     {
         cam->yaw_cur = eu.x;
         cam->pitch_cur = eu.y;
@@ -992,14 +963,14 @@ void xCameraRotate(xCamera* cam, const xMat3x3& m, F32 time, F32 accel, F32 decl
 
     *(xMat3x3*)&cam->mat = m;
 
-    if (_765 == time)
+    if (0.0f == time)
     {
         *(xMat3x3*)&cam->omat = m;
     }
 
-    if (_765 == time)
+    if (0.0f == time)
     {
-        cam->ltm_acc = cam->ltm_dec = cam->ltmr = _765;
+        cam->ltm_acc = cam->ltm_dec = cam->ltmr = 0.0f;
     }
     else
     {
@@ -1008,7 +979,7 @@ void xCameraRotate(xCamera* cam, const xMat3x3& m, F32 time, F32 accel, F32 decl
         cam->ltmr = time;
     }
 
-    cam->yaw_epv = cam->pitch_epv = cam->roll_epv = _765;
+    cam->yaw_epv = cam->pitch_epv = cam->roll_epv = 0.0f;
 }
 
 void xCameraRotate(xCamera* cam, const xVec3& v, F32 roll, F32 time, F32 accel, F32 decl)
@@ -1017,7 +988,7 @@ void xCameraRotate(xCamera* cam, const xVec3& v, F32 roll, F32 time, F32 accel, 
     cam->pitch_goal = -xasin(v.y);
     cam->roll_goal = roll;
 
-    if (_765 == time)
+    if (0.0f == time)
     {
         cam->yaw_cur = cam->yaw_goal;
         cam->pitch_cur = cam->pitch_goal;
@@ -1028,14 +999,14 @@ void xCameraRotate(xCamera* cam, const xVec3& v, F32 roll, F32 time, F32 accel, 
 
     xMat3x3Euler(&cam->mat, cam->yaw_goal, cam->pitch_goal, cam->roll_goal);
 
-    if (_765 == time)
+    if (0.0f == time)
     {
         *(xMat3x3*)&cam->omat = *(xMat3x3*)&cam->mat;
     }
 
-    if (_765 == time)
+    if (0.0f == time)
     {
-        cam->ltm_acc = cam->ltm_dec = cam->ltmr = _765;
+        cam->ltm_acc = cam->ltm_dec = cam->ltmr = 0.0f;
     }
     else
     {
@@ -1044,7 +1015,7 @@ void xCameraRotate(xCamera* cam, const xVec3& v, F32 roll, F32 time, F32 accel, 
         cam->ltmr = time;
     }
 
-    cam->yaw_epv = cam->pitch_epv = cam->roll_epv = _765;
+    cam->yaw_epv = cam->pitch_epv = cam->roll_epv = 0.0f;
 }
 
 F32 xasin(F32 x)
@@ -1058,6 +1029,37 @@ float std::asinf(float x)
     return (float)asin((double)x);
 }
 #endif
+
+// xBound& xBound::operator=(const xBound& b)
+// {
+//     qcd.xmin = b.qcd.xmin;
+//     qcd.ymin = b.qcd.ymin;
+//     qcd.zmin = b.qcd.zmin;
+//     qcd.zmin_dup = b.qcd.zmin_dup;
+//     qcd.xmax = b.qcd.xmax;
+//     qcd.ymax = b.qcd.ymax;
+//     qcd.zmax = b.qcd.zmax;
+//     qcd.zmax_dup = b.qcd.zmax_dup;
+//     qcd.min.x = b.qcd.min.x;
+//     qcd.min.y = b.qcd.min.y;
+//     qcd.min.z = b.qcd.min.z;
+//     qcd.max.x = b.qcd.max.x;
+//     qcd.max.y = b.qcd.max.y;
+//     qcd.max.z = b.qcd.max.z;
+//     pad = b.pad;
+//     box.center.x = b.box.center.x;
+//     box.center.y = b.box.center.y;
+//     box.center.z = b.box.center.z;
+//     box.box.upper.x = b.box.box.upper.x;
+//     box.box.upper.y = b.box.box.upper.y;
+//     box.box.upper.z = b.box.box.upper.z;
+//     box.box.lower.x = b.box.box.lower.x;
+//     box.box.lower.y = b.box.box.lower.y;
+//     box.box.lower.z = b.box.box.lower.z;
+//     mat = b.mat;
+
+//     return *this;
+// }
 
 static void bound_sphere_xz(xVec3& r3, xVec3& r4, const xVec3& r5, F32 f1, const xVec3& r6, F32 f2)
 {
@@ -1092,7 +1094,7 @@ void xBinaryCamera::start(xCamera& camera)
 
     xQuatFromMat(&this->cam_dir, &camera.mat);
 
-    this->stick_offset = _765;
+    this->stick_offset = 0.0f;
 }
 
 void xBinaryCamera::stop()
@@ -1147,17 +1149,17 @@ void xMat3x3LookAt(xMat3x3* m, const xVec3* pos, const xVec3* at)
 
 F32 xQuatGetAngle(const xQuat* q)
 {
-    if (q->s > _1584)
+    if (q->s > 0.99998999f)
     {
-        return _765;
+        return 0.0f;
     }
-    else if (q->s < _1586)
+    else if (q->s < -0.99998999f)
     {
-        return _1585;
+        return 6.2831855f;
     }
     else
     {
-        return _874 * xacos(q->s);
+        return 2.0f * xacos(q->s);
     }
 }
 
@@ -1227,15 +1229,15 @@ float std::expf(float x)
 
 F32 xrmod(F32 ang)
 {
-    F32 frac = _1766 * ang;
+    F32 frac = 0.15915494f * ang;
 
-    if (frac < _765)
+    if (frac < 0.0f)
     {
-        return (frac - std::ceilf(frac) + _788) * _1585;
+        return (frac - std::ceilf(frac) + 1.0f) * 6.2831855f;
     }
-    else if (frac >= _788)
+    else if (frac >= 1.0f)
     {
-        return (frac - std::floorf(frac)) * _1585;
+        return (frac - std::floorf(frac)) * 6.2831855f;
     }
 
     return ang;
@@ -1243,7 +1245,7 @@ F32 xrmod(F32 ang)
 
 xVec3& xVec3::operator/=(F32 f)
 {
-    F32 f2 = _788;
+    F32 f2 = 1.0f;
 
     this->x *= f2 / f;
     this->y *= f2 / f;
@@ -1261,13 +1263,13 @@ xVec3& xVec3::safe_normalize(const xVec3& val)
 {
     F32 len = this->length2();
 
-    if (len < _1772)
+    if (len < 0.000099999997f)
     {
         return (*this = val);
     }
     else
     {
-        return (*this *= _788 / xsqrt(len));
+        return (*this *= 1.0f / xsqrt(len));
     }
 }
 

@@ -25,6 +25,9 @@
 #include "zCutsceneMgr.h"
 #include "zEntPlayerBungeeState.h"
 
+zGlobals globals;
+xGlobals* xglobals;
+
 S32 percentageDone;
 _tagxPad* gDebugPad;
 S32 sShowMenuOnBoot;
@@ -585,6 +588,7 @@ void zMainMemLvlChkCB()
 
 void zLedgeAdjust(zLedgeGrabParams* params)
 {
+    params->animGrab *= (1.0f/30);
     params->animGrab *= (1.0f / 30);
 }
 
