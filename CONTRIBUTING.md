@@ -17,6 +17,8 @@ Please respect the following guidelines:
 - Use the `TRUE`/`FALSE` macros in contexts where conditions use the value of a non-bool data type (S32, U8) as a boolean-like.
 - Use the `NULL` macro when assigning `0`/`0x0` to a pointer value.
 - Do not explicitly define enum values, unless the starting value is non-zero or the increment is non-standard.
+- Hexadecimal literals used as arguments for asset functions should be represented using char literals when it would improve the readability of the code (i.e 0x504c4154 -> 'PLAT').
+- When DWARF symbols are unavailable, ensure variables are named using camelCase and structs/classes are named using TitleCase, or snake_case if they exist only in an anonymous namespace.
 - Use PowerPC naming conventions when creating placeholder variable names. Placeholders should only be used when no DWARF symbol data is available and the variable does not have a name that can be reasonably assigned based on its usage.
 ```cpp
 U32 myFunc(U32 r3, U32 r4, F32 f1)
