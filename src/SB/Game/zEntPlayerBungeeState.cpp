@@ -26,6 +26,7 @@
 
 #include "zLightning.h"
 #include "zScene.h"
+#include "zCameraTweak.h"
 #include <cstring>
 #include <types.h>
 
@@ -467,17 +468,17 @@ namespace bungee_state
             {
                 struct
                 {
-                    float rest_dist;
-                    float emax;
-                    float spring;
-                    float alpha;
-                    float omega;
+                    F32 rest_dist;
+                    F32 emax;
+                    F32 spring;
+                    F32 alpha;
+                    F32 omega;
                 } vertical; // offset 0x0, size 0x14
                 struct
                 {
-                    float vscale;
-                    float hscale;
-                    float roll_decay;
+                    F32 vscale;
+                    F32 hscale;
+                    F32 roll_decay;
                 } camera; // offset 0x14, size 0xC
             } eh; // offset 0x198, size 0x20
             ent_info ent_cache[256];
@@ -499,6 +500,20 @@ namespace bungee_state
             F32 kinetic_energy(F32 v) const;
             F32 find_spring_min(F32 min_dist, F32 max_dist, F32 gravity, F32 damp) const;
 
+            void allow_dive(bool allowed);
+
+            void update_vmovement(F32 dt);
+            void calc_movement(F32& r3, F32& r4, F32& r5, F32 f1, F32 f2, F32 f3, F32 f4, F32 f5,
+                               F32 f6);
+
+            void update_heading(F32 dt);
+            void update_animation(F32 dt);
+            xSphere player_bound() const;
+            void update_sound(F32 dt);
+            void update_blur(F32 dt);
+            xVec3 local_to_world(const xVec3& vl) const;
+            S32 detach_update(xScene& scene, F32& dt);
+            void update_detach_camera(F32 dt);
             void start_detaching();
             void calc_drop_off_velocity(xVec3& v, const xVec3& from, const xVec3& to, F32 g, F32 t);
             void render();
@@ -919,6 +934,192 @@ namespace bungee_state
         void hanging_state_type::render()
         {
             render_player(TRUE);
+        }
+
+        void hanging_state_type::update_vmovement(F32 dt)
+        {
+            F32 dv;
+            F32 v;
+            F32 range;
+            F32 ybottom;
+
+            if (can_dive && globals.pad0->pressed & 0x10000 && control_lag_timer <= 0.0f &&
+                !dying && dive_remaining <= 0.0f)
+            {
+                has_dived = true;
+                allow_dive(false);
+                dive_remaining = fixed.dive.time;
+            }
+
+            if (dive_remaining > 0.0f)
+            {
+                dive_remaining -= dt;
+
+                if (dive_remaining < 0.0f)
+                {
+                    dive_remaining = 0.0f;
+                    dv = h.vertical.dive * dt;
+                }
+                else
+                {
+                    dv = h.vertical.dive * (dt + dive_remaining);
+                }
+
+                if (spring_energy(loc.x, vel.y, eh.vertical.spring, h.vertical.frequency,
+                                  eh.vertical.rest_dist) < eh.vertical.emax)
+                {
+                }
+            }
+
+            calc_movement(vel.x, );
+        }
+
+        void hanging_state_type::calc_movement(F32& r4, F32& r5, F32& r6, F32 f1, F32 f2, F32 f3,
+                                               F32 f4, F32 f5, F32 f6)
+        {
+            F32 dVar1;
+            F32 dVar2;
+            F32 dVar3;
+            F32 dVar4;
+            F32 dVar5;
+            F32 dVar6;
+            F32 dVar7;
+            F32 dVar8;
+            F32 dVar9;
+            F32 dVar10;
+            F32 dVar11;
+
+            dVar7 = f6;
+            dVar6 = f5;
+            dVar5 = f4;
+            dVar4 = f3;
+            dVar3 = f2;
+            dVar2 = f1;
+            dVar11 = dVar7 * dVar4;
+            dVar1 = isin(dVar11);
+            dVar11 = icos(dVar11);
+            dVar9 = dVar2 - dVar5;
+            dVar8 = -(dVar9 * dVar6 - dVar3) / dVar7;
+            dVar10 = dVar8 * dVar6 - dVar9 * dVar7;
+            dVar2 = xexp(dVar6 * dVar4);
+
+            r4 = dVar2 * (dVar9 * dVar11 + (dVar8 * dVar1)) + dVar5;
+            r5 = dVar2 * (dVar3 * dVar11 + (dVar10 * dVar1));
+            r6 = dVar2 * (dVar11 * (dVar3 * dVar6 + (dVar10 * dVar7)) +
+                          (dVar1 * (dVar10 * dVar6 - (dVar3 * dVar7))));
+        }
+
+        void hanging_state_type::update_heading(F32 dt)
+        {
+            F32 angle = xrmod((PI / 2) - stick_ang - rot);
+            rot_vel += stick_frac * (angle - PI) * fixed.turn.spring * stick_mag * dt;
+
+            rot += rot_vel * dt;
+            rot_vel *= fixed.turn.decay;
+        }
+
+        S32 hanging_state_type::detach_update(xScene& scene, F32& dt)
+        {
+            xSphere sphere;
+
+            last_hook_loc = shared.hook_loc;
+            update_hook_loc();
+
+            stick_loc.x = stick_loc.y = 0.0f; // Chained assignment required for match
+            last_loc = loc;
+
+            xVec3 deltaVel = loc.normal() * -h.detach.accel;
+            vel += deltaVel * dt;
+            loc += deltaVel * dt * dt + vel * dt;
+
+            update_animation(dt);
+            update_detach_camera(dt);
+
+            globals.player.ent.bound.sph = player_bound();
+
+            update_sound(dt);
+            update_blur(dt);
+
+            if (loc.y >= 0.0f || loc.length2() <= 0.1f)
+            {
+                play_sound(SOUND_DETACH, 0.0f);
+                return -1;
+            }
+
+            return 1;
+        }
+
+        void hanging_state_type::update_detach_camera(F32 dt)
+        {
+            xMat4x3 cammat;
+            xQuat dir;
+
+            detach.time += dt;
+
+            F32 detachTimeRatio;
+            if (detach.time < detach.end_time)
+            {
+                detachTimeRatio = detach.time / detach.end_time;
+            }
+            else
+            {
+                detachTimeRatio = 1.0f;
+            }
+
+            F32 curve = xSCurve(detachTimeRatio);
+            cammat.pos = detach.start_loc + (detach.end_loc - detach.start_loc) * curve;
+            cammat.pos += local_to_world(loc);
+
+            xQuatSlerp(&dir, &detach.start_dir, &detach.end_dir, curve);
+            xQuatToMat(&dir, &cammat);
+
+            xCameraMove(&globals.camera, cammat.pos);
+            xCameraRotate(&globals.camera, cammat, 0.0f, 0.0f, 0.0f);
+        }
+
+        void hanging_state_type::start_detaching()
+        {
+            xVec3 eulerVec;
+            xMat3x3 mat;
+
+            detaching = true;
+            calc_drop_off_velocity(drop_off_vel, shared.hook_loc, shared.drop_loc,
+                                   globals.player.g.Gravity,
+                                   shared.hook->asset->detach.free_fall_time);
+
+            xVec3 localMatRIght = local_to_world(globals.camera.mat.right);
+            mat.right = globals.camera.mat.right;
+            mat.up.assign(0.0f, 1.0f, 0.0f);
+            mat.at = localMatRIght.cross(mat.up);
+
+            F32 hgoal = globals.camera.hgoal;
+            F32 dgoal = globals.camera.dgoal;
+            detach.start_loc = globals.camera.mat.pos - localMatRIght;
+            detach.end_loc = mat.up * hgoal + mat.at * -dgoal;
+
+            xMat3x3GetEuler(&mat, &eulerVec);
+            eulerVec.x = zCameraTweakGlobal_GetPitch();
+            eulerVec.y = 0.0f;
+            xMat3x3Euler(&mat, &eulerVec);
+
+            xQuatFromMat(&detach.start_dir, &globals.camera.mat);
+            xQuatFromMat(&detach.end_dir, &mat);
+
+            detach.time = 0.0f;
+            detach.end_time = xsqrt(__fabs(loc.length() / h.detach.accel));
+            if (detach.end_time >= -1e-5f && detach.end_time <= 1e-5f)
+            {
+                detach.end_time = 0.01f;
+            }
+
+            globals.camera.tm_dec = 0.0f;
+            globals.camera.tm_acc = 0.0f;
+            globals.camera.tmr = 0.0f;
+            globals.camera.ltm_dec = 0.0f;
+            globals.camera.ltm_acc = 0.0f;
+            globals.camera.ltmr = 0.0f;
+            globals.camera.pgoal = PI + eulerVec.x;
+            globals.camera.pcur = PI + eulerVec.x;
         }
 
         S32 hanging_state_type::cb_cache_collisions::operator()(xEnt& ent, xGridBound& bound)
