@@ -3,6 +3,7 @@
 
 #include "zTextBox.h"
 #include "zNPCTypeCommon.h"
+#include "xIni.h"
 
 #include "xScene.h"
 
@@ -83,13 +84,13 @@ struct ztalkbox : xBase
 
     static void init();
     static void load(xBase& data, xDynAsset& asset, size_t);
+    static void load_settings(xIniFile& ini);
     static void update_all(xScene& s, F32 dt);
     static void render_all();
     static void reset_all();
     static void clear_layout();
     static void permit(U32 add_flags, U32 remove_flags);
     static ztalkbox* get_active();
-
 
     void start_talk(U32 textID, callback*, zNPCCommon*); // FIXME: params not verified
 

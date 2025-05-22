@@ -12,10 +12,10 @@ struct st_SERIAL_CLIENTINFO
     S32 actsize;
 };
 
-struct st_SERIAL_PERCID_SIZE 
+struct st_SERIAL_PERCID_SIZE
 {
     U32 idtag;
-    S32 needsize; 
+    S32 needsize;
 };
 
 struct xSerial
@@ -50,7 +50,7 @@ struct xSerial
     void operator delete(void*);
 };
 
-void xSerialStartup(S32, st_SERIAL_PERCID_SIZE*);
+S32 xSerialStartup(S32, st_SERIAL_PERCID_SIZE*);
 void xSerialShutdown();
 void xSerialTraverse(S32 (*func)(U32 clientID, xSerial* xser));
 void xSerialWipeMainBuffer();

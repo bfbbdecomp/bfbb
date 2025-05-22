@@ -13,6 +13,7 @@ namespace oob_state
     void fx_render();
     void read_persistent(xSerial& s);
     void write_persistent(xSerial& s);
+    void load_settings(xIniFile& ini);
 
     float oob_timer();
 
