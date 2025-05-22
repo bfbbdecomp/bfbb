@@ -44,7 +44,15 @@ We need to give Ghidra the ability to run Python 3 code, we do this with the Ghi
 
 Follow the installation instructions on that page. You probably don't need to create a venv in this case, but you do need to run `ghidrathon_configure.py`.
 
-### Step 5: Add Script Directory
+### Step 5: Install Importer Script Dependencies
+
+The importer script has a single additional Python package dependency on `elftools` to parse the elf file. Install it with the following command:
+
+```bash
+pip install pyelftools
+```
+
+### Step 6: Add Script Directory
 
 In Ghidra, `Window > Script Manager` to open the script manager. This is what we ill use to run the script.
 
@@ -52,13 +60,21 @@ In the script manager, at the top right, click the "Manage Script Directories" b
 
 Click `+` at the top right of the script manager, and add `bfbb/ghidra_scripts` to the list of script directories.
 
-### Step 6: Run the Importer
+### Step 7: Run the Importer
 
 In the Script Manager, you should now be able to filter for `bfbb_import.py`. Select it and run it through the context menu or the run button at the top of the Script Manager.
 
 Importing will take as long as a clean build does because we temporarily have to make a debug build of the executable to get the parameter names and other info from already reverse engineered functions (the script will restore your previous build settings after doing so)
 
-### Step 7: Enjoy The Results
+### Step 8: (Optionally) Change Additional Files to Matching
+
+The importer script only imports functions and types referenced in files linked into the final DOL file the bulid generates. To generate matching DOLs, the build normally only links compilation units which are 100% matching.
+
+If you're working on a cpp file with structures you want to import into Ghidra, you're not bound by this limitation! As long as enough contents are defined in the file you're working on for it to link you can import things from it.
+
+Temporarily change the file in question to "Matching" in `configure.py`, and re-run the importer. Note that if you build with the file changed to Matching when it is not a 100% match yet, this will give you a "not matching" error at the end of the build. That's expected: The import will still be able to import the symbols correctly regardless because it uses the memory mapping in symbols.txt.
+
+### Step 9: Enjoy The Results
 
 Most functions should now have name / parameter info rather than just being FUN_xxxxxxxx. No more having to look stuff up in symbols.txt!
 
