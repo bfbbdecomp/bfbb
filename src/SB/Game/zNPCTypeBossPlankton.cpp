@@ -1,4 +1,5 @@
 #include "zNPCTypeBossPlankton.h"
+#include "xDebug.h"
 
 #include <types.h>
 
@@ -23,8 +24,77 @@
 #define ANIM_attack_missle 76 //0x4c
 #define ANIM_attack_bomb 77 //0x4d
 
+#define SOUND_HOVER 0
+#define SOUND_HIT 1
+#define SOUND_BOLT_FIRE 2
+#define SOUND_BOLT_FLY 3
+#define SOUND_BOLT_HIT 4
+#define SOUND_CHARGE 5
+
 namespace
 {
+    struct sound_data_type
+    {
+        U32 id;
+        U32 handle;
+        xVec3* loc;
+        F32 volume;
+    };
+
+    struct sound_property
+    {
+        U32 asset;
+        F32 volume;
+        F32 range_inner;
+        F32 range_outer;
+        F32 delay;
+        F32 fade_time;
+    };
+
+    struct sound_asset
+    {
+        S32 group;
+        char* name;
+        U32 priority;
+        U32 flags;
+    };
+
+    static U32 sound_asset_ids[6][10];
+    static sound_data_type sound_data[6];
+    static const sound_asset sound_assets[29] =
+    {
+        {0, "RSB_foot_loop", 0, 3},
+        {0, "fan_loop", 0, 3},
+        {0, "Rocket_burn_loop", 0, 3},
+        {0, "RP_whirr_loop", 0, 3},
+        {0, "RP_whirr2_loop", 0, 3},
+        {0, "Glove_hover", 0, 3},
+        {0, "Glove_pursuit", 0, 3},
+        {1, "Prawn_FF_hit", 0, 0},
+        {1, "Prawn_hit", 0, 0},
+        {1, "Door_metal_shut", 0, 0},
+        {1, "Ghostplat_fall", 0, 0},
+        {1, "ST-death", 0, 0},
+        {1, "RP_Bwrrzt", 0, 0},
+        {1, "RP_chunk", 0, 0},
+        {1, "b201_rp_exhale", 0, 0},
+        {2, "RP_laser_alt", 0, 0},
+        {3, "RP_laser_loop", 0, 1},
+        {3, "ElecArc_alt_b", 0, 1},
+        {3, "Laser_lrg_fire_loop", 0, 1},
+        {3, "Laser_sm_fire_loop", 0, 1},
+        {4, "RB_stalact_brk", 0, 0},
+        {4, "Volcano_blast", 0, 0},
+        {4, "RP_laser_thunk", 0, 0},
+        {4, "RP_pfft", 0, 0},
+        {4, "RP_thwash", 0, 0},
+        {5, "RP_charge_whirr", 0, 0},
+        {5, "B101_SC_jump", 0, 0},
+        {5, "KJ_Charge", 0, 0},
+        {5, "Laser_med_pwrup1", 0, 0}
+    };
+
+
     S32 init_sound()
     {
         return 0;
@@ -37,6 +107,745 @@ namespace
 
     void play_sound(int, const xVec3*, float)
     {
+    }
+
+    struct config
+    {
+        F32 radius;
+        F32 length;
+        F32 vel;
+        F32 fade_dist;
+        F32 kill_dist;
+        F32 safe_dist;
+        F32 hit_radius;
+        F32 rand_ang;
+        F32 scar_life;
+        xVec2 bolt_uv[2];
+        S32 hit_interval;
+        F32 damage;
+    };
+
+    struct tweak_group
+    {
+        xVec3 accel;
+        xVec3 max_vel;
+        F32 turn_accel;
+        F32 turn_max_vel;
+        F32 ground_y;
+        F32 ground_radius;
+        F32 hit_vel;
+        F32 hit_max_dist;
+        F32 idle_time;
+        F32 min_arena_dist;
+        struct
+        {
+            F32 min_ang;
+            F32 max_ang;
+            F32 min_delay;
+            F32 max_delay;
+        } follow;
+        struct
+        {
+            F32 fuse_dist;
+            F32 fuse_delay;
+        } help;
+        struct
+        {
+            xVec3 accel;
+            xVec3 max_vel;
+            F32 stun_duration;
+            F32 obstruct_angle;
+        } mode_buddy;
+        struct
+        {
+            xVec3 accel;
+            xVec3 max_vel;
+            F32 stun_duration;
+        } mode_harass;
+        struct
+        {
+            F32 height;
+            F32 radius;
+            F32 beam_interval;
+            F32 beam_duration;
+            F32 beam_dist;
+        } hunt;
+        struct
+        {
+            F32 rate;
+            F32 time_warm_up;
+            F32 time_fire;
+            F32 gun_tilt_min;
+            F32 gun_tilt_max;
+            F32 max_dist;
+            F32 emit_dist;
+            config fx;
+        } beam;
+        struct
+        {
+            F32 safety_dist;
+            F32 safety_height;
+            F32 attack_dist;
+            F32 attack_height;
+            F32 stun_time;
+        } harass;
+        struct
+        {
+            F32 duration;
+            F32 accel;
+            F32 max_vel;
+        } flank;
+        struct
+        {
+            F32 accel;
+            F32 max_vel;
+            F32 dist;
+        } fall;
+        struct
+        {
+            F32 duration;
+            F32 move_delay_min;
+            F32 move_delay_max;
+            F32 accel;
+            F32 max_vel;
+        } evade;
+        struct
+        {
+            xVec3 center;
+            struct
+            {
+                F32 radius;
+                F32 height;
+            } attack;
+            struct
+            {
+                F32 radius;
+                F32 height;
+            } safety;
+        } arena;
+        sound_property sound[6];
+        void* context;
+        tweak_callback cb_move;
+        tweak_callback cb_arena;
+        tweak_callback cb_ground;
+        tweak_callback cb_beam;
+        tweak_callback cb_help;
+        tweak_callback cb_sound;
+        tweak_callback cb_sound_asset;
+
+        void register_tweaks(bool init, xModelAssetParam* ap, U32 apsize, const char*);
+    };
+
+    void tweak_group::register_tweaks(bool init, xModelAssetParam* ap, U32 apsize, const char*)
+    {
+        xVec3 V0;
+        V0.x = 0.0f;
+        V0.y = 0.0f;
+        V0.z = 0.0f;
+
+        if (init)
+        {
+            turn_accel = 540.0f;
+            auto_tweak::load_param<F32, F32>(turn_accel, DEG2RAD(10), 0.01f, 1000000000.0f, ap,
+                                             apsize, "turn_accel");
+        }
+        if (init)
+        {
+            turn_max_vel = 180.0f;
+            auto_tweak::load_param<F32, F32>(turn_max_vel, DEG2RAD(10), 0.01f, 1000000000.0f, ap,
+                                             apsize, "turn_max_vel");
+        }
+        if (init)
+        {
+            ground_y = -1.38f;
+            auto_tweak::load_param<F32, F32>(ground_y, 1.0f, -1000000000.0f, 1000000000.0f, ap,
+                                             apsize, "ground_y");
+        }
+        if (init)
+        {
+            ground_radius = 12.0f;
+            auto_tweak::load_param<F32, F32>(ground_radius, 1.0f, 0.0f, 1000000000.0f, ap, apsize,
+                                             "ground_radius");
+        }
+        if (init)
+        {
+            hit_vel = 5.0f;
+            auto_tweak::load_param<F32, F32>(hit_vel, 1.0f, 0.0f, 100000.0f, ap, apsize, "hit_vel");
+        }
+        if (init)
+        {
+            hit_max_dist = 5.0f;
+            auto_tweak::load_param<F32, F32>(hit_max_dist, 1.0f, 0.0f, 100000.0f, ap, apsize,
+                                             "hit_max_dist");
+        }
+        if (init)
+        {
+            idle_time = 3.0f;
+            auto_tweak::load_param<F32, F32>(idle_time, 1.0f, 0.0f, 10.0f, ap, apsize, "idle_time");
+        }
+        if (init)
+        {
+            min_arena_dist = 3.0f;
+            auto_tweak::load_param<F32, F32>(min_arena_dist, 1.0f, 0.0f, 100.0f, ap, apsize,
+                                             "min_arena_dist");
+        }
+        if (init)
+        {
+            help.fuse_dist = 8.0f;
+            auto_tweak::load_param<F32, F32>(help.fuse_dist, 1.0f, 0.0f, 100.0f, ap, apsize,
+                                             "help.fuse_dist");
+        }
+        if (init)
+        {
+            help.fuse_delay = 3.0f;
+            auto_tweak::load_param<F32, F32>(help.fuse_delay, 1.0f, 0.0f, 100.0f, ap, apsize,
+                                             "help.fuse_delay");
+        }
+        if (init)
+        {
+            follow.min_ang = 15.0f;
+            auto_tweak::load_param<F32, F32>(follow.min_ang, DEG2RAD(10), 0.0f, 180.0f, ap, apsize,
+                                             "follow.min_ang");
+        }
+        if (init)
+        {
+            follow.max_ang = 30.0f;
+            auto_tweak::load_param<F32, F32>(follow.max_ang, DEG2RAD(10), 0.0f, 180.0f, ap, apsize,
+                                             "follow.max_ang");
+        }
+        if (init)
+        {
+            follow.min_delay = 0.0f;
+            auto_tweak::load_param<F32, F32>(follow.min_delay, 1.0f, 0.0f, 10.0f, ap, apsize,
+                                             "follow.min_delay");
+        }
+        if (init)
+        {
+            follow.max_delay = 2.0f;
+            auto_tweak::load_param<F32, F32>(follow.max_delay, 1.0f, 0.0f, 10.0f, ap, apsize,
+                                             "follow.max_delay");
+        }
+        if (init)
+        {
+            mode_buddy.accel = xVec3::create(10.0f, 20.0f, 20.0f);
+            auto_tweak::load_param<xVec3, S32>(mode_buddy.accel, 0, 0, 0, ap, apsize,
+                                               "mode_buddy.accel");
+        }
+        if (init)
+        {
+            mode_buddy.max_vel = xVec3::create(20.0f, 10.0f, 20.0f);
+            auto_tweak::load_param<xVec3, S32>(mode_buddy.max_vel, 0, 0, 0, ap, apsize,
+                                               "mode_buddy.max_vel");
+        }
+        if (init)
+        {
+            mode_buddy.stun_duration = 1.0f;
+            auto_tweak::load_param<F32, F32>(mode_buddy.stun_duration, 1.0f, 0.0f, 100.0f, ap,
+                                             apsize, "mode_buddy.stun_duration");
+        }
+        if (init)
+        {
+            mode_buddy.obstruct_angle = 45.0f;
+            auto_tweak::load_param<F32, F32>(mode_buddy.obstruct_angle, DEG2RAD(10), 0.0f, 90.0f,
+                                             ap, apsize, "mode_buddy.obstruct_angle");
+        }
+        if (init)
+        {
+            mode_harass.accel = xVec3::create(10.0f, 5.0f, 10.0f);
+            auto_tweak::load_param<xVec3, S32>(mode_harass.accel, 0, 0, 0, ap, apsize,
+                                               "mode_harass.accel");
+        }
+        if (init)
+        {
+            mode_harass.max_vel = xVec3::create(20.0f, 10.0f, 10.0f);
+            auto_tweak::load_param<xVec3, S32>(mode_harass.max_vel, 0, 0, 0, ap, apsize,
+                                               "mode_harass.max_vel");
+        }
+        if (init)
+        {
+            mode_harass.stun_duration = 2.0f;
+            auto_tweak::load_param<F32, F32>(mode_harass.stun_duration, 1.0f, 0.0f, 10.0f, ap,
+                                             apsize, "mode_harass.stun_duration");
+        }
+        if (init)
+        {
+            hunt.height = 3.0f;
+            auto_tweak::load_param<F32, F32>(hunt.height, 1.0f, -10.0f, 10.0f, ap, apsize,
+                                             "hunt.height");
+        }
+        if (init)
+        {
+            hunt.radius = 5.0f;
+            auto_tweak::load_param<F32, F32>(hunt.radius, 1.0f, 1.0f, 100.0f, ap, apsize,
+                                             "hunt.radius");
+        }
+        if (init)
+        {
+            hunt.beam_interval = 3.0f;
+            auto_tweak::load_param<F32, F32>(hunt.beam_interval, 1.0f, 0.0f, 100.0f, ap, apsize,
+                                             "hunt.beam_interval");
+        }
+        if (init)
+        {
+            hunt.beam_duration = 3.0f;
+            auto_tweak::load_param<F32, F32>(hunt.beam_duration, 1.0f, 0.0f, 100.0f, ap, apsize,
+                                             "hunt.beam_duration");
+        }
+        if (init)
+        {
+            hunt.beam_dist = 7.5f;
+            auto_tweak::load_param<F32, F32>(hunt.beam_dist, 1.0f, 1.0f, 100.0f, ap, apsize,
+                                             "hunt.beam_dist");
+        }
+        if (init)
+        {
+            beam.rate = 6.0f;
+            auto_tweak::load_param<F32, F32>(beam.rate, 1.0f, 0.01f, 100000.0f, ap, apsize,
+                                             "beam.rate");
+        }
+        if (init)
+        {
+            beam.time_warm_up = 0.5f;
+            auto_tweak::load_param<F32, F32>(beam.time_warm_up, 1.0f, 0.01f, 100.0f, ap, apsize,
+                                             "beam.time_warm_up");
+        }
+        if (init)
+        {
+            beam.time_fire = 5.0f;
+            auto_tweak::load_param<F32, F32>(beam.time_fire, 1.0f, 0.01f, 100.0f, ap, apsize,
+                                             "beam.time_fire");
+        }
+        if (init)
+        {
+            beam.gun_tilt_min = -80.0f;
+            auto_tweak::load_param<F32, F32>(beam.gun_tilt_min, DEG2RAD(10), -180.0f, 180.0f, ap,
+                                             apsize, "beam.gun_tilt_min");
+        }
+        if (init)
+        {
+            beam.gun_tilt_max = 20.0f;
+            auto_tweak::load_param<F32, F32>(beam.gun_tilt_max, DEG2RAD(10), -180.0f, 180.0f, ap,
+                                             apsize, "beam.gun_tilt_max");
+        }
+        if (init)
+        {
+            beam.max_dist = 25.0f;
+            auto_tweak::load_param<F32, F32>(beam.max_dist, 1.0f, 1.0f, 100.0f, ap, apsize,
+                                             "beam.max_dist");
+        }
+        if (init)
+        {
+            beam.emit_dist = 0.5f;
+            auto_tweak::load_param<F32, F32>(beam.emit_dist, 1.0f, 0.0f, 10.0f, ap, apsize,
+                                             "beam.emit_dist");
+        }
+        if (init)
+        {
+            beam.fx.radius = 0.7f;
+            auto_tweak::load_param<F32, F32>(beam.fx.radius, 1.0f, 0.01f, 100.0f, ap, apsize,
+                                             "beam.fx.radius");
+        }
+        if (init)
+        {
+            beam.fx.length = 2.0f;
+            auto_tweak::load_param<F32, F32>(beam.fx.length, 1.0f, 0.01f, 100.0f, ap, apsize,
+                                             "beam.fx.length");
+        }
+        if (init)
+        {
+            beam.fx.vel = 20.0f;
+            auto_tweak::load_param<F32, F32>(beam.fx.vel, 1.0f, 0.0f, 100000.0f, ap, apsize,
+                                             "beam.fx.vel");
+        }
+        if (init)
+        {
+            beam.fx.fade_dist = 15.0f;
+            auto_tweak::load_param<F32, F32>(beam.fx.fade_dist, 1.0f, 0.0f, 100000.0f, ap, apsize,
+                                             "beam.fx.fade_dist");
+        }
+        if (init)
+        {
+            beam.fx.kill_dist = 20.0f;
+            auto_tweak::load_param<F32, F32>(beam.fx.kill_dist, 1.0f, 0.0f, 100000.0f, ap, apsize,
+                                             "beam.fx.kill_dist");
+        }
+        if (init)
+        {
+            beam.fx.safe_dist = 2.0f;
+            auto_tweak::load_param<F32, F32>(beam.fx.safe_dist, 1.0f, 0.0f, 100000.0f, ap, apsize,
+                                             "beam.fx.safe_dist");
+        }
+        if (init)
+        {
+            beam.fx.hit_radius = 0.2f;
+            auto_tweak::load_param<F32, F32>(beam.fx.hit_radius, 1.0f, 0.0f, 100.0f, ap, apsize,
+                                             "beam.fx.hit_radius");
+        }
+        if (init)
+        {
+            beam.fx.rand_ang = 6.0f;
+            auto_tweak::load_param<F32, F32>(beam.fx.rand_ang, DEG2RAD(10), 0.0f, 360.0f, ap,
+                                             apsize, "beam.fx.rand_ang");
+        }
+        if (init)
+        {
+            beam.fx.scar_life = 3.0f;
+            auto_tweak::load_param<F32, F32>(beam.fx.scar_life, 1.0f, 0.0f, 100.0f, ap, apsize,
+                                             "beam.fx.scar_life");
+        }
+        if (init)
+        {
+            beam.fx.bolt_uv[0].x = 0.0f;
+            auto_tweak::load_param<F32, F32>(beam.fx.bolt_uv[0].x, 1.0f, 0.0f, 1.0f, ap, apsize,
+                                             "beam.fx.bolt_uv[0].x");
+        }
+        if (init)
+        {
+            beam.fx.bolt_uv[0].y = 0.0f;
+            auto_tweak::load_param<F32, F32>(beam.fx.bolt_uv[0].y, 1.0f, 0.0f, 1.0f, ap, apsize,
+                                             "beam.fx.bolt_uv[0].y");
+        }
+        if (init)
+        {
+            beam.fx.bolt_uv[1].x = 1.0f;
+            auto_tweak::load_param<F32, F32>(beam.fx.bolt_uv[1].x, 1.0f, 0.0f, 1.0f, ap, apsize,
+                                             "beam.fx.bolt_uv[1].x");
+        }
+        if (init)
+        {
+            beam.fx.bolt_uv[1].y = 1.0f;
+            auto_tweak::load_param<F32, F32>(beam.fx.bolt_uv[1].y, 1.0f, 0.0f, 1.0f, ap, apsize,
+                                             "beam.fx.bolt_uv[1].y");
+        }
+        if (init)
+        {
+            beam.fx.hit_interval = 2;
+            auto_tweak::load_param<S32, S32>(beam.fx.hit_interval, 1, 0, 100, ap, apsize,
+                                             "beam.fx.hit_interval");
+        }
+        if (init)
+        {
+            beam.fx.damage = 1.0f;
+            auto_tweak::load_param<F32, F32>(beam.fx.damage, 1.0f, 0.0f, 1000000000.0f, ap, apsize,
+                                             "beam.fx.damage");
+        }
+        if (init)
+        {
+            harass.safety_dist = 2.0f;
+            auto_tweak::load_param<F32, F32>(harass.safety_dist, 1.0f, 0.0f, 100.0f, ap, apsize,
+                                             "harass.safety_dist");
+        }
+        if (init)
+        {
+            harass.safety_height = -4.0f;
+            auto_tweak::load_param<F32, F32>(harass.safety_height, 1.0f, -100.0f, 100.0f, ap,
+                                             apsize, "harass.safety_height");
+        }
+        if (init)
+        {
+            harass.attack_dist = 5.0f;
+            auto_tweak::load_param<F32, F32>(harass.attack_dist, 1.0f, 0.0f, 100.0f, ap, apsize,
+                                             "harass.attack_dist");
+        }
+        if (init)
+        {
+            harass.attack_height = 2.0f;
+            auto_tweak::load_param<F32, F32>(harass.attack_height, 1.0f, -100.0f, 100.0f, ap,
+                                             apsize, "harass.attack_height");
+        }
+        if (init)
+        {
+            harass.stun_time = 6.0f;
+            auto_tweak::load_param<F32, F32>(harass.stun_time, 1.0f, 0.0f, 100.0f, ap, apsize,
+                                             "harass.stun_time");
+        }
+        if (init)
+        {
+            flank.duration = 2.0f;
+            auto_tweak::load_param<F32, F32>(flank.duration, 1.0f, 0.0f, 100.0f, ap, apsize,
+                                             "flank.duration");
+        }
+        if (init)
+        {
+            flank.accel = 5.0f;
+            auto_tweak::load_param<F32, F32>(flank.accel, 1.0f, 0.0f, 100.0f, ap, apsize,
+                                             "flank.accel");
+        }
+        if (init)
+        {
+            flank.max_vel = 20.0f;
+            auto_tweak::load_param<F32, F32>(flank.max_vel, 1.0f, 0.0f, 100.0f, ap, apsize,
+                                             "flank.max_vel");
+        }
+        if (init)
+        {
+            fall.accel = 4.0f;
+            auto_tweak::load_param<F32, F32>(fall.accel, 1.0f, 0.0f, 1000000000.0f, ap, apsize,
+                                             "fall.accel");
+        }
+        if (init)
+        {
+            fall.max_vel = 50.0f;
+            auto_tweak::load_param<F32, F32>(fall.max_vel, 1.0f, 0.0f, 1000000000.0f, ap, apsize,
+                                             "fall.max_vel");
+        }
+        if (init)
+        {
+            fall.dist = 30.0f;
+            auto_tweak::load_param<F32, F32>(fall.dist, 1.0f, 0.0f, 100000.0f, ap, apsize,
+                                             "fall.dist");
+        }
+        if (init)
+        {
+            evade.duration = 6.0f;
+            auto_tweak::load_param<F32, F32>(evade.duration, 1.0f, 0.0f, 10.0f, ap, apsize,
+                                             "evade.duration");
+        }
+        if (init)
+        {
+            evade.move_delay_min = 1.0f;
+            auto_tweak::load_param<F32, F32>(evade.move_delay_min, 1.0f, 0.0f, 10.0f, ap, apsize,
+                                             "evade.move_delay_min");
+        }
+        if (init)
+        {
+            evade.move_delay_max = 1.5f;
+            auto_tweak::load_param<F32, F32>(evade.move_delay_max, 1.0f, 0.0f, 10.0f, ap, apsize,
+                                             "evade.move_delay_max");
+        }
+        if (init)
+        {
+            evade.accel = 5.0f;
+            auto_tweak::load_param<F32, F32>(evade.accel, 1.0f, 0.0f, 100000.0f, ap, apsize,
+                                             "evade.accel");
+        }
+        if (init)
+        {
+            evade.max_vel = 10.0f;
+            auto_tweak::load_param<F32, F32>(evade.max_vel, 1.0f, 0.0f, 100000.0f, ap, apsize,
+                                             "evade.max_vel");
+        }
+        if (init)
+        {
+            arena.center = V0;
+            auto_tweak::load_param<xVec3, S32>(arena.center, 0, 0, 0, ap, apsize, "arena.center");
+        }
+        if (init)
+        {
+            arena.attack.radius = 14.0f;
+            auto_tweak::load_param<F32, F32>(arena.attack.radius, 1.0f, 0.01f, 100.0f, ap, apsize,
+                                             "arena.attack.radius");
+        }
+        if (init)
+        {
+            arena.attack.height = 11.0f;
+            auto_tweak::load_param<F32, F32>(arena.attack.height, 1.0f, 0.01f, 100.0f, ap, apsize,
+                                             "arena.attack.height");
+        }
+        if (init)
+        {
+            arena.safety.radius = 12.0f;
+            auto_tweak::load_param<F32, F32>(arena.safety.radius, 1.0f, 0.01, 100.0f, ap, apsize,
+                                             "arena.safety.radius");
+        }
+        if (init)
+        {
+            arena.safety.height = 14.0f;
+            auto_tweak::load_param<F32, F32>(arena.safety.height, 1.0f, 0.01f, 100.0f, ap, apsize,
+                                             "arena.safety.height");
+        }
+        if (init)
+        {
+            sound[SOUND_HOVER].volume = 1.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_HOVER].volume, 1.0f, 0.0f, 1.0f, ap,
+                                             apsize, "sound[SOUND_HOVER].volume");
+        }
+        if (init)
+        {
+            sound[SOUND_HOVER].range_inner = 0.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_HOVER].range_inner, 1.0f, 0.0f, 100000.0f,
+                                             ap, apsize, "sound[SOUND_HOVER].range_inner");
+        }
+        if (init)
+        {
+            sound[SOUND_HOVER].range_outer = 10.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_HOVER].range_outer, 1.0f, 0.0f, 100000.0f,
+                                             ap, apsize, "sound[SOUND_HOVER].range_outer");
+        }
+        if (init)
+        {
+            sound[SOUND_HOVER].delay = 0.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_HOVER].delay, 1.0f, 0.0f, 100000.0f, ap,
+                                             apsize, "sound[SOUND_HOVER].delay");
+        }
+        if (init)
+        {
+            sound[SOUND_HOVER].fade_time = 0.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_HOVER].fade_time, 1.0f, 0.0f, 100000.0f,
+                                             ap, apsize, "sound[SOUND_HOVER].fade_time");
+        }
+        if (init)
+        {
+            sound[SOUND_HIT].volume = 0.5f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_HIT].volume, 1.0f, 0.0f, 1.0f, ap, apsize,
+                                             "sound[SOUND_HIT].volume");
+        }
+        if (init)
+        {
+            sound[SOUND_HIT].range_inner = 10.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_HIT].range_inner, 1.0f, 0.0f, 100000.0f,
+                                             ap, apsize, "sound[SOUND_HIT].range_inner");
+        }
+        if (init)
+        {
+            sound[SOUND_HIT].range_outer = 30.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_HIT].range_outer, 1.0f, 0.0f, 100000.0f,
+                                             ap, apsize, "sound[SOUND_HIT].range_outer");
+        }
+        if (init)
+        {
+            sound[SOUND_HIT].delay = 0.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_HIT].delay, 1.0f, 0.0f, 100000.0f, ap,
+                                             apsize, "sound[SOUND_HIT].delay");
+        }
+        if (init)
+        {
+            sound[SOUND_BOLT_FIRE].volume = 0.5f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_BOLT_FIRE].volume, 1.0f, 0.0f, 1.0f, ap,
+                                             apsize, "sound[SOUND_BOLT_FIRE].volume");
+        }
+        if (init)
+        {
+            sound[SOUND_BOLT_FIRE].range_inner = 0.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_BOLT_FIRE].range_inner, 1.0f, 0.0f,
+                                             100000.0f, ap, apsize,
+                                             "sound[SOUND_BOLT_FIRE].range_inner");
+        }
+        if (init)
+        {
+            sound[SOUND_BOLT_FIRE].range_outer = 20.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_BOLT_FIRE].range_outer, 1.0f, 0.0f,
+                                             100000.0f, ap, apsize,
+                                             "sound[SOUND_BOLT_FIRE].range_outer");
+        }
+        if (init)
+        {
+            sound[SOUND_BOLT_FIRE].delay = 0.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_BOLT_FIRE].delay, 1.0f, 0.0f, 100000.0f,
+                                             ap, apsize, "sound[SOUND_BOLT_FIRE].delay");
+        }
+        if (init)
+        {
+            sound[SOUND_BOLT_FLY].volume = 0.2f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_BOLT_FLY].volume, 1.0f, 0.0f, 1.0f, ap,
+                                             apsize, "sound[SOUND_BOLT_FLY].volume");
+        }
+        if (init)
+        {
+            sound[SOUND_BOLT_FLY].range_inner = 0.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_BOLT_FLY].range_inner, 1.0f, 0.0f,
+                                             100000.0f, ap, apsize,
+                                             "sound[SOUND_BOLT_FLY].range_inner");
+        }
+        if (init)
+        {
+            sound[SOUND_BOLT_FLY].range_outer = 10.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_BOLT_FLY].range_outer, 1.0f, 0.0f,
+                                             100000.0f, ap, apsize,
+                                             "sound[SOUND_BOLT_FLY].range_outer");
+        }
+        if (init)
+        {
+            sound[SOUND_BOLT_FLY].delay = 0.1f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_BOLT_FLY].delay, 1.0f, 0.0f, 100000.0f, ap,
+                                             apsize, "sound[SOUND_BOLT_FLY].delay");
+        }
+        if (init)
+        {
+            sound[SOUND_BOLT_FLY].fade_time = 0.1f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_BOLT_FLY].fade_time, 1.0f, 0.0f, 100000.0f,
+                                             ap, apsize, "sound[SOUND_BOLT_FLY].fade_time");
+        }
+        if (init)
+        {
+            sound[SOUND_BOLT_HIT].volume = 1.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_BOLT_HIT].volume, 1.0f, 0.0f, 1.0f, ap,
+                                             apsize, "sound[SOUND_BOLT_HIT].volume");
+        }
+        if (init)
+        {
+            sound[SOUND_BOLT_HIT].range_inner = 0.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_BOLT_HIT].range_inner, 1.0f, 0.0f,
+                                             100000.0f, ap, apsize,
+                                             "sound[SOUND_BOLT_HIT].range_inner");
+        }
+        if (init)
+        {
+            sound[SOUND_BOLT_HIT].range_outer = 20.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_BOLT_HIT].range_outer, 1.0f, 0.0f,
+                                             100000.0f, ap, apsize,
+                                             "sound[SOUND_BOLT_HIT].range_outer");
+        }
+        if (init)
+        {
+            sound[SOUND_BOLT_HIT].delay = 0.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_BOLT_HIT].delay, 1.0f, 0.0f, 100000.0f, ap,
+                                             apsize, "sound[SOUND_BOLT_HIT].delay");
+        }
+        if (init)
+        {
+            sound[SOUND_CHARGE].volume = 1.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_CHARGE].volume, 1.0f, 0.0f, 1.0f, ap,
+                                             apsize, "sound[SOUND_CHARGE].volume");
+        }
+        if (init)
+        {
+            sound[SOUND_CHARGE].range_inner = 0.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_CHARGE].range_inner, 1.0f, 0.0f, 100000.0f,
+                                             ap, apsize, "sound[SOUND_CHARGE].range_inner");
+        }
+        if (init)
+        {
+            sound[SOUND_CHARGE].range_outer = 20.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_CHARGE].range_outer, 1.0f, 0.0f, 100000.0f,
+                                             ap, apsize, "sound[SOUND_CHARGE].range_outer");
+        }
+        if (init)
+        {
+            sound[SOUND_CHARGE].delay = 0.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_CHARGE].delay, 1.0f, 0.0f, 100000.0f, ap,
+                                             apsize, "sound[SOUND_CHARGE].delay");
+        }
+        if (init)
+        {
+            sound[SOUND_HOVER].asset = sound_asset_ids[0][4];
+            sound_data[SOUND_HOVER].id = xStrHash(sound_assets[sound[SOUND_HOVER].asset].name);
+        }
+        if (init)
+        {
+            sound[SOUND_HIT].asset = sound_asset_ids[1][3];
+            sound_data[SOUND_HIT].id = xStrHash(sound_assets[sound[SOUND_HIT].asset].name);
+        }
+        if (init)
+        {
+            sound[SOUND_BOLT_FIRE].asset = sound_asset_ids[2][0];
+            sound_data[SOUND_BOLT_FIRE].id = xStrHash(sound_assets[sound[SOUND_BOLT_FIRE].asset].name);
+        }
+        if (init)
+        {
+            sound[SOUND_BOLT_FLY].asset = sound_asset_ids[3][3];
+            sound_data[SOUND_BOLT_FLY].id = xStrHash(sound_assets[sound[SOUND_BOLT_FLY].asset].name);
+        }
+        if (init)
+        {
+            sound[SOUND_BOLT_HIT].asset = sound_asset_ids[4][3];
+            sound_data[SOUND_BOLT_HIT].id = xStrHash(sound_assets[sound[SOUND_BOLT_HIT].asset].name);
+        }
+        if (init)
+        {
+            sound[SOUND_CHARGE].asset = sound_asset_ids[5][3];
+            sound_data[SOUND_CHARGE].id = xStrHash(sound_assets[sound[SOUND_CHARGE].asset].name);
+        }
     }
 
 } // namespace
