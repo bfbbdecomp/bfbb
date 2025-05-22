@@ -188,7 +188,7 @@ void xEntMechReverse(xEntMotion* motion)
 static xEntMotion** dbg_xems;
 static U16 dbg_num;
 static U16 dbg_num_allocd;
-static S16 dbg_idx;
+static S16 dbg_idx = -1;
 
 void xEntMotionDebugCB();
 
@@ -221,4 +221,108 @@ void xEntMotionDebugExit()
     dbg_xems = NULL;
     dbg_num_allocd = 0;
     dbg_idx = -1;
+}
+
+void xEntMotionDebugCB()
+{
+}
+
+S32 xDebugModeAdd(char*, void*)
+{
+    return 0;
+}
+
+void xEntMotionRun(xEntMotion* motion)
+{
+    motion->flags &= 0xFFFB;
+}
+
+void xEntMotionStop(xEntMotion* motion)
+{
+    motion->flags |= 0x4;
+}
+
+void xEntMotionReset(xEntMotion*, xScene*)
+{
+}
+
+U32 xEntMotionIsStopped(const xEntMotion* motion)
+{
+    return motion->flags & 0x4;
+}
+
+U32 xEntERIsExtending(const xEntMotion* motion)
+{
+    return motion->t < motion->er.et;
+}
+
+U32 xEntERIsExtended(const xEntMotion* motion)
+{
+    return motion->t >= motion->er.et && motion->t < motion->er.brt;
+}
+
+U32 xEntERIsRetracted(const xEntMotion* motion)
+{
+    return motion->t >= motion->er.ert;
+}
+
+U32 xEntERIsRetracting(const xEntMotion* motion)
+{
+    return motion->t >= motion->er.brt && motion->t < motion->er.ert;
+}
+
+void xEntMPSetSpeed(xEntMotion* motion, F32 speed)
+{
+    motion->mp.speed = MAX(0.0f, speed);
+}
+
+void xEntMotionTranslate(xEntMotion*, const xVec3*, xMat4x3*)
+{
+}
+
+void xEntMotionMove(xEntMotion*, xScene*, F32, xEntFrame*)
+{
+}
+
+F32 xSpline3_ArcTotal(xSpline3*)
+{
+    return 0.0f;
+}
+
+void xQuatCopy(xQuat* a, const xQuat* b)
+{
+    a->s = b->s;
+    a->v.x = b->v.x;
+    a->v.y = b->v.y;
+    a->v.z = b->v.z;
+}
+
+U32 xVec3Equals(const xVec3* a, const xVec3* b)
+{
+    // Epsilon test with epsilon of... 0.0f lol.
+    return xabs(a->x - b->x) <= 0.0f && xabs(a->y - b->y) <= 0.0f && xabs(a->z - b->z) <= 0.0f;
+}
+
+U32 xQuatEquals(const xQuat* a, const xQuat* b)
+{
+    return (a->s == b->s) && xVec3Equals(&a->v, &b->v);
+}
+
+void xQuatFlip(xQuat* a, const xQuat* b)
+{
+    a->s = -b->s;
+    xVec3Inv(&a->v, &b->v);
+}
+
+F32 xQuatDot(const xQuat* a, const xQuat* b)
+{
+    return xVec3Dot(&a->v, &b->v) + a->s * b->s;
+}
+
+void xDrawLine(const xVec3* start, const xVec3* end)
+{
+}
+
+void xDrawSetColor(iColor_tag color)
+{
 }

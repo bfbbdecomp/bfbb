@@ -6,24 +6,17 @@
 
 #include "iMath.h"
 
-extern F32 _571;
-extern F32 _640;
-extern F32 _641;
-extern F32 _642;
-extern F32 _643;
-extern F32 _644;
-
 void xBoundUpdate(xBound* b)
 {
     if (b->type == XBOUND_TYPE_BOX)
     {
         xVec3Add(&b->box.center, &b->box.box.lower, &b->box.box.upper);
-        xVec3SMul(&b->box.center, &b->box.center, _571);
+        xVec3SMul(&b->box.center, &b->box.center, 0.5f);
     }
     else if (b->type == XBOUND_TYPE_OBB)
     {
         xVec3Add(&b->box.center, &b->box.box.lower, &b->box.box.upper);
-        xVec3SMul(&b->box.center, &b->box.center, _571);
+        xVec3SMul(&b->box.center, &b->box.center, 0.5f);
         xMat4x3Toworld(&b->box.center, b->mat, &b->box.center);
     }
 
@@ -81,7 +74,7 @@ void xBoundGetSphere(xSphere& o, const xBound& bound)
     case XBOUND_TYPE_OBB:
     {
         const xMat4x3& mat = *bound.mat;
-        xVec3 v = (bound.box.box.upper - bound.box.box.lower) * _571;
+        xVec3 v = (bound.box.box.upper - bound.box.box.lower) * 0.5f;
 
         o.r = xsqrt(SQR(v.x) * mat.right.length2() + SQR(v.y) * mat.up.length2() +
                     SQR(v.z) * mat.at.length2());
@@ -94,10 +87,10 @@ void xBoundGetSphere(xSphere& o, const xBound& bound)
 
 F32 xsqrt(F32 x)
 {
-    const F32 half = _571;
-    const F32 three = _640;
+    const F32 half = 0.5f;
+    const F32 three = 3.0f;
 
-    if (x <= _641 || isinf(x))
+    if (x <= 0.0f || isinf(x))
     {
         return x;
     }
@@ -107,12 +100,12 @@ F32 xsqrt(F32 x)
     F32 guess = __frsqrte(x);
     guess = half * guess * (three - guess * guess * x);
 
-    if (guess > _644)
+    if (guess > 0.0000099999997f)
     {
-        return _642 / guess;
+        return 1.0f / guess;
     }
 
-    return _643;
+    return 100000.0f;
 }
 
 U32 xBoundSphereHitsOBB(const xSphere* s, const xBox* b, const xMat4x3* m, xCollis* coll)
@@ -175,31 +168,31 @@ static void xBoundOBBIsectRay(const xBox* b, const xMat4x3* m, const xRay3* r, x
     {
         F32 len2 = SQR(m->right.x) + SQR(m->right.y) + SQR(m->right.z);
 
-        if ((F32)iabs(len2 - _642) <= _644)
+        if ((F32)iabs(len2 - 1.0f) <= 0.0000099999997f)
         {
             // non-matching: incorrect instruction + order
 
-            scale.x = *(const F32*)&_642;
+            scale.x = 1.0f;
 
             mnormal.right.x = m->right.x;
             mnormal.right.y = m->right.y;
             mnormal.right.z = m->right.z;
         }
-        else if ((F32)iabs(len2) <= _644)
+        else if ((F32)iabs(len2) <= 0.0000099999997f)
         {
             // non-matching: incorrect order
 
-            scale.x = _641;
+            scale.x = 0.0f;
 
-            mnormal.right.x = _641;
-            mnormal.right.y = _642;
-            mnormal.right.z = _641;
+            mnormal.right.x = 0.0f;
+            mnormal.right.y = 1.0f;
+            mnormal.right.z = 0.0f;
         }
         else
         {
             scale.x = xsqrt(len2);
 
-            F32 len_inv = _642 / scale.x;
+            F32 len_inv = 1.0f / scale.x;
 
             mnormal.right.x = m->right.x * len_inv;
             mnormal.right.y = m->right.y * len_inv;
@@ -210,31 +203,31 @@ static void xBoundOBBIsectRay(const xBox* b, const xMat4x3* m, const xRay3* r, x
     {
         F32 len2 = SQR(m->up.x) + SQR(m->up.y) + SQR(m->up.z);
 
-        if ((F32)iabs(len2 - _642) <= _644)
+        if ((F32)iabs(len2 - 1.0f) <= 0.0000099999997f)
         {
             // non-matching: incorrect instruction + order
 
-            scale.y = *(const F32*)&_642;
+            scale.y = 1.0f;
 
             mnormal.up.x = m->up.x;
             mnormal.up.y = m->up.y;
             mnormal.up.z = m->up.z;
         }
-        else if ((F32)iabs(len2) <= _644)
+        else if ((F32)iabs(len2) <= 0.0000099999997f)
         {
             // non-matching: incorrect order
 
-            scale.y = _641;
+            scale.y = 0.0f;
 
-            mnormal.up.x = _641;
-            mnormal.up.y = _642;
-            mnormal.up.z = _641;
+            mnormal.up.x = 0.0f;
+            mnormal.up.y = 1.0f;
+            mnormal.up.z = 0.0f;
         }
         else
         {
             scale.y = xsqrt(len2);
 
-            F32 len_inv = _642 / scale.y;
+            F32 len_inv = 1.0f / scale.y;
 
             mnormal.up.x = m->up.x * len_inv;
             mnormal.up.y = m->up.y * len_inv;
@@ -245,31 +238,31 @@ static void xBoundOBBIsectRay(const xBox* b, const xMat4x3* m, const xRay3* r, x
     {
         F32 len2 = SQR(m->at.x) + SQR(m->at.y) + SQR(m->at.z);
 
-        if ((F32)iabs(len2 - _642) <= _644)
+        if ((F32)iabs(len2 - 1.0f) <= 0.0000099999997f)
         {
             // non-matching: incorrect instruction + order
 
-            scale.z = *(const F32*)&_642;
+            scale.z = 1.0f;
 
             mnormal.at.x = m->at.x;
             mnormal.at.y = m->at.y;
             mnormal.at.z = m->at.z;
         }
-        else if ((F32)iabs(len2) <= _644)
+        else if ((F32)iabs(len2) <= 0.0000099999997f)
         {
             // non-matching: incorrect order
 
-            scale.z = _641;
+            scale.z = 0.0f;
 
-            mnormal.at.x = _641;
-            mnormal.at.y = _642;
-            mnormal.at.z = _641;
+            mnormal.at.x = 0.0f;
+            mnormal.at.y = 1.0f;
+            mnormal.at.z = 0.0f;
         }
         else
         {
             scale.z = xsqrt(len2);
 
-            F32 len_inv = _642 / scale.z;
+            F32 len_inv = 1.0f / scale.z;
 
             mnormal.at.x = m->at.x * len_inv;
             mnormal.at.y = m->at.y * len_inv;
@@ -313,7 +306,7 @@ void xRayHitsBound(const xRay3* r, const xBound* b, xCollis* c)
         iBoxIsectRay(&b->box.box, r, &isect);
     }
 
-    if (isect.penned <= _641)
+    if (isect.penned <= 0.0f)
     {
         c->flags |= 0x1;
         c->dist = isect.dist;
@@ -366,7 +359,7 @@ void xVecHitsBound(const xVec3* v, const xBound* b, xCollis* c)
         iBoxIsectVec(&b->box.box, v, &isect);
     }
 
-    if (isect.penned <= _641)
+    if (isect.penned <= 0.0f)
     {
         c->flags |= 0x1;
     }
@@ -478,6 +471,15 @@ xVec3& xVec3::operator-=(const xVec3& v)
     this->x -= v.x;
     this->y -= v.y;
     this->z -= v.z;
+
+    return *this;
+}
+
+xVec3& xVec3::operator=(const xVec3& v)
+{
+    this->x = v.x;
+    this->y = v.y;
+    this->z = v.z;
 
     return *this;
 }

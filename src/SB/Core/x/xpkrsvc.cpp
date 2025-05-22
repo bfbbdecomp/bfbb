@@ -9,8 +9,6 @@
 #include "xMath.h"
 #include "xMemMgr.h"
 
-extern char xpkrsvc_strings[];
-
 // Square and JESway: Function relocation issues will resolve themselves when all the functions
 //                    here 100% match, as it is apparently related to the instruction size of each function
 static st_PACKER_READ_FUNCS g_pkr_read_funcmap_original = { 1,
@@ -1200,7 +1198,7 @@ S32 ValidatePlatform(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, S32 plattag, 
     sprintf(fullname, "%s %s %s %s", plat, vid, lang, title);
 
     bool rc = false;
-    if ((strcmp(plat, "Game Cube") == 0 || strcmp(plat, "Xbox") == 0 ||
+    if ((strcmp(plat, "GameCube") == 0 || strcmp(plat, "Xbox") == 0 ||
          strcmp(plat, "PlayStation 2") == 0))
     {
         rc = true;
@@ -1242,7 +1240,7 @@ S32 ValidatePlatform(st_HIPLOADDATA* pkg, st_PACKER_READ_DATA* pr, S32 plattag, 
         return 0;
     }
 
-    rc = !(bool)(strcmp(plat, "Game Cube"));
+    rc = !(bool)(strcmp(plat, "GameCube"));
     if (!rc)
     {
         return 0;
@@ -1764,5 +1762,5 @@ void PKR_pop_memmark()
 
 char* st_PACKER_ATOC_NODE::Name() const
 {
-    return xpkrsvc_strings + 82;
+    return "<Unknown>";
 }

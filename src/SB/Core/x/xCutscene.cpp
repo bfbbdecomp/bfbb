@@ -11,16 +11,11 @@
 #include <types.h>
 #include <string.h>
 
-extern xCutscene sActiveCutscene;
-extern xCutsceneInfo* sCutTocInfo;
-extern U32 sCutTocCount;
+xCutscene sActiveCutscene;
+U32 sCutTocCount;
+xCutsceneInfo* sCutTocInfo;
 extern void* RwEngineInstance;
-extern xModelInstance sCutsceneFakeModel[8];
-
-extern F32 _672; // 1.0
-
-extern F32 lbl_803CCB3C; // 0.0
-extern F32 lbl_803CCB40; // 0.033333335
+static xModelInstance sCutsceneFakeModel[8];
 
 // Non-matching: scheduling
 void xCutscene_Init(void* toc)
@@ -60,7 +55,7 @@ xCutscene* xCutscene_Create(U32 id)
 
     xSndPauseAll(1, 1);
     memset(&sActiveCutscene, 0, 0x198);
-    sActiveCutscene.PlaybackSpeed = _672;
+    sActiveCutscene.PlaybackSpeed = 1.0f;
 
     for (int i = 0; i < sCutTocCount; i++)
     {
@@ -165,7 +160,7 @@ S32 xCutscene_Update(xCutscene *csn, F32 dt)
 
     csn->Time = csn->PlaybackSpeed * dt + csn->Time;
     csn->CamTime = xCutsceneConvertBreak(csn->Time, csn->BreakList, csn->Info->BreakCount, -1);
-    
+
     if (csn->Time > csn->Play->EndTime || csn->BadReadPause)
     {
         if (csn->PlayIndex == csn->Info->NumTime - 1)
@@ -247,6 +242,23 @@ void xCutscene_SetSpeed(xCutscene* csn, F32 speed)
     }
 }
 
+F32 xlog(F32 x)
+{
+   return std::logf(x);
+}
+
+float std::logf(float x)
+{
+    return (float)log((double)x);
+}
+
+void xVec3Lerp(xVec3* out, const xVec3* a, const xVec3* b, float alpha)
+{
+    out->x = a->x + (b->x - a->x) * alpha;
+    out->y = a->y + (b->y - a->y) * alpha;
+    out->z = a->z + (b->z - a->z) * alpha;
+}
+
 F32 xCutsceneConvertBreak(float param_1, xCutsceneBreak* param_2, U32 param_3, int param_4)
 {
     int i = 0;
@@ -260,11 +272,11 @@ F32 xCutsceneConvertBreak(float param_1, xCutsceneBreak* param_2, U32 param_3, i
         {
             break;
         }
-        if (param_2[i].Time - param_1 <= lbl_803CCB3C)
+        if (param_2[i].Time - param_1 <= 0.0f)
         {
             break;
         }
-        if (lbl_803CCB40 <= param_2[i].Time - param_1)
+        if (0.03333333f <= param_2[i].Time - param_1)
         {
             break;
         }
@@ -275,7 +287,7 @@ F32 xCutsceneConvertBreak(float param_1, xCutsceneBreak* param_2, U32 param_3, i
             return param_1;
         }
     }
-    return param_2[i].Time - lbl_803CCB40;
+    return param_2[i].Time - 0.03333333f;
 }
 
 void CutsceneShadowRender(CutsceneShadowModel* smod)
@@ -294,7 +306,19 @@ void CutsceneShadowRender(CutsceneShadowModel* smod)
     }
 }
 
+void xCutscene_Render(xCutscene*, xEnt**, S32*, F32*)
+{
+}
+
 xCutscene* xCutscene_CurrentCutscene()
 {
     return &sActiveCutscene;
+}
+
+void XCSNNosey::CanRenderNow()
+{
+}
+
+void XCSNNosey::UpdatedAnimated(RpAtomic*, RwMatrixTag*, U32, U32)
+{
 }

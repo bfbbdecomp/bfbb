@@ -29,6 +29,9 @@
 #include "iTime.h"
 #include "xstransvc.h"
 
+zGlobals globals;
+xGlobals* xglobals;
+
 S32 percentageDone;
 _tagxPad* gDebugPad;
 static S32 sShowMenuOnBoot;
@@ -592,6 +595,7 @@ void zMainMemLvlChkCB()
 
 void zLedgeAdjust(zLedgeGrabParams* params)
 {
+    params->animGrab *= (1.0f/30);
     params->animGrab *= (1.0f / 30);
 }
 

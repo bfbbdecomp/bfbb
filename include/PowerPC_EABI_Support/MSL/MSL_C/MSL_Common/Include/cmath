@@ -17,6 +17,8 @@ namespace std
     float acosf(float x);
     float expf(float x);
     float floorf(float x);
+    float logf(float x);
+    float sqrtf(float x);
 #else
     inline float atan2f(float y, float x)
     {

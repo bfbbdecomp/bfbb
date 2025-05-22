@@ -29,6 +29,8 @@ template <class T> struct tier_queue
     U32 wrap_mask;
     tier_queue_allocator* alloc;
     U8 blocks[256];
+
+    void clear();
 };
 
 template <class T> struct static_queue

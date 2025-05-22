@@ -214,24 +214,12 @@ static zSceneObjectInstanceDesc sInitTable[] =
 };
 // clang-format on
 
-extern U32 _1251;
 extern char byte_803D0884;
-extern U32 _2014;
 
 extern U32 _1250;
-extern F32 _1373;
-extern F32 _1374;
-extern F32 _1375;
-extern F32 _1493;
-extern F32 _1494;
-extern F32 _1495;
-extern F32 _1496_0;
+extern U32 _1251;
 extern U32 _2013;
-extern F32 _2094;
-extern F32 _2095_0;
-extern F32 _2096_0;
-extern F32 _2097_0;
-extern F32 _2242;
+extern U32 _2014;
 
 static void zSceneObjHashtableInit(S32 count);
 static void zSceneObjHashtableExit();
@@ -876,7 +864,7 @@ void zSceneInit(U32 theSceneID, S32 reloadInProgress)
     zGameScreenTransitionBegin();
     zParPTankInit();
 
-    pdone = _1373;
+    pdone = 2.0f;
 
     if (globals.useHIPHOP && !reloadInProgress)
     {
@@ -895,10 +883,10 @@ void zSceneInit(U32 theSceneID, S32 reloadInProgress)
                 rgba_bkgrd[2] = 0;
                 rgba_bkgrd[3] = 0;
 
-                pdone += _1373;
+                pdone += 2.0f;
 
                 zGameScreenTransitionUpdate(pdone, "... scene loading ...\n", rgba_bkgrd);
-            } while (xSTLoadStep(theSceneID) < _1374);
+            } while (xSTLoadStep(theSceneID) < 1.0f);
 
             xSTDisconnect(theSceneID, 0x2);
         }
@@ -932,7 +920,7 @@ void zSceneInit(U32 theSceneID, S32 reloadInProgress)
     xUtil_idtag2string(theSceneID, 0);
     iTimeDiffSec(time);
 
-    pdone += _1373;
+    pdone += 2.0f;
 
     zGameScreenTransitionUpdate(pdone, "... scene asset queue ...\n");
 
@@ -947,10 +935,10 @@ void zSceneInit(U32 theSceneID, S32 reloadInProgress)
         rgba_bkgrd[2] = 0;
         rgba_bkgrd[3] = 0;
 
-        pdone += _1373;
+        pdone += 2.0f;
 
         zGameScreenTransitionUpdate(pdone, "... scene loading ...\n", rgba_bkgrd);
-    } while (xSTLoadStep(theSceneID) < _1374);
+    } while (xSTLoadStep(theSceneID) < 1.0f);
 
     xSTDisconnect(theSceneID, 0x1);
 
@@ -958,7 +946,7 @@ void zSceneInit(U32 theSceneID, S32 reloadInProgress)
     xUtil_idtag2string(theSceneID, 0);
     iTimeDiffSec(time);
 
-    pdone += _1373;
+    pdone += 2.0f;
 
     zGameScreenTransitionUpdate(pdone, "...initializing scene - sound\n");
 
@@ -1019,7 +1007,7 @@ void zSceneInit(U32 theSceneID, S32 reloadInProgress)
     zAnimListInit();
     zGooInit(24);
 
-    zGameScreenTransitionUpdate(_1375, "...initializing scene - base types\n");
+    zGameScreenTransitionUpdate(100.0f, "...initializing scene - base types\n");
 
     for (i = 0; i < eBaseTypeCount; i++)
     {
@@ -1315,7 +1303,7 @@ void zSceneSwitch(_zPortal* p, S32 forceSameScene)
             globals.player.cp.initCamID = PlayerMarkerStartCamID;
         }
 
-        if (PlayerStartAngle >= _1493)
+        if (PlayerStartAngle >= 1000.0f)
         {
             xMarkerAsset* marker = (xMarkerAsset*)xSTFindAsset(PlayerMarkerStartID, NULL);
 
@@ -1346,10 +1334,10 @@ void zSceneSwitch(_zPortal* p, S32 forceSameScene)
 
             xEntFrame* frame = globals.player.ent.frame;
 
-            frame->rot.angle = _1494 * PlayerStartAngle / _1495;
-            frame->rot.axis = xVec3::create(_1496_0, _1374, _1496_0);
+            frame->rot.angle = 3.1415927f * PlayerStartAngle / 180.0f;
+            frame->rot.axis = xVec3::create(0.0f, 1.0f, 0.0f);
 
-            xMat3x3Euler(&frame->mat, frame->rot.angle, _1496_0, _1496_0);
+            xMat3x3Euler(&frame->mat, frame->rot.angle, 0.0f, 0.0f);
 
             *(xMat3x3*)globals.player.ent.model->Mat = frame->mat;
 
@@ -2089,8 +2077,8 @@ void zSceneSetup()
     xSceneSetup(s);
     gUIMgr.Setup(s);
 
-    s->gravity = _2094;
-    s->drag = _2095_0;
+    s->gravity = -50.0f;
+    s->drag = 0.079999998f;
     s->flags = 0x5;
 
     zNPCMgr_scenePostInit();
@@ -2633,10 +2621,10 @@ void zSceneSetup()
     globals.updateMgr->deactivateCB = (xUpdateCullDeactivateCallback)DeactivateCB;
 
     FloatAndVoid defaultDist;
-    defaultDist.f = _2096_0;
+    defaultDist.f = 4900.0f;
 
     FloatAndVoid lodDist;
-    lodDist.f = _1496_0;
+    lodDist.f = 0.0f;
 
     for (i = 0; i < entCount; i++)
     {
@@ -2644,13 +2632,13 @@ void zSceneSetup()
 
         if (lod)
         {
-            if (lod->noRenderDist == _1496_0)
+            if (lod->noRenderDist == 0.0f)
             {
                 lod = NULL;
             }
             else
             {
-                lodDist.f = SQR(_2097_0 + xsqrt(lod->noRenderDist));
+                lodDist.f = SQR(10.0f + xsqrt(lod->noRenderDist));
             }
         }
 
@@ -2686,7 +2674,7 @@ void zSceneSetup()
     iColor_tag clear;
     *(U32*)&clear = _2014;
 
-    xScrFxFade(&black, &clear, _1374, NULL, 0);
+    xScrFxFade(&black, &clear, 1.0f, NULL, 0);
 }
 
 S32 zSceneSetup_serialTraverseCB(U32 clientID, xSerial* xser)
@@ -2725,7 +2713,7 @@ void zSceneUpdate(F32 dt)
     zScene* s;
     xBase** b;
 
-    if (_1496_0 == dt)
+    if (0.0f == dt)
     {
         return;
     }
@@ -2779,8 +2767,8 @@ void zSceneUpdate(F32 dt)
 
     gUIMgr.Update(s, dt);
 
-    if (xVec3Dist(&sOldPosPlayer, (xVec3*)&globals.player.ent.model->Mat->pos) > _2242 ||
-        xVec3Dist(&sOldPosCamera, &globals.camera.mat.pos) > _2242)
+    if (xVec3Dist(&sOldPosPlayer, (xVec3*)&globals.player.ent.model->Mat->pos) > 5.0f ||
+        xVec3Dist(&sOldPosCamera, &globals.camera.mat.pos) > 5.0f)
     {
         sSuddenMove = 1;
     }

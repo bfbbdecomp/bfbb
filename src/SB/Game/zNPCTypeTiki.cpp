@@ -25,14 +25,14 @@ static zNPCTiki* orphanList;
 
 // Taken from zNPCTypeTiki.s
 // Defining these here makes the stringBase0 offsets match in the later functions.
-char* str1 = "Unknown";
-char* str2 = "Idle01";
-char* str3 = "PAREMIT_THUNDER_CLOUD";
-char* str4 = "PAREMIT_CLOUD";
-char* str5 = "target";
-char* str6 = "zNPCTiki";
-char* str7 = "what the ...\n";
-char* str8 = "Idle";
+static char* str1 = "Unknown";
+static char* str2 = "Idle01";
+static char* str3 = "PAREMIT_THUNDER_CLOUD";
+static char* str4 = "PAREMIT_CLOUD";
+static char* str5 = "target";
+static char* str6 = "zNPCTiki";
+static char* str7 = "what the ...\n";
+static char* str8 = "Idle";
 
 void ZNPC_Tiki_Startup()
 {

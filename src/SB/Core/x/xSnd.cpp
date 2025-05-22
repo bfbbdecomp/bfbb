@@ -7,13 +7,9 @@
 
 extern _xSndDelayed sDelayedSnd[16];
 extern U32 sDelayedPaused;
-
 extern F32 sTimeElapsed;
-extern F32 _585;
-extern F32 _586;
-extern F32 _598;
-extern F32 _599;
-extern xSndGlobals gSnd;
+
+xSndGlobals gSnd;
 
 static S32 faders_active;
 
@@ -29,13 +25,13 @@ void xSndInit()
 
     xSndSceneInit();
 
-    //Need this to only use f0 instead of f1 for _585
+    //Need this to only use f0 instead of f1 for 1.0f
     for (int i = 0; i < 5; i++)
     {
-        gSnd.categoryVolFader[i] = _585;
+        gSnd.categoryVolFader[i] = 1.0f;
     }
 
-    gSnd.categoryVolFader[2] = _586;
+    gSnd.categoryVolFader[2] = 0.7f;
 
     gSnd.stereo = 1;
     iSndSuspendCD(1);
@@ -48,15 +44,15 @@ void xSndSceneInit()
     gSnd.listenerMode = SND_LISTENER_MODE_PLAYER;
     for (U32 i = 0; i < 2; i++)
     {
-        gSnd.listenerMat[i].at.assign(_585, _598, _598);
-        gSnd.listenerMat[i].right.assign(_598, _585, _598);
-        gSnd.listenerMat[i].up.assign(_598, _598, _585);
-        gSnd.listenerMat[i].pos.assign(_599, _599, _599);
+        gSnd.listenerMat[i].at.assign(1.0f, 0.0f, 0.0f);
+        gSnd.listenerMat[i].right.assign(0.0f, 1.0f, 0.0f);
+        gSnd.listenerMat[i].up.assign(0.0f, 0.0f, 1.0f);
+        gSnd.listenerMat[i].pos.assign(999999.0f, 999999.0f, 999999.0f);
     }
-    gSnd.at.assign(_585, _598, _598);
-    gSnd.right.assign(_598, _585, _598);
-    gSnd.up.assign(_598, _598, _585);
-    gSnd.pos.assign(_599, _599, _599);
+    gSnd.at.assign(1.0f, 0.0f, 0.0f);
+    gSnd.right.assign(0.0f, 1.0f, 0.0f);
+    gSnd.up.assign(0.0f, 0.0f, 1.0f);
+    gSnd.pos.assign(999999.0f, 999999.0f, 999999.0f);
     iSndUpdate();
 }
 
@@ -141,7 +137,7 @@ void xSndDelayedInit()
     for (int i = 0; i < 16; i++)
     {
         //Alternates between f1 and f0
-        sDelayedSnd[i].delay = *(volatile F32*)&_598;
+        sDelayedSnd[i].delay = 0.0f;
     }
     sDelayedPaused = 0;
 }
@@ -184,7 +180,7 @@ void xSndCalculateListenerPosition()
         gSnd.up = pMat->up;
         gSnd.at = pMat->at;
         gSnd.pos = gSnd.listenerMat[1].pos;
-        gSnd.pos.y += _585;
+        gSnd.pos.y += 1.0f;
         break;
     case SND_LISTENER_MODE_CAMERA:
         pMat = &gSnd.listenerMat[0];
@@ -268,7 +264,7 @@ void xSndExit()
 U32 xSndPlay(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, U32 parentID,
              sound_category category, F32 delay)
 {
-    return xSndPlayInternal(id, vol, pitch, priority, flags, parentID, NULL, NULL, _598, _598,
+    return xSndPlayInternal(id, vol, pitch, priority, flags, parentID, NULL, NULL, 0.0f, 0.0f,
                             category, delay);
 }
 

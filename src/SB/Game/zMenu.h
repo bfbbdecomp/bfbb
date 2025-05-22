@@ -3,8 +3,6 @@
 
 #include <types.h>
 
-bool menu_fmv_played;
-
 U32 zMenuUpdateMode();
 U32 zMenuIsPaused();
 S32 zMenuLoopContinue();

@@ -31,6 +31,8 @@ double asin(double);
 double acos(double);
 double exp(double);
 double floor(double);
+double log(double);
+double sqrt(double);
 
 #ifdef __cplusplus
 }

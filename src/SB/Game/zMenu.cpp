@@ -29,6 +29,8 @@
 #include "zMusic.h"
 #include "zSaveLoad.h"
 
+bool menu_fmv_played;
+
 static S32 sFirstBoot = 1;
 
 // TODO: This probably wasn't volatile in the original code, but we have 100%

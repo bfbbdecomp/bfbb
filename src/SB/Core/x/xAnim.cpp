@@ -361,7 +361,7 @@ void xAnimTempTransitionInit(U32 count)
 }
 
 // TODO: move to xMathInlines.h
-static F32 xatan2(F32 y, F32 x)
+F32 xatan2(F32 y, F32 x)
 {
     return xAngleClampFast(std::atan2f(y, x));
 }
