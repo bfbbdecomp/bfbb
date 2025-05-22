@@ -683,7 +683,7 @@ void zMainLoop()
     zMainShowProgressBar();
     iTimeGet();
     xShadowSimple_Init();
-    globals.pickupTable = (zAssetPickupTable*)xSTFindAssetByType(0x5049434b, 0, 0);
+    globals.pickupTable = (zAssetPickupTable*)xSTFindAssetByType('PLAT', 0, 0);
     // globals.pickupTable = zPickupTableInit();
     // zPickupTableInit hasnt been implemented yet
     xMemPushBase();
@@ -795,15 +795,15 @@ void zMainLoadFontHIP()
 
     xMemPushBase();
     time = iTimeGet();
-    xUtil_idtag2string(0x464f4e54, 0);
+    xUtil_idtag2string('FONT', 0);
     iTimeDiffSec(time);
-    xSTPreLoadScene(0x464f4e54, NULL, 0x1);
+    xSTPreLoadScene('FONT', NULL, 0x1);
     time = iTimeGet();
-    xUtil_idtag2string(0x464f4e54, 0);
+    xUtil_idtag2string('FONT', 0);
     iTimeDiffSec(time);
-    xSTQueueSceneAssets(0x464f4e54, 1);
+    xSTQueueSceneAssets('FONT', 1);
     time = iTimeGet();
-    xUtil_idtag2string(0x464f4e54, 0);
+    xUtil_idtag2string('FONT', 0);
     iTimeDiffSec(time);
 
     do
@@ -811,9 +811,9 @@ void zMainLoadFontHIP()
         xSTLoadStep(time);
     } while (time < 1.0f);
 
-    xSTDisconnect(0x464f4e54, 1);
+    xSTDisconnect('FONT', 1);
     time = iTimeGet();
-    xUtil_idtag2string(0x464f4e54, 0);
+    xUtil_idtag2string('FONT', 0);
     iTimeDiffSec(time);
 }
 
