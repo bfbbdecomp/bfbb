@@ -595,14 +595,14 @@ void zMainMemLvlChkCB()
 
 void zLedgeAdjust(zLedgeGrabParams* params)
 {
-    params->animGrab *= (1.0f/30);
+    params->animGrab *= (1.0f / 30);
     params->animGrab *= (1.0f / 30);
 }
 
 void zMainShowProgressBar()
 {
     S32 progBar;
-    size_t sVar2;
+    size_t str;
     char loadingText[12];
     char auStack_cc[64];
     char acStack_8c[64];
@@ -620,7 +620,7 @@ void zMainShowProgressBar()
         memset(acStack_8c, 0, 0x40);
         strcpy(auStack_cc, loadingText);
         auStack_cc[progBar] = '\0';
-        sVar2 = strlen(loadingText);
+        str = strlen(loadingText);
         memcpy(auStack_cc, acStack_8c + progBar, progBar); // 3rd arg should have progBar - sVar2
         sprintf(formattedStr, "{font=0}{h*2}{w*2}%s{color=FFFFFFFF}%s{~:c}", auStack_cc,
                 acStack_8c);
@@ -650,15 +650,15 @@ void zMainLoop()
     zMainShowProgressBar();
     xMemPushBase();
     time = iTimeGet();
-    xUtil_idtag2string(0x464f4e54, 0);
+    xUtil_idtag2string('BOOT', 0);
     iTimeDiffSec(time);
-    xSTPreLoadScene(0x464f4e54, NULL, 0x1);
+    xSTPreLoadScene('BOOT', NULL, 0x1);
     time = iTimeGet();
-    xUtil_idtag2string(0x464f4e54, 0);
+    xUtil_idtag2string('BOOT', 0);
     iTimeDiffSec(time);
-    xSTQueueSceneAssets(0x464f4e54, 1);
+    xSTQueueSceneAssets('BOOT', 1);
     time = iTimeGet();
-    xUtil_idtag2string(0x464f4e54, 0);
+    xUtil_idtag2string('BOOT', 0);
     iTimeDiffSec(time);
 
     do
@@ -666,13 +666,13 @@ void zMainLoop()
         xSTLoadStep(time);
     } while (time < 1.0f);
 
-    xSTDisconnect(0x464f4e54, 1);
+    xSTDisconnect('BOOT', 1);
     time = iTimeGet();
-    xUtil_idtag2string(0x464f4e54, 0);
+    xUtil_idtag2string('BOOT', 0);
     iTimeDiffSec(time);
     zMainShowProgressBar();
-    xSTPreLoadScene(0x504c4154, 0, 1);
-    xSTQueueSceneAssets(0x504c4154, 1);
+    xSTPreLoadScene('PLAT', 0, 1);
+    xSTQueueSceneAssets('PLAT', 1);
 
     do
     {
@@ -688,45 +688,45 @@ void zMainLoop()
     // zPickupTableInit hasnt been implemented yet
     xMemPushBase();
     time = iTimeGet();
-    xUtil_idtag2string(0x4d4e5534, 0);
+    xUtil_idtag2string('MNU4', 0);
     iTimeDiffSec(time);
-    xSTPreLoadScene(0x4d4e5534, 0, 1);
+    xSTPreLoadScene('MNU4', 0, 1);
     time = iTimeGet();
-    xUtil_idtag2string(0x4d4e5534, 0);
+    xUtil_idtag2string('MNU4', 0);
     iTimeDiffSec(time);
-    xSTQueueSceneAssets(0x4d4e5534, 1);
+    xSTQueueSceneAssets('MNU4', 1);
     time = iTimeGet();
-    xUtil_idtag2string(0x4d4e5534, 0);
+    xUtil_idtag2string('MNU4', 0);
     iTimeDiffSec(time);
     do
     {
         xSTLoadStep(time);
     } while (time < 1.0f);
-    xSTDisconnect(0x4d4e5534, 1);
+    xSTDisconnect('MNU4', 1);
     zMainShowProgressBar();
     time = iTimeGet();
-    xUtil_idtag2string(0x4d4e5534, 0);
+    xUtil_idtag2string('MNU4', 0);
     iTimeDiffSec(time);
     xMemPushBase();
     time = iTimeGet();
-    xUtil_idtag2string(0x4d4e5535, 0);
+    xUtil_idtag2string('MNU5', 0);
     iTimeDiffSec(time);
-    xSTPreLoadScene(0x4d4e5535, 0, 1);
+    xSTPreLoadScene('MNU5', 0, 1);
     time = iTimeGet();
-    xUtil_idtag2string(0x4d4e5535, 0);
+    xUtil_idtag2string('MNU5', 0);
     iTimeDiffSec(time);
-    xSTQueueSceneAssets(0x4d4e5535, 1);
+    xSTQueueSceneAssets('MNU5', 1);
     time = iTimeGet();
-    xUtil_idtag2string(0x4d4e5535, 0);
+    xUtil_idtag2string('MNU5', 0);
     iTimeDiffSec(time);
     do
     {
         xSTLoadStep(time);
     } while (time < 1.0f);
-    xSTDisconnect(0x4d4e5535, 1);
+    xSTDisconnect('MNU5', 1);
     zMainShowProgressBar();
     time = iTimeGet();
-    xUtil_idtag2string(0x4d4e5535, 0);
+    xUtil_idtag2string('MNU5', 0);
     iTimeDiffSec(time);
     xModelInit();
     xModelPoolInit(0x20, 0x40);
@@ -765,12 +765,12 @@ void zMainMemCardQueryPost(S32 needed, S32 available, S32 neededFiles, S32 unk0)
     RwRGBA* colour = 0;
     RwInt32 clearMode = 3;
 
-    cam = iCameraCreate(0x280, 0x1e0, 0);
+    cam = iCameraCreate(640, 480, 0);
     RwCameraClear(cam, colour, clearMode);
     RwCameraBeginUpdate(cam);
     render_mem_card_no_space(needed, available, neededFiles, unk0);
     RwCameraEndUpdate(cam);
-    RwCameraShowRaster(cam, 0, 1);
+    RwCameraShowRaster(cam, NULL, 1);
     iCameraDestroy(cam);
 }
 
@@ -780,12 +780,12 @@ void zMainMemCardRenderText(const char* a, bool enabled)
     RwRGBA* colour = 0;
     RwInt32 clearMode = 3;
 
-    cam = iCameraCreate(0x280, 0x1e0, 0);
+    cam = iCameraCreate(640, 480, 0);
     RwCameraClear(cam, colour, clearMode);
     RwCameraBeginUpdate(cam);
     RenderText(a, enabled);
     RwCameraEndUpdate(cam);
-    RwCameraShowRaster(cam, 0, 1);
+    RwCameraShowRaster(cam, NULL, 1);
     iCameraDestroy(cam);
 }
 
