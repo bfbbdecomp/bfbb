@@ -970,8 +970,6 @@ namespace bungee_state
                 {
                 }
             }
-
-            calc_movement(vel.x, );
         }
 
         void hanging_state_type::calc_movement(F32& r4, F32& r5, F32& r6, F32 f1, F32 f2, F32 f3,
