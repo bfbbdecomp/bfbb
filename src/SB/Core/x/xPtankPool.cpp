@@ -58,7 +58,7 @@ namespace
             RwTexture* texture = it->ptank->geometry->matList.materials[0]->texture;
             if (texture == NULL)
             {
-                if ((it->flags & rpPTANKDFLAGPOSITION) != 0)
+                if (it->flags & rpPTANKDFLAGPOSITION)
                 {
                     bucket++;
                 }
@@ -75,7 +75,7 @@ namespace
                     {
                         if (it->dst_blend == front->dst_blend &&
                             it->src_blend == front->src_blend &&
-                            ((it->flags ^ front->flags) & rpPTANKDFLAGPOSITION) == 0)
+                            (!(it->flags ^ front->flags) & rpPTANKDFLAGPOSITION))
                         {
                             break;
                         }
@@ -319,7 +319,7 @@ void xPTankPoolRender()
     group_data* endg = groups + MAX_PGT;
     while (g != endg)
     {
-        if (g->used != 0)
+        if (g->used)
         {
             qsort((void*)g->ptanks, g->size, sizeof(struct ptank_context), compare_ptanks);
 
@@ -332,7 +332,7 @@ void xPTankPoolRender()
                     render_ptank(*p);
                     p->flags &= ~rpPTANKDFLAGCNSNORMAL;
                 }
-                else if ((p->flags & rpPTANKDFLAGCNS2DROTATE) == 0)
+                else if (!(p->flags & rpPTANKDFLAGCNS2DROTATE))
                 {
                     RpMaterialSetTexture(p->ptank->geometry->matList.materials[0], NULL);
                     p->flags |= rpPTANKDFLAGCNS2DROTATE;
@@ -413,7 +413,7 @@ void ptank_pool::grab_block(ptank_group_type type)
 
 void ptank_pool::flush()
 {
-    if (this->valid() != 0)
+    if (this->valid())
     {
         RpPTankAtomicUnlock(this->ptank);
 
