@@ -60,7 +60,18 @@ struct xVec3
     F32 length2() const;
     xVec3& invert();
     F32 dot(const xVec3& c) const;
-    xVec3 cross(const xVec3& c) const;
+
+    xVec3 cross(const xVec3& c) const
+    {
+        xVec3 v = {};
+
+        v.x = y * c.y - c.y * z;
+        v.y = z * c.x - c.z * x;
+        v.z = x * c.y - c.x * y;
+
+        return v;
+    }
+
     xVec3& normalize();
     xVec3& assign(F32 val);
     xVec3 get_abs() const;
