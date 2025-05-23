@@ -643,8 +643,18 @@ void xFXAuraRender()
 {
 }
 
-void xFXFireworksInit(const char*, const char*, const char*, const char*, const char*)
+void xFXFireworksInit(const char* trailEmit, const char* emit1, const char* emit2, const char* mainSound, const char* launchSound)
 {
+    sFireworkTrailEmit = zParEmitterFind(trailEmit);
+    sFirework1Emit = zParEmitterFind(emit1);
+    sFirework2Emit = zParEmitterFind(emit2);
+    sFireworkSoundID = xStrHash(mainSound);
+    sFireworkLaunchSoundID = xStrHash(launchSound);
+    memset(sFirework, 0, sizeof(sFirework));
+    for (U32 i = 0; i < FIREWORK_COUNT; ++i)
+    {
+        sFirework[i].state = 0;
+    }
 }
 
 void xFXFireworksLaunch(F32 ,const xVec3*, F32)
@@ -653,21 +663,74 @@ void xFXFireworksLaunch(F32 ,const xVec3*, F32)
 
 void xFXFireworksUpdate(F32)
 {
+
 }
 
-RpMaterial* MaterialSetBumpMap(RpMaterial*, void*)
+RpMaterial* MaterialSetBumpMap(RpMaterial* material, void* data)
 {
     return NULL;
 }
 
-RpMaterial* MaterialSetEnvMap(RpMaterial*, void*)
+RpMaterial* MaterialSetEnvMap(RpMaterial* material, void* data)
 {
-    return NULL;
+    // Matching but with mr. instead of cmplwi
+    if (data == NULL)
+    {
+        return NULL;
+    }
+    if (material->texture)
+    {
+        if (data)
+        {
+            RwFrame* frame = NULL;
+            if ((gFXSurfaceFlags & 0x10) != 0)
+            {
+                if (globals.camera.lo_cam)
+                {
+                    frame = (RwFrame*)globals.camera.lo_cam->object.object.parent;
+                }
+                else
+                {
+                    frame = (RwFrame*)MainLight->object.object.parent;
+                }
+            }
+            else
+            {
+                frame = (RwFrame*)MainLight->object.object.parent;
+            }
+            RpMatFXMaterialSetEffects(material, rpMATFXEFFECTENVMAP);
+            RpMatFXMaterialSetupEnvMap(material, (RwTexture*)data, frame, FALSE, 1.0f);
+        }
+        else
+        {
+            RpMatFXMaterialSetEffects(material, rpMATFXEFFECTNULL);
+        }
+    }
+    return material;
 }
 
-RpMaterial* MaterialSetBumpEnvMap(RpMaterial*, RwTexture*, F32, RwTexture*, F32)
+RpMaterial* MaterialSetBumpEnvMap(RpMaterial* material, RwTexture* envMap, F32 envCooef, RwTexture* bumpMap, F32 bumpCooef)
 {
-    return NULL;
+    if (envMap == NULL || bumpMap == NULL)
+    {
+        return NULL;
+    }
+    else
+    {
+        RwFrame *frame;
+        RpMatFXMaterialSetEffects(material, rpMATFXEFFECTBUMPENVMAP);
+        if ((gFXSurfaceFlags & 0x10) != 0)
+        {
+            frame = (RwFrame*)globals.camera.lo_cam->object.object.parent;
+        }
+        else
+        {
+            frame = (RwFrame*)MainLight->object.object.parent;
+        }
+        RpMatFXMaterialSetupEnvMap(material, envMap, frame, TRUE, envCooef);
+        RpMatFXMaterialSetupBumpMap(material, bumpMap, (RwFrame*)MainLight->object.object.parent, bumpCooef);
+    }
+    return material;
 }
 
 RpAtomic* xFXanimUVAtomicSetup(RpAtomic*)
