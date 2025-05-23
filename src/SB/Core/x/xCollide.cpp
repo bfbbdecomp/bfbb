@@ -583,7 +583,7 @@ F32 xVec3::dot(const xVec3& v) const
     return x * v.x + y * v.y + z * v.z;
 }
 
-xVec3 xVec3::cross(const xVec3& v) const
+xVec3 xVec3::cross(const xVec3& c) const
 {
     xVec3 v = {};
 
