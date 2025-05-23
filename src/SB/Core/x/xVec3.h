@@ -27,6 +27,7 @@ struct xVec3
     xVec3 operator+(const xVec3&) const;
     xVec3 operator-(const xVec3&) const;
     xVec3 operator*(F32) const;
+    xVec3 operator/(F32) const;
     xVec3& operator+=(const xVec3&);
     xVec3& operator+=(F32 f)
     {
@@ -73,6 +74,8 @@ struct xVec3
 
     xVec3& normalize();
     xVec3& assign(F32 val);
+    xVec3 get_abs() const;
+    xVec3& set_abs();
 };
 
 F32 xVec3Normalize(xVec3* o, const xVec3* v);

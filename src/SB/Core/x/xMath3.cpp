@@ -11,7 +11,15 @@
 //#include "xVec3Inlines.h" // xVec3Init, imported, realized xClimate has a declaration as well though.
 
 const xVec3 g_O3 = { 0, 0, 0 };
+const xVec3 g_X3 = { 1, 0, 0 };
+const xVec3 g_Y3 = { 0, 1, 0 };
+const xVec3 g_Z3 = { 0, 0, 1 };
+const xVec3 g_NX3 = { -1, 0, 0 };
+const xVec3 g_NY3 = { 0, -1, 0 };
+const xVec3 g_NZ3 = { 0, 0, -1 };
+const xVec3 g_Onez = { 1, 1, 1 };
 const xQuat g_IQ = { 0.0f, 0.0f, 0.0f, 1.0f };
+xMat4x3 g_I3;
 
 S32 xPointInBox(const xBox* b, const xVec3* p)
 {
@@ -27,10 +35,6 @@ S32 xPointInBox(const xBox* b, const xVec3* p)
         }
     }
     return (char)ret;
-}
-
-void xMat4x3Copy(xMat4x3* o, const xMat4x3* m)
-{
 }
 
 void xMat4x3Rot(xMat4x3* m, const xVec3* a, F32 t, const xVec3* p)
@@ -85,10 +89,6 @@ void xMat3x3Euler(xMat3x3* m, F32 yaw, F32 pitch, F32 roll)
     m->at.y = -temp_f29;
     m->at.z = temp_f28 * temp_f30;
     m->flags = 0;
-}
-
-void xMat4x3Toworld(xVec3* o, const xMat4x3* m, const xVec3* v)
-{
 }
 
 /* xMat3x3RotC (xMat3x3 *, float, float, float, float) */
@@ -169,24 +169,12 @@ void xMat3x3RotZ(xMat3x3* m, F32 t)
     m->flags = 0;
 }
 
-void xMat3x3MulRotC(xMat3x3* o, xMat3x3* m, F32 _x, F32 _y, F32 _z, F32 t)
-{
-}
-
-void xMat4x3Identity(xMat4x3* m)
-{
-}
-
 /* xMat3x3Normalize (xMat3x3 *, xMat3x3 const *) */
 void xMat3x3Normalize(xMat3x3* o, const xMat3x3* m)
 {
     xVec3Normalize((xVec3*)o, (xVec3*)m);
     xVec3Normalize(&o->up, &m->up);
     xVec3Normalize(&o->at, &m->at);
-}
-
-void xMat4x3Tolocal(xVec3* o, const xMat4x3* m, const xVec3* v)
-{
 }
 
 /* xMat3x3Tolocal (xVec3 *, xMat3x3 const *, xVec3 const *) */
@@ -325,13 +313,6 @@ void xQuatDiff(xQuat* o, const xQuat* a, const xQuat* b)
     {
         xQuatFlip(o, o);
     }
-}
-
-F32 xQuatGetAngle(const xQuat* q)
-{
-    F32 angle;
-    angle = 5.0;
-    return angle;
 }
 
 /* xQuatFromMat (xQuat *, xMat3x3 const *) */
@@ -497,10 +478,6 @@ void xQuatMul(xQuat* o, const xQuat* a, const xQuat* b)
     xQuatNormalize(o, o);
 }
 
-void xQuatConj(xQuat* o, const xQuat* q)
-{
-}
-
 /* xQuatSMul (xQuat *, xQuat const *, float) */
 void xQuatSMul(xQuat* q, const xQuat* a, F32 t)
 {
@@ -513,10 +490,6 @@ void xQuatAdd(xQuat* q, const xQuat* a, const xQuat* b)
 {
     q->s = a->s + b->s;
     xVec3Add((xVec3*)q, (xVec3*)a, (xVec3*)b);
-}
-
-void xMat3x3LookAt(xMat3x3* m, const xVec3* pos, const xVec3* at)
-{
 }
 
 /* xMat3x3LookVec (xMat3x3 *, xVec3 const *) */
@@ -576,14 +549,6 @@ F32 xMat3x3LookVec(xMat3x3* m, const xVec3* at)
     xVec3Cross((xVec3*)m, &m->up, &m->at);
     m->flags = 0;
     return temp_f31;
-}
-
-void xBoxInitBoundOBB(xBox* o, const xBox* b, const xMat4x3* m)
-{
-}
-
-void xMat3x3Scale(xMat3x3* m, const xVec3* s)
-{
 }
 
 /* xMat3x3ScaleC (xMat3x3 *, float, float, float) */
@@ -739,14 +704,6 @@ void xMat3x3Mul(xMat3x3* o, const xMat3x3* a, const xMat3x3* b)
 }
 
 void xMat3x3SMul(xMat3x3*, const xMat3x3*, F32)
-{
-}
-
-void xBoxFromLine(xBox& box, const xLine3& line)
-{
-}
-
-void xBoxFromRay(xBox& box, const xRay3& ray)
 {
 }
 
