@@ -650,12 +650,3 @@ xVec2& xVec2::operator-=(const xVec2& v)
     y -= v.y;
     return *this;
 }
-
-// Get these assignment operators to exist
-static void tempReferenceWeakDefinitions(RwLine* a, nodeInfo* b, RwBBox* c, xCollis* d)
-{
-    *a = *a;
-    *b = *b;
-    *c = *c;
-    *d = *d;
-}
