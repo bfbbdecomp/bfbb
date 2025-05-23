@@ -585,7 +585,13 @@ F32 xVec3::dot(const xVec3& v) const
 
 xVec3 xVec3::cross(const xVec3& v) const
 {
-    return xVec3();
+    xVec3 v = {};
+
+    v.x = y * c.y - c.y * z;
+    v.y = z * c.x - c.z * x;
+    v.z = x * c.y - c.x * y;
+
+    return v;
 }
 
 xVec3& xVec3::normalize()

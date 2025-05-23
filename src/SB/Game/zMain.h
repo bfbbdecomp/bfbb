@@ -5,8 +5,6 @@
 #include "xIni.h"
 #include "xserializer.h"
 
-st_SERIAL_PERCID_SIZE* g_xser_sizeinfo;
-
 enum eStartupErrors
 {
     eNoError,

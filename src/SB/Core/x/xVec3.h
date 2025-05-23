@@ -54,6 +54,7 @@ struct xVec3
     xVec3& safe_normalize(const xVec3& val);
     xVec3& up_normalize();
     xVec3 up_normal() const;
+    xVec3 normal() const;
     xVec3& assign(F32 x, F32 y, F32 z);
     F32 length() const;
     F32 length2() const;

@@ -8,6 +8,35 @@
 #include "zNPCTypeCommon.h"
 #include "zNPCGoals.h"
 
+namespace auto_tweak
+{
+    template <class T1, class T2>
+    void load_param(T1&, T2, T2, T2, xModelAssetParam*, U32, const char*);
+};
+
+struct beam_config
+{
+    F32 accel;
+    F32 max_vel;
+    F32 start_dist;
+    F32 end_dist;
+    F32 wave_freq;
+    F32 wave_min;
+    F32 wave_max;
+};
+
+struct beam_type : beam_config
+{
+    F32 knock_back;
+    F32 thickness;
+    F32 focus_time;
+    F32 segment_width;
+    F32 light_rate;
+    F32 glow_dist;
+    S32 shots[3];
+    F32 fade_dist;
+};
+
 struct zNPCDutchman : zNPCSubBoss
 {
     enum move_enum
