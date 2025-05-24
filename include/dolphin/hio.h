@@ -1,25 +1,37 @@
-#ifndef _DOLPHIN_HIO_H_
-#define _DOLPHIN_HIO_H_
+#ifndef _DOLPHIN_HOSTIO_H
+#define _DOLPHIN_HOSTIO_H
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif // ifdef __cplusplus
+
+#include <dolphin/os.h>
 
 #include <dolphin/types.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+typedef enum
+{
+    HIO_DEVICE_INVALID = -1,
+    HIO_DEVICE_EXI2USB_0 = 0,
+    HIO_DEVICE_EXI2USB_1 = 1,
+    HIO_DEVICE_MrEXI = 2
+} HostIOType;
 
-typedef void (*HIOCallback)(void);
+typedef enum
+{
+    GRAB_NOT_TRANSFERRING = 0,
+    GRAB_TRANSFERRING = 1
+} HostIOGrabStatus;
+
 typedef BOOL (*HIOEnumCallback)(s32 chan);
+typedef void (*HIOCallback)(void);
 
-BOOL HIOEnumDevices(HIOEnumCallback callback);
-BOOL HIOInit(s32 chan, HIOCallback callback);
-BOOL HIOInitEx(s32 chan, u32 dev, HIOCallback callback);
-BOOL HIOReadMailbox(u32* word);
-BOOL HIOWriteMailbox(u32 word);
-BOOL HIORead(u32 addr, void* buffer, s32 size);
-BOOL HIOWrite(u32 addr, void* buffer, s32 size);
-BOOL HIOReadAsync(u32 addr, void* buffer, s32 size, HIOCallback callback);
-BOOL HIOWriteAsync(u32 addr, void* buffer, s32 size, HIOCallback callback);
-BOOL HIOReadStatus(u32* status);
+BOOL HIOInit(s32 channel, HIOCallback cb);
+BOOL HIOEnumDevices(HIOEnumCallback);
+BOOL HIOWrite(u32 chunkSize, void * buf, u32 bufSize);
+BOOL HIOReadMailbox(u32 *);
+BOOL HIOWriteMailbox(u32);
 
 #ifdef __cplusplus
 }

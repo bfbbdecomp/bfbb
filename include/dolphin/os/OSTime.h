@@ -1,44 +1,39 @@
-#ifndef _DOLPHIN_OSTIME_H_
-#define _DOLPHIN_OSTIME_H_
-
+#ifndef _DOLPHIN_OSTIME_H
+#define _DOLPHIN_OSTIME_H
 #include <dolphin/types.h>
-
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-// Time base frequency = 1/4 bus clock
-#define OS_TIME_SPEED (OS_BUS_CLOCK / 4)
+typedef s64 OSTime;
+typedef u32 OSTick;
 
-// OS time -> Real time
-#define OS_TICKS_TO_SEC(x) ((x) / (OS_TIME_SPEED))
-#define OS_TICKS_TO_MSEC(x) ((x) / (OS_TIME_SPEED / 1000))
-#define OS_TICKS_TO_USEC(x) (((x)*8) / (OS_TIME_SPEED / 125000))
-#define OS_TICKS_TO_NSEC(x) (((x)*8000) / (OS_TIME_SPEED / 125000))
+typedef struct OSCalendarTime
+{
+    int sec;  // seconds after the minute [0, 61]
+    int min;  // minutes after the hour [0, 59]
+    int hour; // hours since midnight [0, 23]
+    int mday; // day of the month [1, 31]
+    int mon;  // month since January [0, 11]
+    int year; // years in AD [1, ...]
+    int wday; // days since Sunday [0, 6]
+    int yday; // days since January 1 [0, 365]
 
-// Real time -> OS time
-#define OS_SEC_TO_TICKS(x) ((x) * (OS_TIME_SPEED))
-#define OS_MSEC_TO_TICKS(x) ((x) * (OS_TIME_SPEED / 1000))
-#define OS_USEC_TO_TICKS(x) ((x) * (OS_TIME_SPEED / 125000) / 8)
-#define OS_NSEC_TO_TICKS(x) ((x) * (OS_TIME_SPEED / 125000) / 8000)
+    int msec; // milliseconds after the second [0,999]
+    int usec; // microseconds after the millisecond [0,999]
+} OSCalendarTime;
 
-#define USEC_MAX 1000
-#define MSEC_MAX 1000
-#define MONTH_MAX 12
-#define WEEK_DAY_MAX 7
-#define YEAR_DAY_MAX 365
+OSTime OSGetTime(void);
+OSTick OSGetTick(void);
 
-#define SECS_IN_MIN 60
-#define SECS_IN_HOUR (SECS_IN_MIN * 60)
-#define SECS_IN_DAY (SECS_IN_HOUR * 24)
-#define SECS_IN_YEAR (SECS_IN_DAY * 365)
+OSTime __OSGetSystemTime(void);
+OSTime __OSTimeToSystemTime(OSTime time);
 
-#define BIAS 0xB2575
-
-#define __OSSystemTime (OSTime*)0x800030D8
+void OSTicksToCalendarTime(OSTime time, OSCalendarTime *cal);
+OSTime OSCalendarTimeToTicks(const OSCalendarTime *cal);
 
 #ifdef __cplusplus
 }
 #endif
-
-#endif // _DOLPHIN_OSTIME_H_
+#endif

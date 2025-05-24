@@ -11,7 +11,7 @@
 #include <types.h>
 #include <string.h>
 #include <stdlib.h>
-#include <cmath>
+#include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
 
 extern xFXRing sPatrickStunRing[3];
 extern xFXRing sPorterRing[2];

@@ -6,6 +6,7 @@
 #include "xJSP.h"
 
 #include <types.h>
+#include <stdio.h>
 #include <rwcore.h>
 #include <rpworld.h>
 #include <xAnim.h>

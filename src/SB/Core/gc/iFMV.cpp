@@ -8,6 +8,7 @@
 
 #include "xFile.h"
 #include "xPar.h"
+#include "gx.h"
 
 #include "zGlobals.h"
 

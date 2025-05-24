@@ -1,34 +1,30 @@
-#ifndef _DOLPHIN_OSALLOC_H_
-#define _DOLPHIN_OSALLOC_H_
+#ifndef _DOLPHIN_OSALLOC
+#define _DOLPHIN_OSALLOC
 
 #include <dolphin/types.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
 typedef int OSHeapHandle;
-
-extern volatile OSHeapHandle __OSCurrHeap;
-
-void* OSAllocFromHeap(int heap, u32 size);
-void* OSAllocFixed(void* rstart, void* rend);
-void OSFreeToHeap(int heap, void* ptr);
-int OSSetCurrentHeap(int heap);
+typedef void (*OSAllocVisitor)(void* obj, u32 size);
 void* OSInitAlloc(void* arenaStart, void* arenaEnd, int maxHeaps);
-int OSCreateHeap(void* start, void* end);
-void OSDestroyHeap(int heap);
-void OSAddToHeap(int heap, void* start, void* end);
-s32 OSCheckHeap(int heap);
+OSHeapHandle OSCreateHeap(void* start, void* end);
+void OSDestroyHeap(OSHeapHandle heap);
+void OSAddToHeap(OSHeapHandle heap, void* start, void* end);
+OSHeapHandle OSSetCurrentHeap(OSHeapHandle heap);
+void* OSAllocFromHeap(OSHeapHandle heap, u32 size);
+void* OSAllocFixed(void** rstart, void** rend);
+void OSFreeToHeap(OSHeapHandle heap, void* ptr);
+long OSCheckHeap(OSHeapHandle heap);
+void OSDumpHeap(OSHeapHandle heap);
 u32 OSReferentSize(void* ptr);
-void OSDumpHeap(int heap);
-void OSVisitAllocated(void (*visitor)(void*, u32));
-
+void OSVisitAllocated(OSAllocVisitor visitor);
+extern volatile OSHeapHandle __OSCurrHeap;
 #define OSAlloc(size) OSAllocFromHeap(__OSCurrHeap, (size))
-#define OSFree(ptr)   OSFreeToHeap(__OSCurrHeap, (ptr))
-
+#define OSFree(ptr) OSFreeToHeap(__OSCurrHeap, (ptr))
 #ifdef __cplusplus
 }
 #endif
 
-#endif
+#endif // _DOLPHIN_OSALLOC

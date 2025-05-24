@@ -2,7 +2,7 @@
 #define XSTRING_H
 
 #include <types.h>
-#include <stddef.h>
+//#include <stddef.h>
 
 struct substr
 {
