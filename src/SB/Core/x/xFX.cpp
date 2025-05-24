@@ -2,14 +2,18 @@
 
 #include "xstransvc.h"
 
+#include "xScrFx.h"
 #include "iMath.h"
 #include "zParEmitter.h"
 #include "zSurface.h"
 #include "zFX.h"
 #include "zGlobals.h"
+#include "zRumble.h"
 
 #include <string.h>
 #include <rpmatfx.h>
+#include <rwplcore.h>
+#include <rpskin.h>
 
 /* boot.HIP texture IDs */
 #define ID_gloss_edge 0xB8C2351E
@@ -361,8 +365,27 @@ static RpAtomic* AtomicSetShininess(RpAtomic* atomic, void* data)
     return atomic;
 }
 
-RpAtomic* xFXAtomicEnvMapSetup(RpAtomic*, U32, F32)
+void AtomicSetEnvMap(RpAtomic*, void*)
 {
+
+}
+
+RpAtomic* xFXAtomicEnvMapSetup(RpAtomic* atomic, U32 aid, F32 shininess)
+{
+    if (void* asset = xSTFindAsset(aid, NULL))
+    {
+        AtomicSetEnvMap(atomic, asset);
+        F32 oldShininess = EnvMapShininess;
+        EnvMapShininess = shininess;
+        AtomicSetShininess(atomic, NULL);
+        EnvMapShininess = oldShininess;
+        RpSkin* skin = RpSkinGeometryGetSkin(atomic->geometry);
+        if (skin)
+        {
+            RpSkinAtomicSetType(atomic, rpSKINTYPEMATFX);
+        }
+        return atomic;
+    }
     return NULL;
 }
 
@@ -657,13 +680,129 @@ void xFXFireworksInit(const char* trailEmit, const char* emit1, const char* emit
     }
 }
 
-void xFXFireworksLaunch(F32 ,const xVec3*, F32)
+void xFXFireworksLaunch(F32 time, const xVec3* pos, F32 fuel)
 {
+    U32 counter = FIREWORK_COUNT;
+    _tagFirework* candidate = sFirework;
+    while (counter)
+    {
+        if (candidate->state == 0)
+        {
+            candidate->state = 1;
+            candidate->timer = time;
+            candidate->pos = *pos;
+            candidate->fuel = fuel;
+            return;
+        }
+        --counter;
+        ++candidate;
+    }
 }
 
-void xFXFireworksUpdate(F32)
+void xFXFireworksUpdate(F32 dt)
 {
+    for (S32 i = 0; i < FIREWORK_COUNT; ++i)
+    {
+        if (sFirework[i].state == 0)
+        {
+            continue;
+        }
+        if (sFirework[i].state == 1)
+        {
+            sFirework[i].timer -= dt;
+            if (sFirework[i].timer <= 0.0f)
+            {
+                sFirework[i].vel.x = 13.0f * xurand() + 6.5f;
+                sFirework[i].vel.y = 0.0f;
+                sFirework[i].vel.z = 13.0f * xurand() + 6.5f;
+                sFirework[i].state = 2;
 
+                if (sFireworkLaunchSoundID != 0)
+                {
+                    xSndPlay3D(sFireworkLaunchSoundID,
+                        0.308f, // Volume
+                        0.0f, // Pitch
+                        0x80, // Priority
+                        0, // Flags
+                        &sFirework[i].pos,
+                        20.0f, // Radius
+                        5.0f,
+                        SND_CAT_GAME,
+                        0.0f); // Delay
+                }
+            }
+        }
+        else
+        {
+            sFirework[i].fuel -= dt;
+            if (sFirework[i].fuel > 0.0f)
+            {
+                sFirework[i].vel.y += 15.0f * dt;
+            }
+            xParEmitterCustomSettings settings;
+            settings.custom_flags = 0x100;
+            sFirework[i].pos.x += sFirework[i].vel.x * dt;
+            sFirework[i].pos.y += sFirework[i].vel.y * dt;
+            sFirework[i].pos.z += sFirework[i].vel.z * dt;
+            settings.pos = sFirework[i].pos;
+            xParEmitterEmitCustom(sFireworkTrailEmit, dt, &settings);
+
+            if (sFirework[i].fuel <= 0.0f)
+            {
+                sFirework[i].state = 0;
+                sFirework[i].timer = 0.0f;
+
+                zParEmitter* emit = sFirework1Emit;
+                if (xurand() < 0.75f)
+                {
+                    emit = sFirework2Emit;
+                }
+
+                xParEmitterCustomSettings settings2;
+                settings2.custom_flags = 0xD00;
+                settings2.pos = sFirework[i].pos;
+
+                if (emit != NULL)
+                {
+                    settings2.color_birth[0].set(127.0f * xurand() + 128.0f, 75.0f, 0.0f, 0);
+                    settings2.color_birth[1].set(127.0f * xurand() + 128.0f, 75.0f, 0.0f, 0);
+                    settings2.color_birth[2].set(127.0f * xurand() + 128.0f, 75.0f, 0.0f, 0);
+                    settings2.color_birth[3].set(255.0f, 0.0f, 1.0f, 0);
+                    memcpy(settings2.color_death, &settings2.color_birth, sizeof(settings2.color_birth));
+                    settings2.color_death[3].set(0.0f, 0.0f, 1.0f, 0);
+                    xParEmitterEmitCustom(emit, dt, &settings2);
+                }
+
+                F32 a = 0.4f * xurand() + 0.1f;
+                F32 b = 0.5f * xurand() + 0.5f;
+                F32 g = 0.5f * xurand() + 0.5f;
+                F32 r = 0.5f * xurand() + 0.5f;
+                F32 size = 5.0f * xurand() + 2.0f;
+                F32 intensity = 0.3f * xurand() + 0.1f;
+                F32 life = 0.5f * xurand() + 0.5f;
+                xScrFXGlareAdd(&sFirework[i].pos, life, intensity, size, r, g, b, a, NULL);
+
+                xVec3 diff;
+                xVec3Sub(&diff, xEntGetPos(&globals.player.ent), &sFirework[i].pos);
+                zRumbleStartDistance(globals.currentActivePad, diff.x * diff.x + diff.z * diff.z, 48.0f,
+                                     eRumble_Medium, 0.35f);
+                sFirework[i].pos.y = xEntGetPos(&globals.player.ent)->y;
+                if (sFireworkSoundID != 0)
+                {
+                    xSndPlay3D(sFireworkSoundID,
+                        0.77f, // Volume
+                        0.0f, // Pitch
+                        0x80, // Priority
+                        0, // Flags
+                        &sFirework[i].pos,
+                        20.0f, // Radius
+                        5.0f,
+                        SND_CAT_GAME,
+                        0.0f); // Delay
+                }
+            }
+        }
+    }
 }
 
 RpMaterial* MaterialSetBumpMap(RpMaterial* material, void* data)
@@ -705,6 +844,25 @@ RpMaterial* MaterialSetEnvMap(RpMaterial* material, void* data)
         {
             RpMatFXMaterialSetEffects(material, rpMATFXEFFECTNULL);
         }
+    }
+    return material;
+}
+
+RpMaterial* MaterialSetEnvMap2(RpMaterial* material, void* data)
+{
+    if (material->texture != NULL)
+    {
+        RwFrame* frame;
+        if (RwEngineInstance->stringFuncs.vecStrcmp(((RwTexture*)data)->name, "spec3") == 0)
+        {
+            frame = (RwFrame*)globals.camera.lo_cam->object.object.parent;
+        }
+        else
+        {
+            frame = (RwFrame*)MainLight->object.object.parent;
+        }
+        RpMatFXMaterialSetEffects(material, rpMATFXEFFECTENVMAP);
+        RpMatFXMaterialSetupEnvMap(material, (RwTexture*)data, frame, FALSE, EnvMapShininess);
     }
     return material;
 }
