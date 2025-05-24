@@ -1004,8 +1004,3 @@ void xFXRibbon::debug_update_curve()
 void xFXRibbon::debug_update(F32)
 {
 }
-
-void tempInstantiateOperators(RwTexCoords& texcoords)
-{
-    texcoords = texcoords;
-}
