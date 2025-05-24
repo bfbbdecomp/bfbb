@@ -98,6 +98,7 @@ namespace xhud
         static void setup_all();
         static void update_all(F32 dt);
         static void render_all();
+        static void debug_render();
 
         static void init_base(xBase&, const xBaseAsset&, unsigned long);
         static S32 cb_dispatch(xBase*, xBase*, U32, const F32*, xBase*);
@@ -143,6 +144,8 @@ namespace xhud
         static block_allocator* motive_allocator();
     };
 
+    typedef bool (motive_proc)(widget&, motive&, F32);
+
     struct motive
     {
         F32* value;
@@ -151,7 +154,7 @@ namespace xhud
         F32 max_offset;
         F32 offset;
         F32 accel;
-        bool (*fp_update)(widget&, motive&, F32);
+        motive_proc* fp_update;
         void* context;
         U8 inverse;
 
@@ -166,7 +169,17 @@ namespace xhud
             this->fp_update = fp_update;
             this->context = context;
         }
-        motive(const motive& other);
+        motive(const motive& other)
+        {
+            value = other.value;
+            delta = other.delta;
+            start_delta = other.start_delta;
+            max_offset = other.max_offset;
+            offset = other.offset;
+            accel = other.accel;
+            fp_update = other.fp_update;
+            context = other.context;
+        }
 
         bool update(widget& w, F32 dt)
         {
@@ -198,6 +211,7 @@ namespace xhud
 
     bool linear_motive_update(widget& w, motive& m, F32);
     bool accelerate_motive_update(widget& w, motive& m, F32);
+    bool shake_motive_update(widget& w, motive& m, F32);
     bool delay_motive_update(widget& w, motive& m, F32);
 
     xModelInstance* load_model(U32);

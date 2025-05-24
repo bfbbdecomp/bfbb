@@ -1,5 +1,6 @@
 #include "zNPCTypeKingJelly.h"
 
+#include "xColor.h"
 #include "zNPCGoalCommon.h"
 #include <types.h>
 #include "string.h"
@@ -29,6 +30,18 @@
 #define ANIM_Attack02Loop01 17
 #define ANIM_Attack02End01 18
 #define ANIM_LassoGrab01 19
+
+#define SOUND_AMBIENT_RING 0
+#define SOUND_BIRTH 1
+#define SOUND_CHARGE 2
+#define SOUND_CHEER 3
+#define SOUND_GRUNT 4
+#define SOUND_LAND 5
+#define SOUND_MOVE 6
+#define SOUND_OSCILLATE 7
+#define SOUND_RISE 8
+#define SOUND_TAUNT 9
+#define SOUND_WAVE_RING 10
 
 namespace
 {
@@ -67,6 +80,1092 @@ namespace
     {
     }
 
+    struct tweak_group
+    {
+        void* context;
+        tweak_callback* cb_fade_obstructions;
+        tweak_callback* cb_ambient_ring;
+        S32 max_life;
+        F32 min_dist;
+        F32 move_radius;
+        F32 vel_decay;
+        F32 repel_radius;
+        F32 repel_radius_ground;
+        F32 fade_obstructions;
+        F32 music_fade;
+        F32 music_fade_delay;
+        struct
+        {
+            F32 duration;
+            S32 amount;
+            F32 drop_off;
+            struct
+            {
+                F32 r;
+                F32 g;
+                F32 b;
+                F32 a;
+            } color;
+        } blink;
+        struct
+        {
+            F32 variance;
+            F32 attack[3];
+            F32 warm_up;
+            F32 release;
+            F32 cool_down;
+        } interval;
+        struct
+        {
+            S32 cycles;
+            F32 voffset;
+            F32 hoffset;
+            F32 delay;
+            F32 fall_time;
+            struct
+            {
+                F32 speed;
+                F32 drop_off;
+                F32 delay;
+                F32 voffset;
+            } spew;
+        } spawn;
+        wave_ring_type wave_ring;
+        struct
+        {
+            F32 radius;
+            F32 min_height;
+            F32 max_height;
+            F32 speed;
+            F32 segment_length;
+            F32 thickness;
+            iColor_tag color;
+            F32 knock_back;
+            struct
+            {
+                F32 radius;
+                F32 max_height;
+                F32 speed;
+                F32 thickness;
+                iColor_tag color;
+            } charge;
+        } ambient_ring;
+        struct
+        {
+            F32 thickness;
+            F32 rand_radius;
+            F32 rot_radius;
+            F32 move_degrees;
+            iColor_tag color;
+            F32 delay;
+            F32 time;
+            S32 max;
+            F32 particles;
+            F32 knock_back;
+            F32 damage_width;
+            struct
+            {
+                F32 thickness;
+                iColor_tag color;
+                F32 move_degrees;
+            } charge;
+        } tentacle;
+        struct
+        {
+            F32 delay;
+            S32 rings;
+            F32 voffset;
+            F32 particles;
+            F32 radius;
+            F32 width;
+            F32 vel;
+            F32 particle_drop_off;
+            F32 vel_drop_off;
+        } thump;
+        struct
+        {
+            F32 volume;
+            F32 delay;
+            F32 radius_inner;
+            F32 radius_outer;
+            S32 priority;
+        } sound[11];
+
+        void load(xModelAssetParam* ap, U32 apsize);
+        void register_tweaks(bool init, xModelAssetParam* ap, U32 apsize, const char*);
+    };
+
+    void tweak_group::load(xModelAssetParam* ap, U32 apsize)
+    {
+        tweak_group::register_tweaks(TRUE, ap, apsize, NULL);
+    }
+
+    void tweak_group::register_tweaks(bool init, xModelAssetParam* ap, U32 apsize, const char*)
+    {
+        if (init)
+        {
+            max_life = 3;
+            auto_tweak::load_param<S32, S32>(max_life, 1, 1, 10000000, ap, apsize, "max_life");
+        }
+        if (init)
+        {
+            min_dist = 4.0f;
+            auto_tweak::load_param<F32, F32>(min_dist, 1.0f, 0.0f, 10.0f, ap, apsize, "min_dist");
+        }
+        if (init)
+        {
+            move_radius = 13.0f;
+            auto_tweak::load_param<F32, F32>(move_radius, 1.0, 0.0f, 20.f, ap, apsize,
+                                             "move_radius");
+        }
+        if (init)
+        {
+            vel_decay = 0.8f;
+            auto_tweak::load_param<F32, F32>(vel_decay, 1.0f, 0.0f, 1.0f, ap, apsize, "vel_decay");
+        }
+        if (init)
+        {
+            repel_radius = 1.8f;
+            auto_tweak::load_param<F32, F32>(repel_radius, 1.0f, 0.0f, 1000.0f, ap, apsize,
+                                             "repel_radius");
+        }
+        if (init)
+        {
+            repel_radius_ground = 3.2f;
+            auto_tweak::load_param<F32, F32>(repel_radius_ground, 1.0, 0.0f, 1000.f, ap, apsize,
+                                             "repel_radius_ground");
+        }
+        if (init)
+        {
+            fade_obstructions = 0.4f;
+            auto_tweak::load_param<F32, F32>(fade_obstructions, 1.0f, 0.0f, 1.0f, ap, apsize,
+                                             "fade_obstructions");
+        }
+        if (init)
+        {
+            music_fade = 0.5f;
+            auto_tweak::load_param<F32, F32>(music_fade, 1.0f, 0.0f, 1.0f, ap, apsize,
+                                             "music_fade");
+        }
+        if (init)
+        {
+            music_fade_delay = 1.0f;
+            auto_tweak::load_param<F32, F32>(music_fade_delay, 1.0f, 0.0f, 10.0f, ap, apsize,
+                                             "music_fade_delay");
+        }
+        if (init)
+        {
+            blink.duration = 2.0f;
+            auto_tweak::load_param<F32, F32>(blink.duration, 1.0f, 0.1, 100.f, ap, apsize,
+                                             "blink.duration");
+        }
+        if (init)
+        {
+            blink.amount = 4;
+            auto_tweak::load_param<S32, S32>(blink.amount, 1, 1, 100, ap, apsize, "blink.amount");
+        }
+        if (init)
+        {
+            blink.drop_off = 0.2f;
+            auto_tweak::load_param<F32, F32>(blink.drop_off, 1.0f, 0.0f, 1.0f, ap, apsize,
+                                             "blink.drop_off");
+        }
+        if (init)
+        {
+            blink.color.r = 2.0f;
+            auto_tweak::load_param<F32, F32>(blink.color.r, 1.0f, 0.0f, 100000.0f, ap, apsize,
+                                             "blink.color.r");
+        }
+        if (init)
+        {
+            blink.color.g = 0.0f;
+            auto_tweak::load_param<F32, F32>(blink.color.g, 1.0f, 0.0f, 100000.0f, ap, apsize,
+                                             "blink.color.g");
+        }
+        if (init)
+        {
+            blink.color.b = 0.0f;
+            auto_tweak::load_param<F32, F32>(blink.color.b, 1.0f, 0.0f, 100000.0f, ap, apsize,
+                                             "blink.color.b");
+        }
+        if (init)
+        {
+            blink.color.a = 0.0f;
+            auto_tweak::load_param<F32, F32>(blink.color.a, 1.0f, 0.0f, 100000.0f, ap, apsize,
+                                             "blink.color.a");
+        }
+        if (init)
+        {
+            interval.variance = 0.2;
+            auto_tweak::load_param<F32, F32>(interval.variance, 1.0f, 0.0, 10.f, ap, apsize,
+                                             "interval.variance");
+        }
+        if (init)
+        {
+            interval.attack[0] = 4.5f;
+            auto_tweak::load_param<F32, F32>(interval.attack[0], 1.0f, 0.0f, 100.0f, ap, apsize,
+                                             "interval.attack[0]");
+        }
+        if (init)
+        {
+            interval.attack[1] = 3.5f;
+            auto_tweak::load_param<F32, F32>(interval.attack[1], 1.0f, 0.0f, 100.0f, ap, apsize,
+                                             "interval.attack[1]");
+        }
+        if (init)
+        {
+            interval.attack[2] = 2.5f;
+            auto_tweak::load_param<F32, F32>(interval.attack[2], 1.0f, 0.0f, 100.0f, ap, apsize,
+                                             "interval.attack[2]");
+        }
+        if (init)
+        {
+            interval.warm_up = 1.0f;
+            auto_tweak::load_param<F32, F32>(interval.warm_up, 1.0f, 0.0f, 1000000000.0, ap, apsize,
+                                             "interval.warm_up");
+            ;
+        }
+        if (init)
+        {
+            interval.release = 0.5f;
+            auto_tweak::load_param<F32, F32>(interval.release, 1.0f, 0.0f, 100.0f, ap, apsize,
+                                             "interval.release");
+        }
+        if (init)
+        {
+            interval.cool_down = 0.25;
+            auto_tweak::load_param<F32, F32>(interval.cool_down, 1.0f, 0.0f, 100.0f, ap, apsize,
+                                             "interval.cool_down");
+        }
+        if (init)
+        {
+            spawn.cycles = 3;
+            auto_tweak::load_param<S32, S32>(spawn.cycles, 1, 0, 100000, ap, apsize,
+                                             "spawn.cycles");
+        }
+        if (init)
+        {
+            spawn.voffset = 3.0f;
+            auto_tweak::load_param<F32, F32>(spawn.voffset, 1.0f, -100.0f, 100.f, ap, apsize,
+                                             "spawn.voffset");
+        }
+        if (init)
+        {
+            spawn.hoffset = 0.5f;
+            auto_tweak::load_param<F32, F32>(spawn.hoffset, 1.0f, 0.0f, 10.0f, ap, apsize,
+                                             "spawn.hoffset");
+        }
+        if (init)
+        {
+            spawn.delay = 0.75f;
+            auto_tweak::load_param<F32, F32>(spawn.delay, 1.0f, 0.0f, 100.0f, ap, apsize,
+                                             "spawn.delay");
+        }
+        if (init)
+        {
+            spawn.fall_time = 2.5f;
+            auto_tweak::load_param<F32, F32>(spawn.fall_time, 1.0f, 0.0f, 10.0f, ap, apsize,
+                                             "spawn.fall_time");
+        }
+        if (init)
+        {
+            spawn.spew.speed = 4000.0f;
+            auto_tweak::load_param<F32, F32>(spawn.spew.speed, 1.0f, 0.0f, 1000000000.0f, ap,
+                                             apsize, "spawn.spew.speed");
+        }
+        if (init)
+        {
+            spawn.spew.drop_off = -6000.0f;
+            auto_tweak::load_param<F32, F32>(spawn.spew.drop_off, 1.0f, -1000000000.0f, 0.0f, ap,
+                                             apsize, "spawn.spew.drop_off");
+        }
+        if (init)
+        {
+            spawn.spew.delay = 0.75f;
+            auto_tweak::load_param<F32, F32>(spawn.spew.delay, 1.0f, 0.0f, 100.0f, ap, apsize,
+                                             "spawn.spew.delay");
+        }
+        if (init)
+        {
+            spawn.spew.voffset = -2.0f;
+            auto_tweak::load_param<F32, F32>(spawn.spew.voffset, 1.0f, -100.0f, 100.0f, ap, apsize,
+                                             "spawn.spew.voffset");
+        }
+        if (init)
+        {
+            wave_ring.min_radius = 1.0f;
+            auto_tweak::load_param<F32, F32>(wave_ring.min_radius, 1.0f, 0.0f, 10.0f, ap, apsize,
+                                             "wave_ring.min_radius");
+        }
+        if (init)
+        {
+            wave_ring.max_radius = 25.0f;
+            auto_tweak::load_param<F32, F32>(wave_ring.max_radius, 1.0f, 0.0f, 1000.0f, ap, apsize,
+                                             "wave_ring.max_radius");
+        }
+        if (init)
+        {
+            wave_ring.height = 0.2f;
+            auto_tweak::load_param<F32, F32>(wave_ring.height, 1.0f, -100.0f, 100.0f, ap, apsize,
+                                             "wave_ring.height");
+        }
+        if (init)
+        {
+            wave_ring.fade_time = 2.0f;
+            auto_tweak::load_param<F32, F32>(wave_ring.fade_time, 1.0f, 0.0f, 10.0f, ap, apsize,
+                                             "wave_ring.fade_time");
+        }
+        if (init)
+        {
+            wave_ring.max_vel = 20.0f;
+            auto_tweak::load_param<F32, F32>(wave_ring.max_vel, 1.0f, 0.0, 10000.0f, ap, apsize,
+                                             "wave_ring.max_vel");
+        }
+        if (init)
+        {
+            wave_ring.accel = 70.0f;
+            auto_tweak::load_param<F32, F32>(wave_ring.accel, 1.0f, 0.0f, 1000.0f, ap, apsize,
+                                             "wave_ring.accel");
+        }
+        if (init)
+        {
+            wave_ring.segment_length = 1.0f;
+            auto_tweak::load_param<F32, F32>(wave_ring.segment_length, 1.0f, 0.0099999998f, 10.0f,
+                                             ap, apsize, "wave_ring.segment_length");
+        }
+        if (init)
+        {
+            wave_ring.particle_height = -0.3f;
+            auto_tweak::load_param<F32, F32>(wave_ring.particle_height, 1.0f, -10.0f, 10.0f, ap,
+                                             apsize, "wave_ring.particle_height");
+        }
+        if (init)
+        {
+            wave_ring.particles = 5000.0f;
+            auto_tweak::load_param<F32, F32>(wave_ring.particles, 1.0f, 0.0f, 100000.0f, ap, apsize,
+                                             "wave_ring.particles");
+        }
+        if (init)
+        {
+            wave_ring.damage_height = 1.0f;
+            auto_tweak::load_param<F32, F32>(wave_ring.damage_height, 1.0f, -100.0f, 100.0f, ap,
+                                             apsize, "wave_ring.damage_height");
+        }
+        if (init)
+        {
+            wave_ring.damage_width = 1.0f;
+            auto_tweak::load_param<F32, F32>(wave_ring.damage_width, 1.0f, 0.0f, 10.0f, ap, apsize,
+                                             "wave_ring.damage_width");
+        }
+        if (init)
+        {
+            wave_ring.knock_back = 10.0f;
+            auto_tweak::load_param<F32, F32>(wave_ring.knock_back, 1.0f, 0.0f, 1000.0f, ap, apsize,
+                                             "wave_ring.knock_back");
+        }
+        if (init)
+        {
+            wave_ring.unit[0].radius_offset = 0.25f;
+            auto_tweak::load_param<F32, F32>(wave_ring.unit[0].radius_offset, 1.0f, -10.0f, 10.0f,
+                                             ap, apsize, "wave_ring.unit[0].radius_offset");
+        }
+        if (init)
+        {
+            wave_ring.unit[0].height_offset = 1.0f;
+            auto_tweak::load_param<F32, F32>(wave_ring.unit[0].height_offset, 1.0f, -10.0f, 10.0f,
+                                             ap, apsize, "wave_ring.unit[0].height_offset");
+        }
+        if (init)
+        {
+            wave_ring.unit[0].line = 0;
+            auto_tweak::load_param<U8, U8>(wave_ring.unit[0].line, 0, 0, 0, ap, apsize,
+                                           "wave_ring.unit[0].line");
+        }
+        if (init)
+        {
+            wave_ring.unit[0].thickness = 0.3f;
+            auto_tweak::load_param<F32, F32>(wave_ring.unit[0].thickness, 1.0f, 0.0f, 100.0f, ap,
+                                             apsize, "wave_ring.unit[0].thickness");
+        }
+        if (init)
+        {
+            wave_ring.unit[0].color = xColorFromRGBA(255, 255, 0, 255);
+            auto_tweak::load_param<iColor_tag, S32>(wave_ring.unit[0].color, 0, 0, 0, ap, apsize,
+                                                    "wave_ring.unit[0].color");
+        }
+        if (init)
+        {
+            wave_ring.unit[0].rot_radius = 1.0f;
+            auto_tweak::load_param<F32, F32>(wave_ring.unit[0].rot_radius, 1.0f, 0.0f, 100.0f, ap,
+                                             apsize, "wave_ring.unit[0].rot_radius");
+        }
+        if (init)
+        {
+            wave_ring.unit[0].degrees = 720.0f;
+            auto_tweak::load_param<F32, F32>(wave_ring.unit[0].degrees, 1.0f, 0.0f, 100000.0f, ap,
+                                             apsize, "wave_ring.unit[0].degrees");
+        }
+        if (init)
+        {
+            wave_ring.unit[1].radius_offset = 0.0f;
+            auto_tweak::load_param<F32, F32>(wave_ring.unit[1].radius_offset, 1.0f, -10.0f, 10.0f,
+                                             ap, apsize, "wave_ring.unit[1].radius_offset");
+        }
+        if (init)
+        {
+            wave_ring.unit[1].height_offset = 0.0f;
+            auto_tweak::load_param<F32, F32>(wave_ring.unit[1].height_offset, 1.0f, -10.0f, 10.0f,
+                                             ap, apsize, "wave_ring.unit[1].height_offset");
+        }
+        if (init)
+        {
+            wave_ring.unit[1].line = 0;
+            auto_tweak::load_param<U8, U8>(wave_ring.unit[1].line, 0, 0, 0, ap, apsize,
+                                           "wave_ring.unit[1].line");
+        }
+        if (init)
+        {
+            wave_ring.unit[1].thickness = 1.5f;
+            auto_tweak::load_param<F32, F32>(wave_ring.unit[1].thickness, 1.0f, 0.0f, 100.0f, ap,
+                                             apsize, "wave_ring.unit[1].thickness");
+        }
+        if (init)
+        {
+            wave_ring.unit[1].color = xColorFromRGBA(255, 255, 255, 255);
+            auto_tweak::load_param<iColor_tag, S32>(wave_ring.unit[1].color, 0, 0, 0, ap, apsize,
+                                                    "wave_ring.unit[1].color");
+        }
+        if (init)
+        {
+            wave_ring.unit[1].rot_radius = 0.5f;
+            auto_tweak::load_param<F32, F32>(wave_ring.unit[1].rot_radius, 1.0f, 0.0f, 100.0f, ap,
+                                             apsize, "wave_ring.unit[1].rot_radius");
+        }
+        if (init)
+        {
+            wave_ring.unit[1].degrees = 360.0f;
+            auto_tweak::load_param<F32, F32>(wave_ring.unit[1].degrees, 1.0f, 0.0f, 100000.0f, ap,
+                                             apsize, "wave_ring.unit[1].degrees");
+        }
+        if (init)
+        {
+            wave_ring.unit[2].radius_offset = -0.5f;
+            auto_tweak::load_param<F32, F32>(wave_ring.unit[2].radius_offset, 1.0f, -10.0f, 10.0f,
+                                             ap, apsize, "wave_ring.unit[2].radius_offset");
+        }
+        if (init)
+        {
+            wave_ring.unit[2].height_offset = 0.0f;
+            auto_tweak::load_param<F32, F32>(wave_ring.unit[2].height_offset, 1.0f, -10.0f, 10.0f,
+                                             ap, apsize, "wave_ring.unit[2].height_offset");
+        }
+        if (init)
+        {
+            wave_ring.unit[2].line = 0;
+            auto_tweak::load_param<U8, U8>(wave_ring.unit[2].line, 0, 0, 0, ap, apsize,
+                                           "wave_ring.unit[2].line");
+        }
+        if (init)
+        {
+            wave_ring.unit[2].thickness = 1.0f;
+            auto_tweak::load_param<F32, F32>(wave_ring.unit[2].thickness, 1.0f, 0.0f, 100.0f, ap,
+                                             apsize, "wave_ring.unit[2].thickness");
+        }
+        if (init)
+        {
+            wave_ring.unit[2].color = xColorFromRGBA(255, 255, 255, 255);
+            auto_tweak::load_param<iColor_tag, S32>(wave_ring.unit[2].color, 0, 0, 0, ap, apsize,
+                                                    "wave_ring.unit[2].color");
+        }
+        if (init)
+        {
+            wave_ring.unit[2].rot_radius = 0.5f;
+            auto_tweak::load_param<F32, F32>(wave_ring.unit[2].rot_radius, 1.0f, 0.0f, 100.0f, ap,
+                                             apsize, "wave_ring.unit[2].rot_radius");
+        }
+        if (init)
+        {
+            wave_ring.unit[2].degrees = 360.0f;
+            auto_tweak::load_param<F32, F32>(wave_ring.unit[2].degrees, 1.0f, 0.0f, 100000.0f, ap,
+                                             apsize, "wave_ring.unit[2].degrees");
+        }
+        if (init)
+        {
+            wave_ring.unit[3].radius_offset = -1.0f;
+            auto_tweak::load_param<F32, F32>(wave_ring.unit[3].radius_offset, 1.0f, -10.0f, 10.0f,
+                                             ap, apsize, "wave_ring.unit[3].radius_offset");
+        }
+        if (init)
+        {
+            wave_ring.unit[3].height_offset = 0.0f;
+            auto_tweak::load_param<F32, F32>(wave_ring.unit[3].height_offset, 1.0f, -10.0f, 10.0f,
+                                             ap, apsize, "wave_ring.unit[3].height_offset");
+        }
+        if (init)
+        {
+            wave_ring.unit[3].line = 0;
+            auto_tweak::load_param<U8, U8>(wave_ring.unit[3].line, 0, 0, 0, ap, apsize,
+                                           "wave_ring.unit[3].line");
+        }
+        if (init)
+        {
+            wave_ring.unit[3].thickness = 0.5f;
+            auto_tweak::load_param<F32, F32>(wave_ring.unit[3].thickness, 1.0f, 0.0f, 100.0f, ap,
+                                             apsize, "wave_ring.unit[3].thickness");
+        }
+        if (init)
+        {
+            wave_ring.unit[3].color = xColorFromRGBA(0, 255, 255, 255);
+            auto_tweak::load_param<iColor_tag, S32>(wave_ring.unit[3].color, 0, 0, 0, ap, apsize,
+                                                    "wave_ring.unit[3].color");
+        }
+        if (init)
+        {
+            wave_ring.unit[3].rot_radius = 0.5f;
+            auto_tweak::load_param<F32, F32>(wave_ring.unit[3].rot_radius, 1.0f, 0.0f, 100.0f, ap,
+                                             apsize, "wave_ring.unit[3].rot_radius");
+        }
+        if (init)
+        {
+            wave_ring.unit[3].degrees = 360.0f;
+            auto_tweak::load_param<F32, F32>(wave_ring.unit[3].degrees, 1.0f, 0.0f, 100000.0f, ap,
+                                             apsize, "wave_ring.unit[3].degrees");
+        }
+        if (init)
+        {
+            ambient_ring.radius = 2.0f;
+            auto_tweak::load_param<F32, F32>(ambient_ring.radius, 1.0f, 0.0f, 100.0f, ap, apsize,
+                                             "ambient_ring.radius");
+        }
+        if (init)
+        {
+            ambient_ring.min_height = 0.4f;
+            auto_tweak::load_param<F32, F32>(ambient_ring.min_height, 1.0f, -100.0f, 100.0f, ap,
+                                             apsize, "ambient_ring.min_height");
+        }
+        if (init)
+        {
+            ambient_ring.max_height = 3.5f;
+            auto_tweak::load_param<F32, F32>(ambient_ring.max_height, 1.0f, -100.0f, 100.0f, ap,
+                                             apsize, "ambient_ring.max_height");
+        }
+        if (init)
+        {
+            ambient_ring.speed = 2.0f;
+            auto_tweak::load_param<F32, F32>(ambient_ring.speed, 1.0f, 0.0f, 10000.0f, ap, apsize,
+                                             "ambient_ring.speed");
+        }
+        if (init)
+        {
+            ambient_ring.segment_length = 1.0f;
+            auto_tweak::load_param<F32, F32>(ambient_ring.segment_length, 1.0f, 0.0f, 10.0f, ap,
+                                             apsize, "ambient_ring.segment_length");
+        }
+        if (init)
+        {
+            ambient_ring.thickness = 0.2;
+            auto_tweak::load_param<F32, F32>(ambient_ring.thickness, 1.0f, 0.0f, 10.0f, ap, apsize,
+                                             "ambient_ring.thickness");
+        }
+        if (init)
+        {
+            ambient_ring.color = xColorFromRGBA(255, 100, 155, 255);
+            auto_tweak::load_param<iColor_tag, S32>(ambient_ring.color, 0, 0, 0, ap, apsize,
+                                                    "ambient_ring.color");
+        }
+        if (init)
+        {
+            ambient_ring.knock_back = 5.0f;
+            auto_tweak::load_param<F32, F32>(ambient_ring.knock_back, 1.0f, 0.0f, 100.0f, ap,
+                                             apsize, "ambient_ring.knock_back");
+        }
+        if (init)
+        {
+            ambient_ring.charge.radius = 4.5f;
+            auto_tweak::load_param<F32, F32>(ambient_ring.charge.radius, 1.0f, 0.0f, 10.0f, ap,
+                                             apsize, "ambient_ring.charge.radius");
+        }
+        if (init)
+        {
+            ambient_ring.charge.max_height = 8.0f;
+            auto_tweak::load_param<F32, F32>(ambient_ring.charge.max_height, 1.0f, -100.0f, 100.0f,
+                                             ap, apsize, "ambient_ring.charge.max_height");
+        }
+        if (init)
+        {
+            ambient_ring.charge.speed = 15.0f;
+            auto_tweak::load_param<F32, F32>(ambient_ring.charge.speed, 1.0f, 0.0f, 10000.0f, ap,
+                                             apsize, "ambient_ring.charge.speed");
+        }
+        if (init)
+        {
+            ambient_ring.charge.thickness = 5.0f;
+            auto_tweak::load_param<F32, F32>(ambient_ring.charge.thickness, 1.0f, 0.0f, 10.0f, ap,
+                                             apsize, "ambient_ring.charge.thickness");
+        }
+        if (init)
+        {
+            ambient_ring.charge.color = xColorFromRGBA(155, 100, 100, 0);
+            auto_tweak::load_param<iColor_tag, S32>(ambient_ring.charge.color, 0, 0, 0, ap, apsize,
+                                                    "ambient_ring.charge.color");
+            ;
+        }
+        if (init)
+        {
+            tentacle.thickness = 0.2f;
+            auto_tweak::load_param<F32, F32>(tentacle.thickness, 1.0f, 0.0f, 100.0f, ap, apsize,
+                                             "tentacle.thickness");
+        }
+        if (init)
+        {
+            tentacle.rand_radius = 1.0f;
+            auto_tweak::load_param<F32, F32>(tentacle.rand_radius, 1.0f, 0.0f, 100.0f, ap, apsize,
+                                             "tentacle.rand_radius");
+        }
+        if (init)
+        {
+            tentacle.rot_radius = 1.0f;
+            auto_tweak::load_param<F32, F32>(tentacle.rot_radius, 1.0f, 0.0f, 100.0f, ap, apsize,
+                                             "tentacle.rot_radius");
+        }
+        if (init)
+        {
+            tentacle.move_degrees = 2440.0f;
+            auto_tweak::load_param<F32, F32>(tentacle.move_degrees, 1.0f, 0.0f, 100000.0f, ap,
+                                             apsize, "tentacle.move_degrees");
+        }
+        if (init)
+        {
+            tentacle.color = xColorFromRGBA(255, 255, 196, 255);
+            auto_tweak::load_param<iColor_tag, S32>(tentacle.color, 0, 0, 0, ap, apsize,
+                                                    "tentacle.color");
+        }
+        if (init)
+        {
+            tentacle.delay = 1.0f;
+            auto_tweak::load_param<F32, F32>(tentacle.delay, 1.0f, 0.0f, 10.0f, ap, apsize,
+                                             "tentacle.delay");
+        }
+        if (init)
+        {
+            tentacle.time = 2.0f;
+            auto_tweak::load_param<F32, F32>(tentacle.time, 1.0f, 0.0f, 100.0f, ap, apsize,
+                                             "tentacle.time");
+        }
+        if (init)
+        {
+            tentacle.max = 5;
+            auto_tweak::load_param<S32, S32>(tentacle.max, 1, 1, 7, ap, apsize, "tentacle.max");
+        }
+        if (init)
+        {
+            tentacle.particles = 0.0f;
+            auto_tweak::load_param<F32, F32>(tentacle.particles, 1.0f, 0.0f, 100000.0f, ap, apsize,
+                                             "tentacle.particles");
+        }
+        if (init)
+        {
+            tentacle.knock_back = 5.0f;
+            auto_tweak::load_param<F32, F32>(tentacle.knock_back, 1.0f, 0.0f, 100000.0f, ap, apsize,
+                                             "tentacle.knock_back");
+        }
+        if (init)
+        {
+            tentacle.damage_width = 0.3f;
+            auto_tweak::load_param<F32, F32>(tentacle.damage_width, 1.0f, 0.0f, 1.0f, ap, apsize,
+                                             "tentacle.damage_width");
+        }
+        if (init)
+        {
+            tentacle.charge.thickness = 0.4f;
+            auto_tweak::load_param<F32, F32>(tentacle.charge.thickness, 1.0f, 0.0f, 100.0f, ap,
+                                             apsize, "tentacle.charge.thickness");
+        }
+        if (init)
+        {
+            tentacle.charge.color = xColorFromRGBA(255, 255, 0, 255);
+            auto_tweak::load_param<iColor_tag, S32>(tentacle.charge.color, 0, 0, 0, ap, apsize,
+                                                    "tentacle.charge.color");
+        }
+        if (init)
+        {
+            tentacle.charge.move_degrees = 180.0f;
+            auto_tweak::load_param<F32, F32>(tentacle.charge.move_degrees, 1.0f, 0.0f, 100000.0f,
+                                             ap, apsize, "tentacle.charge.move_degrees");
+        }
+        if (init)
+        {
+            thump.delay = 0.6f;
+            auto_tweak::load_param<F32, F32>(thump.delay, 1.0f, 0.0f, 10.0f, ap, apsize,
+                                             "thump.delay");
+        }
+        if (init)
+        {
+            thump.rings = 5;
+            auto_tweak::load_param<S32, S32>(thump.rings, 1, 1, 10, ap, apsize, "thump.rings");
+        }
+        if (init)
+        {
+            thump.voffset = 0.0f;
+            auto_tweak::load_param<F32, F32>(thump.voffset, 1.0f, -100.0f, 100.0f, ap, apsize,
+                                             "thump.voffset");
+        }
+        if (init)
+        {
+            thump.particles = 200.0f;
+            auto_tweak::load_param<F32, F32>(thump.particles, 1.0f, 0.0f, 10000.0f, ap, apsize,
+                                             "thump.particles");
+        }
+        if (init)
+        {
+            thump.radius = 4.0f;
+            auto_tweak::load_param<F32, F32>(thump.radius, 1.0f, 0.0f, 100.0f, ap, apsize,
+                                             "thump.radius");
+        }
+        if (init)
+        {
+            thump.width = 2.0f;
+            auto_tweak::load_param<F32, F32>(thump.width, 1.0f, 0.0f, 10.0f, ap, apsize,
+                                             "thump.width");
+        }
+        if (init)
+        {
+            thump.vel = 10.0f;
+            auto_tweak::load_param<F32, F32>(thump.vel, 1.0f, 0.0f, 10000.0f, ap, apsize,
+                                             "thump.vel");
+        }
+        if (init)
+        {
+            thump.particle_drop_off = 0.5f;
+            auto_tweak::load_param<F32, F32>(thump.particle_drop_off, 1.0f, 0.0f, 1.0f, ap, apsize,
+                                             "thump.particle_drop_off");
+        }
+        if (init)
+        {
+            thump.vel_drop_off = 0.69999999f;
+            auto_tweak::load_param<F32, F32>(thump.vel_drop_off, 1.0f, 0.0f, 1.0f, ap, apsize,
+                                             "thump.vel_drop_off");
+        }
+        if (init)
+        {
+            sound[SOUND_AMBIENT_RING].volume = 0.3f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_AMBIENT_RING].volume, 1.0f, 0.0f, 1.0f, ap,
+                                             apsize, "sound[SOUND_AMBIENT_RING].volume");
+        }
+        if (init)
+        {
+            sound[SOUND_AMBIENT_RING].delay = 0.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_AMBIENT_RING].delay, 1.0f, 0.0f, 100000.0f,
+                                             ap, apsize, "sound[SOUND_AMBIENT_RING].delay");
+        }
+        if (init)
+        {
+            sound[SOUND_AMBIENT_RING].radius_inner = 0.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_AMBIENT_RING].radius_inner, 1.0f, 0.0f,
+                                             100000.0f, ap, apsize,
+                                             "sound[SOUND_AMBIENT_RING].radius_inner");
+        }
+        if (init)
+        {
+            sound[SOUND_AMBIENT_RING].priority = 0;
+            auto_tweak::load_param<S32, S32>(sound[SOUND_AMBIENT_RING].priority, 1, 0, 1000, ap,
+                                             apsize, "sound[SOUND_AMBIENT_RING].priority");
+        }
+        if (init)
+        {
+            sound[SOUND_BIRTH].volume = 1.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_BIRTH].volume, 1.0f, 0.0f, 10.0f, ap,
+                                             apsize, "sound[SOUND_BIRTH].volume");
+        }
+        if (init)
+        {
+            sound[SOUND_BIRTH].delay = 0.2f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_BIRTH].delay, 1.0f, 0.0f, 10.0f, ap,
+                                             apsize, "sound[SOUND_BIRTH].delay");
+        }
+        if (init)
+        {
+            sound[SOUND_BIRTH].radius_inner = 20.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_BIRTH].radius_inner, 1.0f, 0.0f, 100000.0f,
+                                             ap, apsize, "sound[SOUND_BIRTH].radius_inner");
+        }
+        if (init)
+        {
+            sound[SOUND_BIRTH].radius_outer = 50.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_BIRTH].radius_outer, 1.0f, 0.0f, 100000.0f,
+                                             ap, apsize, "sound[SOUND_BIRTH].radius_outer");
+        }
+        if (init)
+        {
+            sound[SOUND_BIRTH].priority = 0;
+            auto_tweak::load_param<S32, S32>(sound[SOUND_BIRTH].priority, 1, 0, 1000, ap, apsize,
+                                             "sound[SOUND_BIRTH].priority");
+        }
+        if (init)
+        {
+            sound[SOUND_CHARGE].volume = 0.75f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_CHARGE].volume, 1.0f, 0.0f, 10.0f, ap,
+                                             apsize, "sound[SOUND_CHARGE].volume");
+        }
+        if (init)
+        {
+            sound[SOUND_CHARGE].delay = 0.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_CHARGE].delay, 1.0f, 0.0f, 10.0f, ap,
+                                             apsize, "sound[SOUND_CHARGE].delay");
+        }
+        if (init)
+        {
+            sound[SOUND_CHARGE].radius_inner = 10.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_CHARGE].radius_inner, 1.0f, 0.0f,
+                                             100000.0f, ap, apsize,
+                                             "sound[SOUND_CHARGE].radius_inner");
+        }
+        if (init)
+        {
+            sound[SOUND_CHARGE].radius_outer = 40.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_CHARGE].radius_outer, 1.0f, 0.0f,
+                                             100000.0f, ap, apsize,
+                                             "sound[SOUND_CHARGE].radius_outer");
+        }
+        if (init)
+        {
+            sound[SOUND_CHARGE].priority = 0;
+            auto_tweak::load_param<S32, S32>(sound[SOUND_CHARGE].priority, 1, 0, 1000, ap, apsize,
+                                             "sound[SOUND_CHARGE].priority");
+        }
+        if (init)
+        {
+            sound[SOUND_CHEER].volume = 1.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_CHEER].volume, 1.0f, 0.0f, 10.0f, ap,
+                                             apsize, "sound[SOUND_CHEER].volume");
+        }
+        if (init)
+        {
+            sound[SOUND_CHEER].delay = 0.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_CHEER].delay, 1.0f, 0.0f, 10.0f, ap,
+                                             apsize, "sound[SOUND_CHEER].delay");
+        }
+        if (init)
+        {
+            sound[SOUND_CHEER].radius_inner = 20.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_CHEER].radius_inner, 1.0f, 0.0f, 100000.0f,
+                                             ap, apsize, "sound[SOUND_CHEER].radius_inner");
+        }
+        if (init)
+        {
+            sound[SOUND_CHEER].radius_outer = 50.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_CHEER].radius_outer, 1.0f, 0.0f, 100000.0f,
+                                             ap, apsize, "sound[SOUND_CHEER].radius_outer");
+        }
+        if (init)
+        {
+            sound[SOUND_CHEER].priority = 0;
+            auto_tweak::load_param<S32, S32>(sound[SOUND_CHEER].priority, 1, 0, 1000, ap, apsize,
+                                             "sound[SOUND_CHEER].priority");
+        }
+        if (init)
+        {
+            sound[SOUND_GRUNT].volume = 1.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_GRUNT].volume, 1.0f, 0.0f, 10.0f, ap,
+                                             apsize, "sound[SOUND_GRUNT].volume");
+        }
+        if (init)
+        {
+            sound[SOUND_GRUNT].delay = 0.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_GRUNT].delay, 1.0f, 0.0f, 10.0f, ap,
+                                             apsize, "sound[SOUND_GRUNT].delay");
+        }
+        if (init)
+        {
+            sound[SOUND_GRUNT].radius_inner = 20.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_GRUNT].radius_inner, 1.0f, 0.0f, 100000.0f,
+                                             ap, apsize, "sound[SOUND_GRUNT].radius_inner");
+        }
+        if (init)
+        {
+            sound[SOUND_GRUNT].radius_outer = 50.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_GRUNT].radius_outer, 1.0f, 0.0f, 100000.0f,
+                                             ap, apsize, "sound[SOUND_GRUNT].radius_outer");
+        }
+        if (init)
+        {
+            sound[SOUND_GRUNT].priority = 0;
+            auto_tweak::load_param<S32, S32>(sound[SOUND_GRUNT].priority, 1, 0, 1000, ap, apsize,
+                                             "sound[SOUND_GRUNT].priority");
+        }
+        if (init)
+        {
+            sound[SOUND_LAND].volume = 1.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_LAND].volume, 1.0f, 0.0f, 10.0f, ap,
+                                             apsize, "sound[SOUND_LAND].volume");
+        }
+        if (init)
+        {
+            sound[SOUND_LAND].delay = 0.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_LAND].delay, 1.0f, 0.0f, 10.0f, ap, apsize,
+                                             "sound[SOUND_LAND].delay");
+        }
+        if (init)
+        {
+            sound[SOUND_LAND].radius_inner = 10.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_LAND].radius_inner, 1.0f, 0.0f, 100000.0f,
+                                             ap, apsize, "sound[SOUND_LAND].radius_inner");
+        }
+        if (init)
+        {
+            sound[SOUND_LAND].radius_outer = 40.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_LAND].radius_outer, 1.0f, 0.0f, 100000.0f,
+                                             ap, apsize, "sound[SOUND_LAND].radius_outer");
+        }
+        if (init)
+        {
+            sound[SOUND_LAND].priority = 0;
+            auto_tweak::load_param<S32, S32>(sound[SOUND_LAND].priority, 1, 0, 1000, ap, apsize,
+                                             "sound[SOUND_LAND].priority");
+        }
+        if (init)
+        {
+            sound[SOUND_MOVE].volume = 1.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_MOVE].volume, 1.0f, 0.0f, 10.0f, ap,
+                                             apsize, "sound[SOUND_MOVE].volume");
+        }
+        if (init)
+        {
+            sound[SOUND_MOVE].radius_inner = 10.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_MOVE].radius_inner, 1.0f, 0.0f, 100000.0f,
+                                             ap, apsize, "sound[SOUND_MOVE].radius_inner");
+        }
+        if (init)
+        {
+            sound[SOUND_MOVE].radius_outer = 30.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_MOVE].radius_outer, 1.0f, 0.0f, 100000.0f,
+                                             ap, apsize, "sound[SOUND_MOVE].radius_outer");
+        }
+        if (init)
+        {
+            sound[SOUND_MOVE].priority = 0;
+            auto_tweak::load_param<S32, S32>(sound[SOUND_MOVE].priority, 1, 0, 1000, ap, apsize,
+                                             "sound[SOUND_MOVE].priority");
+        }
+        if (init)
+        {
+            sound[SOUND_OSCILLATE].volume = 0.5f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_OSCILLATE].volume, 1.0f, 0.0f, 10.0f, ap,
+                                             apsize, "sound[SOUND_OSCILLATE].volume");
+        }
+        if (init)
+        {
+            sound[SOUND_OSCILLATE].radius_inner = 0.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_OSCILLATE].radius_inner, 1.0f, 0.0f,
+                                             100000.0f, ap, apsize,
+                                             "sound[SOUND_OSCILLATE].radius_inner");
+        }
+        if (init)
+        {
+            sound[SOUND_OSCILLATE].radius_outer = 25.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_OSCILLATE].radius_outer, 1.0f, 0.0f,
+                                             100000.0f, ap, apsize,
+                                             "sound[SOUND_OSCILLATE].radius_outer");
+        }
+        if (init)
+        {
+            sound[SOUND_OSCILLATE].priority = 0;
+            auto_tweak::load_param<S32, S32>(sound[SOUND_OSCILLATE].priority, 1, 0, 1000, ap,
+                                             apsize, "sound[SOUND_OSCILLATE].priority");
+        }
+        if (init)
+        {
+            sound[SOUND_RISE].volume = 1.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_RISE].volume, 1.0f, 0.0f, 10.0f, ap,
+                                             apsize, "sound[SOUND_RISE].volume");
+        }
+        if (init)
+        {
+            sound[SOUND_RISE].delay = 0.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_RISE].delay, 1.0f, 0.0f, 10.0f, ap, apsize,
+                                             "sound[SOUND_RISE].delay");
+        }
+        if (init)
+        {
+            sound[SOUND_RISE].radius_inner = 10.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_RISE].radius_inner, 1.0f, 0.0f, 100000.0f,
+                                             ap, apsize, "sound[SOUND_RISE].radius_inner");
+        }
+        if (init)
+        {
+            sound[SOUND_RISE].radius_outer = 40.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_RISE].radius_outer, 1.0f, 0.0f, 100000.0f,
+                                             ap, apsize, "sound[SOUND_RISE].radius_outer");
+        }
+        if (init)
+        {
+            sound[SOUND_RISE].priority = 0;
+            auto_tweak::load_param<S32, S32>(sound[SOUND_RISE].priority, 1, 0, 1000, ap, apsize,
+                                             "sound[SOUND_RISE].priority");
+        }
+        if (init)
+        {
+            sound[SOUND_TAUNT].volume = 1.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_TAUNT].volume, 1.0f, 0.0f, 10.0f, ap,
+                                             apsize, "sound[SOUND_TAUNT].volume");
+        }
+        if (init)
+        {
+            sound[SOUND_TAUNT].delay = 0.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_TAUNT].delay, 1.0f, 0.0f, 10.0f, ap,
+                                             apsize, "sound[SOUND_TAUNT].delay");
+        }
+        if (init)
+        {
+            sound[SOUND_TAUNT].radius_inner = 20.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_TAUNT].radius_inner, 1.0f, 0.0f, 100000.0f,
+                                             ap, apsize, "sound[SOUND_TAUNT].radius_inner");
+        }
+        if (init)
+        {
+            sound[SOUND_TAUNT].radius_outer = 50.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_TAUNT].radius_outer, 1.0f, 0.0f, 100000.0f,
+                                             ap, apsize, "sound[SOUND_TAUNT].radius_outer");
+        }
+        if (init)
+        {
+            sound[SOUND_TAUNT].priority = 0;
+            auto_tweak::load_param<S32, S32>(sound[SOUND_TAUNT].priority, 1, 0, 1000, ap, apsize,
+                                             "sound[SOUND_TAUNT].priority");
+        }
+        if (init)
+        {
+            sound[SOUND_WAVE_RING].volume = 0.75f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_WAVE_RING].volume, 1.0f, 0.0f, 10.0f, ap,
+                                             apsize, "sound[SOUND_WAVE_RING].volume");
+        }
+        if (init)
+        {
+            sound[SOUND_WAVE_RING].delay = 0.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_WAVE_RING].delay, 1.0f, 0.0f, 10.0f, ap,
+                                             apsize, "sound[SOUND_WAVE_RING].delay");
+        }
+        if (init)
+        {
+            sound[SOUND_WAVE_RING].radius_inner = 20.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_WAVE_RING].radius_inner, 1.0f, 0.0f,
+                                             100000.0f, ap, apsize,
+                                             "sound[SOUND_WAVE_RING].radius_inner");
+        }
+        if (init)
+        {
+            sound[SOUND_WAVE_RING].radius_outer = 50.0f;
+            auto_tweak::load_param<F32, F32>(sound[SOUND_WAVE_RING].radius_outer, 1.0f, 0.0f,
+                                             100000.0f, ap, apsize,
+                                             "sound[SOUND_WAVE_RING].radius_outer");
+        }
+        if (init)
+        {
+            sound[SOUND_WAVE_RING].priority = 0;
+            auto_tweak::load_param<S32, S32>(sound[SOUND_WAVE_RING].priority, 1, 0, 1000, ap,
+                                             apsize, "sound[SOUND_WAVE_RING].priority");
+        }
+    }
 } // namespace
 
 void lightning_ring::create()

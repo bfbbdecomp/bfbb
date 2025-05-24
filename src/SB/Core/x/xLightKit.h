@@ -25,6 +25,7 @@ struct xLightKit
 
 xLightKit* xLightKit_Prepare(void* data);
 void xLightKit_Enable(xLightKit* lkit, RpWorld* world);
+xLightKit* xLightKit_GetCurrent(RpWorld* world);
 void xLightKit_Destroy(xLightKit* lkit);
 
 #endif

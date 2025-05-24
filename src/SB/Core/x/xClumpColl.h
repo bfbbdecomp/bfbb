@@ -40,6 +40,16 @@ struct xClumpCollBSPTree
     xClumpCollBSPTriangle* triangles;
 };
 
+struct xClumpCollV3dGradient
+{
+    F32 dydx;
+    F32 dzdx;
+    F32 dxdy;
+    F32 dzdy;
+    F32 dxdz;
+    F32 dydz;
+};
+
 struct nodeInfo
 {
     U32 type;
@@ -61,5 +71,13 @@ struct TempAtomicList
 
 void xClumpColl_InstancePointers(xClumpCollBSPTree* tree, RpClump* clump);
 xClumpCollBSPTree* xClumpColl_StaticBufferInit(void* data, U32 param_2);
+void xClumpColl_ForAllCapsuleLeafNodeIntersections(
+    xClumpCollBSPTree* tree,
+    RwLine* line,
+    F32 dist,
+    xClumpCollV3dGradient* grad,
+    int (*tri)(xClumpCollBSPTriangle*, void*),
+    void* data
+);
 
 #endif

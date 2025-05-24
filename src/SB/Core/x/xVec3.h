@@ -27,6 +27,7 @@ struct xVec3
     xVec3 operator+(const xVec3&) const;
     xVec3 operator-(const xVec3&) const;
     xVec3 operator*(F32) const;
+    xVec3 operator/(F32) const;
     xVec3& operator+=(const xVec3&);
     xVec3& operator+=(F32 f)
     {
@@ -53,13 +54,28 @@ struct xVec3
     xVec3& safe_normalize(const xVec3& val);
     xVec3& up_normalize();
     xVec3 up_normal() const;
+    xVec3 normal() const;
     xVec3& assign(F32 x, F32 y, F32 z);
     F32 length() const;
     F32 length2() const;
     xVec3& invert();
     F32 dot(const xVec3& c) const;
+
+    xVec3 cross(const xVec3& c) const
+    {
+        xVec3 v = {};
+
+        v.x = y * c.y - c.y * z;
+        v.y = z * c.x - c.z * x;
+        v.z = x * c.y - c.x * y;
+
+        return v;
+    }
+
     xVec3& normalize();
     xVec3& assign(F32 val);
+    xVec3 get_abs() const;
+    xVec3& set_abs();
 };
 
 F32 xVec3Normalize(xVec3* o, const xVec3* v);

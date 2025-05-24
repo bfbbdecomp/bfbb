@@ -10,6 +10,41 @@
 #include "zNPCTypeAmbient.h"
 #include "xCamera.h"
 
+
+namespace auto_tweak
+{
+    template <class T1, class T2>
+    void load_param(T1&, T2, T2, T2, xModelAssetParam*, U32, const char*);
+};
+
+struct unit_type
+{
+    F32 radius_offset;
+    F32 height_offset;
+    U8 line;
+    F32 thickness;
+    iColor_tag color;
+    F32 rot_radius;
+    F32 degrees;
+};
+
+struct wave_ring_type
+{
+    F32 min_radius;
+    F32 max_radius;
+    F32 height;
+    F32 fade_time;
+    F32 max_vel;
+    F32 accel;
+    F32 segment_length;
+    F32 particle_height;
+    F32 particles;
+    F32 damage_height;
+    F32 damage_width;
+    F32 knock_back;
+    unit_type unit[4];
+};
+
 struct lightning_ring
 {
     U8 active;

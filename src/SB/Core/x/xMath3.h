@@ -80,12 +80,14 @@ struct xRay3;
 
 extern const xQuat g_IQ;
 extern const xVec3 g_O3;
-extern xVec3 g_X3;
-extern xVec3 g_Y3;
-extern xVec3 g_NY3;
-extern xVec3 g_Z3;
+extern const xVec3 g_X3;
+extern const xVec3 g_Y3;
+extern const xVec3 g_Z3;
+extern const xVec3 g_NX3;
+extern const xVec3 g_NY3;
+extern const xVec3 g_NZ3;
+extern const xVec3 g_Onez;
 extern xMat4x3 g_I3;
-extern xVec3 g_Onez;
 
 void xMat3x3Copy(xMat3x3* o, const xMat3x3* m); // TODO: These functions should be inline
 void xMat4x3Copy(xMat4x3* o, const xMat4x3* m);
@@ -107,6 +109,7 @@ void xMat4x3MoveLocalUp(xMat4x3* m, F32 mag);
 void xMat4x3OrthoInv(xMat4x3* o, const xMat4x3* m);
 void xMat3x3GetEuler(const xMat3x3* m, xVec3* a);
 void xMat3x3Euler(xMat3x3* m, const xVec3* ypr);
+void xMat3x3Transpose(xMat3x3* o, const xMat3x3* m);
 void xQuatToMat(const xQuat* q, xMat3x3* m);
 void xQuatDiff(xQuat* o, const xQuat* a, const xQuat* b);
 F32 xQuatGetAngle(const xQuat* q);
