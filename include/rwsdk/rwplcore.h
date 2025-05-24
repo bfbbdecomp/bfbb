@@ -2,7 +2,7 @@
 #define RWPLCORE_H
 
 #include <stdarg.h>
-#include <stddef.h>
+//#include <stddef.h>
 
 #define rwBIGENDIAN
 

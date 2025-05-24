@@ -1,6 +1,6 @@
 #include "zParPTank.h"
 
-#include <cmath>
+#include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
 #include <rpptank.h>
 #include <types.h>
 
@@ -65,8 +65,7 @@ static float sSteamAnimTime;
 
 const RwV2d sparkle_size = { 0.3f, 0.3f };
 
-static void zParPTankSparkleCreate(zParPTank* zp, U32 max_particles,
-                                   zParPTankUpdateCallback update)
+static void zParPTankSparkleCreate(zParPTank* zp, U32 max_particles, zParPTankUpdateCallback update)
 {
     zp->num_particles = 0;
     zp->max_particles = max_particles;
@@ -228,8 +227,7 @@ void zParPTankSpawnSparkles(xVec3* pos, U32 count)
 const RwRGBA bubble_color = { 0x80, 0x80, 0x80, 0xFF };
 
 // Equivalent, float scheduling
-static void zParPTankBubbleCreate(zParPTank* zp, U32 max_particles,
-                                  zParPTankUpdateCallback update)
+static void zParPTankBubbleCreate(zParPTank* zp, U32 max_particles, zParPTankUpdateCallback update)
 {
     zp->num_particles = 0;
     zp->max_particles = max_particles;
@@ -616,8 +614,7 @@ void zParPTankSpawnSnow(xVec3* pos, xVec3* vel, U32 count)
 
 const RwV2d steam_size = { 0.4f, 0.4f };
 
-static void zParPTankSteamCreate(zParPTank* zp, U32 max_particles,
-                                 zParPTankUpdateCallback update)
+static void zParPTankSteamCreate(zParPTank* zp, U32 max_particles, zParPTankUpdateCallback update)
 {
     zp->num_particles = 0;
     zp->max_particles = max_particles;

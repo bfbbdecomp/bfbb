@@ -3,7 +3,7 @@
 #include "iCamera.h"
 
 #include <types.h>
-#include <stdlib.h>
+#include <PowerPC_EABI_Support\MSL_C\MSL_Common\stdlib.h>
 
 extern RpWorld* sBucketDummyWorld;
 extern RwCamera* sBucketDummyCamera;

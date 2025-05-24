@@ -3,8 +3,8 @@
 #include <rwplcore.h>
 
 #include <types.h>
-#include <cstdlib>
-#include <cstring>
+#include <PowerPC_EABI_Support\MSL_C\MSL_Common\cstdlib>
+#include <PowerPC_EABI_Support\MSL_C\MSL_Common\cstring>
 
 char* TrimWhitespace(char* string)
 {
