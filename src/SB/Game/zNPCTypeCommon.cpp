@@ -17,8 +17,12 @@
 #include "xString.h"
 #include "xDebug.h"
 
+#define Unknown 0
+#define LassoGuide_Grab01 1
+#define LassoGuide_Hold01 2
+
 extern char zNPCTypeCommon_strings[];
-extern char* g_strz_lassanim[3];
+static char* g_strz_lassanim[3] = {"Unknown", "LassoGuide_Grab01", "LassoGuide_Hold01"};
 extern S32 g_hash_lassanim[3];
 extern volatile S32 g_skipDescent;
 extern NPCConfig* g_ncfghead;
@@ -334,6 +338,27 @@ void zNPCCommon::LassoNotify(en_LASSO_EVENT event)
 
 void zNPCCommon::AddDEVGoals(xPsyche*)
 {
+}
+
+xAnimTable* ZNPC_AnimTable_Common()
+{
+    xAnimTable* table = xAnimTableNew("zNPCCommon", NULL, 0x0);
+
+    xAnimTableNewState(table, "Idle01", 0x110, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+
+    return table;
+}
+
+xAnimTable* ZNPC_AnimTable_LassoGuide()
+{
+    xAnimTable* table = xAnimTableNew("LassoGuides", NULL, 0x0);
+
+    xAnimTableNewState(table, g_strz_lassanim[LassoGuide_Grab01], 0x0, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_lassanim[LassoGuide_Hold01], 0x0, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+
+    xAnimTableNewTransition(table, g_strz_lassanim[LassoGuide_Grab01], g_strz_lassanim[LassoGuide_Hold01], NULL, NULL, 0x10, 0x0, 0.0f, 0.0f, 0, 0, 0.0f, NULL);
+
+    return table;
 }
 
 U32 zNPCCommon::DBG_Name()
