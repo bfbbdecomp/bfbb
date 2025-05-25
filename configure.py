@@ -159,7 +159,7 @@ config.asflags = [
     "-I include",
     f"-I build/{config.version}/include",
     f"--defsym BUILD_VERSION={version_num}",
-    f"--defsym VERSION_{config.version}",
+    f"--defsym VERSION_={config.version}",
 ]
 config.ldflags = [
     "-fp hardware",
@@ -200,6 +200,9 @@ cflags_base = [
     "-str reuse",
     "-multibyte",  # For Wii compilers, replace with `-enc SJIS`
     "-i include",
+    "-i libs/PowerPC_EABI_Support/include",
+    "-i include/dolphin",
+    "-i libs",
     f"-i build/{config.version}/include",
     f"-DBUILD_VERSION={version_num}",
     f"-DVERSION_{config.version}",
@@ -222,6 +225,19 @@ cflags_runtime = [
     "-inline auto",
 ]
 
+# dolphin library flags
+cflags_dolphin = [
+    *cflags_base,
+    "-lang=c", 
+    "-fp fmadd",
+    "-fp_contract off",
+    "-char signed",
+    "-str reuse", 
+    "-common off",
+    "-O4,p",
+    #"-requireprotos"
+]
+
 # REL flags
 cflags_rel = [
     *cflags_base,
@@ -232,6 +248,7 @@ cflags_rel = [
 # Game-specific flags
 cflags_bfbb = [
     *cflags_base,
+    "-lang=C++",
     "-common on",
     "-char unsigned",
     "-str reuse,pool,readonly",
@@ -240,8 +257,6 @@ cflags_bfbb = [
     "-inline off",
     "-gccinc",
     "-i include/bink",
-    "-i include/PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Include",
-    "-i include/PowerPC_EABI_Support/MSL/MSL_C++/MSL_Common/Include",
     "-i include/inline",
     "-i include/rwsdk",
     "-i src/SB/Core/gc",
@@ -257,12 +272,36 @@ config.linker_version = "GC/2.0p1"
 def DolphinLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
     return {
         "lib": lib_name,
+        "src_dir": "libs",
         "mw_version": "GC/1.2.5n",
-        "cflags": cflags_base,
+        "cflags": cflags_dolphin,
         "progress_category": "sdk",
+        "host": True,
         "objects": objects,
     }
 
+# Helper function for MSL libraries
+def mslLib(lib_name: str, extra_cflags: List[str], objects: List[Object]) -> Dict[str, Any]:
+    return {
+        "lib": lib_name,
+        "src_dir": "libs/PowerPC_EABI_Support/src",
+        "mw_version": "GC/2.6",
+        "cflags": cflags_runtime + extra_cflags,
+        "progress_category": "msl",
+        "host": True,
+        "objects": objects,
+    }
+
+def trkLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
+    return {
+        "lib": lib_name,
+        "src_dir": "libs/runtime_libs",
+        "mw_version": "GC/2.6",
+        "cflags": cflags_runtime,
+        "progress_category": "msl",
+        "host": True,
+        "objects": objects,
+    }
 
 # Helper function for RenderWare libraries
 def RenderWareLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
@@ -270,7 +309,7 @@ def RenderWareLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
         "lib": lib_name,
         "mw_version": "GC/1.3.2",
         "cflags": cflags_base,
-        "progress_category": "sdk",
+        "progress_category": "RW",
         "objects": objects,
     }
 
@@ -535,7 +574,7 @@ config.libs = [
         "lib": "binkngc",
         "mw_version": "GC/1.3.2",
         "cflags": cflags_runtime,
-        "progress_category": "sdk",
+        "progress_category": "bink",
         "objects": [
             Object(NonMatching, "bink/src/sdk/decode/ngc/binkngc.c"),
             Object(NonMatching, "bink/src/sdk/decode/ngc/ngcsnd.c"),
@@ -557,296 +596,325 @@ config.libs = [
     DolphinLib(
         "ai",
         [
-            Object(NonMatching, "dolphin/ai/src/ai.c"),
+            Object(Matching, "dolphin/ai/ai.c"),
         ],
     ),
     DolphinLib(
         "amcstubs",
         [
-            Object(NonMatching, "dolphin/amcstubs/src/AmcExi2Stubs.c"),
+            Object(Matching, "dolphin/amcstubs/AmcExi2Stubs.c"),
         ],
     ),
     DolphinLib(
         "ar",
         [
-            Object(NonMatching, "dolphin/ar/src/ar.c"),
-            Object(NonMatching, "dolphin/ar/src/arq.c"),
-        ],
+            Object(NonMatching, "dolphin/ar/ar.c"),
+            Object(Matching, "dolphin/ar/arq.c")
+        ]        
     ),
     DolphinLib(
         "ax",
         [
-            Object(NonMatching, "dolphin/ax/src/AX.c"),
-            Object(NonMatching, "dolphin/ax/src/AXAlloc.c"),
-            Object(NonMatching, "dolphin/ax/src/AXAux.c"),
-            Object(NonMatching, "dolphin/ax/src/AXCL.c"),
-            Object(NonMatching, "dolphin/ax/src/AXOut.c"),
-            Object(NonMatching, "dolphin/ax/src/AXSPB.c"),
-            Object(NonMatching, "dolphin/ax/src/AXVPB.c"),
-            Object(NonMatching, "dolphin/ax/src/AXComp.c"),
-            Object(NonMatching, "dolphin/ax/src/DSPCode.c"),
-            Object(NonMatching, "dolphin/ax/src/AXProf.c"),
+            Object(Matching, "dolphin/ax/AX.c"),
+            Object(NonMatching, "dolphin/ax/AXAlloc.c"),
+            Object(Matching, "dolphin/ax/AXAux.c"),
+            Object(NonMatching, "dolphin/ax/AXCL.c"),
+            Object(NonMatching, "dolphin/ax/AXOut.c"),
+            Object(NonMatching, "dolphin/ax/AXSPB.c"),
+            Object(NonMatching, "dolphin/ax/AXVPB.c"),
+            Object(Matching, "dolphin/ax/AXComp.c"),
+            Object(NonMatching, "dolphin/ax/DSPCode.c"),
+            Object(Matching, "dolphin/ax/AXProf.c"),
         ],
     ),
     DolphinLib(
         "base",
         [
-            Object(NonMatching, "dolphin/base/src/PPCArch.c"),
-        ],
+            Object(Matching, "dolphin/base/PPCArch.c")
+        ]        
     ),
     DolphinLib(
         "card",
         [
-            Object(NonMatching, "dolphin/card/src/CARDBios.c"),
-            Object(NonMatching, "dolphin/card/src/CARDUnlock.c"),
-            Object(NonMatching, "dolphin/card/src/CARDRdwr.c"),
-            Object(NonMatching, "dolphin/card/src/CARDBlock.c"),
-            Object(NonMatching, "dolphin/card/src/CARDDir.c"),
-            Object(NonMatching, "dolphin/card/src/CARDCheck.c"),
-            Object(NonMatching, "dolphin/card/src/CARDMount.c"),
-            Object(NonMatching, "dolphin/card/src/CARDFormat.c"),
-            Object(NonMatching, "dolphin/card/src/CARDOpen.c"),
-            Object(NonMatching, "dolphin/card/src/CARDCreate.c"),
-            Object(NonMatching, "dolphin/card/src/CARDRead.c"),
-            Object(NonMatching, "dolphin/card/src/CARDWrite.c"),
-            Object(NonMatching, "dolphin/card/src/CARDDelete.c"),
-            Object(NonMatching, "dolphin/card/src/CARDStat.c"),
-            Object(NonMatching, "dolphin/card/src/CARDStatEx.c"),
-            Object(NonMatching, "dolphin/card/src/CARDNet.c"),
-        ],
+            Object(Matching, "dolphin/card/CARDBios.c"),
+            Object(NonMatching, "dolphin/card/CARDUnlock.c"),
+            Object(Matching, "dolphin/card/CARDRdwr.c"),
+            Object(Matching, "dolphin/card/CARDBlock.c"),
+            Object(Matching, "dolphin/card/CARDDir.c"),
+            Object(Matching, "dolphin/card/CARDCheck.c"),
+            Object(Matching, "dolphin/card/CARDMount.c"),
+            Object(Matching, "dolphin/card/CARDFormat.c"),
+            Object(Matching, "dolphin/card/CARDOpen.c"),
+            Object(Matching, "dolphin/card/CARDCreate.c"),
+            Object(Matching, "dolphin/card/CARDRead.c"),
+            Object(Matching, "dolphin/card/CARDWrite.c"),
+            Object(Matching, "dolphin/card/CARDDelete.c"),
+            Object(Matching, "dolphin/card/CARDStat.c"),
+            Object(Matching,"dolphin/card/CARDStatEx.c"),
+            Object(NonMatching, "dolphin/card/CARDNet.c"),
+        ]
     ),
     DolphinLib(
         "db",
         [
-            Object(NonMatching, "dolphin/db/src/db.c"),
-        ],
+            Object(Matching, "dolphin/db/db.c"),
+        ]
     ),
     DolphinLib(
         "dsp",
         [
-            Object(NonMatching, "dolphin/dsp/src/dsp.c"),
-            Object(NonMatching, "dolphin/dsp/src/dsp_debug.c"),
-            Object(NonMatching, "dolphin/dsp/src/dsp_task.c"),
-        ],
+            Object(NonMatching, "dolphin/dsp/dsp.c"),
+            Object(Matching, "dolphin/dsp/dsp_debug.c"),
+            Object(NonMatching, "dolphin/dsp/dsp_task.c")
+        ]        
     ),
     DolphinLib(
         "dvd",
         [
-            Object(NonMatching, "dolphin/dvd/src/dvdlow.c"),
-            Object(NonMatching, "dolphin/dvd/src/dvdfs.c"),
-            Object(NonMatching, "dolphin/dvd/src/dvd.c"),
-            Object(NonMatching, "dolphin/dvd/src/dvdqueue.c"),
-            Object(NonMatching, "dolphin/dvd/src/dvderror.c"),
-            Object(NonMatching, "dolphin/dvd/src/dvdidutils.c"),
-            Object(NonMatching, "dolphin/dvd/src/dvdFatal.c"),
-            Object(NonMatching, "dolphin/dvd/src/emu_level2/fstload.c"),
+            Object(NonMatching, "dolphin/dvd/dvdlow.c"),
+            Object(NonMatching, "dolphin/dvd/dvdfs.c"),
+            Object(NonMatching, "dolphin/dvd/dvd.c"),
+            Object(Matching, "dolphin/dvd/dvdqueue.c"),
+            Object(NonMatching, "dolphin/dvd/dvderror.c"),
+            Object(Matching, "dolphin/dvd/dvdidutils.c"),
+            Object(Matching, "dolphin/dvd/dvdFatal.c"),
+            Object(Matching, "dolphin/dvd/emu_level2/fstload.c"),
         ],
     ),
     DolphinLib(
         "exi",
         [
-            Object(NonMatching, "dolphin/exi/src/EXIBios.c"),
-            Object(NonMatching, "dolphin/exi/src/EXIUart.c"),
-        ],
+            Object(NonMatching, "dolphin/exi/EXIBios.c"),
+            Object(NonMatching, "dolphin/exi/EXIUart.c")
+        ]
     ),
     DolphinLib(
         "gx",
         [
-            Object(NonMatching, "dolphin/gx/src/GXInit.c"),
-            Object(NonMatching, "dolphin/gx/src/GXFifo.c"),
-            Object(NonMatching, "dolphin/gx/src/GXAttr.c"),
-            Object(NonMatching, "dolphin/gx/src/GXMisc.c"),
-            Object(NonMatching, "dolphin/gx/src/GXGeometry.c"),
-            Object(NonMatching, "dolphin/gx/src/GXFrameBuf.c"),
-            Object(NonMatching, "dolphin/gx/src/GXLight.c"),
-            Object(NonMatching, "dolphin/gx/src/GXTexture.c"),
-            Object(NonMatching, "dolphin/gx/src/GXBump.c"),
-            Object(NonMatching, "dolphin/gx/src/GXTev.c"),
-            Object(NonMatching, "dolphin/gx/src/GXPixel.c"),
-            Object(NonMatching, "dolphin/gx/src/GXDisplayList.c"),
-            Object(NonMatching, "dolphin/gx/src/GXTransform.c"),
-            Object(NonMatching, "dolphin/gx/src/GXPerf.c"),
-        ],
+            Object(NonMatching, "dolphin/gx/GXInit.c"),
+            Object(NonMatching, "dolphin/gx/GXFifo.c"),
+            Object(NonMatching, "dolphin/gx/GXAttr.c"),
+            Object(NonMatching, "dolphin/gx/GXMisc.c"),
+            Object(NonMatching, "dolphin/gx/GXGeometry.c"),
+            Object(NonMatching, "dolphin/gx/GXFrameBuf.c"),
+            Object(NonMatching, "dolphin/gx/GXLight.c"),
+            Object(NonMatching, "dolphin/gx/GXTexture.c"),
+            Object(NonMatching, "dolphin/gx/GXBump.c"),
+            Object(NonMatching, "dolphin/gx/GXTev.c"),
+            Object(NonMatching, "dolphin/gx/GXPixel.c"),
+            Object(NonMatching, "dolphin/gx/GXDraw.c"),
+            Object(Matching, "dolphin/gx/GXDisplayList.c"),
+            Object(NonMatching, "dolphin/gx/GXTransform.c"),
+            Object(Matching, "dolphin/gx/GXPerf.c")
+        ]
     ),
+    # DolphinLib(
+    #     "lg",  # unofficial name
+    #     [
+    #         Object(NonMatching, "dolphin/lg/allsrc.c")
+    #     ]
+    # ),
     DolphinLib(
         "mtx",
         [
-            Object(NonMatching, "dolphin/mtx/src/mtx.c"),
-            Object(NonMatching, "dolphin/mtx/src/mtx44.c"),
-        ],
+            Object(NonMatching, "dolphin/mtx/mtx.c"),
+            Object(NonMatching, "dolphin/mtx/mtx44.c"),
+        ]
+    ),
+    DolphinLib(
+        "OdemuExi2",
+        [
+            Object(NonMatching, "dolphin/OdemuExi2/DebuggerDriver.c")
+        ]
     ),
     DolphinLib(
         "odenotstub",
         [
-            Object(NonMatching, "dolphin/odenotstub/src/odenotstub.c"),
-        ],
+            Object(Matching, "dolphin/odenotstub/odenotstub.c")
+        ]
     ),
     DolphinLib(
         "os",
         [
-            Object(NonMatching, "dolphin/os/src/OS.c"),
-            Object(NonMatching, "dolphin/os/src/OSAlarm.c"),
-            Object(NonMatching, "dolphin/os/src/OSAlloc.c"),
-            Object(NonMatching, "dolphin/os/src/OSArena.c"),
-            Object(NonMatching, "dolphin/os/src/OSAudioSystem.c"),
-            Object(NonMatching, "dolphin/os/src/OSCache.c"),
-            Object(NonMatching, "dolphin/os/src/OSContext.c"),
-            Object(NonMatching, "dolphin/os/src/OSError.c"),
-            Object(NonMatching, "dolphin/os/src/OSFont.c"),
-            Object(NonMatching, "dolphin/os/src/OSInterrupt.c"),
-            Object(NonMatching, "dolphin/os/src/OSLink.c"),
-            Object(NonMatching, "dolphin/os/src/OSMemory.c"),
-            Object(NonMatching, "dolphin/os/src/OSMutex.c"),
-            Object(NonMatching, "dolphin/os/src/OSReboot.c"),
-            Object(NonMatching, "dolphin/os/src/OSReset.c"),
-            Object(NonMatching, "dolphin/os/src/OSResetSW.c"),
-            Object(NonMatching, "dolphin/os/src/OSRtc.c"),
-            Object(NonMatching, "dolphin/os/src/OSSync.c"),
-            Object(NonMatching, "dolphin/os/src/OSThread.c"),
-            Object(NonMatching, "dolphin/os/src/OSTime.c"),
-            Object(NonMatching, "dolphin/os/src/init/__start.c"),
-            Object(NonMatching, "dolphin/os/src/init/__ppc_eabi_init.cpp"),
-        ],
+            Object(NonMatching, "dolphin/os/OS.c"),
+            Object(NonMatching, "dolphin/os/OSAlarm.c"),
+            Object(Matching, "dolphin/os/OSAlloc.c"),
+            Object(Matching, "dolphin/os/OSArena.c"),
+            Object(Matching, "dolphin/os/OSAudioSystem.c"),
+            Object(NonMatching, "dolphin/os/OSCache.c"),
+            Object(Matching, "dolphin/os/OSContext.c"),
+            Object(NonMatching, "dolphin/os/OSError.c"),
+            Object(NonMatching, "dolphin/os/OSFont.c"),
+            Object(Matching, "dolphin/os/OSInterrupt.c"),
+            Object(Matching, "dolphin/os/OSLink.c"),
+            Object(Matching, "dolphin/os/OSMemory.c"),
+            Object(Matching, "dolphin/os/OSMutex.c"),
+            Object(Matching, "dolphin/os/OSReboot.c"),
+            Object(NonMatching, "dolphin/os/OSReset.c"),
+            Object(Matching, "dolphin/os/OSResetSW.c"),
+            Object(NonMatching, "dolphin/os/OSRtc.c"),
+            Object(NonMatching, "dolphin/os/OSThread.c"),
+            Object(NonMatching, "dolphin/os/OSTime.c"),
+            Object(Matching, "dolphin/os/OSSync.c"),
+            Object(NonMatching, "dolphin/os/init/__start.c"),
+            Object(NonMatching, "dolphin/os/init/__ppc_eabi_init.cpp")
+        ]
     ),
     DolphinLib(
         "pad",
         [
-            Object(NonMatching, "dolphin/pad/src/Padclamp.c"),
-            Object(NonMatching, "dolphin/pad/src/Pad.c"),
-        ],
+            Object(NonMatching, "dolphin/pad/Padclamp.c"),
+            Object(NonMatching, "dolphin/pad/Pad.c")
+        ]
     ),
     DolphinLib(
         "si",
         [
-            Object(NonMatching, "dolphin/si/src/SIBios.c"),
-            Object(NonMatching, "dolphin/si/src/SISamplingRate.c"),
-        ],
+            Object(NonMatching, "dolphin/si/SIBios.c"),
+            Object(Matching, "dolphin/si/SISamplingRate.c"),
+        ]
     ),
     DolphinLib(
         "vi",
         [
-            Object(NonMatching, "dolphin/vi/src/vi.c"),
+            Object(NonMatching, "dolphin/vi/vi.c"),
         ],
     ),
-    {
-        "lib": "Runtime.PPCEABI.H",
-        "mw_version": config.linker_version,
-        "cflags": cflags_runtime,
-        "progress_category": "sdk",
-        "objects": [
-            Object(NonMatching, "PowerPC_EABI_Support/Runtime/Src/__mem.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/abort_exit.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/alloc.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/errno.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/ansi_files.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Src/ansi_fp.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/arith.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/buffer_io.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/char_io.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/PPC_EABI/SRC/critical_regions.gamecube.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/ctype.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/locale.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/direct_io.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/file_io.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/FILE_POS.C"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/mbstring.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/mem.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/mem_funcs.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/misc_io.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/printf.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/qsort.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/rand.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/scanf.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/signal.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/string.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/float.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/strtold.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/strtoul.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Src/uart_console_io.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/wchar_io.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/e_acos.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/e_asin.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/e_atan2.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/e_exp.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/e_fmod.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/e_log.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/e_pow.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/e_rem_pio2.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/k_cos.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/k_rem_pio2.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/k_sin.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/k_tan.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/s_atan.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/s_ceil.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/s_copysign.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/s_cos.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/s_floor.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/s_frexp.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/s_ldexp.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/s_modf.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/s_sin.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/s_tan.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/w_acos.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/w_asin.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/w_atan2.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/w_exp.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/w_fmod.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/w_log.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common_Embedded/Math/Double_precision/w_pow.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/PPC_EABI/SRC/math_ppc.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/extras.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/Runtime/Src/__va_arg.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/Runtime/Src/global_destructor_chain.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/Runtime/Src/CPlusLibPPC.cp"),
-            Object(NonMatching, "PowerPC_EABI_Support/Runtime/Src/New.cp"),
-            Object(NonMatching, "PowerPC_EABI_Support/Runtime/Src/NMWException.cp"),
-            Object(NonMatching, "PowerPC_EABI_Support/Runtime/Src/runtime.c"),
-            Object(NonMatching, "PowerPC_EABI_Support/Runtime/Src/__init_cpp_exceptions.cpp"),
-            Object(NonMatching, "PowerPC_EABI_Support/Runtime/Src/Gecko_ExceptionPPC.cp"),
-            Object(NonMatching, "PowerPC_EABI_Support/Runtime/Src/GCN_mem_alloc.c"),
-        ],
-    },
-    {
-        "lib": "TRK_Minnow_Dolphin",
-        "mw_version": "GC/1.3.2",
-        "cflags": cflags_runtime,
-        "progress_category": "sdk",
-        "objects": [
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/Portable/mainloop.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/Portable/nubevent.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/Portable/nubinit.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/Portable/msg.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/Portable/msgbuf.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/Portable/serpoll.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/Portable/usr_put.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/Portable/dispatch.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/Portable/msghndlr.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/Portable/support.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/Portable/mutex_TRK.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/Portable/notify.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/ppc/Generic/flush_cache.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/Portable/mem_TRK.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/ppc/Generic/targimpl.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/ppc/Export/targsupp.s"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/ppc/Generic/__exception.s"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/Os/dolphin/dolphin_trk.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/ppc/Generic/mpc_7xx_603e.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/Portable/main_TRK.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/Os/dolphin/dolphin_trk_glue.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/Os/dolphin/targcont.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/Os/dolphin/target_options.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/MetroTRK/Export/mslsupp.c"),
-        ],
-    },
-    {
-        "lib": "OdemuExi2",
-        "mw_version": "GC/1.3.2",
-        "cflags": cflags_runtime,
-        "progress_category": "sdk",
-        "objects": [
-            Object(NonMatching, "OdemuExi2/DebuggerDriver.c"),
-        ],
-    },
+    mslLib(
+        "Runtime.PPCEABI.H",
+        [],
+        [
+            Object(NonMatching, "Runtime/__mem.c"),
+            Object(Matching, "Runtime/__va_arg.c"),
+            Object(NonMatching, "Runtime/global_destructor_chain.c"),
+            Object(NonMatching, "Runtime/New.cp"),
+            Object(NonMatching, "Runtime/NMWException.cp"),
+            Object(NonMatching, "Runtime/CPlusLibPPC.cp"),
+            Object(NonMatching, "Runtime/ptmf.c"),
+            #Object(NonMatching, "Runtime/runtime.c"),
+            Object(NonMatching, "Runtime/__init_cpp_exceptions.cpp"),
+            Object(NonMatching, "Runtime/Gecko_ExceptionPPC.cp"),
+            Object(NonMatching, "Runtime/GCN_mem_alloc.c"),
+        ]
+    ),
+    mslLib(
+        "MSL_C.PPCEABI.H",
+        ["-str pool", "-opt level=0, peephole, schedule, nospace", "-inline off", "-sym on"],
+        [
+            Object(NonMatching, "MSL_C/PPC_EABI/abort_exit.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/alloc.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/ansi_files.c"),
+            Object(NonMatching, "MSL_C/MSL_Common_Embedded/ansi_fp.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/arith.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/bsearch.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/buffer_io.c"),
+            Object(NonMatching, "MSL_C/PPC_EABI/critical_regions.gamecube.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/ctype.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/direct_io.c"),
+            Object(Matching, "MSL_C/MSL_Common/errno.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/file_io.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/FILE_POS.C"),
+            Object(NonMatching, "MSL_C/MSL_Common/locale.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/mbstring.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/mem.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/mem_funcs.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/misc_io.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/printf.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/qsort.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/rand.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/scanf.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/signal.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/string.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/strtold.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/strtoul.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/float.c"),
+                # Causes cyclic dependency error
+                # Object(NonMatching, "MSL_C/MSL_Common/char_io.c"),  
+            Object(NonMatching, "MSL_C/MSL_Common/wchar_io.c"),  
+            Object(NonMatching, "MSL_C/MSL_Common_Embedded/uart_console_io_gcn.c")
+        ]
+    ),
+    mslLib(
+        "fdlibm.PPCEABI.H",
+        [],          
+        [
+            Object(NonMatching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/e_acos.c"),
+            Object(NonMatching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/e_asin.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/e_atan2.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/e_exp.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/e_fmod.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/e_log.c"),
+            Object(NonMatching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/e_pow.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/e_rem_pio2.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/k_cos.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/k_rem_pio2.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/k_sin.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/k_tan.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/s_atan.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/s_ceil.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/s_copysign.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/s_cos.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/s_floor.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/s_frexp.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/s_ldexp.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/s_modf.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/s_sin.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/s_tan.c"),
+            Object(NonMatching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/w_acos.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/w_asin.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/w_atan2.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/w_exp.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/w_fmod.c"),
+            Object(NonMatching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/w_log.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/w_pow.c"),
+            Object(NonMatching, "MSL_C/PPC_EABI/math_ppc.c"),
+        ]
+    ),
+    trkLib(
+        "TRK_MINNOW_DOLPHIN",
+        [
+            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/mainloop.c"),
+            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/nubevent.c"),
+            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/nubassrt.c"),
+            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/nubinit.c"),
+            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/msg.c"),
+            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/msgbuf.c"),
+            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/serpoll.c"),
+            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/dispatch.c"),
+            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/msghndlr.c"),
+            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/support.c"),
+            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/mutex_TRK.c"),
+            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/notify.c"),
+            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/main_TRK.c"),
+            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/mem_TRK.c"),
+            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/string_TRK.c"),
+            Object(NonMatching, "debugger/embedded/MetroTRK/Processor/ppc/Generic/flush_cache.c"),
+            #Object(NonMatching, "debugger/embedded/MetroTRK/Processor/ppc/Generic/__exception.s"),
+            Object(NonMatching, "debugger/embedded/MetroTRK/Processor/ppc/Generic/targimpl.c"),
+            #Object(NonMatching, "debugger/embedded/MetroTRK/Processor/ppc/Export/targsupp.s"),
+            Object(NonMatching, "debugger/embedded/MetroTRK/Processor/ppc/Generic/mpc_7xx_603e.c"),
+            Object(NonMatching, "debugger/embedded/MetroTRK/Os/dolphin/dolphin_trk.c"),   
+            Object(NonMatching, "debugger/embedded/MetroTRK/Os/dolphin/usr_put.c"),
+            Object(NonMatching, "debugger/embedded/MetroTRK/Os/dolphin/dolphin_trk_glue.c"),
+            Object(NonMatching, "debugger/embedded/MetroTRK/Os/dolphin/targcont.c"),
+            Object(NonMatching, "debugger/embedded/MetroTRK/Os/dolphin/target_options.c"),
+            Object(NonMatching, "debugger/embedded/MetroTRK/Os/dolphin/UDP_Stubs.c"),
+            Object(NonMatching, "debugger/embedded/MetroTRK/Export/mslsupp.c"),
+
+            Object(NonMatching, "gamedev/cust_connection/cc/exi2/GCN/EXI2_DDH_GCN/main.c"),
+            Object(NonMatching, "gamedev/cust_connection/utils/common/CircleBuffer.c"),
+            Object(NonMatching, "gamedev/cust_connection/cc/exi2/GCN/EXI2_GDEV_GCN/main.c"),
+            Object(NonMatching, "gamedev/cust_connection/utils/common/MWTrace.c"),
+            Object(NonMatching, "gamedev/cust_connection/utils/gc/MWCriticalSection_gc.cpp"),
+        ]
+    ),
+    mslLib(
+        "MSL_C.PPCEABI.bare.H",
+        [],
+        [
+            Object(NonMatching, "MSL_C/MSL_Common/extras.c")
+        ]
+    ),
     RenderWareLib(
         "rpcollis",
         [
@@ -1047,6 +1115,9 @@ def link_order_callback(module_id: int, objects: List[str]) -> List[str]:
 config.progress_categories = [
     ProgressCategory("game", "Game Code"),
     ProgressCategory("sdk", "SDK Code"),
+    ProgressCategory("msl", "MSL"),
+    ProgressCategory("RW", "Renderware SDK"),
+    ProgressCategory("bink", "Bink SDK"),
 ]
 config.progress_each_module = args.verbose
 

@@ -1,7 +1,7 @@
-#ifndef _DOLPHIN_OSMEMORY_H_
-#define _DOLPHIN_OSMEMORY_H_
+#ifndef _DOLPHIN_OSMEMORY
+#define _DOLPHIN_OSMEMORY
 
-#include <dolphin/types.h>
+#include "types.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -18,11 +18,11 @@ extern "C" {
 #define OS_PROTECT_CONTROL_RDWR (OS_PROTECT_CONTROL_READ | OS_PROTECT_CONTROL_WRITE)
 
 void OSProtectRange(u32 chan, void* addr, u32 nBytes, u32 control);
-u32 OSGetPhysicalMemSize(void);
 u32 OSGetConsoleSimulatedMemSize(void);
+u32 OSGetPhysicalMemSize(void);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif
+#endif // _DOLPHIN_OSMEMORY

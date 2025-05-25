@@ -2,7 +2,7 @@
 #include "zGlobals.h"
 #include "zMain.h"
 
-#include <string.h>
+#include <PowerPC_EABI_Support/MSL_C/MSL_Common/printf.h>
 #include <types.h>
 
 #include "iSystem.h"

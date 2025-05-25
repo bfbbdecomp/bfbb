@@ -16,6 +16,7 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <PowerPC_EABI_Support\MSL_C\MSL_Common\stdlib.h>
 
 extern U32 current_disco_floor;
 

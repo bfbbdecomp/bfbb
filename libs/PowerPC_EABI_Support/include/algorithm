@@ -1,0 +1,51 @@
+#ifndef _STD_ALGORITHM_H
+#define _STD_ALGORITHM_H
+
+#include "types.h"
+
+#include <iterator>
+
+namespace std
+{
+	template <class InputIterator>
+	inline s32
+	__distance(InputIterator first, InputIterator last, input_iterator_tag)
+	{
+		s32 result = 0;
+		for (; first != last; ++first)
+			++result;
+		return result;
+	}
+
+	template <class InputIterator>
+	inline s32
+	distance(InputIterator first, InputIterator last)
+	{
+		input_iterator_tag tag;
+		return __distance(first, last, tag);
+	}
+
+	template <typename InputIterator, typename Predicate>
+	inline InputIterator find_if(InputIterator first, InputIterator last, Predicate p)
+	{
+		for (; first != last && !p(*first); ++first)
+		{
+		}
+		return first;
+	}
+
+	template <typename ForwardIterator, typename Element, typename Predicate>
+	ForwardIterator upper_bound(ForwardIterator first, ForwardIterator last, const Element &value, Predicate predicate);
+
+	template <class ForwardIt, class T>
+	inline void fill(ForwardIt first, ForwardIt last, const T &value)
+	{
+		for (; first != last; ++first)
+		{
+			*first = value;
+		}
+	}
+
+} // namespace std
+
+#endif

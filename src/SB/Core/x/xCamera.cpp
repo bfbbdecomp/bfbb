@@ -9,21 +9,15 @@
 
 #include "iMath.h"
 
-#include <cmath>
-#include <cstring>
-
-
+#include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
+#include <PowerPC_EABI_Support\MSL_C\MSL_Common\cstring>
 
 #define CAMERAFX_ZOOM_MODE_0 0
 #define CAMERAFX_ZOOM_MODE_1 1
 #define CAMERAFX_ZOOM_MODE_2 2
 #define CAMERAFX_ZOOM_MODE_3 3
 
-
-
 #define CAMERAFX_TYPE_SHAKE 2
-
-
 
 S32 sCamCollis;
 volatile S32 xcam_collis_owner_disable;
@@ -687,8 +681,8 @@ void xCameraFXShakeUpdate(cameraFX* f, F32 dt, const xMat4x3*, xMat4x3* m)
 
     xMat3x3GetEuler(m, &e);
 
-    e.z +=
-        f->shake.cycleTime / f->shake.cycleMax * 0.63661975f * 0.1f * scale * f->shake.rotate_magnitude;
+    e.z += f->shake.cycleTime / f->shake.cycleMax * 0.63661975f * 0.1f * scale *
+           f->shake.rotate_magnitude;
 
     xMat3x3Euler(m, &e);
 }
@@ -800,7 +794,8 @@ void xCameraMove(xCamera* cam, U32 flags, F32 dgoal, F32 hgoal, F32 pgoal, F32 t
             xCam_cyltoworld(&cam->mat.pos, cam->tgt_mat, dgoal, hgoal, pgoal, cam->flags);
 
             cam->omat.pos = cam->mat.pos;
-            cam->yaw_cur = cam->yaw_goal = cam->pcur + ((cam->pcur >= 3.1415927f) ? -3.1415927f : 3.1415927f);
+            cam->yaw_cur = cam->yaw_goal =
+                cam->pcur + ((cam->pcur >= 3.1415927f) ? -3.1415927f : 3.1415927f);
         }
     }
     else

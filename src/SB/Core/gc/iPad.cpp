@@ -4,6 +4,8 @@
 #include "xTRC.h"
 #include "zGlobals.h"
 
+#include <dolphin\pad.h>
+
 extern xGlobals* xglobals;
 extern zGlobals globals;
 

@@ -1,5 +1,6 @@
 #include "iTRC.h"
 
+#include <PowerPC_EABI_Support/MSL_C/MSL_Common/strtoul.h>
 #include <string.h>
 #include <dolphin/gx/GXCull.h>
 #include <dolphin/gx/GXFrameBuffer.h>
@@ -12,6 +13,7 @@
 #include <dolphin/gx/GXTev.h>
 #include <dolphin/mtx.h>
 #include <dolphin/vi/vifuncs.h>
+#include <dolphin/os.h>
 
 #define FONT_MATRIX_ID 0x1E
 #define TEXTBOX_MAX_TEXT_LENGTH 256
@@ -192,10 +194,10 @@ void ROMFont::DrawCell(S32 param_1, S32 param_2, S32 param_3, S32 param_4)
 {
     U16 uVar1;
     U16 uVar2;
-    S16 sVar3;
-    S32 iVar4;
-    S32 iVar5;
-    S32 iVar6;
+    S16 sVar3 = 0;
+    S32 iVar4 = 0;
+    S32 iVar5 = 0;
+    S16 iVar6 = 0;
 
     uVar1 = mFontData->cellWidth;
     uVar2 = mFontData->cellHeight;
@@ -211,14 +213,14 @@ void ROMFont::DrawCell(S32 param_1, S32 param_2, S32 param_3, S32 param_4)
 
     iVar6 = (int)(short)(param_3 + uVar1);
 
-    GXTexCoord2s16(iVar6, param_4);
+    GXTexCoord2s16(iVar6, sVar3);
     GXPosition3s16(iVar5, iVar4, 0);
 
     sVar3 = param_4 + uVar2;
 
     GXTexCoord2s16(iVar6, sVar3);
     GXPosition3s16((int)param_1, iVar4, 0);
-    GXTexCoord2s16((int)param_3, sVar3);
+    GXTexCoord2s16(iVar6, sVar3);
 
     GXEnd();
 }

@@ -12,7 +12,7 @@
 #include <types.h>
 #include <string.h>
 #include <stdlib.h>
-#include <cmath>
+#include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
 
 #include <dolphin.h>
 #include <stdio.h>
@@ -360,18 +360,18 @@ void xAnimTempTransitionInit(U32 count)
                   sizeof(xAnimTransition), count, count / 2);
 }
 
+#ifndef INLINE
+float atan2f(float y, float x)
+{
+    return (float)atan2((double)y, (double)x);
+}
+#endif
+
 // TODO: move to xMathInlines.h
 F32 xatan2(F32 y, F32 x)
 {
     return xAngleClampFast(std::atan2f(y, x));
 }
-
-#ifndef INLINE
-float std::atan2f(float y, float x)
-{
-    return (float)atan2((double)y, (double)x);
-}
-#endif
 
 float CalcRecipBlendMax(U16* arg0)
 {
@@ -684,7 +684,7 @@ void xAnimFileEval(xAnimFile* data, F32 time, F32* bilinear, U32 flags, xVec3* t
 }
 
 #ifndef INLINE
-float std::floorf(float x)
+float floorf(float x)
 {
     return (float)floor((double)x);
 }
@@ -2093,7 +2093,7 @@ void xAnimPoolCB(xMemPool* pool, void* data)
     clone->Pool = pool;
 }
 
-#define ADD_4_BITS(x) (((x) & 1) + (((x) >> 1) & 1) + (((x) >> 2) & 1) + (((x) >> 3) & 1))
+#define ADD_4_BITS(x) (((x)&1) + (((x) >> 1) & 1) + (((x) >> 2) & 1) + (((x) >> 3) & 1))
 void xAnimPoolInit(xMemPool* pool, U32 count, U32 singles, U32 blendFlags, U32 effectMax)
 {
     effectMax += effectMax & 1;
