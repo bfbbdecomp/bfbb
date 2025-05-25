@@ -15,7 +15,7 @@
 xCutscene sActiveCutscene;
 U32 sCutTocCount;
 xCutsceneInfo* sCutTocInfo;
-extern void* RwEngineInstance;
+extern RwGlobals* RwEngineInstance;
 static xModelInstance sCutsceneFakeModel[8];
 
 // Non-matching: scheduling
