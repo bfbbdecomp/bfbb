@@ -8,9 +8,10 @@
 extern "C" {
 #endif
 
-typedef GXTexRegion* (*GXTexRegionCallback)(const GXTexObj* obj, GXTexMapID id);
+typedef GXTexRegion* (*GXTexRegionCallback)(GXTexObj* obj, GXTexMapID id);
+typedef GXTlutRegion* (*GXTlutRegionCallback)(u32 idx);
 
-void GXInitTexObj(GXTexObj* obj, void* image_ptr, u16 width, u16 height, GXTexFmt format,
+void GXInitTexObj(GXTexObj* obj, const void* image_ptr, u16 width, u16 height, GXTexFmt format,
                   GXTexWrapMode wrap_s, GXTexWrapMode wrap_t, GXBool mipmap);
 void GXInitTexObjCI(GXTexObj* obj, const void* data, u16 width, u16 height, GXCITexFmt format,
                     GXTexWrapMode wrapS, GXTexWrapMode wrapT, GXBool mipmap, u32 tlut);
@@ -28,6 +29,7 @@ void GXSetTexCoordScaleManually(GXTexCoordID coord, GXBool enable, u16 ss, u16 t
 void GXInitTexCacheRegion(GXTexRegion* region, GXBool is_32b_mipmap, u32 tmem_even,
                           GXTexCacheSize size_even, u32 tmem_odd, GXTexCacheSize size_odd);
 GXTexRegionCallback GXSetTexRegionCallback(GXTexRegionCallback callback);
+GXTlutRegionCallback GXSetTlutRegionCallback(GXTlutRegionCallback f);
 void GXInvalidateTexRegion(const GXTexRegion* region);
 
 #ifdef __cplusplus

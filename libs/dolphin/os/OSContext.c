@@ -6,8 +6,9 @@
 volatile OSContext* __OSCurrentContext : (OS_BASE_CACHED | 0x00D4);
 volatile OSContext* __OSFPUContext : (OS_BASE_CACHED | 0x00D8);
 
-static asm void __OSLoadFPUContext(register u32, register OSContext* fpuContext) {
-  // clang-format off
+static asm void __OSLoadFPUContext(register u32, register OSContext* fpuContext)
+{
+    // clang-format off
   nofralloc
   lhz r5, fpuContext->state;
   clrlwi. r5, r5, 31
@@ -87,11 +88,12 @@ _regular_FPRs:
   lfd fp31, fpuContext->fpr[31]
 _return:
   blr
-  // clang-format on
+    // clang-format on
 }
 
-static asm void __OSSaveFPUContext(register u32, register u32, register OSContext* fpuContext) {
-  // clang-format off
+static asm void __OSSaveFPUContext(register u32, register u32, register OSContext* fpuContext)
+{
+    // clang-format off
   nofralloc
 
   lhz     r3,   fpuContext->state
@@ -175,27 +177,20 @@ static asm void __OSSaveFPUContext(register u32, register u32, register OSContex
 
 _return:
     blr
-  // clang-format on
+    // clang-format on
 }
 
-asm void OSLoadFPUContext(register OSContext* fpuContext) {
-  // clang-format off
-  nofralloc
-  addi    r4, fpuContext, 0
-  b       __OSLoadFPUContext
-  // clang-format on
-}
-
-asm void OSSaveFPUContext(register OSContext* fpuContext) {
-  // clang-format off
+asm void OSSaveFPUContext(register OSContext* fpuContext)
+{
+    // clang-format off
   nofralloc
   addi    r5, fpuContext, 0
   b       __OSSaveFPUContext
-  // clang-format on
+    // clang-format on
 }
 
 asm void OSSetCurrentContext(register OSContext* context){
-  // clang-format off
+    // clang-format off
   nofralloc
 
   addis   r4, r0, OS_CACHED_REGION_PREFIX
@@ -227,15 +222,17 @@ _disableFPU:
   mtmsr   r6
   isync
   blr
-  // clang-format on
+    // clang-format on
 }
 
-OSContext* OSGetCurrentContext(void) {
-  return (OSContext*)__OSCurrentContext;
+OSContext* OSGetCurrentContext(void)
+{
+    return (OSContext*)__OSCurrentContext;
 }
 
-asm u32 OSSaveContext(register OSContext* context) {
-  // clang-format off
+asm u32 OSSaveContext(register OSContext* context)
+{
+    // clang-format off
   nofralloc
   stmw    r13, context->gpr[13]
   mfspr   r0, GQR1
@@ -269,14 +266,15 @@ asm u32 OSSaveContext(register OSContext* context) {
   stw     r0, context->gpr[3]
   li      r3, 0
   blr
-  // clang-format on
+    // clang-format on
 }
 
 extern void __RAS_OSDisableInterrupts_begin();
 extern void __RAS_OSDisableInterrupts_end();
 
-asm void OSLoadContext(register OSContext* context) {
-  // clang-format off
+asm void OSLoadContext(register OSContext* context)
+{
+    // clang-format off
   nofralloc
 
   lis      r4,__RAS_OSDisableInterrupts_begin@ha
@@ -345,165 +343,88 @@ misc:
   lwz     r3, context->gpr[3]
 
   rfi
-  // clang-format on
+    // clang-format on
 }
 
-asm u32 OSGetStackPointer() {
-  // clang-format off
+asm u32 OSGetStackPointer()
+{
+    // clang-format off
   nofralloc 
   mr r3, r1 
   blr
-  // clang-format on
+    // clang-format on
 }
 
-asm u32 OSSwitchStack(register u32 newsp) {
-  // clang-format off
-  nofralloc
-  mr  r5, r1
-  mr  r1, newsp
-  mr  r3, r5
-  blr
-  // clang-format on
+void OSClearContext(register OSContext* context)
+{
+    context->mode = 0;
+    context->state = 0;
+    if (context == __OSFPUContext)
+        __OSFPUContext = NULL;
 }
 
-asm int OSSwitchFiber(register u32 pc, register u32 newsp) {
-  // clang-format off
-  nofralloc
-  mflr    r0
-  mr      r5, r1
-  stwu    r5, -8(newsp)
-  mr      r1, newsp
-  stw     r0, 4(r5)
-  mtlr    pc
-  blrl
-  lwz     r5, 0(r1)
-  lwz     r0, 4(r5)
-  mtlr    r0
-  mr      r1, r5
-  blr
-  // clang-format on
-}
+void OSDumpContext(OSContext* context)
+{
+    u32 i;
+    u32* p;
 
-void OSClearContext(register OSContext* context) {
-  context->mode = 0;
-  context->state = 0;
-  if (context == __OSFPUContext)
-    __OSFPUContext = NULL;
-}
+    OSReport("------------------------- Context 0x%08x -------------------------\n", context);
 
-asm void OSInitContext(register OSContext* context, register u32 pc, register u32 newsp) {
-  // clang-format off
-    nofralloc
-
-    stw     pc,  OS_CONTEXT_SRR0(context)
-    stw     newsp,  OS_CONTEXT_R1(context)
-    li      r11, 0
-    ori     r11, r11, 0x00008000 | 0x00000020 | 0x00000010 | 0x00000002 | 0x00001000
-    stw     r11, OS_CONTEXT_SRR1(context)
-    li      r0,  0x0
-    stw     r0,  OS_CONTEXT_CR(context)
-    stw     r0,  OS_CONTEXT_XER(context)
-
-
-    stw     r2,  OS_CONTEXT_R2(context)
-    stw     r13, OS_CONTEXT_R13(context)
-
-    stw     r0,  OS_CONTEXT_R3(context)
-    stw     r0,  OS_CONTEXT_R4(context)
-    stw     r0,  OS_CONTEXT_R5(context)
-    stw     r0,  OS_CONTEXT_R6(context)
-    stw     r0,  OS_CONTEXT_R7(context)
-    stw     r0,  OS_CONTEXT_R8(context)
-    stw     r0,  OS_CONTEXT_R9(context)
-    stw     r0,  OS_CONTEXT_R10(context)
-    stw     r0,  OS_CONTEXT_R11(context)
-    stw     r0,  OS_CONTEXT_R12(context)
-
-    stw     r0,  OS_CONTEXT_R14(context)
-    stw     r0,  OS_CONTEXT_R15(context)
-    stw     r0,  OS_CONTEXT_R16(context)
-    stw     r0,  OS_CONTEXT_R17(context)
-    stw     r0,  OS_CONTEXT_R18(context)
-    stw     r0,  OS_CONTEXT_R19(context)
-    stw     r0,  OS_CONTEXT_R20(context)
-    stw     r0,  OS_CONTEXT_R21(context)
-    stw     r0,  OS_CONTEXT_R22(context)
-    stw     r0,  OS_CONTEXT_R23(context)
-    stw     r0,  OS_CONTEXT_R24(context)
-    stw     r0,  OS_CONTEXT_R25(context)
-    stw     r0,  OS_CONTEXT_R26(context)
-    stw     r0,  OS_CONTEXT_R27(context)
-    stw     r0,  OS_CONTEXT_R28(context)
-    stw     r0,  OS_CONTEXT_R29(context)
-    stw     r0,  OS_CONTEXT_R30(context)
-    stw     r0,  OS_CONTEXT_R31(context)
-
-    stw     r0,  OS_CONTEXT_GQR0(context)
-    stw     r0,  OS_CONTEXT_GQR1(context)
-    stw     r0,  OS_CONTEXT_GQR2(context)
-    stw     r0,  OS_CONTEXT_GQR3(context)
-    stw     r0,  OS_CONTEXT_GQR4(context)
-    stw     r0,  OS_CONTEXT_GQR5(context)
-    stw     r0,  OS_CONTEXT_GQR6(context)
-    stw     r0,  OS_CONTEXT_GQR7(context)
-
-    b       OSClearContext
-  // clang-format on
-}
-
-void OSDumpContext(OSContext* context) {
-  u32 i;
-  u32* p;
-
-  OSReport("------------------------- Context 0x%08x -------------------------\n", context);
-
-  for (i = 0; i < 16; ++i) {
-    OSReport("r%-2d  = 0x%08x (%14d)  r%-2d  = 0x%08x (%14d)\n", i, context->gpr[i],
-             context->gpr[i], i + 16, context->gpr[i + 16], context->gpr[i + 16]);
-  }
-
-  OSReport("LR   = 0x%08x                   CR   = 0x%08x\n", context->lr, context->cr);
-  OSReport("SRR0 = 0x%08x                   SRR1 = 0x%08x\n", context->srr0, context->srr1);
-
-  OSReport("\nGQRs----------\n");
-  for (i = 0; i < 4; ++i) {
-    OSReport("gqr%d = 0x%08x \t gqr%d = 0x%08x\n", i, context->gqr[i], i + 4, context->gqr[i + 4]);
-  }
-
-  if (context->state & OS_CONTEXT_STATE_FPSAVED) {
-    OSContext* currentContext;
-    OSContext fpuContext;
-    BOOL enabled;
-
-    enabled = OSDisableInterrupts();
-    currentContext = OSGetCurrentContext();
-    OSClearContext(&fpuContext);
-    OSSetCurrentContext(&fpuContext);
-
-    OSReport("\n\nFPRs----------\n");
-    for (i = 0; i < 32; i += 2) {
-      OSReport("fr%d \t= %d \t fr%d \t= %d\n", i, (u32)context->fpr[i], i + 1,
-               (u32)context->fpr[i + 1]);
-    }
-    OSReport("\n\nPSFs----------\n");
-    for (i = 0; i < 32; i += 2) {
-      OSReport("ps%d \t= 0x%x \t ps%d \t= 0x%x\n", i, (u32)context->psf[i], i + 1,
-               (u32)context->psf[i + 1]);
+    for (i = 0; i < 16; ++i)
+    {
+        OSReport("r%-2d  = 0x%08x (%14d)  r%-2d  = 0x%08x (%14d)\n", i, context->gpr[i],
+                 context->gpr[i], i + 16, context->gpr[i + 16], context->gpr[i + 16]);
     }
 
-    OSClearContext(&fpuContext);
-    OSSetCurrentContext(currentContext);
-    OSRestoreInterrupts(enabled);
-  }
+    OSReport("LR   = 0x%08x                   CR   = 0x%08x\n", context->lr, context->cr);
+    OSReport("SRR0 = 0x%08x                   SRR1 = 0x%08x\n", context->srr0, context->srr1);
 
-  OSReport("\nAddress:      Back Chain    LR Save\n");
-  for (i = 0, p = (u32*)context->gpr[1]; p && (u32)p != 0xffffffff && i++ < 16; p = (u32*)*p) {
-    OSReport("0x%08x:   0x%08x    0x%08x\n", p, p[0], p[1]);
-  }
+    OSReport("\nGQRs----------\n");
+    for (i = 0; i < 4; ++i)
+    {
+        OSReport("gqr%d = 0x%08x \t gqr%d = 0x%08x\n", i, context->gqr[i], i + 4,
+                 context->gqr[i + 4]);
+    }
+
+    if (context->state & OS_CONTEXT_STATE_FPSAVED)
+    {
+        OSContext* currentContext;
+        OSContext fpuContext;
+        BOOL enabled;
+
+        enabled = OSDisableInterrupts();
+        currentContext = OSGetCurrentContext();
+        OSClearContext(&fpuContext);
+        OSSetCurrentContext(&fpuContext);
+
+        OSReport("\n\nFPRs----------\n");
+        for (i = 0; i < 32; i += 2)
+        {
+            OSReport("fr%d \t= %d \t fr%d \t= %d\n", i, (u32)context->fpr[i], i + 1,
+                     (u32)context->fpr[i + 1]);
+        }
+        OSReport("\n\nPSFs----------\n");
+        for (i = 0; i < 32; i += 2)
+        {
+            OSReport("ps%d \t= 0x%x \t ps%d \t= 0x%x\n", i, (u32)context->psf[i], i + 1,
+                     (u32)context->psf[i + 1]);
+        }
+
+        OSClearContext(&fpuContext);
+        OSSetCurrentContext(currentContext);
+        OSRestoreInterrupts(enabled);
+    }
+
+    OSReport("\nAddress:      Back Chain    LR Save\n");
+    for (i = 0, p = (u32*)context->gpr[1]; p && (u32)p != 0xffffffff && i++ < 16; p = (u32*)*p)
+    {
+        OSReport("0x%08x:   0x%08x    0x%08x\n", p, p[0], p[1]);
+    }
 }
 
-static asm void OSSwitchFPUContext(register __OSException exception, register OSContext* context) {
-  // clang-format off
+static asm void OSSwitchFPUContext(register __OSException exception, register OSContext* context)
+{
+    // clang-format off
   nofralloc
   mfmsr   r5
   ori     r5, r5, 0x2000
@@ -540,98 +461,12 @@ _restoreAndExit:
   lwz     r3, OS_CONTEXT_R3(context)
   lwz     r4, OS_CONTEXT_R4(context)
   rfi
-  // clang-format on
+    // clang-format on
 }
 
-void __OSContextInit(void) {
-  __OSSetExceptionHandler(__OS_EXCEPTION_FLOATING_POINT, OSSwitchFPUContext);
-  __OSFPUContext = NULL;
-  DBPrintf("FPU-unavailable handler installed\n");
-}
-
-asm void OSFillFPUContext(register OSContext *context)
+void __OSContextInit(void)
 {
-  // clang-format off
-	nofralloc
-	mfmsr     r5
-	ori       r5, r5, 0x2000
-	mtmsr     r5
-
-	isync
-	stfd      f0, 0x90(r3)
-	stfd      f1, 0x98(r3)
-	stfd      f2, 0xA0(r3)
-	stfd      f3, 0xA8(r3)
-	stfd      f4, 0xB0(r3)
-	stfd      f5, 0xB8(r3)
-	stfd      f6, 0xC0(r3)
-	stfd      f7, 0xC8(r3)
-	stfd      f8, 0xD0(r3)
-	stfd      f9, 0xD8(r3)
-	stfd      f10, 0xE0(r3)
-	stfd      f11, 0xE8(r3)
-	stfd      f12, 0xF0(r3)
-	stfd      f13, 0xF8(r3)
-	stfd      f14, 0x100(r3)
-	stfd      f15, 0x108(r3)
-	stfd      f16, 0x110(r3)
-	stfd      f17, 0x118(r3)
-	stfd      f18, 0x120(r3)
-	stfd      f19, 0x128(r3)
-	stfd      f20, 0x130(r3)
-	stfd      f21, 0x138(r3)
-	stfd      f22, 0x140(r3)
-	stfd      f23, 0x148(r3)
-	stfd      f24, 0x150(r3)
-	stfd      f25, 0x158(r3)
-	stfd      f26, 0x160(r3)
-	stfd      f27, 0x168(r3)
-	stfd      f28, 0x170(r3)
-	stfd      f29, 0x178(r3)
-	stfd      f30, 0x180(r3)
-	stfd      f31, 0x188(r3)
-	mffs      f0
-	stfd      f0, 0x190(r3)
-	lfd       f0, 0x90(r3)
-
-	mfspr     r5, 0x398
-	rlwinm.   r5,r5,3,31,31
-	beq-      _return
-
-	psq_st    f0,0x1C8(r3),0,0
-	psq_st    f1,0x1D0(r3),0,0
-	psq_st    f2,0x1D8(r3),0,0
-	psq_st    f3,0x1E0(r3),0,0
-	psq_st    f4,0x1E8(r3),0,0
-	psq_st    f5,0x1F0(r3),0,0
-	psq_st    f6,0x1F8(r3),0,0
-	psq_st    f7,0x200(r3),0,0
-	psq_st    f8,0x208(r3),0,0
-	psq_st    f9,0x210(r3),0,0
-	psq_st    f10,0x218(r3),0,0
-	psq_st    f11,0x220(r3),0,0
-	psq_st    f12,0x228(r3),0,0
-	psq_st    f13,0x230(r3),0,0
-	psq_st    f14,0x238(r3),0,0
-	psq_st    f15,0x240(r3),0,0
-	psq_st    f16,0x248(r3),0,0
-	psq_st    f17,0x250(r3),0,0
-	psq_st    f18,0x258(r3),0,0
-	psq_st    f19,0x260(r3),0,0
-	psq_st    f20,0x268(r3),0,0
-	psq_st    f21,0x270(r3),0,0
-	psq_st    f22,0x278(r3),0,0
-	psq_st    f23,0x280(r3),0,0
-	psq_st    f24,0x288(r3),0,0
-	psq_st    f25,0x290(r3),0,0
-	psq_st    f26,0x298(r3),0,0
-	psq_st    f27,0x2A0(r3),0,0
-	psq_st    f28,0x2A8(r3),0,0
-	psq_st    f29,0x2B0(r3),0,0
-	psq_st    f30,0x2B8(r3),0,0
-	psq_st    f31,0x2C0(r3),0,0
-
-_return:
-	blr
-  // clang-format on
+    __OSSetExceptionHandler(__OS_EXCEPTION_FLOATING_POINT, OSSwitchFPUContext);
+    __OSFPUContext = NULL;
+    DBPrintf("FPU-unavailable handler installed\n");
 }

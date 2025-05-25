@@ -178,10 +178,6 @@ void __AXOutInit(u32 outputBufferMode)
 #ifdef DEBUG
     OSReport("Initializing AXOut code module\n");
 #endif
-    ASSERTLINE(404, ((u32)&__AXOutBuffer[0][0] & 0x1F) == 0);
-    ASSERTLINE(405, ((u32)&__AXOutBuffer[1][0] & 0x1F) == 0);
-    ASSERTLINE(406, ((u32)&__AXOutBuffer[2][0] & 0x1F) == 0);
-    ASSERTLINE(407, ((u32)&__AXOutSBuffer[0] & 0x1F) == 0);
 
     __AXOutputBufferMode = outputBufferMode;
     __AXOutFrame = 0;

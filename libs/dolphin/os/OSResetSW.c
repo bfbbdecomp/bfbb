@@ -14,7 +14,7 @@ static BOOL LastState;
 static OSTime HoldUp;
 static OSTime HoldDown;
 
-void __OSResetSWInterruptHandler(__OSInterrupt interrupt, OSContext *context)
+void __OSResetSWInterruptHandler(__OSInterrupt interrupt, OSContext* context)
 {
     OSResetCallback callback;
 
@@ -88,9 +88,9 @@ BOOL OSGetResetButtonState(void)
 
     LastState = state;
 
-    if (GameChoice & 0x1f)
+    if (GameChoice & 0x3f)
     {
-        OSTime fire = (GameChoice & 0x1f) * 60;
+        OSTime fire = (GameChoice & 0x3f) * 60;
         fire = __OSStartTime + OSSecondsToTicks(fire);
         if (fire < now)
         {
@@ -110,9 +110,3 @@ BOOL OSGetResetButtonState(void)
     OSRestoreInterrupts(enabled);
     return state;
 }
-
-#pragma dont_inline on
-
-BOOL OSGetResetSwitchState(void) { return OSGetResetButtonState(); }
-
-#pragma dont_inline reset

@@ -4,16 +4,14 @@
 
 static struct OSAlarmQueue
 {
-    OSAlarm *head;
-    OSAlarm *tail;
+    OSAlarm* head;
+    OSAlarm* tail;
 } AlarmQueue;
 
-static void DecrementerExceptionHandler(__OSException exception, OSContext *context);
+static void DecrementerExceptionHandler(__OSException exception, OSContext* context);
 static BOOL OnReset(BOOL final);
 
-static OSResetFunctionInfo ResetFunctionInfo = {OnReset, 0xFFFFFFFF};
-
-static void SetTimer(OSAlarm *alarm)
+static void SetTimer(OSAlarm* alarm)
 {
     OSTime delta;
 
@@ -38,20 +36,19 @@ void OSInitAlarm(void)
     {
         AlarmQueue.head = AlarmQueue.tail = NULL;
         __OSSetExceptionHandler(8, DecrementerExceptionHandler);
-        OSRegisterResetFunction(&ResetFunctionInfo);
     }
 }
 
-void OSCreateAlarm(OSAlarm *alarm)
+void OSCreateAlarm(OSAlarm* alarm)
 {
     alarm->handler = 0;
     alarm->tag = 0;
 }
 
-static void InsertAlarm(OSAlarm *alarm, OSTime fire, OSAlarmHandler handler)
+static void InsertAlarm(OSAlarm* alarm, OSTime fire, OSAlarmHandler handler)
 {
-    OSAlarm *next;
-    OSAlarm *prev;
+    OSAlarm* next;
+    OSAlarm* prev;
 
     if (0 < alarm->period)
     {
@@ -104,7 +101,7 @@ static void InsertAlarm(OSAlarm *alarm, OSTime fire, OSAlarmHandler handler)
     }
 }
 
-void OSSetAlarm(OSAlarm *alarm, OSTime tick, OSAlarmHandler handler)
+void OSSetAlarm(OSAlarm* alarm, OSTime tick, OSAlarmHandler handler)
 {
     BOOL enabled;
     enabled = OSDisableInterrupts();
@@ -113,7 +110,7 @@ void OSSetAlarm(OSAlarm *alarm, OSTime tick, OSAlarmHandler handler)
     OSRestoreInterrupts(enabled);
 }
 
-void OSSetPeriodicAlarm(OSAlarm *alarm, OSTime start, OSTime period, OSAlarmHandler handler)
+void OSSetPeriodicAlarm(OSAlarm* alarm, OSTime start, OSTime period, OSAlarmHandler handler)
 {
     BOOL enabled;
     enabled = OSDisableInterrupts();
@@ -123,9 +120,9 @@ void OSSetPeriodicAlarm(OSAlarm *alarm, OSTime start, OSTime period, OSAlarmHand
     OSRestoreInterrupts(enabled);
 }
 
-void OSCancelAlarm(OSAlarm *alarm)
+void OSCancelAlarm(OSAlarm* alarm)
 {
-    OSAlarm *next;
+    OSAlarm* next;
     BOOL enabled;
 
     enabled = OSDisableInterrupts();
@@ -163,10 +160,10 @@ void OSCancelAlarm(OSAlarm *alarm)
 }
 
 static void DecrementerExceptionCallback(register __OSException exception,
-                                         register OSContext *context)
+                                         register OSContext* context)
 {
-    OSAlarm *alarm;
-    OSAlarm *next;
+    OSAlarm* alarm;
+    OSAlarm* next;
     OSAlarmHandler handler;
     OSTime time;
     OSContext exceptionContext;
@@ -218,7 +215,7 @@ static void DecrementerExceptionCallback(register __OSException exception,
 }
 
 static asm void DecrementerExceptionHandler(register __OSException exception,
-                                            register OSContext *context)
+                                            register OSContext* context)
 {
     // clang-format off
 	nofralloc 
@@ -226,29 +223,4 @@ static asm void DecrementerExceptionHandler(register __OSException exception,
 	stwu r1, -8(r1)
 	b DecrementerExceptionCallback
     // clang-format on
-}
-
-static BOOL OnReset(BOOL final)
-{
-    OSAlarm *alarm;
-    OSAlarm *next;
-
-    if (final)
-    {
-        alarm = AlarmQueue.head;
-        next = (alarm) ? alarm->next : NULL;
-
-        while (alarm != NULL)
-        {
-            if (__DVDTestAlarm(alarm) == FALSE)
-            {
-                OSCancelAlarm(alarm);
-            }
-
-            alarm = next;
-            next = (alarm) ? alarm->next : NULL;
-        }
-    }
-
-    return TRUE;
 }

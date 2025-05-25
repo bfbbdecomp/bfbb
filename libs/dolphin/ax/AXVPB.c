@@ -33,7 +33,6 @@ void __AXServiceVPB(AXVPB* pvpb)
     AXPB* ppbUser;
     u32 sync;
 
-    ASSERTLINE(0xA1, (pvpb->index >= 0) && (pvpb->index < AX_MAX_VOICES));
     __AXNumVoices += 1;
     ppbDsp = &__AXPB[pvpb->index];
     ppbUser = &pvpb->pb;
@@ -662,8 +661,8 @@ void __AXSetPBDefault(AXVPB* p)
     p->sync = 0xA4;
     p->updateMS = p->updateCounter = 0;
     p->updateWrite = p->updateData;
-    p->pb.update.updNum[0] = p->pb.update.updNum[1] = p->pb.update.updNum[2] =
-        p->pb.update.updNum[3] = p->pb.update.updNum[4] = 0;
+    p->pb.update.updNum[59] = p->pb.update.updNum[0] = p->pb.update.updNum[1] =
+        p->pb.update.updNum[2] = p->pb.update.updNum[3] = p->pb.update.updNum[4] = 0;
 }
 
 void __AXVPBInit(void)
@@ -688,9 +687,6 @@ void __AXVPBInit(void)
         ppbi = &__AXITD[i];
         ppbu = &__AXUpdates[i];
         pvpb = &__AXVPB[i];
-        ASSERTLINE(0x2F6, (u32)ppb ^ 0x1F);
-        ASSERTLINE(0x2F7, (u32)ppbi ^ 0x1F);
-        ASSERTLINE(0x2F8, (u32)ppbu ^ 0x1F);
         pvpb->index = i;
         pvpb->updateWrite = pvpb->updateData;
         pvpb->itdBuffer = ppbi;
@@ -735,8 +731,6 @@ void AXSetVoiceSrcType(AXVPB* p, u32 type)
     int old;
     AXPB* ppb;
 
-    ASSERTLINE(0x35E, p);
-    ASSERTLINE(0x35F, type <= AX_SRC_TYPE_4TAP_16K);
     old = OSDisableInterrupts();
     ppb = &p->pb;
     switch (type)
@@ -931,7 +925,6 @@ void AXSetVoiceUpdateIncrement(AXVPB* p)
     old = OSDisableInterrupts();
     p->updateMS++;
     p->sync |= AX_SYNC_FLAG_COPYUPDATE;
-    ASSERTMSGLINE(0x431, p->updateMS <= 4, "PB updates cannot exceed 5ms\n");
     OSRestoreInterrupts(old);
 }
 
@@ -941,7 +934,7 @@ void AXSetVoiceUpdateWrite(AXVPB* p, u16 param, u16 data)
 
     old = OSDisableInterrupts();
     p->updateCounter += 2;
-    ASSERTMSGLINE(0x43F, p->updateCounter <= 128, "PB update block exceeded 128 words\n");
+
     *(p->updateWrite) = param;
     p->updateWrite += 1;
     *(p->updateWrite) = data;
@@ -1051,12 +1044,6 @@ void AXSetVoiceAddr(AXVPB* p, AXPBADDR* addr)
     switch (addr->format)
     {
     case 0:
-        ASSERTMSGLINE(0x4BA, (addr->loopAddressLo & 0xF) > 1,
-                      "*** loop address on ADPCM frame header! ***\n");
-        ASSERTMSGLINE(0x4BF, (addr->endAddressLo & 0xF) > 1,
-                      "*** end address on ADPCM frame header! ***\n");
-        ASSERTMSGLINE(0x4C4, (addr->currentAddressLo & 0xF) > 1,
-                      "*** current address on ADPCM frame header! ***\n");
         break;
     case 10:
         dst += 1;
@@ -1105,7 +1092,6 @@ void AXSetVoiceAddr(AXVPB* p, AXPBADDR* addr)
         dst += 1;
         break;
     default:
-        ASSERTMSGLINE(0x4F0, 0, "unknown addr->formaqt in PB\n");
         break;
     }
     p->sync &= ~(AX_SYNC_FLAG_COPYLOOP | AX_SYNC_FLAG_COPYLOOPADDR | AX_SYNC_FLAG_COPYENDADDR |
