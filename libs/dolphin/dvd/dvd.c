@@ -4,7 +4,7 @@
 #include <dolphin/os.h>
 #include <dolphin/os/OSBootInfo.h>
 
-const char* __DVDVersion = "<< Dolphin SDK - DVD\trelease build: Jul 23 2003 11:27:57 (0x2301) >>";
+const char* __DVDVersion = "<< Dolphin SDK - DVD\trelease build: Apr 22 2003 15:49:00 (0x2301) >>";
 // need to be "<< Dolphin SDK - DSP\trelease build: Apr 17 2003 12:34:16 (0x2301) >>"
 
 typedef void (*stateFunc)(DVDCommandBlock* block);
@@ -114,7 +114,7 @@ static void stateReadingFST()
 
     if (bootInfo->FSTMaxLength < BB2.FSTLength)
     {
-#line 650
+#line 644
         OSHalt("DVDChangeDisk(): FST in the new disc is too big.   ");
     }
 
@@ -1093,6 +1093,18 @@ BOOL DVDReadAbsAsyncPrio(DVDCommandBlock* block, void* addr, s32 length, s32 off
     return idle;
 }
 
+int DVDSeekAbsAsyncPrio(DVDCommandBlock* block, s32 offset, DVDCBCallback callback, s32 prio)
+{
+    int idle;
+
+    block->command = DVD_COMMAND_SEEK;
+    block->offset = offset;
+    block->callback = callback;
+
+    idle = issueCommand(prio, block);
+    return idle;
+}
+
 BOOL DVDReadAbsAsyncForBS(DVDCommandBlock* block, void* addr, s32 length, s32 offset,
                           DVDCBCallback callback)
 {
@@ -1483,27 +1495,30 @@ static void cbForCancelSync(s32 result, DVDCommandBlock* block)
     OSWakeupThread(&__DVDThreadQueue);
 }
 
-inline BOOL DVDCancelAllAsync(DVDCBCallback callback)
+int DVDCancelAllAsync(DVDCBCallback callback)
 {
     BOOL enabled;
     DVDCommandBlock* p;
-    BOOL retVal;
+    int retVal;
 
     enabled = OSDisableInterrupts();
     DVDPause();
-
-    while ((p = __DVDPopWaitingQueue()) != 0)
+    while ((p = __DVDPopWaitingQueue()))
     {
         DVDCancelAsync(p, NULL);
     }
 
     if (executing)
+    {
         retVal = DVDCancelAsync(executing, callback);
+    }
     else
     {
-        retVal = TRUE;
+        retVal = 1;
         if (callback)
-            (*callback)(0, NULL);
+        {
+            callback(0, NULL);
+        }
     }
 
     DVDResume();
@@ -1647,18 +1662,4 @@ void __DVDPrepareResetAsync(DVDCBCallback callback)
     }
 
     OSRestoreInterrupts(enabled);
-}
-
-BOOL __DVDTestAlarm(OSAlarm* alarm)
-{
-    BOOL ret;
-    if (alarm == &ResetAlarm)
-    {
-        ret = TRUE;
-    }
-    else
-    {
-        ret = __DVDLowTestAlarm(alarm);
-    }
-    return ret;
 }

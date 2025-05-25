@@ -3,8 +3,8 @@
 #define MAX_QUEUES 4
 typedef struct
 {
-    DVDCommandBlock *next;
-    DVDCommandBlock *prev;
+    DVDCommandBlock* next;
+    DVDCommandBlock* prev;
 } DVDQueue;
 
 static DVDQueue WaitingQueue[MAX_QUEUES];
@@ -15,22 +15,22 @@ void __DVDClearWaitingQueue(void)
 
     for (i = 0; i < MAX_QUEUES; i++)
     {
-        DVDCommandBlock *q;
+        DVDCommandBlock* q;
 
-        q = (DVDCommandBlock *)&(WaitingQueue[i]);
+        q = (DVDCommandBlock*)&(WaitingQueue[i]);
         q->next = q;
         q->prev = q;
     }
 }
 
-BOOL __DVDPushWaitingQueue(s32 prio, DVDCommandBlock *block)
+BOOL __DVDPushWaitingQueue(s32 prio, DVDCommandBlock* block)
 {
     BOOL enabled;
-    DVDCommandBlock *q;
+    DVDCommandBlock* q;
 
     enabled = OSDisableInterrupts();
 
-    q = (DVDCommandBlock *)&(WaitingQueue[prio]);
+    q = (DVDCommandBlock*)&(WaitingQueue[prio]);
 
     q->prev->next = block;
     block->prev = q->prev;
@@ -42,62 +42,76 @@ BOOL __DVDPushWaitingQueue(s32 prio, DVDCommandBlock *block)
     return TRUE;
 }
 
-static DVDCommandBlock *PopWaitingQueuePrio(s32 prio)
-{
-    DVDCommandBlock *tmp;
-    BOOL enabled;
-    DVDCommandBlock *q;
+// static DVDCommandBlock* PopWaitingQueuePrio(s32 prio)
+// {
+//     DVDCommandBlock* tmp;
+//     BOOL enabled;
+//     DVDCommandBlock* q;
 
-    enabled = OSDisableInterrupts();
+//     enabled = OSDisableInterrupts();
 
-    q = (DVDCommandBlock *)&(WaitingQueue[prio]);
+//     q = (DVDCommandBlock*)&(WaitingQueue[prio]);
 
-    tmp = q->next;
-    q->next = tmp->next;
-    tmp->next->prev = q;
+//     tmp = q->next;
+//     q->next = tmp->next;
+//     tmp->next->prev = q;
 
-    OSRestoreInterrupts(enabled);
+//     OSRestoreInterrupts(enabled);
 
-    tmp->next = (DVDCommandBlock *)NULL;
-    tmp->prev = (DVDCommandBlock *)NULL;
+//     tmp->next = (DVDCommandBlock*)NULL;
+//     tmp->prev = (DVDCommandBlock*)NULL;
 
-    return tmp;
-}
+//     return tmp;
+// }
 
-DVDCommandBlock *__DVDPopWaitingQueue(void)
+DVDCommandBlock* __DVDPopWaitingQueue(void)
 {
     u32 i;
     BOOL enabled;
-    DVDCommandBlock *q;
+    DVDCommandBlock* q;
+    DVDCommandBlock* tmp;
 
     enabled = OSDisableInterrupts();
 
     for (i = 0; i < MAX_QUEUES; i++)
     {
-        q = (DVDCommandBlock *)&(WaitingQueue[i]);
+        q = (DVDCommandBlock*)&(WaitingQueue[i]);
         if (q->next != q)
         {
             OSRestoreInterrupts(enabled);
-            return PopWaitingQueuePrio((s32)i);
+            enabled = OSDisableInterrupts();
+
+            q = (DVDCommandBlock*)&(WaitingQueue[i]);
+
+            tmp = q->next;
+            q->next = tmp->next;
+            tmp->next->prev = q;
+
+            OSRestoreInterrupts(enabled);
+
+            tmp->next = (DVDCommandBlock*)NULL;
+            tmp->prev = (DVDCommandBlock*)NULL;
+
+            return tmp;
         }
     }
 
     OSRestoreInterrupts(enabled);
 
-    return (DVDCommandBlock *)NULL;
+    return (DVDCommandBlock*)NULL;
 }
 
 BOOL __DVDCheckWaitingQueue(void)
 {
     u32 i;
     BOOL enabled;
-    DVDCommandBlock *q;
+    DVDCommandBlock* q;
 
     enabled = OSDisableInterrupts();
 
     for (i = 0; i < MAX_QUEUES; i++)
     {
-        q = (DVDCommandBlock *)&(WaitingQueue[i]);
+        q = (DVDCommandBlock*)&(WaitingQueue[i]);
         if (q->next != q)
         {
             OSRestoreInterrupts(enabled);
@@ -110,18 +124,18 @@ BOOL __DVDCheckWaitingQueue(void)
     return FALSE;
 }
 
-BOOL __DVDDequeueWaitingQueue(DVDCommandBlock *block)
+BOOL __DVDDequeueWaitingQueue(DVDCommandBlock* block)
 {
     BOOL enabled;
-    DVDCommandBlock *prev;
-    DVDCommandBlock *next;
+    DVDCommandBlock* prev;
+    DVDCommandBlock* next;
 
     enabled = OSDisableInterrupts();
 
     prev = block->prev;
     next = block->next;
 
-    if ((prev == (DVDCommandBlock *)NULL) || (next == (DVDCommandBlock *)NULL))
+    if ((prev == (DVDCommandBlock*)NULL) || (next == (DVDCommandBlock*)NULL))
     {
         OSRestoreInterrupts(enabled);
         return FALSE;
@@ -135,25 +149,25 @@ BOOL __DVDDequeueWaitingQueue(DVDCommandBlock *block)
     return TRUE;
 }
 
-BOOL __DVDIsBlockInWaitingQueue(DVDCommandBlock *block)
-{
-    u32 i;
-    DVDCommandBlock *start;
-    DVDCommandBlock *q;
+// BOOL __DVDIsBlockInWaitingQueue(DVDCommandBlock *block)
+// {
+//     u32 i;
+//     DVDCommandBlock *start;
+//     DVDCommandBlock *q;
 
-    for (i = 0; i < MAX_QUEUES; i++)
-    {
-        start = (DVDCommandBlock *)&(WaitingQueue[i]);
+//     for (i = 0; i < MAX_QUEUES; i++)
+//     {
+//         start = (DVDCommandBlock *)&(WaitingQueue[i]);
 
-        if (start->next != start)
-        {
-            for (q = start->next; q != start; q = q->next)
-            {
-                if (q == block)
-                    return TRUE;
-            }
-        }
-    }
+//         if (start->next != start)
+//         {
+//             for (q = start->next; q != start; q = q->next)
+//             {
+//                 if (q == block)
+//                     return TRUE;
+//             }
+//         }
+//     }
 
-    return FALSE;
-}
+//     return FALSE;
+// }

@@ -48,27 +48,27 @@ loop:
 }
 // clang-format on
 
-
-void __init_user(void) { __init_cpp(); }
+void __init_user(void)
+{
+    __init_cpp();
+}
 
 static void __init_cpp(void)
 {
-	voidfunctionptr* constructor;
-	/*
+    voidfunctionptr* constructor;
+    /*
 	 *	call static initializers
 	 */
-	for (constructor = _ctors; *constructor; constructor++) {
-		(*constructor)();
-	}
+    for (constructor = _ctors; *constructor; constructor++)
+    {
+        (*constructor)();
+    }
 }
 
-
-void __fini_cpp(void)
+void _ExitProcess(void)
 {
-	// UNUSED FUNCTION
+    PPCHalt();
 }
-
-void _ExitProcess(void) { PPCHalt(); }
 #ifdef __cplusplus
 }
 #endif

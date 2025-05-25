@@ -2,8 +2,6 @@
 
 #include "std/math.h"
 
-s32 PAD_CHANMAX;
-
 static const PADClampRegion ClampRegion = {
     // Triggers
     30,
@@ -98,51 +96,6 @@ static void ClampStick(s8* px, s8* py, s8 max, s8 xy, s8 min)
     *py = (s8)(signY * y);
 }
 
-static void ClampCircle(s8* px, s8* py, s8 radius, s8 min)
-{
-    int x = *px;
-    int y = *py;
-    int squared;
-    int length;
-
-    if (-min < x && x < min)
-    {
-        x = 0;
-    }
-    else if (0 < x)
-    {
-        x -= min;
-    }
-    else
-    {
-        x += min;
-    }
-
-    if (-min < y && y < min)
-    {
-        y = 0;
-    }
-    else if (0 < y)
-    {
-        y -= min;
-    }
-    else
-    {
-        y += min;
-    }
-
-    squared = x * x + y * y;
-    if (radius * radius < squared)
-    {
-        length = sqrtf(squared);
-        x = (x * radius) / length;
-        y = (y * radius) / length;
-    }
-
-    *px = x;
-    *py = y;
-}
-
 static void ClampTrigger(u8* trigger, u8 min, u8 max)
 {
     if (*trigger <= min)
@@ -163,7 +116,7 @@ static void ClampTrigger(u8* trigger, u8 min, u8 max)
 void PADClamp(PADStatus* status)
 {
     int i;
-    for (i = 0; i < PAD_CHANMAX; i++, status++)
+    for (i = 0; i < 4; i++, status++)
     {
         if (status->err != PAD_ERR_NONE)
         {
@@ -174,24 +127,6 @@ void PADClamp(PADStatus* status)
                    ClampRegion.minStick);
         ClampStick(&status->substickX, &status->substickY, ClampRegion.maxSubstick,
                    ClampRegion.xySubstick, ClampRegion.minSubstick);
-        ClampTrigger(&status->triggerLeft, ClampRegion.minTrigger, ClampRegion.maxTrigger);
-        ClampTrigger(&status->triggerRight, ClampRegion.minTrigger, ClampRegion.maxTrigger);
-    }
-}
-
-void PADClampCircle(PADStatus* status)
-{
-    int i;
-    for (i = 0; i < PAD_CHANMAX; ++i, status++)
-    {
-        if (status->err != PAD_ERR_NONE)
-        {
-            continue;
-        }
-
-        ClampCircle(&status->stickX, &status->stickY, ClampRegion.radStick, ClampRegion.minStick);
-        ClampCircle(&status->substickX, &status->substickY, ClampRegion.radSubstick,
-                    ClampRegion.minSubstick);
         ClampTrigger(&status->triggerLeft, ClampRegion.minTrigger, ClampRegion.maxTrigger);
         ClampTrigger(&status->triggerRight, ClampRegion.minTrigger, ClampRegion.maxTrigger);
     }

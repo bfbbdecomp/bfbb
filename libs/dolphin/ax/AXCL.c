@@ -72,7 +72,7 @@ void __AXNextFrame(void* sbuffer, void* buffer)
     case 2:
         break;
     default:
-        ASSERTMSGLINE(193, 0, "Unknown AX mode!");
+        return;
     }
 
     data = (u32)__AXGetPBs();

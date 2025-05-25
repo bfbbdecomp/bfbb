@@ -1,262 +1,344 @@
-#include "types.h"
-#include "dolphin/mtx.h"
+#include <dolphin.h>
+#include <dolphin/mtx.h>
+#include "fake_tgmath.h"
 
-#define R_RET fp1
-#define FP2 fp2
-#define FP3 fp3
-#define FP4 fp4
-#define FP5 fp5
-#define FP6 fp6
-#define FP7 fp7
-#define FP8 fp8
-#define FP9 fp9
-#define FP10 fp10
-#define FP11 fp11
-#define FP12 fp12
-#define FP13 fp13
-
-void C_VECAdd(void)
-{
-    // UNUSED FUNCTION
+void C_VECAdd(const Vec* a, const Vec* b, Vec* ab) {
+    ASSERTMSGLINE(108, a, "VECAdd():  NULL VecPtr 'a' ");
+    ASSERTMSGLINE(109, b, "VECAdd():  NULL VecPtr 'b' ");
+    ASSERTMSGLINE(110, ab, "VECAdd():  NULL VecPtr 'ab' ");
+    ab->x = a->x + b->x;
+    ab->y = a->y + b->y;
+    ab->z = a->z + b->z;
 }
 
-ASM void PSVECAdd(const register Vec *vec1, const register Vec *vec2, register Vec *ret)
-{
-#ifdef __MWERKS__ // clang-format off
-    nofralloc;
-    psq_l     FP2,  0(vec1), 0, 0;
-    psq_l     FP4,  0(vec2), 0, 0;
-    ps_add    FP6, FP2, FP4;
-    psq_st    FP6,  0(ret), 0, 0;
-    psq_l     FP3,   8(vec1), 1, 0;
-    psq_l     FP5,   8(vec2), 1, 0;
-    ps_add    FP7, FP3, FP5;
-    psq_st    FP7,   8(ret), 1, 0;
-    blr
-#endif // clang-format on
+asm void PSVECAdd(const register Vec* a, const register Vec* b, register Vec* ab) {
+    psq_l f2, Vec.x(a), 0, 0
+    psq_l f4, Vec.x(b), 0, 0
+    ps_add f6, f2, f4
+    psq_st f6, Vec.x(ab), 0, 0
+    psq_l f3, Vec.z(a), 1, 0
+    psq_l f5, Vec.z(b), 1, 0
+    ps_add f7, f3, f5
+    psq_st f7, Vec.z(ab), 1, 0
 }
 
-void C_VECSubtract(void)
-{
-    // UNUSED FUNCTION
+void C_VECSubtract(const Vec* a, const Vec* b, Vec* a_b) {
+    ASSERTMSGLINE(177, a, "VECSubtract():  NULL VecPtr 'a' ");
+    ASSERTMSGLINE(178, b, "VECSubtract():  NULL VecPtr 'b' ");
+    ASSERTMSGLINE(179, a_b, "VECSubtract():  NULL VecPtr 'a_b' ");
+    a_b->x = a->x - b->x;
+    a_b->y = a->y - b->y;
+    a_b->z = a->z - b->z;
 }
 
-ASM void PSVECSubtract(const register Vec *vec1, const register Vec *vec2, register Vec *ret)
-{
-#ifdef __MWERKS__ // clang-format off
-    nofralloc;
-    psq_l     FP2,  0(vec1), 0, 0;
-    psq_l     FP4,  0(vec2), 0, 0;
-    ps_sub    FP6, FP2, FP4;
-    psq_st    FP6, 0(ret), 0, 0;
-    psq_l     FP3,   8(vec1), 1, 0;
-    psq_l     FP5,   8(vec2), 1, 0;
-    ps_sub    FP7, FP3, FP5;
-    psq_st    FP7,  8(ret), 1, 0;
-    blr
-#endif // clang-format on
+asm void PSVECSubtract(const register Vec* a, const register Vec* b, register Vec* a_b) {
+    psq_l f2, Vec.x(a), 0, 0
+    psq_l f4, Vec.x(b), 0, 0
+    ps_sub f6, f2, f4
+    psq_st f6, Vec.x(a_b), 0, 0
+    psq_l f3, Vec.z(a), 1, 0
+    psq_l f5, Vec.z(b), 1, 0
+    ps_sub f7, f3, f5
+    psq_st f7, Vec.z(a_b), 1, 0
 }
 
-void C_VECScale(void)
-{
-    // UNUSED FUNCTION
+void C_VECScale(const Vec* src, Vec* dst, f32 scale) {
+    ASSERTMSGLINE(247, src, "VECScale():  NULL VecPtr 'src' ");
+    ASSERTMSGLINE(248, dst, "VECScale():  NULL VecPtr 'dst' ");
+    dst->x = (src->x * scale);
+    dst->y = (src->y * scale);
+    dst->z = (src->z * scale);
 }
 
-void PSVECScale(register const Vec *src, register Vec *dst, register f32 scale)
-{
-    // clang-format off
+void PSVECScale(const register Vec* src, register Vec* dst, register f32 scale) {
     register f32 vxy, vz, rxy, rz;
-    __asm {		
-        psq_l       vxy, 0(src), 0, 0
-        psq_l       vz,  8(src), 1, 0
-        ps_muls0    rxy, vxy, scale
-        psq_st      rxy, 0(dst), 0, 0
-        ps_muls0    rz,  vz,  scale                        
-        psq_st      rz,  8(dst), 1, 0
-    }
-    // clang-format on
-}
 
-void C_VECNormalize(void)
-{
-    // UNUSED FUNCTION
-}
-
-void PSVECNormalize(const register Vec *vec1, register Vec *ret)
-{
-#ifdef __MWERKS__ // clang-format off
-    register f32 half  = 0.5f;
-    register f32 three = 3.0f;
-    register f32 xx_zz, xx_yy;
-    register f32 square_sum;
-    register f32 ret_sqrt;
-    register f32 n_0, n_1;
     asm {
-        psq_l       FP2, 0(vec1), 0, 0;
-        ps_mul      xx_yy, FP2, FP2;
-        psq_l       FP3, 8(vec1), 1, 0;
-        ps_madd     xx_zz, FP3, FP3, xx_yy;
-        ps_sum0     square_sum, xx_zz, FP3, xx_yy;
-        frsqrte     ret_sqrt, square_sum;
-        fmuls       n_0, ret_sqrt, ret_sqrt;
-        fmuls       n_1, ret_sqrt, half;
-        fnmsubs     n_0, n_0, square_sum, three;
-        fmuls       ret_sqrt, n_0, n_1;
-        ps_muls0    FP2, FP2, ret_sqrt;
-        psq_st      FP2, 0(ret), 0, 0;
-        ps_muls0    FP3, FP3, ret_sqrt;
-        psq_st      FP3, 8(ret), 1, 0;
+        psq_l vxy, 0x0(src), 0, 0
+        psq_l vz, 0x8(src), 1, 0
+        ps_muls0 rxy, vxy, scale
+        psq_st rxy, 0x0(dst), 0, 0
+        ps_muls0 rz, vz, scale
+        psq_st rz, 0x8(dst), 1, 0
     }
-#endif // clang-format on
 }
 
-void C_VECSquareMag(void)
-{
-    // UNUSED FUNCTION
+void C_VECNormalize(const Vec* src, Vec* unit) {
+    f32 mag;
+
+    ASSERTMSGLINE(315, src, "VECNormalize():  NULL VecPtr 'src' ");
+    ASSERTMSGLINE(316, unit, "VECNormalize():  NULL VecPtr 'unit' ");
+
+    mag = (src->z * src->z) + ((src->x * src->x) + (src->y * src->y));
+    ASSERTMSGLINE(321, 0.0f != mag, "VECNormalize():  zero magnitude vector ");
+
+    mag = 1.0f/ sqrtf(mag);
+    unit->x = src->x * mag;
+    unit->y = src->y * mag;
+    unit->z = src->z * mag;
 }
 
-f32 PSVECSquareMag(const Vec *v)
-{
-    // UNUSED FUNCTION
-}
+void PSVECNormalize(const register Vec* src, register Vec* unit) {
+    register float c_half = 0.5f;
+    register float c_three = 3.0f;
+    register float v1_xy;
+    register float v1_z;
+    register float xx_zz;
+    register float xx_yy;
+    register float sqsum;
+    register float rsqrt;
+    register float nwork0;
+    register float nwork1;
 
-void C_VECMag(void)
-{
-    // UNUSED FUNCTION
-}
-
-f32 PSVECMag(const register Vec *v)
-{
-    register f32 v_xy, v_zz, square_mag;
-    register f32 ret_mag, n_0, n_1;
-    register f32 three, half, zero;
-    half = 0.5f;
-    #ifdef __MWERKS__ // clang-format off
     asm {
-        psq_l       v_xy, 0(v), 0, 0
-        ps_mul      v_xy, v_xy, v_xy
-        lfs         v_zz, 8(v)
-        fsubs       zero, half, half
-        ps_madd     square_mag, v_zz, v_zz, v_xy
-        ps_sum0     square_mag, square_mag, v_xy, v_xy
-        fcmpu       cr0, square_mag, zero
-        beq-        __exit
-        frsqrte     ret_mag, square_mag
+        psq_l v1_xy, 0x0(src), 0, 0
+        ps_mul xx_yy, v1_xy, v1_xy
+        psq_l v1_z, 0x8(src), 1, 0
+        ps_madd xx_zz, v1_z, v1_z, xx_yy
+        ps_sum0 sqsum, xx_zz, v1_z, xx_yy
+        frsqrte rsqrt, sqsum
+        fmuls nwork0, rsqrt, rsqrt
+        fmuls nwork1, rsqrt, c_half
+        fnmsubs nwork0, nwork0, sqsum, c_three
+        fmuls rsqrt, nwork0, nwork1
+        ps_muls0 v1_xy, v1_xy, rsqrt
+        psq_st v1_xy, 0x0(unit), 0, 0
+        ps_muls0 v1_z, v1_z, rsqrt
+        psq_st v1_z, 0x8(unit), 1, 0
     }
-    #endif // clang-format on
-    three = 3.0f;
-    #ifdef __MWERKS__ // clang-format off
+}
+
+f32 C_VECSquareMag(const Vec* v) {
+    f32 sqmag;
+
+    ASSERTMSGLINE(405, v, "VECMag():  NULL VecPtr 'v' ");
+
+    sqmag = v->z * v->z + ((v->x * v->x) + (v->y * v->y));
+    return sqmag;
+}
+
+f32 PSVECSquareMag(const register Vec* v) {
+    register f32 vxy, vzz, sqmag;
+
     asm {
-        fmuls       n_0, ret_mag, ret_mag
-        fmuls       n_1, ret_mag, half
-        fnmsubs     n_0, n_0, square_mag, three
-        fmuls       ret_mag, n_0, n_1
-        fmuls       square_mag, square_mag, ret_mag
-    __exit:
+        psq_l vxy, 0x0(v), 0, 0
+        ps_mul vxy, vxy, vxy
+        lfs vzz, 0x8(v)
+        ps_madd sqmag, vzz, vzz, vxy
+        ps_sum0 sqmag, sqmag, vxy, vxy
     }
-    #endif // clang-format on
-    return square_mag;
+
+    return sqmag;
 }
 
-void C_VECDotProduct(void)
-{
-    // UNUSED FUNCTION
+f32 C_VECMag(const Vec* v) {
+    return sqrtf(C_VECSquareMag(v));
 }
 
-ASM f32 PSVECDotProduct(register const Vec *a, register const Vec *b)
-{
-#ifdef __MWERKS__ // clang-format off
-    nofralloc;
-    psq_l     f2, 4(a), 0, 0;
-    psq_l     f3, 4(b), 0, 0;
-    ps_mul    f2, f2, f3;
-    psq_l     f5, 0(a), 0, 0;
-    psq_l     f4, 0(b), 0, 0;
-    ps_madd   f3, f5, f4, f2;
-    ps_sum0   R_RET, f3, f2, f2;
-    blr
-#endif // clang-format on
+f32 PSVECMag(const register Vec* v) {
+    register f32 vxy, vzz;
+    register f32 sqmag, rmag;
+    register f32 nwork0, nwork1;
+    register f32 c_three, c_half, c_zero;
+
+    c_half = 0.5f;
+
+    asm {
+        psq_l vxy, 0x0(v), 0, 0
+        ps_mul vxy, vxy, vxy
+        lfs vzz, 0x8(v)
+        fsubs c_zero, c_half, c_half
+        ps_madd sqmag, vzz, vzz, vxy
+        ps_sum0 sqmag, sqmag, vxy, vxy
+        fcmpu cr0, sqmag, c_zero
+        beq L_000005F0
+        frsqrte rmag, sqmag
+    }
+
+    c_three = 3.0f;
+
+    asm {
+        fmuls nwork0, rmag, rmag
+        fmuls nwork1, rmag, c_half
+        fnmsubs nwork0, nwork0, sqmag, c_three
+        fmuls rmag, nwork0, nwork1
+        fmuls sqmag, sqmag, rmag
+    L_000005F0:
+    }
+
+    return sqmag;
 }
 
-void C_VECCrossProduct(void)
-{
-    // UNUSED FUNCTION
+f32 C_VECDotProduct(const Vec* a, const Vec* b) {
+    f32 dot;
+
+    ASSERTMSGLINE(540, a, "VECDotProduct():  NULL VecPtr 'a' ");
+    ASSERTMSGLINE(541, b, "VECDotProduct():  NULL VecPtr 'b' ");
+    dot = (a->z * b->z) + ((a->x * b->x) + (a->y * b->y));
+    return dot;
 }
 
-ASM void PSVECCrossProduct(const register Vec *vec1, const register Vec *vec2, register Vec *ret)
-{
-#ifdef __MWERKS__ // clang-format off
-    nofralloc;
-    psq_l       fp1, 0(vec2), 0, 0
-    lfs         fp2, 8(vec1)
-    psq_l       fp0, 0(vec1), 0, 0
-    ps_merge10  fp6, fp1, fp1
-    lfs         fp3, 8(vec2)
-    ps_mul      fp4, fp1, fp2
-    ps_muls0    fp7, fp1, fp0
-    ps_msub     fp5, fp0, fp3, fp4
-    ps_msub     fp8, fp0, fp6, fp7
-    ps_merge11  fp9, fp5, fp5
-    ps_merge01  fp10, fp5, fp8
-    psq_st      fp9, 0(ret), 1, 0
-    ps_neg      fp10, fp10
-    psq_st      fp10, 4(ret), 0, 0
-    blr;
-#endif // clang-format on
+asm f32 PSVECDotProduct(const register Vec* a, const register Vec* b) {
+    psq_l f2, Vec.y(a), 0, 0
+    psq_l f3, Vec.y(b), 0, 0
+    ps_mul f2, f2, f3
+    psq_l f5, Vec.x(a), 0, 0
+    psq_l f4, Vec.x(b), 0, 0
+    ps_madd f3, f5, f4, f2
+    ps_sum0 f1, f3, f2, f2
 }
 
-void C_VECHalfAngle(void)
-{
-    // UNUSED FUNCTION
+void C_VECCrossProduct(const Vec* a, const Vec* b, Vec* axb) {
+    Vec vTmp;
+
+    ASSERTMSGLINE(602, a, "VECCrossProduct():  NULL VecPtr 'a' ");
+    ASSERTMSGLINE(603, b, "VECCrossProduct():  NULL VecPtr 'b' ");
+    ASSERTMSGLINE(604, axb, "VECCrossProduct():  NULL VecPtr 'axb' ");
+
+    vTmp.x = (a->y * b->z) - (a->z * b->y);
+    vTmp.y = (a->z * b->x) - (a->x * b->z);
+    vTmp.z = (a->x * b->y) - (a->y * b->x);
+    axb->x = vTmp.x;
+    axb->y = vTmp.y;
+    axb->z = vTmp.z;
 }
 
-void C_VECReflect(void)
-{
-    // UNUSED FUNCTION
+asm void PSVECCrossProduct(const register Vec* a, const register Vec* b, register Vec* axb) {
+    psq_l f1, Vec.x(b), 0, 0
+    lfs f2, Vec.z(a)
+    psq_l f0, Vec.x(a), 0, 0
+    ps_merge10 f6, f1, f1
+    lfs f3, Vec.z(b)
+    ps_mul f4, f1, f2
+    ps_muls0 f7, f1, f0
+    ps_msub f5, f0, f3, f4
+    ps_msub f8, f0, f6, f7
+    ps_merge11 f9, f5, f5
+    ps_merge01 f10, f5, f8
+    psq_st f9, Vec.x(axb), 1, 0
+    ps_neg f10, f10
+    psq_st f10, Vec.y(axb), 0, 0
 }
 
-void C_VECSquareDistance(void)
-{
-    // UNUSED FUNCTION
+void C_VECHalfAngle(const Vec* a, const Vec* b, Vec* half) {
+    Vec aTmp;
+    Vec bTmp;
+    Vec hTmp;
+
+    ASSERTMSGLINE(707, a, "VECHalfAngle():  NULL VecPtr 'a' ");
+    ASSERTMSGLINE(708, b, "VECHalfAngle():  NULL VecPtr 'b' ");
+    ASSERTMSGLINE(709, half, "VECHalfAngle():  NULL VecPtr 'half' ");
+
+    aTmp.x = -a->x;
+    aTmp.y = -a->y;
+    aTmp.z = -a->z;
+    bTmp.x = -b->x;
+    bTmp.y = -b->y;
+    bTmp.z = -b->z;
+
+    VECNormalize(&aTmp, &aTmp);
+    VECNormalize(&bTmp, &bTmp);
+    VECAdd(&aTmp, &bTmp, &hTmp);
+
+    if (VECDotProduct(&hTmp, &hTmp) > 0.0f) {
+        VECNormalize(&hTmp, half);
+        return;
+    }
+    *half = hTmp;
 }
 
-f32 PSVECSquareDistance(const Vec *a, const Vec *b)
-{
-    // UNUSED FUNCTION
+void C_VECReflect(const Vec* src, const Vec* normal, Vec* dst) {
+    f32 cosA;
+    Vec uI;
+    Vec uN;
+
+    ASSERTMSGLINE(763, src, "VECReflect():  NULL VecPtr 'src' ");
+    ASSERTMSGLINE(764, normal, "VECReflect():  NULL VecPtr 'normal' ");
+    ASSERTMSGLINE(765, dst, "VECReflect():  NULL VecPtr 'dst' ");
+
+    uI.x = -src->x;
+    uI.y = -src->y;
+    uI.z = -src->z;
+
+    VECNormalize(&uI, &uI);
+    VECNormalize(normal, &uN);
+
+    cosA = VECDotProduct(&uI, &uN);
+    dst->x = (2.0f * uN.x * cosA) - uI.x;
+    dst->y = (2.0f * uN.y * cosA) - uI.y;
+    dst->z = (2.0f * uN.z * cosA) - uI.z;
+    VECNormalize(dst, dst);
 }
 
-void C_VECDistance(void)
-{
-    // UNUSED FUNCTION
+f32 C_VECSquareDistance(const Vec* a, const Vec* b) {
+    Vec diff;
+
+    diff.x = a->x - b->x;
+    diff.y = a->y - b->y;
+    diff.z = a->z - b->z;
+    return (diff.z * diff.z) + ((diff.x * diff.x) + (diff.y * diff.y));
 }
 
-// TODO: cleanup?
-ASM f32 PSVECDistance(register const Vec *a, register const Vec *b)
-{    
-#ifdef __MWERKS__ // clang-format off
-    nofralloc;
-    psq_l     f0, 4(a), 0, 0;
-    psq_l     f1, 4(b), 0, 0;
-    ps_sub    f2, f0, f1;
-    psq_l     f0, 0(a), 0, 0;
-    psq_l     f1, 0(b), 0, 0;
-    ps_mul    f2, f2, f2;
-    ps_sub    f0, f0, f1;
-    lfs       f3, 0.5f;
-    
-    ps_madd   f1, f0, f0, f2;
-    fsubs     f0, f3, f3;
-    ps_sum0   f1, f1, f2, f2;
-    fcmpu     cr0, f0, f1;
-    beq       exit;
-    lfs       f4, 3.0f;
-    frsqrte   f0, f1;
-    fmuls     f2, f0, f0;
-    fmuls     f0, f0, f3;
-    fnmsubs   f2, f2, f1, f4;
-    fmuls     f0, f2, f0;
-    fmuls     R_RET, f1, f0;
-exit:
-    blr
-#endif // clang-format on
+f32 PSVECSquareDistance(const register Vec* a, const register Vec* b) {
+    register f32 v0yz, v1yz, v0xy, v1xy, dyz, dxy;
+    register f32 sqdist;
+
+    asm {
+        psq_l v0yz, 0x4(a), 0, 0
+        psq_l v1yz, 0x4(b), 0, 0
+        ps_sub dyz, v0yz, v1yz
+        psq_l v0xy, 0x0(a), 0, 0
+        psq_l v1xy, 0x0(b), 0, 0
+        ps_mul dyz, dyz, dyz
+        ps_sub dxy, v0xy, v1xy
+        ps_madd sqdist, dxy, dxy, dyz
+        ps_sum0 sqdist, sqdist, dyz, dyz
+    }
+
+    return sqdist;
+}
+
+f32 C_VECDistance(const Vec* a, const Vec* b) {
+    return sqrtf(C_VECSquareDistance(a, b));
+}
+
+f32 PSVECDistance(const register Vec* a, const register Vec* b) {
+    register f32 v0yz, v1yz, v0xy, v1xy, dyz, dxy;
+    register f32 sqdist, rdist;
+    register f32 nwork0, nwork1;
+    register f32 c_half, c_three, c_zero;
+
+    asm {
+        psq_l v0yz, 0x4(a), 0, 0
+        psq_l v1yz, 0x4(b), 0, 0
+        ps_sub dyz, v0yz, v1yz
+        psq_l v0xy, 0x0(a), 0, 0
+        psq_l v1xy, 0x0(b), 0, 0
+        ps_mul dyz, dyz, dyz
+        ps_sub dxy, v0xy, v1xy
+    }
+
+    c_half  = 0.5f;
+
+    asm {
+        ps_madd sqdist, dxy, dxy, dyz
+        fsubs c_zero, c_half, c_half
+        ps_sum0 sqdist, sqdist, dyz, dyz
+        fcmpu cr0, c_zero, sqdist
+        beq L_00000CBC
+    }
+
+    c_three = 3.0f;
+
+    asm {
+        frsqrte rdist, sqdist
+        fmuls nwork0, rdist, rdist
+        fmuls nwork1, rdist, c_half
+        fnmsubs nwork0, nwork0, sqdist, c_three
+        fmuls rdist, nwork0, nwork1
+        fmuls sqdist, sqdist, rdist
+    L_00000CBC:
+    }
+
+    return sqdist;
 }

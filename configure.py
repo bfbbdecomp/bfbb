@@ -630,14 +630,13 @@ config.libs = [
     DolphinLib(
         "base",
         [
-            # Needs a lot of Extended ASM work
-            # Object(NonMatching, "dolphin/base/PPCArch.c")
+            Object(Matching, "dolphin/base/PPCArch.c")
         ]        
     ),
     DolphinLib(
         "card",
         [
-            Object(NonMatching, "dolphin/card/CARDBios.c"),
+            Object(Matching, "dolphin/card/CARDBios.c"),
             Object(NonMatching, "dolphin/card/CARDUnlock.c"),
             Object(Matching, "dolphin/card/CARDRdwr.c"),
             Object(Matching, "dolphin/card/CARDBlock.c"),
@@ -675,34 +674,18 @@ config.libs = [
             Object(NonMatching, "dolphin/dvd/dvdlow.c"),
             Object(NonMatching, "dolphin/dvd/dvdfs.c"),
             Object(NonMatching, "dolphin/dvd/dvd.c"),
-            Object(NonMatching, "dolphin/dvd/dvdqueue.c"),
+            Object(Matching, "dolphin/dvd/dvdqueue.c"),
             Object(NonMatching, "dolphin/dvd/dvderror.c"),
             Object(Matching, "dolphin/dvd/dvdidutils.c"),
-            Object(NonMatching, "dolphin/dvd/dvdFatal.c"),
-            Object(NonMatching, "dolphin/dvd/emu_level2/fstload.c"),
+            Object(Matching, "dolphin/dvd/dvdFatal.c"),
+            Object(Matching, "dolphin/dvd/emu_level2/fstload.c"),
         ],
-    ),
-    DolphinLib(
-        "eth",
-        [
-            Object(Matching, "dolphin/eth/eth.c"),
-            Object(Matching, "dolphin/eth/ethsec.c"),
-            Object(Matching, "dolphin/eth/md5.c"),
-            Object(Matching, "dolphin/eth/base64.c")
-        ]
     ),
     DolphinLib(
         "exi",
         [
             Object(NonMatching, "dolphin/exi/EXIBios.c"),
             Object(NonMatching, "dolphin/exi/EXIUart.c")
-        ]
-    ),
-    DolphinLib(
-        "gd",
-        [
-            Object(NonMatching, "dolphin/gd/GDBase.c"),
-            Object(NonMatching, "dolphin/gd/GDGeometry.c")
         ]
     ),
     DolphinLib(
@@ -720,64 +703,22 @@ config.libs = [
             Object(NonMatching, "dolphin/gx/GXTev.c"),
             Object(NonMatching, "dolphin/gx/GXPixel.c"),
             Object(NonMatching, "dolphin/gx/GXDraw.c"),
-            Object(NonMatching, "dolphin/gx/GXDisplayList.c"),
+            Object(Matching, "dolphin/gx/GXDisplayList.c"),
             Object(NonMatching, "dolphin/gx/GXTransform.c"),
-            Object(NonMatching, "dolphin/gx/GXPerf.c")
+            Object(Matching, "dolphin/gx/GXPerf.c")
         ]
     ),
-    DolphinLib(
-        "hio",
-        [
-            Object(NonMatching, "dolphin/hio/hio.c")
-        ]
-    ),
-    DolphinLib(
-        "ip",
-        [
-            Object(NonMatching, "dolphin/ip/IP.c"),
-            Object(NonMatching, "dolphin/ip/IPArp.c"),
-            Object(NonMatching, "dolphin/ip/IPIcmp.c"),
-            Object(NonMatching, "dolphin/ip/IPRoute.c"),
-            Object(NonMatching, "dolphin/ip/IPUdp.c"),
-            Object(NonMatching, "dolphin/ip/IPFrag.c"),
-            Object(NonMatching, "dolphin/ip/IPEther.c"),
-            Object(NonMatching, "dolphin/ip/IFFifo.c"),
-            Object(NonMatching, "dolphin/ip/IFRing.c"),
-            Object(NonMatching, "dolphin/ip/IPTcp.c"),
-            Object(NonMatching, "dolphin/ip/IPTcpOutput.c"),
-            Object(NonMatching, "dolphin/ip/IPTcpTimer.c"),
-            Object(NonMatching, "dolphin/ip/IPTcpUser.c"),
-            Object(NonMatching, "dolphin/ip/IPTcpTimeWait.c"),
-            Object(NonMatching, "dolphin/ip/IPDns.c"),
-            Object(NonMatching, "dolphin/ip/IPDhcp.c"),
-            Object(NonMatching, "dolphin/ip/IPZero.c"),
-            Object(NonMatching, "dolphin/ip/IPOpt.c"),
-            Object(NonMatching, "dolphin/ip/IPSocket.c"),
-            Object(NonMatching, "dolphin/ip/IPPPP.c"),
-            Object(NonMatching, "dolphin/ip/IPPPPoE.c"),
-            Object(NonMatching, "dolphin/ip/IPLcp.c"),
-            Object(NonMatching, "dolphin/ip/IPIpcp.c"),
-            Object(NonMatching, "dolphin/ip/IPPap.c"),
-            Object(NonMatching, "dolphin/ip/IPChap.c"),
-            Object(NonMatching, "dolphin/ip/IPIgmp.c"),
-            Object(NonMatching, "dolphin/ip/IPUuid.c")
-        ]
-    ),
-    DolphinLib(
-        "lg",  # unofficial name
-        [
-            Object(NonMatching, "dolphin/lg/allsrc.c")
-        ]
-    ),
+    # DolphinLib(
+    #     "lg",  # unofficial name
+    #     [
+    #         Object(NonMatching, "dolphin/lg/allsrc.c")
+    #     ]
+    # ),
     DolphinLib(
         "mtx",
         [
             Object(NonMatching, "dolphin/mtx/mtx.c"),
-            Object(NonMatching, "dolphin/mtx/mtxvec.c"),
             Object(NonMatching, "dolphin/mtx/mtx44.c"),
-            Object(Matching, "dolphin/mtx/mtx44vec.c"),
-            Object(Matching, "dolphin/mtx/vec.c"),
-            Object(NonMatching, "dolphin/mtx/quat.c"),
         ]
     ),
     DolphinLib(
@@ -789,7 +730,7 @@ config.libs = [
     DolphinLib(
         "odenotstub",
         [
-            Object(NonMatching, "dolphin/odenotstub/odenotstub.c")
+            Object(Matching, "dolphin/odenotstub/odenotstub.c")
         ]
     ),
     DolphinLib(
@@ -797,25 +738,24 @@ config.libs = [
         [
             Object(NonMatching, "dolphin/os/OS.c"),
             Object(NonMatching, "dolphin/os/OSAlarm.c"),
-            Object(NonMatching, "dolphin/os/OSAlloc.c"),
-            Object(NonMatching, "dolphin/os/OSArena.c"),
+            Object(Matching, "dolphin/os/OSAlloc.c"),
+            Object(Matching, "dolphin/os/OSArena.c"),
             Object(Matching, "dolphin/os/OSAudioSystem.c"),
             Object(NonMatching, "dolphin/os/OSCache.c"),
-            Object(NonMatching, "dolphin/os/OSContext.c"),
+            Object(Matching, "dolphin/os/OSContext.c"),
             Object(NonMatching, "dolphin/os/OSError.c"),
             Object(NonMatching, "dolphin/os/OSFont.c"),
-            Object(NonMatching, "dolphin/os/OSInterrupt.c"),
-            Object(NonMatching, "dolphin/os/OSLink.c"),
-            Object(NonMatching, "dolphin/os/OSMessage.c"),
-            Object(NonMatching, "dolphin/os/OSMemory.c"),
-            Object(NonMatching, "dolphin/os/OSMutex.c"),
+            Object(Matching, "dolphin/os/OSInterrupt.c"),
+            Object(Matching, "dolphin/os/OSLink.c"),
+            Object(Matching, "dolphin/os/OSMemory.c"),
+            Object(Matching, "dolphin/os/OSMutex.c"),
             Object(Matching, "dolphin/os/OSReboot.c"),
             Object(NonMatching, "dolphin/os/OSReset.c"),
-            Object(NonMatching, "dolphin/os/OSResetSW.c"),
+            Object(Matching, "dolphin/os/OSResetSW.c"),
             Object(NonMatching, "dolphin/os/OSRtc.c"),
             Object(NonMatching, "dolphin/os/OSThread.c"),
             Object(NonMatching, "dolphin/os/OSTime.c"),
-            Object(NonMatching, "dolphin/os/OSSync.c"),
+            Object(Matching, "dolphin/os/OSSync.c"),
             Object(NonMatching, "dolphin/os/init/__start.c"),
             Object(NonMatching, "dolphin/os/init/__ppc_eabi_init.cpp")
         ]
@@ -835,29 +775,10 @@ config.libs = [
         ]
     ),
     DolphinLib(
-        "upnp",
-        [
-            Object(NonMatching, "dolphin/upnp/UPnP.c"),
-            Object(NonMatching, "dolphin/upnp/UPnPHttp.c"),
-            Object(NonMatching, "dolphin/upnp/UPnPSsdp.c"),
-            Object(NonMatching, "dolphin/upnp/UPnPUuid.c"),
-            Object(NonMatching, "dolphin/upnp/UPnPUri.c"),
-            Object(NonMatching, "dolphin/upnp/UPnPHttpd.c"),
-            Object(NonMatching, "dolphin/upnp/UPnPHttpdResponse.c")
-        ]
-    ),
-    DolphinLib(
         "vi",
         [
             Object(NonMatching, "dolphin/vi/vi.c"),
         ],
-    ),
-    DolphinLib(
-        "thp",
-        [
-            Object(Matching, "dolphin/thp/THPDec.c"),
-            Object(Matching, "dolphin/thp/THPAudio.c")
-        ]
     ),
     mslLib(
         "Runtime.PPCEABI.H",

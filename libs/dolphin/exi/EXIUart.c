@@ -8,7 +8,7 @@ static u32 Dev;
 static u32 Enabled = 0;
 static u32 BarnacleEnabled = 0;
 
-static BOOL ProbeBarnacle(s32 chan, u32 dev, u32 *revision)
+static BOOL ProbeBarnacle(s32 chan, u32 dev, u32* revision)
 {
     BOOL err;
     u32 cmd;
@@ -111,8 +111,6 @@ u32 InitializeUART(u32 baudRate)
     }
 }
 
-u32 ReadUARTN(void *bytes, unsigned long length) { return 4; }
-
 static int QueueLength(void)
 {
     u32 cmd;
@@ -131,13 +129,13 @@ static int QueueLength(void)
     return 16 - (int)((cmd >> 24) & 0xff);
 }
 
-u32 WriteUARTN(const void *buf, unsigned long len)
+u32 WriteUARTN(const void* buf, unsigned long len)
 {
     BOOL enabled;
     u32 cmd;
     int qLen;
     long xLen;
-    char *ptr;
+    char* ptr;
     BOOL locked;
     u32 error;
 
@@ -153,7 +151,7 @@ u32 WriteUARTN(const void *buf, unsigned long len)
         return 0;
     }
 
-    for (ptr = (char *)buf; ptr - buf < len; ptr++)
+    for (ptr = (char*)buf; ptr - buf < len; ptr++)
     {
         if (*ptr == '\n')
             *ptr = '\r';
@@ -187,8 +185,8 @@ u32 WriteUARTN(const void *buf, unsigned long len)
             if (qLen < 4 && qLen < len)
                 break;
             xLen = (len < 4) ? (long)len : 4;
-            EXIImm(Chan, (void *)buf, xLen, EXI_WRITE, NULL);
-            (u8 *)buf += xLen;
+            EXIImm(Chan, (void*)buf, xLen, EXI_WRITE, NULL);
+            (u8*)buf += xLen;
             len -= xLen;
             qLen -= xLen;
             EXISync(Chan);
