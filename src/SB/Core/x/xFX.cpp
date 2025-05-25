@@ -372,7 +372,8 @@ void AtomicSetEnvMap(RpAtomic*, void*)
 
 RpAtomic* xFXAtomicEnvMapSetup(RpAtomic* atomic, U32 aid, F32 shininess)
 {
-    if (void* asset = xSTFindAsset(aid, NULL))
+    void* asset = xSTFindAsset(aid, NULL);
+    if (asset)
     {
         AtomicSetEnvMap(atomic, asset);
         F32 oldShininess = EnvMapShininess;
