@@ -2,26 +2,24 @@
 
 #include "xstransvc.h"
 
+#include "xScrFx.h"
 #include "iMath.h"
 #include "zParEmitter.h"
 #include "zSurface.h"
 #include "zFX.h"
 #include "zGlobals.h"
+#include "zRumble.h"
 
 #include <string.h>
 #include <rpmatfx.h>
+#include <rwplcore.h>
+#include <rpskin.h>
 
 /* boot.HIP texture IDs */
 #define ID_gloss_edge 0xB8C2351E
 #define ID_rainbowfilm_smooth32 0x741B0566
 
 extern const char _stringBase0_7[];
-
-extern F32 _957_0;
-extern F32 _958;
-extern F32 _995;
-extern F32 _1132;
-extern F32 _1171;
 
 RpAtomicCallBackRender gAtomicRenderCallBack = NULL;
 F32 EnvMapShininess = 1.0f;
@@ -92,17 +90,17 @@ xFXRing* xFXRingCreate(const xVec3* pos, const xFXRing* params)
 
     for (S32 i = 0; i < RING_COUNT; i++, ring++)
     {
-        if (ring->time <= _957_0)
+        if (ring->time <= 0.0f)
         {
-            // non-matching: _958 is only loaded once
+            // non-matching: 1.0f is only loaded once
 
             memcpy(ring, params, sizeof(xFXRing));
 
-            ring->time = _995;
+            ring->time = 0.001f;
             ring->pos = *pos;
-            ring->ring_radius_delta *= _958 / ring->lifetime;
-            ring->ring_height_delta *= _958 / ring->lifetime;
-            ring->ring_tilt_delta *= _958 / ring->lifetime;
+            ring->ring_radius_delta *= 1.0f / ring->lifetime;
+            ring->ring_height_delta *= 1.0f / ring->lifetime;
+            ring->ring_tilt_delta *= 1.0f / ring->lifetime;
 
             return ring;
         }
@@ -115,14 +113,14 @@ static void xFXRingUpdate(F32 dt)
 {
     xFXRing* ring = &ringlist[0];
 
-    if ((F32)iabs(dt) < _995)
+    if ((F32)iabs(dt) < 0.001f)
     {
         return;
     }
 
     for (S32 i = 0; i < RING_COUNT; i++, ring++)
     {
-        if (ring->time <= _957_0)
+        if (ring->time <= 0.0f)
         {
             continue;
         }
@@ -140,9 +138,9 @@ static void xFXRingUpdate(F32 dt)
 
         // non-matching: float scheduling
 
-        if (t > _958)
+        if (t > 1.0f)
         {
-            ring->time = _957_0;
+            ring->time = 0.0f;
 
             if (ring->parent)
             {
@@ -161,7 +159,7 @@ void xFXRingRender()
 
     for (i = 0; i < RING_COUNT; i++, ring++)
     {
-        if (ring->time > _957_0)
+        if (ring->time > 0.0f)
         {
             DrawRing(ring);
         }
@@ -210,7 +208,7 @@ void xFX_SceneEnter(RpWorld* world)
                         }
 
                         MaterialSetEnvMap(mp, env);
-                        RpMatFXMaterialSetEnvMapCoefficient(mp, _1132 * fxp->shininess);
+                        RpMatFXMaterialSetEnvMapCoefficient(mp, 0.5f * fxp->shininess);
                     }
 
                     if (fxp->flags & 0x2)
@@ -308,8 +306,8 @@ static void LightResetFrame(RpLight* light)
 
     RwFrame* frame = RpLightGetFrame(light);
 
-    RwFrameRotate(frame, &v1, _1171, rwCOMBINEREPLACE);
-    RwFrameRotate(frame, &v2, _1171, rwCOMBINEPOSTCONCAT);
+    RwFrameRotate(frame, &v1, 45.0f, rwCOMBINEREPLACE);
+    RwFrameRotate(frame, &v2, 45.0f, rwCOMBINEPOSTCONCAT);
 }
 
 static RpMaterial* MaterialDisableMatFX(RpMaterial* material, void*)
@@ -367,6 +365,48 @@ static RpAtomic* AtomicSetShininess(RpAtomic* atomic, void* data)
     return atomic;
 }
 
+void AtomicSetEnvMap(RpAtomic*, void*)
+{
+
+}
+
+RpAtomic* xFXAtomicEnvMapSetup(RpAtomic* atomic, U32 aid, F32 shininess)
+{
+    void* asset = xSTFindAsset(aid, NULL);
+    if (asset)
+    {
+        AtomicSetEnvMap(atomic, asset);
+        F32 oldShininess = EnvMapShininess;
+        EnvMapShininess = shininess;
+        AtomicSetShininess(atomic, NULL);
+        EnvMapShininess = oldShininess;
+        RpSkin* skin = RpSkinGeometryGetSkin(atomic->geometry);
+        if (skin)
+        {
+            RpSkinAtomicSetType(atomic, rpSKINTYPEMATFX);
+        }
+        return atomic;
+    }
+    return NULL;
+}
+
+void xFXAuraAdd(void*, xVec3*, iColor_tag*, F32)
+{
+}
+
+void xFXAuraInit()
+{
+}
+
+void xFXAuraUpdate(F32)
+{
+}
+
+U32 xFXanimUVCreate()
+{
+    return 0;
+}
+
 struct xFXBubbleParams
 {
     U32 pass1 : 1;
@@ -400,6 +440,8 @@ static xFXBubbleParams* BFX = &defaultBFX;
 static U32 sFresnelMap = 0;
 static U32 sEnvMap = 0;
 static S32 sTweaked = 0;
+
+xFXRing ringlist[RING_COUNT];
 
 static RxPipeline* xFXanimUVPipeline = NULL;
 F32 xFXanimUVRotMat0[2] = { 1.0f, 0.0f };
@@ -524,11 +566,427 @@ void xFXSceneInit()
 {
 }
 
+void xFXSceneSetup()
+{
+}
+
 void xFXSceneReset()
 {
 }
 
 void xFXScenePrepare()
+{
+}
+
+void xFXSceneFinish()
+{
+}
+
+void xFXanimUV2PSetTexture(RwTexture* tex)
+{
+    xFXanimUV2PTexture = tex;
+}
+
+void xFXanimUVSetAngle(F32 angle)
+{
+    F32 sin = isin(angle);
+    F32 cos = icos(angle);
+    xFXanimUVRotMat0[0] = cos;
+    xFXanimUVRotMat0[1] = -sin;
+    xFXanimUVRotMat1[0] = sin;
+    xFXanimUVRotMat1[1] = cos;
+}
+
+void xFXanimUV2PSetScale(const xVec3* scale)
+{
+    xFXanimUV2PScale[0] = scale->x;
+    xFXanimUV2PScale[1] = scale->y;
+}
+
+void xFXanimUVSetScale(const xVec3* scale)
+{
+    xFXanimUVScale[0] = scale->x;
+    xFXanimUVScale[1] = scale->y;
+}
+
+void xFXanimUVSetTranslation(const xVec3* translation)
+{
+    xFXanimUVTrans[0] = translation->x;
+    xFXanimUVTrans[1] = translation->y;
+}
+
+void xFXStreakUpdate(U32, const xVec3*, const xVec3*)
+{
+}
+
+void xFXStreakStart(F32, F32, F32, U32, const iColor_tag*, const iColor_tag*, S32)
+{
+}
+
+void xFXStreakStop(U32)
+{
+}
+
+void xFXStreakUpdate(F32)
+{
+}
+
+void xParInterp::set(F32 value1, F32 value2, F32 freq, U32 interp)
+{
+    this->val[0] = value1;
+    this->val[1] = value2;
+    this->freq = freq;
+    if (freq != 0.0f)
+    {
+        this->oofreq = 1.0f / freq;
+    }
+    else
+    {
+        this->oofreq = 0.0f;
+    }
+    this->interp = interp;
+}
+
+void xFXShineInit()
+{
+}
+
+void xFXShineStart(const xVec3*, F32, F32, F32, F32, U32, const iColor_tag*, const iColor_tag*, F32, S32)
+{
+}
+
+void xFXShineUpdate(F32)
+{
+}
+
+void xFXShineRender()
+{
+}
+
+void xFXAuraRender()
+{
+}
+
+void xFXFireworksInit(const char* trailEmit, const char* emit1, const char* emit2, const char* mainSound, const char* launchSound)
+{
+    sFireworkTrailEmit = zParEmitterFind(trailEmit);
+    sFirework1Emit = zParEmitterFind(emit1);
+    sFirework2Emit = zParEmitterFind(emit2);
+    sFireworkSoundID = xStrHash(mainSound);
+    sFireworkLaunchSoundID = xStrHash(launchSound);
+    memset(sFirework, 0, sizeof(sFirework));
+    for (U32 i = 0; i < FIREWORK_COUNT; ++i)
+    {
+        sFirework[i].state = 0;
+    }
+}
+
+void xFXFireworksLaunch(F32 time, const xVec3* pos, F32 fuel)
+{
+    U32 counter = FIREWORK_COUNT;
+    _tagFirework* candidate = sFirework;
+    while (counter)
+    {
+        if (candidate->state == 0)
+        {
+            candidate->state = 1;
+            candidate->timer = time;
+            candidate->pos = *pos;
+            candidate->fuel = fuel;
+            return;
+        }
+        --counter;
+        ++candidate;
+    }
+}
+
+void xFXFireworksUpdate(F32 dt)
+{
+    for (S32 i = 0; i < FIREWORK_COUNT; ++i)
+    {
+        if (sFirework[i].state == 0)
+        {
+            continue;
+        }
+        if (sFirework[i].state == 1)
+        {
+            sFirework[i].timer -= dt;
+            if (sFirework[i].timer <= 0.0f)
+            {
+                sFirework[i].vel.x = 13.0f * xurand() + 6.5f;
+                sFirework[i].vel.y = 0.0f;
+                sFirework[i].vel.z = 13.0f * xurand() + 6.5f;
+                sFirework[i].state = 2;
+
+                if (sFireworkLaunchSoundID != 0)
+                {
+                    xSndPlay3D(sFireworkLaunchSoundID,
+                        0.308f, // Volume
+                        0.0f, // Pitch
+                        0x80, // Priority
+                        0, // Flags
+                        &sFirework[i].pos,
+                        20.0f, // Radius
+                        5.0f,
+                        SND_CAT_GAME,
+                        0.0f); // Delay
+                }
+            }
+        }
+        else
+        {
+            sFirework[i].fuel -= dt;
+            if (sFirework[i].fuel > 0.0f)
+            {
+                sFirework[i].vel.y += 15.0f * dt;
+            }
+            xParEmitterCustomSettings settings;
+            settings.custom_flags = 0x100;
+            sFirework[i].pos.x += sFirework[i].vel.x * dt;
+            sFirework[i].pos.y += sFirework[i].vel.y * dt;
+            sFirework[i].pos.z += sFirework[i].vel.z * dt;
+            settings.pos = sFirework[i].pos;
+            xParEmitterEmitCustom(sFireworkTrailEmit, dt, &settings);
+
+            if (sFirework[i].fuel <= 0.0f)
+            {
+                sFirework[i].state = 0;
+                sFirework[i].timer = 0.0f;
+
+                zParEmitter* emit = sFirework1Emit;
+                if (xurand() < 0.75f)
+                {
+                    emit = sFirework2Emit;
+                }
+
+                xParEmitterCustomSettings settings2;
+                settings2.custom_flags = 0xD00;
+                settings2.pos = sFirework[i].pos;
+
+                if (emit != NULL)
+                {
+                    settings2.color_birth[0].set(127.0f * xurand() + 128.0f, 75.0f, 0.0f, 0);
+                    settings2.color_birth[1].set(127.0f * xurand() + 128.0f, 75.0f, 0.0f, 0);
+                    settings2.color_birth[2].set(127.0f * xurand() + 128.0f, 75.0f, 0.0f, 0);
+                    settings2.color_birth[3].set(255.0f, 0.0f, 1.0f, 0);
+                    memcpy(settings2.color_death, &settings2.color_birth, sizeof(settings2.color_birth));
+                    settings2.color_death[3].set(0.0f, 0.0f, 1.0f, 0);
+                    xParEmitterEmitCustom(emit, dt, &settings2);
+                }
+
+                F32 a = 0.4f * xurand() + 0.1f;
+                F32 b = 0.5f * xurand() + 0.5f;
+                F32 g = 0.5f * xurand() + 0.5f;
+                F32 r = 0.5f * xurand() + 0.5f;
+                F32 size = 5.0f * xurand() + 2.0f;
+                F32 intensity = 0.3f * xurand() + 0.1f;
+                F32 life = 0.5f * xurand() + 0.5f;
+                xScrFXGlareAdd(&sFirework[i].pos, life, intensity, size, r, g, b, a, NULL);
+
+                xVec3 diff;
+                xVec3Sub(&diff, xEntGetPos(&globals.player.ent), &sFirework[i].pos);
+                zRumbleStartDistance(globals.currentActivePad, diff.x * diff.x + diff.z * diff.z, 48.0f,
+                                     eRumble_Medium, 0.35f);
+                sFirework[i].pos.y = xEntGetPos(&globals.player.ent)->y;
+                if (sFireworkSoundID != 0)
+                {
+                    xSndPlay3D(sFireworkSoundID,
+                        0.77f, // Volume
+                        0.0f, // Pitch
+                        0x80, // Priority
+                        0, // Flags
+                        &sFirework[i].pos,
+                        20.0f, // Radius
+                        5.0f,
+                        SND_CAT_GAME,
+                        0.0f); // Delay
+                }
+            }
+        }
+    }
+}
+
+RpMaterial* MaterialSetBumpMap(RpMaterial* material, void* data)
+{
+    return NULL;
+}
+
+RpMaterial* MaterialSetEnvMap(RpMaterial* material, void* data)
+{
+    // Matching but with mr. instead of cmplwi
+    if (data == NULL)
+    {
+        return NULL;
+    }
+    if (material->texture)
+    {
+        if (data)
+        {
+            RwFrame* frame = NULL;
+            if ((gFXSurfaceFlags & 0x10) != 0)
+            {
+                if (globals.camera.lo_cam)
+                {
+                    frame = (RwFrame*)globals.camera.lo_cam->object.object.parent;
+                }
+                else
+                {
+                    frame = (RwFrame*)MainLight->object.object.parent;
+                }
+            }
+            else
+            {
+                frame = (RwFrame*)MainLight->object.object.parent;
+            }
+            RpMatFXMaterialSetEffects(material, rpMATFXEFFECTENVMAP);
+            RpMatFXMaterialSetupEnvMap(material, (RwTexture*)data, frame, FALSE, 1.0f);
+        }
+        else
+        {
+            RpMatFXMaterialSetEffects(material, rpMATFXEFFECTNULL);
+        }
+    }
+    return material;
+}
+
+RpMaterial* MaterialSetEnvMap2(RpMaterial* material, void* data)
+{
+    if (material->texture != NULL)
+    {
+        RwFrame* frame;
+        if (RwEngineInstance->stringFuncs.vecStrcmp(((RwTexture*)data)->name, "spec3") == 0)
+        {
+            frame = (RwFrame*)globals.camera.lo_cam->object.object.parent;
+        }
+        else
+        {
+            frame = (RwFrame*)MainLight->object.object.parent;
+        }
+        RpMatFXMaterialSetEffects(material, rpMATFXEFFECTENVMAP);
+        RpMatFXMaterialSetupEnvMap(material, (RwTexture*)data, frame, FALSE, EnvMapShininess);
+    }
+    return material;
+}
+
+RpMaterial* MaterialSetBumpEnvMap(RpMaterial* material, RwTexture* envMap, F32 envCooef, RwTexture* bumpMap, F32 bumpCooef)
+{
+    if (envMap == NULL || bumpMap == NULL)
+    {
+        return NULL;
+    }
+    else
+    {
+        RwFrame *frame;
+        RpMatFXMaterialSetEffects(material, rpMATFXEFFECTBUMPENVMAP);
+        if ((gFXSurfaceFlags & 0x10) != 0)
+        {
+            frame = (RwFrame*)globals.camera.lo_cam->object.object.parent;
+        }
+        else
+        {
+            frame = (RwFrame*)MainLight->object.object.parent;
+        }
+        RpMatFXMaterialSetupEnvMap(material, envMap, frame, TRUE, envCooef);
+        RpMatFXMaterialSetupBumpMap(material, bumpMap, (RwFrame*)MainLight->object.object.parent, bumpCooef);
+    }
+    return material;
+}
+
+RpAtomic* xFXanimUVAtomicSetup(RpAtomic*)
+{
+    return NULL;
+}
+
+void xFXRenderProximityFade(const xModelInstance&, F32, F32)
+{
+}
+
+void xFXanimUV2PSetAngle(F32)
+{
+}
+
+void xFXanimUV2PSetTranslation(const xVec3*)
+{
+}
+
+RpAtomic* xFXShinyRender(RpAtomic* atom)
+{
+    return NULL;
+}
+
+RpAtomic* xFXBubbleRender(RpAtomic* atom)
+{
+    return NULL;
+}
+
+void xFXRibbonRender()
+{
+}
+
+void xFXStreakInit()
+{
+}
+
+void xFXStreakRender()
+{
+}
+
+void xFXRibbonSceneEnter()
+{
+}
+
+void xFXRibbonUpdate(F32)
+{
+}
+
+void xFXRibbon::init(const char*, const char*)
+{
+}
+
+void tier_queue<xFXRibbon::joint_data>::clear()
+{
+}
+
+void xFXRibbon::set_default_config()
+{
+    cfg.life_time = 0.0f;
+    cfg.blend_src = 5;
+    cfg.blend_dst = 6;
+    cfg.pivot = 0.5f;
+    refresh_config();
+}
+
+void xFXRibbon::refresh_config()
+{
+    ilife = 1.0f / cfg.life_time;
+    mlife = 1000.0f * cfg.life_time;
+    if (activated)
+    {
+        ribbons_dirty = true;
+    }
+}
+
+void xFXRibbon::set_texture(const char*)
+{
+}
+
+void xFXRibbon::set_texture(RwTexture*)
+{
+}
+
+void xFXRibbon::set_texture(U32)
+{
+}
+
+void xFXRibbon::insert(const xVec3&, const xVec3&, F32, F32, U32)
+{
+}
+
+void xFXRibbon::insert(const xVec3&, F32, F32, F32, U32)
+{
+}
+
+void xFXRibbon::set_curve(const xFXRibbon::curve_node*, unsigned long)
 {
 }
 

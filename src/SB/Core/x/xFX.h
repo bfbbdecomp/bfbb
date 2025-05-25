@@ -70,6 +70,8 @@ struct xFXRibbon
 
     void init(const char*, const char*);
     void set_texture(const char* name);
+    void set_texture(U32);
+    void set_texture(RwTexture* texture);
     void set_curve(const curve_node* curve, size_t size);
     void refresh_config();
     void set_default_config();
@@ -77,6 +79,8 @@ struct xFXRibbon
     void debug_init(const char*, const char*);
     void debug_update_curve();
     void debug_update(F32);
+    void insert(const xVec3&, const xVec3&, F32, F32, unsigned int);
+    void insert(const xVec3&, F32, F32, F32, U32);
 };
 
 #define RING_COUNT 8
