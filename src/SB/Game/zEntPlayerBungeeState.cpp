@@ -23,6 +23,7 @@
 #include "zEntPlayer.h"
 #include "zGameExtras.h"
 #include "zGlobals.h"
+#include "zCameraTweak.h"
 
 #include "zLightning.h"
 #include "zScene.h"

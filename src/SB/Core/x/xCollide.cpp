@@ -5,7 +5,7 @@
 #include "rpcollis.h"
 #include "xMathInlines.h"
 
-#include <cmath>
+#include <PowerPC_EABI_Support/MSL_C/MSL_Common/cmath>
 #include <types.h>
 
 S32 sSweptSphereHitFound;
@@ -274,8 +274,6 @@ S32 xParabolaHitsEnv(xParabola*, const xEnv*, xCollis*)
     return false;
 }
 
-
-
 U32 xBoxHitsObb(const xBox*, const xBox*, const xMat4x3*, xCollis*)
 {
     return 0;
@@ -293,13 +291,10 @@ xVec3 xCollisTriHit(const xCollis::tri_data&, const xModelInstance&)
 struct RpCollBSPTree;
 struct RpV3dGradient;
 
-RpCollBSPTree* _rpCollBSPTreeForAllCapsuleLeafNodeIntersections(
-    RpCollBSPTree* tree,
-    RwLine* line,
-    F32 radius,
-    RpV3dGradient* grad,
-    S32 (* callBack)(S32, S32, void*),
-    void* data)
+RpCollBSPTree* _rpCollBSPTreeForAllCapsuleLeafNodeIntersections(RpCollBSPTree* tree, RwLine* line,
+                                                                F32 radius, RpV3dGradient* grad,
+                                                                S32 (*callBack)(S32, S32, void*),
+                                                                void* data)
 {
     return NULL;
 }
@@ -344,9 +339,9 @@ S32 xSweptSphereToBox(xSweptSphere*, xBox*, xMat4x3*)
     return 0;
 }
 
-RpCollisionTriangle* SweptSphereHitsEnvCB(
-    RpIntersection* intersection, RpWorldSector* sector, RpCollisionTriangle* collTriangle,
-    RwReal distance, void* data)
+RpCollisionTriangle* SweptSphereHitsEnvCB(RpIntersection* intersection, RpWorldSector* sector,
+                                          RpCollisionTriangle* collTriangle, RwReal distance,
+                                          void* data)
 {
     return NULL;
 }
@@ -397,14 +392,9 @@ S32 xSweptSphereToEnv(xSweptSphere* sphere, xEnv* env)
         gradient.dxdz = delx * zfactor;
         gradient.dydz = dely * zfactor;
 
-        xClumpColl_ForAllCapsuleLeafNodeIntersections(
-            env->geom->jsp->colltree,
-            &line,
-            sphere->radius,
-            &gradient,
-            SweptSphereLeafNodeCB,
-            sphere
-        );
+        xClumpColl_ForAllCapsuleLeafNodeIntersections(env->geom->jsp->colltree, &line,
+                                                      sphere->radius, &gradient,
+                                                      SweptSphereLeafNodeCB, sphere);
     }
     else
     {
@@ -414,8 +404,8 @@ S32 xSweptSphereToEnv(xSweptSphere* sphere, xEnv* env)
         // some struct with RwV3ds in it instead of an xBox.
         intersect.t.box.sup = *(RwV3d*)(&sphere->box.upper);
         intersect.t.box.inf = *(RwV3d*)(&sphere->box.lower);
-        RpCollisionWorldForAllIntersections(env->geom->world, &intersect,
-            SweptSphereHitsEnvCB, sphere);
+        RpCollisionWorldForAllIntersections(env->geom->world, &intersect, SweptSphereHitsEnvCB,
+                                            sphere);
     }
     return sSweptSphereHitFound;
 }
@@ -491,7 +481,7 @@ F32 xVec3Dist(const xVec3* a, const xVec3* b)
     return xsqrt(dx * dx + dy * dy + dz * dz);
 }
 
-void xMat4x3OrthoInv(xMat4x3* a,const xMat4x3* b)
+void xMat4x3OrthoInv(xMat4x3* a, const xMat4x3* b)
 {
     xVec3 vec;
     xMat3x3Transpose(a, b);
