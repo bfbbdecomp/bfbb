@@ -3,19 +3,33 @@
 #include "zNPCTypes.h"
 #include "zNPCGoals.h"
 
-#define ANIM_Idle01 1
-#define ANIM_Move01 2
-#define ANIM_Hurt01 3
-#define ANIM_Yawn01 4
-#define ANIM_Talk01 5
-#define ANIM_Flee01 6
-#define ANIM_Fear01 7
-#define ANIM_Pray01 8
-#define ANIM_Clap01 9
-#define ANIM_Special01 10
-#define ANIM_Unknown 0
+#define Unknown 0
+#define Idle01 1
+#define Move01 2
+#define Hurt01 3
+#define Yawn01 4
+#define Talk01 5
+#define Flee01 6
+#define Fear01 7
+#define Pray01 8
+#define Clap01 9
+#define Special01 10
+#define Ride01 11
+#define Bump01 12
+#define Fall01 13
+#define Land01 14
+#define Weep01 15
+#define Swim01 16
+#define Idle02 17
+#define Idle03 18
+#define Idle04 19
+#define Yawn02 20
+#define Yawn03 21
+#define Yawn04 22
+#define Talk02 23
+#define Talk03 24
+#define Talk04 25
 
-extern char* g_strz_folkanim[26];
 extern U32 g_hash_folkanim[26];
 extern char* g_strz_platanim[2];
 extern U32 g_hash_platanim[2];
@@ -23,34 +37,38 @@ extern zParEmitter* g_pemit_aqualeak;
 extern xParEmitterCustomSettings g_parf_aqualeak;
 extern const xVec3 g_O3;
 
+static char* g_strz_folkanim[26] =
+{
+    "Unknown",
+    "Idle01",
+    "Move01",
+    "Hurt01",
+    "Yawn01",
+    "Talk01",
+    "Flee01",
+    "Fear01",
+    "Pray01",
+    "Clap01",
+    "Special01",
+    "Ride01",
+    "Bump01",
+    "Fall01",
+    "Land01",
+    "Weep01",
+    "Swim01",
+    "Idle02",
+    "Idle03",
+    "Idle04",
+    "Yawn02",
+    "Yawn03",
+    "Yawn04",
+    "Talk02",
+    "Talk03",
+    "Talk04",
+};
+
 // Taken from zNPCTypeVillager.s
 // Defining these here makes the stringBase0 offsets match in the later functions.
-static char* str1 = "Unknown";
-static char* str2 = "Idle01";
-static char* str3 = "Move01";
-static char* str4 = "Hurt01";
-static char* str5 = "Yawn01";
-static char* str6 = "Talk01";
-static char* str7 = "Flee01";
-static char* str8 = "Fear01";
-static char* str9 = "Pray01";
-static char* str10 = "Clap01";
-static char* str11 = "Special01";
-static char* str12 = "Ride01";
-static char* str13 = "Bump01";
-static char* str14 = "Fall01";
-static char* str15 = "Land01";
-static char* str16 = "Weep01";
-static char* str17 = "Swim01";
-static char* str18 = "Idle02";
-static char* str19 = "Idle03";
-static char* str20 = "Idle04";
-static char* str21 = "Yawn02";
-static char* str22 = "Yawn03";
-static char* str23 = "Yawn04";
-static char* str24 = "Talk02";
-static char* str25 = "Talk03";
-static char* str26 = "Talk04";
 static char* str27 = "fish_d_balloon_move";
 static char* str28 = "fish_d_balloon_hit";
 static char* str29 = "zNPCVillager";
@@ -271,15 +289,138 @@ xAnimTable* ZNPC_AnimTable_Villager()
     return ZNPC_AnimTable_Villager(NULL);
 }
 
+xAnimTable* ZNPC_AnimTable_Villager(xAnimTable* callerTable)
+{
+    S32 ourAnims[11] = { Idle01, Move01, Hurt01, Yawn01, Talk01, Flee01,
+                         Fear01, Pray01, Clap01, Special01, Unknown };
+    xAnimTable* table = callerTable;
+    char** names = g_strz_folkanim;
+
+    if (table == NULL)
+    {
+        table = xAnimTableNew("zNPCVillager", NULL, 0x0);
+    }
+
+    xAnimTableNewState(table, names[Idle01], 0x10, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, names[Move01], 0x10, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, names[Hurt01], 0x20, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, names[Yawn01], 0x20, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, names[Talk01], 0x10, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, names[Flee01], 0x10, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, names[Fear01], 0x10, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, names[Pray01], 0x20, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, names[Clap01], 0x120, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, names[Special01], 0x10, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+
+    NPCC_BuildStandardAnimTran(table, names, ourAnims, 1, 0.2f);
+
+    xAnimTableNewTransition(table, names[Pray01], names[Fear01], NULL, NULL, 0x10, 0x0, 0.0f, 0.0f,
+                            0, 0, 0.35f, NULL);
+
+    return table;
+}
+
 xAnimTable* ZNPC_AnimTable_BalloonBoy()
 {
     return ZNPC_AnimTable_BalloonBoy(NULL);
+}
+
+xAnimTable* ZNPC_AnimTableBalloonBoy(xAnimTable* callerTable)
+{
+    S32 ourAnims[7] = { Ride01, Bump01, Fall01, Land01, Weep01, Swim01, Unknown };
+    xAnimTable* table = callerTable;
+    char** names = g_strz_folkanim;
+
+    if (table == NULL)
+    {
+        table = xAnimTableNew("zNPCBallonBoy", NULL, 0x0);
+    }
+
+    ZNPC_AnimTable_Villager(table);
+
+    xAnimTableNewState(table, names[Ride01], 0x10, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, names[Bump01], 0x20, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, names[Fall01], 0x10, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, names[Land01], 0x20, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, names[Weep01], 0x10, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, names[Swim01], 0x10, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+
+    NPCC_BuildStandardAnimTran(table, names, ourAnims, 1, 0.2f);
+
+    xAnimTableNewTransition(table, names[Fall01], names[Bump01], NULL, NULL, 0x10, 0x0, 0.0f, 0.0f,
+                            0, 0, 0.35f, NULL);
+    xAnimTableNewTransition(table, names[Land01], names[Weep01], NULL, NULL, 0x10, 0x0, 0.0f, 0.0f,
+                            0, 0, 0.35f, NULL);
+
+    return table;
 }
 
 xAnimTable* ZNPC_AnimTable_SuperFriend()
 {
     return ZNPC_AnimTable_SuperFriend(NULL);
 }
+
+xAnimTable* ZNPC_AnimTableSuperFriend(xAnimTable* callerTable)
+{
+    S32 ourAnims[10] = { Idle02, Idle03, Idle04, Yawn02, Yawn03,
+                         Yawn04, Talk02, Talk03, Talk04, Unknown };
+    xAnimTable* table = callerTable;
+    char** names = g_strz_folkanim;
+
+    if (table == NULL)
+    {
+        table = xAnimTableNew("zNPCSuperFriend", NULL, 0x0);
+    }
+
+    ZNPC_AnimTable_Villager(table);
+
+    xAnimTableNewState(table, names[Idle02], 0x10, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, names[Idle03], 0x10, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, names[Idle04], 0x10, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, names[Yawn02], 0x20, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, names[Yawn03], 0x20, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, names[Yawn04], 0x20, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, names[Talk02], 0x10, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, names[Talk03], 0x10, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, names[Talk04], 0x10, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+
+    NPCC_BuildStandardAnimTran(table, names, ourAnims, 1, 0.35f);
+
+    xAnimTableNewTransition(table, names[Yawn02], names[Idle02], NULL, NULL, 0x10, 0x0, 0.0f, 0.0f,
+                            0, 0, 0.35f, NULL);
+    xAnimTableNewTransition(table, names[Yawn03], names[Idle03], NULL, NULL, 0x10, 0x0, 0.0f, 0.0f,
+                            0, 0, 0.35f, NULL);
+    xAnimTableNewTransition(table, names[Yawn04], names[Idle04], NULL, NULL, 0x10, 0x0, 0.0f, 0.0f,
+                            0, 0, 0.35f, NULL);
+
+    return table;
+}
+
 
 U8 zNPCVillager::PhysicsFlags() const
 {
