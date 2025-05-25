@@ -574,7 +574,7 @@ config.libs = [
         "lib": "binkngc",
         "mw_version": "GC/1.3.2",
         "cflags": cflags_runtime,
-        "progress_category": "sdk",
+        "progress_category": "bink",
         "objects": [
             Object(NonMatching, "bink/src/sdk/decode/ngc/binkngc.c"),
             Object(NonMatching, "bink/src/sdk/decode/ngc/ngcsnd.c"),
@@ -1117,6 +1117,7 @@ config.progress_categories = [
     ProgressCategory("sdk", "SDK Code"),
     ProgressCategory("msl", "MSL"),
     ProgressCategory("RW", "Renderware SDK"),
+    ProgressCategory("bink", "Bink SDK"),
 ]
 config.progress_each_module = args.verbose
 
