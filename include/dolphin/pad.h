@@ -14,8 +14,8 @@ extern "C" {
 #define PAD_SPEC_4 4
 #define PAD_SPEC_5 5
 
-#define PAD_MOTOR_STOP      0
-#define PAD_MOTOR_RUMBLE    1
+#define PAD_MOTOR_STOP 0
+#define PAD_MOTOR_RUMBLE 1
 #define PAD_MOTOR_STOP_HARD 2
 
 #define PAD_CHAN0_BIT 0x80000000
@@ -23,30 +23,31 @@ extern "C" {
 #define PAD_CHAN2_BIT 0x20000000
 #define PAD_CHAN3_BIT 0x10000000
 
-#define PAD_MAX_CONTROLLERS     4
+#define PAD_MAX_CONTROLLERS 4
 
-#define PAD_BUTTON_LEFT  (1 << 0)   // 0x0001
-#define PAD_BUTTON_RIGHT (1 << 1)   // 0x0002
-#define PAD_BUTTON_DOWN  (1 << 2)   // 0x0004
-#define PAD_BUTTON_UP    (1 << 3)   // 0x0008
-#define PAD_TRIGGER_Z    (1 << 4)   // 0x0010
-#define PAD_TRIGGER_R    (1 << 5)   // 0x0020
-#define PAD_TRIGGER_L    (1 << 6)   // 0x0040
-#define PAD_BUTTON_A     (1 << 8)   // 0x0100
-#define PAD_BUTTON_B     (1 << 9)   // 0x0200
-#define PAD_BUTTON_X     (1 << 10)  // 0x0400
-#define PAD_BUTTON_Y     (1 << 11)  // 0x0800
-#define PAD_BUTTON_MENU  (1 << 12)  // 0x1000
-#define PAD_BUTTON_START (1 << 12)  // 0x1000
+#define PAD_BUTTON_LEFT (1 << 0) // 0x0001
+#define PAD_BUTTON_RIGHT (1 << 1) // 0x0002
+#define PAD_BUTTON_DOWN (1 << 2) // 0x0004
+#define PAD_BUTTON_UP (1 << 3) // 0x0008
+#define PAD_TRIGGER_Z (1 << 4) // 0x0010
+#define PAD_TRIGGER_R (1 << 5) // 0x0020
+#define PAD_TRIGGER_L (1 << 6) // 0x0040
+#define PAD_BUTTON_A (1 << 8) // 0x0100
+#define PAD_BUTTON_B (1 << 9) // 0x0200
+#define PAD_BUTTON_X (1 << 10) // 0x0400
+#define PAD_BUTTON_Y (1 << 11) // 0x0800
+#define PAD_BUTTON_MENU (1 << 12) // 0x1000
+#define PAD_BUTTON_START (1 << 12) // 0x1000
 
-#define PAD_ERR_NONE           0
+#define PAD_ERR_NONE 0
 #define PAD_ERR_NO_CONTROLLER -1
-#define PAD_ERR_NOT_READY     -2
-#define PAD_ERR_TRANSFER      -3
+#define PAD_ERR_NOT_READY -2
+#define PAD_ERR_TRANSFER -3
 
 #define RES_WIRELESS_LITE 0x40000
 
-typedef struct PADStatus {
+typedef struct PADStatus
+{
     /* 0x00 */ u16 button;
     /* 0x02 */ s8 stickX;
     /* 0x03 */ s8 stickY;
@@ -59,7 +60,8 @@ typedef struct PADStatus {
     /* 0x0A */ s8 err;
 } PADStatus;
 
-typedef struct PADClampRegion {
+typedef struct PADClampRegion
+{
     u8 minTrigger;
     u8 maxTrigger;
     s8 minStick;

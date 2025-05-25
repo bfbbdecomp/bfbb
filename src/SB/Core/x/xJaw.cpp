@@ -2,7 +2,7 @@
 
 #include "xstransvc.h"
 
-#include <cmath>
+#include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
 
 struct xJawDataTable
 {
@@ -45,13 +45,13 @@ void* xJaw_FindData(U32 soundID)
 
 #define swap(data)                                                                                 \
     {                                                                                              \
-        U8 c;                                                                                   \
-        c = ((U8*)(data))[3];                                                                   \
-        ((U8*)(data))[3] = ((U8*)(data))[0];                                                 \
-        ((U8*)(data))[0] = c;                                                                   \
-        c = ((U8*)(data))[2];                                                                   \
-        ((U8*)(data))[2] = ((U8*)(data))[1];                                                 \
-        ((U8*)(data))[1] = c;                                                                   \
+        U8 c;                                                                                      \
+        c = ((U8*)(data))[3];                                                                      \
+        ((U8*)(data))[3] = ((U8*)(data))[0];                                                       \
+        ((U8*)(data))[0] = c;                                                                      \
+        c = ((U8*)(data))[2];                                                                      \
+        ((U8*)(data))[2] = ((U8*)(data))[1];                                                       \
+        ((U8*)(data))[1] = c;                                                                      \
     }
 
 F32 xJaw_EvalData(void* data, F32 time)

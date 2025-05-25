@@ -8,20 +8,21 @@ extern "C" {
 #endif
 
 // make the assert happy
-#define OS_SOUND_MODE_MONO 0
-#define OS_SOUND_MODE_STEREO 1
+//#define OS_SOUND_MODE_MONO 0
+//#define OS_SOUND_MODE_STEREO 1
 
 // make the asserts happy
 #define OS_VIDEO_MODE_NTSC 0
 #define OS_VIDEO_MODE_MPAL 2
 
-#define OS_PROGRESSIVE_MODE_OFF 0
-#define OS_PROGRESSIVE_MODE_ON  1
+// #define OS_PROGRESSIVE_MODE_OFF 0
+// #define OS_PROGRESSIVE_MODE_ON 1
 
-#define OS_EURGB60_OFF 0
-#define OS_EURGB60_ON  1
+// #define OS_EURGB60_OFF 0
+// #define OS_EURGB60_ON 1
 
-typedef struct OSSram {
+typedef struct OSSram
+{
     u16 checkSum;
     u16 checkSumInv;
     u32 ead0;
@@ -33,7 +34,8 @@ typedef struct OSSram {
     u8 flags;
 } OSSram;
 
-typedef struct OSSramEx {
+typedef struct OSSramEx
+{
     u8 flashID[2][12];
     u32 wirelessKeyboardID;
     u16 wirelessPadID[4];
@@ -46,8 +48,9 @@ typedef struct OSSramEx {
 
 #define SRAM_SIZE (sizeof(OSSram) + sizeof(OSSramEx))
 
-typedef struct SramControl {
-    u8 sram[SRAM_SIZE];  // dummy for OSSram + OSSramEx
+typedef struct SramControl
+{
+    u8 sram[SRAM_SIZE]; // dummy for OSSram + OSSramEx
     u32 offset;
     BOOL enabled;
     BOOL locked;
@@ -57,7 +60,7 @@ typedef struct SramControl {
 
 u32 OSGetSoundMode(void);
 void OSSetSoundMode(u32 mode);
-u32 OSGetVideoMode(void);
+u32 OSGetVideoMode();
 void OSSetVideoMode(u32 mode);
 u8 OSGetLanguage(void);
 void OSSetLanguage(u8 language);

@@ -9,7 +9,7 @@
 
 #include "zEnt.h"
 
-#include <new>
+#include <PowerPC_EABI_Support\MSL_C++\MSL_Common\Include\new>
 #include <types.h>
 
 #define lengthof(x) (sizeof(x) / sizeof((x)[0]))
@@ -339,10 +339,10 @@ namespace xhud
             U32 widget_size;
         } known_types[] = {
             // TODO: The second value should probably be sizeof(...)
-            {0x3a, 0x9c},
-            {0x3c, 0x19c},
-            {0x3b, 0x15c},
-            {0x47, 0x17c},
+            { 0x3a, 0x9c },
+            { 0x3c, 0x19c },
+            { 0x3b, 0x15c },
+            { 0x47, 0x17c },
         };
 
         struct functor_disable
@@ -380,8 +380,7 @@ namespace xhud
             F32 delta_time;
         };
 
-        template <class F>
-        void for_each(U8 widget_type, U32 type_size, F f)
+        template <class F> void for_each(U8 widget_type, U32 type_size, F f)
         {
             U32 count = globals.sceneCur->baseCount[widget_type];
             U8* list = (U8*)globals.sceneCur->baseList[widget_type];
@@ -391,7 +390,8 @@ namespace xhud
             }
         }
 
-        void render_one_model(xModelInstance& model, F32 alpha, const basic_rect<F32>& rect, const xVec3& from, const xVec3& to, const xMat4x3& frame)
+        void render_one_model(xModelInstance& model, F32 alpha, const basic_rect<F32>& rect,
+                              const xVec3& from, const xVec3& to, const xMat4x3& frame)
         {
             xModelSetMaterialAlpha(&model, 255.0f * alpha + 0.5f);
             xModelSetFrame(&model, &frame);
@@ -402,7 +402,6 @@ namespace xhud
 
     void widget::debug_render()
     {
-
     }
 
     void widget::setup_all()
@@ -555,7 +554,7 @@ namespace xhud
 
     bool shake_motive_update(widget& w, motive& m, F32 dt)
     {
-        static const float mult[4] = {-1.0f, -1.0f, 1.0f, 1.0f};
+        static const float mult[4] = { -1.0f, -1.0f, 1.0f, 1.0f };
 
         *((U32*)&m.context) += 1;
         U32 context = *((U32*)&m.context);
@@ -592,15 +591,14 @@ namespace xhud
 
     void xhud::render_model(xModelInstance& model, const xhud::render_context& rc)
     {
-
         basic_rect<F32> rect = { 0 };
         rect.x = rc.loc.x;
         rect.y = rc.loc.y;
         rect.w = rc.size.x;
         rect.h = rc.size.y;
 
-        xVec3 vecA = {0, 0, 1};
-        xVec3 vecB = {0, 0, -rc.loc.z};
+        xVec3 vecA = { 0, 0, 1 };
+        xVec3 vecB = { 0, 0, -rc.loc.z };
 
         xMat4x3 matrix;
         xMat3x3Euler(&matrix, rc.rot.x, rc.rot.y, rc.rot.z);

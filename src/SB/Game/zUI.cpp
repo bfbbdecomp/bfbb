@@ -20,7 +20,7 @@
 
 #include "iMath.h"
 
-#include <stdlib.h>
+#include <PowerPC_EABI_Support\MSL_C\MSL_Common\stdlib.h>
 #include <string.h>
 #include <stdio.h>
 
@@ -1358,8 +1358,7 @@ static zUIFont* findUIFont(zScene* zsc, U32 id)
     return ui;
 }
 
-S32 zUIPortalEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
-                       xBase* toParamWidget)
+S32 zUIPortalEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* toParamWidget)
 {
     S32 result;
 

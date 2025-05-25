@@ -3,6 +3,7 @@
 #include <types.h>
 #include <stdio.h>
 #include <string.h>
+#include <PowerPC_EABI_Support\MSL_C\MSL_Common\stdlib.h>
 
 #include "iTime.h"
 

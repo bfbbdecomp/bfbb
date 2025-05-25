@@ -10,6 +10,7 @@
 
 #include <types.h>
 #include <string.h>
+#include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
 
 xCutscene sActiveCutscene;
 U32 sCutTocCount;
@@ -143,7 +144,7 @@ S32 xCutscene_LoadStart(xCutscene* csn)
     return 1;
 }
 
-S32 xCutscene_Update(xCutscene *csn, F32 dt)
+S32 xCutscene_Update(xCutscene* csn, F32 dt)
 {
     if ((csn->SndStarted == FALSE) && (csn->SndNumChannel != 0))
     {
@@ -183,7 +184,8 @@ S32 xCutscene_Update(xCutscene *csn, F32 dt)
         if (csn->Waiting)
         {
             csn->Time = csn->Play->EndTime;
-            csn->CamTime = xCutsceneConvertBreak(csn->Time, csn->BreakList, csn->Info->BreakCount, -1);
+            csn->CamTime =
+                xCutsceneConvertBreak(csn->Time, csn->BreakList, csn->Info->BreakCount, -1);
 
             if (csn->BadReadPause == FALSE)
             {
@@ -202,7 +204,9 @@ S32 xCutscene_Update(xCutscene *csn, F32 dt)
 
         if (csn->PlayIndex + 1 < csn->Info->NumTime)
         {
-            iCSFileAsyncRead(csn, csn->Stream, csn->TimeChunkOffs[csn->PlayIndex + 2] - csn->TimeChunkOffs[csn->PlayIndex + 1]);
+            iCSFileAsyncRead(csn, csn->Stream,
+                             csn->TimeChunkOffs[csn->PlayIndex + 2] -
+                                 csn->TimeChunkOffs[csn->PlayIndex + 1]);
         }
     }
 
@@ -244,7 +248,7 @@ void xCutscene_SetSpeed(xCutscene* csn, F32 speed)
 
 F32 xlog(F32 x)
 {
-   return std::logf(x);
+    return std::logf(x);
 }
 
 float std::logf(float x)

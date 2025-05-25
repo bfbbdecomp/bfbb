@@ -1,7 +1,7 @@
 #ifndef __BINK_H__
 #define __BINK_H__
 
-#include <size_t.h>
+#include <PowerPC_EABI_Support\MSL_C\MSL_Common\size_t.h>
 
 #define BINKSURFACE8P 0
 #define BINKSURFACE24 1
@@ -80,4 +80,3 @@ extern void BinkClose(HBINK bink);
 #endif
 
 #endif
-
