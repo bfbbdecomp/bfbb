@@ -115,40 +115,45 @@ FILE __files[4] =
 
 void __close_all()
 {
-	FILE* p = &__files[0];
-	FILE* plast;
+    FILE* p = &__files[0];
+    FILE* plast;
 
-	__begin_critical_region(stdin_access);
+    __begin_critical_region(stdin_access);
 
-	while (p) {
-		if (p->mMode.file_kind != __closed_file) {
-			fclose(p);
-		}
+    while (p)
+    {
+        if (p->mMode.file_kind != __closed_file)
+        {
+            fclose(p);
+        }
 
-		plast = p;
-		p     = p->mNextFile;
-		if (plast->mIsDynamicallyAllocated)
-			free(plast);
-		else {
-			plast->mMode.file_kind = __unavailable_file;
-			if ((p != NULL) && p->mIsDynamicallyAllocated)
-				plast->mNextFile = nullptr;
-		}
-	}
+        plast = p;
+        p = p->mNextFile;
+        if (plast->mIsDynamicallyAllocated)
+            free(plast);
+        else
+        {
+            plast->mMode.file_kind = __unavailable_file;
+            if ((p != NULL) && p->mIsDynamicallyAllocated)
+                plast->mNextFile = nullptr;
+        }
+    }
 
-	__end_critical_region(stdin_access);
+    __end_critical_region(stdin_access);
 }
 
 u32 __flush_all()
 {
-	u32 retval = 0;
-	FILE* __stream;
-	__stream = &__files[0];
-	while (__stream) {
-		if ((__stream->mMode.file_kind) && (fflush(__stream))) {
-			retval = -1;
-		}
-		__stream = __stream->mNextFile;
-	};
-	return retval;
+    u32 retval = 0;
+    FILE* __stream;
+    __stream = &__files[0];
+    while (__stream)
+    {
+        if ((__stream->mMode.file_kind) && (fflush(__stream)))
+        {
+            retval = -1;
+        }
+        __stream = __stream->mNextFile;
+    };
+    return retval;
 }

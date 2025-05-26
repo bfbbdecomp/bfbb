@@ -18,6 +18,8 @@ extern DSPTaskInfo* __DSP_tmp_task;
 extern DSPTaskInfo* __DSP_last_task;
 extern DSPTaskInfo* __DSP_first_task;
 extern DSPTaskInfo* __DSP_curr_task;
+extern DSPTaskInfo* __DSP_rude_task;
+extern s32 __DSP_rude_task_pending;
 
 extern void __DSPHandler(__OSInterrupt, OSContext*);
 extern void __DSP_debug_printf(const char* fmt, ...);
@@ -108,6 +110,37 @@ DSPTaskInfo* DSPCancelTask(DSPTaskInfo* task)
 
     OSRestoreInterrupts(old);
     return task;
+}
+
+DSPTaskInfo* DSPAssertTask(DSPTaskInfo* task)
+{
+    s32 old;
+
+    old = OSDisableInterrupts();
+
+    if (__DSP_curr_task == task)
+    {
+        __DSP_rude_task = task;
+        __DSP_rude_task_pending = 1;
+        OSRestoreInterrupts(old);
+        return task;
+    }
+
+    if (task->priority < __DSP_curr_task->priority)
+    {
+        __DSP_rude_task = task;
+        __DSP_rude_task_pending = 1;
+        if (__DSP_curr_task->state == 1)
+        {
+            OSDisableInterrupts();
+            OSRestoreInterrupts(FALSE);
+        }
+        OSRestoreInterrupts(old);
+        return task;
+    }
+
+    OSRestoreInterrupts(old);
+    return NULL;
 }
 
 #ifdef __cplusplus

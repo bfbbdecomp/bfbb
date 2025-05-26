@@ -16,55 +16,62 @@ static void (*__atexit_funcs[64])(void);
 
 void abort(void)
 {
-	raise(1);
-	__aborting = 1;
-	exit(1);
-}
+    raise(1);
+    __aborting = 1;
+    __begin_critical_region(atexit_funcs_access);
 
-void atexit(void)
-{
-	// UNUSED FUNCTION
-}
+    while (__atexit_curr_func > 0)
+        __atexit_funcs[--__atexit_curr_func]();
 
-void __atexit(void)
-{
-	// UNUSED FUNCTION
+    __end_critical_region(atexit_funcs_access);
+    __kill_critical_regions();
+
+    if (__console_exit != NULL)
+    {
+        __console_exit();
+        __console_exit = NULL;
+    }
+
+    _ExitProcess();
 }
 
 void exit(int status)
 {
-	int i;
-	void (**dtor)(void);
+    int i;
+    void (**dtor)(void);
 
-	if (!__aborting) {
-		__begin_critical_region(atexit_funcs_access);
-		__end_critical_region(atexit_funcs_access);
-		__destroy_global_chain();
-		dtor = _dtors;
-		while (*dtor != NULL) {
-			(*dtor)();
-			dtor++;
-		}
-		if (__stdio_exit != NULL) {
-			__stdio_exit();
-			__stdio_exit = NULL;
-		}
-	}
-	__exit(status);
-}
+    if (!__aborting)
+    {
+        __begin_critical_region(atexit_funcs_access);
+        __end_critical_region(atexit_funcs_access);
+        __destroy_global_chain();
 
-void __exit(int status)
-{
-	__begin_critical_region(atexit_funcs_access);
-	while (__atexit_curr_func > 0)
-		__atexit_funcs[--__atexit_curr_func]();
-	__end_critical_region(atexit_funcs_access);
-	__kill_critical_regions();
-	if (__console_exit != NULL)
-	{
+        dtor = _dtors;
+        while (*dtor != NULL)
+        {
+            (*dtor)();
+            dtor++;
+        }
 
-		__console_exit();
-		__console_exit = NULL;
-	}
-	_ExitProcess();
+        if (__stdio_exit != NULL)
+        {
+            __stdio_exit();
+            __stdio_exit = NULL;
+        }
+    }
+
+    __begin_critical_region(atexit_funcs_access);
+    while (__atexit_curr_func > 0)
+        __atexit_funcs[--__atexit_curr_func]();
+
+    __end_critical_region(atexit_funcs_access);
+    __kill_critical_regions();
+
+    if (__console_exit != NULL)
+    {
+        __console_exit();
+        __console_exit = NULL;
+    }
+
+    _ExitProcess();
 }

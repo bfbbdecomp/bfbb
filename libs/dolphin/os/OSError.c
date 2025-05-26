@@ -10,6 +10,7 @@ volatile OSContext* __OSFPUContext : (OS_BASE_CACHED | 0x00D8);
 OSErrorHandler __OSErrorTable[OS_ERROR_MAX];
 #define FPSCR_ENABLE (FPSCR_VE | FPSCR_OE | FPSCR_UE | FPSCR_ZE | FPSCR_XE)
 u32 __OSFpscrEnableBits = FPSCR_ENABLE;
+extern volatile OSTime __OSLastInterruptTime;
 
 __declspec(weak) void OSReport(const char* msg, ...)
 {

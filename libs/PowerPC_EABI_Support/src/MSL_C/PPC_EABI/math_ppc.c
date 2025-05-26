@@ -283,7 +283,6 @@ void atan2f(void)
 	// UNUSED FUNCTION
 }*/
 
-
 /*void coshf(void)
 {
 	// UNUSED FUNCTION

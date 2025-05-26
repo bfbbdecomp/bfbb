@@ -111,7 +111,7 @@ u32 InitializeUART(u32 baudRate)
     }
 }
 
-static int QueueLength(void)
+inline int QueueLength(void)
 {
     u32 cmd;
 
