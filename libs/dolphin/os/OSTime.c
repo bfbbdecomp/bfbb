@@ -65,17 +65,17 @@ OSTime __OSTimeToSystemTime(OSTime time)
     return result;
 }
 
-static BOOL IsLeapYear(s32 year)
+inline BOOL IsLeapYear(s32 year)
 {
     return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
 }
 
-static s32 GetYearDays(s32 year, s32 mon)
+inline s32 GetYearDays(s32 year, s32 mon)
 {
     return (IsLeapYear(year) ? LeapYearDays : YearDays)[mon];
 }
 
-static s32 GetLeapDays(s32 year)
+inline s32 GetLeapDays(s32 year)
 {
     if (year < 1)
     {

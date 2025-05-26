@@ -1,7 +1,7 @@
 #ifndef RPWORLD_H
 #define RPWORLD_H
 
-#include "rwcore.h"
+#include <rwsdk/rwcore.h>
 
 typedef struct RpLight;
 

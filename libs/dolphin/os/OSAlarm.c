@@ -11,7 +11,7 @@ static struct OSAlarmQueue
 static void DecrementerExceptionHandler(__OSException exception, OSContext* context);
 static BOOL OnReset(BOOL final);
 
-static void SetTimer(OSAlarm* alarm)
+inline void SetTimer(OSAlarm* alarm)
 {
     OSTime delta;
 

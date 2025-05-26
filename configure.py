@@ -238,6 +238,19 @@ cflags_dolphin = [
     #"-requireprotos"
 ]
 
+# Renderware library flags
+cflags_renderware = [
+    *cflags_base,
+    "-lang=c", 
+    "-fp fmadd",
+    "-fp_contract off",
+    "-char signed",
+    "-str reuse", 
+    "-common off",
+    "-O4,p",
+    #"-requireprotos"
+]
+
 # REL flags
 cflags_rel = [
     *cflags_base,
@@ -307,8 +320,9 @@ def trkLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
 def RenderWareLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
     return {
         "lib": lib_name,
+        "src_dir": "libs",
         "mw_version": "GC/1.3.2",
-        "cflags": cflags_base,
+        "cflags": cflags_renderware,
         "progress_category": "RW",
         "objects": objects,
     }
@@ -608,7 +622,7 @@ config.libs = [
     DolphinLib(
         "ar",
         [
-            Object(NonMatching, "dolphin/ar/ar.c"),
+            Object(Matching, "dolphin/ar/ar.c"),
             Object(Matching, "dolphin/ar/arq.c")
         ]        
     ),
@@ -694,9 +708,9 @@ config.libs = [
             Object(NonMatching, "dolphin/gx/GXInit.c"),
             Object(NonMatching, "dolphin/gx/GXFifo.c"),
             Object(NonMatching, "dolphin/gx/GXAttr.c"),
-            Object(NonMatching, "dolphin/gx/GXMisc.c"),
+            Object(Matching, "dolphin/gx/GXMisc.c"),
             Object(NonMatching, "dolphin/gx/GXGeometry.c"),
-            Object(NonMatching, "dolphin/gx/GXFrameBuf.c"),
+            Object(Matching, "dolphin/gx/GXFrameBuf.c"),
             Object(NonMatching, "dolphin/gx/GXLight.c"),
             Object(NonMatching, "dolphin/gx/GXTexture.c"),
             Object(NonMatching, "dolphin/gx/GXBump.c"),
@@ -737,11 +751,11 @@ config.libs = [
         "os",
         [
             Object(NonMatching, "dolphin/os/OS.c"),
-            Object(NonMatching, "dolphin/os/OSAlarm.c"),
+            Object(Matching, "dolphin/os/OSAlarm.c"),
             Object(Matching, "dolphin/os/OSAlloc.c"),
             Object(Matching, "dolphin/os/OSArena.c"),
             Object(Matching, "dolphin/os/OSAudioSystem.c"),
-            Object(NonMatching, "dolphin/os/OSCache.c"),
+            Object(Matching, "dolphin/os/OSCache.c"),
             Object(Matching, "dolphin/os/OSContext.c"),
             Object(NonMatching, "dolphin/os/OSError.c"),
             Object(NonMatching, "dolphin/os/OSFont.c"),
@@ -750,11 +764,11 @@ config.libs = [
             Object(Matching, "dolphin/os/OSMemory.c"),
             Object(Matching, "dolphin/os/OSMutex.c"),
             Object(Matching, "dolphin/os/OSReboot.c"),
-            Object(NonMatching, "dolphin/os/OSReset.c"),
+            Object(Matching, "dolphin/os/OSReset.c"),
             Object(Matching, "dolphin/os/OSResetSW.c"),
             Object(NonMatching, "dolphin/os/OSRtc.c"),
             Object(NonMatching, "dolphin/os/OSThread.c"),
-            Object(NonMatching, "dolphin/os/OSTime.c"),
+            Object(Matching, "dolphin/os/OSTime.c"),
             Object(Matching, "dolphin/os/OSSync.c"),
             Object(NonMatching, "dolphin/os/init/__start.c"),
             Object(NonMatching, "dolphin/os/init/__ppc_eabi_init.cpp")
@@ -777,7 +791,7 @@ config.libs = [
     DolphinLib(
         "vi",
         [
-            Object(NonMatching, "dolphin/vi/vi.c"),
+            Object(Matching, "dolphin/vi/vi.c", extra_cflags=["-DMATCHING"]),
         ],
     ),
     mslLib(

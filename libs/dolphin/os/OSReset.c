@@ -66,7 +66,7 @@ void OSRegisterResetFunction(OSResetFunctionInfo* func)
     tmp->next = func;
 }
 
-BOOL __OSCallResetFunctions(u32 arg0)
+inline BOOL __OSCallResetFunctions(u32 arg0)
 {
     OSResetFunctionInfo* info;
     s32 err = 0;
@@ -129,7 +129,7 @@ lbl_803831A8:
 
 OSThreadQueue __OSActiveThreadQueue : (OS_BASE_CACHED | 0x00DC);
 
-static void KillThreads(void)
+inline void KillThreads(void)
 {
     OSThread* thread;
     OSThread* next;

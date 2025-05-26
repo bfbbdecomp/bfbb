@@ -152,7 +152,7 @@ asm void LCDisable() {
 /* clang-format off */
 
 /* clang-format on */
-static void L2Disable(void)
+inline void L2Disable(void)
 {
     __sync();
     PPCMtl2cr(PPCMfl2cr() & ~0x80000000);
@@ -172,7 +172,7 @@ void L2GlobalInvalidate(void)
     }
 }
 
-static void L2Init(void)
+inline void L2Init(void)
 {
     u32 oldMSR;
     oldMSR = PPCMfmsr();
