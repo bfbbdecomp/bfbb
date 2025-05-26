@@ -68,7 +68,7 @@ Importing will take as long as a clean build does because we temporarily have to
 
 ### Step 8: (Optionally) Change Additional Files to Matching
 
-The importer script only imports functions and types referenced in files linked into the final DOL file the bulid generates. To generate matching DOLs, the build normally only links compilation units which are 100% matching.
+The importer script only imports types referenced in files linked into the final DOL file the bulid generates. To generate matching DOLs, the build normally only links compilation units which are 100% matching.
 
 If you're working on a cpp file with structures you want to import into Ghidra, you're not bound by this limitation! As long as enough contents are defined in the file you're working on for it to link you can import things from it.
 
