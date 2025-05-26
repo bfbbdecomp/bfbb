@@ -9,7 +9,7 @@ extern S32 sAtomicStartCount; // not exactly sure of the type
 extern RwV3d* sCurrVert; // not sure if correct type. not sure what this is.
 extern RwV3d* sAtomicStartVert; // I'm just going based on matt's assumption
 
-extern void* RwEngineInstance;
+extern RwGlobals* RwEngineInstance;
 
 // No dwarf info
 // ghidra said return type and type of param_2 was void
