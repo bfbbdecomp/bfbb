@@ -189,6 +189,7 @@ cflags_base = [
     "-Cpp_exceptions off",
     "-W err",
     # "-W all",
+    "-wchar_t on",
     "-O4,p",
     "-inline auto",
     '-pragma "cats off"',
@@ -205,7 +206,6 @@ cflags_base = [
     "-i libs",
     f"-i build/{config.version}/include",
     f"-DBUILD_VERSION={version_num}",
-    f"-DBUILD_VERSION{version_num}", # test for github
     f"-DVERSION_{config.version}",
 ]
 
