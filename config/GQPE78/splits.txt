@@ -3217,10 +3217,10 @@ debugger/embedded/MetroTRK/Processor/ppc/Generic/targimpl.c:
 	.data       start:0x802B7628 end:0x802B7658
 	.bss        start:0x80380CD0 end:0x80381250
 
-debugger/embedded/MetroTRK/Processor/ppc/Export/targsupp.s: comment:0
+debugger/embedded/MetroTRK/Processor/ppc/Export/targsupp.s:
 	.text       start:0x801F5760 end:0x801F5780
 
-debugger/embedded/MetroTRK/Processor/ppc/Generic/__exception.s: comment:0
+debugger/embedded/MetroTRK/Processor/ppc/Generic/__exception.s:
 	.init       start:0x800035E4 end:0x80005518
 
 debugger/embedded/MetroTRK/Os/dolphin/dolphin_trk.c:
