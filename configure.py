@@ -205,6 +205,7 @@ cflags_base = [
     "-i libs",
     f"-i build/{config.version}/include",
     f"-DBUILD_VERSION={version_num}",
+    f"-DBUILD_VERSION{version_num}", # test for github
     f"-DVERSION_{config.version}",
 ]
 
@@ -738,7 +739,7 @@ config.libs = [
     DolphinLib(
         "OdemuExi2",
         [
-            Object(NonMatching, "dolphin/OdemuExi2/DebuggerDriver.c")
+            Object(Matching, "dolphin/OdemuExi2/DebuggerDriver.c", extra_cflags=["-inline on, deferred"])
         ]
     ),
     DolphinLib(
@@ -766,8 +767,8 @@ config.libs = [
             Object(Matching, "dolphin/os/OSReboot.c"),
             Object(Matching, "dolphin/os/OSReset.c"),
             Object(Matching, "dolphin/os/OSResetSW.c"),
-            Object(NonMatching, "dolphin/os/OSRtc.c"),
-            Object(NonMatching, "dolphin/os/OSThread.c"),
+            Object(Matching, "dolphin/os/OSRtc.c"),
+            Object(Matching, "dolphin/os/OSThread.c"),
             Object(Matching, "dolphin/os/OSTime.c"),
             Object(Matching, "dolphin/os/OSSync.c"),
             Object(NonMatching, "dolphin/os/init/__start.c"),
@@ -777,7 +778,7 @@ config.libs = [
     DolphinLib(
         "pad",
         [
-            Object(NonMatching, "dolphin/pad/Padclamp.c"),
+            Object(Matching, "dolphin/pad/Padclamp.c"),
             Object(NonMatching, "dolphin/pad/Pad.c")
         ]
     ),
