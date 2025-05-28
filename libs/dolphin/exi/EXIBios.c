@@ -89,7 +89,7 @@ static void SetExiInterruptMask(s32 chan, EXIControl* exi)
     }
 }
 
-static void CompleteTransfer(s32 chan)
+inline void CompleteTransfer(s32 chan)
 {
     EXIControl* exi = &Ecb[chan];
     u8* buf;
@@ -366,7 +366,7 @@ s32 EXIProbeEx(s32 chan)
     }
 }
 
-static BOOL __EXIAttach(s32 chan, EXICallback extCallback)
+inline BOOL __EXIAttach(s32 chan, EXICallback extCallback)
 {
     EXIControl* exi = &Ecb[chan];
     BOOL enabled;

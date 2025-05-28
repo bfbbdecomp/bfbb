@@ -62,7 +62,7 @@ void GXFlush(void)
     PPCSync();
 }
 
-static void __GXAbortWait(u32 clocks)
+inline void __GXAbortWait(u32 clocks)
 {
     OSTime time0;
     OSTime time1;
@@ -74,7 +74,7 @@ static void __GXAbortWait(u32 clocks)
     } while (time1 - time0 <= (clocks / 4));
 }
 
-static void __GXAbortWaitPECopyDone(void)
+inline void __GXAbortWaitPECopyDone(void)
 {
     u32 peCnt0;
     u32 peCnt1;
@@ -126,7 +126,7 @@ u16 GXReadDrawSync(void)
     return token;
 }
 
-void GXSetDrawDone(void)
+inline void GXSetDrawDone(void)
 {
     u32 reg;
     BOOL enabled;
@@ -140,7 +140,7 @@ void GXSetDrawDone(void)
     OSRestoreInterrupts(enabled);
 }
 
-void GXWaitDrawDone(void)
+inline void GXWaitDrawDone(void)
 {
     BOOL enabled;
 

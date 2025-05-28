@@ -238,6 +238,19 @@ cflags_dolphin = [
     #"-requireprotos"
 ]
 
+# Renderware library flags
+cflags_renderware = [
+    *cflags_base,
+    "-lang=c", 
+    "-fp fmadd",
+    "-fp_contract off",
+    "-char signed",
+    "-str reuse", 
+    "-common off",
+    "-O4,p",
+    #"-requireprotos"
+]
+
 # REL flags
 cflags_rel = [
     *cflags_base,
@@ -307,8 +320,9 @@ def trkLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
 def RenderWareLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
     return {
         "lib": lib_name,
+        "src_dir": "libs",
         "mw_version": "GC/1.3.2",
-        "cflags": cflags_base,
+        "cflags": cflags_renderware,
         "progress_category": "RW",
         "objects": objects,
     }
@@ -608,7 +622,7 @@ config.libs = [
     DolphinLib(
         "ar",
         [
-            Object(NonMatching, "dolphin/ar/ar.c"),
+            Object(Matching, "dolphin/ar/ar.c"),
             Object(Matching, "dolphin/ar/arq.c")
         ]        
     ),
@@ -620,7 +634,7 @@ config.libs = [
             Object(Matching, "dolphin/ax/AXAux.c"),
             Object(NonMatching, "dolphin/ax/AXCL.c"),
             Object(NonMatching, "dolphin/ax/AXOut.c"),
-            Object(NonMatching, "dolphin/ax/AXSPB.c"),
+            Object(Matching, "dolphin/ax/AXSPB.c"),
             Object(NonMatching, "dolphin/ax/AXVPB.c"),
             Object(Matching, "dolphin/ax/AXComp.c"),
             Object(NonMatching, "dolphin/ax/DSPCode.c"),
@@ -672,10 +686,10 @@ config.libs = [
         "dvd",
         [
             Object(NonMatching, "dolphin/dvd/dvdlow.c"),
-            Object(NonMatching, "dolphin/dvd/dvdfs.c"),
+            Object(Matching, "dolphin/dvd/dvdfs.c"),
             Object(NonMatching, "dolphin/dvd/dvd.c"),
             Object(Matching, "dolphin/dvd/dvdqueue.c"),
-            Object(NonMatching, "dolphin/dvd/dvderror.c"),
+            Object(Matching, "dolphin/dvd/dvderror.c"),
             Object(Matching, "dolphin/dvd/dvdidutils.c"),
             Object(Matching, "dolphin/dvd/dvdFatal.c"),
             Object(Matching, "dolphin/dvd/emu_level2/fstload.c"),
@@ -685,7 +699,7 @@ config.libs = [
         "exi",
         [
             Object(NonMatching, "dolphin/exi/EXIBios.c"),
-            Object(NonMatching, "dolphin/exi/EXIUart.c")
+            Object(Matching, "dolphin/exi/EXIUart.c")
         ]
     ),
     DolphinLib(
@@ -694,9 +708,9 @@ config.libs = [
             Object(NonMatching, "dolphin/gx/GXInit.c"),
             Object(NonMatching, "dolphin/gx/GXFifo.c"),
             Object(NonMatching, "dolphin/gx/GXAttr.c"),
-            Object(NonMatching, "dolphin/gx/GXMisc.c"),
+            Object(Matching, "dolphin/gx/GXMisc.c"),
             Object(NonMatching, "dolphin/gx/GXGeometry.c"),
-            Object(NonMatching, "dolphin/gx/GXFrameBuf.c"),
+            Object(Matching, "dolphin/gx/GXFrameBuf.c"),
             Object(NonMatching, "dolphin/gx/GXLight.c"),
             Object(NonMatching, "dolphin/gx/GXTexture.c"),
             Object(NonMatching, "dolphin/gx/GXBump.c"),
@@ -724,7 +738,7 @@ config.libs = [
     DolphinLib(
         "OdemuExi2",
         [
-            Object(NonMatching, "dolphin/OdemuExi2/DebuggerDriver.c")
+            Object(Matching, "dolphin/OdemuExi2/DebuggerDriver.c", extra_cflags=["-inline on, deferred"])
         ]
     ),
     DolphinLib(
@@ -737,11 +751,11 @@ config.libs = [
         "os",
         [
             Object(NonMatching, "dolphin/os/OS.c"),
-            Object(NonMatching, "dolphin/os/OSAlarm.c"),
+            Object(Matching, "dolphin/os/OSAlarm.c"),
             Object(Matching, "dolphin/os/OSAlloc.c"),
             Object(Matching, "dolphin/os/OSArena.c"),
             Object(Matching, "dolphin/os/OSAudioSystem.c"),
-            Object(NonMatching, "dolphin/os/OSCache.c"),
+            Object(Matching, "dolphin/os/OSCache.c"),
             Object(Matching, "dolphin/os/OSContext.c"),
             Object(NonMatching, "dolphin/os/OSError.c"),
             Object(NonMatching, "dolphin/os/OSFont.c"),
@@ -750,11 +764,11 @@ config.libs = [
             Object(Matching, "dolphin/os/OSMemory.c"),
             Object(Matching, "dolphin/os/OSMutex.c"),
             Object(Matching, "dolphin/os/OSReboot.c"),
-            Object(NonMatching, "dolphin/os/OSReset.c"),
+            Object(Matching, "dolphin/os/OSReset.c"),
             Object(Matching, "dolphin/os/OSResetSW.c"),
-            Object(NonMatching, "dolphin/os/OSRtc.c"),
-            Object(NonMatching, "dolphin/os/OSThread.c"),
-            Object(NonMatching, "dolphin/os/OSTime.c"),
+            Object(Matching, "dolphin/os/OSRtc.c"),
+            Object(Matching, "dolphin/os/OSThread.c"),
+            Object(Matching, "dolphin/os/OSTime.c"),
             Object(Matching, "dolphin/os/OSSync.c"),
             Object(NonMatching, "dolphin/os/init/__start.c"),
             Object(NonMatching, "dolphin/os/init/__ppc_eabi_init.cpp")
@@ -763,7 +777,7 @@ config.libs = [
     DolphinLib(
         "pad",
         [
-            Object(NonMatching, "dolphin/pad/Padclamp.c"),
+            Object(Matching, "dolphin/pad/Padclamp.c"),
             Object(NonMatching, "dolphin/pad/Pad.c")
         ]
     ),
@@ -777,7 +791,7 @@ config.libs = [
     DolphinLib(
         "vi",
         [
-            Object(NonMatching, "dolphin/vi/vi.c"),
+            Object(Matching, "dolphin/vi/vi.c", extra_cflags=["-DMATCHING"]),
         ],
     ),
     mslLib(
@@ -789,9 +803,9 @@ config.libs = [
             Object(NonMatching, "Runtime/global_destructor_chain.c"),
             Object(NonMatching, "Runtime/New.cp"),
             Object(NonMatching, "Runtime/NMWException.cp"),
-            Object(NonMatching, "Runtime/CPlusLibPPC.cp"),
+            Object(Matching, "Runtime/CPlusLibPPC.cp"),
             Object(NonMatching, "Runtime/ptmf.c"),
-            #Object(NonMatching, "Runtime/runtime.c"),
+            Object(NonMatching, "Runtime/runtime.c"),
             Object(NonMatching, "Runtime/__init_cpp_exceptions.cpp"),
             Object(NonMatching, "Runtime/Gecko_ExceptionPPC.cp"),
             Object(NonMatching, "Runtime/GCN_mem_alloc.c"),
@@ -808,7 +822,7 @@ config.libs = [
             Object(NonMatching, "MSL_C/MSL_Common/arith.c"),
             Object(NonMatching, "MSL_C/MSL_Common/bsearch.c"),
             Object(NonMatching, "MSL_C/MSL_Common/buffer_io.c"),
-            Object(NonMatching, "MSL_C/PPC_EABI/critical_regions.gamecube.c"),
+            Object(Matching, "MSL_C/PPC_EABI/critical_regions.gamecube.c"),
             Object(NonMatching, "MSL_C/MSL_Common/ctype.c"),
             Object(NonMatching, "MSL_C/MSL_Common/direct_io.c"),
             Object(Matching, "MSL_C/MSL_Common/errno.c"),
@@ -828,8 +842,7 @@ config.libs = [
             Object(NonMatching, "MSL_C/MSL_Common/strtold.c"),
             Object(NonMatching, "MSL_C/MSL_Common/strtoul.c"),
             Object(NonMatching, "MSL_C/MSL_Common/float.c"),
-                # Causes cyclic dependency error
-                # Object(NonMatching, "MSL_C/MSL_Common/char_io.c"),  
+            Object(NonMatching, "MSL_C/MSL_Common/char_io.c"),  
             Object(NonMatching, "MSL_C/MSL_Common/wchar_io.c"),  
             Object(NonMatching, "MSL_C/MSL_Common_Embedded/uart_console_io_gcn.c")
         ]
@@ -860,12 +873,12 @@ config.libs = [
             Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/s_modf.c"),
             Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/s_sin.c"),
             Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/s_tan.c"),
-            Object(NonMatching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/w_acos.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/w_acos.c"),
             Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/w_asin.c"),
             Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/w_atan2.c"),
             Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/w_exp.c"),
             Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/w_fmod.c"),
-            Object(NonMatching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/w_log.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/w_log.c"),
             Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/w_pow.c"),
             Object(NonMatching, "MSL_C/PPC_EABI/math_ppc.c"),
         ]
@@ -883,20 +896,20 @@ config.libs = [
             Object(NonMatching, "debugger/embedded/MetroTRK/Portable/dispatch.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Portable/msghndlr.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Portable/support.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/mutex_TRK.c"),
+            Object(Matching, "debugger/embedded/MetroTRK/Portable/mutex_TRK.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Portable/notify.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Portable/main_TRK.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Portable/mem_TRK.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Portable/string_TRK.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Processor/ppc/Generic/flush_cache.c"),
+            Object(Matching, "debugger/embedded/MetroTRK/Processor/ppc/Generic/flush_cache.c"),
             #Object(NonMatching, "debugger/embedded/MetroTRK/Processor/ppc/Generic/__exception.s"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Processor/ppc/Generic/targimpl.c"),
             #Object(NonMatching, "debugger/embedded/MetroTRK/Processor/ppc/Export/targsupp.s"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Processor/ppc/Generic/mpc_7xx_603e.c"),
+            Object(Matching, "debugger/embedded/MetroTRK/Processor/ppc/Generic/mpc_7xx_603e.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Os/dolphin/dolphin_trk.c"),   
             Object(NonMatching, "debugger/embedded/MetroTRK/Os/dolphin/usr_put.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Os/dolphin/dolphin_trk_glue.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Os/dolphin/targcont.c"),
+            Object(Matching, "debugger/embedded/MetroTRK/Os/dolphin/targcont.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Os/dolphin/target_options.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Os/dolphin/UDP_Stubs.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Export/mslsupp.c"),

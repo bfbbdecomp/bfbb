@@ -2904,7 +2904,7 @@ MSL_C/MSL_Common/arith.c:
 MSL_C/MSL_Common/buffer_io.c:
 	.text       start:0x801E1E30 end:0x801E215C
 
-PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Src/char_io.c:
+MSL_C/MSL_Common/char_io.c:
 	.text       start:0x801E215C end:0x801E25FC
 
 MSL_C/PPC_EABI/critical_regions.gamecube.c:

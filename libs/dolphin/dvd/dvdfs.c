@@ -46,7 +46,7 @@ void __DVDFSInit()
 #define filePosition(i) (FstStart[i].parentOrPosition)
 #define fileLength(i) (FstStart[i].nextEntryOrLength)
 
-static BOOL isSame(const char* path, const char* string)
+inline BOOL isSame(const char* path, const char* string)
 {
     while (*string != '\0')
     {
@@ -239,7 +239,7 @@ BOOL DVDClose(DVDFileInfo* fileInfo)
     return TRUE;
 }
 
-static u32 myStrncpy(char* dest, char* src, u32 maxlen)
+inline u32 myStrncpy(char* dest, char* src, u32 maxlen)
 {
     u32 i = maxlen;
 
@@ -278,7 +278,7 @@ static u32 entryToPath(u32 entry, char* path, u32 maxlen)
     return loc;
 }
 
-static BOOL DVDConvertEntrynumToPath(s32 entrynum, char* path, u32 maxlen)
+inline BOOL DVDConvertEntrynumToPath(s32 entrynum, char* path, u32 maxlen)
 {
     u32 loc;
 
@@ -308,20 +308,6 @@ static BOOL DVDConvertEntrynumToPath(s32 entrynum, char* path, u32 maxlen)
 BOOL DVDGetCurrentDir(char* path, u32 maxlen)
 {
     return DVDConvertEntrynumToPath((s32)currentDirectory, path, maxlen);
-}
-
-BOOL DVDChangeDir(char* dirName)
-{
-    s32 entry;
-    entry = DVDConvertPathToEntrynum(dirName);
-    if ((entry < 0) || (entryIsDir(entry) == FALSE))
-    {
-        return FALSE;
-    }
-
-    currentDirectory = (u32)entry;
-
-    return TRUE;
 }
 
 BOOL DVDReadAsyncPrio(DVDFileInfo* fileInfo, void* addr, s32 length, s32 offset,
@@ -448,308 +434,4 @@ static void cbForSeekAsync(s32 result, DVDCommandBlock* block)
     {
         (fileInfo->callback)(result, fileInfo);
     }
-}
-/* This is based on the revolution SDK, these may not match in all cases */
-s32 DVDSeekPrio(DVDFileInfo* fileInfo, s32 offset, s32 prio)
-{
-    BOOL result;
-    DVDCommandBlock* block;
-    s32 state;
-    BOOL enabled;
-    s32 retVal;
-
-    block = &(fileInfo->cb);
-
-    result = DVDSeekAbsAsyncPrio(block, (s32)(fileInfo->startAddr + offset), cbForSeekSync, prio);
-
-    if (result == FALSE)
-    {
-        return -1;
-    }
-
-    enabled = OSDisableInterrupts();
-
-    while (1)
-    {
-        state = ((volatile DVDCommandBlock*)block)->state;
-
-        if (state == DVD_STATE_END)
-        {
-            retVal = 0;
-            break;
-        }
-        if (state == DVD_STATE_FATAL_ERROR)
-        {
-            retVal = DVD_RESULT_FATAL_ERROR;
-            break;
-        }
-        if (state == DVD_STATE_CANCELED)
-        {
-            retVal = DVD_RESULT_CANCELED;
-            break;
-        }
-
-        OSSleepThread(&__DVDThreadQueue);
-    }
-
-    OSRestoreInterrupts(enabled);
-    return retVal;
-}
-/* This is based on the revolution SDK, these may not match in all cases */
-static void cbForSeekSync(s32 result, DVDCommandBlock* block)
-{
-    OSWakeupThread(&__DVDThreadQueue);
-}
-
-/* This is based on the revolution SDK, these may not match in all cases */
-s32 DVDGetFileInfoStatus(DVDFileInfo* fileInfo)
-{
-    return DVDGetCommandBlockStatus(&fileInfo->cb);
-}
-
-/* This is based on the revolution SDK, these may not match in all cases */
-BOOL DVDFastOpenDir(s32 entrynum, DVDDir* dir)
-{
-    if ((entrynum < 0) || (entrynum >= MaxEntryNum) || !entryIsDir(entrynum))
-    {
-        return FALSE;
-    }
-
-    dir->entryNum = (u32)entrynum;
-    dir->location = (u32)entrynum + 1;
-    dir->next = nextDir(entrynum);
-
-    return TRUE;
-}
-
-/* This is based on the revolution SDK, these may not match in all cases */
-BOOL DVDOpenDir(char* dirName, DVDDir* dir)
-{
-    s32 entry;
-    char currentDir[128];
-    entry = DVDConvertPathToEntrynum(dirName);
-
-    if (entry < 0)
-    {
-        DVDGetCurrentDir(currentDir, 128);
-        OSReport("Warning: DVDOpenDir(): file '%s' was not found under %s.\n", dirName, currentDir);
-        return FALSE;
-    }
-
-    if (!entryIsDir(entry))
-    {
-        return FALSE;
-    }
-
-    dir->entryNum = (u32)entry;
-    dir->location = (u32)entry + 1;
-    dir->next = nextDir(entry);
-
-    return TRUE;
-}
-
-BOOL DVDReadDir(DVDDir* dir, DVDDirEntry* dirent)
-{
-    u32 loc = dir->location;
-    if ((loc <= dir->entryNum) || (dir->next <= loc))
-        return FALSE;
-
-    dirent->entryNum = loc;
-    dirent->isDir = entryIsDir(loc);
-    dirent->name = FstStringStart + stringOff(loc);
-
-    dir->location = entryIsDir(loc) ? nextDir(loc) : (loc + 1);
-
-    return TRUE;
-}
-
-/* This is based on the revolution SDK, these may not match in all cases */
-BOOL DVDCloseDir(DVDDir* dir)
-{
-    return TRUE;
-}
-
-/* This is based on the revolution SDK, these may not match in all cases */
-void DVDRewindDir(DVDDir* dir)
-{
-    dir->location = dir->entryNum + 1;
-}
-
-/* This is based on the revolution SDK, these may not match in all cases */
-void* DVDGetFSTLocation(void)
-{
-    return BootInfo->FSTLocation;
-}
-
-#define RoundUp32KB(x) (((u32)(x) + 32 * 1024 - 1) & ~(32 * 1024 - 1))
-#define Is32KBAligned(x) (((u32)(x) & (32 * 1024 - 1)) == 0)
-
-BOOL DVDPrepareStreamAsync(DVDFileInfo* fileInfo, u32 length, u32 offset, DVDCallback callback)
-{
-    u32 start;
-
-    start = fileInfo->startAddr + offset;
-
-    if (!Is32KBAligned(start))
-    {
-        OSPanic(
-            __FILE__, 1189,
-            "DVDPrepareStreamAsync(): Specified start address (filestart(0x%x) + offset(0x%x)) is "
-            "not 32KB aligned",
-            fileInfo->startAddr, offset);
-    }
-
-    if (length == 0)
-        length = fileInfo->length - offset;
-
-    if (!Is32KBAligned(length))
-    {
-        OSPanic(
-            __FILE__, 1199,
-            "DVDPrepareStreamAsync(): Specified length (0x%x) is not a multiple of 32768(32*1024)",
-            length);
-    }
-
-    if (!((offset < fileInfo->length) && (offset + length <= fileInfo->length)))
-    {
-        OSPanic(
-            __FILE__, 1207,
-            "DVDPrepareStreamAsync(): The area specified (offset(0x%x), length(0x%x)) is out of "
-            "the file",
-            offset, length);
-    }
-
-    fileInfo->callback = callback;
-    return DVDPrepareStreamAbsAsync(&(fileInfo->cb), length, fileInfo->startAddr + offset,
-                                    cbForPrepareStreamAsync);
-}
-
-static void cbForPrepareStreamAsync(s32 result, DVDCommandBlock* block)
-{
-    DVDFileInfo* fileInfo;
-
-    fileInfo = (DVDFileInfo*)((char*)block - offsetof(DVDFileInfo, cb));
-
-    if (fileInfo->callback)
-    {
-        (fileInfo->callback)(result, fileInfo);
-    }
-}
-
-/* This is based on the revolution SDK, these may not match in all cases */
-s32 DVDPrepareStream(DVDFileInfo* fileInfo, u32 length, u32 offset)
-{
-    BOOL result;
-    DVDCommandBlock* block;
-    s32 state;
-    BOOL enabled;
-    s32 retVal;
-    u32 start;
-    start = fileInfo->startAddr + offset;
-
-    if (!Is32KBAligned(start))
-    {
-        OSPanic(
-            __FILE__, 0,
-            "DVDPrepareStream(): Specified start address (filestart(0x%x) + offset(0x%x)) is not "
-            "32KB aligned",
-            fileInfo->startAddr, offset);
-    }
-
-    if (length == 0)
-        length = fileInfo->length - offset;
-
-    if (!Is32KBAligned(length))
-    {
-        OSPanic(__FILE__, 0,
-                "DVDPrepareStream(): Specified length (0x%x) is not a multiple of 32768(32*1024)",
-                length);
-    }
-
-    if (!((offset <= fileInfo->length) && (offset + length <= fileInfo->length)))
-    {
-        OSPanic(
-            __FILE__, 0,
-            "DVDPrepareStream(): The area specified (offset(0x%x), length(0x%x)) is out of the file",
-            offset, length);
-    }
-
-    block = &(fileInfo->cb);
-    result = DVDPrepareStreamAbsAsync(block, length, start, cbForPrepareStreamSync);
-
-    if (result == FALSE)
-    {
-        return -1;
-    }
-
-    enabled = OSDisableInterrupts();
-
-    while (1)
-    {
-        state = ((volatile DVDCommandBlock*)block)->state;
-
-        if (state == DVD_STATE_END)
-        {
-            retVal = 0;
-            break;
-        }
-        if (state == DVD_STATE_FATAL_ERROR)
-        {
-            retVal = DVD_RESULT_FATAL_ERROR;
-            break;
-        }
-        if (state == DVD_STATE_CANCELED)
-        {
-            retVal = DVD_RESULT_CANCELED;
-            break;
-        }
-
-        OSSleepThread(&__DVDThreadQueue);
-    }
-
-    OSRestoreInterrupts(enabled);
-    return retVal;
-}
-
-/* This is based on the revolution SDK, these may not match in all cases */
-static void cbForPrepareStreamSync(s32 result, DVDCommandBlock* block)
-{
-    OSWakeupThread(&__DVDThreadQueue);
-}
-
-/* This is based on the revolution SDK, these may not match in all cases */
-s32 DVDGetTransferredSize(DVDFileInfo* fileinfo)
-{
-    s32 bytes;
-    DVDCommandBlock* cb;
-
-    cb = &(fileinfo->cb);
-
-    switch (cb->state)
-    {
-    case DVD_STATE_END:
-    case DVD_STATE_COVER_CLOSED:
-    case DVD_STATE_NO_DISK:
-    case DVD_STATE_COVER_OPEN:
-    case DVD_STATE_WRONG_DISK:
-    case DVD_STATE_FATAL_ERROR:
-    case DVD_STATE_MOTOR_STOPPED:
-    case DVD_STATE_CANCELED:
-    case DVD_STATE_RETRY:
-        bytes = (s32)cb->transferredSize;
-        break;
-
-    case DVD_STATE_WAITING:
-        bytes = 0;
-        break;
-
-    case DVD_STATE_BUSY:
-        bytes = (s32)(cb->transferredSize + (cb->currTransferSize - DVDLowGetLength()));
-        break;
-
-    default:
-        break;
-    }
-
-    return bytes;
 }

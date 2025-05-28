@@ -96,7 +96,7 @@ static void ClampStick(s8* px, s8* py, s8 max, s8 xy, s8 min)
     *py = (s8)(signY * y);
 }
 
-static void ClampTrigger(u8* trigger, u8 min, u8 max)
+inline void ClampTrigger(u8* trigger, u8 min, u8 max)
 {
     if (*trigger <= min)
     {

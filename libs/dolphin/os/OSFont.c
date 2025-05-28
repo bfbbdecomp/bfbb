@@ -1,7 +1,6 @@
 #include <dolphin.h>
 #include <dolphin/os.h>
 
-#include <dolphin/os/__os.h>
 #include <dolphin/os/OSFont.h>
 
 typedef char* (*ParseStringCallback)(u16, char*, OSFontHeader**, int*);

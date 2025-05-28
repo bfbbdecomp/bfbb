@@ -23,7 +23,7 @@ typedef struct SramControlBlock
 
 static SramControlBlock Scb ALIGN(32);
 
-static BOOL ReadSram(void* buffer)
+inline BOOL ReadSram(void* buffer)
 {
     BOOL err;
     u32 cmd;
@@ -98,7 +98,7 @@ void __OSInitSram()
     OSSetGbsMode(OSGetGbsMode());
 }
 
-static void* LockSram(u32 offset)
+inline void* LockSram(u32 offset)
 {
     BOOL enabled;
     enabled = OSDisableInterrupts();
@@ -252,74 +252,6 @@ void OSSetSoundMode(u32 mode)
     __OSUnlockSram(TRUE);
 }
 
-u32 OSGetProgressiveMode()
-{
-    OSSram* sram;
-    u32 mode;
-
-    sram = __OSLockSramHACK();
-    mode = (sram->flags & 0x80) >> 7;
-    __OSUnlockSram(FALSE);
-    return mode;
-}
-
-void OSSetProgressiveMode(u32 mode)
-{
-    OSSram* sram;
-    mode <<= 7;
-    mode &= 0x80;
-
-    sram = __OSLockSramHACK();
-    if (mode == (sram->flags & 0x80))
-    {
-        __OSUnlockSram(FALSE);
-        return;
-    }
-
-    sram->flags &= ~0x80;
-    sram->flags |= mode;
-    __OSUnlockSram(TRUE);
-}
-
-u8 OSGetLanguage()
-{
-    OSSram* sram;
-    u8 language;
-
-    sram = __OSLockSramHACK();
-    language = sram->language;
-    __OSUnlockSram(FALSE);
-    return language;
-}
-
-u32 OSGetEuRgb60Mode()
-{
-    OSSram* sram;
-    u32 on;
-    sram = __OSLockSramHACK();
-    on = (sram->ntd >> 6) & 0x1;
-    __OSUnlockSram(FALSE);
-    return on;
-}
-
-void OSSetEuRgb60Mode(u32 mode)
-{
-    OSSram* sram;
-    mode <<= 6;
-    mode &= 0x40;
-
-    sram = __OSLockSramHACK();
-    if (mode == (sram->ntd & 0x40))
-    {
-        __OSUnlockSram(FALSE);
-        return;
-    }
-
-    sram->ntd &= ~0x40;
-    sram->ntd |= mode;
-    __OSUnlockSram(TRUE);
-}
-
 u16 OSGetWirelessID(s32 channel)
 {
     OSSramEx* sram;
@@ -370,7 +302,7 @@ void OSSetGbsMode(u16 mode)
     sram = __OSLockSramEx();
     if (mode == sram->gbs)
     {
-        __OSUnlockSramEx(FALSE);
+        UnlockSram(FALSE, FALSE);
         return;
     }
 

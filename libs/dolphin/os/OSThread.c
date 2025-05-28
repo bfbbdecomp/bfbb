@@ -149,7 +149,7 @@ OSThread* OSGetCurrentThread()
     return __OSCurrentThread;
 }
 
-static void __OSSwitchThread(OSThread* nextThread)
+inline void __OSSwitchThread(OSThread* nextThread)
 {
     OSSetCurrentThread(nextThread);
     OSSetCurrentContext(&nextThread->context);
@@ -178,7 +178,7 @@ s32 OSEnableScheduler()
     return count;
 }
 
-static void SetRun(OSThread* thread)
+inline void SetRun(OSThread* thread)
 {
     thread->queue = &RunQueue[thread->priority];
     AddTail(thread->queue, thread, link);
@@ -241,7 +241,7 @@ static OSThread* SetEffectivePriority(OSThread* thread, OSPriority priority)
     return NULL;
 }
 
-static void UpdatePriority(OSThread* thread)
+inline void UpdatePriority(OSThread* thread)
 {
     OSPriority priority;
 

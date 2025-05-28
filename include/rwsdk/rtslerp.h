@@ -1,8 +1,9 @@
 #ifndef RTSLERP_H
 #define RTSLERP_H
 
-#include "rwcore.h"
-#include "rtquat.h"
+#include <rwsdk/rwcore.h>
+#include <rwsdk/rtquat.h>
+#include "rtslerp.h"
 
 struct RtQuatSlerpCache
 {

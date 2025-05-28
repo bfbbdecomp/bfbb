@@ -145,7 +145,7 @@ static void __ARHandler(__OSInterrupt interrupt, OSContext* context)
 
 #define RoundUP32(x) (((u32)(x) + 32 - 1) & ~(32 - 1))
 
-static void __ARWriteDMA(u32 mmem_addr, u32 aram_addr, u32 length)
+inline void __ARWriteDMA(u32 mmem_addr, u32 aram_addr, u32 length)
 {
     u16 tmp;
     __DSPRegs[16] = (u16)((__DSPRegs[16] & ~0x03ff) | (u16)(mmem_addr >> 16));
@@ -168,7 +168,7 @@ static void __ARWriteDMA(u32 mmem_addr, u32 aram_addr, u32 length)
     __DSPRegs[5] = tmp;
 }
 
-static void __ARReadDMA(u32 mmem_addr, u32 aram_addr, u32 length)
+inline void __ARReadDMA(u32 mmem_addr, u32 aram_addr, u32 length)
 {
     u16 tmp;
     __DSPRegs[16] = (u16)((__DSPRegs[16] & ~0x03ff) | (u16)(mmem_addr >> 16));

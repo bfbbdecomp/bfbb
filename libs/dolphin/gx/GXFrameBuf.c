@@ -176,7 +176,7 @@ void GXSetCopyClamp(GXFBClamp clamp)
     SET_REG_FIELD(1439, __GXData->cpTex, 1, 1, clmpB);
 }
 
-static u32 __GXGetNumXfbLines(u32 efbHt, u32 iScale)
+inline u32 __GXGetNumXfbLines(u32 efbHt, u32 iScale)
 {
     u32 count;
     u32 realHt;

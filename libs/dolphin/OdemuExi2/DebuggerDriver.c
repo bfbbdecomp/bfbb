@@ -19,7 +19,7 @@ static u8 SendCount = 0x80;
 #define IS_FALSE(x) !IS_TRUE(x)
 #define ROUND_UP(x, align) (((x) + (align)-1) & (-(align)))
 
-void DBGEXIInit()
+inline void DBGEXIInit()
 {
     __OSMaskInterrupts(0x18000);
     __EXIRegs[10] = 0;
@@ -31,7 +31,7 @@ void DBGEXIInit()
  * Size:	000028
  */
 
-static u32 DBGEXISelect(u32 v)
+inline u32 DBGEXISelect(u32 v)
 {
     u32 regs = __EXIRegs[10];
     regs &= 0x405;
@@ -45,7 +45,7 @@ static u32 DBGEXISelect(u32 v)
  * Address:	........
  * Size:	00001C
  */
-BOOL DBGEXIDeselect(void)
+inline BOOL DBGEXIDeselect(void)
 {
     __EXIRegs[10] &= 0x405;
     return TRUE;
@@ -56,7 +56,7 @@ BOOL DBGEXIDeselect(void)
  * Address:	........
  * Size:	00001C
  */
-static BOOL DBGEXISync()
+inline BOOL DBGEXISync()
 {
     while (__EXIRegs[13] & 1)
         ;
@@ -108,7 +108,7 @@ static BOOL DBGEXIImm(void* buffer, s32 bytecounter, u32 write)
  * Address:	........
  * Size:	00008C
  */
-static BOOL DBGWriteMailbox(u32 p1)
+inline BOOL DBGWriteMailbox(u32 p1)
 {
     BOOL total = FALSE;
     u32 v;
@@ -326,7 +326,7 @@ void DBInitInterrupts(void)
  * Address:	........
  * Size:	000150
  */
-static void CheckMailBox(void)
+inline void CheckMailBox(void)
 {
     u32 v;
     DBGReadStatus(&v);
@@ -358,8 +358,8 @@ u32 DBQueryData(void)
     {
         interrupts = OSDisableInterrupts();
         CheckMailBox();
+        OSRestoreInterrupts(interrupts);
     }
-    OSRestoreInterrupts(interrupts);
     return RecvDataLeng;
 }
 

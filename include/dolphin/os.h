@@ -5,8 +5,7 @@
 #include <dolphin/types.h>
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 // Upper words of the masks, since UIMM is only 16 bits
@@ -23,26 +22,26 @@ extern "C"
 #define AT_ADDRESS
 #endif
 volatile int __OSTVMode AT_ADDRESS(OS_BASE_CACHED | 0xCC);
-u32 __OSBusClock AT_ADDRESS(OS_BASE_CACHED | 0x00F8);  // sync with OSLoMem.h
+u32 __OSBusClock AT_ADDRESS(OS_BASE_CACHED | 0x00F8); // sync with OSLoMem.h
 u32 __OSCoreClock AT_ADDRESS(OS_BASE_CACHED | 0x00FC); // sync with OSLoMem.h
 #define OS_BUS_CLOCK (u32) __OSBusClock
 #define OS_CORE_CLOCK __OSCoreClock
 #define OS_TIMER_CLOCK (OS_BUS_CLOCK / 4)
 
 #ifndef _DEBUG
-#define OSPhysicalToCached(paddr) ((void *)((u32)(paddr) + OS_BASE_CACHED))
-#define OSPhysicalToUncached(paddr) ((void *)((u32)(paddr) + OS_BASE_UNCACHED))
-#define OSCachedToPhysical(caddr) ((u32)((u8 *)(caddr)-OS_BASE_CACHED))
-#define OSUncachedToPhysical(ucaddr) ((u32)((u8 *)(ucaddr)-OS_BASE_UNCACHED))
-#define OSCachedToUncached(caddr) ((void *)((u8 *)(caddr) + (OS_BASE_UNCACHED - OS_BASE_CACHED)))
-#define OSUncachedToCached(ucaddr) ((void *)((u8 *)(ucaddr) - (OS_BASE_UNCACHED - OS_BASE_CACHED)))
+#define OSPhysicalToCached(paddr) ((void*)((u32)(paddr) + OS_BASE_CACHED))
+#define OSPhysicalToUncached(paddr) ((void*)((u32)(paddr) + OS_BASE_UNCACHED))
+#define OSCachedToPhysical(caddr) ((u32)((u8*)(caddr)-OS_BASE_CACHED))
+#define OSUncachedToPhysical(ucaddr) ((u32)((u8*)(ucaddr)-OS_BASE_UNCACHED))
+#define OSCachedToUncached(caddr) ((void*)((u8*)(caddr) + (OS_BASE_UNCACHED - OS_BASE_CACHED)))
+#define OSUncachedToCached(ucaddr) ((void*)((u8*)(ucaddr) - (OS_BASE_UNCACHED - OS_BASE_CACHED)))
 #else
-u32 OSPhysicalToCached(void *paddr);
-u32 OSPhysicalToUncached(void *paddr);
-u32 OSCachedToPhysical(void *caddr);
-u32 OSUncachedToPhysical(void *ucaddr);
-u32 OSCachedToUncached(void *caddr);
-u32 OSUncachedToCached(void *ucaddr);
+u32 OSPhysicalToCached(void* paddr);
+u32 OSPhysicalToUncached(void* paddr);
+u32 OSCachedToPhysical(void* caddr);
+u32 OSUncachedToPhysical(void* ucaddr);
+u32 OSCachedToUncached(void* caddr);
+u32 OSUncachedToCached(void* ucaddr);
 #endif
 
 #define OSTicksToCycles(ticks) (((ticks) * ((OS_CORE_CLOCK * 2) / OS_TIMER_CLOCK)) / 2)
@@ -60,13 +59,13 @@ u32 OSUncachedToCached(void *ucaddr);
 #define OSRoundUp32B(v) ((((u32)v + 31) & ~31))
 #define OSRoundDown32B(v) (((u32)(v) & ~31))
 
-void *OSGetArenaHi(void);
-void *OSGetArenaLo(void);
-void OSSetArenaHi(void *newHi);
-void OSSetArenaLo(void *newLo);
+void* OSGetArenaHi(void);
+void* OSGetArenaLo(void);
+void OSSetArenaHi(void* newHi);
+void OSSetArenaLo(void* newLo);
 
-void *OSAllocFromArenaLo(u32 size, u32 align);
-void *OSAllocFromArenaHi(u32 size, u32 align);
+void* OSAllocFromArenaLo(u32 size, u32 align);
+void* OSAllocFromArenaHi(u32 size, u32 align);
 
 void OSInit();
 
@@ -122,7 +121,7 @@ void OSSetLanguage(u8 language);
 u32 OSGetEuRgb60Mode(void);
 void OSSetEuRgb60Mode(u32 on);
 
-void OSRegisterVersion(const char *id);
+void OSRegisterVersion(const char* id);
 
 BOOL OSDisableInterrupts(void);
 BOOL OSEnableInterrupts(void);
@@ -145,7 +144,7 @@ BOOL OSRestoreInterrupts(BOOL level);
 #endif
 
 #ifndef ASSERTMSG
-#if defined(__STDC_VERSION__) && (199901L <= __STDC_VERSION__) || defined(__MWERKS__) || \
+#if defined(__STDC_VERSION__) && (199901L <= __STDC_VERSION__) || defined(__MWERKS__) ||           \
     defined(__SN__)
 #define ASSERTMSG(exp, ...) (void)((exp) || (OSPanic(__FILE__, __LINE__, __VA_ARGS__), 0))
 #else
@@ -154,23 +153,23 @@ BOOL OSRestoreInterrupts(BOOL level);
 #endif
 
 #ifndef ASSERTMSG1
-#define ASSERTMSG1(exp, msg, param1) \
-  (void)((exp) || (OSPanic(__FILE__, __LINE__, (msg), (param1)), 0))
+#define ASSERTMSG1(exp, msg, param1)                                                               \
+    (void)((exp) || (OSPanic(__FILE__, __LINE__, (msg), (param1)), 0))
 #endif
 
 #ifndef ASSERTMSG2
-#define ASSERTMSG2(exp, msg, param1, param2) \
-  (void)((exp) || (OSPanic(__FILE__, __LINE__, (msg), (param1), (param2)), 0))
+#define ASSERTMSG2(exp, msg, param1, param2)                                                       \
+    (void)((exp) || (OSPanic(__FILE__, __LINE__, (msg), (param1), (param2)), 0))
 #endif
 
 #ifndef ASSERTMSG3
-#define ASSERTMSG3(exp, msg, param1, param2, param3) \
-  (void)((exp) || (OSPanic(__FILE__, __LINE__, (msg), (param1), (param2), (param3)), 0))
+#define ASSERTMSG3(exp, msg, param1, param2, param3)                                               \
+    (void)((exp) || (OSPanic(__FILE__, __LINE__, (msg), (param1), (param2), (param3)), 0))
 #endif
 
 #ifndef ASSERTMSG4
-#define ASSERTMSG4(exp, msg, param1, param2, param3, param4) \
-  (void)((exp) || (OSPanic(__FILE__, __LINE__, (msg), (param1), (param2), (param3), (param4)), 0))
+#define ASSERTMSG4(exp, msg, param1, param2, param3, param4)                                       \
+    (void)((exp) || (OSPanic(__FILE__, __LINE__, (msg), (param1), (param2), (param3), (param4)), 0))
 #endif
 
 #else // _DEBUG
@@ -180,7 +179,7 @@ BOOL OSRestoreInterrupts(BOOL level);
 #endif
 
 #ifndef ASSERTMSG
-#if defined(__STDC_VERSION__) && (199901L <= __STDC_VERSION__) || defined(__MWERKS__) || \
+#if defined(__STDC_VERSION__) && (199901L <= __STDC_VERSION__) || defined(__MWERKS__) ||           \
     defined(__SN__)
 #define ASSERTMSG(exp, ...) ((void)0)
 #else
@@ -203,9 +202,9 @@ BOOL OSRestoreInterrupts(BOOL level);
 
 #endif // _DEBUG
 
-void OSReport(const char *msg, ...);
-void OSPanic(const char *file, int line, const char *msg, ...);
-void OSFatal(GXColor fg, GXColor bg, const char *msg);
+void OSReport(const char* msg, ...);
+void OSPanic(const char* file, int line, const char* msg, ...);
+void OSFatal(GXColor fg, GXColor bg, const char* msg);
 
 #define OSError(...) OSPanic(__FILE__, __LINE__, __VA_ARGS__)
 #ifndef MATCHING

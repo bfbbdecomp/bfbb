@@ -50,7 +50,7 @@ void __DVDInitWA()
 
 static void Read(void* addr, u32 length, u32 offset, DVDLowCallback callback);
 
-static BOOL ProcessNextCommand()
+inline BOOL ProcessNextCommand()
 {
     s32 n = NextCommandNumber;
     ASSERT(n < 3);
@@ -218,7 +218,7 @@ static void AlarmHandlerForTimeout(OSAlarm* alarm, OSContext* context)
     OSSetCurrentContext(context);
 }
 
-static void SetTimeoutAlarm(OSTime timeout)
+inline void SetTimeoutAlarm(OSTime timeout)
 {
     OSCreateAlarm(&AlarmForTimeout);
     OSSetAlarm(&AlarmForTimeout, timeout, AlarmHandlerForTimeout);
@@ -249,7 +249,7 @@ static void Read(void* addr, u32 length, u32 offset, DVDLowCallback callback)
     }
 }
 
-BOOL HitCache(DVDBuffer* cur, DVDBuffer* prev)
+inline BOOL HitCache(DVDBuffer* cur, DVDBuffer* prev)
 {
     u32 uVar1 = (prev->offset + prev->length - 1) >> 15;
     u32 uVar2 = (cur->offset >> 15);
@@ -262,7 +262,7 @@ BOOL HitCache(DVDBuffer* cur, DVDBuffer* prev)
     return FALSE;
 }
 
-static void DoJustRead(void* addr, u32 length, u32 offset, DVDLowCallback callback)
+inline void DoJustRead(void* addr, u32 length, u32 offset, DVDLowCallback callback)
 {
     CommandList[0].cmd = -1;
     NextCommandNumber = 0;
@@ -293,7 +293,7 @@ static void SeekTwiceBeforeRead(void* addr, u32 length, u32 offset, DVDLowCallba
     DVDLowSeek(newOffset, callback);
 }
 
-static void WaitBeforeRead(void* addr, u32 length, u32 offset, DVDLowCallback callback,
+inline void WaitBeforeRead(void* addr, u32 length, u32 offset, DVDLowCallback callback,
                            OSTime timeout)
 {
     CommandList[0].cmd = 1;
@@ -504,16 +504,16 @@ void __DVDLowSetWAType(u32 type, u32 location)
     OSRestoreInterrupts(enabled);
 }
 
-BOOL __DVDLowTestAlarm(OSAlarm* alarm)
-{
-    if (alarm == &AlarmForBreak)
-    {
-        return TRUE;
-    }
-    if (alarm == &AlarmForTimeout)
-    {
-        return TRUE;
-    }
+// BOOL __DVDLowTestAlarm(OSAlarm* alarm)
+// {
+//     if (alarm == &AlarmForBreak)
+//     {
+//         return TRUE;
+//     }
+//     if (alarm == &AlarmForTimeout)
+//     {
+//         return TRUE;
+//     }
 
-    return FALSE;
-}
+//     return FALSE;
+// }
