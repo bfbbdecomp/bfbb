@@ -1,12 +1,14 @@
 #include "iMix.h"
 
+#include <dolphin/os.h>
+
 static struct MIXChannel __MIXChannel[64];
 
-static unsigned int __MIXSoundMode;
-static int __MIXDvdStreamAttenUser;
-static int __MIXDvdStreamAttenCurrent;
+static U32 __MIXSoundMode;
+static S32 __MIXDvdStreamAttenUser;
+static S32 __MIXDvdStreamAttenCurrent;
 
-unsigned short __MIXVolumeTable[] = {
+U16 __MIXVolumeTable[] = {
     0x0,    0x1,    0x1,    0x1,    0x1,    0x1,    0x1,    0x1,    0x1,    0x1,    0x1,    0x1,
     0x1,    0x1,    0x1,    0x1,    0x1,    0x1,    0x1,    0x1,    0x1,    0x1,    0x1,    0x1,
     0x1,    0x1,    0x1,    0x1,    0x1,    0x1,    0x1,    0x1,    0x1,    0x1,    0x1,    0x1,
@@ -90,7 +92,7 @@ unsigned short __MIXVolumeTable[] = {
     0xF3E6, 0xF6B9, 0xF994, 0xFC78, 0xFF64
 };
 
-int __MIXPanTable[] = {
+S32 __MIXPanTable[] = {
     0x0,        0x0,        0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFE, 0xFFFFFFFE, 0xFFFFFFFE,
     0xFFFFFFFD, 0xFFFFFFFD, 0xFFFFFFFC, 0xFFFFFFFC, 0xFFFFFFFC, 0xFFFFFFFB, 0xFFFFFFFB, 0xFFFFFFFB,
     0xFFFFFFFA, 0xFFFFFFFA, 0xFFFFFFF9, 0xFFFFFFF9, 0xFFFFFFF9, 0xFFFFFFF8, 0xFFFFFFF8, 0xFFFFFFF7,
@@ -109,7 +111,7 @@ int __MIXPanTable[] = {
     0xFFFFFF82, 0xFFFFFF7B, 0xFFFFFF74, 0xFFFFFF6A, 0xFFFFFF5D, 0xFFFFFF4C, 0xFFFFFF2E, 0xFFFFFC78
 };
 
-short __MIX_DPL2_front[] = {
+S16 __MIX_DPL2_front[] = {
     0x0,    0x0,    0x0,    0x0,    0x0,    0x0,    0x0,    0x0,    0x0,    0x0,    0x0,    0x0,
     0x0,    0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFE, 0xFFFE, 0xFFFE, 0xFFFE, 0xFFFD, 0xFFFD,
     0xFFFD, 0xFFFC, 0xFFFC, 0xFFFC, 0xFFFB, 0xFFFB, 0xFFFA, 0xFFFA, 0xFFFA, 0xFFF9, 0xFFF9, 0xFFF8,
@@ -123,7 +125,7 @@ short __MIX_DPL2_front[] = {
     0xFF2C, 0xFF1F, 0xFF0F, 0xFEFB, 0xFEE2, 0xFEBF, 0xFE83, 0xFC40
 };
 
-short __MIX_DPL2_rear[] = {
+S16 __MIX_DPL2_rear[] = {
     0xFFC3, 0xFFC3, 0xFFC4, 0xFFC5, 0xFFC5, 0xFFC6, 0xFFC6, 0xFFC7, 0xFFC8, 0xFFC8, 0xFFC9, 0xFFC9,
     0xFFCA, 0xFFCB, 0xFFCB, 0xFFCC, 0xFFCC, 0xFFCD, 0xFFCE, 0xFFCE, 0xFFCF, 0xFFCF, 0xFFD0, 0xFFD0,
     0xFFD1, 0xFFD1, 0xFFD2, 0xFFD2, 0xFFD3, 0xFFD3, 0xFFD4, 0xFFD4, 0xFFD5, 0xFFD5, 0xFFD6, 0xFFD6,
@@ -137,7 +139,7 @@ short __MIX_DPL2_rear[] = {
     0xFFF3, 0xFFF3, 0xFFF3, 0xFFF4, 0xFFF4, 0xFFF4, 0xFFF4, 0xFFF5
 };
 
-static int __MIXGetVolume(int param_1)
+static S32 __MIXGetVolume(S32 param_1)
 {
     if (param_1 <= -0x388)
     {
@@ -150,13 +152,13 @@ static int __MIXGetVolume(int param_1)
     return __MIXVolumeTable[param_1 + 0x388];
 }
 
-static int __MIXSetPan(struct MIXChannel* param_1)
+static void __MIXSetPan(struct MIXChannel* param_1)
 {
-    int iVar1 = *(int*)((int)param_1 + 0x14);
-    int iVar3 = *(int*)((int)param_1 + 0x18);
+    S32 iVar1 = *(S32*)((S32)param_1 + 0x14);
+    S32 iVar3 = *(S32*)((S32)param_1 + 0x18);
 
-    int iVar2 = 0x7f - iVar1;
-    int iVar4 = 0x7f - iVar3;
+    S32 iVar2 = 0x7f - iVar1;
+    S32 iVar4 = 0x7f - iVar3;
 
     if (__MIXSoundMode == 3)
     {
@@ -174,7 +176,6 @@ static int __MIXSetPan(struct MIXChannel* param_1)
         param_1->data[10] = __MIXPanTable[iVar4];
         param_1->data[11] = __MIXPanTable[iVar3];
     }
-    return 0;
 }
 
 static void __MIXResetChannel(struct MIXChannel* param_1)
@@ -187,23 +188,23 @@ static void __MIXResetChannel(struct MIXChannel* param_1)
     param_1->data[5] = 0x40;
     param_1->data[6] = 0x7f;
 
-    *(unsigned short*)(&param_1->data[23]) = 0;
-    *(unsigned short*)(&param_1->data[22]) = 0;
-    *(unsigned short*)(&param_1->data[21]) = 0;
-    *(unsigned short*)(&param_1->data[20]) = 0;
-    *(unsigned short*)(&param_1->data[19]) = 0;
-    *(unsigned short*)(&param_1->data[18]) = 0;
-    *(unsigned short*)(&param_1->data[17]) = 0;
-    *(unsigned short*)(&param_1->data[16]) = 0;
-    *(unsigned short*)(&param_1->data[15]) = 0;
-    *(unsigned short*)(&param_1->data[14]) = 0;
+    *(U16*)(&param_1->data[23]) = 0;
+    *(U16*)(&param_1->data[22]) = 0;
+    *(U16*)(&param_1->data[21]) = 0;
+    *(U16*)(&param_1->data[20]) = 0;
+    *(U16*)(&param_1->data[19]) = 0;
+    *(U16*)(&param_1->data[18]) = 0;
+    *(U16*)(&param_1->data[17]) = 0;
+    *(U16*)(&param_1->data[16]) = 0;
+    *(U16*)(&param_1->data[15]) = 0;
+    *(U16*)(&param_1->data[14]) = 0;
 
     __MIXSetPan(param_1);
 }
 
-static int __MIXClampPan(int param)
+static S32 __MIXClampPan(S32 param)
 {
-    int retval;
+    S32 retval;
     if (param < 0)
     {
         return 0;
@@ -218,7 +219,7 @@ static int __MIXClampPan(int param)
 
 void MIXInit()
 {
-    int iVar1 = 0;
+    S32 iVar1 = 0;
     do
     {
         __MIXResetChannel((struct MIXChannel*)&__MIXChannel[iVar1]);
@@ -226,17 +227,17 @@ void MIXInit()
     } while (iVar1 < 0x40);
     __MIXDvdStreamAttenCurrent = 0;
     __MIXDvdStreamAttenUser = 0;
-    //__MIXSoundMode = OSGetSoundMode();
+    __MIXSoundMode = OSGetSoundMode();
 }
 
-void MIXInitChannel(int param_1, unsigned int param_2, int param_3, int param_4, int param_5,
-                    int param_6, int param_7, int param_8)
+void MIXInitChannel(S32 param_1, U32 param_2, S32 param_3, S32 param_4, S32 param_5,
+                    S32 param_6, S32 param_7, S32 param_8)
 {
-    struct MIXChannel* chan = &__MIXChannel[*(int*)((int)param_1 + 0x18)];
+    struct MIXChannel* chan = &__MIXChannel[*(S32*)((S32)param_1 + 0x18)];
 
-    short sVar1;
-    unsigned short uVar2;
-    unsigned short uVar4;
+    S16 sVar1;
+    U16 uVar2;
+    U16 uVar4;
 
     chan->data[0] = param_1;
     chan->data[1] = param_2 & 7;
@@ -251,52 +252,52 @@ void MIXInitChannel(int param_1, unsigned int param_2, int param_3, int param_4,
 
     if ((chan->data[1] & 4))
     {
-        *(unsigned short*)(&chan->data[0xe]) = 0;
+        *(U16*)(&chan->data[0xe]) = 0;
     }
     else
     {
-        *(unsigned short*)(&chan->data[0xe]) = __MIXGetVolume(param_3);
+        *(U16*)(&chan->data[0xe]) = __MIXGetVolume(param_3);
     }
 
     uVar4 = 0;
 
-    switch ((int)__MIXSoundMode)
+    switch ((S32)__MIXSoundMode)
     {
     case 0:
-        *(unsigned short*)(&chan->data[0xf]) = __MIXGetVolume(chan->data[7] + chan->data[10]);
-        *(unsigned short*)(&chan->data[0x10]) = __MIXGetVolume(chan->data[7] + chan->data[10]);
-        *(unsigned short*)(&chan->data[0x11]) = __MIXGetVolume(chan->data[7] + chan->data[11]);
+        *(U16*)(&chan->data[0xf]) = __MIXGetVolume(chan->data[7] + chan->data[10]);
+        *(U16*)(&chan->data[0x10]) = __MIXGetVolume(chan->data[7] + chan->data[10]);
+        *(U16*)(&chan->data[0x11]) = __MIXGetVolume(chan->data[7] + chan->data[11]);
         if ((chan->data[1] & 1U) != 0)
         {
-            *(unsigned short*)(&chan->data[0x12]) = __MIXGetVolume(chan->data[3] + chan->data[10]);
-            *(unsigned short*)(&chan->data[0x13]) = __MIXGetVolume(chan->data[3] + chan->data[10]);
-            *(unsigned short*)(&chan->data[0x14]) =
+            *(U16*)(&chan->data[0x12]) = __MIXGetVolume(chan->data[3] + chan->data[10]);
+            *(U16*)(&chan->data[0x13]) = __MIXGetVolume(chan->data[3] + chan->data[10]);
+            *(U16*)(&chan->data[0x14]) =
                 __MIXGetVolume(chan->data[3] + chan->data[11] - 0x3c);
         }
         else
         {
-            *(unsigned short*)(&chan->data[0x12]) =
+            *(U16*)(&chan->data[0x12]) =
                 __MIXGetVolume(chan->data[7] + chan->data[3] + chan->data[10]);
-            *(unsigned short*)(&chan->data[0x13]) =
+            *(U16*)(&chan->data[0x13]) =
                 __MIXGetVolume(chan->data[7] + chan->data[3] + chan->data[10]);
-            *(unsigned short*)(&chan->data[0x14]) =
+            *(U16*)(&chan->data[0x14]) =
                 __MIXGetVolume(chan->data[7] + chan->data[3] + chan->data[11] - 0x3c);
         }
 
         if (chan->data[1] & 2)
         {
-            *(unsigned short*)(&chan->data[0x15]) = __MIXGetVolume(chan->data[4] + chan->data[10]);
-            *(unsigned short*)(&chan->data[0x16]) = __MIXGetVolume(chan->data[4] + chan->data[10]);
-            *(unsigned short*)(&chan->data[0x17]) =
+            *(U16*)(&chan->data[0x15]) = __MIXGetVolume(chan->data[4] + chan->data[10]);
+            *(U16*)(&chan->data[0x16]) = __MIXGetVolume(chan->data[4] + chan->data[10]);
+            *(U16*)(&chan->data[0x17]) =
                 __MIXGetVolume(chan->data[4] + chan->data[11] - 0x3c);
         }
         else
         {
-            *(unsigned short*)(&chan->data[0x15]) =
+            *(U16*)(&chan->data[0x15]) =
                 __MIXGetVolume(chan->data[7] + chan->data[4] + chan->data[10]);
-            *(unsigned short*)(&chan->data[0x16]) =
+            *(U16*)(&chan->data[0x16]) =
                 __MIXGetVolume(chan->data[7] + chan->data[4] + chan->data[10]);
-            *(unsigned short*)(&chan->data[0x17]) =
+            *(U16*)(&chan->data[0x17]) =
                 __MIXGetVolume(chan->data[7] + chan->data[4] + chan->data[11] - 0x3c);
         }
 
@@ -304,80 +305,80 @@ void MIXInitChannel(int param_1, unsigned int param_2, int param_3, int param_4,
 
     case 1:
     case 2:
-        *(unsigned short*)(&chan->data[0xf]) =
+        *(U16*)(&chan->data[0xf]) =
             __MIXGetVolume(chan->data[7] + chan->data[8] + chan->data[10]);
-        *(unsigned short*)(&chan->data[0x10]) =
+        *(U16*)(&chan->data[0x10]) =
             __MIXGetVolume(chan->data[7] + chan->data[9] + chan->data[10]);
-        *(unsigned short*)(&chan->data[0x11]) = __MIXGetVolume(chan->data[7] + chan->data[11]);
+        *(U16*)(&chan->data[0x11]) = __MIXGetVolume(chan->data[7] + chan->data[11]);
 
         if ((chan->data[1] & 1) != 0)
         {
-            *(unsigned short*)(&chan->data[0x12]) =
+            *(U16*)(&chan->data[0x12]) =
                 __MIXGetVolume(chan->data[3] + chan->data[8] + chan->data[10]);
-            *(unsigned short*)(&chan->data[0x13]) =
+            *(U16*)(&chan->data[0x13]) =
                 __MIXGetVolume(chan->data[3] + chan->data[9] + chan->data[10]);
-            *(unsigned short*)(&chan->data[0x14]) =
+            *(U16*)(&chan->data[0x14]) =
                 __MIXGetVolume(chan->data[3] + chan->data[11] + -0x3c);
         }
         else
         {
-            *(unsigned short*)(&chan->data[0x12]) =
+            *(U16*)(&chan->data[0x12]) =
                 __MIXGetVolume(chan->data[7] + chan->data[3] + chan->data[8] + chan->data[10]);
-            *(unsigned short*)(&chan->data[0x13]) =
+            *(U16*)(&chan->data[0x13]) =
                 __MIXGetVolume(chan->data[7] + chan->data[3] + chan->data[9] + chan->data[10]);
-            *(unsigned short*)(&chan->data[0x14]) =
+            *(U16*)(&chan->data[0x14]) =
                 __MIXGetVolume(chan->data[7] + chan->data[3] + chan->data[11] + -0x3c);
         }
         if (chan->data[1] & 2U)
         {
-            *(unsigned short*)(&chan->data[0x15]) =
+            *(U16*)(&chan->data[0x15]) =
                 __MIXGetVolume(chan->data[4] + chan->data[8] + chan->data[10]);
-            *(unsigned short*)(&chan->data[0x16]) =
+            *(U16*)(&chan->data[0x16]) =
                 __MIXGetVolume(chan->data[4] + chan->data[9] + chan->data[10]);
-            *(unsigned short*)(&chan->data[0x17]) =
+            *(U16*)(&chan->data[0x17]) =
                 __MIXGetVolume(chan->data[4] + chan->data[11] + -0x3c);
         }
         else
         {
-            *(unsigned short*)(&chan->data[0x15]) =
+            *(U16*)(&chan->data[0x15]) =
                 __MIXGetVolume(chan->data[7] + chan->data[4] + chan->data[8] + chan->data[10]);
-            *(unsigned short*)(&chan->data[0x16]) =
+            *(U16*)(&chan->data[0x16]) =
                 __MIXGetVolume(chan->data[7] + chan->data[4] + chan->data[9] + chan->data[10]);
-            *(unsigned short*)(&chan->data[0x17]) =
+            *(U16*)(&chan->data[0x17]) =
                 __MIXGetVolume(chan->data[7] + chan->data[4] + chan->data[11] + -0x3c);
         }
         break;
 
     case 3:
-        *(unsigned short*)(&chan->data[15]) =
+        *(U16*)(&chan->data[15]) =
             __MIXGetVolume(chan->data[7] + chan->data[8] + chan->data[10]);
-        *(unsigned short*)(&chan->data[16]) =
+        *(U16*)(&chan->data[16]) =
             __MIXGetVolume(chan->data[7] + chan->data[9] + chan->data[10]);
-        *(unsigned short*)(&chan->data[21]) =
+        *(U16*)(&chan->data[21]) =
             __MIXGetVolume(chan->data[7] + chan->data[12] + chan->data[11]);
-        *(unsigned short*)(&chan->data[22]) =
+        *(U16*)(&chan->data[22]) =
             __MIXGetVolume(chan->data[7] + chan->data[13] + chan->data[11]);
 
         if ((chan->data[1] & 1) != 0)
         {
-            *(unsigned short*)(&chan->data[0x12]) =
+            *(U16*)(&chan->data[0x12]) =
                 __MIXGetVolume(chan->data[3] + chan->data[8] + chan->data[10]);
-            *(unsigned short*)(&chan->data[0x13]) =
+            *(U16*)(&chan->data[0x13]) =
                 __MIXGetVolume(chan->data[3] + chan->data[9] + chan->data[10]);
-            *(unsigned short*)(&chan->data[0x14]) =
+            *(U16*)(&chan->data[0x14]) =
                 __MIXGetVolume(chan->data[3] + chan->data[12] + chan->data[11]);
-            *(unsigned short*)(&chan->data[0x17]) =
+            *(U16*)(&chan->data[0x17]) =
                 __MIXGetVolume(chan->data[3] + chan->data[13] + chan->data[11]);
         }
         else
         {
-            *(unsigned short*)(&chan->data[0x12]) =
+            *(U16*)(&chan->data[0x12]) =
                 __MIXGetVolume(chan->data[7] + chan->data[3] + chan->data[8] + chan->data[10]);
-            *(unsigned short*)(&chan->data[0x13]) =
+            *(U16*)(&chan->data[0x13]) =
                 __MIXGetVolume(chan->data[7] + chan->data[3] + chan->data[9] + chan->data[10]);
-            *(unsigned short*)(&chan->data[0x14]) =
+            *(U16*)(&chan->data[0x14]) =
                 __MIXGetVolume(chan->data[7] + chan->data[3] + chan->data[12] + chan->data[11]);
-            *(unsigned short*)(&chan->data[0x17]) =
+            *(U16*)(&chan->data[0x17]) =
                 __MIXGetVolume(chan->data[7] + chan->data[3] + chan->data[13] + chan->data[11]);
         }
 
@@ -385,114 +386,114 @@ void MIXInitChannel(int param_1, unsigned int param_2, int param_3, int param_4,
         break;
     }
 
-    //OSDisableInterrupts();
+    int enabled = OSDisableInterrupts();
 
-    *(unsigned short*)((int)param_1 + 0x19c) =
-        *(unsigned short*)(&chan->data[0xe]); // Target sets to r4 instead of r3.
-    *(unsigned short*)((int)param_1 + 0x19e) = 0;
-    if ((*(unsigned short*)((int)param_1 + 0x14a) = *(unsigned short*)(&chan->data[0xf])))
+    *(U16*)((S32)param_1 + 0x19c) =
+        *(U16*)(&chan->data[0xe]);
+    *(U16*)((S32)param_1 + 0x19e) = 0;
+    if ((*(U16*)((S32)param_1 + 0x14a) = *(U16*)(&chan->data[0xf])))
     {
         uVar4 |= 1;
     }
 
-    *(unsigned short*)((int)param_1 + 0x14c) = 0;
+    *(U16*)((S32)param_1 + 0x14c) = 0;
 
-    if (*(unsigned short*)(param_1 + 0x14e) = *(unsigned short*)(&chan->data[0x10]))
+    if (*(U16*)(param_1 + 0x14e) = *(U16*)(&chan->data[0x10]))
     {
         uVar4 = uVar4 | 2;
     }
-    *(unsigned short*)(param_1 + 0x150) = 0;
+    *(U16*)(param_1 + 0x150) = 0;
 
-    if (*(unsigned short*)(param_1 + 0x152) = *(unsigned short*)(&chan->data[0x12]))
+    if (*(U16*)(param_1 + 0x152) = *(U16*)(&chan->data[0x12]))
     {
         uVar4 = uVar4 | 0x10;
     }
-    *(unsigned short*)((int)param_1 + 0x154) = 0;
-    if (*(unsigned short*)((int)param_1 + 0x156) = *(unsigned short*)(&chan->data[0x13]))
+    *(U16*)((S32)param_1 + 0x154) = 0;
+    if (*(U16*)((S32)param_1 + 0x156) = *(U16*)(&chan->data[0x13]))
     {
         uVar4 = uVar4 | 0x20;
     }
-    *(unsigned short*)(param_1 + 0x158) = 0;
-    if (*(unsigned short*)(param_1 + 0x15a) = *(unsigned short*)(&chan->data[0x15]))
+    *(U16*)(param_1 + 0x158) = 0;
+    if (*(U16*)(param_1 + 0x15a) = *(U16*)(&chan->data[0x15]))
     {
         uVar4 = uVar4 | 0x200;
     }
-    *(unsigned short*)(param_1 + 0x15c) = 0;
-    if (*(unsigned short*)(param_1 + 0x15e) = *(unsigned short*)(&chan->data[0x16]))
+    *(U16*)(param_1 + 0x15c) = 0;
+    if (*(U16*)(param_1 + 0x15e) = *(U16*)(&chan->data[0x16]))
     {
         uVar4 = uVar4 | 0x400;
     }
-    *(unsigned short*)(param_1 + 0x160) = 0;
+    *(U16*)(param_1 + 0x160) = 0;
     ;
-    if (*(unsigned short*)(param_1 + 0x162) = *(unsigned short*)(&chan->data[0x17]))
+    if (*(U16*)(param_1 + 0x162) = *(U16*)(&chan->data[0x17]))
     {
         uVar4 = uVar4 | 0x1000;
     }
-    *(unsigned short*)(param_1 + 0x164) = 0;
-    if (*(unsigned short*)((int)param_1 + 0x166) = *(unsigned short*)(&chan->data[0x11]))
+    *(U16*)(param_1 + 0x164) = 0;
+    if (*(U16*)((S32)param_1 + 0x166) = *(U16*)(&chan->data[0x11]))
     {
         uVar4 = uVar4 | 4;
     }
-    *(unsigned short*)((int)param_1 + 0x168) = 0;
-    if (*(unsigned short*)(param_1 + 0x16a) = *(unsigned short*)(&chan->data[0x14]))
+    *(U16*)((S32)param_1 + 0x168) = 0;
+    if (*(U16*)(param_1 + 0x16a) = *(U16*)(&chan->data[0x14]))
     {
         uVar4 = uVar4 | 0x80;
     }
-    *(unsigned short*)((int)param_1 + 0x16c) = 0;
-    *(unsigned short*)((int)param_1 + 0x144) = uVar4;
-    *(unsigned int*)(param_1 + 0x1c) = *(unsigned int*)(param_1 + 0x1c) | 0x212;
-    //OSRestoreInterrupts();
+    *(U16*)((S32)param_1 + 0x16c) = 0;
+    *(U16*)((S32)param_1 + 0x144) = uVar4;
+    *(U32*)(param_1 + 0x1c) = *(U32*)(param_1 + 0x1c) | 0x212;
+    OSRestoreInterrupts(enabled);
 }
 
-void MIXReleaseChannel(int* param_1)
+void MIXReleaseChannel(S32* param_1)
 {
     __MIXChannel[*(param_1 + 6)].data[0] = 0;
 }
 
-void MIXAdjustInput(int* param_1, int param_2)
+void MIXAdjustInput(S32* param_1, S32 param_2)
 {
-    int* handle = &__MIXChannel[*(param_1 + 6)].data[0];
+    S32* handle = &__MIXChannel[*(param_1 + 6)].data[0];
     handle[2] += param_2;
     handle[1] |= 0x10000000;
 }
 
-int MIXGetInput(int* param_1)
+S32 MIXGetInput(S32* param_1)
 {
-    int* handle = &__MIXChannel[*(param_1 + 6)].data[0];
+    S32* handle = &__MIXChannel[*(param_1 + 6)].data[0];
     return handle[2];
 }
 
-void MIXAdjustPan(int* param_1, int param_2)
+void MIXAdjustPan(S32* param_1, S32 param_2)
 {
     struct MIXChannel* chan = &__MIXChannel[*(param_1 + 6)];
-    int* handle = &__MIXChannel[*(param_1 + 6)].data[0];
+    S32* handle = &__MIXChannel[*(param_1 + 6)].data[0];
     handle[5] = __MIXClampPan(handle[5] + param_2);
     __MIXSetPan(chan);
     chan->data[1] |= 0x40000000;
 }
 
-int MIXGetPan(int* param_1)
+S32 MIXGetPan(S32* param_1)
 {
-    int* handle = &__MIXChannel[*(param_1 + 6)].data[0];
+    S32* handle = &__MIXChannel[*(param_1 + 6)].data[0];
     return handle[5];
 }
 
-void MIXUnMute(int* param_1)
+void MIXUnMute(S32* param_1)
 {
-    int* handle = &__MIXChannel[*(param_1 + 6)].data[0];
+    S32* handle = &__MIXChannel[*(param_1 + 6)].data[0];
     handle[1] &= ~4;
     handle[1] |= 0x10000000;
 }
 
-void MIXAdjustFader(int* param_1, int param_2)
+void MIXAdjustFader(S32* param_1, S32 param_2)
 {
-    int* handle = &__MIXChannel[*(param_1 + 6)].data[0];
+    S32* handle = &__MIXChannel[*(param_1 + 6)].data[0];
     handle[7] += param_2;
     handle[1] |= 0x40000000;
 }
 
-int MIXGetFader(int* param_1)
+S32 MIXGetFader(S32* param_1)
 {
-    int* handle = &__MIXChannel[*(param_1 + 6)].data[0];
+    S32* handle = &__MIXChannel[*(param_1 + 6)].data[0];
     return handle[7];
 }
