@@ -1,6 +1,8 @@
 #ifndef IMIX_H
 #define IMIX_H
 
+#include <types.h>
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -8,12 +10,12 @@ extern "C"
 
 struct _AXVPB;
 
-void MIXUnMute(int* param_1);
+void MIXUnMute(S32* param_1);
 
 // No DWARF data for this structure so this is entirely guesswork.
 struct MIXChannel
 {
-	int data[24];
+	S32 data[24];
 };
 
 #ifdef __cplusplus
