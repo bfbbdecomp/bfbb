@@ -7,7 +7,6 @@
 #include <rwcore.h>
 #include <rpworld.h>
 #include <rphanim.h>
-#include "zAssetTypes.h"
 
 void iModelInit();
 U32 iModelNumBones(RpAtomic* model);
