@@ -7,12 +7,7 @@
 #include <rwcore.h>
 #include <rpworld.h>
 #include <rphanim.h>
-
-struct RwMemory
-{
-    char* start;
-    U32 length;
-};
+#include "zAssetTypes.h"
 
 void iModelInit();
 U32 iModelNumBones(RpAtomic* model);
