@@ -203,7 +203,7 @@ cflags_base = [
     "-i src/PowerPC_EABI_Support/include",
     "-i src/dolphin/include",
     "-i src/dolphin/src",
-    "-i libs",
+    "-i src",
     f"-i build/{config.version}/include",
     f"-DBUILD_VERSION={version_num}",
     f"-DVERSION_{config.version}",
@@ -309,7 +309,7 @@ def mslLib(lib_name: str, extra_cflags: List[str], objects: List[Object]) -> Dic
 def trkLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
     return {
         "lib": lib_name,
-        "src_dir": "libs/runtime_libs",
+        "src_dir": "src/runtime_libs",
         "mw_version": "GC/2.6",
         "cflags": cflags_runtime,
         "progress_category": "msl",
@@ -321,7 +321,7 @@ def trkLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
 def RenderWareLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
     return {
         "lib": lib_name,
-        "src_dir": "libs",
+        "src_dir": "src",
         "mw_version": "GC/1.3.2",
         "cflags": cflags_renderware,
         "progress_category": "RW",
