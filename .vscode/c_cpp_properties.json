@@ -9,8 +9,9 @@
       "includePath": [
         "${workspaceFolder}/include",
         "${workspaceFolder}/include/bink",
-        "${workspaceFolder}/include/PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Include",
-        "${workspaceFolder}/include/PowerPC_EABI_Support/MSL/MSL_C++/MSL_Common/Include",
+        "${workspaceFolder}/libs/PowerPC_EABI_Support/include",
+        "${workspaceFolder}/libs/PowerPC_EABI_Support/include/PowerPC_EABI_Support/MSL_C/MSL_Common",
+        "${workspaceFolder}/libs/PowerPC_EABI_Support/include/PowerPC_EABI_Support/MSL_C++",
         "${workspaceFolder}/include/inline",
         "${workspaceFolder}/include/rwsdk",
         "${workspaceFolder}/src/SB/Core/gc",

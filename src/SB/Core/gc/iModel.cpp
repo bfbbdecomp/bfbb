@@ -2,6 +2,8 @@
 
 #include <types.h>
 
+
+
 RwFrame* GetChildFrameHierarchy(RwFrame* frame, void* data)
 {
     RpHAnimHierarchy* hierarchy = RpHAnimFrameGetHierarchy(frame);
@@ -24,6 +26,7 @@ void* GetHierarchy(RpAtomic* frame)
     GetChildFrameHierarchy((RwFrame*)frame, unk_0);
     return unk_0[0];
 }
+
 
 RpAtomic* iModelFileNew(void* buffer, U32 size)
 {
@@ -51,6 +54,7 @@ void iModelUnload(RpAtomic* userdata)
         RwFrameGetRoot((RwFrame*)userdata);
         RwFrameDestroyHierarchy(frame);
         userdata = 0;
+
     }
     if (clump != 0)
     {
