@@ -5,7 +5,7 @@
 #include <dolphin/os.h>
 #include <dolphin/vi.h>
 
-#include <dolphin/gx/__gx.h>
+#include <gx/__gx.h>
 #include <dolphin/gx/GXEnum.h>
 
 #if SDK_REVISION < 2

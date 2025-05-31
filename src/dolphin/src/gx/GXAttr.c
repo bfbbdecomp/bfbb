@@ -1,7 +1,7 @@
 #include <dolphin/gx.h>
 #include <dolphin/os.h>
 
-#include <dolphin/gx/__gx.h>
+#include <gx/__gx.h>
 
 #define CHECK_ATTRPTR(line, attrPtr)                                                               \
     ASSERTMSGLINE(line, (attrPtr) != NULL, "GXSetVtxDescv: attrPtr is NULL")

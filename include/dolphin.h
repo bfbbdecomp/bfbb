@@ -1,7 +1,7 @@
 #ifndef _DOLPHIN_H_
 #define _DOLPHIN_H_
 
-#include <dolphin/types.h>
+#include <types.h>
 #include <dolphin/os.h>
 #include <dolphin/dsp.h>
 #include <dolphin/dvd.h>

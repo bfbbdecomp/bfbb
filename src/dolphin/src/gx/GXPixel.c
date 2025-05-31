@@ -4,7 +4,7 @@
 #include <dolphin/gx/gxpixel.h>
 #include <dolphin/gx/GXStruct.h>
 
-#include <dolphin/gx/__gx.h>
+#include <gx/__gx.h>
 
 void GXSetFog(GXFogType type, f32 startz, f32 endz, f32 nearz, f32 farz, GXColor color)
 {

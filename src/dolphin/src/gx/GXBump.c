@@ -1,7 +1,7 @@
 #include <dolphin/gx.h>
 #include <dolphin/os.h>
 
-#include <dolphin/gx/__gx.h>
+#include <gx/__gx.h>
 
 #if DEBUG
 #define GX_WRITE_SOME_REG5(a, b)                                                                   \

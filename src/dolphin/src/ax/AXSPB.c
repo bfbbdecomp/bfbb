@@ -1,7 +1,7 @@
 #include <dolphin.h>
 #include <dolphin/ax.h>
 
-#include "dolphin/ax/__ax.h"
+#include "ax/__ax.h"
 
 // .bss
 static struct _AXSPB __AXStudio ATTRIBUTE_ALIGN(32);

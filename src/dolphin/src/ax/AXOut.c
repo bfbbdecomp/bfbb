@@ -2,7 +2,7 @@
 #include <dolphin/dsp.h>
 #include <dolphin/ax.h>
 
-#include "dolphin/ax/__ax.h"
+#include "ax/__ax.h"
 
 static s16 __AXOutBuffer[3][320];
 static s32 __AXOutSBuffer[160];

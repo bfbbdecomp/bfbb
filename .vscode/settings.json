@@ -16,7 +16,10 @@
   "files.trimFinalNewlines": true,
   "files.associations": {
     "*.inc": "c",
-    ".clangd": "yaml"
+    ".clangd": "yaml",
+    "__gx.h": "c",
+    "stddef.h": "c",
+    "hw_regs.h": "c"
   },
   // Disable C/C++ IntelliSense, use clangd instead
   "C_Cpp.intelliSenseEngine": "default",

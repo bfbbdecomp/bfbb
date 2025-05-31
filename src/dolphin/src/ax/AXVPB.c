@@ -1,7 +1,7 @@
 #include <dolphin.h>
 #include <dolphin/ax.h>
 
-#include "dolphin/ax/__ax.h"
+#include "ax/__ax.h"
 
 static unsigned long __AXSrcCycles[5] = { 0x00000DF8, 0x00000F78, 0x000014B8, 0x000019F8,
                                           0x000019F8 };

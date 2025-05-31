@@ -8,7 +8,7 @@
 
 #include "xFile.h"
 #include "xPar.h"
-#include "gx.h"
+#include <dolphin/gx.h>
 
 #include "zGlobals.h"
 
