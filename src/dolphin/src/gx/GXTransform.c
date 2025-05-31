@@ -2,7 +2,8 @@
 #include <dolphin/mtx.h>
 #include <dolphin/os.h>
 
-#include <dolphin/gx/__gx.h>
+#include <gx/__gx.h>
+//C :\Users\Colin\Desktop\battle decomp\bfbb - decomp\src\dolphin\src\gx\__gx.h
 
 void GXProject(f32 x, f32 y, f32 z, const Mtx mtx, const f32* pm, const f32* vp, f32* sx, f32* sy,
                f32* sz)

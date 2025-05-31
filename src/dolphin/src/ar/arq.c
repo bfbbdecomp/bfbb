@@ -2,7 +2,7 @@
 #include <dolphin.h>
 #include <dolphin/ar.h>
 
-#include "dolphin/ax/__ax.h"
+#include "ax/__ax.h"
 
 #ifdef DEBUG
 const char* __ARQVersion = "<< Dolphin SDK - ARQ\tdebug build: Apr  5 2004 03:56:20 (0x2301) >>";

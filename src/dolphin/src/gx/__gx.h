@@ -2,7 +2,7 @@
 #define _DOLPHIN_GX_INTERNAL_H_
 
 #include <dolphin/gx.h>
-#include <gx/GXVerify.h>
+#include <dolphin/gx/GXVerify.h>
 
 #ifdef __cplusplus
 extern "C" {

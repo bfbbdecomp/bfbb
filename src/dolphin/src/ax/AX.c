@@ -1,7 +1,7 @@
 #include <dolphin.h>
 #include <dolphin/ax.h>
 
-#include "dolphin/ax/__ax.h"
+#include "ax/__ax.h"
 
 #ifdef DEBUG
 const char* __AXVersion = "<< Dolphin SDK - AX\tdebug build: Apr  5 2004 03:56:21 (0x2301) >>";

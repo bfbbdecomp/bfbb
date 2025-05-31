@@ -1,7 +1,7 @@
 #include <dolphin.h>
 #include <dolphin/ax.h>
 
-#include "dolphin/ax/__ax.h"
+#include "ax/__ax.h"
 
 u16 __AXCompressorTable[3360] = {
     0x7FA1, 0x7F43, 0x7EE6, 0x7E88, 0x7E2B, 0x7DCE, 0x7D72, 0x7D16, 0x7CBA, 0x7C5E, 0x7C02, 0x7BA7,
