@@ -2,8 +2,7 @@
 
 #include <types.h>
 
-RpLight* sEmptyDirectionalLight;
-RpLight* sEmptyAmbientLight;
+
 
 RwFrame* GetChildFrameHierarchy(RwFrame* frame, void* data)
 {
@@ -28,25 +27,6 @@ void* GetHierarchy(RpAtomic* frame)
     return unk_0[0];
 }
 
-void iModelInit()
-{
-    RwFrame* frame;
-    RwRGBAReal black;
-    void* tempVoid = 0;
-
-    for (S32 i = 0; i < 4; i++)
-    {
-        frame = (RwFrame*)RpLightCreate(i);
-        //black = frame;
-        RpLightSetColor(sEmptyDirectionalLight, &black);
-        frame = RwFrameCreate();
-        _rwObjectHasFrameSetFrame(sEmptyDirectionalLight, frame);
-
-        sEmptyAmbientLight = RpLightCreate(2);
-
-        RpLightSetColor(sEmptyAmbientLight, &black);
-    }
-}
 
 RpAtomic* iModelFileNew(void* buffer, U32 size)
 {
@@ -72,57 +52,14 @@ void iModelUnload(RpAtomic* userdata)
     if ((RpClump*)userdata != 0)
     {
         RwFrameGetRoot((RwFrame*)userdata);
-        userdata = 0;
-    }
-    else
-    {
         RwFrameDestroyHierarchy(frame);
+        userdata = 0;
+
     }
     if (clump != 0)
     {
         RpClumpDestroy(clump);
     }
-}
-
-RpAtomic* NextAtomicCallback(RpAtomic* atomic, void* data)
-{
-    // What?
-
-    RpAtomic** nextModel;
-
-    if (data != atomic)
-    {
-        atomic = 0;
-        return atomic;
-    }
-    if (data != 0)
-    {
-        return atomic;
-    }
-
-    atomic = (RpAtomic*)data;
-
-    return atomic;
-}
-
-RpAtomic* iModelFile_RWMultiAtomic(RpAtomic* model)
-{
-    RpClump* clump;
-    RpAtomic* nextModel = 0;
-    RpAtomic* modelArray[2];
-
-    if (model == 0)
-    {
-        modelArray[0] = 0;
-    }
-    else
-    {
-        //modelArray[0] = (S32)model;
-        modelArray[0] = nextModel;
-        RpClumpForAllAtomics(model->clump, (RpAtomicCallBack)NextAtomicCallback(nextModel, NULL),
-                             modelArray);
-    }
-    return model;
 }
 
 void iModelCacheAtomic(RpAtomic*)
