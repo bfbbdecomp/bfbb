@@ -2,8 +2,10 @@
 
 #include <types.h>
 
+
 RpLight* sEmptyDirectionalLight;
 RpLight* sEmptyAmbientLight;
+
 
 RwFrame* GetChildFrameHierarchy(RwFrame* frame, void* data)
 {
@@ -28,6 +30,7 @@ void* GetHierarchy(RpAtomic* frame)
     return unk_0[0];
 }
 
+
 void iModelInit()
 {
     RwFrame* frame;
@@ -47,6 +50,7 @@ void iModelInit()
         RpLightSetColor(sEmptyAmbientLight, &black);
     }
 }
+
 
 RpAtomic* iModelFileNew(void* buffer, U32 size)
 {
@@ -72,17 +76,23 @@ void iModelUnload(RpAtomic* userdata)
     if ((RpClump*)userdata != 0)
     {
         RwFrameGetRoot((RwFrame*)userdata);
+
         userdata = 0;
     }
     else
     {
         RwFrameDestroyHierarchy(frame);
+
+        RwFrameDestroyHierarchy(frame);
+        userdata = 0;
+
     }
     if (clump != 0)
     {
         RpClumpDestroy(clump);
     }
 }
+
 
 RpAtomic* NextAtomicCallback(RpAtomic* atomic, void* data)
 {
