@@ -23,6 +23,7 @@ enum en_npcdcat
     eNPCDCAT_Seven = 7,
     eNPCDCAT_Eight = 8,
     eNPCDCAT_Eleven = 11,
+    eNPCDCAT_Thirteen = 13,
 };
 
 struct xNPCBasic : xEnt, xFactoryInst

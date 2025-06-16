@@ -278,6 +278,7 @@ public:
 
     S32 BombzAway(F32);
     S32 Exit(F32 dt, void* updCtxt);
+    S32 Enter(F32 dt, void* updCtxt);
     S32 idx_launch; // offset 0x54, size 0x4
 };
 
@@ -329,6 +330,7 @@ public:
     }
 
     S32 FireOne(S32);
+    S32 Enter(F32 dt, void* updCtxt);
     S32 idx_launch; // offset 0x6C, size 0x4
 };
 
@@ -447,6 +449,8 @@ public:
     {
         xGoal::SetFlags(2);
     }
+
+    S32 Enter(F32 dt, void* updCtxt);
 };
 
 class zNPCGoalStunned : public zNPCGoalCommon
@@ -558,6 +562,7 @@ public:
     F32 tmr_minAttack; // offset 0x60, size 0x4
 
     S32 Exit(F32, void*);
+    S32 Enter(F32 dt, void* updCtxt);
 };
 
 class zNPCGoalChase : public zNPCGoalCommon
@@ -713,7 +718,9 @@ public:
     }
     S32 Suspend(F32 dt, void* updCtxt);
     S32 Resume(F32 dt, void* updCtxt);
+    S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);
+    void CalcAttackVector();
     F32 tmr_attack; // offset 0x4C, size 0x4
     F32 tmr_minAttack; // offset 0x50, size 0x4
     xVec3 pos_began; // offset 0x54, size 0xC
@@ -925,6 +932,8 @@ public:
     }
 
     S32 Resume(F32 dt, void* updCtxt);
+    S32 Enter(F32 dt, void* updCtxt);
+    void Detonate();
     S32 flg_attack; // offset 0x4C, size 0x4
     en_alertbomb alertbomb; // offset 0x50, size 0x4
     F32 tmr_nextping; // offset 0x54, size 0x4
@@ -1050,6 +1059,8 @@ public:
     S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);
     void ChkPrelimTran(en_trantype* trantype, int* nextgoal);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
+    void MoveTryToEscape(F32 dt);
 };
 
 class zNPCGoalTubeDead : public zNPCGoalDead
@@ -1123,7 +1134,7 @@ public:
     void AttackDataReset();
     S32 Enter(F32 dt, void* updCtxt);
     S32 Resume(F32 dt, void* updCtxt);
-    bool MarySpinUp(float);
+    S32 MarySpinUp(F32 dt);
     void LaserRender();
     void MaryzBlessing();
     void MaryzFury();
@@ -1213,6 +1224,9 @@ public:
     }
 
     S32 InputInfo(NPCSpawnInfo* info);
+    S32 Enter(F32, void*);
+    S32 Exit(F32, void*);
+    F32 LaunchRoboBits();
     F32 tmr_respawn; // offset 0x4C, size 0x4
     F32 tmr_robobits; // offset 0x50, size 0x4
     S32 cnt_ring; // offset 0x54, size 0x4
@@ -1306,6 +1320,7 @@ public:
     }
 
     S32 Enter(F32 dt, void* updCtxt);
+    void HoundPlayer(F32 dt);
 };
 
 xFactoryInst* GOALCreate_Standard(S32 who, RyzMemGrow* grow, void*);

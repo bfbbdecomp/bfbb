@@ -181,7 +181,7 @@ struct zNPCSettings : xDynAsset
     U8 allowPatrol;
     U8 allowWander;
     U8 reduceCollide;
-    S8 useNavSplines;
+    U8 useNavSplines;
     S8 pad[3];
     S8 allowChase;
     S8 allowAttack;
@@ -430,6 +430,7 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
     xAnimState* AnimCurState();
     xAnimSingle* AnimCurSingle();
     U32 AnimCurStateID();
+    U32 CanDoSplines();
     void GiveReward();
     S32 SndPlayFromSFX(xSFX* sfx, U32* sid_played);
     S32 SndPlayRandom(en_NPC_SOUND sndtype);
@@ -456,6 +457,7 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
     xVec3* Pos();
     RwMatrix* BoneMat(S32 unk) const;
     RwV3d* BonePos(S32 unk) const;
+    xVec3* MatPosSet(xVec3* pos);
     void XZVecToPlayer(xVec3* unk1, F32* unk2);
     F32 XZDstSqToPos(const xVec3* unk1, xVec3* unk2, F32* unk3);
     void XZVecToPos(xVec3* unk1, const xVec3* unk2, F32* unk3);
@@ -632,8 +634,8 @@ void ZNPC_Destroy_Common(xFactoryInst* inst);
 void zNPCCommon_ScenePrepare();
 void zNPCCommon_ScenePostInit();
 void zNPCCommon_SceneFinish();
-void zNPCPlyrSnd_Reset();
-void zNPCPlyrSnd_Update(F32 dt);
+static void zNPCPlyrSnd_Reset();
+static void zNPCPlyrSnd_Update(F32 dt);
 void zNPCCommon_SceneReset();
 void ZNPC_Destroy_Common(xFactoryInst* inst);
 void zNPCSettings_MakeDummy();

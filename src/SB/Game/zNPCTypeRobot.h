@@ -147,7 +147,7 @@ struct zNPCRobot : zNPCCommon
     U8 ColChkByFlags() const;
     zNPCLassoInfo* PRIV_GetLassoData();
     S32 LassoSetup();
-
+    F32 GetParm(en_npcparm, zMovePoint**);
     F32 FacePlayer(F32 dt, F32 spd_turn);
 
     // vTable (zNPCRobot)
