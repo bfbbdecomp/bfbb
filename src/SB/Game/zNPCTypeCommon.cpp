@@ -22,7 +22,7 @@
 #define LassoGuide_Hold01 2
 
 extern char zNPCTypeCommon_strings[];
-static char* g_strz_lassanim[3] = {"Unknown", "LassoGuide_Grab01", "LassoGuide_Hold01"};
+static char* g_strz_lassanim[3] = { "Unknown", "LassoGuide_Grab01", "LassoGuide_Hold01" };
 extern S32 g_hash_lassanim[3];
 extern volatile S32 g_skipDescent;
 extern NPCConfig* g_ncfghead;
@@ -104,7 +104,7 @@ void zNPCCommon_ScenePostInit()
     NPCSupport_ScenePostInit();
 }
 
-void zNPCCommon_Timestep(F32 dt)
+void zNPCCommon_Timestep(xScene* scene, F32 dt)
 {
     NPCSupport_Timestep(dt);
     NPCS_SndTimersUpdate(dt);
@@ -180,6 +180,16 @@ S32 zNPCCommon::GetVertPos(en_mdlvert vid, xVec3* pos)
     return 1;
 }
 
+void zNPCPlyrSnd_Reset()
+{
+    g_tmr_talkless = 10.0f;
+}
+
+void zNPCPlyrSnd_Update(F32 dt)
+{
+    g_tmr_talkless = MAX(-1.0f, g_tmr_talkless - dt);
+}
+
 void zNPCCommon::ConfigSceneDone()
 {
     g_ncfghead = 0;
@@ -189,6 +199,64 @@ void zNPCCommon_WonderReset()
 {
     g_isConversation = 0;
     g_flg_wonder = 0;
+}
+
+U32 zNPCCommon::CanDoSplines()
+{
+    bool retval = false;
+    if ((npcset.useNavSplines) && ((flg_move) & 8))
+    {
+        retval = true;
+    }
+    return retval;
+}
+
+zMovePoint* zNPCCommon::FirstAssigned()
+{
+    zMovePoint* nav_first = NULL;
+    zNPCCommon::GetParm(NPC_PARM_FIRSTMVPT, &nav_first);
+    return nav_first;
+}
+
+U32 zNPCCommon::AnimCurStateID()
+{
+    xAnimState* state = AnimCurState();
+    if (state != NULL)
+    {
+        return state->ID;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+F32 zNPCCommon::AnimDuration(xAnimState* ast)
+{
+    if (ast == 0)
+    {
+        ast = AnimCurState();
+    }
+    return (ast == 0) ? 0.0f : ast->Data->Duration;
+}
+
+F32 zNPCCommon::AnimTimeRemain(xAnimState* ast)
+{
+    return (AnimDuration(ast) - AnimTimeCurrent());
+}
+
+F32 zNPCCommon::AnimTimeCurrent()
+{
+    return model->Anim->Single->Time;
+}
+
+xVec3* zNPCCommon::MatPosSet(xVec3* pos)
+{
+    if (pos != NULL)
+    {
+        xVec3Copy((xVec3*)&model->Mat->pos, pos);
+    }
+    return (xVec3*)&model->Mat->pos;
 }
 
 S32 NPCC_NPCIsConversing()
@@ -344,7 +412,8 @@ xAnimTable* ZNPC_AnimTable_Common()
 {
     xAnimTable* table = xAnimTableNew("zNPCCommon", NULL, 0x0);
 
-    xAnimTableNewState(table, "Idle01", 0x110, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, "Idle01", 0x110, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
 
     return table;
 }
@@ -353,10 +422,14 @@ xAnimTable* ZNPC_AnimTable_LassoGuide()
 {
     xAnimTable* table = xAnimTableNew("LassoGuides", NULL, 0x0);
 
-    xAnimTableNewState(table, g_strz_lassanim[LassoGuide_Grab01], 0x0, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_lassanim[LassoGuide_Hold01], 0x0, 0x1, 1.0f, NULL, NULL, 0.0f, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_lassanim[LassoGuide_Grab01], 0x0, 0x1, 1.0f, NULL, NULL, 0.0f,
+                       NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(table, g_strz_lassanim[LassoGuide_Hold01], 0x0, 0x1, 1.0f, NULL, NULL, 0.0f,
+                       NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
 
-    xAnimTableNewTransition(table, g_strz_lassanim[LassoGuide_Grab01], g_strz_lassanim[LassoGuide_Hold01], NULL, NULL, 0x10, 0x0, 0.0f, 0.0f, 0, 0, 0.0f, NULL);
+    xAnimTableNewTransition(table, g_strz_lassanim[LassoGuide_Grab01],
+                            g_strz_lassanim[LassoGuide_Hold01], NULL, NULL, 0x10, 0x0, 0.0f, 0.0f,
+                            0, 0, 0.0f, NULL);
 
     return table;
 }

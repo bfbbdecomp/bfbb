@@ -22,6 +22,7 @@ struct zNPCGoalCommon : xGoal
 
     U32 DoAutoAnim(en_NPC_GOAL_SPOT gspot, S32 forceRestart);
     U32 DoExplicitAnim(U32 anid, S32 forceRestart);
+    void KickFromTheNest();
 
     const char* Name()
     {
