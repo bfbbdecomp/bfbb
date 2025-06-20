@@ -5,6 +5,7 @@
 #include <stddef.h>
 
 #define rwBIGENDIAN
+#define RWASMCALL __cdecl
 
 typedef long RwFixed;
 typedef int RwInt32;
@@ -31,17 +32,17 @@ struct RwInt64
     RwUInt32 bottom;
 };
 
-struct RwUInt128
-{
-    RwUInt64 top;
-    RwUInt64 bottom;
-};
+// struct RwUInt128
+// {
+//     RwUInt64 top;
+//     RwUInt64 bottom;
+// };
 
-struct RwInt128
-{
-    RwInt64 top;
-    RwUInt64 bottom;
-};
+// struct RwInt128
+// {
+//     RwInt64 top;
+//     RwUInt64 bottom;
+// };
 
 #define RwInt32MAXVAL 0x7FFFFFFF
 #define RwInt32MINVAL 0x80000000
@@ -146,6 +147,13 @@ struct RwSplitFixed
     RwUInt16 fractional;
 };
 
+typedef struct RwSplitFixed RwSplitFixed;
+// Square noted that these Typedefs could be avoided by doing
+// struct RwSplitFixed splitfixed inside the union.
+// Currently going to stick with the typedef convention until
+// we come up with the "correct" solution for our project
+//                      - Colin
+
 union RwUnionReal
 {
     RwReal real;
@@ -183,6 +191,8 @@ struct RwRect
     RwInt32 h;
 };
 
+typedef struct RwV3d RwV3d;
+
 struct RwSphere
 {
     RwV3d center;
@@ -219,6 +229,8 @@ struct RwTexCoords
     RwReal v;
 };
 
+typedef struct RwSLLink RwSLLink;
+
 struct RwSLLink
 {
     RwSLLink* next;
@@ -241,6 +253,8 @@ struct RwSingleList
     ((linkvar)->next = (list)->link.next, (list)->link.next = (linkvar))
 #define rwSingleListGetFirstSLLink(list) ((list)->link.next)
 #define rwSingleListGetTerminator(list) (NULL)
+
+typedef struct RwLLLink RwLLLink;
 
 struct RwLLLink
 {
@@ -390,6 +404,8 @@ struct RwObject
     void* parent;
 };
 
+typedef struct RwObject RwObject;
+
 typedef RwObject* (*RwObjectCallBack)(RwObject* object, void* data);
 
 #define rwObjectCopy(d, s)                                                                         \
@@ -497,6 +513,8 @@ struct RwMemoryFunctions
     void* (*rwcalloc)(size_t numObj, size_t sizeObj);
 };
 
+typedef struct RwLinkList RwLinkList;
+
 struct RwFreeList
 {
     RwUInt32 entrySize;
@@ -507,6 +525,8 @@ struct RwFreeList
     RwUInt32 flags;
     RwLLLink link;
 };
+
+typedef struct RwFreeList RwFreeList;
 
 typedef void (*RwFreeListCallBack)(void* pMem, void* pData);
 typedef void* (*RwMemoryAllocFn)(RwFreeList* fl);
@@ -558,12 +578,20 @@ struct RwStreamCustom
     void* data;
 };
 
+typedef struct RwStreamMemory RwStreamMemory;
+typedef struct RwStreamCustom RwStreamCustom;
+typedef union RwStreamFile RwStreamFile;
+
 union RwStreamUnion
 {
     RwStreamMemory memory;
     RwStreamFile file;
     RwStreamCustom custom;
 };
+
+typedef enum RwStreamType RwStreamType;
+typedef enum RwStreamAccessType RwStreamAccessType;
+typedef union RwStreamUnion RwStreamUnion;
 
 struct RwStream
 {
@@ -573,6 +601,8 @@ struct RwStream
     RwStreamUnion Type;
     RwBool rwOwned;
 };
+
+typedef struct RwStream RwStream;
 
 typedef void* (*RwPluginObjectConstructor)(void* object, RwInt32 offsetInObject,
                                            RwInt32 sizeInObject);
@@ -593,7 +623,7 @@ typedef RwBool (*RwPluginDataChunkAlwaysCallBack)(void* object, RwInt32 offsetIn
 typedef RwBool (*RwPluginDataChunkRightsCallBack)(void* object, RwInt32 offsetInObject,
                                                   RwInt32 sizeInObject, RwUInt32 extraData);
 
-typedef struct RwPluginRegEntry;
+typedef struct RwPluginRegEntry RwPluginRegEntry;
 
 struct RwPluginRegistry
 {
@@ -606,6 +636,8 @@ struct RwPluginRegistry
 };
 
 typedef void* (*RwPluginErrorStrCallBack)(void*);
+
+typedef struct RwPluginRegistry RwPluginRegistry;
 
 struct RwPluginRegEntry
 {
@@ -781,6 +813,8 @@ struct RwRGBA
 
 #define RwRGBAAssign(_target, _source) (*(_target) = *(_source))
 
+typedef struct RwRGBA RwRGBA;
+
 struct rwGameCube2DVertex
 {
     RwReal x;
@@ -791,6 +825,7 @@ struct rwGameCube2DVertex
     RwReal v;
 };
 
+typedef struct rwGameCube2DVertex rwGameCube2DVertex;
 typedef rwGameCube2DVertex RwIm2DVertex;
 typedef RwUInt16 RxVertexIndex;
 typedef RxVertexIndex RwImVertexIndex;
@@ -1082,8 +1117,12 @@ struct RwEngineOpenParams
 
 struct RwGameCubeDeviceConfig
 {
+    void* unk;
     /* unknown */
 };
+
+typedef enum RwRenderState RwRenderState;
+typedef enum RwPrimitiveType RwPrimitiveType;
 
 typedef RwBool (*RwSystemFunc)(RwInt32 nOption, void* pOut, void* pInOut, RwInt32 nIn);
 typedef RwBool (*RwRenderStateSetFunction)(RwRenderState nState, void* pParam);
@@ -1148,6 +1187,8 @@ enum RwVideoModeFlag
     rwVIDEOMODEFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
 
+typedef enum RwVideoModeFlag RwVideoModeFlag;
+
 struct RwVideoMode
 {
     RwInt32 width;
@@ -1176,6 +1217,13 @@ enum RwEngineStatus
     rwENGINESTATUSFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
 
+typedef struct RwDevice RwDevice;
+typedef struct RwFileFunctions RwFileFunctions;
+typedef struct RwStringFunctions RwStringFunctions;
+typedef struct RwMemoryFunctions RwMemoryFunctions;
+typedef struct RwMetrics RwMetrics;
+typedef enum RwEngineStatus RwEngineStatus;
+
 struct RwGlobals
 {
     void* curCamera;
@@ -1197,6 +1245,8 @@ struct RwGlobals
 };
 
 typedef struct RwResEntry;
+
+typedef struct RwResEntry RwResEntry;
 
 typedef void (*RwResEntryDestroyNotify)(RwResEntry* resEntry);
 
@@ -1220,6 +1270,8 @@ struct RwChunkHeaderInfo
     RwBool isComplex; /**< Internal Use */
 };
 
+typedef struct RwRGBAReal RwRGBAReal;
+
 struct RwSky2DVertexFields
 {
     RwV3d scrVertex;
@@ -1233,6 +1285,8 @@ struct RwSky2DVertexFields
     RwReal pad2;
 };
 
+typedef struct RwSky2DVertexFields RwSky2DVertexFields;
+
 struct RwSky2DVertexAlignmentOverlay
 {
     union
@@ -1242,6 +1296,8 @@ struct RwSky2DVertexAlignmentOverlay
     };
 };
 
+typedef struct RwSky2DVertexAlignmentOverlay RwSky2DVertexAlignmentOverlay;
+
 struct RwSky2DVertex
 {
     RwSky2DVertexAlignmentOverlay u;
@@ -1250,6 +1306,8 @@ struct RwSky2DVertex
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+typedef struct RwGlobals RwGlobals;
 
 extern RwGlobals* RwEngineInstance;
 
@@ -1265,6 +1323,10 @@ extern RwStream* RwStreamWriteReal(RwStream* stream, const RwReal* reals, RwUInt
 extern RwStream* RwStreamWriteInt32(RwStream* stream, const RwInt32* ints, RwUInt32 numBytes);
 extern RwStream* RwStreamReadReal(RwStream* stream, RwReal* reals, RwUInt32 numBytes);
 extern RwStream* RwStreamReadInt32(RwStream* stream, RwInt32* ints, RwUInt32 numBytes);
+
+typedef struct RwChunkHeaderInfo RwChunkHeaderInfo;
+typedef struct RwError RwError;
+
 extern RwStream* RwStreamReadChunkHeaderInfo(RwStream* stream, RwChunkHeaderInfo* chunkHeaderInfo);
 extern RwError* RwErrorSet(RwError* code);
 extern RwError* RwErrorGet(RwError* code);
@@ -1290,6 +1352,9 @@ extern RwMatrix* RwMatrixUpdate(RwMatrix* matrix);
 extern RwMatrix* RwMatrixMultiply(RwMatrix* matrixOut, const RwMatrix* MatrixIn1,
                                   const RwMatrix* matrixIn2);
 extern RwMatrix* RwMatrixOrthoNormalize(RwMatrix* matrixOut, const RwMatrix* matrixIn);
+
+typedef enum RwOpCombineType RwOpCombineType;
+
 extern RwMatrix* RwMatrixRotateOneMinusCosineSine(RwMatrix* matrix, const RwV3d* unitAxis,
                                                   RwReal oneMinusCosine, RwReal sine,
                                                   RwOpCombineType combineOp);
@@ -1320,7 +1385,7 @@ extern RwStream* RwStreamWrite(RwStream* stream, const void* buffer, RwUInt32 le
 extern RwStream* RwStreamSkip(RwStream* stream, RwUInt32 offset);
 extern RwBool RwStreamClose(RwStream* stream, void* pData);
 extern RwStream* RwStreamOpen(RwStreamType type, RwStreamAccessType accessType, const void* pData);
-extern RwInt32 _rwPluginRegistryAddPluginStream(RwPluginRegistry* reg, RwUInt32 pluginID,
+extern RwInt32 _rwPluginRegistryAddPluginStream(RwPluginRegistry*, RwUInt32 pluginID,
                                                 RwPluginDataChunkReadCallBack readCB,
                                                 RwPluginDataChunkWriteCallBack writeCB,
                                                 RwPluginDataChunkGetSizeCallBack getSizeCB);
@@ -1360,11 +1425,17 @@ extern RwInt32 RwEngineRegisterPlugin(RwInt32 size, RwUInt32 pluginID,
                                       RwPluginObjectConstructor initCB,
                                       RwPluginObjectDestructor termCB);
 extern RwInt32 RwEngineGetPluginOffset(RwUInt32 pluginID);
+
+typedef struct RwVideoMode RwVideoMode;
+
 extern RwVideoMode* RwEngineGetVideoModeInfo(RwVideoMode* modeinfo, RwInt32 modeIndex);
 extern RwInt32 RwEngineGetCurrentVideoMode(void);
 extern RwBool RwEngineStop(void);
 extern RwBool RwEngineStart(void);
 extern RwBool RwEngineClose(void);
+
+typedef struct RwEngineOpenParams RwEngineOpenParams;
+
 extern RwBool RwEngineOpen(RwEngineOpenParams* initParams);
 extern RwBool RwEngineTerm(void);
 extern RwBool RwEngineInit(const RwMemoryFunctions* memFuncs, RwUInt32 initFlags,

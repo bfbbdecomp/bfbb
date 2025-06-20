@@ -200,6 +200,7 @@ cflags_base = [
     "-str reuse",
     "-multibyte",  # For Wii compilers, replace with `-enc SJIS`
     "-i include",
+    "-i include/rwsdk",
     "-i src/PowerPC_EABI_Support/include",
     "-i src/dolphin/include",
     "-i src/dolphin/src",
@@ -1074,7 +1075,7 @@ config.libs = [
             Object(NonMatching, "rwsdk/src/baresamp.c"),
             Object(NonMatching, "rwsdk/src/basync.c"),
             Object(NonMatching, "rwsdk/src/batextur.c"),
-            Object(NonMatching, "rwsdk/src/batypehf.c"),
+            Object(Matching, "rwsdk/src/batypehf.c"),
             Object(NonMatching, "rwsdk/driver/common/palquant.c"),
             Object(NonMatching, "rwsdk/driver/gcn/dl2drend.c"),
             Object(NonMatching, "rwsdk/driver/gcn/dlconvrt.c"),

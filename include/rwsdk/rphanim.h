@@ -4,6 +4,8 @@
 #include "rwcore.h"
 #include "rtanim.h"
 
+#define rpHANIMDEFAULTFRAMEID -1
+
 struct RpHAnimNodeInfo
 {
     RwInt32 nodeID;
@@ -11,6 +13,10 @@ struct RpHAnimNodeInfo
     RwInt32 flags;
     RwFrame* pFrame;
 };
+
+typedef struct RpHAnimNodeInfo RpHAnimNodeInfo;
+typedef struct RpHAnimHierarchy RpHAnimHierarchy;
+typedef struct RtAnimInterpolator RtAnimInterpolator;
 
 struct RpHAnimHierarchy
 {
@@ -35,9 +41,27 @@ enum RpHAnimHierarchyFlag
     rpHANIMHIERARCHYFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
 
+typedef struct RpHAnimAtomicGlobalVars RpHAnimAtomicGlobalVars;
+
+struct RpHAnimAtomicGlobalVars
+{
+    RwInt32 engineOffset;
+    RwFreeList* HAnimFreeList;
+};
+
+typedef struct RpHAnimFrameExtension RpHAnimFrameExtension;
+struct RpHAnimFrameExtension
+{
+    RwInt32 id;
+    RpHAnimHierarchy* hierarchy;
+};
+
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+typedef struct RtAnimAnimation RtAnimAnimation;
+typedef enum RpHAnimHierarchyFlag RpHAnimHierarchyFlag;
 
 extern void RpHAnimKeyFrameApply(void* matrix, void* voidIFrame);
 extern void RpHAnimKeyFrameInterpolate(void* voidOut, void* voidIn1, void* voidIn2, RwReal time,

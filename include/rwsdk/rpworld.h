@@ -4,6 +4,7 @@
 #include <rwsdk/rwcore.h>
 
 typedef struct RpLight;
+typedef struct RwSurfaceProperties RwSurfaceProperties;
 
 struct RpMaterial
 {
@@ -14,6 +15,8 @@ struct RpMaterial
     RwInt16 refCount;
     RwInt16 pad;
 };
+
+typedef struct RpMaterial RpMaterial;
 
 typedef RpMaterial* (*RpMaterialCallBack)(RpMaterial* material, void* data);
 
@@ -81,6 +84,8 @@ struct RpBuildMeshTriangle
     RwUInt16 pipelineIndex;
 };
 
+typedef struct RpBuildMeshTriangle RpBuildMeshTriangle;
+
 struct RpBuildMesh
 {
     RwUInt32 triangleBufferSize;
@@ -104,9 +109,14 @@ struct RpMeshHeader
     RwUInt32 firstMeshOffset;
 };
 
+typedef struct RpMesh RpMesh;
+typedef struct RpMeshHeader RpMeshHeader;
+
 typedef RpMesh* (*RpMeshCallBack)(RpMesh* mesh, RpMeshHeader* meshHeader, void* pData);
 
 typedef struct RpGeometry;
+
+typedef struct RpGeometry RpGeometry;
 
 struct RpMorphTarget
 {
@@ -115,6 +125,11 @@ struct RpMorphTarget
     RwV3d* verts;
     RwV3d* normals;
 };
+
+typedef struct RpMaterialList RpMaterialList;
+typedef struct RpTriangle RpTriangle;
+typedef struct RwTexCoords RwTexCoords;
+typedef struct RpMorphTarget RpMorphTarget;
 
 struct RpGeometry
 {
@@ -150,7 +165,7 @@ enum RpAtomicFlag
     rpATOMICFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
 
-typedef struct RpClump;
+typedef struct RpClump RpClump;
 
 typedef RpClump* (*RpClumpCallBack)(RpClump* clump, void* data);
 
@@ -174,7 +189,7 @@ struct RpInterpolator
     RwReal position;
 };
 
-typedef struct RpAtomic;
+typedef struct RpAtomic RpAtomic;
 
 typedef RpAtomic* (*RpAtomicCallBackRender)(RpAtomic* atomic);
 
@@ -318,6 +333,8 @@ typedef RpAtomic* (*RpAtomicCallBackRender)(RpAtomic* atomic);
 #define RpAtomicSetPipeline RpAtomicSetPipelineMacro
 #define RpAtomicGetPipeline RpAtomicGetPipelineMacro
 
+typedef struct RpInterpolator RpInterpolator;
+
 struct RpAtomic
 {
     RwObjectHasFrame object;
@@ -351,6 +368,9 @@ struct RpPolygon
     RwUInt16 vertIndex[3];
 };
 
+typedef struct RpPolygon RpPolygon;
+typedef struct RpVertexNormal RpVertexNormal;
+
 struct RpWorldSector
 {
     RwInt32 type;
@@ -372,6 +392,8 @@ struct RpWorldSector
     RwUInt16 numPolygons;
     RwUInt16 pad;
 };
+
+typedef struct RpWorldSector RpWorldSector;
 
 typedef RpWorldSector* (*RpWorldSectorCallBack)(RpWorldSector* worldSector, void* data);
 
@@ -453,6 +475,9 @@ enum RpWorldRenderOrder
 
 typedef RpWorldSector* (*RpWorldSectorCallBackRender)(RpWorldSector* worldSector);
 
+typedef enum RpWorldRenderOrder RpWorldRenderOrder;
+typedef struct RpSector RpSector;
+
 struct RpWorld
 {
     RwObject object;
@@ -507,6 +532,8 @@ struct RpLight
     RwUInt16 pad;
 };
 
+typedef struct RpLight RpLight;
+
 typedef RpLight* (*RpLightCallBack)(RpLight* light, void* data);
 
 #define RpLightGetRadiusMacro(_light) ((_light)->radius)
@@ -541,6 +568,8 @@ typedef RpLight* (*RpLightCallBack)(RpLight* light, void* data);
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+typedef struct RpWorld RpWorld;
 
 extern RpWorld* RpWorldStreamRead(RwStream* stream);
 extern RpAtomic* AtomicDefaultRenderCallBack(RpAtomic* atomic);
@@ -654,6 +683,7 @@ extern RpMaterialList* _rpMaterialListStreamRead(RwStream* stream, RpMaterialLis
 extern RpMeshHeader* _rpMeshHeaderCreate(RwUInt32 size);
 extern void* _rpMeshClose(void* instance, RwInt32 offset, RwInt32 size);
 extern void* _rpMeshOpen(void* instance, RwInt32 offset, RwInt32 size);
+typedef struct RpBuildMesh RpBuildMesh;
 extern RpBuildMesh* _rpBuildMeshCreate(RwUInt32 bufferSize);
 extern RwBool _rpBuildMeshDestroy(RpBuildMesh* mesh);
 extern RwBool _rpMeshDestroy(RpMeshHeader* mesh);
