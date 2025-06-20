@@ -19,7 +19,17 @@
     ".clangd": "yaml",
     "__gx.h": "c",
     "stddef.h": "c",
-    "hw_regs.h": "c"
+    "hw_regs.h": "c",
+    "rtanim.h": "c",
+    "rwcore.h": "c",
+    "rwplcore.h": "c",
+    "stdarg.h": "c",
+    "ptankgcn.h": "c",
+    "cmath": "cpp",
+    "rpcollis.h": "c",
+    "rpworld.h": "c",
+    "rphanim.h": "c",
+    "rpmatfx.h": "c"
   },
   // Disable C/C++ IntelliSense, use clangd instead
   "C_Cpp.intelliSenseEngine": "default",

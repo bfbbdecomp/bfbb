@@ -3,7 +3,7 @@
 
 #include "rwcore.h"
 
-typedef struct RtAnimAnimation;
+typedef struct RtAnimAnimation RtAnimAnimation;
 
 typedef void (*RtAnimKeyFrameApplyCallBack)(void* result, void* voidIFrame);
 typedef void (*RtAnimKeyFrameBlendCallBack)(void* voidOut, void* voidIn1, void* voidIn2,
@@ -33,6 +33,8 @@ struct RtAnimInterpolatorInfo
     RwInt32 customDataSize;
 };
 
+typedef struct RtAnimInterpolatorInfo RtAnimInterpolatorInfo;
+
 struct RtAnimAnimation
 {
     RtAnimInterpolatorInfo* interpInfo;
@@ -43,7 +45,7 @@ struct RtAnimAnimation
     void* customData;
 };
 
-typedef struct RtAnimInterpolator;
+typedef struct RtAnimInterpolator RtAnimInterpolator;
 
 typedef RtAnimInterpolator* (*RtAnimCallBack)(RtAnimInterpolator* animInstance, void* data);
 

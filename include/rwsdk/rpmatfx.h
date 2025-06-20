@@ -27,14 +27,40 @@ enum RpMatFXMaterialFlags
     rpMATFXFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
 
+struct MatFXDualData
+{
+    // This is device specific.
+    // This struct could be wrong
+    RwTexture* texture;
+    RwBlendFunction srcBlendMode;
+    RwBlendFunction dstBlendMode;
+};
+
+typedef struct MatFXDualData MatFXDualData;
+
+struct MatFXBumpMapData
+{
+    RwFrame* frame;
+    RwTexture* texture;
+    RwTexture* bumpTexture;
+    RwReal coef;
+    RwReal invBumpWidth;
+};
+
+typedef struct MatFXBumpMapData MatFXBumpMapData;
+
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+typedef enum RpMatFXGameCubePipeline RpMatFXGameCubePipeline;
 
 extern RxPipeline* RpMatFXGetGameCubePipeline(RpMatFXGameCubePipeline gamecubePipeline);
 extern RwBool RpMatFXPluginAttach(void);
 extern RpAtomic* RpMatFXAtomicEnableEffects(RpAtomic* atomic);
 extern RpWorldSector* RpMatFXWorldSectorEnableEffects(RpWorldSector* worldSector);
+typedef enum RpMatFXMaterialFlags RpMatFXMaterialFlags;
+
 extern RpMaterial* RpMatFXMaterialSetEffects(RpMaterial* material, RpMatFXMaterialFlags flags);
 extern RpMaterial* RpMatFXMaterialSetupBumpMap(RpMaterial* material, RwTexture* texture,
                                                RwFrame* frame, RwReal coef);
@@ -70,6 +96,8 @@ extern RpMaterial* RpMatFXMaterialSetUVTransformMatrices(RpMaterial* material,
 extern const RpMaterial* RpMatFXMaterialGetUVTransformMatrices(const RpMaterial* material,
                                                                RwMatrix** baseTransform,
                                                                RwMatrix** dualTransform);
+extern RwTexture* _rpMatFXTextureMaskCreate(const RwTexture* baseTexture,
+                                            const RwTexture* effectTexture);
 
 #ifdef __cplusplus
 }
