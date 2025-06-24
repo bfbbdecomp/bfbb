@@ -3,6 +3,10 @@
 
 #include "rwcore.h"
 #include "rtanim.h"
+#include "rtquat.h"
+
+#define rpHANIMDEFAULTFRAMEID -1
+#define rpHANIMSTREAMCURRENTVERSION 0x100
 
 struct RpHAnimNodeInfo
 {
@@ -11,6 +15,9 @@ struct RpHAnimNodeInfo
     RwInt32 flags;
     RwFrame* pFrame;
 };
+
+typedef struct RpHAnimNodeInfo RpHAnimNodeInfo;
+typedef struct RpHAnimHierarchy RpHAnimHierarchy;
 
 struct RpHAnimHierarchy
 {
@@ -33,6 +40,43 @@ enum RpHAnimHierarchyFlag
     rpHANIMHIERARCHYUPDATELTMS = 0x2000,
     rpHANIMHIERARCHYLOCALSPACEMATRICES = 0x4000,
     rpHANIMHIERARCHYFLAGFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+typedef enum RpHAnimHierarchyFlag RpHAnimHierarchyFlag;
+
+typedef struct RpHAnimAtomicGlobalVars RpHAnimAtomicGlobalVars;
+
+struct RpHAnimAtomicGlobalVars
+{
+    RwInt32 engineOffset;
+    RwFreeList* HAnimFreeList;
+};
+
+typedef struct RpHAnimFrameExtension RpHAnimFrameExtension;
+
+struct RpHAnimFrameExtension
+{
+    RwInt32 id;
+    RpHAnimHierarchy* hierarchy;
+};
+
+typedef struct RpHAnimInterpFrame RpHAnimInterpFrame;
+
+typedef struct RpHAnimKeyFrame RpHAnimKeyFrame;
+
+struct RpHAnimKeyFrame
+{
+    RpHAnimKeyFrame* prevFrame;
+    RwReal time;
+    RtQuat q;
+    RwV3d t;
+};
+
+struct RpHAnimInterpFrame
+{
+    RpHAnimKeyFrame* keyFrame1;
+    RpHAnimKeyFrame* keyFrame2;
+    RtQuat q;
+    RwV3d t;
 };
 
 #ifdef __cplusplus

@@ -3,7 +3,7 @@
 
 #include "rwcore.h"
 
-typedef struct RtAnimAnimation;
+typedef struct RtAnimAnimation RtAnimAnimation;
 
 typedef void (*RtAnimKeyFrameApplyCallBack)(void* result, void* voidIFrame);
 typedef void (*RtAnimKeyFrameBlendCallBack)(void* voidOut, void* voidIn1, void* voidIn2,
@@ -16,6 +16,8 @@ typedef RtAnimAnimation* (*RtAnimKeyFrameStreamReadCallBack)(RwStream* stream,
                                                              RtAnimAnimation* animation);
 typedef RwBool (*RtAnimKeyFrameStreamWriteCallBack)(RtAnimAnimation* animation, RwStream* stream);
 typedef RwInt32 (*RtAnimKeyFrameStreamGetSizeCallBack)(RtAnimAnimation* animation);
+
+typedef struct RtAnimInterpolatorInfo RtAnimInterpolatorInfo;
 
 struct RtAnimInterpolatorInfo
 {
@@ -43,7 +45,7 @@ struct RtAnimAnimation
     void* customData;
 };
 
-typedef struct RtAnimInterpolator;
+typedef struct RtAnimInterpolator RtAnimInterpolator;
 
 typedef RtAnimInterpolator* (*RtAnimCallBack)(RtAnimInterpolator* animInstance, void* data);
 

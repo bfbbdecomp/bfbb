@@ -5,7 +5,7 @@
 #include "rpworld.h"
 #include "rphanim.h"
 
-typedef struct RpSkin;
+typedef struct RpSkin RpSkin;
 
 struct RwMatrixWeights
 {
@@ -34,9 +34,14 @@ extern RpSkin* RpSkinGeometryGetSkin(RpGeometry* geometry);
 extern RpGeometry* RpSkinGeometrySetSkin(RpGeometry* geometry, RpSkin* skin);
 extern RpSkin* RpSkinDestroy(RpSkin* skin);
 extern RwUInt32 RpSkinGetNumBones(RpSkin* skin);
+typedef struct RwMatrixWeights RwMatrixWeights;
+
 extern const RwMatrixWeights* RpSkinGetVertexBoneWeights(RpSkin* skin);
 extern const RwUInt32* RpSkinGetVertexBoneIndices(RpSkin* skin);
 extern const RwMatrix* RpSkinGetSkinToBoneMatrices(RpSkin* skin);
+typedef struct RpAtomic RpAtomic;
+typedef enum RpSkinType RpSkinType;
+
 extern RpAtomic* RpSkinAtomicSetType(RpAtomic* atomic, RpSkinType type);
 
 #ifdef __cplusplus

@@ -204,6 +204,8 @@ cflags_base = [
     "-i src/dolphin/include",
     "-i src/dolphin/src",
     "-i src",
+    "-i src/rwsdk",
+    "-i include/rwsdk",
     f"-i build/{config.version}/include",
     f"-DBUILD_VERSION={version_num}",
     f"-DVERSION_{config.version}",

@@ -16,6 +16,9 @@ union RxColorUnion
 //          However, currently decomped functions seem to pack the struct
 //          in this particular way so it's like this for now.
 //          See: zActionLIne.cpp
+
+typedef union RxColorUnion RxColorUnion;
+
 struct _RxObjSpace3DVertex
 {
     RwV3d objVertex;
@@ -33,11 +36,15 @@ typedef struct rxHeapSuperBlockDescriptor;
 typedef struct RxHeap;
 typedef struct rxHeapBlockHeader;
 
+typedef struct rxHeapBlockHeader rxHeapBlockHeader;
+
 struct rxHeapFreeBlock
 {
     RwUInt32 size;
     rxHeapBlockHeader* ptr;
 };
+
+typedef struct rxHeapSuperBlockDescriptor rxHeapSuperBlockDescriptor;
 
 struct rxHeapSuperBlockDescriptor
 {
@@ -45,6 +52,8 @@ struct rxHeapSuperBlockDescriptor
     RwUInt32 size;
     rxHeapSuperBlockDescriptor* next;
 };
+
+typedef struct rxHeapFreeBlock rxHeapFreeBlock;
 
 struct RxHeap
 {
@@ -56,6 +65,8 @@ struct RxHeap
     RwUInt32 entriesUsed;
     RwBool dirty;
 };
+
+typedef struct rxHeapFreeBlock rxHeapFreeBlock;
 
 struct rxHeapBlockHeader
 {
@@ -95,6 +106,8 @@ struct RxClusterDefinition
     const RwChar* attributeSet;
 };
 
+typedef enum RxClusterValid RxClusterValid;
+
 struct RxOutputSpec
 {
     RwChar* name;
@@ -109,12 +122,19 @@ enum RxClusterForcePresent
     rxCLUSTERFORCEPRESENTFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
 
+typedef struct RxClusterDefinition RxClusterDefinition;
+typedef enum RxClusterForcePresent RxClusterForcePresent;
+
 struct RxClusterRef
 {
     RxClusterDefinition* clusterDef;
     RxClusterForcePresent forcePresent;
     RwUInt32 reserved;
 };
+
+typedef struct RxClusterRef RxClusterRef;
+typedef enum RxClusterValidityReq RxClusterValidityReq;
+typedef struct RxOutputSpec RxOutputSpec;
 
 struct RxIoSpec
 {
@@ -124,6 +144,11 @@ struct RxIoSpec
     RwUInt32 numOutputs;
     RxOutputSpec* outputs;
 };
+
+typedef struct RxPipelineNode RxPipelineNode;
+typedef struct RxPipelineNodeParam RxPipelineNodeParam;
+typedef struct RxNodeDefinition RxNodeDefinition;
+typedef struct RxPipeline RxPipeline;
 
 typedef RwBool (*RxNodeBodyFn)(RxPipelineNode* self, const RxPipelineNodeParam* params);
 typedef RwBool (*RxNodeInitFn)(RxNodeDefinition* self);
@@ -152,6 +177,10 @@ enum RxNodeDefEditable
     rxNODEDEFEDITABLEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
 
+typedef struct RxNodeMethods RxNodeMethods;
+typedef struct RxIoSpec RxIoSpec;
+typedef enum RxNodeDefEditable RxNodeDefEditable;
+
 struct RxNodeDefinition
 {
     RwChar* name;
@@ -168,6 +197,8 @@ struct RxPipelineCluster
     RwUInt32 creationAttributes;
 };
 
+typedef struct RxPipelineCluster RxPipelineCluster;
+
 struct RxCluster
 {
     RwUInt16 flags;
@@ -180,6 +211,9 @@ struct RxCluster
     RwUInt32 attributes;
 };
 
+typedef struct RxPipelineCluster RxPipelineCluster;
+typedef struct RxCluster RxCluster;
+
 struct RxPacket
 {
     RwUInt16 flags;
@@ -190,6 +224,8 @@ struct RxPacket
     RxPipelineCluster** slotClusterRefs;
     RxCluster clusters[1];
 };
+
+typedef struct RxPipelineNodeTopSortData RxPipelineNodeTopSortData;
 
 struct RxPipelineNode
 {
@@ -205,7 +241,7 @@ struct RxPipelineNode
     RwUInt32 initializationDataSize;
 };
 
-typedef struct rxReq;
+typedef struct rxReq rxReq;
 
 struct RxPipelineNodeTopSortData
 {
@@ -213,6 +249,8 @@ struct RxPipelineNodeTopSortData
     RwUInt32 numInsVisited;
     rxReq* req;
 };
+
+typedef struct RxHeap RxHeap;
 
 struct RxPipelineNodeParam
 {
@@ -235,6 +273,10 @@ struct RxPipelineRequiresCluster
     RxClusterValidityReq rqdOrOpt;
     RwUInt32 slotIndex;
 };
+
+typedef enum rxEmbeddedPacketState rxEmbeddedPacketState;
+typedef struct RxPacket RxPacket;
+typedef struct RxPipelineRequiresCluster RxPipelineRequiresCluster;
 
 struct RxPipeline
 {
@@ -324,6 +366,8 @@ enum RwRasterPrivateFlag
 #define rwRASTERPALETTELOCKED (rwRASTERPALETTELOCKEDREAD | rwRASTERPALETTELOCKEDWRITE)
 #define rwRASTERLOCKED (rwRASTERPIXELLOCKED | rwRASTERPALETTELOCKED)
 
+typedef struct RwRaster RwRaster;
+
 struct RwRaster
 {
     RwRaster* parent;
@@ -355,6 +399,12 @@ struct RwRaster
 #define RwRasterGetType(_raster) (((_raster)->cType) & rwRASTERTYPEMASK)
 
 #define RwRasterGetParent(_raster) ((_raster)->parent)
+
+typedef enum RwShadeMode RwShadeMode;
+typedef enum RwBlendFunction RwBlendFunction;
+typedef enum RwTextureAddressMode RwTextureAddressMode;
+typedef enum RwTextureFilterMode RwTextureFilterMode;
+typedef enum RwFogType RwFogType;
 
 struct RxRenderStateVector
 {
@@ -425,6 +475,8 @@ struct RwTexDictionary
     RwLLLink lInInstance;
 };
 
+typedef struct RwTexDictionary RwTexDictionary;
+
 struct RwTexture
 {
     RwRaster* raster;
@@ -435,6 +487,8 @@ struct RwTexture
     RwUInt32 filterAddressing;
     RwInt32 refCount;
 };
+
+typedef struct RwTexture RwTexture;
 
 typedef RwTexture* (*RwTextureCallBackRead)(const RwChar* name, const RwChar* maskName);
 typedef RwTexture* (*RwTextureCallBack)(RwTexture* texture, void* pData);
@@ -531,11 +585,15 @@ struct RwFrame
     struct RwFrame* root;
 };
 
+typedef struct RwFrame RwFrame;
+
 typedef RwFrame* (*RwFrameCallBack)(RwFrame* frame, void* data);
 
 #define RwFrameGetParent(_f) ((RwFrame*)rwObjectGetParent(_f))
 
 #define RwFrameGetMatrix(_f) (&(_f)->modelling)
+
+typedef struct RwObjectHasFrame RwObjectHasFrame;
 
 typedef struct RwObjectHasFrame;
 typedef RwObjectHasFrame* (*RwObjectHasFrameSyncFunction)(RwObjectHasFrame* object);
@@ -586,6 +644,8 @@ enum RwFrustumTestResult
     rwFRUSTUMTESTRESULTFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
 
+typedef struct RwPlane RwPlane;
+
 struct RwFrustumPlane
 {
     RwPlane plane;
@@ -597,8 +657,15 @@ struct RwFrustumPlane
 
 typedef struct RwCamera;
 
+typedef struct RwCamera RwCamera;
+
 typedef RwCamera* (*RwCameraBeginUpdateFunc)(RwCamera* camera);
 typedef RwCamera* (*RwCameraEndUpdateFunc)(RwCamera* camera);
+
+typedef enum RwCameraProjection RwCameraProjection;
+typedef struct RwV2d RwV2d;
+typedef struct RwFrustumPlane RwFrustumPlane;
+typedef struct RwBBox RwBBox;
 
 struct RwCamera
 {
@@ -668,6 +735,8 @@ extern RwCamera* RwCameraStreamRead(RwStream* stream);
 extern RwInt32 RwFrameRegisterPluginStream(RwUInt32 pluginID, RwPluginDataChunkReadCallBack readCB,
                                            RwPluginDataChunkWriteCallBack writeCB,
                                            RwPluginDataChunkGetSizeCallBack getSizeCB);
+typedef struct rwFrameList rwFrameList;
+
 extern RwBool _rwFrameListFindFrame(const rwFrameList* frameList, const RwFrame* frame,
                                     RwInt32* npIndex);
 extern rwFrameList* _rwFrameListDeinitialize(rwFrameList* frameList);
@@ -685,6 +754,9 @@ extern RwCamera* RwCameraBeginUpdate(RwCamera* camera);
 extern RwCamera* RwCameraSetViewOffset(RwCamera* camera, const RwV2d* offset);
 extern RwCamera* RwCameraSetNearClipPlane(RwCamera* camera, RwReal nearClip);
 extern RwCamera* RwCameraSetFarClipPlane(RwCamera* camera, RwReal farClip);
+typedef enum RwFrustumTestResult RwFrustumTestResult;
+typedef struct RwSphere RwSphere;
+
 extern RwFrustumTestResult RwCameraFrustumTestSphere(const RwCamera* camera,
                                                      const RwSphere* sphere);
 extern RwCamera* RwCameraClear(RwCamera* camera, RwRGBA* colour, RwInt32 clearMode);
@@ -716,6 +788,8 @@ extern RwInt32 RwFrameRegisterPlugin(RwInt32 size, RwUInt32 pluginID,
                                      RwPluginObjectConstructor constructCB,
                                      RwPluginObjectDestructor destructCB,
                                      RwPluginObjectCopy copyCB);
+typedef struct RwImage RwImage;
+
 extern RwImage* RwImageCreate(RwInt32 width, RwInt32 height, RwInt32 depth);
 extern RwBool RwImageDestroy(RwImage* image);
 extern RwImage* RwImageAllocatePixels(RwImage* image);
@@ -802,6 +876,8 @@ extern void RxHeapFree(RxHeap* heap, void* block);
 extern RwBool _rxHeapReset(RxHeap* heap);
 extern void RxHeapDestroy(RxHeap* heap);
 extern RxHeap* RxHeapCreate(RwUInt32 size);
+typedef struct RxRenderStateVector RxRenderStateVector;
+
 extern RxRenderStateVector*
 RxRenderStateVectorSetDefaultRenderStateVector(RxRenderStateVector* rsvp);
 extern RxRenderStateVector* RxRenderStateVectorLoadDriverState(RxRenderStateVector* rsvp);

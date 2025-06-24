@@ -1,63 +1,17 @@
 #ifndef RTQUAT_H
 #define RTQUAT_H
 
-/**
- * \defgroup rtquat RtQuat
- * \ingroup mathtools
- *
- * Quaternion Toolkit for RenderWare.
- *
- * See also http://www.gamasutra.com/features/19980703/quaternions_01.htm
- */
-
-/*
- * See http://www-groups.dcs.st-and.ac.uk/~history/Mathematicians/Hamilton.html
- * On 16 October 1843 (a Monday) Hamilton was walking in along the Royal
- * Canal with his wife to preside at a Council meeting of the Royal Irish
- * Academy.
- * 
- * Although his wife talked to him now and again Hamilton hardly
- * heard, for the discovery of the quaternions, the first noncommutative
- * algebra to be studied, was taking shape in his mind:-
- * 
- *    "And here there dawned on me the notion that we must admit, in
- *     some sense, a fourth dimension of space for the purpose of calculating
- *     with triples ...  An electric circuit seemed to close, and a spark
- *     flashed forth."
- */
-
-/****************************************************************************
- Includes
- */
-
 #include <math.h>
-/* renderware */
-//#include "rwplcore.h"
-
-//#include "rtquat.rpe"          /* automatically generated header file */
+#include "rwcore.h"
 
 #define RW_TOL_ORTHONORMAL ((RwReal)0.01)
 
-/****************************************************************************
- Global Types
- */
-
 typedef struct RtQuat RtQuat;
-/**
- * \ingroup rtquat
- * \struct RtQuat 
- * A structure describing a Quaternion
- *
-*/
 struct RtQuat
 {
-    RwV3d imag; /**< The imaginary part(s) */
-    RwReal real; /**< The real part */
+    RwV3d imag;
+    RwReal real;
 };
-
-/****************************************************************************
- Defines
- */
 
 #define RtQuatInitMacro(result, _x, _y, _z, _w)                                                    \
     MACRO_START                                                                                    \
@@ -71,7 +25,7 @@ struct RtQuat
 
 #if (!defined(RtQuatAssignMacro))
 #define RtQuatAssignMacro(_target, _source) (*(_target) = *(_source))
-#endif /* (!defined(RtQuatAssignMacro)) */
+#endif
 
 #define RtQuatAddMacro(result, q1, q2)                                                             \
     MACRO_START                                                                                    \
@@ -159,9 +113,6 @@ struct RtQuat
 #define RtQuatMultiplyMacro(result, q1, q2)                                                        \
     MACRO_START                                                                                    \
     {                                                                                              \
-        /*                                                                     \
-     * Assumes q1 != result != q2                                          \
-     */                  \
         (result)->real = (q1)->real * (q2)->real - RwV3dDotProductMacro(&(q1)->imag, &(q2)->imag); \
         RwV3dCrossProductMacro(&(result)->imag, &(q1)->imag, &(q2)->imag);                         \
         RwV3dIncrementScaledMacro(&(result)->imag, &(q2)->imag, (q1)->real);                       \
@@ -172,9 +123,6 @@ struct RtQuat
 #define RtQuatReciprocalMacro(result, q)                                                           \
     MACRO_START                                                                                    \
     {                                                                                              \
-        /*                                                                     \
-     * Assumes result != q                                                 \
-     */                  \
         RwReal val = RtQuatModulusSquaredMacro(q);                                                 \
                                                                                                    \
         if (val > (RwReal)0)                                                                       \
@@ -190,9 +138,6 @@ struct RtQuat
 #define RtQuatSquareMacro(result, q)                                                               \
     MACRO_START                                                                                    \
     {                                                                                              \
-        /*                                                                     \
-     * Assumes result != q                                                 \
-     */                  \
         RwReal val = ((RwReal)2) * (q)->real;                                                      \
                                                                                                    \
         (result)->real = (q)->real * (q)->real - RwV3dDotProductMacro(&(q)->imag, &(q)->imag);     \
@@ -467,14 +412,11 @@ struct RtQuat
 
 #define RtQuatUnitConvertToMatrix(qpQuat, mpMatrix) RtQuatUnitConvertToMatrixMacro(qpQuat, mpMatrix)
 
-#endif /* (! ( defined(RWDEBUG) || defined(RWSUPPRESSINLINE) )) */
+#endif
 
-/****************************************************************************
- Function prototypes
- */
 #ifdef __cplusplus
 extern "C" {
-#endif /* __cplusplus */
+#endif
 
 extern RwBool RtQuatConvertFromMatrix(RtQuat* const qpQuat, const RwMatrix* const mpMatrix);
 
@@ -536,15 +478,11 @@ extern void RtQuatConvertToMatrix(const RtQuat* const qpQuat, RwMatrix* const mp
 
 extern void RtQuatUnitConvertToMatrix(const RtQuat* const qpQuat, RwMatrix* const mpMatrix);
 
-#endif /* ( defined(RWDEBUG) || defined(RWSUPPRESSINLINE) ) */
+#endif
 
 #ifdef __cplusplus
 }
-#endif /* __cplusplus */
-
-/*
- * Backwards compatibility code
- */
+#endif
 
 typedef RtQuat RpQuat;
 
@@ -552,4 +490,4 @@ typedef RtQuat RpQuat;
 
 #define RpAnimQuatConvertToMatrix(qpQuat, mpMatrix) RtQuatUnitConvertToMatrix(qpQuat, mpMatrix)
 
-#endif /* RTQUAT_H */
+#endif

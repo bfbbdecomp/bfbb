@@ -31,10 +31,15 @@ enum RpMatFXMaterialFlags
 extern "C" {
 #endif
 
+typedef struct RxPipeline RxPipeline;
+typedef enum RpMatFXGameCubePipeline RpMatFXGameCubePipeline;
+
 extern RxPipeline* RpMatFXGetGameCubePipeline(RpMatFXGameCubePipeline gamecubePipeline);
 extern RwBool RpMatFXPluginAttach(void);
 extern RpAtomic* RpMatFXAtomicEnableEffects(RpAtomic* atomic);
 extern RpWorldSector* RpMatFXWorldSectorEnableEffects(RpWorldSector* worldSector);
+typedef enum RpMatFXMaterialFlags RpMatFXMaterialFlags;
+
 extern RpMaterial* RpMatFXMaterialSetEffects(RpMaterial* material, RpMatFXMaterialFlags flags);
 extern RpMaterial* RpMatFXMaterialSetupBumpMap(RpMaterial* material, RwTexture* texture,
                                                RwFrame* frame, RwReal coef);
