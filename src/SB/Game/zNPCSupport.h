@@ -15,7 +15,7 @@ enum en_npctgt
     NPC_TGT_FORCEINT = 0x7fffffff
 };
 
-enum _tageNPCSnd
+typedef enum _tageNPCSnd
 {
     eNPCSnd_GloveAttack,
     eNPCSnd_SleepyAttack,
@@ -23,7 +23,7 @@ enum _tageNPCSnd
     eNPCSnd_FodBzztAttack,
     eNPCSnd_JellyfishAttack,
     eNPCSnd_Total
-};
+} eNPCSnd;
 
 enum en_NPC_UI_WIDGETS
 {
@@ -67,7 +67,9 @@ struct NPCTarget
     zNPCCommon* npc_owner;
 
     void TargetClear();
+    S32 FindNearest(S32 flg_consider, xBase* skipme, xVec3* from, F32 dst_max);
     void PosGet(xVec3* pos);
+    S32 InCylinder(xVec3* from, F32 rad, F32 hyt, F32 off);
     void TargetSet(xEnt* ent, int b);
     S32 IsDead();
 };
@@ -89,10 +91,10 @@ struct NPCWidget
     zNPCCommon* npc_ownerlock;
 
     S32 NPCIsTheLocker(const zNPCCommon* npc_lock);
-    U32 IsLocked();
+    S32 IsLocked();
     S32 IsVisible();
-    U32 Off(zNPCCommon* npc, U32 theman);
-    U32 On(const zNPCCommon* npc, S32 theman);
+    S32 Off(const zNPCCommon* npc, S32 theman);
+    S32 On(const zNPCCommon* npc, S32 theman);
     void Reset();
     void Init(en_NPC_UI_WIDGETS);
     S32 Lock(const zNPCCommon*);
@@ -135,6 +137,7 @@ void NPCSupport_Timestep(F32 dt);
 void NPCSupport_SceneReset();
 void NPCSupport_Shutdown();
 void NPCSupport_ScenePostInit();
+NPCWidget* NPCWidget_Find(en_NPC_UI_WIDGETS which);
 void Firework_SceneReset(S32);
 void Firework_ScenePrepare();
 void Firework_SceneFinish();
@@ -150,14 +153,23 @@ F32 NPCC_TmrCycle(F32* tmr, F32 dt, F32 interval);
 xVec3* NPCC_rightDir(xEnt* ent);
 xVec3* NPCC_faceDir(xEnt* ent);
 void NPCC_ang_toXZDir(F32 angle, xVec3* dir);
+F32 NPCC_dir_toXZAng(const xVec3* dir);
 F32 NPCC_aimVary(xVec3* dir_aim, xVec3* pos_src, xVec3* pos_tgt, F32 dst_vary, S32 flg_vary,
                  xVec3* pos_aimPoint);
 void NPCC_aimMiss(xVec3*, xVec3*, xVec3*, float, xVec3*);
 S32 NPCC_chk_hitPlyr(xBound* bnd, xCollis* collide);
+S32 NPCC_chk_hitEnt(xEnt* tgt, xBound* bnd, xCollis* collide);
 S32 NPCC_pos_ofBase(xBase* tgt, xVec3* pos);
+void NPCC_xBoundAway(xBound* bnd);
+void NPCC_xBoundBack(xBound* bnd);
 F32 NPCC_ds2_toCam(const xVec3* pos_from, xVec3* delta);
 void zNPC_SNDStop(_tageNPCSnd snd);
 void zNPC_SNDPlay3D(_tageNPCSnd snd, xEnt*);
 RwRaster* NPCC_FindRWRaster(char*);
+
+inline F32 SQ(F32 x)
+{
+    return x * x;
+}
 
 #endif

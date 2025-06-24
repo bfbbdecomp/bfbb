@@ -8,17 +8,33 @@
 #include "zNPCHazard.h"
 #include "zNPCGlyph.h"
 #include "zNPCSupplement.h"
+#include "zNPCMgr.h"
+#include "zNPCTypeRobot.h"
+#include "zNPCFXCinematic.h"
 
 #include "xMathInlines.h"
 #include "xMath3.h"
 #include "xUtil.h"
 #include "xBound.h"
+#include "xQuickCull.h"
+#include "xCollide.h"
 
-NPCWidget g_npc_widgets[1] = {};
-static U32 g_hash_uiwidgets[1] = { 0 };
-static char* g_strz_uiwidgets[1] = { "MNU4 NPCTALK" };
+#define MAX_FIREWORK 32
+
+static NPCWidget g_npc_widgets[NPC_WIDGE_NOMORE];
+static U32 g_hash_uiwidgets[NPC_WIDGE_NOMORE] = {};
+static const char* g_strz_uiwidgets[NPC_WIDGE_NOMORE] = { "MNU4 NPCTALK" };
+
+static U32 sNPCSndFx[eNPCSnd_Total] = {};
+static U32 sNPCSndID[eNPCSnd_Total] = {};
+static F32 sNPCSndFxVolume[eNPCSnd_Total] = {};
+
+static Firework g_fireworks[MAX_FIREWORK];
+
+F32 Firework::acc_thrust = 15.0f;
+F32 Firework::acc_gravity = -10.0f;
+
 S32 g_pc_playerInvisible;
-static Firework g_fireworks[32];
 
 void NPCSupport_Startup()
 {
@@ -83,7 +99,10 @@ void NPCSupport_Timestep(F32 dt)
 
 void NPCWidget_Startup()
 {
-    g_hash_uiwidgets[0] = xStrHash((const char*)g_strz_uiwidgets);
+    for (S32 i = 0; i < NPC_WIDGE_NOMORE; i++)
+    {
+        g_hash_uiwidgets[i] = xStrHash(g_strz_uiwidgets[i]);
+    }
 }
 
 void NPCWidget_Shutdown()
@@ -108,9 +127,9 @@ void NPCWidget::Reset()
 {
 }
 
-U32 NPCWidget::On(const zNPCCommon* npc, int theman)
+S32 NPCWidget::On(const zNPCCommon* npc, S32 theman)
 {
-    if ((!theman && !NPCIsTheLocker(npc)) && (((S32)IsLocked()) || (!Lock(npc))))
+    if ((!theman && !NPCIsTheLocker(npc)) && ((IsLocked()) || (!Lock(npc))))
     {
         return 0;
     }
@@ -125,6 +144,23 @@ U32 NPCWidget::On(const zNPCCommon* npc, int theman)
         return 1;
     }
 
+    return 1;
+}
+
+S32 NPCWidget::Off(const zNPCCommon* npc, S32 theman)
+{
+    if (!theman && !this->NPCIsTheLocker(npc))
+    {
+        return 0;
+    }
+
+    if (npc)
+    {
+        this->Unlock(npc);
+    }
+
+    zEntEvent(this->base_widge, eEventInvisible);
+    zEntEvent(this->base_widge, eEventUIFocusOff_Unselect);
     return 1;
 }
 
@@ -192,7 +228,8 @@ NPCWidget* NPCWidget_Find(en_NPC_UI_WIDGETS which)
 
 void NPCWidget::Init(en_NPC_UI_WIDGETS which)
 {
-    base_widge = zSceneFindObject(g_hash_uiwidgets[idxID = which]);
+    this->idxID = which;
+    this->base_widge = zSceneFindObject(g_hash_uiwidgets[this->idxID]);
 }
 
 void NPCTarget::TargetSet(xEnt* ent, int b)
@@ -216,6 +253,322 @@ void NPCTarget::TargetClear()
     ent_target = 0; //0x4?
     typ_target = NPC_TGT_NONE;
 }
+
+S32 NPCTarget::FindNearest(S32 flg_consider, xBase* skipme, xVec3* from, F32 dst_max)
+//NONMATCH("https://decomp.me/scratch/wWBRW")
+{
+    S32 found = 0;
+    st_XORDEREDARRAY* npclist;
+    F32 ds2_best;
+    zNPCCommon *npc, *npc_best;
+    xVec3 vec = {};
+    F32 fv;
+    S32 i, ntyp;
+
+    npc_best = NULL;
+    ds2_best = (dst_max < 0.0f) ? HUGE : SQ(dst_max);
+
+    if (flg_consider & 0x1)
+    {
+        this->TargetSet(&globals.player.ent, 1);
+
+        if (from)
+        {
+            xVec3Sub(&vec, xEntGetPos(&globals.player.ent), from);
+            ds2_best = xVec3Length2(&vec);
+        }
+    }
+
+    if (from && (flg_consider & 0x1E))
+    {
+        npclist = zNPCMgr_GetNPCList();
+
+        for (i = 0; i < npclist->cnt; i++)
+        {
+            npc = (zNPCCommon*)npclist->list[i];
+            ntyp = npc->SelfType();
+
+            if (npc == skipme)
+                continue;
+
+            if (((ntyp & 0xFFFFFF00) != 'NTT\0' || (flg_consider & 0x4)) &&
+                ((ntyp & 0xFFFFFF00) != 'NTR\0' || (flg_consider & 0x2)) &&
+                ((ntyp & 0xFFFFFF00) != 'NTF\0' || (flg_consider & 0x8)) &&
+                ((ntyp & 0xFFFFFF00) != 'NTA\0' || (flg_consider & 0x10)))
+            {
+                if (npc->IsAlive())
+                {
+                    xVec3Sub(&vec, xEntGetPos(npc), from);
+                    if (flg_consider & 0x80)
+                    {
+                        vec.y = 0.0f;
+                    }
+
+                    fv = xVec3Length2(&vec);
+                    if (fv > ds2_best)
+                        continue;
+
+                    ds2_best = fv;
+                    npc_best = npc;
+                    found = 1;
+                }
+            }
+        }
+
+        if (found)
+        {
+            this->TargetSet(npc_best, 0);
+        }
+    }
+
+    return found;
+}
+
+S32 NPCTarget::InCylinder(xVec3* from, F32 rad, F32 hyt, F32 off)
+{
+    S32 inrange = 1;
+
+    xVec3 vec = {};
+    this->PosGet(&vec);
+    xVec3SubFrom(&vec, from);
+
+    F32 upper = hyt + off;
+    F32 lower = upper - hyt;
+
+    if (vec.y > upper)
+    {
+        inrange = 0;
+    }
+    else if (vec.y < lower)
+    {
+        inrange = 0;
+    }
+    else if (xVec3Length2(&vec) > SQ(rad))
+    {
+        inrange = 0;
+    }
+
+    return inrange;
+}
+
+S32 NPCTarget::IsDead()
+{
+    S32 dead = 0;
+
+    switch (this->typ_target)
+    {
+    case NPC_TGT_PLYR:
+        if (globals.player.Health < 1)
+        {
+            dead = 1;
+        }
+        break;
+    case NPC_TGT_ENT:
+        if (this->ent_target->baseType == eBaseTypeNPC)
+        {
+            if (!((zNPCCommon*)this->ent_target)->IsAlive())
+            {
+                dead = 1;
+            }
+        }
+        break;
+    case NPC_TGT_BASE:
+        break;
+    }
+
+    return dead;
+}
+
+// void NPCLaser::Render(xVec3* pos_src, xVec3* pos_tgt)
+// //NONMATCH("https://decomp.me/scratch/lNgTd")
+// {
+//     xVec3 var_70;
+//     xVec3Copy(&var_70, pos_src);
+
+//     xVec3 var_7C;
+//     xVec3Copy(&var_7C, pos_tgt);
+
+//     xVec3 var_88;
+//     xVec3Sub(&var_88, &var_7C, &var_70);
+//     xVec3Normalize(&var_88, &var_88);
+
+//     xVec3 var_94;
+//     xVec3Cross(&var_94, &globals.camera.mat.at, &var_88);
+
+//     F32 f1 = xVec3Length2(&var_94);
+//     if (f1 < 0.00001f)
+//     {
+//         xVec3Copy(&var_94, &g_X3);
+//     }
+//     else
+//     {
+//         xVec3SMulBy(&var_94, 1.0f / xsqrt(f1));
+//     }
+
+//     xVec3 var_A0;
+//     xVec3Cross(&var_A0, &var_94, &var_88);
+
+//     S32 i;
+
+//     static RwIm3DVertex laser_vtxbuf[2][14];
+//     RwIm3DVertex* vtx_horz = laser_vtxbuf[0];
+//     RwIm3DVertex* vtx_vert = laser_vtxbuf[1];
+
+//     for (i = 0; i <= 6; i++)
+//     {
+//         F32 rat = (F32)i / 6.0f;
+//         F32 f29 = LERP(rat, this->radius[0], this->radius[1]);
+
+//         xVec3 var_AC;
+//         var_AC.x = LERP(rat, var_70.x, var_7C.x);
+//         var_AC.y = LERP(rat, var_70.y, var_7C.y);
+//         var_AC.z = LERP(rat, var_70.z, var_7C.z);
+
+//         U8 r22 = LERP(rat, this->rgba[0].red, this->rgba[1].red);
+//         U8 r23 = LERP(rat, this->rgba[0].green, this->rgba[1].green);
+//         U8 r24 = LERP(rat, this->rgba[0].blue, this->rgba[1].blue);
+//         U8 r25 = LERP(rat, this->rgba[0].alpha, this->rgba[1].alpha);
+
+//         F32 u = 1.0f - rat + this->uv_base[0];
+//         F32 v = 1.0f - rat + this->uv_base[1];
+
+//         while (u > 1.0f)
+//             u -= 1.0f;
+//         while (v > 1.0f)
+//             v -= 1.0f;
+
+//         xVec3 var_B8;
+
+//         xVec3SMul(&var_B8, &var_94, f29);
+//         xVec3AddTo(&var_B8, &var_AC);
+//         RwIm3DVertexSetPos(&vtx_horz[0], var_B8.x, var_B8.y, var_B8.z);
+//         RwIm3DVertexSetRGBA(&vtx_horz[0], r22, r23, r24, r25);
+//         RwIm3DVertexSetU(&vtx_horz[0], 0.0f);
+//         RwIm3DVertexSetV(&vtx_horz[0], v);
+
+//         xVec3SMul(&var_B8, &var_94, -f29);
+//         xVec3AddTo(&var_B8, &var_AC);
+//         RwIm3DVertexSetPos(&vtx_horz[1], var_B8.x, var_B8.y, var_B8.z);
+//         RwIm3DVertexSetRGBA(&vtx_horz[1], r22, r23, r24, r25);
+//         RwIm3DVertexSetU(&vtx_horz[1], 1.0f);
+//         RwIm3DVertexSetV(&vtx_horz[1], v);
+
+//         vtx_horz += 2;
+
+//         xVec3SMul(&var_B8, &var_A0, f29);
+//         xVec3AddTo(&var_B8, &var_AC);
+//         RwIm3DVertexSetPos(&vtx_vert[0], var_B8.x, var_B8.y, var_B8.z);
+//         RwIm3DVertexSetRGBA(&vtx_vert[0], r22, r23, r24, r25);
+//         RwIm3DVertexSetU(&vtx_vert[0], 0.0f);
+//         RwIm3DVertexSetV(&vtx_vert[0], v);
+
+//         xVec3SMul(&var_B8, &var_A0, -f29);
+//         xVec3AddTo(&var_B8, &var_AC);
+//         RwIm3DVertexSetPos(&vtx_vert[1], var_B8.x, var_B8.y, var_B8.z);
+//         RwIm3DVertexSetRGBA(&vtx_vert[1], r22, r23, r24, r25);
+//         RwIm3DVertexSetU(&vtx_vert[1], 1.0f);
+//         RwIm3DVertexSetV(&vtx_vert[1], v);
+
+//         vtx_vert += 2;
+//     }
+
+//     SDRenderState old_rendstat = zRenderStateCurrent();
+//     if (old_rendstat == SDRS_Unknown)
+//     {
+//         old_rendstat = SDRS_Default;
+//     }
+
+//     zRenderState(SDRS_NPCVisual);
+
+//     RwRenderStateSet(rwRENDERSTATETEXTURERASTER, (void*)this->rast_laser);
+//     RwIm3DTransform(laser_vtxbuf[0], 14, NULL,
+//                     rwIM3D_VERTEXXYZ | rwIM3D_VERTEXRGBA | rwIM3D_VERTEXUV);
+//     RwIm3DRenderPrimitive(rwPRIMTYPETRISTRIP);
+//     RwIm3DEnd();
+
+//     RwRenderStateSet(rwRENDERSTATETEXTURERASTER, (void*)this->rast_laser);
+//     RwIm3DTransform(laser_vtxbuf[1], 14, NULL,
+//                     rwIM3D_VERTEXXYZ | rwIM3D_VERTEXRGBA | rwIM3D_VERTEXUV);
+//     RwIm3DRenderPrimitive(rwPRIMTYPETRISTRIP);
+//     RwIm3DEnd();
+
+//     zRenderState(old_rendstat);
+// }
+
+// void NPCCone::RenderCone(xVec3* pos_tiptop, xVec3* pos_botcenter)
+// //NONMATCH("https://decomp.me/scratch/G9pbs")
+// {
+//     RwRGBA rgba_top = this->rgba_top;
+//     RwRGBA rgba_bot = this->rgba_bot;
+//     xVec3 pos_top = *pos_tiptop;
+//     xVec3 pos_bot = *pos_botcenter;
+//     F32 f29 = this->uv_tip[0] + 0.5f * this->uv_slice[0];
+//     F32 f28 = this->uv_tip[1];
+//     F32 f31 = this->uv_tip[0] + this->uv_slice[0];
+//     F32 f30 = this->uv_tip[1] + this->uv_slice[1];
+
+//     void* mem = xMemPushTemp(10 * sizeof(RwIm3DVertex));
+//     if (!mem)
+//     {
+//         return;
+//     }
+
+//     memset(mem, 0, 10 * sizeof(RwIm3DVertex));
+
+//     RwIm3DVertex* vert_list = (RwIm3DVertex*)mem;
+//     RwIm3DVertex* vtx = vert_list + 1;
+
+//     RwIm3DVertexSetPos(&vert_list[0], pos_top.x, pos_top.y, pos_top.z);
+//     RwIm3DVertexSetRGBA(&vert_list[0], rgba_top.red, rgba_top.green, rgba_top.blue, rgba_top.alpha);
+//     RwIm3DVertexSetU(&vert_list[0], f29);
+//     RwIm3DVertexSetV(&vert_list[0], f28);
+
+//     for (S32 i = 0; i < 8; i++)
+//     {
+//         F32 ang_seg = i * PI / 4;
+//         F32 f29 = isin(ang_seg);
+//         F32 f1 = icos(ang_seg);
+
+//         xVec3 var_A0;
+//         var_A0.x = f29;
+//         var_A0.y = 0.0f;
+//         var_A0.z = f1;
+//         var_A0 *= this->rad_cone;
+//         var_A0 += pos_bot;
+
+//         RwIm3DVertexSetPos(vtx, var_A0.x, var_A0.y, var_A0.z);
+//         RwIm3DVertexSetRGBA(vtx, rgba_bot.red, rgba_bot.green, rgba_bot.blue, rgba_bot.alpha);
+
+//         F32 f0 = 1 / 8.0f * i;
+
+//         RwIm3DVertexSetU(vtx, f31 + f0);
+//         RwIm3DVertexSetV(vtx, f30);
+
+//         vtx++;
+//     }
+
+//     *vtx = vert_list[1];
+//     RwIm3DVertexSetU(vtx, f31 + this->uv_slice[0]);
+//     RwIm3DVertexSetV(vtx, f30);
+
+//     SDRenderState old_rendstat = zRenderStateCurrent();
+//     if (old_rendstat == SDRS_Unknown)
+//     {
+//         old_rendstat = SDRS_Default;
+//     }
+
+//     zRenderState(SDRS_NPCVisual);
+
+//     RwRenderStateSet(rwRENDERSTATEVERTEXALPHAENABLE, (void*)TRUE);
+//     RwRenderStateSet(rwRENDERSTATETEXTURERASTER, (void*)this->rast_cone);
+//     RwIm3DTransform(vert_list, 10, NULL, rwIM3D_VERTEXXYZ | rwIM3D_VERTEXRGBA | rwIM3D_VERTEXUV);
+//     RwIm3DRenderPrimitive(rwPRIMTYPETRIFAN);
+//     RwIm3DEnd();
+
+//     zRenderState(old_rendstat);
+
+//     xMemPopTemp(mem);
+// }
 
 void NPCBlinker::Reset()
 {
@@ -270,6 +623,44 @@ void Firework::Cleanup()
 {
 }
 
+void Firework::Update(F32 dt)
+{
+    switch (this->fwstate)
+    {
+    case FW_STAT_FLIGHT:
+        this->FlyFlyFly(dt);
+        if (this->tmr_remain < 0.0f)
+        {
+            this->fwstate = FW_STAT_BOOM;
+        }
+        break;
+    case FW_STAT_BOOM:
+        this->Detonate();
+        this->fwstate = FW_STAT_DONE;
+        break;
+    case FW_STAT_DONE:
+        break;
+    }
+
+    this->tmr_remain = MAX(-1.0f, this->tmr_remain - dt);
+}
+
+void Firework::FlyFlyFly(F32 dt) //NONMATCH("https://decomp.me/scratch/6hPC3")
+{
+    F32 pam_life = 1.0f - CLAMP(this->tmr_remain / this->tym_lifespan, 0.0f, 1.0f);
+    if (pam_life < 0.75f)
+    {
+        xVec3 dir_trav = this->vel;
+        dir_trav.normalize();
+
+        this->vel += dir_trav * (Firework::acc_thrust * dt);
+    }
+
+    this->vel += g_NY3 * (Firework::acc_gravity * dt);
+
+    NPAR_EmitFWExhaust(&this->pos, &g_O3);
+}
+
 void NPAR_EmitFWExhaust(xVec3* pos, xVec3* vel);
 
 void Firework::Detonate()
@@ -284,14 +675,136 @@ void NPCC_ang_toXZDir(F32 angle, xVec3* dir)
     dir->z = icos(angle);
 }
 
-void NPCC_dir_toXZAng(const xVec3* vec)
+F32 NPCC_dir_toXZAng(const xVec3* dir)
 {
-    xatan2(vec->x, vec->z);
+    return xatan2(dir->x, dir->z);
 }
 
 void NPCC_aimMiss(xVec3* dir_aim, xVec3* pos_src, xVec3* pos_tgt, F32 dst_miss, xVec3* pos_miss)
 {
-    NPCC_aimVary(dir_aim, pos_src,  pos_tgt, dst_miss, 8, pos_miss);
+    NPCC_aimVary(dir_aim, pos_src, pos_tgt, dst_miss, 8, pos_miss);
+}
+
+F32 NPCC_aimVary(xVec3* dir_aim, xVec3* pos_src, xVec3* pos_tgt, F32 dst_vary, S32 flg_vary,
+                 xVec3* pos_aimPoint) //NONMATCH("https://decomp.me/scratch/D1gIj")
+{
+    F32 dst_toFake = 0.0f;
+    xVec3 dir_left = {};
+    xVec3 dir_toFake = {};
+    xVec3 dir_toReal = {};
+    xVec3 vec_offset = {};
+    xVec3 pos_tgtFake = {};
+
+    xVec3Sub(&dir_toReal, pos_tgt, pos_src);
+
+    if (flg_vary & 0x10)
+    {
+        dir_toReal.y = 0.0f;
+    }
+
+    F32 mag_vary = xVec3Length(&dir_toReal);
+    if (mag_vary < 0.001f)
+    {
+        if (mag_vary > 0.0f)
+        {
+            xVec3SMulBy(&dir_toReal, 100000.0f);
+            xVec3Normalize(&dir_toReal, &dir_toReal);
+        }
+        else
+        {
+            xVec3Copy(dir_aim, &g_X3);
+        }
+
+        if (pos_aimPoint)
+        {
+            xVec3Copy(pos_aimPoint, pos_tgt);
+        }
+
+        return mag_vary;
+    }
+
+    xVec3SMulBy(&dir_toReal, 1.0f / mag_vary);
+    xVec3Cross(&dir_left, &g_Y3, &dir_toReal);
+
+    F32 mag_updown;
+    if (flg_vary & 0x8)
+    {
+        mag_updown = dst_vary;
+    }
+    else
+    {
+        mag_updown = 2.0f * (xurand() - 0.5f) * dst_vary;
+
+        F32 fv;
+        if ((flg_vary & 0x1) && (flg_vary & 0x2))
+        {
+            fv = 2.0f * (xurand() - 0.5f);
+        }
+        else if (flg_vary == 0x1)
+        {
+            fv = xurand();
+        }
+        else if (flg_vary == 0x2)
+        {
+            fv = -xurand();
+        }
+        else
+        {
+            fv = 0.0f;
+        }
+
+        dst_toFake = fv * dst_vary;
+    }
+
+    xVec3AddScaled(&vec_offset, &dir_left, mag_updown);
+    xVec3AddScaled(&vec_offset, &g_Y3, dst_toFake);
+    xVec3Add(&pos_tgtFake, pos_tgt, &vec_offset);
+    xVec3Sub(&dir_toFake, &pos_tgtFake, pos_src);
+
+    F32 f31 = xVec3Normalize(&dir_toFake, dir_aim);
+
+    if (pos_aimPoint)
+    {
+        xVec3Copy(pos_aimPoint, &pos_tgtFake);
+    }
+
+    return (flg_vary & 0x4) ? f31 : mag_vary;
+}
+
+S32 NPCC_chk_hitPlyr(xBound* bnd, xCollis* collide)
+{
+    return NPCC_chk_hitEnt(&globals.player.ent, bnd, collide);
+}
+
+S32 NPCC_chk_hitEnt(xEnt* tgt, xBound* bnd,
+                    xCollis* collide) //NONMATCH("https://decomp.me/scratch/Bf1rk")
+{
+    S32 hittgt = 0;
+    xCollis* colrec;
+    xCollis lcl_collide = {};
+
+    colrec = collide ? collide : &lcl_collide;
+    colrec->optr = tgt;
+    colrec->oid = tgt->id;
+
+    if (collide)
+    {
+        colrec->flags = k_HIT_0xF00 | k_HIT_CALC_HDNG;
+    }
+    else
+    {
+        colrec->flags = 0;
+    }
+
+    xQuickCullForEverything(&bnd->qcd);
+    xBoundHitsBound(bnd, &tgt->bound, colrec);
+
+    if (colrec->flags & k_HIT_IT)
+    {
+        hittgt = 1;
+    }
+
+    return hittgt;
 }
 
 void Firework_SceneReset(int param_1)
@@ -370,8 +883,82 @@ RwRaster* NPCC_FindRWRaster(RwTexture* txtr)
     return NULL;
 }
 
-void zNPC_SNDInit()
+void NPCC_GenSmooth(xVec3** pos_base,
+                    xVec3** pos_mid) //WIP NONMATCH("https://decomp.me/scratch/1MplX")
 {
+    static F32 prepute[4][4];
+    static const F32 yews[4] = { 0.25f, 0.5f, 0.75f, 1.0f };
+    static S32 init = 0;
+
+    S32 i;
+
+    if (!init)
+    {
+        init = 1;
+
+        for (i = 0; i < 4; i++)
+        {
+            F32 u = yews[i];
+            F32 u2 = u * u;
+            F32 u3 = u * u2;
+
+            prepute[i][0] = u2 + -0.5f * u3 + -0.5f * u;
+            prepute[i][1] = -2.5f * u2 + 1.5f * u3 + 1.0f;
+            prepute[i][2] = 2.0f * u2 + -1.5f * u3 + 0.5f * u;
+            prepute[i][3] = -0.5f * u2 + 0.5f * u3;
+        }
+    }
+
+    for (i = 0; i < 4; i++)
+    {
+        xVec3SMul(pos_mid[i], pos_base[0], prepute[i][0]);
+        xVec3AddScaled(pos_mid[i], pos_base[1], prepute[i][1]);
+        xVec3AddScaled(pos_mid[i], pos_base[2], prepute[i][2]);
+        xVec3AddScaled(pos_mid[i], pos_base[3], prepute[i][3]);
+    }
+}
+
+void zNPC_SNDInit() //NONMATCH("https://decomp.me/scratch/VlDh8")
+{
+    sNPCSndID[eNPCSnd_GloveAttack] = 0;
+    sNPCSndID[eNPCSnd_SleepyAttack] = 0;
+    sNPCSndID[eNPCSnd_TubeAttack] = 0;
+    sNPCSndID[eNPCSnd_FodBzztAttack] = 0;
+    sNPCSndID[eNPCSnd_JellyfishAttack] = 0;
+
+    sNPCSndFxVolume[eNPCSnd_GloveAttack] = 0.77f;
+    sNPCSndFxVolume[eNPCSnd_SleepyAttack] = 0.77f;
+    sNPCSndFxVolume[eNPCSnd_TubeAttack] = 0.77f;
+    sNPCSndFxVolume[eNPCSnd_FodBzztAttack] = 0.77f;
+    sNPCSndFxVolume[eNPCSnd_JellyfishAttack] = 0.77f;
+
+    sNPCSndFx[eNPCSnd_GloveAttack] = xStrHash("Glove_hover_loop");
+    sNPCSndFx[eNPCSnd_SleepyAttack] = xStrHash("ST_hit2_loop");
+    sNPCSndFx[eNPCSnd_TubeAttack] = xStrHash("Tube_attack21_loop");
+    sNPCSndFx[eNPCSnd_FodBzztAttack] = xStrHash("FodBzzt_attack_loop");
+    sNPCSndFx[eNPCSnd_JellyfishAttack] = xStrHash("Jellyfish_zap_loop");
+}
+
+void zNPC_SNDPlay3D(eNPCSnd snd, xEnt* ent)
+{
+    if (globals.cmgr)
+        return;
+    if (sNPCSndID[snd] != 0)
+        return;
+    if (sNPCSndFx[snd] == 0)
+        return;
+
+    sNPCSndID[snd] = xSndPlay3D(sNPCSndFx[snd], sNPCSndFxVolume[snd], 0.0f, 0x80, 0, ent, 2.0f,
+                                15.0f, SND_CAT_GAME, 0.0f);
+}
+
+void zNPC_SNDStop(eNPCSnd snd)
+{
+    if (sNPCSndFx[snd] == 0)
+        return;
+
+    xSndStop(sNPCSndID[snd]);
+    sNPCSndID[snd] = 0;
 }
 
 U32 NPCC_LineHitsBound(xVec3* param_1, xVec3* param_2, xBound* param_3, xCollis* param_4)
@@ -384,7 +971,7 @@ U32 NPCC_LineHitsBound(xVec3* param_1, xVec3* param_2, xBound* param_3, xCollis*
 
     if (param_4 != NULL)
     {
-        colrec = (xCollis *)param_4;
+        colrec = (xCollis*)param_4;
     }
     xVec3Sub(&vec, param_2, param_1);
     len = xVec3Length(&vec);
@@ -407,74 +994,74 @@ S32 NPCC_bnd_ofBase(xBase* tgt, xBound* bnd)
 {
     S32 retval = 1;
 
-    switch(tgt->baseType)
+    switch (tgt->baseType)
     {
-        case eBaseTypeCamera:
-        case eBaseTypeDoor:
-        case eBaseTypeVolume:
-        case eBaseTypeEGenerator:
-            retval = 0;
-            break;
-        case eBaseTypePlayer:
-        case eBaseTypePickup:
-        case eBaseTypePlatform:
-        case eBaseTypeStatic:
-        case eBaseTypeDynamic:
-        case eBaseTypeBubble:
-        case eBaseTypePendulum:
-        case eBaseTypeHangable:
-        case eBaseTypeButton:
-        case eBaseTypeProjectile:
-        case eBaseTypeDestructObj:
-        case eBaseTypeNPC:
-        case eBaseTypeBoulder:
-            *bnd = *(xBound*)((int)tgt + 0x64);
-            break;
-        default:
-            retval = 0;
-            break;
-        case eBaseTypeCruiseBubble:
-            break;
+    case eBaseTypeCamera:
+    case eBaseTypeDoor:
+    case eBaseTypeVolume:
+    case eBaseTypeEGenerator:
+        retval = 0;
+        break;
+    case eBaseTypePlayer:
+    case eBaseTypePickup:
+    case eBaseTypePlatform:
+    case eBaseTypeStatic:
+    case eBaseTypeDynamic:
+    case eBaseTypeBubble:
+    case eBaseTypePendulum:
+    case eBaseTypeHangable:
+    case eBaseTypeButton:
+    case eBaseTypeProjectile:
+    case eBaseTypeDestructObj:
+    case eBaseTypeNPC:
+    case eBaseTypeBoulder:
+        *bnd = *(xBound*)((int)tgt + 0x64);
+        break;
+    default:
+        retval = 0;
+        break;
+    case eBaseTypeCruiseBubble:
+        break;
     }
     return retval;
 }
 
 S32 NPCC_pos_ofBase(xBase* tgt, xVec3* pos)
 {
-    xVec3 *pxVar1;
+    xVec3* pxVar1;
     S32 retval = 1;
 
-    switch(tgt->baseType)
+    switch (tgt->baseType)
     {
-        case eBaseTypeCamera:
-            xVec3Copy(pos, &globals.camera.mat.pos);
-            break;
-        case eBaseTypeCruiseBubble:
-            retval = 0;
-            break;
-        case eBaseTypePlayer:
-        case eBaseTypePickup:
-        case eBaseTypePlatform:
-        case eBaseTypeStatic:
-        case eBaseTypeDynamic:
-        case eBaseTypeBubble:
-        case eBaseTypePendulum:
-        case eBaseTypeHangable:
-        case eBaseTypeButton:
-        case eBaseTypeProjectile:
-        case eBaseTypeDestructObj:
-        case eBaseTypeNPC:
-        case eBaseTypeBoulder:
-            xVec3Copy(pos, xEntGetPos((xEnt *)tgt));
-            break;
-        case eBaseTypeDoor:
-        case eBaseTypeVolume:
-        case eBaseTypeEGenerator:
-            retval = 0;
-            break;
-        default:
-            retval = 0;
-            break;
+    case eBaseTypeCamera:
+        xVec3Copy(pos, &globals.camera.mat.pos);
+        break;
+    case eBaseTypeCruiseBubble:
+        retval = 0;
+        break;
+    case eBaseTypePlayer:
+    case eBaseTypePickup:
+    case eBaseTypePlatform:
+    case eBaseTypeStatic:
+    case eBaseTypeDynamic:
+    case eBaseTypeBubble:
+    case eBaseTypePendulum:
+    case eBaseTypeHangable:
+    case eBaseTypeButton:
+    case eBaseTypeProjectile:
+    case eBaseTypeDestructObj:
+    case eBaseTypeNPC:
+    case eBaseTypeBoulder:
+        xVec3Copy(pos, xEntGetPos((xEnt*)tgt));
+        break;
+    case eBaseTypeDoor:
+    case eBaseTypeVolume:
+    case eBaseTypeEGenerator:
+        retval = 0;
+        break;
+    default:
+        retval = 0;
+        break;
     }
     return retval;
 }
@@ -483,19 +1070,19 @@ void NPCTarget::PosGet(xVec3* pos)
 {
     switch (typ_target)
     {
-        case NPC_TGT_NONE:
-            break;
-        case NPC_TGT_PLYR:
-        case NPC_TGT_ENT:
-        case NPC_TGT_BASE:
-            NPCC_pos_ofBase(bas_target, pos);
-            break;
-        case NPC_TGT_POS:
-            xVec3Copy(pos, &pos_target);
-            break;
-        case NPC_TGT_MVPT:
-            xVec3Copy(pos, zMovePointGetPos(nav_target));
-            break;
+    case NPC_TGT_NONE:
+        break;
+    case NPC_TGT_PLYR:
+    case NPC_TGT_ENT:
+    case NPC_TGT_BASE:
+        NPCC_pos_ofBase(bas_target, pos);
+        break;
+    case NPC_TGT_POS:
+        xVec3Copy(pos, &pos_target);
+        break;
+    case NPC_TGT_MVPT:
+        xVec3Copy(pos, zMovePointGetPos(nav_target));
+        break;
     }
 }
 
@@ -523,6 +1110,66 @@ void NPCC_xBoundBack(xBound* bnd)
     }
 }
 
+S32 NPCC_HaveLOSToPos(xVec3* pos_src, xVec3* pos_tgt, F32 dst_max, xBase* tgt, xCollis* colCallers)
+//NONMATCH("https://decomp.me/scratch/LyDtk")
+{
+    S32 result;
+    xRay3 ray = {};
+    xScene* xscn = globals.sceneCur;
+    xCollis* colrec;
+
+    if (colCallers)
+    {
+        colrec = colCallers;
+    }
+    else
+    {
+        static xCollis localCollis = { k_HIT_0xF00 | k_HIT_CALC_HDNG };
+
+        memset(&localCollis, 0, sizeof(xCollis));
+        localCollis.flags = k_HIT_0xF00 | k_HIT_CALC_HDNG;
+
+        colrec = &localCollis;
+    }
+
+    ray.min_t = 0.0f;
+    ray.max_t = dst_max;
+
+    xVec3Sub(&ray.dir, pos_tgt, pos_src);
+    xVec3Normalize(&ray.dir, &ray.dir);
+    xVec3Copy(&ray.origin, pos_src);
+
+    ray.flags = XRAY3_USE_MIN | XRAY3_USE_MAX;
+
+    xRayHitsScene(xscn, &ray, colrec);
+
+    if (!(colrec->flags & k_HIT_IT))
+    {
+        result = 1;
+    }
+    else if (colrec->dist > dst_max)
+    {
+        result = 1;
+    }
+    else if (tgt && colrec->oid != 0)
+    {
+        if (tgt->id == colrec->oid)
+        {
+            result = 1;
+        }
+        else
+        {
+            result = 0;
+        }
+    }
+    else
+    {
+        result = 0;
+    }
+
+    return result;
+}
+
 void NPCC_DstSq(const xVec3*, const xVec3*, xVec3*);
 
 void NPCC_DstSqPlyrToPos(const xVec3* pos)
@@ -535,7 +1182,7 @@ F32 NPCC_ds2_toCam(const xVec3* pos_from, xVec3* delta)
     xVec3 delt = {};
     xVec3Sub(&delt, &globals.camera.mat.pos, pos_from);
     F32 retval = xVec3Length2(&delt);
-    if (delta != (xVec3 *)0)
+    if (delta != (xVec3*)0)
     {
         xVec3Copy(delta, &delt);
     }

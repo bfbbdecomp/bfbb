@@ -8,12 +8,25 @@
 #include "xBehaveMgr.h"
 #include "xEnt.h"
 #include "xSFX.h"
+#include "xstransvc.h"
+#include "xutil.h"
 
 #include "zNPCSndTable.h"
 #include "zMovePoint.h"
 #include "zShrapnel.h"
 
 typedef struct NPCMsg;
+
+// Will need to be moved
+struct zAnimFxSound
+{
+    U32 ID;
+    F32 vol;
+    F32 pitch;
+    U32 priority;
+    U32 flags;
+    F32 radius;
+};
 
 enum en_npcparm
 {
@@ -353,6 +366,15 @@ enum en_SM_NOTICES
     SM_NOTE_FORCE = 0x7fffffff
 };
 
+enum en_lassanim
+{
+    LASS_ANIM_UNKNOWN,
+    LASS_ANIM_GRAB,
+    LASS_ANIM_HOLD,
+    LASS_ANIM_NOMORE,
+    LASS_ANIM_FORCEINT = FORCEENUMSIZEINT
+};
+
 struct zNPCLassoInfo
 {
     en_LASSO_STATUS stage;
@@ -401,9 +423,20 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
     F32 ThrottleAccel(F32 dt, S32 speedup, F32 pct_max);
     F32 ThrottleAdjust(F32 dt, F32 spd_want, F32 accel);
 
-    F32 BoundAsRadius(int useCfg);
+    void InitBounds();
+    F32 BoundAsRadius(int useCfg) const;
+    void ConvertHitEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
+                         xBase* toParamWidget, S32* handled);
     void VelStop();
+    void TagVerts();
+    S32 IsAttackFrame(F32 tym_anim, S32 series);
     static void ConfigSceneDone();
+    NPCConfig* ConfigCreate(U32 modelID);
+    NPCConfig* ConfigFind(U32 modelID);
+    void GetParm(en_npcparm pid, S32* val);
+    void GetParm(en_npcparm pid, F32* val);
+    void GetParm(en_npcparm pid, xVec3* val);
+    void GetParm(en_npcparm pid, zMovePoint** val);
     U32 LassoInit();
     zNPCLassoInfo* GimmeLassInfo();
     void AddDEVGoals(xPsyche*);
@@ -426,17 +459,27 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
     xModelInstance* ModelAtomicHide(int index, xModelInstance* mdl);
     xModelInstance* ModelAtomicShow(int index, xModelInstance* mdl);
     S32 AnimStart(U32 animID, S32 forceRestart);
+    void AnimSetState(U32 animID, F32 time);
     xAnimState* AnimFindState(U32 animID);
     xAnimState* AnimCurState();
     xAnimSingle* AnimCurSingle();
     U32 AnimCurStateID();
     U32 CanDoSplines();
     void GiveReward();
+    void PlayerKiltMe();
+    void ISeePlayer();
+    S32 SndPlayFromAFX(zAnimFxSound* afxsnd, U32* sid_played);
     S32 SndPlayFromSFX(xSFX* sfx, U32* sid_played);
     S32 SndPlayRandom(en_NPC_SOUND sndtype);
+    U32 SndStart(U32 aid_toplay, NPCSndProp* sprop, F32 radius);
     S32 SndChanIsBusy(S32 flg_chan);
+    void SndKillSounds(S32 flg_chan, S32 all);
+    S32 SndQueUpdate(F32 dt);
     S32 LassoUseGuides(S32 idx_grabmdl, S32 idx_holdmdl);
+    S32 LassoGetAnims(xModelInstance* modgrab, xModelInstance* modhold);
+    void LassoSyncAnims(en_lassanim lassanim);
     S32 GetVertPos(en_mdlvert vid, xVec3* pos);
+    void Vibrate(F32 ds2_cur, F32 ds2_max);
     void Vibrate(en_npcvibe vibe, F32 duration);
     void AddScripting(xPsyche* psy, S32 (*eval_script)(xGoal*, void*, en_trantype*, F32, void*),
                       S32 (*eval_playanim)(xGoal*, void*, en_trantype*, F32, void*),
@@ -639,6 +682,7 @@ static void zNPCPlyrSnd_Update(F32 dt);
 void zNPCCommon_SceneReset();
 void ZNPC_Destroy_Common(xFactoryInst* inst);
 void zNPCSettings_MakeDummy();
+zNPCSettings* zNPCSettings_Find(U32);
 void ZNPC_Common_Startup();
 void zNPCCommon_WonderReset();
 void ZNPC_Common_Shutdown();

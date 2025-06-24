@@ -21,6 +21,15 @@ struct xBound
     xMat4x3* mat;
 };
 
+enum
+{
+    k_XBOUNDTYPE_NONE = 0,
+    k_XBOUNDTYPE_SPHERE = 1,
+    k_XBOUNDTYPE_BOX = 2,
+    k_XBOUNDTYPE_CYL = 3,
+    k_XBOUNDTYPE_OBB = 4
+};
+
 #define XBOUND_TYPE_NA 0 // None/invalid
 #define XBOUND_TYPE_SPHERE 1 // Sphere - xBound::sph
 #define XBOUND_TYPE_BOX 2 // Axis aligned bounding box - xBound::box

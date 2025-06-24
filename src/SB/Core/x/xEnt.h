@@ -184,6 +184,25 @@ struct xEnt : xBase
     void* user_data; // 0xCC
 };
 
+// Ent flags (xEnt::flags)
+#define k_XENT_IS_VISIBLE ((U8)(1 << 0))
+#define k_XENT_IS_STACKED ((U8)(1 << 1))
+#define k_XENT_0x10 ((U8)(1 << 4))
+#define k_XENT_0x40 ((U8)(1 << 6))
+#define k_XENT_0x80 ((U8)(1 << 7))
+
+// Physics flags (xEnt::pflags)
+#define k_XENT_IS_MOVING ((U8)(1 << 0))
+#define k_XENT_HAS_VELOCITY ((U8)(1 << 1))
+#define k_XENT_HAS_GRAVITY ((U8)(1 << 2))
+#define k_XENT_HAS_DRAG ((U8)(1 << 3))
+#define k_XENT_HAS_FRICTION ((U8)(1 << 4))
+
+// More ent flags (xEnt::moreFlags)
+#define k_MORE_FLAGS_0x8 ((U8)1 << 3)
+#define k_MORE_FLAGS_HITTABLE ((U8)1 << 4)
+#define k_MORE_FLAGS_ANIM_COLL ((U8)1 << 5)
+
 // collision types
 #define XENT_COLLTYPE_NONE 0x0
 #define XENT_COLLTYPE_TRIG 0x1 // trigger (TRIG)

@@ -182,7 +182,12 @@ enum en_NPCGOALS
     NPC_GOAL_TIKIHIDE,
     NPC_GOAL_TIKICOUNT,
     NPC_GOAL_TIKIDYING,
-    NPC_GOAL_TIKIDEAD
+    NPC_GOAL_TIKIDEAD,
+    // I don't remember why i added these tbh
+    //            - Colin
+    NPC_GOAL_DEV_ANIMCYCLE = 'NGX0',
+    NPC_GOAL_DEV_ANIMSPIN,
+    NPC_GOAL_DEV_HERO,
 };
 
 struct xFactory;

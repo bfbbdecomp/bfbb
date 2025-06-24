@@ -115,6 +115,7 @@ struct xPsyche : RyzMemData
     S32 GoalSet(S32 gid, S32 r5);
     S32 GoalPop(S32 gid_popto, S32 r5);
     S32 GoalNone(S32 denyExplicit);
+    S32 GoalNone(S32, S32 denyExplicit);
     S32 GoalSwap(S32 gid, S32 r5);
     S32 GoalPopRecover(S32 overpend);
     S32 GoalPopToBase(S32 overpend);

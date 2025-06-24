@@ -52,10 +52,24 @@ struct NPCSndQueue //0x14
     F32 radius; //0x10
 };
 
+struct NPCSndProp
+{
+    en_NPC_SOUND sndtype;
+    int flg_snd;
+    float tym_delayNext;
+};
+
 void NPCS_Startup();
 void NPCS_SndTimersReset();
 void NPCS_SndTimersUpdate(F32 dt);
 void NPCS_SndTablePrepare(NPCSndTrax* trax);
+void NPCS_SndTypePlayed(en_NPC_SOUND sndtype, F32 delayNext);
+
 void NPCS_Shutdown();
+S32 NPCS_SndOkToPlay(en_NPC_SOUND sndtype);
+
+NPCSndProp* NPCS_SndFindProps(en_NPC_SOUND sndtype);
+en_NPC_SOUND NPCS_SndTypeFromHash(U32 aid_snd, NPCSndTrax* cust, NPCSndTrax* share);
+U32 NPCS_SndPickSimilar(en_NPC_SOUND sndtype, NPCSndTrax* cust, NPCSndTrax* share);
 
 #endif

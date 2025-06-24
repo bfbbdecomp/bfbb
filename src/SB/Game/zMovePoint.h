@@ -23,6 +23,10 @@ struct zMovePoint : xMovePoint
     }
     U32 NumNodes();
     S32 IsOn();
+    S32 HasSpline()
+    {
+        return spl != NULL;
+    }
 };
 
 zMovePoint* zMovePoint_GetMemPool(S32 cnt);

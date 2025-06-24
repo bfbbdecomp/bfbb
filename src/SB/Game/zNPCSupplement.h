@@ -43,7 +43,8 @@ enum en_npcstreak
     NPC_STRK_FORCE = 0x7fffffff
 };
 
-enum en_nparmode {
+enum en_nparmode
+{
     NPAR_MODE_STD = 0,
     NPAR_MODE_ALT_A = 1,
     NPAR_MODE_ALT_B = 2,
@@ -97,7 +98,8 @@ struct NPARXtraData
 {
 };
 
-class NPARParmVisSplash {
+class NPARParmVisSplash
+{
     // total size: 0x20
 public:
     F32 tym_lifespan; // offset 0x0, size 0x4
@@ -109,7 +111,8 @@ public:
     void ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos, const xVec3* vel) const;
 };
 
-class NPARParmTarTarGunk {
+class NPARParmTarTarGunk
+{
     // total size: 0x28
 public:
     F32 tym_lifespan; // offset 0x0, size 0x4
@@ -124,7 +127,8 @@ public:
     void ConfigPar(NPARData*, en_nparmode, const xVec3*, const xVec3*) const;
 };
 
-class NPARParmFahrwerkz {
+class NPARParmFahrwerkz
+{
     // total size: 0x28
 public:
     F32 tym_lifespan; // offset 0x0, size 0x4
@@ -139,7 +143,8 @@ public:
     void ConfigPar(NPARData*, en_nparmode, const xVec3*, const xVec3*) const;
 };
 
-class NPARParmSleepyZeez {
+class NPARParmSleepyZeez
+{
     // total size: 0x28
 public:
     F32 tym_lifespan; // offset 0x0, size 0x4
@@ -154,7 +159,8 @@ public:
     void ConfigPar(NPARData*, en_nparmode, const xVec3*, const xVec3*) const;
 };
 
-class NPARParmDogBreath {
+class NPARParmDogBreath
+{
     // total size: 0x20
 public:
     F32 tym_lifespan; // offset 0x0, size 0x4
@@ -167,7 +173,8 @@ public:
     void ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos, const xVec3* vel) const;
 };
 
-class NPARParmGloveDust {
+class NPARParmGloveDust
+{
     // total size: 0x1C
 public:
     F32 tym_lifespan; // offset 0x0, size 0x4
@@ -216,7 +223,8 @@ public:
     void ConfigPar(NPARData*, en_nparmode, const xVec3*, const xVec3*, F32 dt) const;
 };
 
-class NPARParmChuckSplash {
+class NPARParmChuckSplash
+{
     // total size: 0x20
 public:
     F32 tym_lifespan; // offset 0x0, size 0x4
@@ -282,6 +290,7 @@ void NPAR_ScenePrepare();
 void NPAR_SceneFinish();
 void NPAR_EmitTarTarTrail(const xVec3*, const xVec3*);
 NPARMgmt* NPAR_PartySetup(en_nparptyp parType, void** userData, NPARXtraData* xtraData);
+void NPAR_EmitFWExhaust(const xVec3* pos, const xVec3* vel);
 void NPAR_SceneReset();
 static void NPCC_ShadowCacheReset();
 void NPAR_Timestep(F32 dt);

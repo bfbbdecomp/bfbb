@@ -90,6 +90,9 @@ typedef wchar_t wint_t;
 #define NULL 0
 #endif
 
+#define FORCEENUMSIZEINT ((S32)((~((U32)0)) >> 1))
+#define ARRAY_LENGTH(a) (sizeof(a) / sizeof(a[0]))
+
 #define UINT32_MAX 0xffffffff
 
 #endif // !TYPES_H
