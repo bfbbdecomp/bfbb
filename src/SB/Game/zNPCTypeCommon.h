@@ -8,10 +8,21 @@
 #include "xBehaveMgr.h"
 #include "xEnt.h"
 #include "xSFX.h"
+#include "xstransvc.h"
+#include "xDraw.h"
 
 #include "zNPCSndTable.h"
 #include "zMovePoint.h"
 #include "zShrapnel.h"
+#include "zNPCMessenger.h"
+#include "zNPCGoals.h"
+#include "zGrid.h"
+#include "iCollide.h"
+#include "zEntButton.h"
+#include "zCombo.h"
+
+#define XRAY3_USE_MIN (1 << 10)
+#define XRAY3_USE_MAX (1 << 11)
 
 typedef struct NPCMsg;
 
@@ -401,7 +412,10 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
     F32 ThrottleAccel(F32 dt, S32 speedup, F32 pct_max);
     F32 ThrottleAdjust(F32 dt, F32 spd_want, F32 accel);
 
-    F32 BoundAsRadius(int useCfg);
+    void InitBounds();
+    F32 BoundAsRadius(int useCfg) const;
+    void ConvertHitEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
+                         xBase* toParamWidget, S32* handled);
     void VelStop();
     static void ConfigSceneDone();
     U32 LassoInit();
@@ -418,6 +432,7 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
     bool IsMountableType(en_ZBASETYPE type);
     void MvptReset(zMovePoint* nav_goto);
     S32 MvptCycle();
+    void TagVerts();
     S32 HaveLOSToPos(xVec3*, float, xScene*, xBase*, xCollis*);
     void ModelScaleSet(F32 x, F32 y, F32 z);
     void ModelScaleSet(F32 unk);
@@ -426,18 +441,33 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
     xModelInstance* ModelAtomicHide(int index, xModelInstance* mdl);
     xModelInstance* ModelAtomicShow(int index, xModelInstance* mdl);
     S32 AnimStart(U32 animID, S32 forceRestart);
+    void AnimSetState(U32 animID, F32 time);
     xAnimState* AnimFindState(U32 animID);
     xAnimState* AnimCurState();
     xAnimSingle* AnimCurSingle();
     U32 AnimCurStateID();
+    void ISeePlayer();
+    NPCConfig* ConfigCreate(U32 modelID);
+    NPCConfig* ConfigFind(U32 modelID);
+    void GetParm(en_npcparm pid, S32* val);
+    void GetParm(en_npcparm pid, F32* val);
+    void GetParm(en_npcparm pid, xVec3* val);
+    void GetParm(en_npcparm pid, zMovePoint** val);
+    S32 HasSpline();
     U32 CanDoSplines();
+    S32 IsAttackFrame(F32 tym_anim, S32 series);
     void GiveReward();
+    void PlayerKiltMe();
     S32 SndPlayFromSFX(xSFX* sfx, U32* sid_played);
     S32 SndPlayRandom(en_NPC_SOUND sndtype);
+    //U32 SndStart(U32 aid_toplay, NPCSndProp* sprop, F32 radius);
     S32 SndChanIsBusy(S32 flg_chan);
+    void SndKillSounds(S32 flg_chan, S32 all);
+    S32 SndQueUpdate(F32 dt);
     S32 LassoUseGuides(S32 idx_grabmdl, S32 idx_holdmdl);
     S32 GetVertPos(en_mdlvert vid, xVec3* pos);
     void Vibrate(en_npcvibe vibe, F32 duration);
+    void Vibrate(F32 vibe, F32 duration);
     void AddScripting(xPsyche* psy, S32 (*eval_script)(xGoal*, void*, en_trantype*, F32, void*),
                       S32 (*eval_playanim)(xGoal*, void*, en_trantype*, F32, void*),
                       S32 (*eval_attack)(xGoal*, void*, en_trantype*, F32, void*),
@@ -646,10 +676,33 @@ void NPCC_BuildStandardAnimTran(xAnimTable* table, char** namelist, S32* ourAnim
                                 F32 blend);
 void zNPCCommon_Timestep(xScene* xscn, F32 dt);
 
+xFactoryInst* ZNPC_Create_Common(S32 who, RyzMemGrow* grow, void*);
+void ZNPC_Destroy_Common(xFactoryInst* inst);
+void ZNPC_Common_Startup();
+void ZNPC_Common_Shutdown();
+void zNPCCommon_ScenePrepare();
+void zNPCCommon_SceneFinish();
+void zNPCCommon_SceneReset();
+void zNPCCommon_ScenePostInit();
+void zNPCCommon_Timestep(xScene*, F32 dt);
+void zNPCSettings_MakeDummy();
+zNPCSettings* zNPCSettings_Find(U32);
+S32 NPCC_NPCIsConversing();
+void zNPCCommon_WonderReset();
 xAnimTable* ZNPC_AnimTable_Common();
 xAnimTable* ZNPC_AnimTable_LassoGuide();
-S32 NPCC_NPCIsConversing();
+void NPCC_BuildStandardAnimTran(xAnimTable* table, char** namelist, S32* ourAnims, S32 idx_dflt,
+                                F32 blend);
 void zNPCCommon_EjectPhlemOnPawz();
 U32 xSndIsPlaying(U32 assetID, U32 parid);
+
+// move to messenger?
+
+void zNPCMsg_AreaNotify(zNPCCommon* sender, en_NPC_MSG_ID msgid, F32 rad, S32 filter,
+                        en_NPCTYPES toNPCType);
+
+void zNPCMsg_SendMsg(en_NPC_MSG_ID msgevent, zNPCCommon* npc_sendto);
+void zNPCMsg_SendMsg(NPCMsg* inmsg, zNPCCommon* npc_sendto);
+void zNPCMsg_SendMsg(NPCMsg* inmsg, F32 delay, zNPCCommon* npc_sendto);
 
 #endif

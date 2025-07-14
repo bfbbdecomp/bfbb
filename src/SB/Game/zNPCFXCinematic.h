@@ -11,13 +11,11 @@
 #include "zShrapnel.h"
 #include "rwcore.h"
 
-
 void zNPCFXStartup();
 void zNPCFXShutdown();
 S32 zNPCFXCutscenePrep(const xScene*, F32, const zCutsceneMgr* csnmgr);
 void zNPCFXCutscene(const xScene*, F32, const zCutsceneMgr* csnmgr);
 void zNPCFXCutsceneDone(const xScene*, F32, const zCutsceneMgr* csnmgr);
-
 
 struct NCINLyt
 {
@@ -198,6 +196,15 @@ struct NPCCone
     void UVBaseSet(F32 u, F32 v);
     void ColorSet(RwRGBA top, RwRGBA bot);
     void RadiusSet(F32);
+};
+
+struct NCINBeNosey : XCSNNosey
+{
+    zCutsceneMgr* use_csnmgr;
+    NCINEntry* use_fxtab;
+
+    void UpdatedAnimated(RpAtomic* model, RwMatrixTag* animMat, U32 animIndex, U32 dataIndex);
+    void CanRenderNow();
 };
 
 #endif

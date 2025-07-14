@@ -438,6 +438,14 @@ void NCIN_Par_CIN_PLATFORM_JETS_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 p
     fxrec->pos_B[0] = 5.0f;
 }
 
+void NCINBeNosey::CanRenderNow()
+{
+    zCutsceneMgr* csnmgr;
+    NCINEntry* fxtab;
+    NCINEntry* nextrec;
+    NCINEntry* fxrec;
+}
+
 void NCIN_Generic_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
@@ -473,7 +481,8 @@ void NCIN_BubSlam(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
     }
 }
 
-void NCIN_BubTrailBone_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic*, RwMatrixTag*, U32 num_1, U32 num_2)
+void NCIN_BubTrailBone_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic*, RwMatrixTag*, U32 num_1,
+                          U32 num_2)
 {
     S32 ifx = fxrec->pos_A[1].x;
     S32 ify = fxrec->pos_A[1].y;
@@ -687,6 +696,14 @@ void NCIN_HazTTSteam_Upd(const zCutsceneMgr* manager, NCINEntry* fxrec, S32 para
 
 void NCIN_HazTTSteam_AR(const zCutsceneMgr* cutsceneMgr, NCINEntry* fxrec, RpAtomic* atomic,
                         RwMatrixTag* matrix, U32 num_1, U32 num_2)
+{
+}
+
+void NCIN_ArfDogBoom(const zCutsceneMgr*, NCINEntry*, S32)
+{
+}
+
+void NCIN_ShieldPop(const zCutsceneMgr*, NCINEntry*, S32)
 {
 }
 

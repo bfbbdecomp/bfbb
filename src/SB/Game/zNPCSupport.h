@@ -70,6 +70,8 @@ struct NPCTarget
     void PosGet(xVec3* pos);
     void TargetSet(xEnt* ent, int b);
     S32 IsDead();
+    S32 FindNearest(S32 flg_consider, xBase* skipme, xVec3* from, F32 dst_max);
+    S32 InCylinder(xVec3* from, F32 rad, F32 hyt, F32 off);
 };
 
 struct NPCBlinker
@@ -91,8 +93,8 @@ struct NPCWidget
     S32 NPCIsTheLocker(const zNPCCommon* npc_lock);
     U32 IsLocked();
     S32 IsVisible();
-    U32 Off(zNPCCommon* npc, U32 theman);
-    U32 On(const zNPCCommon* npc, S32 theman);
+    S32 Off(const zNPCCommon* npc, S32 theman);
+    S32 On(const zNPCCommon* npc, S32 theman);
     void Reset();
     void Init(en_NPC_UI_WIDGETS);
     S32 Lock(const zNPCCommon*);
@@ -150,6 +152,7 @@ F32 NPCC_TmrCycle(F32* tmr, F32 dt, F32 interval);
 xVec3* NPCC_rightDir(xEnt* ent);
 xVec3* NPCC_faceDir(xEnt* ent);
 void NPCC_ang_toXZDir(F32 angle, xVec3* dir);
+F32 NPCC_dir_toXZAng(const xVec3* dir);
 F32 NPCC_aimVary(xVec3* dir_aim, xVec3* pos_src, xVec3* pos_tgt, F32 dst_vary, S32 flg_vary,
                  xVec3* pos_aimPoint);
 void NPCC_aimMiss(xVec3*, xVec3*, xVec3*, float, xVec3*);
@@ -159,5 +162,7 @@ F32 NPCC_ds2_toCam(const xVec3* pos_from, xVec3* delta);
 void zNPC_SNDStop(_tageNPCSnd snd);
 void zNPC_SNDPlay3D(_tageNPCSnd snd, xEnt*);
 RwRaster* NPCC_FindRWRaster(char*);
+void NPCC_xBoundAway(xBound* bnd);
+void NPCC_xBoundBack(xBound* bnd);
 
 #endif
