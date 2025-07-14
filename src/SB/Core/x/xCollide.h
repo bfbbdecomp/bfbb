@@ -6,6 +6,20 @@
 #include "xQuickCull.h"
 #include "iMath3.h"
 
+#define k_HIT_IT ((U32)(1 << 0))
+#define k_HIT_0x2 ((U32)(1 << 1))
+#define k_HIT_0x4 ((U32)(1 << 2))
+#define k_HIT_0x8 ((U32)(1 << 3))
+#define k_HIT_0x10 ((U32)(1 << 4))
+#define k_HIT_0x100 ((U32)(1 << 8))
+#define k_HIT_0x200 ((U32)(1 << 9))
+#define k_HIT_0x400 ((U32)(1 << 10))
+#define k_HIT_0x800 ((U32)(1 << 11))
+#define k_HIT_0xF00 (k_HIT_0x100 | k_HIT_0x200 | k_HIT_0x400 | k_HIT_0x800)
+#define k_HIT_CALC_HDNG ((U32)(1 << 12))
+#define k_HIT_CALC_TRI ((U32)(1 << 13))
+#define k_HIT_0x20000 ((U32)(1 << 17))
+
 struct xModelInstance;
 
 struct xCollis

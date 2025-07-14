@@ -284,11 +284,6 @@ void xEntMotionMove(xEntMotion*, xScene*, F32, xEntFrame*)
 {
 }
 
-F32 xSpline3_ArcTotal(xSpline3*)
-{
-    return 0.0f;
-}
-
 void xQuatCopy(xQuat* a, const xQuat* b)
 {
     a->s = b->s;

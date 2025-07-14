@@ -9,6 +9,8 @@
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))
 #define xabs(x) iabs(x)
 
+#define xeq(a, b, e) (xabs((a) - (b)) <= (e))
+
 #define CLAMP(x, a, b) (MAX((a), MIN((x), (b))))
 
 #define SQR(x) ((x) * (x))

@@ -32,6 +32,11 @@ struct xSpline3
 };
 
 void xSpline3_ArcInit(xSpline3* spl, U32 sample);
-xSpline3* xSpline3_Bezier(xVec3* points, F32* time, U32 numpoints, U32 numalloc, xVec3* p1, xVec3* p2);
+xSpline3* xSpline3_Bezier(xVec3* points, F32* time, U32 numpoints, U32 numalloc, xVec3* p1,
+                          xVec3* p2);
+inline F32 xSpline3_ArcTotal(xSpline3* spl)
+{
+    return spl->arcLength[spl->N * spl->arcSample - 1];
+}
 
 #endif
