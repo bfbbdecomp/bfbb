@@ -20,6 +20,7 @@
 #include "iCollide.h"
 #include "zEntButton.h"
 #include "zCombo.h"
+#include "zNPCTypes.h"
 
 #define XRAY3_USE_MIN (1 << 10)
 #define XRAY3_USE_MAX (1 << 11)

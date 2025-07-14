@@ -674,9 +674,9 @@ void NPCC_ang_toXZDir(F32 angle, xVec3* dir)
     dir->z = icos(angle);
 }
 
-void NPCC_dir_toXZAng(const xVec3* vec)
+F32 NPCC_dir_toXZAng(const xVec3* vec)
 {
-    xatan2(vec->x, vec->z);
+    return xatan2(vec->x, vec->z);
 }
 
 void NPCC_aimMiss(xVec3* dir_aim, xVec3* pos_src, xVec3* pos_tgt, F32 dst_miss, xVec3* pos_miss)
