@@ -220,7 +220,7 @@ static char* jsp_shadow_hack_textures[] = {
     "glass_broken", "ground_path_alpha",
 };
 
-static char** jsp_shadow_hack_end_textures = &jsp_shadow_hack_textures[4];
+static char** jsp_shadow_hack_end_textures = &jsp_shadow_hack_textures[5];
 
 struct AnimTableList animTable[33] = {
     { "ZNPC_AnimTable_Test", ZNPC_AnimTable_Test, 0 },
@@ -345,7 +345,7 @@ static void jsp_shadow_hack(xJSPHeader* header)
     RpClumpForAllAtomics(header->clump, jsp_shadow_hack_atomic_cb, &context);
 }
 
-static xAnimTable* (*tableFuncList[48])() = {
+static xAnimTable* (*tableFuncList[])() = {
     zEntPlayer_AnimTable,
     ZNPC_AnimTable_Common,
     zPatrick_AnimTable,
@@ -390,7 +390,7 @@ static xAnimTable* (*tableFuncList[48])() = {
     ZNPC_AnimTable_NightLight,
     ZNPC_AnimTable_HazardStd,
     ZNPC_AnimTable_FloatDevice,
-    anim_table, // Cruise Bubble anim table based on PS2 DWARF data
+    cruise_bubble::anim_table, // Cruise Bubble anim table based on PS2 DWARF data
     ZNPC_AnimTable_BossSandyScoreboard,
     zEntPlayer_TreeDomeSBAnimTable,
     NULL,
@@ -505,7 +505,7 @@ void FootstepHackSceneEnter()
     s_patFootSoundB = xStrHash("Pat_run_rock_dryR");
 }
 
-static U8 dummyEffectCB(U32, xAnimActiveEffect*, xAnimSingle*, void*)
+static U32 dummyEffectCB(U32, xAnimActiveEffect*, xAnimSingle*, void*)
 {
     return 0;
 }
@@ -595,25 +595,33 @@ static U32 soundEffectCB(U32 cbenum, xAnimActiveEffect* acteffect, xAnimSingle* 
     return sndhandle;
 }
 
+static U32 (*effectFuncList[])(U32, xAnimActiveEffect*, xAnimSingle*, void*) = { dummyEffectCB,
+                                                                                 soundEffectCB };
+
 static void* FindAssetCB(U32 ID, char*)
 {
     U32 size;
     return xSTFindAsset(ID, &size);
 }
 
-static void* ATBL_Read(void*, U32, void* indata, U32, U32* outsize)
+static xAnimTable* Anim_ATBL_getTable(xAnimTable* (*constructor)());
+static void* ATBL_Read(void*, U32, void* indata, U32 param_4, U32* outsize)
 {
     U32 i;
     U32 j;
-    U32 debugNum;
+    U32 debugNum = 0;
     U32 tmpsize;
 
     xAnimTable* table;
     xAnimState* astate;
     xAnimTransition* atran;
     U8* zaBytes;
+
     xAnimAssetTable* zaTbl = (xAnimAssetTable*)indata;
     void** zaRaw = (void**)(zaTbl + 1);
+    xAnimAssetFile* zaFile = (xAnimAssetFile*)(zaRaw + zaTbl->NumRaw);
+    xAnimAssetState* zaState =
+        (xAnimAssetState*)((U32)zaFile + zaTbl->NumFiles * sizeof(xAnimAssetFile));
 
     for (i = 0; i < zaTbl->NumRaw; ++i)
     {
@@ -624,16 +632,14 @@ static void* ATBL_Read(void*, U32, void* indata, U32, U32* outsize)
     {
         if (zaRaw[i] == NULL)
         {
-            continue;
-        }
-
-        for (j = 0; j < zaTbl->NumRaw; ++j)
-        {
-            if (zaRaw[j] == NULL)
+            for (j = 0; j < zaTbl->NumRaw; ++j)
             {
-                continue;
+                if (zaRaw[j] != NULL)
+                {
+                    zaRaw[i] = zaRaw[j];
+                    break;
+                }
             }
-            zaRaw[j] = zaRaw[i];
         }
     }
 
@@ -644,18 +650,110 @@ static void* ATBL_Read(void*, U32, void* indata, U32, U32* outsize)
             xMorphSeqSetup(zaRaw[i], FindAssetCB);
         }
     }
-    xAnimAssetFile* zaFile;
-    xAnimAssetState* zaState;
-    S32 k;
-    xAnimFile** fList;
-    xAnimTable* (*constructor)();
-    // S32 i;
+
+    for (i = 0; i < zaTbl->NumFiles; ++i)
+    {
+        zaFile[i].RawData = (void**)((U32)zaFile[i].RawData + (U32)zaTbl);
+        for (S32 k = 0; k < zaFile[i].NumAnims[0] * zaFile[i].NumAnims[1]; ++k)
+        {
+            zaFile[i].RawData[k] = zaRaw[(U32)zaFile[i].RawData[k]];
+        }
+    }
+
+    xAnimFile** fList = (xAnimFile**)zaFile;
+    for (i = 0; i < zaTbl->NumFiles; ++i)
+    {
+        fList[i] = xAnimFileNewBilinear(zaFile[i].RawData, "", zaFile[i].FileFlags, NULL,
+                                        zaFile[i].NumAnims[0], zaFile[i].NumAnims[1]);
+        if (zaFile[i].TimeOffset >= 0.0f)
+        {
+            xAnimFileSetTime(fList[i], zaFile[i].Duration, zaFile[i].TimeOffset);
+        }
+    }
+
+    xAnimTable* (*constructor)() = NULL;
+    if (zaTbl->ConstructFunc < sizeof(tableFuncList) / sizeof(xAnimTable * (*)()))
+    {
+        constructor = tableFuncList[zaTbl->ConstructFunc];
+    }
+    else
+    {
+        for (S32 i = 0; i < sizeof(animTable) / sizeof(AnimTableList); ++i)
+        {
+            if (zaTbl->ConstructFunc == animTable[i].id)
+            {
+                constructor = animTable[i].constructor;
+                break;
+            }
+        }
+    }
+
+    gxAnimUseGrowAlloc = true;
+
+    table = Anim_ATBL_getTable(constructor);
+
     char tmpstr[32];
-    xAnimFile* foundFile;
-    xAnimState* state;
-    xAnimAssetEffect* zaEffect;
-    xAnimEffect* effect;
-    return NULL;
+    for (i = 0; i < zaTbl->NumStates; ++i)
+    {
+        astate = xAnimTableAddFileID(table, fList[zaState[i].FileIndex], zaState[i].StateID,
+                                     zaState[i].SubStateID, zaState[i].SubStateCount);
+
+        if (astate == NULL)
+        {
+            sprintf(tmpstr, "Debug%02d", debugNum++);
+            astate = xAnimTableNewState(table, tmpstr, 0x20, 0x80000000, 1.0f, NULL, NULL, 0.0f,
+                                        NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+            atran = xAnimTableNewTransition(table, tmpstr, NULL, NULL, NULL, 0x10, 0, 0.0f, 0.0f, 0,
+                                            0, 0.2f, NULL);
+            atran->Dest = table->StateList;
+            xAnimTableAddFileID(table, fList[zaState[i].FileIndex], astate->ID, 0, 0);
+        }
+        astate->Speed = zaState[i].Speed;
+    }
+
+    xAnimFile* foundFile = NULL;
+    for (astate = table->StateList; astate != NULL; astate = astate->Next)
+    {
+        if (foundFile == NULL && astate->Data != NULL)
+        {
+            foundFile = astate->Data;
+        }
+    }
+    for (astate = table->StateList; astate != NULL; astate = astate->Next)
+    {
+        if (astate->Data == NULL)
+        {
+            astate->Data = foundFile;
+            astate->UserFlags |= 0x40000000;
+        }
+    }
+
+    for (i = 0; i < zaTbl->NumStates; ++i)
+    {
+        if (zaState[i].EffectCount != 0)
+        {
+            xAnimState* state = xAnimTableGetStateID(table, zaState[i].StateID);
+            xAnimAssetEffect* zaEffect = (xAnimAssetEffect*)((U32)zaTbl + zaState[i].EffectOffset);
+
+            if (state != NULL)
+            {
+                for (j = 0; j < zaState[i].EffectCount; ++j)
+                {
+                    xAnimEffect* effect =
+                        xAnimStateNewEffect(state, zaEffect->Flags, zaEffect->StartTime,
+                                            zaEffect->EndTime, effectFuncList[zaEffect->EffectType],
+                                            zaEffect->UserDataSize);
+                    memcpy(effect + 1, zaEffect + 1, zaEffect->UserDataSize);
+
+                    zaEffect = (xAnimAssetEffect*)(U32(zaEffect) + zaEffect->UserDataSize) + 1;
+                }
+            }
+        }
+    }
+
+    gxAnimUseGrowAlloc = false;
+    *outsize = sizeof(xAnimTable);
+    return table;
 }
 
 static void Anim_Unload(void*, U32)
@@ -667,9 +765,9 @@ static void LightKit_Unload(void* userdata, U32 b)
     xLightKit_Destroy((xLightKit*)userdata);
 }
 
-static void Anim_ATBL_getTable(xAnimTable* (*param)(void))
+static xAnimTable* Anim_ATBL_getTable(xAnimTable* (*constructor)())
 {
-    *param();
+    return constructor();
 }
 
 static void MovePoint_Unload(void* userdata, U32 b)
@@ -699,10 +797,4 @@ static void* SndInfoRead(void* param_1, U32 param_2, void* indata, U32 insize, U
     }
 
     return __dest;
-}
-
-U32 xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, xEnt* ent, F32 radius,
-               sound_category category, F32 delay)
-{
-    return xSndPlay3D(id, vol, pitch, priority, flags, ent, radius / 4.0f, radius, category, delay);
 }
