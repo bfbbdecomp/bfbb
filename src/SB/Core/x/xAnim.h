@@ -65,7 +65,7 @@ struct xAnimState
     F32 Speed;
     xAnimFile* Data;
     xAnimEffect* Effects;
-    
+
     // 0x20
     xAnimTransitionList* Default;
     xAnimTransitionList* List;
@@ -177,10 +177,11 @@ struct xAnimPlay
     void (*BeforeAnimMatrices)(xAnimPlay*, xQuat*, xVec3*, S32);
 };
 
-class AnimTableList {  // size: 0xC
+class AnimTableList
+{ // size: 0xC
 public:
-    char * name; // offset 0x0, size 0x4
-    class xAnimTable * (* constructor)(); // offset 0x4, size 0x4
+    char* name; // offset 0x0, size 0x4
+    class xAnimTable* (*constructor)(); // offset 0x4, size 0x4
     unsigned int id; // offset 0x8, size 0x4
 };
 
@@ -188,6 +189,9 @@ void xAnimInit();
 void xAnimTempTransitionInit(U32 count);
 xAnimFile* xAnimFileNew(void* rawData, const char* name, U32 flags, xAnimFile** linkedList);
 xAnimTable* xAnimTableNew(const char* name, xAnimTable** linkedList, U32 userFlags);
+xAnimFile* xAnimFileNewBilinear(void** rawData, const char* name, U32 flags, xAnimFile** linkedList,
+                                U32 numX, U32 numY);
+void xAnimFileSetTime(xAnimFile* data, float duration, float timeOffset);
 xAnimState* xAnimTableNewState(xAnimTable* table, const char* name, U32 flags, U32 userFlags,
                                F32 speed, F32* boneBlend, F32* timeSnap, F32 fadeRecip,
                                U16* fadeOffset, void* callbackData,
@@ -199,6 +203,8 @@ xAnimTransition* xAnimTableNewTransition(xAnimTable* table, const char* source, 
                                          xAnimTransitionCallback callback, U32 flags, U32 userFlags,
                                          F32 srcTime, F32 destTime, U16 priority, U16 queuePriority,
                                          F32 blendRecip, U16* blendOffset);
+xAnimEffect* xAnimStateNewEffect(xAnimState* state, U32 flags, F32 startTime, F32 endTime,
+                                 xAnimEffectCallback callback, U32 userDataSize);
 void xAnimDefaultBeforeEnter(xAnimPlay* play, xAnimState* state);
 void xAnimPoolInit(xMemPool* pool, U32 count, U32 singles, U32 blendFlags, U32 effectMax);
 xAnimPlay* xAnimPoolAlloc(xMemPool* pool, void* object, xAnimTable* table,
@@ -224,6 +230,5 @@ inline F32 xAnimFileRawTime(xAnimFile* data, float time)
     }
     return data->TimeOffset + time;
 }
-
 
 #endif

@@ -27,6 +27,8 @@
 
 typedef struct NPCMsg;
 
+class zAnimFxSound;
+
 enum en_npcparm
 {
     NPC_PARM_NONE,
@@ -460,6 +462,7 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
     void GiveReward();
     void PlayerKiltMe();
     S32 SndPlayFromSFX(xSFX* sfx, U32* sid_played);
+    S32 SndPlayFromAFX(zAnimFxSound* afx, U32* sid_played);
     S32 SndPlayRandom(en_NPC_SOUND sndtype);
     //U32 SndStart(U32 aid_toplay, NPCSndProp* sprop, F32 radius);
     S32 SndChanIsBusy(S32 flg_chan);
