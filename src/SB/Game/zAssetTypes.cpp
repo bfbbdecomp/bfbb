@@ -1,15 +1,16 @@
 #include "zAssetTypes.h"
 
+#include "xAnim.h"
 #include "xstransvc.h"
 #include "xDebug.h"
 #include "xEnv.h"
 #include "xJSP.h"
+#include "xMorph.h"
 
 #include <types.h>
 #include <stdio.h>
 #include <rwcore.h>
 #include <rpworld.h>
-#include <xAnim.h>
 
 static void* Curve_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize);
 static void* ATBL_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize);
@@ -509,8 +510,151 @@ static U8 dummyEffectCB(U32, xAnimActiveEffect*, xAnimSingle*, void*)
     return 0;
 }
 
-static void* ATBL_Read(void*, unsigned int, void*, unsigned int, unsigned int*)
+static U32 soundEffectCB(U32 cbenum, xAnimActiveEffect* acteffect, xAnimSingle* single,
+                         void* object)
 {
+    U32 sndhandle = 0;
+    U32 vil_SID = 0;
+    S32 vil_result;
+
+    if (cbenum == 1)
+    {
+        xEnt* ent_tmp = (xEnt*)object;
+        zAnimFxSound* snd = (zAnimFxSound*)(acteffect->Effect + 1);
+        if (ent_tmp == NULL)
+        {
+            vil_result = 0;
+        }
+        else if (ent_tmp->baseType == eBaseTypeNPC)
+        {
+            vil_result = ((zNPCCommon*)ent_tmp)->SndPlayFromAFX(snd, &vil_SID);
+        }
+        else
+        {
+            vil_result = 0;
+        }
+
+        if (vil_result > 0)
+        {
+            sndhandle = vil_SID;
+        }
+        else if (vil_result < 0)
+        {
+            sndhandle = 0;
+        }
+        else
+        {
+            U32 id = snd->ID;
+            U32 newId;
+            F32 volFactor;
+
+            static U32 footSelector = 0;
+            footSelector++;
+            if (id == 0x42B584CB || id == 0x56E1F71E || id == 0x331BDF8F)
+            {
+                newId = 0;
+                volFactor = 1.0f;
+
+                switch (id)
+                {
+                case 0x42B584CB:
+                {
+                    newId = footSelector % 2 ? s_sbFootSoundA : s_sbFootSoundB;
+                    volFactor = 0.6f;
+                    break;
+                }
+                case 0x56E1F71E:
+                {
+                    newId = footSelector % 2 ? s_scFootSoundA : s_scFootSoundB;
+                    volFactor = 0.4f;
+                    break;
+                }
+                case 0x331BDF8F:
+                {
+                    newId = footSelector % 2 ? s_patFootSoundA : s_patFootSoundB;
+                    volFactor = 0.6f;
+                    break;
+                }
+                }
+                volFactor *= 0.65f;
+                sndhandle = xSndPlay(newId, snd->vol * 0.77f * volFactor, snd->pitch, snd->priority,
+                                     snd->flags, 0, SND_CAT_GAME, 0.0f);
+            }
+            else
+            {
+                sndhandle = xSndPlay3D(snd->ID, snd->vol * 0.77f, snd->pitch, snd->priority,
+                                       snd->flags, (xEnt*)object, snd->radius, SND_CAT_GAME, 0.0f);
+            }
+        }
+    }
+    if (cbenum == 3)
+    {
+        xSndStop(acteffect->Handle);
+    }
+
+    return sndhandle;
+}
+
+static void* FindAssetCB(U32 ID, char*)
+{
+    U32 size;
+    return xSTFindAsset(ID, &size);
+}
+
+static void* ATBL_Read(void*, U32, void* indata, U32, U32* outsize)
+{
+    U32 i;
+    U32 j;
+    U32 debugNum;
+    U32 tmpsize;
+
+    xAnimTable* table;
+    xAnimState* astate;
+    xAnimTransition* atran;
+    U8* zaBytes;
+    xAnimAssetTable* zaTbl = (xAnimAssetTable*)indata;
+    void** zaRaw = (void**)(zaTbl + 1);
+
+    for (i = 0; i < zaTbl->NumRaw; ++i)
+    {
+        zaRaw[i] = xSTFindAsset(*(U32*)&zaRaw[i], &tmpsize);
+    }
+
+    for (i = 0; i < zaTbl->NumRaw; ++i)
+    {
+        if (zaRaw[i] == NULL)
+        {
+            continue;
+        }
+
+        for (j = 0; j < zaTbl->NumRaw; ++j)
+        {
+            if (zaRaw[j] == NULL)
+            {
+                continue;
+            }
+            zaRaw[j] = zaRaw[i];
+        }
+    }
+
+    for (i = 0; i < zaTbl->NumRaw; ++i)
+    {
+        if (*(U32*)zaRaw[i] == 'QSPM')
+        {
+            xMorphSeqSetup(zaRaw[i], FindAssetCB);
+        }
+    }
+    xAnimAssetFile* zaFile;
+    xAnimAssetState* zaState;
+    S32 k;
+    xAnimFile** fList;
+    xAnimTable* (*constructor)();
+    // S32 i;
+    char tmpstr[32];
+    xAnimFile* foundFile;
+    xAnimState* state;
+    xAnimAssetEffect* zaEffect;
+    xAnimEffect* effect;
     return NULL;
 }
 
