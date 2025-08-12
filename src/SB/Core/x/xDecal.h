@@ -23,7 +23,7 @@ struct xDecalEmitter
     struct config
     {
         U32 flags;
-        F32 life_time;
+        F32 life_time; // 0x2ec
         U32 blend_src;
         U32 blend_dst;
         struct

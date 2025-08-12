@@ -59,54 +59,115 @@ namespace
         U32 flags;
     };
 
-    static U32 sound_asset_ids[6][10];
-    static sound_data_type sound_data[6];
-    static const sound_asset sound_assets[29] =
+    struct bolt;
+
+    struct effect_data
     {
-        {0, "RSB_foot_loop", 0, 3},
-        {0, "fan_loop", 0, 3},
-        {0, "Rocket_burn_loop", 0, 3},
-        {0, "RP_whirr_loop", 0, 3},
-        {0, "RP_whirr2_loop", 0, 3},
-        {0, "Glove_hover", 0, 3},
-        {0, "Glove_pursuit", 0, 3},
-        {1, "Prawn_FF_hit", 0, 0},
-        {1, "Prawn_hit", 0, 0},
-        {1, "Door_metal_shut", 0, 0},
-        {1, "Ghostplat_fall", 0, 0},
-        {1, "ST-death", 0, 0},
-        {1, "RP_Bwrrzt", 0, 0},
-        {1, "RP_chunk", 0, 0},
-        {1, "b201_rp_exhale", 0, 0},
-        {2, "RP_laser_alt", 0, 0},
-        {3, "RP_laser_loop", 0, 1},
-        {3, "ElecArc_alt_b", 0, 1},
-        {3, "Laser_lrg_fire_loop", 0, 1},
-        {3, "Laser_sm_fire_loop", 0, 1},
-        {4, "RB_stalact_brk", 0, 0},
-        {4, "Volcano_blast", 0, 0},
-        {4, "RP_laser_thunk", 0, 0},
-        {4, "RP_pfft", 0, 0},
-        {4, "RP_thwash", 0, 0},
-        {5, "RP_charge_whirr", 0, 0},
-        {5, "B101_SC_jump", 0, 0},
-        {5, "KJ_Charge", 0, 0},
-        {5, "Laser_med_pwrup1", 0, 0}
+        struct effect_callback
+        {
+            void (*fp)(bolt&, void*);
+            void* context;
+        };
+
+        fx_type_enum type;
+        fx_orient_enum orient;
+        F32 rate;
+        union
+        {
+            xParEmitter* par;
+            xDecalEmitter* decal;
+            effect_callback callback;
+        };
+        F32 irate;
     };
 
+    static effect_data beam_launch_effect[2]; // size: 0x30, address: 0x4E0E60
+    static effect_data beam_head_effect[1]; // size: 0x18, address: 0x4E0E90
+    static effect_data beam_impact_effect[3]; // size: 0x48, address: 0x4E0EB0
+    static effect_data beam_death_effect[1]; // size: 0x18, address: 0x5E53F0
+    static effect_data beam_kill_effect[1];
+
+    static U32 sound_asset_ids[6][10];
+    static sound_data_type sound_data[6];
+
+    static const sound_asset sound_assets[29] = {
+        { 0, "RSB_foot_loop", 0, 3 },       { 0, "fan_loop", 0, 3 },
+        { 0, "Rocket_burn_loop", 0, 3 },    { 0, "RP_whirr_loop", 0, 3 },
+        { 0, "RP_whirr2_loop", 0, 3 },      { 0, "Glove_hover", 0, 3 },
+        { 0, "Glove_pursuit", 0, 3 },       { 1, "Prawn_FF_hit", 0, 0 },
+        { 1, "Prawn_hit", 0, 0 },           { 1, "Door_metal_shut", 0, 0 },
+        { 1, "Ghostplat_fall", 0, 0 },      { 1, "ST-death", 0, 0 },
+        { 1, "RP_Bwrrzt", 0, 0 },           { 1, "RP_chunk", 0, 0 },
+        { 1, "b201_rp_exhale", 0, 0 },      { 2, "RP_laser_alt", 0, 0 },
+        { 3, "RP_laser_loop", 0, 1 },       { 3, "ElecArc_alt_b", 0, 1 },
+        { 3, "Laser_lrg_fire_loop", 0, 1 }, { 3, "Laser_sm_fire_loop", 0, 1 },
+        { 4, "RB_stalact_brk", 0, 0 },      { 4, "Volcano_blast", 0, 0 },
+        { 4, "RP_laser_thunk", 0, 0 },      { 4, "RP_pfft", 0, 0 },
+        { 4, "RP_thwash", 0, 0 },           { 5, "RP_charge_whirr", 0, 0 },
+        { 5, "B101_SC_jump", 0, 0 },        { 5, "KJ_Charge", 0, 0 },
+        { 5, "Laser_med_pwrup1", 0, 0 }
+    };
+
+    const size_t beam_ring_curve = 2;
+
+    xVec3* get_player_loc()
+    {
+        return (xVec3*)&globals.player.ent.model->Mat->pos;
+    }
 
     S32 init_sound()
     {
         return 0;
     }
 
-    F32 get_player_loc()
+    void reset_sound()
+    {
+        for (S32 i = 0; i < 6; ++i)
+        {
+            sound_data[i].handle = 0;
+        }
+    }
+
+    void* play_sound(int, const xVec3*, float)
+    {
+        return NULL;
+    }
+
+    void* kill_sound(S32, U32)
+    {
+        return 0; // to-do
+    }
+
+    void* kill_sound(S32)
     {
         return 0;
     }
 
-    void play_sound(int, const xVec3*, float)
+    void play_beam_fly_sound(xLaserBoltEmitter::bolt& bolt, void* unk)
     {
+        if (bolt.context == NULL)
+        {
+            bolt.context = play_sound(SOUND_BOLT_FLY, &bolt.loc, 1.0f);
+        }
+    }
+
+    void kill_beam_fly_sound(xLaserBoltEmitter::bolt& bolt, void* unk)
+    {
+        if (bolt.context != NULL)
+        {
+            kill_sound(3, (U32)bolt.context);
+            bolt.context = NULL;
+        }
+    }
+
+    void play_beam_fire_sound(xLaserBoltEmitter::bolt& bolt, void* unk)
+    {
+        play_sound(SOUND_BOLT_FIRE, &bolt.origin, 1.0f);
+    }
+
+    void play_beam_hit_sound(xLaserBoltEmitter::bolt& bolt, void* unk)
+    {
+        play_sound(SOUND_BOLT_HIT, &bolt.loc, 1.0f);
     }
 
     struct config
@@ -233,8 +294,16 @@ namespace
         tweak_callback cb_sound;
         tweak_callback cb_sound_asset;
 
+        void load(xModelAssetParam*, U32);
         void register_tweaks(bool init, xModelAssetParam* ap, U32 apsize, const char*);
     };
+
+    static tweak_group tweak;
+
+    void tweak_group::load(xModelAssetParam* ap, U32 apsize)
+    {
+        register_tweaks(true, ap, apsize, NULL);
+    }
 
     void tweak_group::register_tweaks(bool init, xModelAssetParam* ap, U32 apsize, const char*)
     {
@@ -829,23 +898,38 @@ namespace
         if (init)
         {
             sound[SOUND_BOLT_FIRE].asset = sound_asset_ids[2][0];
-            sound_data[SOUND_BOLT_FIRE].id = xStrHash(sound_assets[sound[SOUND_BOLT_FIRE].asset].name);
+            sound_data[SOUND_BOLT_FIRE].id =
+                xStrHash(sound_assets[sound[SOUND_BOLT_FIRE].asset].name);
         }
         if (init)
         {
             sound[SOUND_BOLT_FLY].asset = sound_asset_ids[3][3];
-            sound_data[SOUND_BOLT_FLY].id = xStrHash(sound_assets[sound[SOUND_BOLT_FLY].asset].name);
+            sound_data[SOUND_BOLT_FLY].id =
+                xStrHash(sound_assets[sound[SOUND_BOLT_FLY].asset].name);
         }
         if (init)
         {
             sound[SOUND_BOLT_HIT].asset = sound_asset_ids[4][3];
-            sound_data[SOUND_BOLT_HIT].id = xStrHash(sound_assets[sound[SOUND_BOLT_HIT].asset].name);
+            sound_data[SOUND_BOLT_HIT].id =
+                xStrHash(sound_assets[sound[SOUND_BOLT_HIT].asset].name);
         }
         if (init)
         {
             sound[SOUND_CHARGE].asset = sound_asset_ids[5][3];
             sound_data[SOUND_CHARGE].id = xStrHash(sound_assets[sound[SOUND_CHARGE].asset].name);
         }
+    }
+
+    static void update_move_accel(xVec3& loc, zNPCBPlankton::move_info& move, F32 dt)
+    {
+        // Ghidra output, will come back to this later
+
+        // xAccelMove((double)*(float*)(param_3 + 0x18), param_1_00, (double)*(float*)(param_3 + 0x24),
+        //            (float*)this, (float*)(param_3 + 0xc));
+        // xAccelMove((double)*(float*)(param_3 + 0x1c), param_1_00, (double)*(float*)(param_3 + 0x28),
+        //            (float*)(this + 4), (float*)(param_3 + 0x10));
+        // xAccelMove((double)*(float*)(param_3 + 0x20), param_1_00, (double)*(float*)(param_3 + 0x2c),
+        //            (float*)(this + 8), (float*)(param_3 + 0x14));
     }
 
 } // namespace
@@ -988,6 +1072,33 @@ void zNPCBPlankton::Init(xEntAsset* asset) //66%
     zNPCBPlankton::aim_gun(play, &gun_tilt, &move.dest, 0);
 }
 
+void zNPCBPlankton::Setup()
+{
+    U32 tmpVar;
+
+    zNPCBoss::Setup();
+    zNPCBPlankton::setup_beam();
+    tmpVar = xStrHash("NPC_NEWSCASTER");
+    newsfish = (zNPCNewsFish*)zSceneFindObject(tmpVar);
+}
+
+void zNPCBPlankton::PostSetup()
+{
+    xUpdateCull_SetCB(xglobals->updateMgr, NULL, xUpdateCull_AlwaysTrueCB, NULL);
+}
+
+void zNPCBPlankton::Reset()
+{
+    if (newsfish != 0)
+    {
+    }
+
+    zNPCCommon::Reset();
+    zNPCBPlankton::reset_beam();
+    memset((void*)flag.updated, 0, 0x10);
+    zNPCBPlankton::face_player();
+}
+
 void zNPCBPlankton::Destroy()
 {
     zNPCCommon::Destroy();
@@ -1050,10 +1161,35 @@ void zNPCBPlankton::Process(xScene* xscn, float dt)
     //Process__10zNPCCommonFP6xScenef(param_1,param_9,param_10);
 }
 
+S32 zNPCBPlankton::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
+                            xBase* toParamWidget, S32* handled)
+{
+    *handled = 0;
+    return zNPCCommon::SysEvent(from, to, toEvent, toParam, toParamWidget, handled);
+
+    // ((zNPCCommon*) 0x1b8???
+}
+
 void zNPCBPlankton::Render()
 {
     xNPCBasic::Render();
     zNPCBPlankton::render_debug();
+}
+
+void zNPCBPlankton::RenderExtraPostParticles()
+{
+    if ((beam.visible() & 0xff) != 0)
+    {
+        RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)5);
+        RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)2);
+        beam.render();
+    }
+}
+
+void zNPCBPlankton::ParseINI()
+{
+    zNPCCommon::ParseINI();
+    tweak.load(parmdata, pdatsize);
 }
 
 void zNPCBPlankton::SelfSetup()
@@ -1169,14 +1305,137 @@ S32 zNPCBPlankton::next_goal()
 
 void zNPCBPlankton::render_debug()
 {
+    // weak
 }
 
-void zNPCBPlankton::update_animation(float)
+void zNPCBPlankton::reset_territories()
 {
+}
+
+void zNPCBPlankton::update_animation(F32)
+{
+}
+
+void zNPCBPlankton::update_follow(F32 dt)
+{
+    if (flag.follow != 2)
+    {
+        update_follow_player(dt);
+    }
+    else if ((flag.follow < 2) && (1 > flag.follow))
+    {
+        update_follow_camera(dt);
+    }
+}
+
+void zNPCBPlankton::check_player_damage()
+{
+    // TODO
+}
+
+void zNPCBPlankton::init_beam()
+{
+    beam.init((U32)&beam, "Plankton\'s Beam");
+    beam.set_texture("plankton_laser_bolt");
+
+    beam.refresh_config();
+    //
+    beam_ring.init(0, "Plankton\'s Beam Rings");
+    beam_ring.set_curve((xDecalEmitter::curve_node*)&beam_ring.curve, beam_ring_curve);
+    beam_ring.set_texture("bubble");
+    beam_ring.set_default_config();
+    beam_ring.cfg.flags = 0;
+    beam_ring.cfg.life_time = 0.0f;
+    beam_ring.cfg.blend_src = 5;
+    beam_ring.cfg.blend_dst = 2;
+    beam_ring.refresh_config();
+
+    //
+    beam_glow.init(0, "Plankton\'s Beam Glow");
+    beam_glow.set_curve((xDecalEmitter::curve_node*)&beam_glow.curve, 0);
+    beam_glow.set_texture("fx_firework");
+    beam_glow.set_default_config();
+    beam_glow.cfg.flags = 0;
+    beam_glow.cfg.life_time = 0.0f;
+    beam_glow.cfg.blend_src = 5;
+    beam_glow.cfg.blend_dst = 2;
+    beam_glow.refresh_config();
+}
+
+void zNPCBPlankton::setup_beam()
+{
+}
+
+void zNPCBPlankton::reset_beam()
+{
+    beam.reset();
 }
 
 void zNPCBPlankton::vanish()
 {
+    flags = flags & 0xfe;
+    flags = flags | 0x40;
+    pflags = 0;
+    moreFlags = 0;
+    chkby = 0;
+    penby = 0;
+    flags2.flg_colCheck = 0;
+    flags2.flg_penCheck = 0;
+    kill_sound(NULL);
+}
+
+void zNPCBPlankton::reappear()
+{
+    flags = flags | 1;
+    flags = flags & 0xbf;
+    pflags = 0;
+    moreFlags = 16;
+    chkby = 16;
+    penby = 16;
+    flags2.flg_colCheck = 0;
+    flags2.flg_penCheck = 0;
+    play_sound(0, (xVec3*)&bound.pad[3], 1.0f);
+}
+
+void zNPCBPlankton::next_territory()
+{
+    if ((have_cronies() & 0xff) != 0)
+    {
+        active_territory = active_territory + 1;
+        if (active_territory >= territory_size)
+        {
+            active_territory = territory_size + -1;
+        }
+    }
+}
+
+S32 zNPCBPlankton::have_cronies() const
+{
+    // FIXME: dunno how to fix this yet
+    return (active_territory) & (active_territory * 0x3c + 0x4e4) >> 0x1f;
+}
+
+void zNPCBPlankton::sickum()
+{
+}
+
+void zNPCBPlankton::here_boy()
+{
+    flag.hunt = 0;
+}
+
+void zNPCBPlankton::follow_player()
+{
+    flag.follow = FOLLOW_PLAYER;
+    follow.delay = follow.max_delay = 0.0f;
+    flag.move = MOVE_ORBIT;
+}
+
+void zNPCBPlankton::follow_camera()
+{
+    flag.follow = FOLLOW_CAMERA;
+    follow.delay = follow.max_delay = 0.0f;
+    flag.move = MOVE_ORBIT;
 }
 
 S32 zNPCBPlankton::IsAlive()
@@ -1204,14 +1463,62 @@ xFactoryInst* zNPCGoalBPlanktonIdle::create(S32 who, RyzMemGrow* grow, void* inf
     return new (who, grow) zNPCGoalBPlanktonIdle(who, (zNPCBPlankton&)*info);
 }
 
+S32 zNPCGoalBPlanktonIdle::Enter(F32 dt, void* ctxt)
+{
+    F32 tmpFloat;
+    F32 local_24[3];
+
+    owner.reappear();
+    owner.flag.attacking = false;
+    owner.refresh_orbit();
+    owner.reset_speed();
+    owner.flag.follow = owner.FOLLOW_NONE;
+    get_yaw(tmpFloat, dt);
+    apply_yaw(tmpFloat);
+    return zNPCGoalCommon::Enter(dt, ctxt);
+}
+
+S32 zNPCGoalBPlanktonIdle::Exit(F32 dt, void* ctxt)
+{
+    owner.refresh_orbit();
+    return xGoal::Exit(dt, ctxt);
+}
+
 xFactoryInst* zNPCGoalBPlanktonAttack::create(S32 who, RyzMemGrow* grow, void* info)
 {
     return new (who, grow) zNPCGoalBPlanktonAttack(who, (zNPCBPlankton&)*info);
 }
 
+S32 zNPCGoalBPlanktonAttack::Enter(F32 dt, void* ctxt)
+{
+    owner.reappear();
+    owner.flag.attacking = true;
+    owner.refresh_orbit();
+    owner.follow_player();
+    owner.delay = 0.0f;
+    owner.face_player();
+    owner.reset_speed();
+    return zNPCGoalCommon::Enter(dt, ctxt);
+}
+
+S32 zNPCGoalBPlanktonAttack::Exit(F32 dt, void* ctxt)
+{
+    return xGoal::Exit(dt, ctxt);
+}
+
 xFactoryInst* zNPCGoalBPlanktonAmbush::create(S32 who, RyzMemGrow* grow, void* info)
 {
     return new (who, grow) zNPCGoalBPlanktonAmbush(who, (zNPCBPlankton&)*info);
+}
+
+S32 zNPCGoalBPlanktonAmbush::Enter(F32 dt, void* ctxt)
+{
+    return zNPCGoalCommon::Enter(dt, ctxt);
+}
+
+S32 zNPCGoalBPlanktonAmbush::Exit(F32 dt, void* ctxt)
+{
+    return xGoal::Exit(dt, ctxt);
 }
 
 xFactoryInst* zNPCGoalBPlanktonFlank::create(S32 who, RyzMemGrow* grow, void* info)
@@ -1229,7 +1536,7 @@ xFactoryInst* zNPCGoalBPlanktonHunt::create(S32 who, RyzMemGrow* grow, void* inf
     return new (who, grow) zNPCGoalBPlanktonHunt(who, (zNPCBPlankton&)*info);
 }
 
-S32 zNPCGoalBPlanktonHunt::Enter(float dt, void* updCtxt)
+S32 zNPCGoalBPlanktonHunt::Enter(F32 dt, void* updCtxt)
 {
     owner.reappear();
     get_player_loc();
@@ -1241,7 +1548,7 @@ S32 zNPCGoalBPlanktonHunt::Enter(float dt, void* updCtxt)
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
-S32 zNPCGoalBPlanktonHunt::Exit(float dt, void* updCtxt)
+S32 zNPCGoalBPlanktonHunt::Exit(F32 dt, void* updCtxt)
 {
     owner.refresh_orbit();
     return xGoal::Exit(dt, updCtxt);
@@ -1312,24 +1619,22 @@ xFactoryInst* zNPCGoalBPlanktonBeam::create(S32 who, RyzMemGrow* grow, void* inf
 
 S32 zNPCGoalBPlanktonBeam::Enter(float dt, void* updCtxt)
 {
-    xParEmitter parE;
-    xParEmitter& pEmit = parE; // this is one of the codes of all time
     owner.reappear();
+    substate = SS_WARM_UP;
     owner.delay = 0.0f;
-    emitted = 0.0f;
+    emitted = 0;
+    owner.flag.aim_gun = true;
     owner.flag.follow = owner.FOLLOW_NONE;
-    owner.enable_emitter(pEmit);
-    void play_sound(S32, const xVec3*, F32); // dunno how to get this to call properly
+    owner.enable_emitter((xParEmitter&)owner.beam_charge);
+    play_sound(5, (xVec3*)&owner.bound.pad[3], 1.0f); // dunno how to get this to call properly
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
 S32 zNPCGoalBPlanktonBeam::Exit(float dt, void* updCtxt)
 {
-    xParEmitter parE;
-    xParEmitter& pEmit = parE; // this is one of the codes of all time
     owner.flag.aim_gun = false;
-    owner.flag.follow = owner.FOLLOW_NONE;
-    owner.disable_emitter(pEmit);
+    owner.flag.follow = owner.FOLLOW_PLAYER;
+    owner.disable_emitter((xParEmitter&)owner.beam_charge);
     return xGoal::Exit(dt, updCtxt);
 }
 
