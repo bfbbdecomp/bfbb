@@ -14,6 +14,27 @@ namespace auto_tweak
     void load_param(T1&, T2, T2, T2, xModelAssetParam*, U32, const char*);
 };
 
+struct inode;
+
+struct response_curve
+{
+    U32 values; // offset 0x0,
+    inode* curve; // offset 0x4,
+    U32 nodes; // offset 0x8,
+    U32 active_node; // offset 0xC,
+
+    void end_t() const;
+};
+struct node
+{
+    F32 t;
+};
+
+struct inode : node
+{
+    F32 value[1];
+};
+
 struct zNPCB_SB2 : zNPCBoss
 {
     enum move_enum

@@ -44,6 +44,20 @@ namespace oob_state
         tagFixed fixed;
         xMat4x3 shared_target;
 
+        static void reset_camera()
+        {
+            // xMat4x3 ma, is not correct. This is a major placeholder.
+            // Simply have not figured out what the data/global is supposed to be
+            // FIXME: Correct this function
+
+            xMat4x3* ma = xEntGetFrame(&(xEnt)globals.player.ent);
+
+            zCameraEnableInput();
+            zCameraEnableTracking(CO_OOB);
+            xCameraDoCollisions(1, 6);
+            zCameraTweakGlobal_Init();
+        }
+
         static bool assume_player_is_stupid()
         {
             shared.tutorial = (ztalkbox*)zSceneFindObject(xStrHash("OUT_OF_BOUNDS_TLKBX"));
@@ -72,6 +86,21 @@ namespace oob_state
 
         static void move_hand(float dt /* r29+0x10 */)
         {
+        }
+
+        static void set_rect_vert(rwGameCube2DVertex&, F32, F32, F32, iColor_tag, F32)
+        {
+        }
+
+        drop_state_type::substate_enum drop_state_type::supdate_fade_in(drop_state_type&,
+                                                                        xScene& scn, F32& unk0)
+        {
+            return drop_state_type::update_fade_in();
+        }
+
+        drop_state_type::substate_enum drop_state_type::update_fade_in(xScene&, float&)
+        {
+            return SS_MOVING_IN;
         }
 
     } // namespace
