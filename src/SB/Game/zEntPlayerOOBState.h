@@ -4,6 +4,8 @@
 #include "xserializer.h"
 #include "zTalkBox.h"
 #include "zTaskBox.h"
+#include "zCamera.h"
+#include "zCameraTweak.h"
 
 extern bool oob_player_teleported;
 
@@ -107,6 +109,36 @@ namespace oob_state
 
             void start();
             void stop();
+        };
+
+        struct drop_state_type : state_type
+        {
+            enum substate_enum
+            {
+                SS_MOVING_IN,
+                SS_STOPPING,
+                SS_STOPPED,
+                SS_STARTING,
+                SS_MOVING_OUT,
+                SS_START_FADE_IN,
+                SS_FADE_IN,
+                MAX_SS,
+                SS_INVALID = 0xffffffff,
+            };
+
+            substate_enum move_substate;
+            substate_enum fade_substate;
+            xVec3 player_start;
+            F32 stop_time;
+            F32 fade_start_time;
+            F32 fade_time;
+            substate_enum (*updatess)(drop_state_type&, xScene&, F32&)[7];
+
+            void start();
+            state_enum update(xScene& s, F32& dt);
+            substate_enum supdate_fade_in(drop_state_type&, xScene&, F32&);
+            substate_enum update_fade_in();
+            substate_enum update_fade_in(xScene&, F32&);
         };
 
         struct _class_9
