@@ -62,6 +62,70 @@ U16 my_dsc(U16 dsc)
     return dsc;
 }
 
+void FloatingPointErrorHandler(U16 last, OSContext* ctxt, U64 unk1, U64 unk2)
+{
+    U32 uVar2;
+    uVar2 = (ctxt->fpscr) & 0xf8 << 0x16 | 0x1f80700;
+    if ((uVar2 & 0x20000000) != 0)
+    {
+        OSReport("FPE: Invalid operation: ");
+
+        if ((uVar2 & 0x1000000) != 0)
+        {
+            OSReport("SNaN\n");
+        }
+        if ((uVar2 & 0x800000) != 0)
+        {
+            OSReport("Infinity - Infinity\n");
+        }
+        if ((uVar2 & 0x400000) != 0)
+        {
+            OSReport("Infinity / Infinity\n");
+        }
+        if ((uVar2 & 0x200000) != 0)
+        {
+            OSReport("0 / 0\n");
+        }
+        if ((uVar2 & 0x100000) != 0)
+        {
+            OSReport("Infinity * 0\n");
+        }
+        if ((uVar2 & 0x80000) != 0)
+        {
+            OSReport("Invalid compare\n");
+        }
+        if ((uVar2 & 0x400) != 0)
+        {
+            OSReport("Software request\n");
+        }
+        if ((uVar2 & 0x200) != 0)
+        {
+            OSReport("Invalid square root\n");
+        }
+        if ((uVar2 & 0x100) != 0)
+        {
+            OSReport("Invalid integer convert\n");
+        }
+    }
+    if ((uVar2 & 0x10000000) != 0)
+    {
+        OSReport("FPE: Overflow\n");
+    }
+    if ((uVar2 & 0x8000000) != 0)
+    {
+        OSReport("FPE: Underflow\n");
+    }
+    if ((uVar2 & 0x4000000) != 0)
+    {
+        OSReport("FPE: Zero division\n");
+    }
+    if ((uVar2 & 0x2000000) != 0)
+    {
+        OSReport("FPE: Inexact result\n");
+    }
+    ctxt->srr0 = ctxt->srr0 + 4;
+}
+
 void MemoryProtectionErrorHandler(U16 last, OSContext* ctx, U64 unk1, U64 unk2)
 {
     last_error = last;

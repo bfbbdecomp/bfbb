@@ -5,23 +5,102 @@
 
 namespace
 {
-    struct SharedTalkboxState
-    {
-        void* padding[2]; // FIXME: variables not verified
-        ztalkbox* active;
-        U8 unkC[0x8D48 - 0xC];
-        U32 unk8D48;
-        U8 unk8D4C[0x8D78 - 0x8D4C];
-        U8 unk8D78;
-        U8 unk8D79;
-        U8 unk8D7A;
-    }; // size: 0x8E9C?
-
-    SharedTalkboxState shared;
+    shared_type shared;
 
     void stop_audio_effect();
 
-    void deactivate() {
+    void speak_stop()
+    {
+        if (shared.speak_npc != NULL)
+        {
+            shared.speak_npc->SpeakStop();
+            shared.speak_npc = NULL;
+        }
+
+        if (shared.speak_player != 0)
+        {
+            zEntPlayerSpeakStop();
+            shared.speak_player = 0;
+        }
+    }
+
+    static void trigger(U32 event)
+    {
+        // shared.delay_events = 0; // -0x7286
+        // shared.triggered._first = 0; // -0x7280
+
+        if (shared.delay_events == 0)
+        {
+            zEntEvent(shared.active, shared.active, event);
+        }
+        else
+        {
+            shared.triggered.push_back();
+        }
+    }
+
+    void trigger_pads(U32 pressed)
+    {
+        if ((pressed & 0x10) != 0)
+        {
+            trigger(73);
+        }
+        if ((pressed & 0x40) != 0)
+        {
+            trigger(74);
+        }
+        if ((pressed & 0x80) != 0)
+        {
+            trigger(76);
+        }
+        if ((pressed & 0x20) != 0)
+        {
+            trigger(75);
+        }
+        if ((pressed & 1) != 0)
+        {
+            trigger(71);
+        }
+        if ((pressed & 2) != 0)
+        {
+            trigger(72);
+        }
+        if ((pressed & 0x1000) != 0)
+        {
+            trigger(69);
+        }
+        if ((pressed & 0x2000) != 0)
+        {
+            trigger(70);
+        }
+        if ((pressed & 0x100) != 0)
+        {
+            trigger(67);
+        }
+        if ((pressed & 0x200) != 0)
+        {
+            trigger(68);
+        }
+        if ((pressed & 0x10000) != 0)
+        {
+            trigger(63);
+        }
+        if ((pressed & 0x20000) != 0)
+        {
+            trigger(65);
+        }
+        if ((pressed & 0x40000) != 0)
+        {
+            trigger(66);
+        }
+        if ((pressed & 0x80000) != 0)
+        {
+            trigger(64);
+        }
+    }
+
+    void deactivate()
+    {
         stop_audio_effect();
 
         ztalkbox* active = shared.active;
@@ -46,91 +125,93 @@ namespace
     // Equivalent: see fixme
     S32 cb_dispatch(xBase*, xBase* to, U32 event, const F32* argf, xBase*)
     {
-        shared.unk8D7A = 1;
+        //shared.unk8D7A = 1;
         ztalkbox& talkbox = *(ztalkbox*)to;
 
         switch (event)
         {
-            case 10:
-            case 88:
-                talkbox.reset();
-                break;
-            case 4:
-            case 504:
-                talkbox.hide();
-                break;
-            case 3:
-            case 503:
-                talkbox.show();
-                break;
-            case 335: {
-                U32 textID = ((U32*)argf == NULL) ? 0 : *(U32*)argf;
-                talkbox.start_talk(textID, NULL, NULL);
-                flush_triggered();
-                break;
+        case 10:
+        case 88:
+            talkbox.reset();
+            break;
+        case 4:
+        case 504:
+            talkbox.hide();
+            break;
+        case 3:
+        case 503:
+            talkbox.show();
+            break;
+        case 335:
+        {
+            U32 textID = ((U32*)argf == NULL) ? 0 : *(U32*)argf;
+            talkbox.start_talk(textID, NULL, NULL);
+            flush_triggered();
+            break;
+        }
+        case 336:
+            talkbox.stop_talk();
+            flush_triggered();
+            break;
+        case 352:
+            if (argf == NULL)
+            {
+                stop_wait(talkbox, NULL, 0);
             }
-            case 336:
-                talkbox.stop_talk();
-                flush_triggered();
-                break;
-            case 352:
-                if (argf == NULL)
-                {
-                    stop_wait(talkbox, NULL, 0);
-                }
-                else
-                {
-                    stop_wait(talkbox, argf, 4);
-                }
-                flush_triggered();
-                break;
-            case 334:
-                if ((U32*)argf != NULL)
-                {
-                    talkbox.set_text(*(U32*)argf);
-                }
-                break;
-            case 338:
-                if ((U32*)argf != NULL)
-                {
-                    talkbox.add_text(*(U32*)argf);
-                }
-                break;
-            case 339:
-                talkbox.clear_text();
-                break;
+            else
+            {
+                stop_wait(talkbox, argf, 4);
+            }
+            flush_triggered();
+            break;
+        case 334:
+            if ((U32*)argf != NULL)
+            {
+                talkbox.set_text(*(U32*)argf);
+            }
+            break;
+        case 338:
+            if ((U32*)argf != NULL)
+            {
+                talkbox.add_text(*(U32*)argf);
+            }
+            break;
+        case 339:
+            talkbox.clear_text();
+            break;
 
-            // FIXME: Figure out the right no-op cases
-            case 75:
-            case 76:
-            case 342:
-            case 343:
-            case 344:
-            case 345:
-            case 346:
-            case 347:
-            case 348:
-            case 349:
-            case 350:
-            case 351:
-            case 353:
-            case 356:
-            case 357:
-            case 358:
-            case 359:
-            // case 452:
-            // case 453:
-            // case 454:
-            case 465:
-            case 466:
-                break;
+        // FIXME: Figure out the right no-op cases
+        case 75:
+        case 76:
+        case 342:
+        case 343:
+        case 344:
+        case 345:
+        case 346:
+        case 347:
+        case 348:
+        case 349:
+        case 350:
+        case 351:
+        case 353:
+        case 356:
+        case 357:
+        case 358:
+        case 359:
+        // case 452:
+        // case 453:
+        // case 454:
+        case 465:
+        case 466:
+            break;
         }
 
-        shared.unk8D7A = 0;
+        //shared.unk8D7A = 0;
         return 1;
     }
 
-    char* load_text(U32 id) {
+    char* load_text(U32 id)
+    {
         if (id == 0)
         {
             return NULL;
@@ -146,7 +227,7 @@ namespace
         // HACK
         return (char*)(asset) + 4;
     }
-}
+} // namespace
 
 void ztalkbox::load(const asset_type& tasset)
 {
@@ -191,10 +272,32 @@ void ztalkbox::load(const asset_type& tasset)
 void ztalkbox::reset()
 {
     flag.visible = true;
-    if (shared.active == this) {
+    if (shared.active == this)
+    {
         deactivate();
     }
 }
+
+namespace
+{
+
+    struct state_type
+    {
+        state_enum type;
+
+        void start();
+        void stop();
+    };
+
+    void state_type::start()
+    {
+    }
+
+    void state_type::stop()
+    {
+    }
+
+} // namespace
 
 void ztalkbox::clear_text()
 {
@@ -213,7 +316,7 @@ void ztalkbox::stop_wait(U32 unk)
 {
     if (shared.active == this)
     {
-        shared.unk8D48 |= unk;
+        //shared.unk8D48 |= unk;
     }
 }
 
@@ -231,10 +334,10 @@ void ztalkbox::show()
         prompt_box->activate();
     }
 
-    if (shared.unk8D78 != 0 && prompt.quit != 0 && quit_box != NULL)
-    {
-        quit_box->activate();
-    }
+    // if (shared.unk8D78 != 0 && prompt.quit != 0 && quit_box != NULL)
+    // {
+    //     quit_box->activate();
+    // }
 }
 
 void ztalkbox::hide()
@@ -255,4 +358,10 @@ void ztalkbox::hide()
 ztalkbox* ztalkbox::get_active()
 {
     return shared.active;
+}
+
+void ztalkbox::permit(U32 add_flags, U32 remove_flags)
+{
+    shared.permit &= ~remove_flags;
+    shared.permit |= add_flags;
 }
