@@ -3,6 +3,7 @@
 
 #include <types.h>
 
+S32 zMenuRunning();
 U32 zMenuUpdateMode();
 U32 zMenuIsPaused();
 S32 zMenuLoopContinue();
