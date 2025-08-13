@@ -230,8 +230,8 @@ void MIXInit()
     __MIXSoundMode = OSGetSoundMode();
 }
 
-void MIXInitChannel(S32 param_1, U32 param_2, S32 param_3, S32 param_4, S32 param_5,
-                    S32 param_6, S32 param_7, S32 param_8)
+void MIXInitChannel(S32 param_1, U32 param_2, S32 param_3, S32 param_4, S32 param_5, S32 param_6,
+                    S32 param_7, S32 param_8)
 {
     struct MIXChannel* chan = &__MIXChannel[*(S32*)((S32)param_1 + 0x18)];
 
@@ -271,8 +271,7 @@ void MIXInitChannel(S32 param_1, U32 param_2, S32 param_3, S32 param_4, S32 para
         {
             *(U16*)(&chan->data[0x12]) = __MIXGetVolume(chan->data[3] + chan->data[10]);
             *(U16*)(&chan->data[0x13]) = __MIXGetVolume(chan->data[3] + chan->data[10]);
-            *(U16*)(&chan->data[0x14]) =
-                __MIXGetVolume(chan->data[3] + chan->data[11] - 0x3c);
+            *(U16*)(&chan->data[0x14]) = __MIXGetVolume(chan->data[3] + chan->data[11] - 0x3c);
         }
         else
         {
@@ -288,8 +287,7 @@ void MIXInitChannel(S32 param_1, U32 param_2, S32 param_3, S32 param_4, S32 para
         {
             *(U16*)(&chan->data[0x15]) = __MIXGetVolume(chan->data[4] + chan->data[10]);
             *(U16*)(&chan->data[0x16]) = __MIXGetVolume(chan->data[4] + chan->data[10]);
-            *(U16*)(&chan->data[0x17]) =
-                __MIXGetVolume(chan->data[4] + chan->data[11] - 0x3c);
+            *(U16*)(&chan->data[0x17]) = __MIXGetVolume(chan->data[4] + chan->data[11] - 0x3c);
         }
         else
         {
@@ -305,10 +303,8 @@ void MIXInitChannel(S32 param_1, U32 param_2, S32 param_3, S32 param_4, S32 para
 
     case 1:
     case 2:
-        *(U16*)(&chan->data[0xf]) =
-            __MIXGetVolume(chan->data[7] + chan->data[8] + chan->data[10]);
-        *(U16*)(&chan->data[0x10]) =
-            __MIXGetVolume(chan->data[7] + chan->data[9] + chan->data[10]);
+        *(U16*)(&chan->data[0xf]) = __MIXGetVolume(chan->data[7] + chan->data[8] + chan->data[10]);
+        *(U16*)(&chan->data[0x10]) = __MIXGetVolume(chan->data[7] + chan->data[9] + chan->data[10]);
         *(U16*)(&chan->data[0x11]) = __MIXGetVolume(chan->data[7] + chan->data[11]);
 
         if ((chan->data[1] & 1) != 0)
@@ -317,8 +313,7 @@ void MIXInitChannel(S32 param_1, U32 param_2, S32 param_3, S32 param_4, S32 para
                 __MIXGetVolume(chan->data[3] + chan->data[8] + chan->data[10]);
             *(U16*)(&chan->data[0x13]) =
                 __MIXGetVolume(chan->data[3] + chan->data[9] + chan->data[10]);
-            *(U16*)(&chan->data[0x14]) =
-                __MIXGetVolume(chan->data[3] + chan->data[11] + -0x3c);
+            *(U16*)(&chan->data[0x14]) = __MIXGetVolume(chan->data[3] + chan->data[11] + -0x3c);
         }
         else
         {
@@ -335,8 +330,7 @@ void MIXInitChannel(S32 param_1, U32 param_2, S32 param_3, S32 param_4, S32 para
                 __MIXGetVolume(chan->data[4] + chan->data[8] + chan->data[10]);
             *(U16*)(&chan->data[0x16]) =
                 __MIXGetVolume(chan->data[4] + chan->data[9] + chan->data[10]);
-            *(U16*)(&chan->data[0x17]) =
-                __MIXGetVolume(chan->data[4] + chan->data[11] + -0x3c);
+            *(U16*)(&chan->data[0x17]) = __MIXGetVolume(chan->data[4] + chan->data[11] + -0x3c);
         }
         else
         {
@@ -350,14 +344,10 @@ void MIXInitChannel(S32 param_1, U32 param_2, S32 param_3, S32 param_4, S32 para
         break;
 
     case 3:
-        *(U16*)(&chan->data[15]) =
-            __MIXGetVolume(chan->data[7] + chan->data[8] + chan->data[10]);
-        *(U16*)(&chan->data[16]) =
-            __MIXGetVolume(chan->data[7] + chan->data[9] + chan->data[10]);
-        *(U16*)(&chan->data[21]) =
-            __MIXGetVolume(chan->data[7] + chan->data[12] + chan->data[11]);
-        *(U16*)(&chan->data[22]) =
-            __MIXGetVolume(chan->data[7] + chan->data[13] + chan->data[11]);
+        *(U16*)(&chan->data[15]) = __MIXGetVolume(chan->data[7] + chan->data[8] + chan->data[10]);
+        *(U16*)(&chan->data[16]) = __MIXGetVolume(chan->data[7] + chan->data[9] + chan->data[10]);
+        *(U16*)(&chan->data[21]) = __MIXGetVolume(chan->data[7] + chan->data[12] + chan->data[11]);
+        *(U16*)(&chan->data[22]) = __MIXGetVolume(chan->data[7] + chan->data[13] + chan->data[11]);
 
         if ((chan->data[1] & 1) != 0)
         {
@@ -388,8 +378,7 @@ void MIXInitChannel(S32 param_1, U32 param_2, S32 param_3, S32 param_4, S32 para
 
     int enabled = OSDisableInterrupts();
 
-    *(U16*)((S32)param_1 + 0x19c) =
-        *(U16*)(&chan->data[0xe]);
+    *(U16*)((S32)param_1 + 0x19c) = *(U16*)(&chan->data[0xe]);
     *(U16*)((S32)param_1 + 0x19e) = 0;
     if ((*(U16*)((S32)param_1 + 0x14a) = *(U16*)(&chan->data[0xf])))
     {
