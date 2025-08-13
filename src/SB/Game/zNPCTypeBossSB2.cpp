@@ -83,20 +83,11 @@ namespace
 
     static U32 sound_asset_ids[10][4];
     static sound_data_type sound_data[10];
-    static const sound_asset sound_assets[12] =
-    {
-        {0, "RSB_laugh", 0, 0},
-        {1, "RSB_kah", 0, 0},
-        {2, "RSB_chop_windup", 0, 0},
-        {3, "RSB_chop_swing", 0, 0},
-        {4, "RSB_swipe", 0, 0},
-        {5, "RSB_foot_loop", 0, 1},
-        {6, "RSB_armhit1", 0, 0},
-        {6, "RSB_armhit2", 0, 0},
-        {7, "RSB_armhit1", 0, 0},
-        {7, "RSB_armhit2", 0, 0},
-        {8, "RSB_armsmash", 0, 0},
-        {9, "RSB_foor_impact", 0, 0},
+    static const sound_asset sound_assets[12] = {
+        { 0, "RSB_laugh", 0, 0 },      { 1, "RSB_kah", 0, 0 },      { 2, "RSB_chop_windup", 0, 0 },
+        { 3, "RSB_chop_swing", 0, 0 }, { 4, "RSB_swipe", 0, 0 },    { 5, "RSB_foot_loop", 0, 1 },
+        { 6, "RSB_armhit1", 0, 0 },    { 6, "RSB_armhit2", 0, 0 },  { 7, "RSB_armhit1", 0, 0 },
+        { 7, "RSB_armhit2", 0, 0 },    { 8, "RSB_armsmash", 0, 0 }, { 9, "RSB_foor_impact", 0, 0 },
     };
 
     S32 set_alpha_blend(xModelInstance*)
@@ -116,6 +107,14 @@ namespace
     S32 tweak()
     {
         return 0; // to-do
+    }
+
+    void reset_sound()
+    {
+        for (S32 i = 0; i < 10; ++i)
+        {
+            sound_data[i].handle = 0;
+        }
     }
 
     S32 play_sound(int, const xVec3*, float)
@@ -222,6 +221,11 @@ namespace
         void load(xModelAssetParam* ap, U32 apsize);
         void register_tweaks(bool init, xModelAssetParam* ap, U32 apsize, const char*);
     };
+
+    void tweak_group::load(xModelAssetParam* params, U32 size)
+    {
+        tweak_group::register_tweaks(true, params, size, NULL);
+    }
 
     void tweak_group::register_tweaks(bool init, xModelAssetParam* ap, U32 apsize, const char*)
     {
@@ -975,6 +979,10 @@ namespace
         }
     }
 
+    void response_curve::end_t() const
+    {
+    }
+
 } // namespace
 
 xAnimTable* ZNPC_AnimTable_BossSB2()
@@ -1285,7 +1293,7 @@ S32 zNPCGoalBossSB2Idle::Exit(float dt, void* updCtxt)
 
 S32 zNPCGoalBossSB2Taunt::Enter(float dt, void* updCtxt)
 {
-    ::play_sound(0, &owner.sound_loc.mouth , 1.0f);
+    play_sound(0, &owner.sound_loc.mouth , 1.0f);
     owner.flag.face_player = 1;
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }

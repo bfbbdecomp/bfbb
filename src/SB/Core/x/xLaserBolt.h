@@ -42,21 +42,6 @@ enum fx_orient_enum
     FORCE_INT_FX_ORIENT = 0xffffffff
 };
 
-struct bolt
-{
-    xVec3 origin;
-    xVec3 dir;
-    xVec3 loc;
-    xVec3 hit_norm;
-    F32 dist;
-    F32 hit_dist;
-    F32 prev_dist;
-    F32 prev_check_dist;
-    xEnt* hit_ent;
-    F32 emitted;
-    void* context;
-};
-
 struct xLaserBoltEmitter
 {
     struct config
@@ -74,6 +59,8 @@ struct xLaserBoltEmitter
         S32 hit_interval;
         F32 damage;
     };
+
+    struct bolt;
 
     struct static_queue
     {
@@ -104,6 +91,21 @@ struct xLaserBoltEmitter
         F32 irate;
     };
 
+    struct bolt
+    {
+        xVec3 origin;
+        xVec3 dir;
+        xVec3 loc;
+        xVec3 hit_norm;
+        F32 dist;
+        F32 hit_dist;
+        F32 prev_dist;
+        F32 prev_check_dist;
+        xEnt* hit_ent;
+        F32 emitted;
+        void* context;
+    };
+
     config cfg;
     static_queue bolts;
     F32 ialpha;
@@ -112,6 +114,7 @@ struct xLaserBoltEmitter
     effect_data* fx[7];
     U32 fxsize[7];
 
+    void init(U32 max_bolts, const char*);
     void set_texture(char* name);
     void set_texture(U32 aid);
     void set_texture(RwTexture* tex);
@@ -128,6 +131,8 @@ struct xLaserBoltEmitter
     RxObjSpace3DVertex* get_vert_buffer(S32& dat);
     void applyDamage(bolt& b);
     void reset_fx(fx_when_enum when);
+
+    U32 visible() const;
 };
 
 #endif

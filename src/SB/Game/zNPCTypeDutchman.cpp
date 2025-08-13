@@ -5,7 +5,6 @@
 
 #include <types.h>
 
-
 #define f1605 0.0f
 #define f1606 1.0f
 #define f1689 0.2f
@@ -36,6 +35,7 @@ static U32 dutchman_count;
 
 namespace
 {
+
     void kill_sound(S32 a, U32 b)
     {
     }
@@ -161,9 +161,14 @@ namespace
         tweak_callback cb_blob_pitch;
         tweak_callback cb_sound;
 
-
         void register_tweaks(bool init, xModelAssetParam* ap, U32 apsize, const char*);
     };
+
+    static tweak_group tweak;
+
+    static void set_volume(S32 which, U32, F32 new_vol)
+    {
+    }
 
     void tweak_group::register_tweaks(bool init, xModelAssetParam* ap, U32 apsize, const char*)
     {
@@ -1344,7 +1349,6 @@ xFactoryInst* zNPCGoalDutchmanPostFlame::create(S32 who, RyzMemGrow* grow, void*
 {
     return new (who, grow) zNPCGoalDutchmanPostFlame(who, (zNPCDutchman&)*info);
 }
-
 
 S32 zNPCGoalDutchmanPostFlame::Exit(F32 dt, void* updCtxt)
 {
