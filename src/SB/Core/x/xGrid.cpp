@@ -29,7 +29,7 @@ void xGridBoundInit(xGridBound* bound, void* data)
 // I think they may not have used the obvious pattern for it, since changing
 // the multiplication order for the second one generates closer machine code
 // than the same for both lines.
-void xGridInit(xGrid* grid, xBox* bounds, U16 nx, U16 nz, U8 ingrid_id)
+void xGridInit(xGrid* grid, const xBox* bounds, U16 nx, U16 nz, U8 ingrid_id)
 {
     grid->ingrid_id = ingrid_id;
     grid->nx = nx;
