@@ -155,4 +155,10 @@ void xSndSetPitch(U32 snd, F32 pitch);
 void xSndSetCategoryVol(sound_category category, F32 vol);
 void xSndSetExternalCallback(void (*callback)(U32));
 
+inline U32 xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, xEnt* ent, F32 radius,
+                      sound_category category, F32 delay)
+{
+    return xSndPlay3D(id, vol, pitch, priority, flags, ent, radius / 4.0f, radius, category, delay);
+}
+
 #endif
