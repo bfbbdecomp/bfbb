@@ -1,8 +1,10 @@
 #include "zLOD.h"
 
 #include <types.h>
-#include <../Core/x/xEnt.h>
-#include <../Core/x/xBound.h>
+
+#include "xEnt.h"
+#include "xMathInlines.h"
+
 #include "zBase.h"
 #include "zEntDestructObj.h"
 
