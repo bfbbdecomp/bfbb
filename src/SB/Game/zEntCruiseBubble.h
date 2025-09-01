@@ -648,8 +648,8 @@ namespace cruise_bubble
     bool event_handler(xBase* from, U32 event, const F32* fparam, xBase* to);
     xMat4x3* get_player_mat();
     xMat4x3* get_missle_mat();
-} // namespace cruise_bubble
+    xAnimTable* anim_table();
 
-xAnimTable* anim_table();
+} // namespace cruise_bubble
 
 #endif
