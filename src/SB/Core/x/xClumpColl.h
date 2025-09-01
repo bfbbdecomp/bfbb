@@ -69,15 +69,20 @@ struct TempAtomicList
     RwMeshCache* meshCache;
 };
 
+class RpIntersection;
+class RpCollisionTriangle;
+
+typedef RpCollisionTriangle* (*IntersectionCB)(RpIntersection*, RpWorldSector*,
+                                               RpCollisionTriangle*, float, void*);
+
 void xClumpColl_InstancePointers(xClumpCollBSPTree* tree, RpClump* clump);
 xClumpCollBSPTree* xClumpColl_StaticBufferInit(void* data, U32 param_2);
-void xClumpColl_ForAllCapsuleLeafNodeIntersections(
-    xClumpCollBSPTree* tree,
-    RwLine* line,
-    F32 dist,
-    xClumpCollV3dGradient* grad,
-    int (*tri)(xClumpCollBSPTriangle*, void*),
-    void* data
-);
+void xClumpColl_ForAllCapsuleLeafNodeIntersections(xClumpCollBSPTree* tree, RwLine* line, F32 dist,
+                                                   xClumpCollV3dGradient* grad,
+                                                   int (*tri)(xClumpCollBSPTriangle*, void*),
+                                                   void* data);
+xClumpCollBSPTree* xClumpColl_ForAllIntersections(xClumpCollBSPTree* tree,
+                                                  RpIntersection* intersection,
+                                                  IntersectionCB callBack, void* data);
 
 #endif
