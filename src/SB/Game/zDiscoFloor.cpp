@@ -10,6 +10,7 @@
 #include "xString.h"
 #include "xDebug.h"
 #include "xMath.h"
+#include "xMathInlines.h"
 
 #include "iModel.h"
 #include "iMath.h"

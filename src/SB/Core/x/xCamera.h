@@ -67,7 +67,6 @@ extern xMat4x3 sCameraFXMatOld;
 extern cameraFX sCameraFX[10];
 extern cameraFXTableEntry sCameraFXTable[3];
 
-
 struct xScene;
 
 enum _tagTransType

@@ -1,6 +1,7 @@
 #include "xEntDrive.h"
 
 #include "xMath.h"
+#include "xMathInlines.h"
 
 #include <types.h>
 

@@ -16,7 +16,6 @@
 
 #include "xString.h"
 #include "xDebug.h"
-#include "xBound.h"
 
 // Finish porting code from bfbbpc repo
 
@@ -749,7 +748,7 @@ S32 zNPCCommon::NPCMessage(NPCMsg* mail)
 void zNPCCommon::Move(xScene* xscn, F32 dt, xEntFrame* frm)
 {
     bool retval = false;
-    if ((npcset.useNavSplines) && ((flg_move)&8))
+    if ((npcset.useNavSplines) && ((flg_move) & 8))
         if (this->drv_data && (this->drv_data->driver || this->drv_data->odriver))
         {
             retval = true;
@@ -2430,7 +2429,7 @@ void zNPCCommon_WonderReset()
 U32 zNPCCommon::CanDoSplines()
 {
     bool retval = false;
-    if ((npcset.useNavSplines) && ((flg_move)&8))
+    if ((npcset.useNavSplines) && ((flg_move) & 8))
     {
         retval = true;
     }
