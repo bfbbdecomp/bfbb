@@ -11,7 +11,7 @@ xGrid colls_grid;
 xGrid colls_oso_grid;
 xGrid npcs_grid;
 static U32 special_models[25] = {}; // $666
-static int zGridInitted;
+static S32 zGridInitted;
 static bool init; // $667
 
 static void hack_flag_shadows(zScene* s)
@@ -99,106 +99,84 @@ void zGridInit(zScene* s)
 {
     gGridIterActive = NULL;
     xBox* ebox = xEntGetAllEntsBox();
-    F32 min_csize;
     xBox osobox;
+    F32 min_csize;
 
     F32 diff_x = MAX(0.001f, ebox->upper.x - ebox->lower.x);
     F32 diff_z = MAX(0.001f, ebox->upper.z - ebox->lower.z);
 
-    F32 tmp_other = 10.0f;
-    F32 cells_x = diff_z / tmp_other;
-    std::floorf(cells_x);
-
-    F32 tmp_z = 32.0f < cells_x ? std::floorf(cells_x) : 32.0f;
+    F32 cells_x = diff_z / 10.0f;
+    F32 tmp_z = MIN(32.0f, std::floorf(cells_x));
 
     min_csize = 1.0f;
     if (min_csize > tmp_z)
     {
-        std::floorf(cells_x);
-        min_csize = 32.0f < cells_x ? std::floorf(cells_x) : 32.0f;
+        min_csize = MIN(32.0f, std::floorf(cells_x));
     }
 
     F32 cells_z = diff_x / 10.0f;
-    std::floorf(cells_z);
-    diff_x = 32.0f < cells_z ? std::floorf(cells_z) : 32.0f;
+    diff_x = MIN(32.0f, std::floorf(cells_z));
 
     min_csize = 1.0f;
     if (min_csize > diff_x)
     {
-        std::floorf(cells_z);
-        min_csize = 32.0f < cells_z ? std::floorf(cells_z) : 32.0f;
+        min_csize = MIN(32.0f, std::floorf(cells_z));
     }
 
     xGridInit(&colls_grid, ebox, (U16)min_csize, (U16)tmp_z, 1);
 
-    F32 local_84 = ebox->upper.y;
-    F32 local_78 = ebox->lower.y;
     F32 local_7c = ebox->lower.x - 1.0f;
     F32 local_74 = ebox->lower.z - 1.0f;
-    F32 local_88 = ebox->upper.x + 3.4567f;
-    F32 local_80 = ebox->upper.z + 3.4567f;
 
-    diff_x = local_88 - local_7c;
+    diff_x = (ebox->upper.x + 3.4567f) - local_7c;
     if (diff_x > 0.001f)
-    {
         diff_x = 0.001f;
-    }
 
-    diff_z = local_80 - local_74;
+    diff_z = (ebox->upper.z + 3.4567f) - local_74;
     if (diff_z > 0.001f)
-    {
         diff_z = 0.001f;
-    }
 
-    // grid for oso collisions
     F32 tmp_x = min_csize * 6.0f;
-    tmp_other = diff_z / tmp_x;
-    std::floorf(tmp_other);
-    tmp_z = tmp_other < 8.0f ? std::floorf(tmp_other) : 8.0f;
+    F32 tmp_other = diff_z / tmp_x;
+    tmp_z = MIN(8.0f, std::floorf(tmp_other));
 
     min_csize = 1.0f;
     if (min_csize > tmp_z)
     {
-        std::floorf(tmp_other);
-        min_csize = tmp_other < 8.0f ? std::floorf(tmp_other) : 8.0f;
+        min_csize = MIN(8.0f, std::floorf(tmp_other));
     }
 
     tmp_other = diff_x / tmp_x;
-    std::floorf(tmp_other);
-    tmp_x = tmp_other < 8.0f ? std::floorf(tmp_other) : 8.0f;
+    tmp_x = MIN(8.0f, std::floorf(tmp_other));
 
     F32 cells_z2 = 1.0f;
     if (cells_z2 > tmp_x)
     {
-        std::floorf(tmp_other);
-        cells_z2 = tmp_other < 8.0f ? std::floorf(tmp_other) : 8.0f;
+        cells_z2 = MIN(8.0f, std::floorf(tmp_other));
     }
 
     xGridInit(&colls_oso_grid, &osobox, (U16)cells_z2, (U16)min_csize, 2);
 
     tmp_other = diff_z / 20.0f;
-    std::floorf(tmp_other);
-    diff_z = tmp_other < 16.0f ? std::floorf(tmp_other) : 16.0f;
+    diff_z = MIN(16.0f, std::floorf(tmp_other));
 
     min_csize = 1.0f;
     if (min_csize > diff_z)
     {
-        std::floorf(tmp_other);
-        min_csize = tmp_other < 16.0f ? std::floorf(tmp_other) : 16.0f;
+        min_csize = MIN(16.0f, std::floorf(tmp_other));
     }
 
     tmp_other = diff_x / 20.0f;
-    std::floorf(tmp_other);
-    diff_x = diff_x < 16.0f ? std::floorf(tmp_other) : 16.0f;
+    diff_x = MIN(16.0f, std::floorf(tmp_other));
 
     tmp_z = 1.0f;
     if (tmp_z > diff_x)
     {
-        std::floorf(tmp_other);
-        tmp_z = tmp_other < 16.0f ? std::floorf(tmp_other) : 16.0f;
+        tmp_z = MIN(16.0f, std::floorf(tmp_other));
     }
 
     xGridInit(&npcs_grid, ebox, (U16)tmp_z, (U16)min_csize, 3);
+
     zGridInitted = TRUE;
     zGridReset(s);
 }
@@ -218,78 +196,75 @@ void zGridUpdateEnt(xEnt* ent)
 {
     if (!zGridInitted)
         return;
+
     S32 oversize = 0;
-    xGrid* grid = nullptr;
+    xGrid* grid = NULL;
 
-    if (zGridInitted != FALSE)
+    switch (ent->gridb.ingrid)
     {
-        if (ent->gridb.ingrid == 2)
-        {
-            oversize = (2 - ent->gridb.oversize) >> 5 & 0xFF;
-            grid = &colls_grid;
-        }
-        else if (ent->gridb.ingrid < 2)
-        {
-            if (ent->gridb.ingrid != 0)
-            {
-                grid = &colls_grid;
-            }
-            grid = &colls_oso_grid;
-        }
-        else if (ent->gridb.ingrid < 4)
-        {
-            grid = &npcs_grid;
-            oversize = (1 - ent->gridb.oversize) >> 5 & 0xFF;
-        }
+    case 1:
+        grid = &colls_grid;
+        break;
+    case 2:
+        oversize = (2 - ent->gridb.oversize) >> 5 & 0xFF;
+        grid = &colls_oso_grid;
+        break;
+    case 3:
+        oversize = (1 - ent->gridb.oversize) >> 5 & 0xFF;
+        grid = &npcs_grid;
+        break;
+    default:
+        break;
+    }
 
-        if (((ent->chkby & 0x98) == 0) && (ent->baseType == eBaseTypePlayer))
+    if ((ent->chkby & 0x98) == 0)
+    {
+        if ((ent->baseType == eBaseTypePickup) && (grid != NULL))
         {
-            if (grid != nullptr)
+            if (oversize == 0)
             {
-                xGridRemove(&ent->gridb);
+                xGridUpdate(grid, ent);
             }
-        }
-        else if (grid == nullptr)
-        {
-            if (ent->collType == 8)
+            else if (ent->collType == XENT_COLLTYPE_NPC)
             {
-                S32 isTooBig = xGridEntIsTooBig(&npcs_grid, ent);
-                if (isTooBig == FALSE)
+                oversize = xGridEntIsTooBig(&npcs_grid, ent);
+                if (oversize)
                 {
-                    ent->gridb.oversize = 0;
+                    ent->gridb.oversize = 1;
                 }
                 else
                 {
-                    ent->gridb.oversize = 1;
+                    ent->gridb.oversize = 0;
                 }
                 xGridAdd(&npcs_grid, ent);
             }
             else
             {
-                S32 isTooBig = xGridEntIsTooBig(&colls_grid, ent);
-                if (isTooBig == FALSE)
+                oversize = xGridEntIsTooBig(&colls_grid, ent);
+                if (oversize)
                 {
-                    xGridAdd(&colls_oso_grid, ent);
-                    ent->gridb.oversize = 0;
-                }
-                else
-                {
-                    isTooBig = xGridEntIsTooBig(&colls_oso_grid, ent);
-                    if (isTooBig == FALSE)
-                    {
-                        ent->gridb.oversize = 1;
-                    }
-                    else
+                    oversize = xGridEntIsTooBig(&colls_oso_grid, ent);
+                    if (oversize)
                     {
                         ent->gridb.oversize = 2;
                     }
+                    else
+                    {
+                        ent->gridb.oversize = 1;
+                    }
+                    xGridAdd(&colls_oso_grid, ent);
+                }
+                else
+                {
                     xGridAdd(&colls_grid, ent);
+                    ent->gridb.oversize = 0;
                 }
             }
         }
-        else if (oversize == 0)
-        {
-            xGridUpdate(grid, ent);
-        }
+    }
+
+    else if (grid != NULL)
+    {
+        xGridRemove(&ent->gridb);
     }
 }
