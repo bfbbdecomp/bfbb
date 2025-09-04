@@ -7,64 +7,62 @@
 #include "xVec3.h"
 #include <types.h>
 
-xGrid colls_grid;
-xGrid colls_oso_grid;
-xGrid npcs_grid;
-static U32 special_models[25] = {}; // $666
-static S32 zGridInitted;
-static bool init; // $667
-
 static void hack_flag_shadows(zScene* s)
 {
-    if (init == FALSE)
-    {
-        special_models[0] = xStrHash("bb_arrow");
-        special_models[1] = xStrHash("metal_sheets");
-        special_models[2] = xStrHash("clam_poop");
-        special_models[3] = xStrHash("beach_chair_yellow");
-        special_models[4] = xStrHash("debris_pile_rb_smll");
-        special_models[5] = xStrHash("debris_pile_rb");
-        special_models[6] = xStrHash("floor_panel");
-        special_models[7] = xStrHash("gy_woodpieceA");
-        special_models[8] = xStrHash("quarter_note_on");
-        special_models[9] = xStrHash("eighth_note_on");
-        special_models[10] = xStrHash("db03_path_a");
-        special_models[11] = xStrHash("db03_path_b");
-        special_models[12] = xStrHash("db03_path_c");
-        special_models[13] = xStrHash("db03_path_d");
-        special_models[14] = xStrHash("db03_path_e");
-        special_models[15] = xStrHash("db03_path_f");
-        special_models[16] = xStrHash("db03_path_g");
-        special_models[17] = xStrHash("db03_path_h");
-        special_models[18] = xStrHash("db03_path_i");
-        special_models[19] = xStrHash("db03_path_j");
-        special_models[20] = xStrHash("db03_path_k");
-        special_models[21] = xStrHash("db03_path_l");
-        special_models[22] = xStrHash("db03_path_m");
-        special_models[23] = xStrHash("db03_path_o");
-        special_models[24] = xStrHash("db03_path_p");
-        init = TRUE;
-    }
+    static U32 special_models[25] = {
+        xStrHash("bb_arrow"),
+        xStrHash("metal_sheets"),
+        xStrHash("clam_poop"),
+        xStrHash("beach_chair_yellow"),
+        xStrHash("debris_pile_rb_smll"),
+        xStrHash("debris_pile_rb"),
+        xStrHash("floor_panel"),
+        xStrHash("gy_woodpieceA"),
+        xStrHash("quarter_note_on"),
+        xStrHash("eighth_note_on"),
+        xStrHash("db03_path_a"),
+        xStrHash("db03_path_b"),
+        xStrHash("db03_path_c"),
+        xStrHash("db03_path_d"),
+        xStrHash("db03_path_e"),
+        xStrHash("db03_path_f"),
+        xStrHash("db03_path_g"),
+        xStrHash("db03_path_h"),
+        xStrHash("db03_path_i"),
+        xStrHash("db03_path_j"),
+        xStrHash("db03_path_k"),
+        xStrHash("db03_path_l"),
+        xStrHash("db03_path_m"),
+        xStrHash("db03_path_o"),
+        xStrHash("db03_path_p"),
+    }; // non-matching: stb happens too early?
+
     zEnt** it = s->ents;
-    zEnt** end = s->num_ents + it;
-    do
+    zEnt** end = s->ents + s->num_ents;
+
+    while (it != end)
     {
+        // non-matching: extra `mr` instruction?
         xEnt* ent = *it;
-        if (ent && (ent->baseFlags & 0x20) && ent->model)
+        if (ent && (ent->baseFlags & 0x20) && ent->asset)
         {
-            U32* end_special_models = &special_models[24];
-            for (U32* id = special_models; id != end_special_models; id++)
+            U32* id = special_models;
+            U32* end_special_models = id + 25;
+
+            while (id != end_special_models)
             {
-                if (ent->model->modelID == *id)
+                if (ent->asset->modelInfoID == *id)
                 {
                     ent->chkby |= 0x80;
                     ent->baseFlags |= 0x10;
                     ent->asset->baseFlags |= 0x10;
                     break;
                 }
+                id++;
             }
         }
-    } while (it != end);
+        it++;
+    }
 }
 
 void zGridReset(zScene* s)
@@ -94,13 +92,16 @@ void zGridReset(zScene* s)
     }
 }
 
-// WIP
+// WIP, the MIN/MAX stuff seem like they should be CLAMP
+// but the codegen is different. Also, there are a bunch
+// of local vars here currently that weren't in the dwarf.
+// All the dwarf had was ebox, min_csize and osobox.
 void zGridInit(zScene* s)
 {
     gGridIterActive = NULL;
     xBox* ebox = xEntGetAllEntsBox();
-    xBox osobox;
     F32 min_csize;
+    xBox osobox;
 
     F32 diff_x = MAX(0.001f, ebox->upper.x - ebox->lower.x);
     F32 diff_z = MAX(0.001f, ebox->upper.z - ebox->lower.z);
@@ -124,6 +125,9 @@ void zGridInit(zScene* s)
     }
 
     xGridInit(&colls_grid, ebox, (U16)min_csize, (U16)tmp_z, 1);
+
+    // non-matching: missing a bunch of lwz, lfs and stw instructions,
+    // and ghidra has a few local variables that *appear* unused
 
     F32 local_7c = ebox->lower.x - 1.0f;
     F32 local_74 = ebox->lower.z - 1.0f;
@@ -200,6 +204,7 @@ void zGridUpdateEnt(xEnt* ent)
     S32 oversize = 0;
     xGrid* grid = NULL;
 
+    // case 2 and 3 need to use `cntlzw` but are `mr` currently
     switch (ent->gridb.ingrid)
     {
     case 1:
