@@ -62,8 +62,7 @@ typedef S32 (*GridEntCallback)(xEnt*, void*);
 extern volatile S32 gGridIterActive;
 
 void xGridBoundInit(xGridBound* gridb, void* data);
-void xGridInit(xGrid* grid /* r18 */, const xBox* bounds /* r2 */, U16 nx /* r17 */,
-               U16 nz /* r16 */, U8 ingrid_id /* r2 */);
+void xGridInit(xGrid* grid, const xBox* bounds, U16 nx, U16 nz, U8 ingrid_id);
 void xGridKill(xGrid* grid);
 void xGridEmpty(xGrid* grid);
 S32 xGridRemove(xGridBound* gridb);
