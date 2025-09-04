@@ -6,6 +6,7 @@
 
 #include "xParCmd.h"
 #include "xMath.h"
+#include "xMathInlines.h"
 #include "xString.h"
 
 #include "zGlobals.h"

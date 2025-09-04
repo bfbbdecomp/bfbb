@@ -1,5 +1,7 @@
 #include "zLasso.h"
 
+#include "xMathInlines.h"
+
 #include "iModel.h"
 
 #include <types.h>
@@ -30,8 +32,10 @@ void zLasso_SetGuide(xEnt* ent, xAnimState* lassoAnim)
     var_r5 = sGuideList;
     u32 guideListIdx = 0;
 
-    for (u32 i = sNumGuideLists; i > 0; i--) {
-        if (var_r5->target == ent) {
+    for (u32 i = sNumGuideLists; i > 0; i--)
+    {
+        if (var_r5->target == ent)
+        {
             break;
         }
 
@@ -83,25 +87,28 @@ void zLasso_InterpToGuide(zLasso* lasso)
         xVec3Init(&lasso->tgCenter, 0.0f, 0.0f, 0.0f);
 
         S32 vertMapIdx = 0;
-        for (S32 i = 0; i < currentGuideNumTris; i++) {
-            xVec3AddTo(&lasso->tgCenter, (xVec3*) morphTargetVector + sCurrentGuide->vertMap[vertMapIdx]);
+        for (S32 i = 0; i < currentGuideNumTris; i++)
+        {
+            xVec3AddTo(&lasso->tgCenter,
+                       (xVec3*)morphTargetVector + sCurrentGuide->vertMap[vertMapIdx]);
             vertMapIdx += 1;
         }
 
-        xVec3SMul(&lasso->tgCenter, &lasso->tgCenter, 1.0f / (f32) currentGuideNumTris);
-        xVec3Sub(&sp14, (xVec3*) morphTargetVector + sCurrentGuide->vertMap[0], &lasso->tgCenter);
-        xVec3Sub(&sp8, (xVec3*) morphTargetVector + sCurrentGuide->vertMap[1], &lasso->tgCenter);
+        xVec3SMul(&lasso->tgCenter, &lasso->tgCenter, 1.0f / (f32)currentGuideNumTris);
+        xVec3Sub(&sp14, (xVec3*)morphTargetVector + sCurrentGuide->vertMap[0], &lasso->tgCenter);
+        xVec3Sub(&sp8, (xVec3*)morphTargetVector + sCurrentGuide->vertMap[1], &lasso->tgCenter);
 
         lasso->tgRadius = xVec3Normalize(&sp14, &sp14);
-        
+
         xVec3Cross(&lasso->tgNormal, &sp14, &sp8);
         xVec3Normalize(&lasso->tgNormal, &lasso->tgNormal);
 
-        if (lasso->tgNormal.y < 0.0f) {
+        if (lasso->tgNormal.y < 0.0f)
+        {
             xVec3Inv(&lasso->tgNormal, &lasso->tgNormal);
         }
 
-        xMat4x3Toworld(&lasso->tgCenter, (xMat4x3*) sCurrentGuide->poly->Mat, &lasso->tgCenter);
+        xMat4x3Toworld(&lasso->tgCenter, (xMat4x3*)sCurrentGuide->poly->Mat, &lasso->tgCenter);
     }
 }
 
