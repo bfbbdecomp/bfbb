@@ -7,6 +7,11 @@
 #include "xVec3.h"
 #include <types.h>
 
+xGrid colls_grid;
+xGrid colls_oso_grid;
+xGrid npcs_grid;
+static S32 zGridInitted;
+
 static void hack_flag_shadows(zScene* s)
 {
     static U32 special_models[25] = {
