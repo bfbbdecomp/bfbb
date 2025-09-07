@@ -37,7 +37,6 @@ void xBoundHitsBound(const xBound* a, const xBound* b, xCollis* c);
 void xRayHitsBound(const xRay3* r, const xBound* b, xCollis* c);
 void xSphereHitsBound(const xSphere* o, const xBound* b, xCollis* c);
 void xVecHitsBound(const xVec3* v, const xBound* b, xCollis* c);
-F32 xsqrt(F32 x);
 
 inline xVec3* xBoundCenter(xBound* bound)
 {

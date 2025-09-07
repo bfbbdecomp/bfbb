@@ -1,7 +1,6 @@
 #include "zEntPlayerBungeeState.h"
 
 #include "iScrFX.h"
-#include "xBound.h"
 #include "xCamera.h"
 #include "xDebug.h"
 #include "xFX.h"
