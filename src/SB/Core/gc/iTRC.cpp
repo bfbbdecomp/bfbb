@@ -18,9 +18,6 @@
 #define FONT_MATRIX_ID 0x1E
 #define TEXTBOX_MAX_TEXT_LENGTH 256
 
-extern void GXPosition3s16(S32, S32, S32);
-extern void GXTexCoord2s16(S32, S32);
-
 // FIXME: These should be in a RW header somewhere
 extern GXRenderModeObj* _RwDlRenderMode;
 extern "C" {
@@ -59,14 +56,15 @@ BOOL ROMFont::Init()
 {
     if (OSGetFontEncode() == 1)
     {
-        ROMFont::mFontData = (OSFontHeader*)OSAllocFromHeap(__OSCurrHeap, 0xF00 + 0x12);
+        ROMFont::mFontData = (OSFontHeader*)OSAllocFromHeap(__OSCurrHeap, 0x120F00);
     }
     else
     {
-        ROMFont::mFontData = (OSFontHeader*)OSAllocFromHeap(__OSCurrHeap, 0x2 + 0x120);
+        ROMFont::mFontData = (OSFontHeader*)OSAllocFromHeap(__OSCurrHeap, 0x20120);
     }
 
-    return OSInitFont(ROMFont::mFontData);
+    OSFontHeader* volatile& hack = ROMFont::mFontData;
+    return OSInitFont(hack);
 }
 
 void ROMFont::InitDisplay(_GXRenderModeObj* InRenderMode)
@@ -84,7 +82,7 @@ void ROMFont::InitDisplay(_GXRenderModeObj* InRenderMode)
     ROMFont::InitVI();
 
     GXSetCopyClear(clr, 0xffffff);
-    C_MTXOrtho(mtx, 0.0f, mRenderMode->efbHeight, 0.0f, mRenderMode->fbWidth, 0.0f, 10000.0f);
+    C_MTXOrtho(mtx, 0.0f, mRenderMode->efbHeight, 0.0f, mRenderMode->fbWidth, 0.0f, -100.0f);
     GXSetProjection(mtx, GX_ORTHOGRAPHIC);
     PSMTXIdentity(idt);
     GXLoadPosMtxImm(idt, 0);
@@ -189,38 +187,45 @@ void ROMFont::SwapBuffers()
     mCurrentFrameBuffer = mCurrentFrameBuffer == mXFBs[0] ? mXFBs[1] : mXFBs[0];
 }
 
-// FIXME: Revisit after GXTexCoord2s16 and GXPosition3s16 have been decompiled, looks like they were inlined
-void ROMFont::DrawCell(S32 param_1, S32 param_2, S32 param_3, S32 param_4)
+void ROMFont::DrawCell(S32 x, S32 y, S32 u, S32 v)
 {
-    U16 uVar1;
-    U16 uVar2;
-    S16 sVar3 = 0;
-    S32 iVar4 = 0;
-    S32 iVar5 = 0;
-    S16 iVar6 = 0;
+    u16 cellWidth;
+    u16 cellHeight;
 
-    uVar1 = mFontData->cellWidth;
-    uVar2 = mFontData->cellHeight;
-    iVar5 = (int)(short)(param_1 + uVar1);
-    iVar4 = (int)(short)(param_2 + uVar2);
+    s16 tex_bottom;
+    s16 tex_right;
+    s16 tex_left;
+    s16 tex_top;
 
-    GXBegin(GX_LINESTRIP, GX_VTXFMT0, 4);
+    s16 left;
+    s16 right;
+    s16 bottom;
+    s16 top;
 
-    GXPosition3s16((int)param_1, (int)param_2, 0);
-    GXTexCoord2s16((int)param_3, param_4);
+    left = x;
+    bottom = y;
+    cellWidth = mFontData->cellWidth;
+    cellHeight = mFontData->cellHeight;
+    right = left + cellWidth;
+    top = bottom + cellHeight;
 
-    GXPosition3s16(iVar5, (int)param_2, 0);
+    GXBegin(GX_QUADS, GX_VTXFMT0, 4);
 
-    iVar6 = (int)(short)(param_3 + uVar1);
+    GXPosition3s16(left, bottom, 0);
+    tex_left = u;
+    tex_bottom = v;
+    GXTexCoord2s16(tex_left, tex_bottom);
 
-    GXTexCoord2s16(iVar6, sVar3);
-    GXPosition3s16(iVar5, iVar4, 0);
+    GXPosition3s16(right, bottom, 0);
+    tex_right = u + cellWidth;
+    GXTexCoord2s16(tex_right, tex_bottom);
 
-    sVar3 = param_4 + uVar2;
+    GXPosition3s16(right, top, 0);
+    tex_top = v + cellHeight;
+    GXTexCoord2s16(tex_right, tex_top);
 
-    GXTexCoord2s16(iVar6, sVar3);
-    GXPosition3s16((int)param_1, iVar4, 0);
-    GXTexCoord2s16(iVar6, sVar3);
+    GXPosition3s16(left, top, 0);
+    GXTexCoord2s16(tex_left, tex_top);
 
     GXEnd();
 }
@@ -282,34 +287,35 @@ S32 ROMFont::GetWidth(char* string)
     return iVar1;
 }
 
-void ROMFont::DrawTextBox(S32 param_1, S32 param_2, S32 param_3, S32 param_4, char* str)
+void ROMFont::DrawTextBox(S32 x, S32 y, S32 width, S32 height, char* str)
 {
-    char* tokenizedString;
-    S32 baseWidth;
+    char* word;
     S32 tokWidth;
-    S32 iVar4;
-    S32 iVar5;
-    char acStack_128[TEXTBOX_MAX_TEXT_LENGTH];
+    S32 baseWidth;
+    S32 cursor_x;
+    S32 cursor_y;
+
+    char buf[TEXTBOX_MAX_TEXT_LENGTH];
 
     if (str != NULL)
     {
         RenderBegin();
-        strcpy(acStack_128, str);
-        tokenizedString = strtok(acStack_128, " ");
+        cursor_x = x;
+        cursor_y = y;
+        strcpy(buf, str);
+        word = strtok(buf, " ");
         baseWidth = GetWidth(" ");
-        iVar4 = param_2 + param_4;
-        iVar5 = param_1;
-        while ((tokenizedString != NULL && (param_2 < iVar4)))
+        while (word != NULL && y + height > cursor_y)
         {
-            tokWidth = GetWidth(tokenizedString);
-            if (param_1 + param_3 < iVar5 + tokWidth)
+            tokWidth = GetWidth(word);
+            if (cursor_x + tokWidth > x + width)
             {
-                param_2 = param_2 + mFontData->cellHeight;
-                iVar5 = param_1;
+                cursor_y += mFontData->cellHeight;
+                cursor_x = x;
             }
-            DrawString(iVar5, param_2, tokenizedString);
-            tokenizedString = strtok(NULL, " ");
-            iVar5 = tokWidth + baseWidth + iVar5;
+            DrawString(cursor_x, cursor_y, word);
+            word = strtok(NULL, " ");
+            cursor_x += tokWidth + baseWidth;
         }
         RenderEnd();
     }
@@ -332,15 +338,39 @@ void ResetButton::SetSndKillFunction(void (*Func)())
 
 void ResetButton::CheckResetButton()
 {
-    // TODO
+    BOOL reset_button_state = OSGetResetButtonState();
+    if (!reset_button_state && mWasResetButtonPressed)
+    {
+        if (mResetEnabled)
+        {
+            OSDisableInterrupts();
+            if (mSndKill)
+            {
+                mSndKill();
+            }
 
-    OSGetResetButtonState();
-    PADRecalibrate(0xf0000000);
-    VISetBlack(TRUE);
-    VIFlush();
-    VIWaitForRetrace();
-    OSEnableInterrupts();
-    DVDGetDriveStatus();
+            PADRecalibrate(0xf0000000);
+            VISetBlack(TRUE);
+            VIFlush();
+            VIWaitForRetrace();
+            OSEnableInterrupts();
+
+            if (DVDGetDriveStatus() == DVD_STATE_WRONG_DISK ||
+                DVDGetDriveStatus() == DVD_STATE_COVER_OPEN ||
+                DVDCheckDisk() == FALSE && DVDGetDriveStatus() == DVD_STATE_END)
+            {
+                OSResetSystem(TRUE, 0, FALSE);
+            }
+            else
+            {
+                OSResetSystem(FALSE, 0, FALSE);
+            }
+        }
+    }
+    else
+    {
+        mWasResetButtonPressed = reset_button_state;
+    }
 }
 
 void iTRCDisk::Init()
@@ -405,37 +435,100 @@ bool iTRCDisk::IsDiskIDed()
 
 void iTRCDisk::DisplayErrorMessage()
 {
-    S32 tempVar;
-    GXCullMode* getMode = 0;
-    GXCullMode setMode = GX_CULL_ALL;
-    _GXRenderModeObj* gxRender = 0;
+    GXCullMode cullMode;
 
-    tempVar = strcmp(mMessage, "");
-
-    if (tempVar != 0)
+    if (strcmp(mMessage, "") != 0)
     {
-        GXGetCullMode(getMode); // (local_18)
-        ROMFont::InitDisplay(gxRender);
-        iTRCDisk::SetDVDState();
-        while (tempVar != 0)
+        GXGetCullMode(&cullMode);
+        ROMFont::InitDisplay(_RwDlRenderMode);
+        S32 dvd_state = SetDVDState();
+        while (dvd_state != 0)
         {
             ROMFont::DrawTextBox(0x32, 0xaa, 0x244, 100, mMessage);
-            if (tempVar != -1)
+            if (dvd_state != DVD_STATE_FATAL_ERROR)
             {
                 ResetButton::CheckResetButton();
             }
-            iTRCDisk::SetDVDState();
+            dvd_state = SetDVDState();
         }
-        iTRCDisk::ResetMessage();
-        GXSetCullMode(setMode);
+        ResetMessage();
+        GXSetCullMode(cullMode);
     }
 }
 
-void iTRCDisk::SetDVDState()
+S32 iTRCDisk::SetDVDState()
 {
+    S32 dvd_state = DVDGetDriveStatus();
+    switch (dvd_state)
+    {
+    case DVD_STATE_END:
+        break;
+    case DVD_STATE_NO_DISK:
+        SetErrorMessage(
+            "Please insert the \'SpongeBob SquarePants: Battle for Bikini Bottom\' Game Disc.");
+        break;
+    case DVD_STATE_WRONG_DISK:
+        SetErrorMessage(
+            "This is not the \'SpongeBob SquarePants: Battle for Bikini Bottom\' Game Disc. Please insert the \'SpongeBob SquarePants: Battle for Bikini Bottom\' Game Disc.");
+        break;
+    case DVD_STATE_COVER_OPEN:
+        SetErrorMessage(
+            "The Disc Cover is open. If you want to continue the game, please close the Disc Cover.");
+        break;
+    case DVD_STATE_RETRY:
+        SetErrorMessage(
+            "The Game Disc could not be read. Please read the Nintendo GameCube\x99 Instruction Booklet for more information.");
+        break;
+    case DVD_STATE_FATAL_ERROR:
+        SetErrorMessage(
+            "An error has occurred. Turn the power off and refer to the Nintendo GameCube\x99 Instruction Booklet for further instructions.");
+        break;
+    default:
+        if (!DVDCheckDisk())
+        {
+            SetErrorMessage(
+                "Please wait... Checking for the \'SpongeBob SquarePants: Battle for Bikini Bottom\' Game Disc.");
+            dvd_state = DVD_STATE_COVER_OPEN;
+        }
+        break;
+    }
+    return dvd_state;
 }
 
 bool iTRCDisk::CheckDVDAndResetState()
 {
-    return false;
+    S32 dvd_state = SetDVDState();
+    DVDCheckDisk();
+    bool ret = false;
+
+    if (dvd_state != DVD_STATE_FATAL_ERROR)
+    {
+        ResetButton::CheckResetButton();
+    }
+    if (dvd_state != DVD_STATE_END && dvd_state != DVD_STATE_BUSY)
+    {
+        if (mSndSuspend)
+        {
+            mSndSuspend();
+        }
+        if (mPadStopRumbling)
+        {
+            mPadStopRumbling();
+        }
+        if (mMovieSuspendFunction)
+        {
+            mMovieSuspendFunction();
+        }
+        DisplayErrorMessage();
+        if (mMovieResumeFunction)
+        {
+            mMovieResumeFunction();
+        }
+        if (mSndResume)
+        {
+            mSndResume();
+        }
+        ret = true;
+    }
+    return ret;
 }
