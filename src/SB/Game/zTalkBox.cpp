@@ -313,21 +313,13 @@ void ztalkbox::stop_talk()
     }
 }
 
-
 void ztalkbox::stop_wait(U32 x)
 {
-
-    
-    if (shared.active != this)
+    if (shared.active == this)
     {
-        return;
+        shared.wait_event_mask = shared.wait_event_mask | x;
     }
-    
-    shared.wait_event_mask = shared.wait_event_mask | x;
-    return;
-    
 }
-
 
 void ztalkbox::show()
 {
