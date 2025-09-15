@@ -1,6 +1,7 @@
 #include "xVec3.h"
 #include "xMath3.h"
 #include "xDebug.h"
+#include "zGlobals.h"
 #include "zNPCTypeDutchman.h"
 
 #include <types.h>
@@ -35,10 +36,6 @@ static U32 dutchman_count;
 
 namespace
 {
-
-    void kill_sound(S32 a, U32 b)
-    {
-    }
 
     struct sound_property
     {
@@ -163,6 +160,72 @@ namespace
 
         void register_tweaks(bool init, xModelAssetParam* ap, U32 apsize, const char*);
     };
+
+    struct sound_data_type
+    {
+        U32 id;
+        U32 handle;
+    };
+
+    struct sound_asset
+    {
+        char* name;
+        U32 priority;
+        U32 flags;
+    };
+
+    class curve_node
+    {
+        F32 time;
+        iColor_tag color;
+        F32 scale;
+    };
+
+    static sound_data_type sound_data[6];
+    static sound_asset sound_assets[6];
+    static xBinaryCamera boss_cam;
+    static xFXRibbon eye_scorch[2];
+    static curve_node burn_ribbon_curve[7];
+    static zParEmitter* plasma_emitter;
+    static xParEmitterCustomSettings plasma_emitter_settings;
+    static zParEmitter* spark_emitter;
+    static xParEmitterCustomSettings spark_emitter_settings;
+    static zParEmitter* light_emitter;
+    static xParEmitterCustomSettings light_emitter_settings;
+    static zParEmitter* eyeglow_emitter[2];
+    static zParEmitter* death_emitter;
+    static zParEmitter* dissolve_emitter;
+    static zParEmitter* fadeout_emitter;
+    static zParEmitter* fadein_emitter;
+    static zParEmitter* flame_emitter[3];
+    static xParEmitterCustomSettings flame_emitter_settings;
+    static zParEmitter* snot_emitter;
+    static xParEmitterCustomSettings snot_emitter_settings;
+    static zParEmitter* slime_emitter;
+    static xParEmitterCustomSettings slime_emitter_settings;
+    static zParEmitter* hand_trail_emitter;
+    static zParEmitter* blob_emitter;
+
+    static void init_sound()
+    {
+        U32 total; // r11
+
+        memset(&sound_data, 0, 0x30);
+
+        for (U32 i = 0; i < 6; i++)
+        {
+            xStrHash((const char*)&sound_assets[i]);
+        }
+    }
+
+    U32 play_sound(S32, const xVec3*, F32)
+    {
+        return 0;
+    }
+
+    void kill_sound(S32 a, U32 b)
+    {
+    }
 
     static tweak_group tweak;
 
@@ -976,9 +1039,103 @@ xAnimTable* ZNPC_AnimTable_Dutchman()
     return table;
 }
 
+void zNPCDutchman::Init(xEntAsset* asset)
+{
+    // Function is at 60%
+    // Laser_texture and m both need to be used?
+
+    char* scorch_name[2]; // r29+0x58
+    S32 i; // r18
+    RwTexture* laser_texture; // r2
+    S32 model_index; // r3
+    xModelInstance* m = model; // r4
+    xFXRibbon* ribbon;
+
+    dutchman_count = dutchman_count + 1;
+    boss_cam.init();
+    zNPCCommon::Init(asset);
+    flg_move = 1;
+    ribbon = eye_scorch;
+    flg_vuln = 1;
+
+    for (i = 0; i < 2; i++)
+    {
+        ribbon->init((S32)eye_scorch, (const char*)0x1ff);
+        ribbon->set_default_config();
+        ribbon->set_curve(ribbon->curve, 0x7);
+        ribbon->set_texture("fx_streak1");
+        ribbon->cfg.life_time = 5.0;
+        ribbon->refresh_config();
+    }
+
+    laser_raster = (RwRaster*)xSTFindAsset((U32)xStrHash("laser_beam_white_blue"), 0x0);
+
+    waves.init(0xf);
+    slime.slices.init(0x3f);
+}
+
 void zNPCDutchman::Setup()
 {
     zNPCSubBoss::Setup();
+}
+
+void zNPCDutchman::Reset()
+{
+    // Best I can get it
+    // xFXRibbon::clear doenst make much sense
+    zNPCCommon::Reset();
+    memset((void*)flag.face_player, 0, 16);
+    decompose();
+    life = 3;
+    round = 0;
+    stage = -1;
+    alpha = 1.0f;
+    update_round();
+    face_player();
+    flg_vuln = 1;
+    reset_speed();
+    move.vel = 0.0f;
+    move.dest = get_center();
+    flag.move = MOVE_FOLLOW;
+    flames.imax_dist = 1.0f / tweak.ground_radius;
+    reset_blob_mat();
+    waves.clear();
+    slime.slices.clear();
+    //eye_scorch->joints.clear();
+    //eye_scorch->joints.clear();
+    fade.sound_handle = 0;
+    vanish();
+    refresh_reticle();
+    flag.fighting = 0;
+    plasma_emitter = zParEmitterFind("PAREMIT_DUTCHMAN_PLASMA");
+    plasma_emitter_settings.custom_flags = 0x100;
+    plasma_emitter_settings.pos = g_O3;
+    spark_emitter = zParEmitterFind("PAREMIT_DUTCHMAN_SPARKS");
+    spark_emitter_settings.custom_flags = 0x100;
+    spark_emitter_settings.pos = g_O3;
+    light_emitter = zParEmitterFind("PAREMIT_DUTCHMAN_LIGHT");
+    light_emitter_settings.custom_flags = 0x110;
+    light_emitter_settings.pos = g_O3;
+    light_emitter->prop->life.set((119.99999f * tweak.beam.light_rate));
+    eyeglow_emitter[0] = zParEmitterFind("PAREMIT_DUTCHMAN_EYEGLOW0");
+    eyeglow_emitter[1] = zParEmitterFind("PAREMIT_DUTCHMAN_EYEGLOW1");
+    death_emitter = zParEmitterFind("PAREMIT_DUTCHMAN_DEATH");
+    dissolve_emitter = zParEmitterFind("PAREMIT_DUTCHMAN_DISSOLVE");
+    fadeout_emitter = zParEmitterFind("PAREMIT_DUTCHMAN_FADEOUT");
+    fadein_emitter = zParEmitterFind("PAREMIT_DUTCHMAN_FADEIN");
+    flame_emitter[0] = zParEmitterFind("PAREMIT_DUTCHMAN_FLAME_LIGHT");
+    flame_emitter[1] = zParEmitterFind("PAREMIT_DUTCHMAN_FLAME_NORMAL");
+    flame_emitter[2] = zParEmitterFind("PAREMIT_DUTCHMAN_FLAME_SPRAY");
+    flame_emitter_settings.custom_flags = 0x110;
+    flame_emitter_settings.pos = g_O3;
+    light_emitter->prop->life.set((59.999996f));
+    snot_emitter = zParEmitterFind("PAREMIT_DUTCHMAN_FLAME_SNOT");
+    snot_emitter_settings.custom_flags = 0x300;
+    slime_emitter = zParEmitterFind("PAREMIT_DUTCHMAN_SLIME_TRAIL");
+    slime_emitter_settings.custom_flags = 0x100;
+    hand_trail_emitter = zParEmitterFind("PAREMIT_DUTCHMAN_HAND_TRAIL");
+    blob_emitter = zParEmitterFind("PAREMIT_DUTCHMAN_BLOB");
+    psy_instinct->GoalSet('NGM=', 1);
 }
 
 void zNPCDutchman::Destroy()
@@ -987,9 +1144,135 @@ void zNPCDutchman::Destroy()
     dutchman_count--;
 }
 
+void zNPCDutchman::Process(xScene* xscn, F32 dt)
+{
+    xVec3 player_loc;
+
+    if (flag.fighting == 0)
+    {
+        zNPCCommon::Process(xscn, dt);
+    }
+    else
+    {
+        delay = delay + dt;
+        psy_instinct->Timestep(dt, NULL);
+        if (flag.fighting == 0)
+        {
+            zNPCCommon::Process(xscn, dt);
+        }
+        else
+        {
+            if (flag.face_player != 0)
+            {
+                player_loc = globals.player.ent.model->Scale;
+                get_center();
+            }
+            update_turn(dt);
+            update_move(dt);
+            update_animation(dt);
+            update_flames(dt);
+            update_eye_glow(dt);
+            update_hand_trail(dt);
+            update_fade(dt);
+            update_slime(dt);
+
+            if ((check_player_damage() & 0xff) != 0)
+            {
+                zEntPlayer_Damage((xBase*)this, 1);
+            }
+            update_camera(dt);
+            refresh_reticle();
+            flg_xtrarend = flg_xtrarend | 1;
+            zNPCCommon::Process(xscn, dt);
+        }
+    }
+}
+
+S32 zNPCDutchman::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
+                           xBase* toParamWidget, S32* handled)
+{
+    // Was going to try this function, but literally can't find 0x1d9
+    if (toEvent == 0x1d9)
+    {
+        psy_instinct->GoalSet('NGM=', 1);
+    }
+    else
+    {
+        if ((0x1d8 < toEvent) || (toEvent != 0x1b5))
+        {
+            handled = 0;
+            return zNPCCommon::SysEvent(from, to, toEvent, toParam, toParamWidget, handled);
+        }
+        start_fight();
+    }
+    return 1;
+}
+
 void zNPCDutchman::Render()
 {
     zNPCDutchman::render_debug();
+}
+
+void zNPCDutchman::RenderExtra()
+{
+    S32 oldzwrite; // r29+0x6C
+    S32 oldztest; // r29+0x68
+    U32 oldsrcblend; // r29+0x64
+    U32 olddestblend; // r29+0x60
+    U8 oldcmp; // r17
+    xModelInstance* m; // r16
+    U8 haloing; // r17
+
+    RwRenderStateGet(rwRENDERSTATEFOGENABLE, (void*)&oldcmp);
+    RwRenderStateGet(rwRENDERSTATESRCBLEND, (void*)&oldcmp);
+    RwRenderStateGet(rwRENDERSTATEDESTBLEND, (void*)&oldcmp);
+    RwRenderStateGet(rwRENDERSTATEVERTEXALPHAENABLE, (void*)&oldcmp);
+    RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)&oldcmp);
+    RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)&oldcmp);
+    RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)&oldcmp);
+    RwRenderStateSet(rwRENDERSTATEVERTEXALPHAENABLE, (void*)&oldcmp);
+    iDrawSetFBMSK(-1);
+
+    for (m = model; m != 0; m = m)
+    {
+        xModelRenderSingle(m);
+    }
+
+    iDrawSetFBMSK(0);
+
+    for (m = model; m != 0; m = m)
+    {
+        xModelRenderSingle(m);
+    }
+
+    oldcmp = FALSE;
+
+    if (flag.beaming != 0)
+    {
+        if (beam->segments != 0)
+        {
+            oldcmp = TRUE;
+        }
+        render_beam();
+        // if (*(int*)(this + 0x430) + *(int*)(this + 0x54c) != 0)
+        // {
+        //     bVar1 = true;
+        // }
+    }
+    // 0x2c0
+    oldzwrite = flag.fade;
+    if (oldcmp)
+    {
+        render_beam();
+    }
+    if ((2U - oldzwrite | oldzwrite - 2U) < 0)
+    {
+        render_halo();
+    }
+    RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)&oldcmp);
+    RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)&oldcmp);
+    RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)&oldcmp);
+    RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)&oldcmp);
 }
 
 void zNPCDutchman::SelfSetup()
@@ -1110,6 +1393,19 @@ void zNPCDutchman::update_round()
     stage = -1;
 }
 
+void zNPCDutchman::decompose()
+{
+    if (flag.fighting != 0)
+    {
+        flag.fighting = 0;
+        disable_emitter(*dissolve_emitter);
+        disable_emitter(*fadein_emitter);
+        disable_emitter(*fadeout_emitter);
+        zCameraEnableTracking(CO_BOSS);
+        boss_cam.stop;
+    }
+}
+
 void zNPCDutchman::render_debug()
 {
 }
@@ -1149,6 +1445,42 @@ void zNPCDutchman::start_hand_trail()
 void zNPCDutchman::stop_hand_trail()
 {
     flag.hand_trail = false;
+}
+
+void zNPCDutchman::dissolve(F32 delay)
+{
+    F32 volume;
+    if (delay == 0.0f)
+    {
+        flag.fade = FADE_TELEPORT;
+        disable_emitter(*fadeout_emitter);
+        set_alpha(0.0f);
+        vanish();
+        volume = 1.0f;
+    }
+    else
+    {
+        flag.fade = FADE_DISSOLVE;
+        fade.time = 0.0f;
+        fade.duration = delay;
+        fade.iduration = 1.0f / fade.duration;
+        enable_emitter(*fadeout_emitter);
+        set_alpha(1.0f);
+        reappear();
+        volume = 0.0f;
+    }
+    enable_emitter(*dissolve_emitter);
+    start_eye_glow();
+    start_hand_trail();
+
+    if (fade.sound_handle == 0)
+    {
+        fade.sound_handle = play_sound(2, (const xVec3*)&bound.pad[3], volume);
+    }
+    else
+    {
+        set_volume(2, 0, 0.0f);
+    }
 }
 
 void zNPCDutchman::reset_lasso_anim()

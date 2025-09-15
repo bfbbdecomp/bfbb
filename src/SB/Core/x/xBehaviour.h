@@ -134,6 +134,7 @@ struct xPsyche : RyzMemData
         gid_safegoal = goalID;
     }
     void Amnesia(S32);
+    S32 IndexInStack(S32) const;
     void SetNotify(xPSYNote* notice)
     {
         cb_notice = notice;

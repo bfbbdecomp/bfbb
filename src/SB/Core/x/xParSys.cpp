@@ -1,3 +1,50 @@
 #include "xParSys.h"
 
 #include <types.h>
+#include "zScene.h"
+
+static xVec3 par_offset_right;
+static xVec3 par_offset_up;
+
+static xParSysInfo sParSysInfo[7];
+
+static S32 sBlendTable[11] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
+
+static void par_sprite_begin()
+{
+}
+
+static void render_par_sprite(void* data, xParGroup* ps)
+{
+    if (using_ptank_render((*(xParSysAsset*)&ps->m_culled)) == 0)
+    {
+        iParMgrRenderParSys_Sprite(data, ps);
+    }
+}
+
+void xParCmdTexInit(xParCmdTex* tex)
+{
+    // TODO: Function either needs casts, or its just float meme
+    tex->unit_count = tex->rows * tex->cols;
+    tex->unit_width = (tex->x2 - tex->x1) / (tex->cols - 4503599627370496.0);
+    tex->unit_height = (tex->y2 - tex->y1) / (tex->rows - 4503599627370496.0);
+}
+
+void xParSysInit(void* b, void* tasset)
+{
+    xParSysInit((xBase*)b, (xParSysAsset*)tasset);
+}
+
+void xParSysInit(xBase* b, xParSysAsset* tasset)
+{
+}
+
+void xParSysSetup(xParSys* t)
+{
+    if ((t != 0) && (t->link != 0) && (t->link->param[1]))
+    {
+        t->parent = (xParSys*)zSceneFindObject(t->cmd->flag);
+    }
+    t->parent = (xParSys*)xSTFindAsset(t->cmd->flag, 0);
+    t->parent = t->parent;
+}

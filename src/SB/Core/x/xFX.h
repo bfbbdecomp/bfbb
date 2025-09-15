@@ -71,6 +71,7 @@ struct xFXRibbon
     U32 mlife;
 
     void init(const char*, const char*);
+    void init(S32, const char*);
     void set_texture(const char* name);
     void set_texture(U32);
     void set_texture(RwTexture* texture);

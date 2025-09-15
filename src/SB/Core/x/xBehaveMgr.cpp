@@ -5,12 +5,12 @@
 #include "xBehaveGoalSimple.h"
 #include "xutil.h"
 
-extern S32 g_modinit_xBehaveMgr;
-extern xBehaveMgr* g_behavmgr;
+static S32 g_modinit;
+static xBehaveMgr* g_behavmgr;
 
 void xBehaveMgr_Startup()
 {
-    if (g_modinit_xBehaveMgr++ == 0)
+    if (g_modinit++ == 0)
     {
         g_behavmgr = new ('BMGR', NULL) xBehaveMgr();
         g_behavmgr->Startup(0xfa, 0xfa);
@@ -19,8 +19,8 @@ void xBehaveMgr_Startup()
 
 void xBehaveMgr_Shutdown()
 {
-    g_modinit_xBehaveMgr--;
-    if (g_modinit_xBehaveMgr == 0)
+    g_modinit--;
+    if (g_modinit == 0)
     {
         if (g_behavmgr != NULL)
         {
@@ -91,6 +91,16 @@ void xBehaveMgr::SceneReset()
         xPsyche* psyche = (xPsyche*)this->psylist.list[i];
         psyche->Amnesia(0);
     }
+}
+
+void xBehaveMgr::Startup(S32 size, S32 tmpAlloc)
+{
+    goalFactory = new ('BMGR', NULL) xFactory(tmpAlloc);
+
+    RegBuiltIn();
+    XOrdInit(&psylist, size, 0);
+    psypool = (xPsyche*)xMemAlloc(gActiveHeap, size * 0x68, 0);
+    memset(psypool, 0, size * 0x68);
 }
 
 void xPsyche::BrainBegin()
@@ -207,4 +217,24 @@ void xPsyche::Amnesia(S32 i)
             continue;
         }
     }
+}
+
+S32 xPsyche::IndexInStack(S32 gid) const
+{
+    // This kinda sucks
+    S32 da_idx;
+    S32 i;
+    S32 temp;
+    S32 temp2;
+
+    da_idx = staktop;
+
+    i = 0;
+    while ((temp = -1, i <= da_idx && (temp2 = goallist->GetID(), temp = i, gid != temp2)))
+    {
+        da_idx = da_idx + 4;
+        i++;
+    }
+
+    return da_idx;
 }

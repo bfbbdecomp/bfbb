@@ -1,8 +1,7 @@
 #include "iModel.h"
 
 #include <types.h>
-
-
+#include "zAssetTypes.h"
 
 RwFrame* GetChildFrameHierarchy(RwFrame* frame, void* data)
 {
@@ -23,43 +22,53 @@ void* GetHierarchy(RpAtomic* frame)
 {
     void* unk_0[2];
     unk_0[0] = 0;
-    GetChildFrameHierarchy((RwFrame*)frame, unk_0);
+    GetChildFrameHierarchy((RwFrame*)frame->object.object.parent, unk_0);
     return unk_0[0];
 }
 
-
 RpAtomic* iModelFileNew(void* buffer, U32 size)
 {
-    RwStream* rwmem;
-    S32 unk_0 = (S32)buffer;
-    RwStreamType type;
-    RwStreamAccessType accessType;
+    RwMemory rwmem;
 
-    type = (RwStreamType)3;
-    accessType = (RwStreamAccessType)1;
-
-    rwmem = RwStreamOpen(type, accessType, buffer);
-    return iModelStreamRead(rwmem);
+    return iModelStreamRead(RwStreamOpen(rwSTREAMMEMORY, rwSTREAMREAD, &buffer));
 }
 
 void iModelUnload(RpAtomic* userdata)
 {
-    RpClump* clump;
-    RwFrame* frame = 0;
-    RwFrame* root;
+    // Not really a hard function.
+    // Don't know why frame and root exist
+    RpClump* clump; // r17
+    RwFrame* frame; // r16
+    RwFrame* root; // r2
 
-    clump = (RpClump*)userdata + 0x3c;
-    if ((RpClump*)userdata != 0)
+    clump = userdata->clump;
+    if (clump->object.parent != 0)
     {
-        RwFrameGetRoot((RwFrame*)userdata);
-        RwFrameDestroyHierarchy(frame);
-        userdata = 0;
-
+        RwFrameGetRoot((RwFrame*)userdata->object.object.parent);
+        RwFrameDestroyHierarchy((RwFrame*)clump);
+        userdata->object.object.parent = 0;
     }
-    if (clump != 0)
+    if (&clump->object != 0)
     {
         RpClumpDestroy(clump);
     }
+}
+
+static RpAtomic* NextAtomicCallback(RpAtomic* atomic, void* data)
+{
+    RpAtomic** nextModel;
+
+    if (data == atomic)
+    {
+        data = 0;
+        return (RpAtomic*)data;
+    }
+    if (data == 0)
+    {
+        return atomic;
+    }
+    data = atomic;
+    return atomic;
 }
 
 void iModelCacheAtomic(RpAtomic*)
