@@ -52,6 +52,6 @@ void xParSysRender(xBase* b);
 S32 xParSysEventCB(xBase*, xBase*, U32, F32*, xBase*);
 void xParSysUpdate(xBase* to, xScene*, F32 dt);
 
-WEAK U8 using_ptank_render(const xParSysAsset&);
+U8 using_ptank_render(const xParSysAsset&);
 
 #endif

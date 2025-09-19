@@ -25,7 +25,7 @@ void zNPCMsg_SceneFinish()
     return zNPCMsg_SceneReset();
 }
 
-void zNPCMsg_SendMsg(en_NPC_MSG_ID msgevent /* r17 */, U32 unk0)
+void zNPCMsg_SendMsg(en_NPC_MSG_ID msgevent, U32 unk0)
 {
     static NPCMsg msg;
     memset(&msg, 0, sizeof(NPCMsg));

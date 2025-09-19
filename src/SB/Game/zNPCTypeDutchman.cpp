@@ -208,7 +208,7 @@ namespace
 
     static void init_sound()
     {
-        U32 total; // r11
+        U32 total;
 
         memset(&sound_data, 0, 0x30);
 
@@ -1044,11 +1044,11 @@ void zNPCDutchman::Init(xEntAsset* asset)
     // Function is at 60%
     // Laser_texture and m both need to be used?
 
-    char* scorch_name[2]; // r29+0x58
-    S32 i; // r18
-    RwTexture* laser_texture; // r2
-    S32 model_index; // r3
-    xModelInstance* m = model; // r4
+    char* scorch_name[2];
+    S32 i;
+    RwTexture* laser_texture;
+    S32 model_index;
+    xModelInstance* m = model;
     xFXRibbon* ribbon;
 
     dutchman_count = dutchman_count + 1;
@@ -1215,13 +1215,13 @@ void zNPCDutchman::Render()
 
 void zNPCDutchman::RenderExtra()
 {
-    S32 oldzwrite; // r29+0x6C
-    S32 oldztest; // r29+0x68
-    U32 oldsrcblend; // r29+0x64
-    U32 olddestblend; // r29+0x60
-    U8 oldcmp; // r17
-    xModelInstance* m; // r16
-    U8 haloing; // r17
+    S32 oldzwrite;
+    S32 oldztest;
+    U32 oldsrcblend;
+    U32 olddestblend;
+    U8 oldcmp;
+    xModelInstance* m;
+    U8 haloing;
 
     RwRenderStateGet(rwRENDERSTATEFOGENABLE, (void*)&oldcmp);
     RwRenderStateGet(rwRENDERSTATESRCBLEND, (void*)&oldcmp);

@@ -372,9 +372,9 @@ static RpAtomic* AtomicSetShininess(RpAtomic* atomic, void* data)
 static RpAtomic* AtomicSetEnvMap(RpAtomic* atomic, void* data)
 {
     RpMatFXAtomicEnableEffects(atomic);
-    if ((atomic->geometry) != 0)
+    if (atomic->geometry != 0)
     {
-        RpGeometryForAllMaterials((atomic->geometry), MaterialSetEnvMap2, data);
+        RpGeometryForAllMaterials(atomic->geometry, MaterialSetEnvMap2, data);
     }
     return atomic;
 }
@@ -685,8 +685,8 @@ void xFXAuraRender()
     // Honestly the closest I can get this function.
     // fogstate is in the dwarf but currently isn't used in the function.
 
-    S32 fogstate; // r29+0x3C
-    _xFXAura* ap; // r17
+    S32 fogstate;
+    _xFXAura* ap;
     _xFXAuraAngle* auraAng;
 
     if (gAuraTex != NULL)
@@ -1076,9 +1076,9 @@ RpAtomic* xFXBubbleRender(RpAtomic* atomic)
 
 void xFXRibbonRender()
 {
-    xFXRibbon* prev; // r19
-    U32 i; // r18
-    xFXRibbon* ribbon; // r17
+    xFXRibbon* prev;
+    U32 i;
+    xFXRibbon* ribbon;
 
     RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)0x0);
     RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)0x1);

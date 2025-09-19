@@ -739,7 +739,7 @@ void zMainReadINI()
     void* buf;
     U32 size;
     xIniFile* ini;
-    uint local_18[2];
+    U32 local_18[2];
 
     str = (char*)iFileLoad("SB.INI", 0, (U32*)local_18);
     if (str = NULL)

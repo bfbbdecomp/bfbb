@@ -1322,12 +1322,11 @@ void zNPCKingJelly::BUpdate(xVec3* pos)
 S32 zNPCKingJelly::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
                             xBase* toParamWidget, S32* handled)
 {
-    U32 uVar1;
+    U32 ret;
 
     if (toEvent == 0x1b9)
     {
-    LAB_8014808c:
-        uVar1 = 1;
+        ret = 1;
     }
     else
     {
@@ -1336,19 +1335,19 @@ S32 zNPCKingJelly::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toPa
             if (toEvent == 0x1b5)
             {
                 start_fight();
-                goto LAB_8014808c;
+                return 1;
             }
         }
         else if (toEvent == 0x1d9)
         {
             xPsyche* psy = this->psy_instinct;
             psy->GoalSet(0x4e474d37, 1);
-            goto LAB_8014808c;
+            return 1;
         }
         handled = 0;
-        uVar1 = zNPCCommon::SysEvent(from, to, toEvent, toParam, toParamWidget, handled);
+        ret = zNPCCommon::SysEvent(from, to, toEvent, toParam, toParamWidget, handled);
     }
-    return uVar1;
+    return ret;
 }
 
 void zNPCKingJelly::RenderExtra()

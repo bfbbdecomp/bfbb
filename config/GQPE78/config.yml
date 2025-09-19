@@ -6,4 +6,3 @@ splits: config/GQPE78/splits.txt
 symbols_known: true
 fill_gaps: false
 ldscript_template: config/GQPE78/ldscript.tpl
-write_asm: true

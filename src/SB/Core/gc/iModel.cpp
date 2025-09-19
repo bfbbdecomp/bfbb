@@ -37,9 +37,9 @@ void iModelUnload(RpAtomic* userdata)
 {
     // Not really a hard function.
     // Don't know why frame and root exist
-    RpClump* clump; // r17
-    RwFrame* frame; // r16
-    RwFrame* root; // r2
+    RpClump* clump;
+    RwFrame* frame;
+    RwFrame* root;
 
     clump = userdata->clump;
     if (clump->object.parent != 0)

@@ -24,10 +24,9 @@ static void render_par_sprite(void* data, xParGroup* ps)
 
 void xParCmdTexInit(xParCmdTex* tex)
 {
-    // TODO: Function either needs casts, or its just float meme
     tex->unit_count = tex->rows * tex->cols;
-    tex->unit_width = (tex->x2 - tex->x1) / (tex->cols - 4503599627370496.0);
-    tex->unit_height = (tex->y2 - tex->y1) / (tex->rows - 4503599627370496.0);
+    tex->unit_width = (tex->x2 - tex->x1) / tex->cols;
+    tex->unit_height = (tex->y2 - tex->y1) / tex->rows;
 }
 
 void xParSysInit(void* b, void* tasset)
@@ -41,7 +40,7 @@ void xParSysInit(xBase* b, xParSysAsset* tasset)
 
 void xParSysSetup(xParSys* t)
 {
-    if ((t != 0) && (t->link != 0) && (t->link->param[1]))
+    if (t != 0 && t->link != 0 && t->link->param[1])
     {
         t->parent = (xParSys*)zSceneFindObject(t->cmd->flag);
     }
