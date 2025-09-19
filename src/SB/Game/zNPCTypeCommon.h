@@ -704,7 +704,10 @@ U32 xSndIsPlaying(U32 assetID, U32 parid);
 
 void zNPCMsg_AreaNotify(zNPCCommon* sender, en_NPC_MSG_ID msgid, F32 rad, S32 filter,
                         en_NPCTYPES toNPCType);
+void zNPCMsg_AreaNotify(zNPCCommon*, en_NPC_MSG_ID, F32, S32, en_NPCTYPES*);
+void zNPCMsg_AreaNotify(zNPCCommon*, NPCMsg*, F32, S32, en_NPCTYPES*);
 
+void zNPCMsg_SendMsg(NPCMsg, F32, zNPCCommon*);
 void zNPCMsg_SendMsg(en_NPC_MSG_ID msgevent, zNPCCommon* npc_sendto);
 void zNPCMsg_SendMsg(NPCMsg* inmsg, zNPCCommon* npc_sendto);
 void zNPCMsg_SendMsg(NPCMsg* inmsg, F32 delay, zNPCCommon* npc_sendto);

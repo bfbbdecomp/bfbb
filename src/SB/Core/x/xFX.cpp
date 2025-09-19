@@ -1,9 +1,11 @@
 #include "xFX.h"
 
+#include "xDebug.h"
 #include "xstransvc.h"
 
 #include "xScrFx.h"
 #include "iMath.h"
+#include "zEntPickup.h"
 #include "zParEmitter.h"
 #include "zSurface.h"
 #include "zFX.h"
@@ -28,6 +30,8 @@ RpLight* MainLight = NULL;
 static U32 num_fx_atomics = 0;
 
 static U32 xfx_initted = 0;
+
+xFXStreak sStreakList[10];
 
 static void LightResetFrame(RpLight* light);
 
@@ -365,9 +369,14 @@ static RpAtomic* AtomicSetShininess(RpAtomic* atomic, void* data)
     return atomic;
 }
 
-void AtomicSetEnvMap(RpAtomic*, void*)
+static RpAtomic* AtomicSetEnvMap(RpAtomic* atomic, void* data)
 {
-
+    RpMatFXAtomicEnableEffects(atomic);
+    if (atomic->geometry != 0)
+    {
+        RpGeometryForAllMaterials(atomic->geometry, MaterialSetEnvMap2, data);
+    }
+    return atomic;
 }
 
 RpAtomic* xFXAtomicEnvMapSetup(RpAtomic* atomic, U32 aid, F32 shininess)
@@ -651,8 +660,10 @@ void xFXShineInit()
 {
 }
 
-void xFXShineStart(const xVec3*, F32, F32, F32, F32, U32, const iColor_tag*, const iColor_tag*, F32, S32)
+U32 xFXShineStart(const xVec3*, F32, F32, F32, F32, U32, const iColor_tag*, const iColor_tag*, F32,
+                  S32)
 {
+    return 2;
 }
 
 void xFXShineUpdate(F32)
@@ -663,11 +674,67 @@ void xFXShineRender()
 {
 }
 
-void xFXAuraRender()
+static void RenderRotatedBillboard(xVec3* pos, _xFXAuraAngle* rot, U32 count, F32 width, F32 height,
+                                   iColor_tag tint, U32 flipUV)
 {
 }
 
-void xFXFireworksInit(const char* trailEmit, const char* emit1, const char* emit2, const char* mainSound, const char* launchSound)
+void xFXAuraRender()
+{
+    // TODO: Fix function
+    // Honestly the closest I can get this function.
+    // fogstate is in the dwarf but currently isn't used in the function.
+
+    S32 fogstate;
+    _xFXAura* ap;
+    _xFXAuraAngle* auraAng;
+
+    if (gAuraTex != NULL)
+    {
+        RwRenderStateSet(rwRENDERSTATETEXTURERASTER, (void*)gAuraTex->raster);
+        RwRenderStateSet(rwRENDERSTATEVERTEXALPHAENABLE, (void*)0x1);
+        RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)0x5);
+        RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)0x2);
+        RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)0x1);
+        RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)0x0);
+        RwRenderStateGet(rwRENDERSTATEFOGTYPE, (void*)0x1);
+        RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)0x0);
+
+        ap = sAura;
+
+        for (S32 i = 0; i < 32; i++)
+        {
+            if (ap->frame == gFrameCount)
+            {
+                auraAng = &sAuraAngle[0];
+                RenderRotatedBillboard(&ap->pos, auraAng, 1, 0, 0, ap->color, 0);
+                auraAng = &sAuraAngle[1];
+                RenderRotatedBillboard(&ap->pos, auraAng, 1, 0, 0, ap->color, 1);
+            }
+            ap = (_xFXAura*)ap->dangle;
+        }
+
+        RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)0x5);
+        RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)0x6);
+        RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)0x1);
+        RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)0x1);
+        RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)0x10);
+
+        ap = sAura;
+
+        for (S32 i = 0; i < 32; i++)
+        {
+            if (ap->frame == gFrameCount && ap->parent != 0)
+            {
+                zEntPickup_RenderOne((xEnt*)ap->parent);
+            }
+            ap = (_xFXAura*)ap->dangle;
+        }
+    }
+}
+
+void xFXFireworksInit(const char* trailEmit, const char* emit1, const char* emit2,
+                      const char* mainSound, const char* launchSound)
 {
     sFireworkTrailEmit = zParEmitterFind(trailEmit);
     sFirework1Emit = zParEmitterFind(emit1);
@@ -721,15 +788,14 @@ void xFXFireworksUpdate(F32 dt)
                 if (sFireworkLaunchSoundID != 0)
                 {
                     xSndPlay3D(sFireworkLaunchSoundID,
-                        0.308f, // Volume
-                        0.0f, // Pitch
-                        0x80, // Priority
-                        0, // Flags
-                        &sFirework[i].pos,
-                        20.0f, // Radius
-                        5.0f,
-                        SND_CAT_GAME,
-                        0.0f); // Delay
+                               0.308f, // Volume
+                               0.0f, // Pitch
+                               0x80, // Priority
+                               0, // Flags
+                               &sFirework[i].pos,
+                               20.0f, // Radius
+                               5.0f, SND_CAT_GAME,
+                               0.0f); // Delay
                 }
             }
         }
@@ -769,7 +835,8 @@ void xFXFireworksUpdate(F32 dt)
                     settings2.color_birth[1].set(127.0f * xurand() + 128.0f, 75.0f, 0.0f, 0);
                     settings2.color_birth[2].set(127.0f * xurand() + 128.0f, 75.0f, 0.0f, 0);
                     settings2.color_birth[3].set(255.0f, 0.0f, 1.0f, 0);
-                    memcpy(settings2.color_death, &settings2.color_birth, sizeof(settings2.color_birth));
+                    memcpy(settings2.color_death, &settings2.color_birth,
+                           sizeof(settings2.color_birth));
                     settings2.color_death[3].set(0.0f, 0.0f, 1.0f, 0);
                     xParEmitterEmitCustom(emit, dt, &settings2);
                 }
@@ -785,21 +852,20 @@ void xFXFireworksUpdate(F32 dt)
 
                 xVec3 diff;
                 xVec3Sub(&diff, xEntGetPos(&globals.player.ent), &sFirework[i].pos);
-                zRumbleStartDistance(globals.currentActivePad, diff.x * diff.x + diff.z * diff.z, 48.0f,
-                                     eRumble_Medium, 0.35f);
+                zRumbleStartDistance(globals.currentActivePad, diff.x * diff.x + diff.z * diff.z,
+                                     48.0f, eRumble_Medium, 0.35f);
                 sFirework[i].pos.y = xEntGetPos(&globals.player.ent)->y;
                 if (sFireworkSoundID != 0)
                 {
                     xSndPlay3D(sFireworkSoundID,
-                        0.77f, // Volume
-                        0.0f, // Pitch
-                        0x80, // Priority
-                        0, // Flags
-                        &sFirework[i].pos,
-                        20.0f, // Radius
-                        5.0f,
-                        SND_CAT_GAME,
-                        0.0f); // Delay
+                               0.77f, // Volume
+                               0.0f, // Pitch
+                               0x80, // Priority
+                               0, // Flags
+                               &sFirework[i].pos,
+                               20.0f, // Radius
+                               5.0f, SND_CAT_GAME,
+                               0.0f); // Delay
                 }
             }
         }
@@ -808,7 +874,25 @@ void xFXFireworksUpdate(F32 dt)
 
 RpMaterial* MaterialSetBumpMap(RpMaterial* material, void* data)
 {
-    return NULL;
+    RwFrame* frame;
+    if (data == NULL)
+    {
+        return NULL;
+    }
+    else if (material->texture)
+    {
+        if (data)
+        {
+            frame = (RwFrame*)MainLight->object.object.parent;
+            RpMatFXMaterialSetEffects(material, rpMATFXEFFECTBUMPMAP);
+            RpMatFXMaterialSetupBumpMap(material, (RwTexture*)data, frame, 1.0f);
+        }
+        else
+        {
+            RpMatFXMaterialSetEffects(material, rpMATFXEFFECTNULL);
+        }
+    }
+    return material;
 }
 
 RpMaterial* MaterialSetEnvMap(RpMaterial* material, void* data)
@@ -868,7 +952,8 @@ RpMaterial* MaterialSetEnvMap2(RpMaterial* material, void* data)
     return material;
 }
 
-RpMaterial* MaterialSetBumpEnvMap(RpMaterial* material, RwTexture* envMap, F32 envCooef, RwTexture* bumpMap, F32 bumpCooef)
+RpMaterial* MaterialSetBumpEnvMap(RpMaterial* material, RwTexture* envMap, F32 envCooef,
+                                  RwTexture* bumpMap, F32 bumpCooef)
 {
     if (envMap == NULL || bumpMap == NULL)
     {
@@ -876,7 +961,7 @@ RpMaterial* MaterialSetBumpEnvMap(RpMaterial* material, RwTexture* envMap, F32 e
     }
     else
     {
-        RwFrame *frame;
+        RwFrame* frame;
         RpMatFXMaterialSetEffects(material, rpMATFXEFFECTBUMPENVMAP);
         if ((gFXSurfaceFlags & 0x10) != 0)
         {
@@ -887,7 +972,8 @@ RpMaterial* MaterialSetBumpEnvMap(RpMaterial* material, RwTexture* envMap, F32 e
             frame = (RwFrame*)MainLight->object.object.parent;
         }
         RpMatFXMaterialSetupEnvMap(material, envMap, frame, TRUE, envCooef);
-        RpMatFXMaterialSetupBumpMap(material, bumpMap, (RwFrame*)MainLight->object.object.parent, bumpCooef);
+        RpMatFXMaterialSetupBumpMap(material, bumpMap, (RwFrame*)MainLight->object.object.parent,
+                                    bumpCooef);
     }
     return material;
 }
@@ -909,22 +995,105 @@ void xFXanimUV2PSetTranslation(const xVec3*)
 {
 }
 
-RpAtomic* xFXShinyRender(RpAtomic* atom)
+RpAtomic* xFXShinyRender(RpAtomic* atomic)
 {
-    return NULL;
+    RwCullMode cmode;
+
+    if (sTweaked == 0)
+    {
+        sEnvMap = xStrHash("default_env_map.RW3");
+        sFresnelMap = xStrHash("gloss_edge");
+        sTweaked = 1;
+    }
+
+    RwRenderStateGet(rwRENDERSTATECULLMODE, NULL);
+    RwRenderStateSet(rwRENDERSTATECULLMODE, (void*)rwCULLMODECULLBACK);
+    iDrawSetFBMSK(-1);
+    iModelSetMaterialAlpha(atomic, rwCULLMODEFORCEENUMSIZEINT);
+    AtomicDisableMatFX(atomic);
+    (*gAtomicRenderCallBack)(atomic);
+    iDrawSetFBMSK(0);
+    iModelSetMaterialAlpha(atomic, 0);
+    gFXSurfaceFlags = 0x10;
+    xFXAtomicEnvMapSetup(atomic, sFresnelMap, 1.0f);
+    gFXSurfaceFlags = 0;
+    (*gAtomicRenderCallBack)(atomic);
+    iModelSetMaterialAlpha(atomic, 0xff);
+    AtomicDisableMatFX(atomic);
+    gFXSurfaceFlags = 0x10;
+    xFXAtomicEnvMapSetup(atomic, sEnvMap, 1.0f);
+    gFXSurfaceFlags = 0;
+    (*gAtomicRenderCallBack)(atomic);
+    RwRenderStateSet(rwRENDERSTATECULLMODE, (void*)0x8); // TODO: Fix Magic Number
+
+    return atomic;
 }
 
-RpAtomic* xFXBubbleRender(RpAtomic* atom)
+RpAtomic* xFXBubbleRender(RpAtomic* atomic)
 {
-    return NULL;
+    RwCullMode cmode;
+    xFXBubbleParams* bp;
+
+    bp = BFX + bfx_curr * 1; // Why multiply by 1? Probably needs rewritten differently
+
+    RwRenderStateGet(rwRENDERSTATECULLMODE, NULL);
+    RwRenderStateSet(rwRENDERSTATECULLMODE, (void*)rwCULLMODECULLBACK);
+    iDrawSetFBMSK(bp->pass1_fbmsk);
+    iModelSetMaterialAlpha(atomic, bp->pass1_alpha);
+
+    if (((char)bp->pass1))
+    {
+        AtomicDisableMatFX(atomic);
+        (*gAtomicRenderCallBack)(atomic);
+    }
+
+    iDrawSetFBMSK(0);
+    iModelSetMaterialAlpha(atomic, bp->pass2_alpha);
+
+    if (((char)bp->pass2) != 0)
+    {
+        gFXSurfaceFlags = 0x10;
+        xFXAtomicEnvMapSetup(atomic, bp->fresnel_map, bp->fresnel_map_coeff);
+        gFXSurfaceFlags = 0;
+        (*gAtomicRenderCallBack)(atomic);
+    }
+
+    iModelSetMaterialAlpha(atomic, bp->pass3_alpha);
+
+    if (((char)bp->pass3) != 0)
+    {
+        AtomicDisableMatFX(atomic);
+        gFXSurfaceFlags = 0x10;
+        xFXAtomicEnvMapSetup(atomic, bp->env_map, bp->env_map_coeff);
+        gFXSurfaceFlags = 0;
+        (*gAtomicRenderCallBack)(atomic);
+    }
+
+    RwRenderStateSet(rwRENDERSTATECULLMODE, (void*)0x8);
+
+    return atomic;
 }
 
 void xFXRibbonRender()
 {
+    xFXRibbon* prev;
+    U32 i;
+    xFXRibbon* ribbon;
+
+    RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)0x0);
+    RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)0x1);
+    RwRenderStateSet(rwRENDERSTATESHADEMODE, (void*)0x2);
+    RwRenderStateSet(rwRENDERSTATECULLMODE, (void*)0x1);
+
+    ribbon = 0x0;
 }
 
 void xFXStreakInit()
 {
+    for (S32 i = 0; i < 10; i++)
+    {
+        memset(&sStreakList[i], 0, sizeof(xFXStreak));
+    }
 }
 
 void xFXStreakRender()
@@ -976,6 +1145,13 @@ void xFXRibbon::set_texture(RwTexture*)
 
 void xFXRibbon::set_texture(U32)
 {
+}
+
+void xFXRibbon::start_render()
+{
+    RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)cfg.blend_src);
+    RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)cfg.blend_dst);
+    RwRenderStateSet(rwRENDERSTATETEXTURERASTER, (void*)raster);
 }
 
 void xFXRibbon::insert(const xVec3&, const xVec3&, F32, F32, U32)

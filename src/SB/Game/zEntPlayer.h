@@ -6,6 +6,7 @@
 #include "xAnim.h"
 #include "zEnt.h"
 #include "zLasso.h"
+#include "xColor.h"
 
 enum zControlOwner
 {
@@ -365,6 +366,20 @@ struct zPlayerLassoInfo
     S32 canCopter;
     zLasso lasso;
     xAnimState* zeroAnim;
+};
+
+class PlayerStreakInfo
+{
+    U32 activated;
+    U32 streakID;
+    xModelTag* tagA;
+    xModelTag* tagB;
+    F32 alphaStart;
+    S32 streakTaper;
+    iColor_tag colA;
+    iColor_tag colB;
+    xVec3 a;
+    xVec3 b;
 };
 
 #define SHINY_MAX 99999

@@ -54,7 +54,7 @@ struct xModelInstance
     RwMatrix* Mat; // 0x4C
 
     // Offset: 0x50
-    xVec3 Scale;
+    xVec3 Scale; // 0x704 in globals
     U32 modelID;
     U32 shadowID;
     RpAtomic* shadowmapAtomic;

@@ -4,14 +4,6 @@
 #include "zNPCTypeCommon.h"
 #include "zNPCTypes.h"
 
-void zNPCMsg_SceneReset();
-void zNPCMsg_ScenePrepare();
-void zNPCMsg_Startup();
-void zNPCMsg_Shutdown();
-// void zNPCMsg_AreaNotify(zNPCCommon* sender, en_NPC_MSG_ID msgid, F32 rad, S32 filter,
-//                         en_NPCTYPES toNPCType);
-void zNPCMsg_Timestep(xScene* xscn, F32 dt);
-
 struct NPCMsg;
 
 struct NPCPSClt
@@ -33,5 +25,14 @@ struct NPCPSData
     NPCMsg* msgfree; // offset 0x1C, size 0x4
     st_XORDEREDARRAY quelist; // offset 0x20, size 0x10
 };
+
+void zNPCMsg_SceneReset();
+void zNPCMsg_ScenePrepare();
+void zNPCMsg_Startup();
+void zNPCMsg_Shutdown();
+
+void zNPCMsg_Timestep(xScene* xscn, F32 dt);
+void NPCPS_MsgPoolReset(NPCPSData* npc);
+void NPCPS_CltPoolReset(NPCPSData* npc);
 
 #endif

@@ -24,7 +24,7 @@ struct zNPCBSandy : zNPCBoss
     xEnt** boundList; // 0x2B4
     U32* boundFlags;
     F32* boundEmitTimer;
-    U32 bossFlags;
+    U32 bossFlags; // 0x2c0
     xVec3 currDir;
     F32 currVel;
     S32 hitPoints; // 0x2D4

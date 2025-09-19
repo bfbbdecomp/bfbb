@@ -4,6 +4,8 @@
 #include "xMath3.h"
 #include "containers.h"
 #include "iColor.h"
+#include "iDraw.h"
+#include "iModel.h"
 
 #include <rwcore.h>
 #include <rpworld.h>
@@ -69,6 +71,7 @@ struct xFXRibbon
     U32 mlife;
 
     void init(const char*, const char*);
+    void init(S32, const char*);
     void set_texture(const char* name);
     void set_texture(U32);
     void set_texture(RwTexture* texture);
@@ -81,6 +84,30 @@ struct xFXRibbon
     void debug_update(F32);
     void insert(const xVec3&, const xVec3&, F32, F32, unsigned int);
     void insert(const xVec3&, F32, F32, F32, U32);
+    void start_render();
+};
+
+class xFXStreakElem
+{
+    U32 flag;
+    xVec3 p[2];
+    F32 a;
+};
+
+class xFXStreak
+{
+    U32 flags;
+    F32 frequency;
+    F32 alphaFadeRate;
+    F32 alphaStart;
+    F32 elapsed;
+    F32 lifetime;
+    U32 head;
+    iColor_tag color_a;
+    iColor_tag color_b;
+    RwTexture* texturePtr;
+    RwRaster* textureRasterPtr;
+    xFXStreakElem elem[50];
 };
 
 #define RING_COUNT 8
@@ -100,6 +127,7 @@ void xFXPreAllocMatFX(RpClump* clump);
 
 RpAtomic* xFXBubbleRender(RpAtomic* atomic);
 RpAtomic* xFXShinyRender(RpAtomic* atomic);
+RpMaterial* MaterialSetEnvMap2(RpMaterial* material, void* data);
 
 void xFXanimUV2PSetTexture(RwTexture* texture);
 void xFXanimUVSetTranslation(const xVec3* trans);

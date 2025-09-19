@@ -63,13 +63,14 @@ namespace
         // non-matching: scheduling
 
         glow_light.kit.tagID = 'TIKL';
+
         glow_light.kit.lightCount = 1;
         glow_light.kit.lightList = glow_light.light;
         glow_light.light[0].type = 0x1;
-        glow_light.light[0].color.red = _710_2;
-        glow_light.light[0].color.green = _710_2;
-        glow_light.light[0].color.blue = _710_2;
-        glow_light.light[0].color.alpha = _710_2;
+        glow_light.light[0].color.red = 1.0;
+        glow_light.light[0].color.green = 1.0;
+        glow_light.light[0].color.blue = 1.0;
+        glow_light.light[0].color.alpha = 1.0;
 
         xLightKit_Prepare(&glow_light.kit);
     }
