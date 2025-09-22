@@ -10,7 +10,6 @@
 #include "zNPCTypeAmbient.h"
 #include "xCamera.h"
 
-
 namespace auto_tweak
 {
     template <class T1, class T2>
@@ -172,10 +171,13 @@ struct zNPCKingJelly : zNPCSubBoss
 
     zNPCKingJelly(S32 myType);
     void Setup();
+    void Reset();
     void Destroy();
     U32 AnimPick(S32 rawgoal, en_NPC_GOAL_SPOT gspot, xGoal* goal);
     void Init(xEntAsset*);
     void BUpdate(xVec3*);
+    S32 SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* toParamWidget,
+                 S32* handled);
     void RenderExtra();
     void ParseINI();
     void SelfSetup();
@@ -183,6 +185,7 @@ struct zNPCKingJelly : zNPCSubBoss
     void init_child(zNPCKingJelly::child_data&, zNPCCommon&, int);
     void disable_child(zNPCKingJelly::child_data&);
     void enable_child(zNPCKingJelly::child_data& child);
+    void start_fight();
     void spawn_children(int, int);
     S32 max_strikes();
     void load_model();
