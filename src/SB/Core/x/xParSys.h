@@ -4,6 +4,8 @@
 #include "xBase.h"
 #include "xParCmd.h"
 #include "xParGroup.h"
+#include "iParMgr.h"
+#include "xstransvc.h"
 
 #include <rwcore.h>
 
@@ -35,10 +37,21 @@ struct xParSys : xBase
     RwTexture* txtr_particle;
 };
 
+struct xParSysInfo
+{
+    S32 type;
+    void (*func)(void*, class xParGroup*);
+};
+
+void xParCmdTexInit(xParCmdTex* tex);
 void xParSysInit(void* b, void* tasset);
+void xParSysInit(xBase* b, xParSysAsset* tasset);
 void xParSysSetup(xParSys* t);
 void xParSysExit(xParSys* t);
 void xParSysRender(xBase* b);
+S32 xParSysEventCB(xBase*, xBase*, U32, F32*, xBase*);
 void xParSysUpdate(xBase* to, xScene*, F32 dt);
+
+U8 using_ptank_render(const xParSysAsset&);
 
 #endif

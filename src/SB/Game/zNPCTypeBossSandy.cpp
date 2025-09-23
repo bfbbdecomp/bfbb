@@ -63,7 +63,7 @@ static U8 sPCWasBubbleBouncing;
 static F32 sRadiusOfRing;
 static F32 sElbowDropTimer;
 static F32 sChaseTimer;
-static F32 sNumAttacks;
+static S32 sNumAttacks;
 static F32 sDidClothesline;
 static F32 sElbowDropThreshold;
 static zNPCBSandy* sSandyPtr;
@@ -144,8 +144,7 @@ void on_change_shockwave(const tweak_info& tweak)
 xAnimTable* ZNPC_AnimTable_BossSandy()
 {
     // clang-format off
-    S32 ourAnims[28] = {
-        Unknown,
+    S32 ourAnims[25] = {
         Idle01, 
         Idle02, 
         Taunt01, 
@@ -171,13 +170,12 @@ xAnimTable* ZNPC_AnimTable_BossSandy()
         NoHeadGetUp01,
         NoHeadShotUp01, 
         NoHeadShock01,
-        NoHeadReplace01, 
-        NoHeadHit01,
     };
     // clang-format on
 
-    //Missing like 2 logic lines or something, too tired to figure it out
-    xAnimTable* table = xAnimTableNew("zNPCBSandy", NULL, 0);
+    xAnimTransition* tList;
+    xAnimTable* table;
+    table = xAnimTableNew("zNPCBSandy", NULL, 0);
 
     xAnimTableNewState(table, g_strz_bossanim[Unknown], 0x10, 0x40, 1.0f, NULL, NULL, 0.0f, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
@@ -228,7 +226,7 @@ xAnimTable* ZNPC_AnimTable_BossSandy()
 
     NPCC_BuildStandardAnimTran(table, g_strz_bossanim, ourAnims, 1, 0.2f);
 
-    xAnimTransition* tList = table->TransitionList;
+    tList = table->TransitionList;
     while (tList != NULL)
     {
         tList->BlendRecip = 3.3333333f;
@@ -1467,6 +1465,48 @@ S32 zNPCGoalBossSandyNoHead::Process(en_trantype* trantype, F32 dt, void* updCtx
     }
 
     return zNPCGoalCommon::Process(trantype, dt, updCtxt, xscn);
+}
+
+S32 zNPCGoalBossSandyElbowDrop::Enter(F32 dt, void* updCtxt)
+{
+    zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
+
+    timeInGoal = 0;
+    sandy->bossFlags &= 0xfffffffd;
+    sNumAttacks++;
+
+    xVec3Init(&sandy->frame->vel, 0.0f, 0.0f, 0.0f);
+
+    xSndPlay3D(xStrHash("B101_SC_drop"), 0.77f, 0.0f, 0x0, 0x0, sandy, 30.0f, SND_CAT_GAME, 0.65f);
+    xSndPlay3D(xStrHash("B101_SC_drop"), 0.77f, 0.0f, 0x0, 0x0, sandy, 30.0f, SND_CAT_GAME, 1.3f);
+    xSndPlay3D(xStrHash("B101_SC_hitring"), 0.77f, 0.0f, 0x0, 0x0, sandy, 30.0f, SND_CAT_GAME,
+               2.25f);
+    elbowFlags = 0;
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+// This function is certified not cool
+S32 zNPCGoalBossSandyElbowDrop::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
+    xVec3 newAt;
+
+    if (timeInGoal > 0.75f)
+    {
+        for (S32 i = 0; i < 13; i++)
+        {
+            sandy->boundFlags[i] |= 0x1;
+        }
+    }
+
+    if (timeInGoal <= sandy->edropTurnMinTime)
+    {
+        if (sandy->shockwaveMaxRadius < timeInGoal)
+        {
+        }
+    }
+
+    return xGoal::Process(trantype, dt, updCtxt, xscn);
 }
 
 void xBinaryCamera::add_tweaks(char const*)

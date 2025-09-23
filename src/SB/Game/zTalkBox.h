@@ -121,7 +121,7 @@ struct ztalkbox : xBase
     void add_text(U32 textID);
     void clear_text();
     void stop_talk();
-    void stop_wait(U32 unk);
+    void stop_wait(U32 x);
     void show();
     void hide();
 };

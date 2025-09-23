@@ -596,7 +596,6 @@ void zMainMemLvlChkCB()
 void zLedgeAdjust(zLedgeGrabParams* params)
 {
     params->animGrab *= (1.0f / 30);
-    params->animGrab *= (1.0f / 30);
 }
 
 void zMainShowProgressBar()
@@ -740,6 +739,13 @@ void zMainReadINI()
     void* buf;
     U32 size;
     xIniFile* ini;
+    U32 local_18[2];
+
+    str = (char*)iFileLoad("SB.INI", 0, (U32*)local_18);
+    if (str = NULL)
+    {
+        xIniGetString(xIniParse(0, 0), "patrick.MoveSpeed", 0);
+    }
 }
 
 void zMainFirstScreen(int)

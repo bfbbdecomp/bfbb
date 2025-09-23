@@ -12,7 +12,7 @@
 
 #define ANIM_Unknown 0 // 0x0
 #define ANIM_Idle01 1 // 0x04
-#define ANIM_Idle02 2 // 0x08      
+#define ANIM_Idle02 2 // 0x08
 #define ANIM_Idle03 3 // 0xC
 #define ANIM_Fidget01 4 //
 #define ANIM_Fidget02 5
@@ -1294,6 +1294,11 @@ void zNPCKingJelly::Setup()
     zNPCSubBoss::Setup();
 }
 
+void zNPCKingJelly::Reset()
+{
+    // u32 i
+}
+
 void zNPCKingJelly::Destroy()
 {
     decompose();
@@ -1312,6 +1317,37 @@ void zNPCKingJelly::BUpdate(xVec3* pos)
     // (xVec3&)this->model->Mat->pos = (xVec3&)this->model->Mat->pos + *pos;
 
     zNPCCommon::BUpdate(pos);
+}
+
+S32 zNPCKingJelly::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
+                            xBase* toParamWidget, S32* handled)
+{
+    U32 ret;
+
+    if (toEvent == 0x1b9)
+    {
+        ret = 1;
+    }
+    else
+    {
+        if (toEvent < 0x1b9)
+        {
+            if (toEvent == 0x1b5)
+            {
+                start_fight();
+                return 1;
+            }
+        }
+        else if (toEvent == 0x1d9)
+        {
+            xPsyche* psy = this->psy_instinct;
+            psy->GoalSet(0x4e474d37, 1);
+            return 1;
+        }
+        handled = 0;
+        ret = zNPCCommon::SysEvent(from, to, toEvent, toParam, toParamWidget, handled);
+    }
+    return ret;
 }
 
 void zNPCKingJelly::RenderExtra()
