@@ -11,39 +11,44 @@ static class xVec3 par_offset_up; // size: 0xC, address: 0x5CE8A0
 static class xParSysInfo sParSysInfo[7]; // size: 0x38, address: 0x4DF990
 class zGlobals globals; // size: 0x2050, address: 0x52C8F0
 unsigned int gActiveHeap; // size: 0x4, address: 0x50FA44
-signed int xParSysEventCB(class xBase *, class xBase *, unsigned int, float *, class xBase *); // size: 0x0, address: 0x2FBE00
+signed int xParSysEventCB(class xBase*, class xBase*, unsigned int, float*,
+                          class xBase*); // size: 0x0, address: 0x2FBE00
 signed int _rpPTankAtomicDataOffset; // size: 0x4, address: 0x50F128
-class xAnimFile {
+class xAnimFile
+{
     // total size: 0x20
 public:
-    class xAnimFile * Next; // offset 0x0, size 0x4
-    char * Name; // offset 0x4, size 0x4
+    class xAnimFile* Next; // offset 0x0, size 0x4
+    char* Name; // offset 0x4, size 0x4
     unsigned int ID; // offset 0x8, size 0x4
     unsigned int FileFlags; // offset 0xC, size 0x4
     float Duration; // offset 0x10, size 0x4
     float TimeOffset; // offset 0x14, size 0x4
     unsigned short BoneCount; // offset 0x18, size 0x2
     unsigned char NumAnims[2]; // offset 0x1A, size 0x2
-    void * * RawData; // offset 0x1C, size 0x4
+    void** RawData; // offset 0x1C, size 0x4
 };
-class xBase {
+class xBase
+{
     // total size: 0x10
 public:
     unsigned int id; // offset 0x0, size 0x4
     unsigned char baseType; // offset 0x4, size 0x1
     unsigned char linkCount; // offset 0x5, size 0x1
     unsigned short baseFlags; // offset 0x6, size 0x2
-    class xLinkAsset * link; // offset 0x8, size 0x4
-    signed int (* eventFunc)(class xBase *, class xBase *, unsigned int, float *, class xBase *); // offset 0xC, size 0x4
+    class xLinkAsset* link; // offset 0x8, size 0x4
+    signed int (*eventFunc)(class xBase*, class xBase*, unsigned int, float*,
+                            class xBase*); // offset 0xC, size 0x4
 };
-class zLedgeGrabParams {
+class zLedgeGrabParams
+{
     // total size: 0x380
 public:
     float animGrab; // offset 0x0, size 0x4
     float zdist; // offset 0x4, size 0x4
     class xVec3 tranTable[60]; // offset 0x8, size 0x2D0
     signed int tranCount; // offset 0x2D8, size 0x4
-    class xEnt * optr; // offset 0x2DC, size 0x4
+    class xEnt* optr; // offset 0x2DC, size 0x4
     class xMat4x3 omat; // offset 0x2E0, size 0x40
     float y0det; // offset 0x320, size 0x4
     float dydet; // offset 0x324, size 0x4
@@ -61,32 +66,37 @@ public:
     float startrot; // offset 0x36C, size 0x4
     float endrot; // offset 0x370, size 0x4
 };
-class RwV3d {
+class RwV3d
+{
     // total size: 0xC
 public:
     float x; // offset 0x0, size 0x4
     float y; // offset 0x4, size 0x4
     float z; // offset 0x8, size 0x4
 };
-class zScene : public xScene {
+class zScene : public xScene
+{
     // total size: 0x2C8
 public:
-    class _zPortal * pendingPortal; // offset 0x70, size 0x4
-    union { // inferred
+    class _zPortal* pendingPortal; // offset 0x70, size 0x4
+    union
+    { // inferred
         unsigned int num_ents; // offset 0x74, size 0x4
         unsigned int num_base; // offset 0x74, size 0x4
     };
-    union { // inferred
-        class xBase * * base; // offset 0x78, size 0x4
-        class zEnt * * ents; // offset 0x78, size 0x4
+    union
+    { // inferred
+        class xBase** base; // offset 0x78, size 0x4
+        class zEnt** ents; // offset 0x78, size 0x4
     };
     unsigned int num_update_base; // offset 0x7C, size 0x4
-    class xBase * * update_base; // offset 0x80, size 0x4
+    class xBase** update_base; // offset 0x80, size 0x4
     unsigned int baseCount[72]; // offset 0x84, size 0x120
-    class xBase * baseList[72]; // offset 0x1A4, size 0x120
-    class _zEnv * zen; // offset 0x2C4, size 0x4
+    class xBase* baseList[72]; // offset 0x1A4, size 0x120
+    class _zEnv* zen; // offset 0x2C4, size 0x4
 };
-class xLightKitLight {
+class xLightKitLight
+{
     // total size: 0x60
 public:
     unsigned int type; // offset 0x0, size 0x4
@@ -94,13 +104,14 @@ public:
     float matrix[16]; // offset 0x14, size 0x40
     float radius; // offset 0x54, size 0x4
     float angle; // offset 0x58, size 0x4
-    class RpLight * platLight; // offset 0x5C, size 0x4
+    class RpLight* platLight; // offset 0x5C, size 0x4
 };
-class xParGroup {
+class xParGroup
+{
     // total size: 0x24
 public:
-    class xPar * m_root; // offset 0x0, size 0x4
-    class xPar * m_dead; // offset 0x4, size 0x4
+    class xPar* m_root; // offset 0x0, size 0x4
+    class xPar* m_dead; // offset 0x4, size 0x4
     signed int m_num_of_particles; // offset 0x8, size 0x4
     unsigned char m_alive; // offset 0xC, size 0x1
     unsigned char m_killWhenDead; // offset 0xD, size 0x1
@@ -110,38 +121,43 @@ public:
     unsigned char m_priority; // offset 0x11, size 0x1
     unsigned char m_flags; // offset 0x12, size 0x1
     unsigned char m_regidx; // offset 0x13, size 0x1
-    class xParGroup * m_next; // offset 0x14, size 0x4
-    class xParGroup * m_prev; // offset 0x18, size 0x4
-    void (* draw)(void *, class xParGroup *); // offset 0x1C, size 0x4
-    class xParCmdTex * m_cmdTex; // offset 0x20, size 0x4
+    class xParGroup* m_next; // offset 0x14, size 0x4
+    class xParGroup* m_prev; // offset 0x18, size 0x4
+    void (*draw)(void*, class xParGroup*); // offset 0x1C, size 0x4
+    class xParCmdTex* m_cmdTex; // offset 0x20, size 0x4
 };
-class RxPipelineNode {
+class RxPipelineNode
+{
     // total size: 0x28
 public:
-    class RxNodeDefinition * nodeDef; // offset 0x0, size 0x4
+    class RxNodeDefinition* nodeDef; // offset 0x0, size 0x4
     unsigned int numOutputs; // offset 0x4, size 0x4
-    unsigned int * outputs; // offset 0x8, size 0x4
-    class RxPipelineCluster * * slotClusterRefs; // offset 0xC, size 0x4
-    unsigned int * slotsContinue; // offset 0x10, size 0x4
-    void * privateData; // offset 0x14, size 0x4
-    unsigned int * inputToClusterSlot; // offset 0x18, size 0x4
-    class RxPipelineNodeTopSortData * topSortData; // offset 0x1C, size 0x4
-    void * initializationData; // offset 0x20, size 0x4
+    unsigned int* outputs; // offset 0x8, size 0x4
+    class RxPipelineCluster** slotClusterRefs; // offset 0xC, size 0x4
+    unsigned int* slotsContinue; // offset 0x10, size 0x4
+    void* privateData; // offset 0x14, size 0x4
+    unsigned int* inputToClusterSlot; // offset 0x18, size 0x4
+    class RxPipelineNodeTopSortData* topSortData; // offset 0x1C, size 0x4
+    void* initializationData; // offset 0x20, size 0x4
     unsigned int initializationDataSize; // offset 0x24, size 0x4
 };
-class rxHeapFreeBlock {
+class rxHeapFreeBlock
+{
     // total size: 0x8
 public:
     unsigned int size; // offset 0x0, size 0x4
-    class rxHeapBlockHeader * ptr; // offset 0x4, size 0x4
+    class rxHeapBlockHeader* ptr; // offset 0x4, size 0x4
 };
-class xAnimTransition {
+class xAnimTransition
+{
     // total size: 0x2C
 public:
-    class xAnimTransition * Next; // offset 0x0, size 0x4
-    class xAnimState * Dest; // offset 0x4, size 0x4
-    unsigned int (* Conditional)(class xAnimTransition *, class xAnimSingle *, void *); // offset 0x8, size 0x4
-    unsigned int (* Callback)(class xAnimTransition *, class xAnimSingle *, void *); // offset 0xC, size 0x4
+    class xAnimTransition* Next; // offset 0x0, size 0x4
+    class xAnimState* Dest; // offset 0x4, size 0x4
+    unsigned int (*Conditional)(class xAnimTransition*, class xAnimSingle*,
+                                void*); // offset 0x8, size 0x4
+    unsigned int (*Callback)(class xAnimTransition*, class xAnimSingle*,
+                             void*); // offset 0xC, size 0x4
     unsigned int Flags; // offset 0x10, size 0x4
     unsigned int UserFlags; // offset 0x14, size 0x4
     float SrcTime; // offset 0x18, size 0x4
@@ -149,21 +165,23 @@ public:
     unsigned short Priority; // offset 0x20, size 0x2
     unsigned short QueuePriority; // offset 0x22, size 0x2
     float BlendRecip; // offset 0x24, size 0x4
-    unsigned short * BlendOffset; // offset 0x28, size 0x4
+    unsigned short* BlendOffset; // offset 0x28, size 0x4
 };
-class /* @class */ {
+class /* @class */
+{
     // total size: 0xC
 public:
     float t; // offset 0x0, size 0x4
     float u; // offset 0x4, size 0x4
     float v; // offset 0x8, size 0x4
 };
-class RwRaster {
+class RwRaster
+{
     // total size: 0x34
 public:
-    class RwRaster * parent; // offset 0x0, size 0x4
-    unsigned char * cpPixels; // offset 0x4, size 0x4
-    unsigned char * palette; // offset 0x8, size 0x4
+    class RwRaster* parent; // offset 0x0, size 0x4
+    unsigned char* cpPixels; // offset 0x4, size 0x4
+    unsigned char* palette; // offset 0x8, size 0x4
     signed int width; // offset 0xC, size 0x4
     signed int height; // offset 0x10, size 0x4
     signed int depth; // offset 0x14, size 0x4
@@ -174,50 +192,55 @@ public:
     unsigned char cFlags; // offset 0x21, size 0x1
     unsigned char privateFlags; // offset 0x22, size 0x1
     unsigned char cFormat; // offset 0x23, size 0x1
-    unsigned char * originalPixels; // offset 0x24, size 0x4
+    unsigned char* originalPixels; // offset 0x24, size 0x4
     signed int originalWidth; // offset 0x28, size 0x4
     signed int originalHeight; // offset 0x2C, size 0x4
     signed int originalStride; // offset 0x30, size 0x4
 };
-class RxPipelineNodeTopSortData {
+class RxPipelineNodeTopSortData
+{
     // total size: 0xC
 public:
     unsigned int numIns; // offset 0x0, size 0x4
     unsigned int numInsVisited; // offset 0x4, size 0x4
-    class rxReq * req; // offset 0x8, size 0x4
+    class rxReq* req; // offset 0x8, size 0x4
 };
-class xAnimSingle {
+class xAnimSingle
+{
     // total size: 0x40
 public:
     unsigned int SingleFlags; // offset 0x0, size 0x4
-    class xAnimState * State; // offset 0x4, size 0x4
+    class xAnimState* State; // offset 0x4, size 0x4
     float Time; // offset 0x8, size 0x4
     float CurrentSpeed; // offset 0xC, size 0x4
     float BilinearLerp[2]; // offset 0x10, size 0x8
-    class xAnimEffect * Effect; // offset 0x18, size 0x4
+    class xAnimEffect* Effect; // offset 0x18, size 0x4
     unsigned int ActiveCount; // offset 0x1C, size 0x4
     float LastTime; // offset 0x20, size 0x4
-    class xAnimActiveEffect * ActiveList; // offset 0x24, size 0x4
-    class xAnimPlay * Play; // offset 0x28, size 0x4
-    class xAnimTransition * Sync; // offset 0x2C, size 0x4
-    class xAnimTransition * Tran; // offset 0x30, size 0x4
-    class xAnimSingle * Blend; // offset 0x34, size 0x4
+    class xAnimActiveEffect* ActiveList; // offset 0x24, size 0x4
+    class xAnimPlay* Play; // offset 0x28, size 0x4
+    class xAnimTransition* Sync; // offset 0x2C, size 0x4
+    class xAnimTransition* Tran; // offset 0x30, size 0x4
+    class xAnimSingle* Blend; // offset 0x34, size 0x4
     float BlendFactor; // offset 0x38, size 0x4
     unsigned int pad; // offset 0x3C, size 0x4
 };
-class RpPolygon {
+class RpPolygon
+{
     // total size: 0x8
 public:
     unsigned short matIndex; // offset 0x0, size 0x2
     unsigned short vertIndex[3]; // offset 0x2, size 0x6
 };
-class RwV2d {
+class RwV2d
+{
     // total size: 0x8
 public:
     float x; // offset 0x0, size 0x4
     float y; // offset 0x4, size 0x4
 };
-class xShadowSimpleCache {
+class xShadowSimpleCache
+{
     // total size: 0x98
 public:
     unsigned short flags; // offset 0x0, size 0x2
@@ -226,7 +249,7 @@ public:
     unsigned int collPriority; // offset 0x4, size 0x4
     class xVec3 pos; // offset 0x8, size 0xC
     class xVec3 at; // offset 0x14, size 0xC
-    class xEnt * castOnEnt; // offset 0x20, size 0x4
+    class xEnt* castOnEnt; // offset 0x20, size 0x4
     class xShadowSimplePoly poly; // offset 0x24, size 0x30
     float envHeight; // offset 0x54, size 0x4
     float shadowHeight; // offset 0x58, size 0x4
@@ -235,32 +258,36 @@ public:
     float dydz; // offset 0x64, size 0x4
     class xVec3 corner[4]; // offset 0x68, size 0x30
 };
-class xUpdateCullEnt {
+class xUpdateCullEnt
+{
     // total size: 0x10
 public:
     unsigned short index; // offset 0x0, size 0x2
     signed short groupIndex; // offset 0x2, size 0x2
-    unsigned int (* cb)(void *, void *); // offset 0x4, size 0x4
-    void * cbdata; // offset 0x8, size 0x4
-    class xUpdateCullEnt * nextInGroup; // offset 0xC, size 0x4
+    unsigned int (*cb)(void*, void*); // offset 0x4, size 0x4
+    void* cbdata; // offset 0x8, size 0x4
+    class xUpdateCullEnt* nextInGroup; // offset 0xC, size 0x4
 };
-class xAnimActiveEffect {
+class xAnimActiveEffect
+{
     // total size: 0x8
 public:
-    class xAnimEffect * Effect; // offset 0x0, size 0x4
+    class xAnimEffect* Effect; // offset 0x0, size 0x4
     unsigned int Handle; // offset 0x4, size 0x4
 };
-class RxNodeDefinition {
+class RxNodeDefinition
+{
     // total size: 0x40
 public:
-    char * name; // offset 0x0, size 0x4
+    char* name; // offset 0x0, size 0x4
     class RxNodeMethods nodeMethods; // offset 0x4, size 0x1C
     class RxIoSpec io; // offset 0x20, size 0x14
     unsigned int pipelineNodePrivateDataSize; // offset 0x34, size 0x4
     enum RxNodeDefEditable editable; // offset 0x38, size 0x4
     signed int InputPipesCnt; // offset 0x3C, size 0x4
 };
-class xParCmdTex : public xParCmdAsset {
+class xParCmdTex : public xParCmdAsset
+{
     // total size: 0x24
 public:
     float x1; // offset 0x8, size 0x4
@@ -274,81 +301,90 @@ public:
     float unit_width; // offset 0x1C, size 0x4
     float unit_height; // offset 0x20, size 0x4
 };
-class ptank_pool__pos_color_size_uv2 : public ptank_pool {
+class ptank_pool__pos_color_size_uv2 : public ptank_pool
+{
     // total size: 0x38
 public:
-    class xVec3 * pos; // offset 0x24, size 0x4
-    class iColor_tag * color; // offset 0x28, size 0x4
-    class xVec2 * size; // offset 0x2C, size 0x4
-    class xVec2 * uv; // offset 0x30, size 0x4
+    class xVec3* pos; // offset 0x24, size 0x4
+    class iColor_tag* color; // offset 0x28, size 0x4
+    class xVec2* size; // offset 0x2C, size 0x4
+    class xVec2* uv; // offset 0x30, size 0x4
     signed int stride; // offset 0x34, size 0x4
 };
-class xEntShadow {
+class xEntShadow
+{
     // total size: 0x28
 public:
     class xVec3 pos; // offset 0x0, size 0xC
     class xVec3 vec; // offset 0xC, size 0xC
-    class RpAtomic * shadowModel; // offset 0x18, size 0x4
+    class RpAtomic* shadowModel; // offset 0x18, size 0x4
     float dst_cast; // offset 0x1C, size 0x4
     float radius[2]; // offset 0x20, size 0x8
 };
-class RpMaterialList {
+class RpMaterialList
+{
     // total size: 0xC
 public:
-    class RpMaterial * * materials; // offset 0x0, size 0x4
+    class RpMaterial** materials; // offset 0x0, size 0x4
     signed int numMaterials; // offset 0x4, size 0x4
     signed int space; // offset 0x8, size 0x4
 };
-enum _zPlayerWallJumpState {
+enum _zPlayerWallJumpState
+{
     k_WALLJUMP_NOT = 0,
     k_WALLJUMP_LAUNCH = 1,
     k_WALLJUMP_FLIGHT = 2,
     k_WALLJUMP_LAND = 3,
 };
-class xParCmd {
+class xParCmd
+{
     // total size: 0x8
 public:
     unsigned int flag; // offset 0x0, size 0x4
-    class xParCmdAsset * tasset; // offset 0x4, size 0x4
+    class xParCmdAsset* tasset; // offset 0x4, size 0x4
 };
-class RpAtomic {
+class RpAtomic
+{
     // total size: 0x70
 public:
     class RwObjectHasFrame object; // offset 0x0, size 0x14
-    class RwResEntry * repEntry; // offset 0x14, size 0x4
-    class RpGeometry * geometry; // offset 0x18, size 0x4
+    class RwResEntry* repEntry; // offset 0x14, size 0x4
+    class RpGeometry* geometry; // offset 0x18, size 0x4
     class RwSphere boundingSphere; // offset 0x1C, size 0x10
     class RwSphere worldBoundingSphere; // offset 0x2C, size 0x10
-    class RpClump * clump; // offset 0x3C, size 0x4
+    class RpClump* clump; // offset 0x3C, size 0x4
     class RwLLLink inClumpLink; // offset 0x40, size 0x8
-    class RpAtomic * (* renderCallBack)(class RpAtomic *); // offset 0x48, size 0x4
+    class RpAtomic* (*renderCallBack)(class RpAtomic*); // offset 0x48, size 0x4
     class RpInterpolator interpolator; // offset 0x4C, size 0x14
     unsigned short renderFrame; // offset 0x60, size 0x2
     unsigned short pad; // offset 0x62, size 0x2
     class RwLinkList llWorldSectorsInAtomic; // offset 0x64, size 0x8
-    class RxPipeline * pipeline; // offset 0x6C, size 0x4
+    class RxPipeline* pipeline; // offset 0x6C, size 0x4
 };
-class xAnimPlay {
+class xAnimPlay
+{
     // total size: 0x20
 public:
-    class xAnimPlay * Next; // offset 0x0, size 0x4
+    class xAnimPlay* Next; // offset 0x0, size 0x4
     unsigned short NumSingle; // offset 0x4, size 0x2
     unsigned short BoneCount; // offset 0x6, size 0x2
-    class xAnimSingle * Single; // offset 0x8, size 0x4
-    void * Object; // offset 0xC, size 0x4
-    class xAnimTable * Table; // offset 0x10, size 0x4
-    class xMemPool * Pool; // offset 0x14, size 0x4
-    class xModelInstance * ModelInst; // offset 0x18, size 0x4
-    void (* BeforeAnimMatrices)(class xAnimPlay *, class xQuat *, class xVec3 *, signed int); // offset 0x1C, size 0x4
+    class xAnimSingle* Single; // offset 0x8, size 0x4
+    void* Object; // offset 0xC, size 0x4
+    class xAnimTable* Table; // offset 0x10, size 0x4
+    class xMemPool* Pool; // offset 0x14, size 0x4
+    class xModelInstance* ModelInst; // offset 0x18, size 0x4
+    void (*BeforeAnimMatrices)(class xAnimPlay*, class xQuat*, class xVec3*,
+                               signed int); // offset 0x1C, size 0x4
 };
-class xModelInstance {
+class xModelInstance
+{
     // total size: 0x6C
 public:
-    class xModelInstance * Next; // offset 0x0, size 0x4
-    class xModelInstance * Parent; // offset 0x4, size 0x4
-    class xModelPool * Pool; // offset 0x8, size 0x4
-    class xAnimPlay * Anim; // offset 0xC, size 0x4
-    class RpAtomic * Data; // offset 0x10, size 0x4
+    class xModelInstance* Next; // offset 0x0, size 0x4
+    class xModelInstance* Parent; // offset 0x4, size 0x4
+    class xModelPool* Pool; // offset 0x8, size 0x4
+    class xAnimPlay* Anim; // offset 0xC, size 0x4
+    class RpAtomic* Data; // offset 0x10, size 0x4
     unsigned int PipeFlags; // offset 0x14, size 0x4
     float RedMultiplier; // offset 0x18, size 0x4
     float GreenMultiplier; // offset 0x1C, size 0x4
@@ -356,30 +392,32 @@ public:
     float Alpha; // offset 0x24, size 0x4
     float FadeStart; // offset 0x28, size 0x4
     float FadeEnd; // offset 0x2C, size 0x4
-    class xSurface * Surf; // offset 0x30, size 0x4
-    class xModelBucket * * Bucket; // offset 0x34, size 0x4
-    class xModelInstance * BucketNext; // offset 0x38, size 0x4
-    class xLightKit * LightKit; // offset 0x3C, size 0x4
-    void * Object; // offset 0x40, size 0x4
+    class xSurface* Surf; // offset 0x30, size 0x4
+    class xModelBucket** Bucket; // offset 0x34, size 0x4
+    class xModelInstance* BucketNext; // offset 0x38, size 0x4
+    class xLightKit* LightKit; // offset 0x3C, size 0x4
+    void* Object; // offset 0x40, size 0x4
     unsigned short Flags; // offset 0x44, size 0x2
     unsigned char BoneCount; // offset 0x46, size 0x1
     unsigned char BoneIndex; // offset 0x47, size 0x1
-    unsigned char * BoneRemap; // offset 0x48, size 0x4
-    class RwMatrixTag * Mat; // offset 0x4C, size 0x4
+    unsigned char* BoneRemap; // offset 0x48, size 0x4
+    class RwMatrixTag* Mat; // offset 0x4C, size 0x4
     class xVec3 Scale; // offset 0x50, size 0xC
     unsigned int modelID; // offset 0x5C, size 0x4
     unsigned int shadowID; // offset 0x60, size 0x4
-    class RpAtomic * shadowmapAtomic; // offset 0x64, size 0x4
-    class /* @class */ {
+    class RpAtomic* shadowmapAtomic; // offset 0x64, size 0x4
+    class /* @class */
+    {
         // total size: 0x4
     public:
-        class xVec3 * verts; // offset 0x0, size 0x4
+        class xVec3* verts; // offset 0x0, size 0x4
     } anim_coll; // offset 0x68, size 0x4
 };
-class xEnt : public xBase {
+class xEnt : public xBase
+{
     // total size: 0xD0
 public:
-    class xEntAsset * asset; // offset 0x10, size 0x4
+    class xEntAsset* asset; // offset 0x10, size 0x4
     unsigned short idx; // offset 0x14, size 0x2
     unsigned short num_updates; // offset 0x16, size 0x2
     unsigned char flags; // offset 0x18, size 0x1
@@ -394,166 +432,184 @@ public:
     unsigned char collLev; // offset 0x21, size 0x1
     unsigned char chkby; // offset 0x22, size 0x1
     unsigned char penby; // offset 0x23, size 0x1
-    class xModelInstance * model; // offset 0x24, size 0x4
-    class xModelInstance * collModel; // offset 0x28, size 0x4
-    class xModelInstance * camcollModel; // offset 0x2C, size 0x4
-    class xLightKit * lightKit; // offset 0x30, size 0x4
-    void (* update)(class xEnt *, class xScene *, float); // offset 0x34, size 0x4
-    void (* endUpdate)(class xEnt *, class xScene *, float); // offset 0x38, size 0x4
-    void (* bupdate)(class xEnt *, class xVec3 *); // offset 0x3C, size 0x4
-    void (* move)(class xEnt *, class xScene *, float, class xEntFrame *); // offset 0x40, size 0x4
-    void (* render)(class xEnt *); // offset 0x44, size 0x4
-    class xEntFrame * frame; // offset 0x48, size 0x4
-    class xEntCollis * collis; // offset 0x4C, size 0x4
+    class xModelInstance* model; // offset 0x24, size 0x4
+    class xModelInstance* collModel; // offset 0x28, size 0x4
+    class xModelInstance* camcollModel; // offset 0x2C, size 0x4
+    class xLightKit* lightKit; // offset 0x30, size 0x4
+    void (*update)(class xEnt*, class xScene*, float); // offset 0x34, size 0x4
+    void (*endUpdate)(class xEnt*, class xScene*, float); // offset 0x38, size 0x4
+    void (*bupdate)(class xEnt*, class xVec3*); // offset 0x3C, size 0x4
+    void (*move)(class xEnt*, class xScene*, float, class xEntFrame*); // offset 0x40, size 0x4
+    void (*render)(class xEnt*); // offset 0x44, size 0x4
+    class xEntFrame* frame; // offset 0x48, size 0x4
+    class xEntCollis* collis; // offset 0x4C, size 0x4
     class xGridBound gridb; // offset 0x50, size 0x14
     class xBound bound; // offset 0x64, size 0x4C
-    void (* transl)(class xEnt *, class xVec3 *, class xMat4x3 *); // offset 0xB0, size 0x4
-    class xFFX * ffx; // offset 0xB4, size 0x4
-    class xEnt * driver; // offset 0xB8, size 0x4
+    void (*transl)(class xEnt*, class xVec3*, class xMat4x3*); // offset 0xB0, size 0x4
+    class xFFX* ffx; // offset 0xB4, size 0x4
+    class xEnt* driver; // offset 0xB8, size 0x4
     signed int driveMode; // offset 0xBC, size 0x4
-    class xShadowSimpleCache * simpShadow; // offset 0xC0, size 0x4
-    class xEntShadow * entShadow; // offset 0xC4, size 0x4
-    class anim_coll_data * anim_coll; // offset 0xC8, size 0x4
-    void * user_data; // offset 0xCC, size 0x4
+    class xShadowSimpleCache* simpShadow; // offset 0xC0, size 0x4
+    class xEntShadow* entShadow; // offset 0xC4, size 0x4
+    class anim_coll_data* anim_coll; // offset 0xC8, size 0x4
+    void* user_data; // offset 0xCC, size 0x4
 };
-class rxHeapSuperBlockDescriptor {
+class rxHeapSuperBlockDescriptor
+{
     // total size: 0xC
 public:
-    void * start; // offset 0x0, size 0x4
+    void* start; // offset 0x0, size 0x4
     unsigned int size; // offset 0x4, size 0x4
-    class rxHeapSuperBlockDescriptor * next; // offset 0x8, size 0x4
+    class rxHeapSuperBlockDescriptor* next; // offset 0x8, size 0x4
 };
-class xVec3 {
+class xVec3
+{
     // total size: 0xC
 public:
     float x; // offset 0x0, size 0x4
     float y; // offset 0x4, size 0x4
     float z; // offset 0x8, size 0x4
 };
-class iEnv {
+class iEnv
+{
     // total size: 0x30
 public:
-    class RpWorld * world; // offset 0x0, size 0x4
-    class RpWorld * collision; // offset 0x4, size 0x4
-    class RpWorld * fx; // offset 0x8, size 0x4
-    class RpWorld * camera; // offset 0xC, size 0x4
-    class xJSPHeader * jsp; // offset 0x10, size 0x4
-    class RpLight * light[2]; // offset 0x14, size 0x8
-    class RwFrame * light_frame[2]; // offset 0x1C, size 0x8
+    class RpWorld* world; // offset 0x0, size 0x4
+    class RpWorld* collision; // offset 0x4, size 0x4
+    class RpWorld* fx; // offset 0x8, size 0x4
+    class RpWorld* camera; // offset 0xC, size 0x4
+    class xJSPHeader* jsp; // offset 0x10, size 0x4
+    class RpLight* light[2]; // offset 0x14, size 0x8
+    class RwFrame* light_frame[2]; // offset 0x1C, size 0x8
     signed int memlvl; // offset 0x24, size 0x4
 };
-class RxPipeline {
+class RxPipeline
+{
     // total size: 0x34
 public:
     signed int locked; // offset 0x0, size 0x4
     unsigned int numNodes; // offset 0x4, size 0x4
-    class RxPipelineNode * nodes; // offset 0x8, size 0x4
+    class RxPipelineNode* nodes; // offset 0x8, size 0x4
     unsigned int packetNumClusterSlots; // offset 0xC, size 0x4
     enum rxEmbeddedPacketState embeddedPacketState; // offset 0x10, size 0x4
-    class RxPacket * embeddedPacket; // offset 0x14, size 0x4
+    class RxPacket* embeddedPacket; // offset 0x14, size 0x4
     unsigned int numInputRequirements; // offset 0x18, size 0x4
-    class RxPipelineRequiresCluster * inputRequirements; // offset 0x1C, size 0x4
-    void * superBlock; // offset 0x20, size 0x4
+    class RxPipelineRequiresCluster* inputRequirements; // offset 0x1C, size 0x4
+    void* superBlock; // offset 0x20, size 0x4
     unsigned int superBlockSize; // offset 0x24, size 0x4
     unsigned int entryPoint; // offset 0x28, size 0x4
     unsigned int pluginId; // offset 0x2C, size 0x4
     unsigned int pluginData; // offset 0x30, size 0x4
 };
-class RxPipelineCluster {
+class RxPipelineCluster
+{
     // total size: 0x8
 public:
-    class RxClusterDefinition * clusterRef; // offset 0x0, size 0x4
+    class RxClusterDefinition* clusterRef; // offset 0x0, size 0x4
     unsigned int creationAttributes; // offset 0x4, size 0x4
 };
-class anim_coll_data {
+class anim_coll_data
+{
     // total size: 0x0
 };
-class RpMaterial {
+class RpMaterial
+{
     // total size: 0x1C
 public:
-    class RwTexture * texture; // offset 0x0, size 0x4
+    class RwTexture* texture; // offset 0x0, size 0x4
     class RwRGBA color; // offset 0x4, size 0x4
-    class RxPipeline * pipeline; // offset 0x8, size 0x4
+    class RxPipeline* pipeline; // offset 0x8, size 0x4
     class RwSurfaceProperties surfaceProps; // offset 0xC, size 0xC
     signed short refCount; // offset 0x18, size 0x2
     signed short pad; // offset 0x1A, size 0x2
 };
-class render_state {
+class render_state
+{
     // total size: 0x10
 public:
-    class RwTexture * texture; // offset 0x0, size 0x4
+    class RwTexture* texture; // offset 0x0, size 0x4
     unsigned int src_blend; // offset 0x4, size 0x4
     unsigned int dst_blend; // offset 0x8, size 0x4
     unsigned int flags; // offset 0xC, size 0x4
 };
-class _tagEmitSphere {
+class _tagEmitSphere
+{
     // total size: 0x4
 public:
     float radius; // offset 0x0, size 0x4
 };
-class xAnimState {
+class xAnimState
+{
     // total size: 0x4C
 public:
-    class xAnimState * Next; // offset 0x0, size 0x4
-    char * Name; // offset 0x4, size 0x4
+    class xAnimState* Next; // offset 0x0, size 0x4
+    char* Name; // offset 0x4, size 0x4
     unsigned int ID; // offset 0x8, size 0x4
     unsigned int Flags; // offset 0xC, size 0x4
     unsigned int UserFlags; // offset 0x10, size 0x4
     float Speed; // offset 0x14, size 0x4
-    class xAnimFile * Data; // offset 0x18, size 0x4
-    class xAnimEffect * Effects; // offset 0x1C, size 0x4
-    class xAnimTransitionList * Default; // offset 0x20, size 0x4
-    class xAnimTransitionList * List; // offset 0x24, size 0x4
-    float * BoneBlend; // offset 0x28, size 0x4
-    float * TimeSnap; // offset 0x2C, size 0x4
+    class xAnimFile* Data; // offset 0x18, size 0x4
+    class xAnimEffect* Effects; // offset 0x1C, size 0x4
+    class xAnimTransitionList* Default; // offset 0x20, size 0x4
+    class xAnimTransitionList* List; // offset 0x24, size 0x4
+    float* BoneBlend; // offset 0x28, size 0x4
+    float* TimeSnap; // offset 0x2C, size 0x4
     float FadeRecip; // offset 0x30, size 0x4
-    unsigned short * FadeOffset; // offset 0x34, size 0x4
-    void * CallbackData; // offset 0x38, size 0x4
-    class xAnimMultiFile * MultiFile; // offset 0x3C, size 0x4
-    void (* BeforeEnter)(class xAnimPlay *, class xAnimState *); // offset 0x40, size 0x4
-    void (* StateCallback)(class xAnimState *, class xAnimSingle *, void *); // offset 0x44, size 0x4
-    void (* BeforeAnimMatrices)(class xAnimPlay *, class xQuat *, class xVec3 *, signed int); // offset 0x48, size 0x4
+    unsigned short* FadeOffset; // offset 0x34, size 0x4
+    void* CallbackData; // offset 0x38, size 0x4
+    class xAnimMultiFile* MultiFile; // offset 0x3C, size 0x4
+    void (*BeforeEnter)(class xAnimPlay*, class xAnimState*); // offset 0x40, size 0x4
+    void (*StateCallback)(class xAnimState*, class xAnimSingle*, void*); // offset 0x44, size 0x4
+    void (*BeforeAnimMatrices)(class xAnimPlay*, class xQuat*, class xVec3*,
+                               signed int); // offset 0x48, size 0x4
 };
-class xModelPool {
+class xModelPool
+{
     // total size: 0xC
 public:
-    class xModelPool * Next; // offset 0x0, size 0x4
+    class xModelPool* Next; // offset 0x0, size 0x4
     unsigned int NumMatrices; // offset 0x4, size 0x4
-    class xModelInstance * List; // offset 0x8, size 0x4
+    class xModelInstance* List; // offset 0x8, size 0x4
 };
-class xAnimMultiFile : public xAnimMultiFileBase {
+class xAnimMultiFile : public xAnimMultiFileBase
+{
     // total size: 0xC
 public:
     class xAnimMultiFileEntry Files[1]; // offset 0x4, size 0x8
 };
-class ptank_pool {
+class ptank_pool
+{
     // total size: 0x24
 public:
     class render_state rs; // offset 0x0, size 0x10
     unsigned int used; // offset 0x10, size 0x4
-    class RpAtomic * ptank; // offset 0x14, size 0x4
-    class /* @class */ {
+    class RpAtomic* ptank; // offset 0x14, size 0x4
+    class /* @class */
+    {
         // total size: 0xC
     public:
-        unsigned char * data; // offset 0x0, size 0x4
+        unsigned char* data; // offset 0x0, size 0x4
         signed int stride; // offset 0x4, size 0x4
         unsigned int size; // offset 0x8, size 0x4
     } hide; // offset 0x18, size 0xC
 };
-class RxPipelineNodeParam {
+class RxPipelineNodeParam
+{
     // total size: 0x8
 public:
-    void * dataParam; // offset 0x0, size 0x4
-    class RxHeap * heap; // offset 0x4, size 0x4
+    void* dataParam; // offset 0x0, size 0x4
+    class RxHeap* heap; // offset 0x4, size 0x4
 };
-class xParEmitterAsset : public xBaseAsset {
+class xParEmitterAsset : public xBaseAsset
+{
     // total size: 0x54
 public:
     unsigned char emit_flags; // offset 0x8, size 0x1
     unsigned char emit_type; // offset 0x9, size 0x1
     unsigned short pad; // offset 0xA, size 0x2
     unsigned int propID; // offset 0xC, size 0x4
-    union { // inferred
+    union
+    { // inferred
         class xPECircle e_circle; // offset 0x10, size 0x14
         class _tagEmitSphere e_sphere; // offset 0x10, size 0x4
         class _tagEmitRect e_rect; // offset 0x10, size 0x8
@@ -571,48 +627,54 @@ public:
     unsigned int cull_mode; // offset 0x4C, size 0x4
     float cull_dist_sqr; // offset 0x50, size 0x4
 };
-class zEnt : public xEnt {
+class zEnt : public xEnt
+{
     // total size: 0xD4
 public:
-    class xAnimTable * atbl; // offset 0xD0, size 0x4
+    class xAnimTable* atbl; // offset 0xD0, size 0x4
 };
-class xLightKit {
+class xLightKit
+{
     // total size: 0x10
 public:
     unsigned int tagID; // offset 0x0, size 0x4
     unsigned int groupID; // offset 0x4, size 0x4
     unsigned int lightCount; // offset 0x8, size 0x4
-    class xLightKitLight * lightList; // offset 0xC, size 0x4
+    class xLightKitLight* lightList; // offset 0xC, size 0x4
 };
-class RwTexture {
+class RwTexture
+{
     // total size: 0x58
 public:
-    class RwRaster * raster; // offset 0x0, size 0x4
-    class RwTexDictionary * dict; // offset 0x4, size 0x4
+    class RwRaster* raster; // offset 0x0, size 0x4
+    class RwTexDictionary* dict; // offset 0x4, size 0x4
     class RwLLLink lInDictionary; // offset 0x8, size 0x8
     char name[32]; // offset 0x10, size 0x20
     char mask[32]; // offset 0x30, size 0x20
     unsigned int filterAddressing; // offset 0x50, size 0x4
     signed int refCount; // offset 0x54, size 0x4
 };
-class RxHeap {
+class RxHeap
+{
     // total size: 0x1C
 public:
     unsigned int superBlockSize; // offset 0x0, size 0x4
-    class rxHeapSuperBlockDescriptor * head; // offset 0x4, size 0x4
-    class rxHeapBlockHeader * headBlock; // offset 0x8, size 0x4
-    class rxHeapFreeBlock * freeBlocks; // offset 0xC, size 0x4
+    class rxHeapSuperBlockDescriptor* head; // offset 0x4, size 0x4
+    class rxHeapBlockHeader* headBlock; // offset 0x8, size 0x4
+    class rxHeapFreeBlock* freeBlocks; // offset 0xC, size 0x4
     unsigned int entriesAlloced; // offset 0x10, size 0x4
     unsigned int entriesUsed; // offset 0x14, size 0x4
     signed int dirty; // offset 0x18, size 0x4
 };
-class xJSPNodeInfo {
+class xJSPNodeInfo
+{
     // total size: 0x8
 public:
     signed int originalMatIndex; // offset 0x0, size 0x4
     signed int nodeFlags; // offset 0x4, size 0x4
 };
-class RwRGBA {
+class RwRGBA
+{
     // total size: 0x4
 public:
     unsigned char red; // offset 0x0, size 0x1
@@ -620,13 +682,15 @@ public:
     unsigned char blue; // offset 0x2, size 0x1
     unsigned char alpha; // offset 0x3, size 0x1
 };
-class RwBBox {
+class RwBBox
+{
     // total size: 0x18
 public:
     class RwV3d sup; // offset 0x0, size 0xC
     class RwV3d inf; // offset 0xC, size 0xC
 };
-enum _tagRumbleType {
+enum _tagRumbleType
+{
     eRumble_Off = 0,
     eRumble_Hi = 1,
     eRumble_VeryLightHi = 2,
@@ -642,7 +706,8 @@ enum _tagRumbleType {
     eRumble_Total = 12,
     eRumbleForceU32 = 2147483647,
 };
-class xLinkAsset {
+class xLinkAsset
+{
     // total size: 0x20
 public:
     unsigned short srcEvent; // offset 0x0, size 0x2
@@ -652,21 +717,24 @@ public:
     unsigned int paramWidgetAssetID; // offset 0x18, size 0x4
     unsigned int chkAssetID; // offset 0x1C, size 0x4
 };
-enum _zPlayerType {
+enum _zPlayerType
+{
     ePlayer_SB = 0,
     ePlayer_Patrick = 1,
     ePlayer_Sandy = 2,
     ePlayer_MAXTYPES = 3,
 };
-class xUpdateCullGroup {
+class xUpdateCullGroup
+{
     // total size: 0xC
 public:
     unsigned int active; // offset 0x0, size 0x4
     unsigned short startIndex; // offset 0x4, size 0x2
     unsigned short endIndex; // offset 0x6, size 0x2
-    class xGroup * groupObject; // offset 0x8, size 0x4
+    class xGroup* groupObject; // offset 0x8, size 0x4
 };
-class RpClump {
+class RpClump
+{
     // total size: 0x2C
 public:
     class RwObject object; // offset 0x0, size 0x8
@@ -674,15 +742,17 @@ public:
     class RwLinkList lightList; // offset 0x10, size 0x8
     class RwLinkList cameraList; // offset 0x18, size 0x8
     class RwLLLink inWorldLink; // offset 0x20, size 0x8
-    class RpClump * (* callback)(class RpClump *, void *); // offset 0x28, size 0x4
+    class RpClump* (*callback)(class RpClump*, void*); // offset 0x28, size 0x4
 };
-class xQuat {
+class xQuat
+{
     // total size: 0x10
 public:
     class xVec3 v; // offset 0x0, size 0xC
     float s; // offset 0xC, size 0x4
 };
-class xParSysAsset : public xBaseAsset {
+class xParSysAsset : public xBaseAsset
+{
     // total size: 0x20
 public:
     unsigned int type; // offset 0x8, size 0x4
@@ -697,13 +767,15 @@ public:
     unsigned char cmdCount; // offset 0x1B, size 0x1
     unsigned int cmdSize; // offset 0x1C, size 0x4
 };
-class RwTexCoords {
+class RwTexCoords
+{
     // total size: 0x8
 public:
     float u; // offset 0x0, size 0x4
     float v; // offset 0x4, size 0x4
 };
-class RpGeometry {
+class RpGeometry
+{
     // total size: 0x60
 public:
     class RwObject object; // offset 0x0, size 0x8
@@ -715,45 +787,48 @@ public:
     signed int numMorphTargets; // offset 0x18, size 0x4
     signed int numTexCoordSets; // offset 0x1C, size 0x4
     class RpMaterialList matList; // offset 0x20, size 0xC
-    class RpTriangle * triangles; // offset 0x2C, size 0x4
-    class RwRGBA * preLitLum; // offset 0x30, size 0x4
-    class RwTexCoords * texCoords[8]; // offset 0x34, size 0x20
-    class RpMeshHeader * mesh; // offset 0x54, size 0x4
-    class RwResEntry * repEntry; // offset 0x58, size 0x4
-    class RpMorphTarget * morphTarget; // offset 0x5C, size 0x4
+    class RpTriangle* triangles; // offset 0x2C, size 0x4
+    class RwRGBA* preLitLum; // offset 0x30, size 0x4
+    class RwTexCoords* texCoords[8]; // offset 0x34, size 0x20
+    class RpMeshHeader* mesh; // offset 0x54, size 0x4
+    class RwResEntry* repEntry; // offset 0x58, size 0x4
+    class RpMorphTarget* morphTarget; // offset 0x5C, size 0x4
 };
-class RpWorldSector {
+class RpWorldSector
+{
     // total size: 0x90
 public:
     signed int type; // offset 0x0, size 0x4
-    class RpPolygon * polygons; // offset 0x4, size 0x4
-    class RwV3d * vertices; // offset 0x8, size 0x4
-    class RpVertexNormal * normals; // offset 0xC, size 0x4
-    class RwTexCoords * texCoords[8]; // offset 0x10, size 0x20
-    class RwRGBA * preLitLum; // offset 0x30, size 0x4
-    class RwResEntry * repEntry; // offset 0x34, size 0x4
+    class RpPolygon* polygons; // offset 0x4, size 0x4
+    class RwV3d* vertices; // offset 0x8, size 0x4
+    class RpVertexNormal* normals; // offset 0xC, size 0x4
+    class RwTexCoords* texCoords[8]; // offset 0x10, size 0x20
+    class RwRGBA* preLitLum; // offset 0x30, size 0x4
+    class RwResEntry* repEntry; // offset 0x34, size 0x4
     class RwLinkList collAtomicsInWorldSector; // offset 0x38, size 0x8
     class RwLinkList noCollAtomicsInWorldSector; // offset 0x40, size 0x8
     class RwLinkList lightsInWorldSector; // offset 0x48, size 0x8
     class RwBBox boundingBox; // offset 0x50, size 0x18
     class RwBBox tightBoundingBox; // offset 0x68, size 0x18
-    class RpMeshHeader * mesh; // offset 0x80, size 0x4
-    class RxPipeline * pipeline; // offset 0x84, size 0x4
+    class RpMeshHeader* mesh; // offset 0x80, size 0x4
+    class RxPipeline* pipeline; // offset 0x84, size 0x4
     unsigned short matListWindowBase; // offset 0x88, size 0x2
     unsigned short numVertices; // offset 0x8A, size 0x2
     unsigned short numPolygons; // offset 0x8C, size 0x2
     unsigned short pad; // offset 0x8E, size 0x2
 };
-class rxHeapBlockHeader {
+class rxHeapBlockHeader
+{
     // total size: 0x20
 public:
-    class rxHeapBlockHeader * prev; // offset 0x0, size 0x4
-    class rxHeapBlockHeader * next; // offset 0x4, size 0x4
+    class rxHeapBlockHeader* prev; // offset 0x0, size 0x4
+    class rxHeapBlockHeader* next; // offset 0x4, size 0x4
     unsigned int size; // offset 0x8, size 0x4
-    class rxHeapFreeBlock * freeEntry; // offset 0xC, size 0x4
+    class rxHeapFreeBlock* freeEntry; // offset 0xC, size 0x4
     unsigned int pad[4]; // offset 0x10, size 0x10
 };
-class analog_data {
+class analog_data
+{
     // total size: 0x18
 public:
     class xVec2 offset; // offset 0x0, size 0x8
@@ -761,36 +836,40 @@ public:
     float mag; // offset 0x10, size 0x4
     float ang; // offset 0x14, size 0x4
 };
-class xAnimTable {
+class xAnimTable
+{
     // total size: 0x1C
 public:
-    class xAnimTable * Next; // offset 0x0, size 0x4
-    char * Name; // offset 0x4, size 0x4
-    class xAnimTransition * TransitionList; // offset 0x8, size 0x4
-    class xAnimState * StateList; // offset 0xC, size 0x4
+    class xAnimTable* Next; // offset 0x0, size 0x4
+    char* Name; // offset 0x4, size 0x4
+    class xAnimTransition* TransitionList; // offset 0x8, size 0x4
+    class xAnimState* StateList; // offset 0xC, size 0x4
     unsigned int AnimIndex; // offset 0x10, size 0x4
     unsigned int MorphIndex; // offset 0x14, size 0x4
     unsigned int UserFlags; // offset 0x18, size 0x4
 };
-class xParSys : public xBase {
+class xParSys : public xBase
+{
     // total size: 0x2C
 public:
-    class xParSysAsset * tasset; // offset 0x10, size 0x4
+    class xParSysAsset* tasset; // offset 0x10, size 0x4
     unsigned int cmdCount; // offset 0x14, size 0x4
-    class xParCmd * cmd; // offset 0x18, size 0x4
-    class xParSys * parent; // offset 0x1C, size 0x4
-    class xParGroup * group; // offset 0x20, size 0x4
+    class xParCmd* cmd; // offset 0x18, size 0x4
+    class xParSys* parent; // offset 0x1C, size 0x4
+    class xParGroup* group; // offset 0x20, size 0x4
     unsigned char visible; // offset 0x24, size 0x1
-    class RwTexture * txtr_particle; // offset 0x28, size 0x4
+    class RwTexture* txtr_particle; // offset 0x28, size 0x4
 };
-class RxPipelineRequiresCluster {
+class RxPipelineRequiresCluster
+{
     // total size: 0xC
 public:
-    class RxClusterDefinition * clusterDef; // offset 0x0, size 0x4
+    class RxClusterDefinition* clusterDef; // offset 0x0, size 0x4
     enum RxClusterValidityReq rqdOrOpt; // offset 0x4, size 0x4
     unsigned int slotIndex; // offset 0x8, size 0x4
 };
-class xClumpCollBSPBranchNode {
+class xClumpCollBSPBranchNode
+{
     // total size: 0x10
 public:
     unsigned int leftInfo; // offset 0x0, size 0x4
@@ -798,33 +877,37 @@ public:
     float leftValue; // offset 0x8, size 0x4
     float rightValue; // offset 0xC, size 0x4
 };
-class RpMorphTarget {
+class RpMorphTarget
+{
     // total size: 0x1C
 public:
-    class RpGeometry * parentGeom; // offset 0x0, size 0x4
+    class RpGeometry* parentGeom; // offset 0x0, size 0x4
     class RwSphere boundingSphere; // offset 0x4, size 0x10
-    class RwV3d * verts; // offset 0x14, size 0x4
-    class RwV3d * normals; // offset 0x18, size 0x4
+    class RwV3d* verts; // offset 0x14, size 0x4
+    class RwV3d* normals; // offset 0x18, size 0x4
 };
-class xGroup : public xBase {
+class xGroup : public xBase
+{
     // total size: 0x20
 public:
-    class xGroupAsset * asset; // offset 0x10, size 0x4
-    class xBase * * item; // offset 0x14, size 0x4
+    class xGroupAsset* asset; // offset 0x10, size 0x4
+    class xBase** item; // offset 0x14, size 0x4
     unsigned int last_index; // offset 0x18, size 0x4
     signed int flg_group; // offset 0x1C, size 0x4
 };
-class _tagEmitRect {
+class _tagEmitRect
+{
     // total size: 0x8
 public:
     float x_len; // offset 0x0, size 0x4
     float z_len; // offset 0x4, size 0x4
 };
-class xPar {
+class xPar
+{
     // total size: 0x60
 public:
-    class xPar * m_next; // offset 0x0, size 0x4
-    class xPar * m_prev; // offset 0x4, size 0x4
+    class xPar* m_next; // offset 0x0, size 0x4
+    class xPar* m_prev; // offset 0x4, size 0x4
     float m_lifetime; // offset 0x8, size 0x4
     unsigned char m_c[4]; // offset 0xC, size 0x4
     class xVec3 m_pos; // offset 0x10, size 0xC
@@ -837,20 +920,23 @@ public:
     unsigned char m_rotdeg[3]; // offset 0x34, size 0x3
     unsigned char pad8; // offset 0x37, size 0x1
     float totalLifespan; // offset 0x38, size 0x4
-    class xParEmitterAsset * m_asset; // offset 0x3C, size 0x4
+    class xParEmitterAsset* m_asset; // offset 0x3C, size 0x4
     float m_cvel[4]; // offset 0x40, size 0x10
     float m_cfl[4]; // offset 0x50, size 0x10
 };
-class xAnimEffect {
+class xAnimEffect
+{
     // total size: 0x14
 public:
-    class xAnimEffect * Next; // offset 0x0, size 0x4
+    class xAnimEffect* Next; // offset 0x0, size 0x4
     unsigned int Flags; // offset 0x4, size 0x4
     float StartTime; // offset 0x8, size 0x4
     float EndTime; // offset 0xC, size 0x4
-    unsigned int (* Callback)(unsigned int, class xAnimActiveEffect *, class xAnimSingle *, void *); // offset 0x10, size 0x4
+    unsigned int (*Callback)(unsigned int, class xAnimActiveEffect*, class xAnimSingle*,
+                             void*); // offset 0x10, size 0x4
 };
-class RpVertexNormal {
+class RpVertexNormal
+{
     // total size: 0x4
 public:
     signed char x; // offset 0x0, size 0x1
@@ -858,36 +944,41 @@ public:
     signed char z; // offset 0x2, size 0x1
     unsigned char pad; // offset 0x3, size 0x1
 };
-class xBound {
+class xBound
+{
     // total size: 0x4C
 public:
     class xQCData qcd; // offset 0x0, size 0x20
     unsigned char type; // offset 0x20, size 0x1
     unsigned char pad[3]; // offset 0x21, size 0x3
-    union { // inferred
+    union
+    { // inferred
         class xSphere sph; // offset 0x24, size 0x10
         class xBBox box; // offset 0x24, size 0x24
         class xCylinder cyl; // offset 0x24, size 0x14
     };
-    class xMat4x3 * mat; // offset 0x48, size 0x4
+    class xMat4x3* mat; // offset 0x48, size 0x4
 };
-class xJSPHeader {
+class xJSPHeader
+{
     // total size: 0x18
 public:
     char idtag[4]; // offset 0x0, size 0x4
     unsigned int version; // offset 0x4, size 0x4
     unsigned int jspNodeCount; // offset 0x8, size 0x4
-    class RpClump * clump; // offset 0xC, size 0x4
-    class xClumpCollBSPTree * colltree; // offset 0x10, size 0x4
-    class xJSPNodeInfo * jspNodeList; // offset 0x14, size 0x4
+    class RpClump* clump; // offset 0xC, size 0x4
+    class xClumpCollBSPTree* colltree; // offset 0x10, size 0x4
+    class xJSPNodeInfo* jspNodeList; // offset 0x14, size 0x4
 };
-class xVec2 {
+class xVec2
+{
     // total size: 0x8
 public:
     float x; // offset 0x0, size 0x4
     float y; // offset 0x4, size 0x4
 };
-class xBaseAsset {
+class xBaseAsset
+{
     // total size: 0x8
 public:
     unsigned int id; // offset 0x0, size 0x4
@@ -895,33 +986,36 @@ public:
     unsigned char linkCount; // offset 0x5, size 0x1
     unsigned short baseFlags; // offset 0x6, size 0x2
 };
-class zCheckPoint {
+class zCheckPoint
+{
     // total size: 0x14
 public:
     class xVec3 pos; // offset 0x0, size 0xC
     float rot; // offset 0xC, size 0x4
     unsigned int initCamID; // offset 0x10, size 0x4
 };
-class xMat4x3 : public xMat3x3 {
+class xMat4x3 : public xMat3x3
+{
     // total size: 0x40
 public:
     class xVec3 pos; // offset 0x30, size 0xC
     unsigned int pad3; // offset 0x3C, size 0x4
 };
-class zPlayerGlobals {
+class zPlayerGlobals
+{
     // total size: 0x1940
 public:
     class zEnt ent; // offset 0x0, size 0xD4
     class xEntShadow entShadow_embedded; // offset 0xD4, size 0x28
     class xShadowSimpleCache simpShadow_embedded; // offset 0xFC, size 0x98
     class zGlobalSettings g; // offset 0x194, size 0x150
-    class zPlayerSettings * s; // offset 0x2E4, size 0x4
+    class zPlayerSettings* s; // offset 0x2E4, size 0x4
     class zPlayerSettings sb; // offset 0x2F0, size 0x460
     class zPlayerSettings patrick; // offset 0x750, size 0x460
     class zPlayerSettings sandy; // offset 0xBB0, size 0x460
-    class xModelInstance * model_spongebob; // offset 0x1010, size 0x4
-    class xModelInstance * model_patrick; // offset 0x1014, size 0x4
-    class xModelInstance * model_sandy; // offset 0x1018, size 0x4
+    class xModelInstance* model_spongebob; // offset 0x1010, size 0x4
+    class xModelInstance* model_patrick; // offset 0x1014, size 0x4
+    class xModelInstance* model_sandy; // offset 0x1018, size 0x4
     unsigned int Visible; // offset 0x101C, size 0x4
     unsigned int Health; // offset 0x1020, size 0x4
     signed int Speed; // offset 0x1024, size 0x4
@@ -943,7 +1037,7 @@ public:
     float HotsauceTimer; // offset 0x1064, size 0x4
     float LeanLerp; // offset 0x1068, size 0x4
     float ScareTimer; // offset 0x106C, size 0x4
-    class xBase * ScareSource; // offset 0x1070, size 0x4
+    class xBase* ScareSource; // offset 0x1070, size 0x4
     float CowerTimer; // offset 0x1074, size 0x4
     float DamageTimer; // offset 0x1078, size 0x4
     float SundaeTimer; // offset 0x107C, size 0x4
@@ -955,7 +1049,7 @@ public:
     float HeadbuttVel; // offset 0x1094, size 0x4
     float HeadbuttTimer; // offset 0x1098, size 0x4
     unsigned int SpecialReceived; // offset 0x109C, size 0x4
-    class xEnt * MountChimney; // offset 0x10A0, size 0x4
+    class xEnt* MountChimney; // offset 0x10A0, size 0x4
     float MountChimOldY; // offset 0x10A4, size 0x4
     unsigned int MaxHealth; // offset 0x10A8, size 0x4
     unsigned int DoMeleeCheck; // offset 0x10AC, size 0x4
@@ -976,24 +1070,24 @@ public:
     float IdleMajorTimer; // offset 0x10E8, size 0x4
     float IdleSitTimer; // offset 0x10EC, size 0x4
     signed int Transparent; // offset 0x10F0, size 0x4
-    class zEnt * FireTarget; // offset 0x10F4, size 0x4
+    class zEnt* FireTarget; // offset 0x10F4, size 0x4
     unsigned int ControlOff; // offset 0x10F8, size 0x4
     unsigned int ControlOnEvent; // offset 0x10FC, size 0x4
     unsigned int AutoMoveSpeed; // offset 0x1100, size 0x4
     float AutoMoveDist; // offset 0x1104, size 0x4
     class xVec3 AutoMoveTarget; // offset 0x1108, size 0xC
-    class xBase * AutoMoveObject; // offset 0x1114, size 0x4
-    class zEnt * Diggable; // offset 0x1118, size 0x4
+    class xBase* AutoMoveObject; // offset 0x1114, size 0x4
+    class zEnt* Diggable; // offset 0x1118, size 0x4
     float DigTimer; // offset 0x111C, size 0x4
     class zPlayerCarryInfo carry; // offset 0x1120, size 0xE0
     class zPlayerLassoInfo lassoInfo; // offset 0x1200, size 0x120
     class xModelTag BubbleWandTag[2]; // offset 0x1320, size 0x40
-    class xModelInstance * model_wand; // offset 0x1360, size 0x4
-    class xEntBoulder * bubblebowl; // offset 0x1364, size 0x4
+    class xModelInstance* model_wand; // offset 0x1360, size 0x4
+    class xEntBoulder* bubblebowl; // offset 0x1364, size 0x4
     float bbowlInitVel; // offset 0x1368, size 0x4
-    class zEntHangable * HangFound; // offset 0x136C, size 0x4
-    class zEntHangable * HangEnt; // offset 0x1370, size 0x4
-    class zEntHangable * HangEntLast; // offset 0x1374, size 0x4
+    class zEntHangable* HangFound; // offset 0x136C, size 0x4
+    class zEntHangable* HangEnt; // offset 0x1370, size 0x4
+    class zEntHangable* HangEntLast; // offset 0x1374, size 0x4
     class xVec3 HangPivot; // offset 0x1378, size 0xC
     class xVec3 HangVel; // offset 0x1384, size 0xC
     float HangLength; // offset 0x1390, size 0x4
@@ -1008,7 +1102,7 @@ public:
     signed int Jump_CanDouble; // offset 0x1438, size 0x4
     signed int Jump_CanFloat; // offset 0x143C, size 0x4
     signed int Jump_SpringboardStart; // offset 0x1440, size 0x4
-    class zPlatform * Jump_Springboard; // offset 0x1444, size 0x4
+    class zPlatform* Jump_Springboard; // offset 0x1444, size 0x4
     signed int CanJump; // offset 0x1448, size 0x4
     signed int CanBubbleSpin; // offset 0x144C, size 0x4
     signed int CanBubbleBounce; // offset 0x1450, size 0x4
@@ -1033,7 +1127,7 @@ public:
     unsigned int Inv_PatsSock_Total; // offset 0x1544, size 0x4
     class xModelTag BubbleTag; // offset 0x1548, size 0x20
     class xEntDrive drv; // offset 0x1568, size 0x7C
-    class xSurface * floor_surf; // offset 0x15E4, size 0x4
+    class xSurface* floor_surf; // offset 0x15E4, size 0x4
     class xVec3 floor_norm; // offset 0x15E8, size 0xC
     signed int slope; // offset 0x15F4, size 0x4
     class xCollis earc_coll; // offset 0x15F8, size 0x50
@@ -1046,7 +1140,7 @@ public:
     class zCheckPoint cp; // offset 0x16B8, size 0x14
     unsigned int SlideTrackSliding; // offset 0x16CC, size 0x4
     unsigned int SlideTrackCount; // offset 0x16D0, size 0x4
-    class xEnt * SlideTrackEnt[111]; // offset 0x16D4, size 0x1BC
+    class xEnt* SlideTrackEnt[111]; // offset 0x16D4, size 0x1BC
     unsigned int SlideNotGroundedSinceSlide; // offset 0x1890, size 0x4
     class xVec3 SlideTrackDir; // offset 0x1894, size 0xC
     class xVec3 SlideTrackVel; // offset 0x18A0, size 0xC
@@ -1054,7 +1148,7 @@ public:
     float SlideTrackLean; // offset 0x18B0, size 0x4
     float SlideTrackLand; // offset 0x18B4, size 0x4
     unsigned char sb_model_indices[14]; // offset 0x18B8, size 0xE
-    class xModelInstance * sb_models[14]; // offset 0x18C8, size 0x38
+    class xModelInstance* sb_models[14]; // offset 0x18C8, size 0x38
     unsigned int currentPlayer; // offset 0x1900, size 0x4
     class xVec3 PredictRotate; // offset 0x1904, size 0xC
     class xVec3 PredictTranslate; // offset 0x1910, size 0xC
@@ -1064,7 +1158,8 @@ public:
     float KnockBackTimer; // offset 0x1930, size 0x4
     float KnockIntoAirTimer; // offset 0x1934, size 0x4
 };
-class xVec4 {
+class xVec4
+{
     // total size: 0x10
 public:
     float x; // offset 0x0, size 0x4
@@ -1072,20 +1167,23 @@ public:
     float z; // offset 0x8, size 0x4
     float w; // offset 0xC, size 0x4
 };
-class RwSurfaceProperties {
+class RwSurfaceProperties
+{
     // total size: 0xC
 public:
     float ambient; // offset 0x0, size 0x4
     float specular; // offset 0x4, size 0x4
     float diffuse; // offset 0x8, size 0x4
 };
-class xBBox {
+class xBBox
+{
     // total size: 0x24
 public:
     class xVec3 center; // offset 0x0, size 0xC
     class xBox box; // offset 0xC, size 0x18
 };
-class RwMatrixTag {
+class RwMatrixTag
+{
     // total size: 0x40
 public:
     class RwV3d right; // offset 0x0, size 0xC
@@ -1097,7 +1195,8 @@ public:
     class RwV3d pos; // offset 0x30, size 0xC
     unsigned int pad3; // offset 0x3C, size 0x4
 };
-class RpMeshHeader {
+class RpMeshHeader
+{
     // total size: 0x10
 public:
     unsigned int flags; // offset 0x0, size 0x4
@@ -1106,22 +1205,24 @@ public:
     unsigned int totalIndicesInMesh; // offset 0x8, size 0x4
     unsigned int firstMeshOffset; // offset 0xC, size 0x4
 };
-class xUpdateCullMgr {
+class xUpdateCullMgr
+{
     // total size: 0x2C
 public:
     unsigned int entCount; // offset 0x0, size 0x4
     unsigned int entActive; // offset 0x4, size 0x4
-    void * * ent; // offset 0x8, size 0x4
-    class xUpdateCullEnt * * mgr; // offset 0xC, size 0x4
+    void** ent; // offset 0x8, size 0x4
+    class xUpdateCullEnt** mgr; // offset 0xC, size 0x4
     unsigned int mgrCount; // offset 0x10, size 0x4
     unsigned int mgrCurr; // offset 0x14, size 0x4
-    class xUpdateCullEnt * mgrList; // offset 0x18, size 0x4
+    class xUpdateCullEnt* mgrList; // offset 0x18, size 0x4
     unsigned int grpCount; // offset 0x1C, size 0x4
-    class xUpdateCullGroup * grpList; // offset 0x20, size 0x4
-    void (* activateCB)(void *); // offset 0x24, size 0x4
-    void (* deactivateCB)(void *); // offset 0x28, size 0x4
+    class xUpdateCullGroup* grpList; // offset 0x20, size 0x4
+    void (*activateCB)(void*); // offset 0x24, size 0x4
+    void (*deactivateCB)(void*); // offset 0x28, size 0x4
 };
-class xParCmdAsset {
+class xParCmdAsset
+{
     // total size: 0x8
 public:
     unsigned int type; // offset 0x0, size 0x4
@@ -1129,14 +1230,15 @@ public:
     unsigned char mode; // offset 0x5, size 0x1
     unsigned char pad[2]; // offset 0x6, size 0x2
 };
-class zPlayerCarryInfo {
+class zPlayerCarryInfo
+{
     // total size: 0xE0
 public:
-    class xEnt * grabbed; // offset 0x0, size 0x4
+    class xEnt* grabbed; // offset 0x0, size 0x4
     unsigned int grabbedModelID; // offset 0x4, size 0x4
     class xMat4x3 spin; // offset 0x10, size 0x40
-    class xEnt * throwTarget; // offset 0x50, size 0x4
-    class xEnt * flyingToTarget; // offset 0x54, size 0x4
+    class xEnt* throwTarget; // offset 0x50, size 0x4
+    class xEnt* flyingToTarget; // offset 0x54, size 0x4
     float minDist; // offset 0x58, size 0x4
     float maxDist; // offset 0x5C, size 0x4
     float minHeight; // offset 0x60, size 0x4
@@ -1166,41 +1268,46 @@ public:
     float fruitCeilingBounce; // offset 0xC8, size 0x4
     float fruitWallBounce; // offset 0xCC, size 0x4
     float fruitLifetime; // offset 0xD0, size 0x4
-    class xEnt * patLauncher; // offset 0xD4, size 0x4
+    class xEnt* patLauncher; // offset 0xD4, size 0x4
 };
-class RwResEntry {
+class RwResEntry
+{
     // total size: 0x18
 public:
     class RwLLLink link; // offset 0x0, size 0x8
     signed int size; // offset 0x8, size 0x4
-    void * owner; // offset 0xC, size 0x4
-    class RwResEntry * * ownerRef; // offset 0x10, size 0x4
-    void (* destroyNotify)(class RwResEntry *); // offset 0x14, size 0x4
+    void* owner; // offset 0xC, size 0x4
+    class RwResEntry** ownerRef; // offset 0x10, size 0x4
+    void (*destroyNotify)(class RwResEntry*); // offset 0x14, size 0x4
 };
-class xSerial {
+class xSerial
+{
     // total size: 0x0
 };
-class _zEnv : public xBase {
+class _zEnv : public xBase
+{
     // total size: 0x14
 public:
-    class xEnvAsset * easset; // offset 0x10, size 0x4
+    class xEnvAsset* easset; // offset 0x10, size 0x4
 };
-class rxReq {
+class rxReq
+{
     // total size: 0x0
 };
-class xCamera : public xBase {
+class xCamera : public xBase
+{
     // total size: 0x330
 public:
-    class RwCamera * lo_cam; // offset 0x10, size 0x4
+    class RwCamera* lo_cam; // offset 0x10, size 0x4
     class xMat4x3 mat; // offset 0x20, size 0x40
     class xMat4x3 omat; // offset 0x60, size 0x40
     class xMat3x3 mbasis; // offset 0xA0, size 0x30
     class xBound bound; // offset 0xD0, size 0x4C
-    class xMat4x3 * tgt_mat; // offset 0x11C, size 0x4
-    class xMat4x3 * tgt_omat; // offset 0x120, size 0x4
-    class xBound * tgt_bound; // offset 0x124, size 0x4
+    class xMat4x3* tgt_mat; // offset 0x11C, size 0x4
+    class xMat4x3* tgt_omat; // offset 0x120, size 0x4
+    class xBound* tgt_bound; // offset 0x124, size 0x4
     class xVec3 focus; // offset 0x128, size 0xC
-    class xScene * sc; // offset 0x134, size 0x4
+    class xScene* sc; // offset 0x134, size 0x4
     class xVec3 tran_accum; // offset 0x138, size 0xC
     float fov; // offset 0x144, size 0x4
     unsigned int flags; // offset 0x148, size 0x4
@@ -1268,20 +1375,22 @@ public:
     float roll_csv; // offset 0x264, size 0x4
     class xVec4 frustplane[12]; // offset 0x270, size 0xC0
 };
-class xMemPool {
+class xMemPool
+{
     // total size: 0x1C
 public:
-    void * FreeList; // offset 0x0, size 0x4
+    void* FreeList; // offset 0x0, size 0x4
     unsigned short NextOffset; // offset 0x4, size 0x2
     unsigned short Flags; // offset 0x6, size 0x2
-    void * UsedList; // offset 0x8, size 0x4
-    void (* InitCB)(class xMemPool *, void *); // offset 0xC, size 0x4
-    void * Buffer; // offset 0x10, size 0x4
+    void* UsedList; // offset 0x8, size 0x4
+    void (*InitCB)(class xMemPool*, void*); // offset 0xC, size 0x4
+    void* Buffer; // offset 0x10, size 0x4
     unsigned short Size; // offset 0x14, size 0x2
     unsigned short NumRealloc; // offset 0x16, size 0x2
     unsigned int Total; // offset 0x18, size 0x4
 };
-class xPEEntBound {
+class xPEEntBound
+{
     // total size: 0xC
 public:
     unsigned char flags; // offset 0x0, size 0x1
@@ -1291,7 +1400,8 @@ public:
     float expand; // offset 0x4, size 0x4
     float deflection; // offset 0x8, size 0x4
 };
-class zPlayerSettings {
+class zPlayerSettings
+{
     // total size: 0x460
 public:
     enum _zPlayerType pcType; // offset 0x0, size 0x4
@@ -1318,30 +1428,33 @@ public:
     unsigned char talk_filter_size; // offset 0x459, size 0x1
     unsigned char talk_filter[4]; // offset 0x45A, size 0x4
 };
-enum RxClusterValidityReq {
+enum RxClusterValidityReq
+{
     rxCLREQ_DONTWANT = 0,
     rxCLREQ_REQUIRED = 1,
     rxCLREQ_OPTIONAL = 2,
     rxCLUSTERVALIDITYREQFORCEENUMSIZEINT = 2147483647,
 };
-class xClumpCollBSPTree {
+class xClumpCollBSPTree
+{
     // total size: 0x10
 public:
     unsigned int numBranchNodes; // offset 0x0, size 0x4
-    class xClumpCollBSPBranchNode * branchNodes; // offset 0x4, size 0x4
+    class xClumpCollBSPBranchNode* branchNodes; // offset 0x4, size 0x4
     unsigned int numTriangles; // offset 0x8, size 0x4
-    class xClumpCollBSPTriangle * triangles; // offset 0xC, size 0x4
+    class xClumpCollBSPTriangle* triangles; // offset 0xC, size 0x4
 };
-class RwCamera {
+class RwCamera
+{
     // total size: 0x190
 public:
     class RwObjectHasFrame object; // offset 0x0, size 0x14
     enum RwCameraProjection projectionType; // offset 0x14, size 0x4
-    class RwCamera * (* beginUpdate)(class RwCamera *); // offset 0x18, size 0x4
-    class RwCamera * (* endUpdate)(class RwCamera *); // offset 0x1C, size 0x4
+    class RwCamera* (*beginUpdate)(class RwCamera*); // offset 0x18, size 0x4
+    class RwCamera* (*endUpdate)(class RwCamera*); // offset 0x1C, size 0x4
     class RwMatrixTag viewMatrix; // offset 0x20, size 0x40
-    class RwRaster * frameBuffer; // offset 0x60, size 0x4
-    class RwRaster * zBuffer; // offset 0x64, size 0x4
+    class RwRaster* frameBuffer; // offset 0x60, size 0x4
+    class RwRaster* zBuffer; // offset 0x64, size 0x4
     class RwV2d viewWindow; // offset 0x68, size 0x8
     class RwV2d recipViewWindow; // offset 0x70, size 0x8
     class RwV2d viewOffset; // offset 0x78, size 0x8
@@ -1354,23 +1467,27 @@ public:
     class RwBBox frustumBoundBox; // offset 0x10C, size 0x18
     class RwV3d frustumCorners[8]; // offset 0x124, size 0x60
 };
-class _tagEmitLine {
+class _tagEmitLine
+{
     // total size: 0x1C
 public:
     class xVec3 pos1; // offset 0x0, size 0xC
     class xVec3 pos2; // offset 0xC, size 0xC
     float radius; // offset 0x18, size 0x4
 };
-class xParSysInfo {
+class xParSysInfo
+{
     // total size: 0x8
 public:
     signed int type; // offset 0x0, size 0x4
-    void (* func)(void *, class xParGroup *); // offset 0x4, size 0x4
+    void (*func)(void*, class xParGroup*); // offset 0x4, size 0x4
 };
-class xSurface {
+class xSurface
+{
     // total size: 0x0
 };
-class xEnvAsset : public xBaseAsset {
+class xEnvAsset : public xBaseAsset
+{
     // total size: 0x44
 public:
     unsigned int bspAssetID; // offset 0x8, size 0x4
@@ -1389,24 +1506,28 @@ public:
     unsigned int bspMapperFXID; // offset 0x3C, size 0x4
     float loldHeight; // offset 0x40, size 0x4
 };
-class RpTriangle {
+class RpTriangle
+{
     // total size: 0x8
 public:
     unsigned short vertIndex[3]; // offset 0x0, size 0x6
     signed short matIndex; // offset 0x6, size 0x2
 };
-enum RxNodeDefEditable {
+enum RxNodeDefEditable
+{
     rxNODEDEFCONST = 0,
     rxNODEDEFEDITABLE = 1,
     rxNODEDEFEDITABLEFORCEENUMSIZEINT = 2147483647,
 };
-enum RxClusterValid {
+enum RxClusterValid
+{
     rxCLVALID_NOCHANGE = 0,
     rxCLVALID_VALID = 1,
     rxCLVALID_INVALID = 2,
     rxCLUSTERVALIDFORCEENUMSIZEINT = 2147483647,
 };
-class xPortalAsset : public xBaseAsset {
+class xPortalAsset : public xBaseAsset
+{
     // total size: 0x18
 public:
     unsigned int assetCameraID; // offset 0x8, size 0x4
@@ -1414,26 +1535,29 @@ public:
     float ang; // offset 0x10, size 0x4
     unsigned int sceneID; // offset 0x14, size 0x4
 };
-class xGridBound {
+class xGridBound
+{
     // total size: 0x14
 public:
-    void * data; // offset 0x0, size 0x4
+    void* data; // offset 0x0, size 0x4
     unsigned short gx; // offset 0x4, size 0x2
     unsigned short gz; // offset 0x6, size 0x2
     unsigned char ingrid; // offset 0x8, size 0x1
     unsigned char oversize; // offset 0x9, size 0x1
     unsigned char deleted; // offset 0xA, size 0x1
     unsigned char gpad; // offset 0xB, size 0x1
-    class xGridBound * * head; // offset 0xC, size 0x4
-    class xGridBound * next; // offset 0x10, size 0x4
+    class xGridBound** head; // offset 0xC, size 0x4
+    class xGridBound* next; // offset 0x10, size 0x4
 };
-class xRot {
+class xRot
+{
     // total size: 0x10
 public:
     class xVec3 axis; // offset 0x0, size 0xC
     float angle; // offset 0xC, size 0x4
 };
-class iFogParams {
+class iFogParams
+{
     // total size: 0x1C
 public:
     enum RwFogType type; // offset 0x0, size 0x4
@@ -1442,18 +1566,20 @@ public:
     float density; // offset 0xC, size 0x4
     class RwRGBA fogcolor; // offset 0x10, size 0x4
     class RwRGBA bgcolor; // offset 0x14, size 0x4
-    unsigned char * table; // offset 0x18, size 0x4
+    unsigned char* table; // offset 0x18, size 0x4
 };
-class _tagxRumble {
+class _tagxRumble
+{
     // total size: 0x10
 public:
     enum _tagRumbleType type; // offset 0x0, size 0x4
     float seconds; // offset 0x4, size 0x4
-    class _tagxRumble * next; // offset 0x8, size 0x4
+    class _tagxRumble* next; // offset 0x8, size 0x4
     signed short active; // offset 0xC, size 0x2
     unsigned short fxflags; // offset 0xE, size 0x2
 };
-class xEntAsset : public xBaseAsset {
+class xEntAsset : public xBaseAsset
+{
     // total size: 0x54
 public:
     unsigned char flags; // offset 0x8, size 0x1
@@ -1473,20 +1599,23 @@ public:
     unsigned int modelInfoID; // offset 0x4C, size 0x4
     unsigned int animListID; // offset 0x50, size 0x4
 };
-enum rxEmbeddedPacketState {
+enum rxEmbeddedPacketState
+{
     rxPKST_PACKETLESS = 0,
     rxPKST_UNUSED = 1,
     rxPKST_INUSE = 2,
     rxPKST_PENDING = 3,
     rxEMBEDDEDPACKETSTATEFORCEENUMSIZEINT = 2147483647,
 };
-class xSphere {
+class xSphere
+{
     // total size: 0x10
 public:
     class xVec3 center; // offset 0x0, size 0xC
     float r; // offset 0xC, size 0x4
 };
-class xScene {
+class xScene
+{
     // total size: 0x70
 public:
     unsigned int sceneID; // offset 0x0, size 0x4
@@ -1506,81 +1635,90 @@ public:
     unsigned short num_stats_allocd; // offset 0x24, size 0x2
     unsigned short num_dyns_allocd; // offset 0x26, size 0x2
     unsigned short num_npcs_allocd; // offset 0x28, size 0x2
-    class xEnt * * trigs; // offset 0x2C, size 0x4
-    class xEnt * * stats; // offset 0x30, size 0x4
-    class xEnt * * dyns; // offset 0x34, size 0x4
-    class xEnt * * npcs; // offset 0x38, size 0x4
-    class xEnt * * act_ents; // offset 0x3C, size 0x4
-    class xEnt * * nact_ents; // offset 0x40, size 0x4
-    class xEnv * env; // offset 0x44, size 0x4
+    class xEnt** trigs; // offset 0x2C, size 0x4
+    class xEnt** stats; // offset 0x30, size 0x4
+    class xEnt** dyns; // offset 0x34, size 0x4
+    class xEnt** npcs; // offset 0x38, size 0x4
+    class xEnt** act_ents; // offset 0x3C, size 0x4
+    class xEnt** nact_ents; // offset 0x40, size 0x4
+    class xEnv* env; // offset 0x44, size 0x4
     class xMemPool mempool; // offset 0x48, size 0x1C
-    class xBase * (* resolvID)(unsigned int); // offset 0x64, size 0x4
-    char * (* base2Name)(class xBase *); // offset 0x68, size 0x4
-    char * (* id2Name)(unsigned int); // offset 0x6C, size 0x4
+    class xBase* (*resolvID)(unsigned int); // offset 0x64, size 0x4
+    char* (*base2Name)(class xBase*); // offset 0x68, size 0x4
+    char* (*id2Name)(unsigned int); // offset 0x6C, size 0x4
 };
-class xAnimTransitionList {
+class xAnimTransitionList
+{
     // total size: 0x8
 public:
-    class xAnimTransitionList * Next; // offset 0x0, size 0x4
-    class xAnimTransition * T; // offset 0x4, size 0x4
+    class xAnimTransitionList* Next; // offset 0x0, size 0x4
+    class xAnimTransition* T; // offset 0x4, size 0x4
 };
-class RpWorld {
+class RpWorld
+{
     // total size: 0x70
 public:
     class RwObject object; // offset 0x0, size 0x8
     unsigned int flags; // offset 0x8, size 0x4
     enum RpWorldRenderOrder renderOrder; // offset 0xC, size 0x4
     class RpMaterialList matList; // offset 0x10, size 0xC
-    class RpSector * rootSector; // offset 0x1C, size 0x4
+    class RpSector* rootSector; // offset 0x1C, size 0x4
     signed int numTexCoordSets; // offset 0x20, size 0x4
     signed int numClumpsInWorld; // offset 0x24, size 0x4
-    class RwLLLink * currentClumpLink; // offset 0x28, size 0x4
+    class RwLLLink* currentClumpLink; // offset 0x28, size 0x4
     class RwLinkList clumpList; // offset 0x2C, size 0x8
     class RwLinkList lightList; // offset 0x34, size 0x8
     class RwLinkList directionalLightList; // offset 0x3C, size 0x8
     class RwV3d worldOrigin; // offset 0x44, size 0xC
     class RwBBox boundingBox; // offset 0x50, size 0x18
-    class RpWorldSector * (* renderCallBack)(class RpWorldSector *); // offset 0x68, size 0x4
-    class RxPipeline * pipeline; // offset 0x6C, size 0x4
+    class RpWorldSector* (*renderCallBack)(class RpWorldSector*); // offset 0x68, size 0x4
+    class RxPipeline* pipeline; // offset 0x6C, size 0x4
 };
-class _tagEmitVolume {
+class _tagEmitVolume
+{
     // total size: 0x4
 public:
     unsigned int emit_volumeID; // offset 0x0, size 0x4
 };
-enum RwCameraProjection {
+enum RwCameraProjection
+{
     rwNACAMERAPROJECTION = 0,
     rwPERSPECTIVE = 1,
     rwPARALLEL = 2,
     rwCAMERAPROJECTIONFORCEENUMSIZEINT = 2147483647,
 };
-enum RxClusterForcePresent {
+enum RxClusterForcePresent
+{
     rxCLALLOWABSENT = 0,
     rxCLFORCEPRESENT = 1,
     rxCLUSTERFORCEPRESENTFORCEENUMSIZEINT = 2147483647,
 };
-class xModelTag {
+class xModelTag
+{
     // total size: 0x20
 public:
     class xVec3 v; // offset 0x0, size 0xC
     unsigned int matidx; // offset 0xC, size 0x4
     float wt[4]; // offset 0x10, size 0x10
 };
-class xCylinder {
+class xCylinder
+{
     // total size: 0x14
 public:
     class xVec3 center; // offset 0x0, size 0xC
     float r; // offset 0xC, size 0x4
     float h; // offset 0x10, size 0x4
 };
-class xEnv {
+class xEnv
+{
     // total size: 0x50
 public:
-    class iEnv * geom; // offset 0x0, size 0x4
+    class iEnv* geom; // offset 0x0, size 0x4
     class iEnv ienv; // offset 0x10, size 0x30
-    class xLightKit * lightKit; // offset 0x40, size 0x4
+    class xLightKit* lightKit; // offset 0x40, size 0x4
 };
-class xEntDrive {
+class xEntDrive
+{
     // total size: 0x7C
 public:
     unsigned int flags; // offset 0x0, size 0x4
@@ -1590,9 +1728,9 @@ public:
     float tm; // offset 0x10, size 0x4
     float tmr; // offset 0x14, size 0x4
     float s; // offset 0x18, size 0x4
-    class xEnt * odriver; // offset 0x1C, size 0x4
-    class xEnt * driver; // offset 0x20, size 0x4
-    class xEnt * driven; // offset 0x24, size 0x4
+    class xEnt* odriver; // offset 0x1C, size 0x4
+    class xEnt* driver; // offset 0x20, size 0x4
+    class xEnt* driven; // offset 0x24, size 0x4
     class xVec3 op; // offset 0x28, size 0xC
     class xVec3 p; // offset 0x34, size 0xC
     class xVec3 q; // offset 0x40, size 0xC
@@ -1600,21 +1738,24 @@ public:
     class xVec3 dloc; // offset 0x50, size 0xC
     class tri_data tri; // offset 0x5C, size 0x20
 };
-class xBox {
+class xBox
+{
     // total size: 0x18
 public:
     class xVec3 upper; // offset 0x0, size 0xC
     class xVec3 lower; // offset 0xC, size 0xC
 };
-class RxClusterDefinition {
+class RxClusterDefinition
+{
     // total size: 0x10
 public:
-    char * name; // offset 0x0, size 0x4
+    char* name; // offset 0x0, size 0x4
     unsigned int defaultStride; // offset 0x4, size 0x4
     unsigned int defaultAttributes; // offset 0x8, size 0x4
-    char * attributeSet; // offset 0xC, size 0x4
+    char* attributeSet; // offset 0xC, size 0x4
 };
-class zJumpParam {
+class zJumpParam
+{
     // total size: 0x10
 public:
     float PeakHeight; // offset 0x0, size 0x4
@@ -1622,13 +1763,15 @@ public:
     float TimeHold; // offset 0x8, size 0x4
     float ImpulseVel; // offset 0xC, size 0x4
 };
-enum RpWorldRenderOrder {
+enum RpWorldRenderOrder
+{
     rpWORLDRENDERNARENDERORDER = 0,
     rpWORLDRENDERFRONT2BACK = 1,
     rpWORLDRENDERBACK2FRONT = 2,
     rpWORLDRENDERORDERFORCEENUMSIZEINT = 2147483647,
 };
-class RpLight {
+class RpLight
+{
     // total size: 0x40
 public:
     class RwObjectHasFrame object; // offset 0x0, size 0x14
@@ -1640,20 +1783,24 @@ public:
     unsigned short lightFrame; // offset 0x3C, size 0x2
     unsigned short pad; // offset 0x3E, size 0x2
 };
-enum _tagPadState {
+enum _tagPadState
+{
     ePad_Disabled = 0,
     ePad_DisabledError = 1,
     ePad_Enabled = 2,
     ePad_Missing = 3,
     ePad_Total = 4,
 };
-class xEntBoulder {
+class xEntBoulder
+{
     // total size: 0x0
 };
-class zEntHangable {
+class zEntHangable
+{
     // total size: 0x0
 };
-class RwFrame {
+class RwFrame
+{
     // total size: 0xB0
 public:
     class RwObject object; // offset 0x0, size 0x8
@@ -1661,30 +1808,32 @@ public:
     class RwMatrixTag modelling; // offset 0x10, size 0x40
     class RwMatrixTag ltm; // offset 0x50, size 0x40
     class RwLinkList objectList; // offset 0x90, size 0x8
-    class RwFrame * child; // offset 0x98, size 0x4
-    class RwFrame * next; // offset 0x9C, size 0x4
-    class RwFrame * root; // offset 0xA0, size 0x4
+    class RwFrame* child; // offset 0x98, size 0x4
+    class RwFrame* next; // offset 0x9C, size 0x4
+    class RwFrame* root; // offset 0xA0, size 0x4
 };
-class RwSphere {
+class RwSphere
+{
     // total size: 0x10
 public:
     class RwV3d center; // offset 0x0, size 0xC
     float radius; // offset 0xC, size 0x4
 };
-class xGlobals {
+class xGlobals
+{
     // total size: 0x700
 public:
     class xCamera camera; // offset 0x0, size 0x330
-    class _tagxPad * pad0; // offset 0x330, size 0x4
-    class _tagxPad * pad1; // offset 0x334, size 0x4
-    class _tagxPad * pad2; // offset 0x338, size 0x4
-    class _tagxPad * pad3; // offset 0x33C, size 0x4
+    class _tagxPad* pad0; // offset 0x330, size 0x4
+    class _tagxPad* pad1; // offset 0x334, size 0x4
+    class _tagxPad* pad2; // offset 0x338, size 0x4
+    class _tagxPad* pad3; // offset 0x33C, size 0x4
     signed int profile; // offset 0x340, size 0x4
     char profFunc[6][128]; // offset 0x344, size 0x300
-    class xUpdateCullMgr * updateMgr; // offset 0x644, size 0x4
+    class xUpdateCullMgr* updateMgr; // offset 0x644, size 0x4
     signed int sceneFirst; // offset 0x648, size 0x4
     char sceneStart[32]; // offset 0x64C, size 0x20
-    class RpWorld * currWorld; // offset 0x66C, size 0x4
+    class RpWorld* currWorld; // offset 0x66C, size 0x4
     class iFogParams fog; // offset 0x670, size 0x1C
     class iFogParams fogA; // offset 0x68C, size 0x1C
     class iFogParams fogB; // offset 0x6A8, size 0x1C
@@ -1701,7 +1850,8 @@ public:
     unsigned char dontShowPadMessageDuringLoadingOrCutScene; // offset 0x6F0, size 0x1
     unsigned char autoSaveFeature; // offset 0x6F1, size 0x1
 };
-class iColor_tag {
+class iColor_tag
+{
     // total size: 0x4
 public:
     unsigned char r; // offset 0x0, size 0x1
@@ -1709,36 +1859,42 @@ public:
     unsigned char b; // offset 0x2, size 0x1
     unsigned char a; // offset 0x3, size 0x1
 };
-class _tagEmitOffsetPoint {
+class _tagEmitOffsetPoint
+{
     // total size: 0xC
 public:
     class xVec3 offset; // offset 0x0, size 0xC
 };
-class RpSector {
+class RpSector
+{
     // total size: 0x4
 public:
     signed int type; // offset 0x0, size 0x4
 };
-class zPlatform {
+class zPlatform
+{
     // total size: 0x0
 };
-class xModelBucket {
+class xModelBucket
+{
     // total size: 0x14
 public:
-    class RpAtomic * Data; // offset 0x0, size 0x4
-    class RpAtomic * OriginalData; // offset 0x4, size 0x4
-    class xModelInstance * List; // offset 0x8, size 0x4
+    class RpAtomic* Data; // offset 0x0, size 0x4
+    class RpAtomic* OriginalData; // offset 0x4, size 0x4
+    class xModelInstance* List; // offset 0x8, size 0x4
     signed int ClipFlags; // offset 0xC, size 0x4
     unsigned int PipeFlags; // offset 0x10, size 0x4
 };
-class RwTexDictionary {
+class RwTexDictionary
+{
     // total size: 0x18
 public:
     class RwObject object; // offset 0x0, size 0x8
     class RwLinkList texturesInDict; // offset 0x8, size 0x8
     class RwLLLink lInInstance; // offset 0x10, size 0x8
 };
-class _tagxPad {
+class _tagxPad
+{
     // total size: 0x148
 public:
     unsigned char value[22]; // offset 0x0, size 0x16
@@ -1761,19 +1917,22 @@ public:
     float down_tmr[22]; // offset 0xC0, size 0x58
     class analog_data analog[2]; // offset 0x118, size 0x30
 };
-class _zPortal : public xBase {
+class _zPortal : public xBase
+{
     // total size: 0x14
 public:
-    class xPortalAsset * passet; // offset 0x10, size 0x4
+    class xPortalAsset* passet; // offset 0x10, size 0x4
 };
-class RxOutputSpec {
+class RxOutputSpec
+{
     // total size: 0xC
 public:
-    char * name; // offset 0x0, size 0x4
-    enum RxClusterValid * outputClusters; // offset 0x4, size 0x4
+    char* name; // offset 0x0, size 0x4
+    enum RxClusterValid* outputClusters; // offset 0x4, size 0x4
     enum RxClusterValid allOtherClusters; // offset 0x8, size 0x4
 };
-class xEntFrame {
+class xEntFrame
+{
     // total size: 0xF0
 public:
     class xMat4x3 mat; // offset 0x0, size 0x40
@@ -1787,10 +1946,12 @@ public:
     class xVec3 vel; // offset 0xD4, size 0xC
     unsigned int mode; // offset 0xE0, size 0x4
 };
-class zCutsceneMgr {
+class zCutsceneMgr
+{
     // total size: 0x0
 };
-class xEntCollis {
+class xEntCollis
+{
     // total size: 0x5B4
 public:
     unsigned char chk; // offset 0x0, size 0x1
@@ -1805,10 +1966,12 @@ public:
     unsigned char stat_eidx; // offset 0x9, size 0x1
     unsigned char idx; // offset 0xA, size 0x1
     class xCollis colls[18]; // offset 0xC, size 0x5A0
-    void (* post)(class xEnt *, class xScene *, float, class xEntCollis *); // offset 0x5AC, size 0x4
-    unsigned int (* depenq)(class xEnt *, class xEnt *, class xScene *, float, class xCollis *); // offset 0x5B0, size 0x4
+    void (*post)(class xEnt*, class xScene*, float, class xEntCollis*); // offset 0x5AC, size 0x4
+    unsigned int (*depenq)(class xEnt*, class xEnt*, class xScene*, float,
+                           class xCollis*); // offset 0x5B0, size 0x4
 };
-class xMat3x3 {
+class xMat3x3
+{
     // total size: 0x30
 public:
     class xVec3 right; // offset 0x0, size 0xC
@@ -1818,107 +1981,124 @@ public:
     class xVec3 at; // offset 0x20, size 0xC
     unsigned int pad2; // offset 0x2C, size 0x4
 };
-class RxClusterRef {
+class RxClusterRef
+{
     // total size: 0xC
 public:
-    class RxClusterDefinition * clusterDef; // offset 0x0, size 0x4
+    class RxClusterDefinition* clusterDef; // offset 0x0, size 0x4
     enum RxClusterForcePresent forcePresent; // offset 0x4, size 0x4
     unsigned int reserved; // offset 0x8, size 0x4
 };
-class xGroupAsset : public xBaseAsset {
+class xGroupAsset : public xBaseAsset
+{
     // total size: 0xC
 public:
     unsigned short itemCount; // offset 0x8, size 0x2
     unsigned short groupFlags; // offset 0xA, size 0x2
 };
-class _tagPadAnalog {
+class _tagPadAnalog
+{
     // total size: 0x2
 public:
     signed char x; // offset 0x0, size 0x1
     signed char y; // offset 0x1, size 0x1
 };
-class zAssetPickupTable {
+class zAssetPickupTable
+{
     // total size: 0x0
 };
-class RwObject {
+class RwObject
+{
     // total size: 0x8
 public:
     unsigned char type; // offset 0x0, size 0x1
     unsigned char subType; // offset 0x1, size 0x1
     unsigned char flags; // offset 0x2, size 0x1
     unsigned char privateFlags; // offset 0x3, size 0x1
-    void * parent; // offset 0x4, size 0x4
+    void* parent; // offset 0x4, size 0x4
 };
-class RwLLLink {
+class RwLLLink
+{
     // total size: 0x8
 public:
-    class RwLLLink * next; // offset 0x0, size 0x4
-    class RwLLLink * prev; // offset 0x4, size 0x4
+    class RwLLLink* next; // offset 0x0, size 0x4
+    class RwLLLink* prev; // offset 0x4, size 0x4
 };
-class RpPTankLockStruct {
+class RpPTankLockStruct
+{
     // total size: 0x8
 public:
-    unsigned char * data; // offset 0x0, size 0x4
+    unsigned char* data; // offset 0x0, size 0x4
     signed int stride; // offset 0x4, size 0x4
 };
-class xShadowSimplePoly {
+class xShadowSimplePoly
+{
     // total size: 0x30
 public:
     class xVec3 vert[3]; // offset 0x0, size 0x24
     class xVec3 norm; // offset 0x24, size 0xC
 };
-class _tagiPad {
+class _tagiPad
+{
     // total size: 0x4
 public:
     signed int port; // offset 0x0, size 0x4
 };
-class xPEVCyl {
+class xPEVCyl
+{
     // total size: 0xC
 public:
     float height; // offset 0x0, size 0x4
     float radius; // offset 0x4, size 0x4
     float deflection; // offset 0x8, size 0x4
 };
-class RxIoSpec {
+class RxIoSpec
+{
     // total size: 0x14
 public:
     unsigned int numClustersOfInterest; // offset 0x0, size 0x4
-    class RxClusterRef * clustersOfInterest; // offset 0x4, size 0x4
-    enum RxClusterValidityReq * inputRequirements; // offset 0x8, size 0x4
+    class RxClusterRef* clustersOfInterest; // offset 0x4, size 0x4
+    enum RxClusterValidityReq* inputRequirements; // offset 0x8, size 0x4
     unsigned int numOutputs; // offset 0xC, size 0x4
-    class RxOutputSpec * outputs; // offset 0x10, size 0x4
+    class RxOutputSpec* outputs; // offset 0x10, size 0x4
 };
-class xFFX {
+class xFFX
+{
     // total size: 0x0
 };
-class tri_data : public tri_data {
+class tri_data : public tri_data
+{
     // total size: 0x20
 public:
     class xVec3 loc; // offset 0xC, size 0xC
     float yaw; // offset 0x18, size 0x4
-    class xCollis * coll; // offset 0x1C, size 0x4
+    class xCollis* coll; // offset 0x1C, size 0x4
 };
-class /* @class */ {
+class /* @class */
+{
     // total size: 0xC
 public:
-    unsigned char * data; // offset 0x0, size 0x4
+    unsigned char* data; // offset 0x0, size 0x4
     signed int stride; // offset 0x4, size 0x4
     unsigned int size; // offset 0x8, size 0x4
 };
-class xCollis {
+class xCollis
+{
     // total size: 0x50
 public:
     unsigned int flags; // offset 0x0, size 0x4
     unsigned int oid; // offset 0x4, size 0x4
-    void * optr; // offset 0x8, size 0x4
-    class xModelInstance * mptr; // offset 0xC, size 0x4
+    void* optr; // offset 0x8, size 0x4
+    class xModelInstance* mptr; // offset 0xC, size 0x4
     float dist; // offset 0x10, size 0x4
     class xVec3 norm; // offset 0x14, size 0xC
     class xVec3 tohit; // offset 0x20, size 0xC
     class xVec3 depen; // offset 0x2C, size 0xC
     class xVec3 hdng; // offset 0x38, size 0xC
-    union { // inferred
-        class /* @class */ {
+    union
+    { // inferred
+        class /* @class */
+        {
             // total size: 0xC
         public:
             float t; // offset 0x0, size 0x4
@@ -1928,24 +2108,30 @@ public:
         class tri_data tri; // offset 0x44, size 0xC
     };
 };
-class RxNodeMethods {
+class RxNodeMethods
+{
     // total size: 0x1C
 public:
-    signed int (* nodeBody)(class RxPipelineNode *, class RxPipelineNodeParam *); // offset 0x0, size 0x4
-    signed int (* nodeInit)(class RxNodeDefinition *); // offset 0x4, size 0x4
-    void (* nodeTerm)(class RxNodeDefinition *); // offset 0x8, size 0x4
-    signed int (* pipelineNodeInit)(class RxPipelineNode *); // offset 0xC, size 0x4
-    void (* pipelineNodeTerm)(class RxPipelineNode *); // offset 0x10, size 0x4
-    signed int (* pipelineNodeConfig)(class RxPipelineNode *, class RxPipeline *); // offset 0x14, size 0x4
-    unsigned int (* configMsgHandler)(class RxPipelineNode *, unsigned int, unsigned int, void *); // offset 0x18, size 0x4
+    signed int (*nodeBody)(class RxPipelineNode*,
+                           class RxPipelineNodeParam*); // offset 0x0, size 0x4
+    signed int (*nodeInit)(class RxNodeDefinition*); // offset 0x4, size 0x4
+    void (*nodeTerm)(class RxNodeDefinition*); // offset 0x8, size 0x4
+    signed int (*pipelineNodeInit)(class RxPipelineNode*); // offset 0xC, size 0x4
+    void (*pipelineNodeTerm)(class RxPipelineNode*); // offset 0x10, size 0x4
+    signed int (*pipelineNodeConfig)(class RxPipelineNode*,
+                                     class RxPipeline*); // offset 0x14, size 0x4
+    unsigned int (*configMsgHandler)(class RxPipelineNode*, unsigned int, unsigned int,
+                                     void*); // offset 0x18, size 0x4
 };
-class xClumpCollBSPVertInfo {
+class xClumpCollBSPVertInfo
+{
     // total size: 0x4
 public:
     unsigned short atomIndex; // offset 0x0, size 0x2
     unsigned short meshVertIndex; // offset 0x2, size 0x2
 };
-class RwFrustumPlane {
+class RwFrustumPlane
+{
     // total size: 0x14
 public:
     class RwPlane plane; // offset 0x0, size 0x10
@@ -1954,28 +2140,33 @@ public:
     unsigned char closestZ; // offset 0x12, size 0x1
     unsigned char pad; // offset 0x13, size 0x1
 };
-class RwPlane {
+class RwPlane
+{
     // total size: 0x10
 public:
     class RwV3d normal; // offset 0x0, size 0xC
     float distance; // offset 0xC, size 0x4
 };
-class xClumpCollBSPTriangle {
+class xClumpCollBSPTriangle
+{
     // total size: 0x8
 public:
-    class /* @class */ {
+    class /* @class */
+    {
         // total size: 0x4
     public:
-        union { // inferred
+        union
+        { // inferred
             class xClumpCollBSPVertInfo i; // offset 0x0, size 0x4
-            class RwV3d * p; // offset 0x0, size 0x4
+            class RwV3d* p; // offset 0x0, size 0x4
         };
     } v; // offset 0x0, size 0x4
     unsigned char flags; // offset 0x4, size 0x1
     unsigned char platData; // offset 0x5, size 0x1
     unsigned short matIndex; // offset 0x6, size 0x2
 };
-class xQCData {
+class xQCData
+{
     // total size: 0x20
 public:
     signed char xmin; // offset 0x0, size 0x1
@@ -1989,7 +2180,8 @@ public:
     class xVec3 min; // offset 0x8, size 0xC
     class xVec3 max; // offset 0x14, size 0xC
 };
-class xPEEntBone {
+class xPEEntBone
+{
     // total size: 0x18
 public:
     unsigned char flags; // offset 0x0, size 0x1
@@ -2000,48 +2192,54 @@ public:
     float radius; // offset 0x10, size 0x4
     float deflection; // offset 0x14, size 0x4
 };
-class RxCluster {
+class RxCluster
+{
     // total size: 0x1C
 public:
     unsigned short flags; // offset 0x0, size 0x2
     unsigned short stride; // offset 0x2, size 0x2
-    void * data; // offset 0x4, size 0x4
-    void * currentData; // offset 0x8, size 0x4
+    void* data; // offset 0x4, size 0x4
+    void* currentData; // offset 0x8, size 0x4
     unsigned int numAlloced; // offset 0xC, size 0x4
     unsigned int numUsed; // offset 0x10, size 0x4
-    class RxPipelineCluster * clusterRef; // offset 0x14, size 0x4
+    class RxPipelineCluster* clusterRef; // offset 0x14, size 0x4
     unsigned int attributes; // offset 0x18, size 0x4
 };
-class xAnimMultiFileEntry {
+class xAnimMultiFileEntry
+{
     // total size: 0x8
 public:
     unsigned int ID; // offset 0x0, size 0x4
-    class xAnimFile * File; // offset 0x4, size 0x4
+    class xAnimFile* File; // offset 0x4, size 0x4
 };
-class tri_data {
+class tri_data
+{
     // total size: 0xC
 public:
     unsigned int index; // offset 0x0, size 0x4
     float r; // offset 0x4, size 0x4
     float d; // offset 0x8, size 0x4
 };
-class RxPacket {
+class RxPacket
+{
     // total size: 0x30
 public:
     unsigned short flags; // offset 0x0, size 0x2
     unsigned short numClusters; // offset 0x2, size 0x2
-    class RxPipeline * pipeline; // offset 0x4, size 0x4
-    unsigned int * inputToClusterSlot; // offset 0x8, size 0x4
-    unsigned int * slotsContinue; // offset 0xC, size 0x4
-    class RxPipelineCluster * * slotClusterRefs; // offset 0x10, size 0x4
+    class RxPipeline* pipeline; // offset 0x4, size 0x4
+    unsigned int* inputToClusterSlot; // offset 0x8, size 0x4
+    unsigned int* slotsContinue; // offset 0xC, size 0x4
+    class RxPipelineCluster** slotClusterRefs; // offset 0x10, size 0x4
     class RxCluster clusters[1]; // offset 0x14, size 0x1C
 };
-class /* @class */ {
+class /* @class */
+{
     // total size: 0x4
 public:
-    class xVec3 * verts; // offset 0x0, size 0x4
+    class xVec3* verts; // offset 0x0, size 0x4
 };
-class zLasso {
+class zLasso
+{
     // total size: 0xFC
 public:
     unsigned int flags; // offset 0x0, size 0x4
@@ -2068,25 +2266,28 @@ public:
     unsigned char reindex[5]; // offset 0xC4, size 0x5
     class xVec3 anchor; // offset 0xCC, size 0xC
     class xModelTag tag; // offset 0xD8, size 0x20
-    class xModelInstance * model; // offset 0xF8, size 0x4
+    class xModelInstance* model; // offset 0xF8, size 0x4
 };
-class zGlobals : public xGlobals {
+class zGlobals : public xGlobals
+{
     // total size: 0x2050
 public:
     class zPlayerGlobals player; // offset 0x700, size 0x1940
-    class zAssetPickupTable * pickupTable; // offset 0x2040, size 0x4
-    class zCutsceneMgr * cmgr; // offset 0x2044, size 0x4
-    class zScene * sceneCur; // offset 0x2048, size 0x4
-    class zScene * scenePreload; // offset 0x204C, size 0x4
+    class zAssetPickupTable* pickupTable; // offset 0x2040, size 0x4
+    class zCutsceneMgr* cmgr; // offset 0x2044, size 0x4
+    class zScene* sceneCur; // offset 0x2048, size 0x4
+    class zScene* scenePreload; // offset 0x204C, size 0x4
 };
-enum RwFogType {
+enum RwFogType
+{
     rwFOGTYPENAFOGTYPE = 0,
     rwFOGTYPELINEAR = 1,
     rwFOGTYPEEXPONENTIAL = 2,
     rwFOGTYPEEXPONENTIAL2 = 3,
     rwFOGTYPEFORCEENUMSIZEINT = 2147483647,
 };
-class zGlobalSettings {
+class zGlobalSettings
+{
     // total size: 0x150
 public:
     unsigned short AnalogMin; // offset 0x0, size 0x2
@@ -2176,7 +2377,8 @@ public:
     unsigned char PowerUp[2]; // offset 0x149, size 0x2
     unsigned char InitialPowerUp[2]; // offset 0x14B, size 0x2
 };
-class RwRGBAReal {
+class RwRGBAReal
+{
     // total size: 0x10
 public:
     float red; // offset 0x0, size 0x4
@@ -2184,14 +2386,16 @@ public:
     float blue; // offset 0x8, size 0x4
     float alpha; // offset 0xC, size 0x4
 };
-class RwObjectHasFrame {
+class RwObjectHasFrame
+{
     // total size: 0x14
 public:
     class RwObject object; // offset 0x0, size 0x8
     class RwLLLink lFrame; // offset 0x8, size 0x8
-    class RwObjectHasFrame * (* sync)(class RwObjectHasFrame *); // offset 0x10, size 0x4
+    class RwObjectHasFrame* (*sync)(class RwObjectHasFrame*); // offset 0x10, size 0x4
 };
-class RpInterpolator {
+class RpInterpolator
+{
     // total size: 0x14
 public:
     signed int flags; // offset 0x0, size 0x4
@@ -2201,44 +2405,50 @@ public:
     float recipTime; // offset 0xC, size 0x4
     float position; // offset 0x10, size 0x4
 };
-class xPECircle {
+class xPECircle
+{
     // total size: 0x14
 public:
     float radius; // offset 0x0, size 0x4
     float deflection; // offset 0x4, size 0x4
     class xVec3 dir; // offset 0x8, size 0xC
 };
-class RwLinkList {
+class RwLinkList
+{
     // total size: 0x8
 public:
     class RwLLLink link; // offset 0x0, size 0x8
 };
-class xAnimMultiFileBase {
+class xAnimMultiFileBase
+{
     // total size: 0x4
 public:
     unsigned int Count; // offset 0x0, size 0x4
 };
-class zPlayerLassoInfo {
+class zPlayerLassoInfo
+{
     // total size: 0x120
 public:
-    class xEnt * target; // offset 0x0, size 0x4
+    class xEnt* target; // offset 0x0, size 0x4
     float dist; // offset 0x4, size 0x4
     unsigned char destroy; // offset 0x8, size 0x1
     unsigned char targetGuide; // offset 0x9, size 0x1
     float lassoRot; // offset 0xC, size 0x4
-    class xEnt * swingTarget; // offset 0x10, size 0x4
-    class xEnt * releasedSwing; // offset 0x14, size 0x4
+    class xEnt* swingTarget; // offset 0x10, size 0x4
+    class xEnt* releasedSwing; // offset 0x14, size 0x4
     float copterTime; // offset 0x18, size 0x4
     signed int canCopter; // offset 0x1C, size 0x4
     class zLasso lasso; // offset 0x20, size 0xFC
-    class xAnimState * zeroAnim; // offset 0x11C, size 0x4
+    class xAnimState* zeroAnim; // offset 0x11C, size 0x4
 };
-class /* @class */ {
+class /* @class */
+{
     // total size: 0x4
 public:
-    union { // inferred
+    union
+    { // inferred
         class xClumpCollBSPVertInfo i; // offset 0x0, size 0x4
-        class RwV3d * p; // offset 0x0, size 0x4
+        class RwV3d* p; // offset 0x0, size 0x4
     };
 };
 
@@ -2249,12 +2459,13 @@ public:
     Code range: 0x002FBA10 -> 0x002FBACC
 */
 // Range: 0x2FBA10 -> 0x2FBACC
-void xParSysRender(class xBase * b /* r2 */) {
+void xParSysRender(class xBase* b /* r2 */)
+{
     // Blocks
     /* anonymous block */ {
         // Range: 0x2FBA10 -> 0x2FBACC
-        class xParGroup * g; // r17
-        class xParSys * s; // r16
+        class xParGroup* g; // r17
+        class xParSys* s; // r16
     }
 }
 
@@ -2265,13 +2476,15 @@ void xParSysRender(class xBase * b /* r2 */) {
     Code range: 0x002FBAD0 -> 0x002FBBAC
 */
 // Range: 0x2FBAD0 -> 0x2FBBAC
-static void xParGroupUpdateR(class xParSys * s /* r19 */, class xParGroup * g /* r18 */, float dt /* r20 */) {
+static void xParGroupUpdateR(class xParSys* s /* r19 */, class xParGroup* g /* r18 */,
+                             float dt /* r20 */)
+{
     // Blocks
     /* anonymous block */ {
         // Range: 0x2FBAD0 -> 0x2FBBAC
         unsigned int i; // r17
-        class xParCmd * cmd; // r20
-        void (* func)(class xParCmd *, class xParGroup *, float); // r2
+        class xParCmd* cmd; // r20
+        void (*func)(class xParCmd*, class xParGroup*, float); // r2
     }
 }
 
@@ -2282,13 +2495,14 @@ static void xParGroupUpdateR(class xParSys * s /* r19 */, class xParGroup * g /*
     Code range: 0x002FBBB0 -> 0x002FBE00
 */
 // Range: 0x2FBBB0 -> 0x2FBE00
-void xParSysUpdate(class xBase * to /* r2 */, float dt /* r20 */) {
+void xParSysUpdate(class xBase* to /* r2 */, float dt /* r20 */)
+{
     // Blocks
     /* anonymous block */ {
         // Range: 0x2FBBB0 -> 0x2FBE00
-        class xParSys * s; // r20
-        class xParSys * parent; // r19
-        class xParGroup * g; // r18
+        class xParSys* s; // r20
+        class xParSys* parent; // r19
+        class xParGroup* g; // r18
     }
 }
 
@@ -2299,11 +2513,12 @@ void xParSysUpdate(class xBase * to /* r2 */, float dt /* r20 */) {
     Code range: 0x002FBE00 -> 0x002FBF5C
 */
 // Range: 0x2FBE00 -> 0x2FBF5C
-signed int xParSysEventCB(class xBase * to /* r2 */, unsigned int toEvent /* r2 */) {
+signed int xParSysEventCB(class xBase* to /* r2 */, unsigned int toEvent /* r2 */)
+{
     // Blocks
     /* anonymous block */ {
         // Range: 0x2FBE00 -> 0x2FBF5C
-        class xParSys * t; // r16
+        class xParSys* t; // r16
     }
 }
 
@@ -2314,7 +2529,8 @@ signed int xParSysEventCB(class xBase * to /* r2 */, unsigned int toEvent /* r2 
     Code range: 0x002FBF60 -> 0x002FBFA0
 */
 // Range: 0x2FBF60 -> 0x2FBFA0
-void xParSysExit(class xParSys * t /* r16 */) {
+void xParSysExit(class xParSys* t /* r16 */)
+{
     // Blocks
     /* anonymous block */ {
         // Range: 0x2FBF60 -> 0x2FBFA0
@@ -2328,7 +2544,8 @@ void xParSysExit(class xParSys * t /* r16 */) {
     Code range: 0x002FBFA0 -> 0x002FC004
 */
 // Range: 0x2FBFA0 -> 0x2FC004
-void xParSysSetup(class xParSys * t /* r16 */) {
+void xParSysSetup(class xParSys* t /* r16 */)
+{
     // Blocks
     /* anonymous block */ {
         // Range: 0x2FBFA0 -> 0x2FC004
@@ -2342,13 +2559,14 @@ void xParSysSetup(class xParSys * t /* r16 */) {
     Code range: 0x002FC010 -> 0x002FC2DC
 */
 // Range: 0x2FC010 -> 0x2FC2DC
-void xParSysInit(class xBase * b /* r20 */, class xParSysAsset * tasset /* r19 */) {
+void xParSysInit(class xBase* b /* r20 */, class xParSysAsset* tasset /* r19 */)
+{
     // Blocks
     /* anonymous block */ {
         // Range: 0x2FC010 -> 0x2FC2DC
-        class xParSys * t; // r2
+        class xParSys* t; // r2
         unsigned int i; // r18
-        unsigned char * cmdPtr; // r17
+        unsigned char* cmdPtr; // r17
     }
 }
 
@@ -2359,7 +2577,8 @@ void xParSysInit(class xBase * b /* r20 */, class xParSysAsset * tasset /* r19 *
     Code range: 0x002FC2E0 -> 0x002FC2E8
 */
 // Range: 0x2FC2E0 -> 0x2FC2E8
-void xParSysInit(void * b /* r2 */, void * tasset /* r2 */) {
+void xParSysInit(void* b /* r2 */, void* tasset /* r2 */)
+{
     // Blocks
     /* anonymous block */ {
         // Range: 0x2FC2E0 -> 0x2FC2E8
@@ -2373,7 +2592,8 @@ void xParSysInit(void * b /* r2 */, void * tasset /* r2 */) {
     Code range: 0x002FC2F0 -> 0x002FC324
 */
 // Range: 0x2FC2F0 -> 0x2FC324
-static void render_par_sprite(void * data /* r2 */, class xParGroup * ps /* r2 */) {
+static void render_par_sprite(void* data /* r2 */, class xParGroup* ps /* r2 */)
+{
     // Blocks
     /* anonymous block */ {
         // Range: 0x2FC2F0 -> 0x2FC324
@@ -2387,7 +2607,8 @@ static void render_par_sprite(void * data /* r2 */, class xParGroup * ps /* r2 *
     Code range: 0x002FC330 -> 0x002FC95C
 */
 // Range: 0x2FC330 -> 0x2FC95C
-static void par_sprite_update(class xParSys & sys /* r2 */, class xParGroup & group /* r2 */) {
+static void par_sprite_update(class xParSys& sys /* r2 */, class xParGroup& group /* r2 */)
+{
     // Blocks
     /* anonymous block */ {
         // Range: 0x2FC330 -> 0x2FC95C
@@ -2395,11 +2616,10 @@ static void par_sprite_update(class xParSys & sys /* r2 */, class xParGroup & gr
         class xVec3 offset_right; // r29+0x100
         class xVec3 offset_up; // r29+0xF0
         class ptank_pool__pos_color_size_uv2 pool; // r29+0x30
-        class xParCmdTex * tex; // r17
-        class xPar * p; // r16
-        class xVec4 * _loc; // r2
+        class xParCmdTex* tex; // r17
+        class xPar* p; // r16
+        class xVec4* _loc; // r2
         float par_dist; // r1
-        class xVec3 & loc; // r9
+        class xVec3& loc; // r9
     }
 }
-

@@ -20,7 +20,7 @@ struct tagiRenderInput
     // total size: 0x80
 public:
     U16* m_index; // offset 0x0, size 0x4
-    RxObjSpace3DVertex * m_vertex; // offset 0x4, size 0x4
+    RxObjSpace3DVertex* m_vertex; // offset 0x4, size 0x4
     F32* m_vertexTZ; // offset 0x8, size 0x4
     U32 m_mode; // offset 0xC, size 0x4
     S32 m_vertexType; // offset 0x10, size 0x4
@@ -38,8 +38,10 @@ void iParMgrRender();
 void iRenderInit();
 void iRenderSetCameraViewMatrix(xMat4x3* m);
 void iRenderFlush();
-void iRenderTrianglesImmediate(S32 vertType, S32 vertTypeSize, void* data, S32 dataSize, U16* index, S32 indexSize);
+void iRenderTrianglesImmediate(S32 vertType, S32 vertTypeSize, void* data, S32 dataSize, U16* index,
+                               S32 indexSize);
 void iParMgrRenderParSys_QuadStreak(void* data, xParGroup* ps);
 void iParMgrRenderParSys_Flat(void* data, xParGroup* ps);
+void iParMgrRenderParSys_Sprite(void* data, xParGroup* ps);
 
 #endif
