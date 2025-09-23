@@ -79,6 +79,7 @@ static S32 sPlayerAttackInAir;
 #define MAX_DELAYED_SOUNDS 8
 static zDelayedStreamSound sDelayedSound[MAX_DELAYED_SOUNDS];
 static zPlayerSndTimer sPlayerStreamSndTimer[ePlayerStreamSnd_Total] = {};
+static PlayerStreakInfo sStreakInfo[3][4] = {};
 
 F32 startJump;
 F32 startDouble;
@@ -3696,6 +3697,21 @@ void zEntPlayer_RestoreSounds()
 void zEntPlayer_Load(xEnt* ent, xSerial* serial)
 {
     return;
+}
+
+static void zEntPlayer_StreakFX(xEnt* ent, F32)
+{
+    S32 i;
+    S32 p;
+    S32 cp;
+
+    for (S32 i = 0; i < 6; i++)
+    {
+        for (S32 p = 0; p < 2; p++)
+        {
+            //sStreakInfo[i][p] = 0;
+        }
+    }
 }
 
 void zEntPlayer_PatrickLaunch(xEnt* patLauncher)

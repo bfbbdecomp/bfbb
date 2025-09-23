@@ -227,6 +227,7 @@ namespace
         // HACK
         return (char*)(asset) + 4;
     }
+        
 } // namespace
 
 void ztalkbox::load(const asset_type& tasset)
@@ -312,11 +313,11 @@ void ztalkbox::stop_talk()
     }
 }
 
-void ztalkbox::stop_wait(U32 unk)
+void ztalkbox::stop_wait(U32 x)
 {
     if (shared.active == this)
     {
-        //shared.unk8D48 |= unk;
+        shared.wait_event_mask = shared.wait_event_mask | x;
     }
 }
 

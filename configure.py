@@ -535,7 +535,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zGrid.cpp"),
             Object(Matching, "SB/Game/zNPCGoalScript.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zNPCSndTable.cpp"),
-            Object(NonMatching, "SB/Game/zNPCSndLists.cpp"),
+            Object(Matching, "SB/Game/zNPCSndLists.cpp"),
             Object(NonMatching, "SB/Game/zNPCTypeDuplotron.cpp"),
             Object(NonMatching, "SB/Core/x/xModelBucket.cpp"),
             Object(NonMatching, "SB/Game/zShrapnel.cpp"),
