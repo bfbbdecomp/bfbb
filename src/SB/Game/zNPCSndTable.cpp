@@ -9,8 +9,6 @@ static char* g_strz_sndgroup[26];
 static unsigned int g_hash_sndgroup[26];
 static float g_tmrz_sndplay[26];
 
-NPCSndProp g_sndProps[];
-
 void NPCS_Startup()
 {
     for (int i = 0; i < (int)(sizeof(g_strz_sndgroup) / sizeof(char*)); i++)
@@ -42,15 +40,15 @@ void NPCS_SndTypePlayed(en_NPC_SOUND sndtype, float delayNext)
 
     switch (sndtype)
     {
-        case NPC_STYP_TIKISTACK:
-            tym = 0.15f;
-            break;
-        case NPC_STYP_TIKIEXPLODE:
-            tym = 2.0f;
-            break;
-        default:
-            tym = -1.0f;
-            break;
+    case NPC_STYP_TIKISTACK:
+        tym = 0.15f;
+        break;
+    case NPC_STYP_TIKIEXPLODE:
+        tym = 2.0f;
+        break;
+    default:
+        tym = -1.0f;
+        break;
     }
 
     if (delayNext > 0.0f)

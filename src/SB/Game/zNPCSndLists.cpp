@@ -1,14 +1,23 @@
 #include "zNPCSndLists.h"
 
+// clang-format off
 NPCSndProp g_sndProps[] = {
-    { NPC_STYP_ENCOUNTER, 0x400, 1.0f },   { NPC_STYP_LAUGH, 0xC00, 7.0f },
-    { NPC_STYP_ALERT, 0x400, 0.0f },       { NPC_STYP_CLANKING, 0x400, 0.75f },
-    { NPC_STYP_RESPAWN, 0x200, 0.75f },    { NPC_STYP_WARNBANG, 0x200, 0.1f },
-    { NPC_STYP_OUCH, 0x200, 0.1f },        { NPC_STYP_DIZZY, 0x200, 0.1f },
-    { NPC_STYP_EXCLAIM, 0x200, 0.5f },     { NPC_STYP_CHEERING, 0xA00, 0.25f },
-    { NPC_STYP_LIGHTNING, 0xA00, 0.1f },   { NPC_STYP_DANCE, 0x400, 0.2f },
-    { NPC_STYP_DEATH, 0x2200, 1.0f },      { NPC_STYP_DEATHJELLY, 0x2C00, 1.0f },
-    { NPC_STYP_TIKIEXPLODE, 0x400, 0.1f }, { NPC_STYP_TIKITHUNDER, 0x1A00, 0.1f },
+    { NPC_STYP_ENCOUNTER, 0x400, 1.0f },
+    { NPC_STYP_LAUGH, 0xC00, 7.0f },
+    { NPC_STYP_ALERT, 0x400, 0.0f },
+    { NPC_STYP_CLANKING, 0x400, 0.75f },
+    { NPC_STYP_RESPAWN, 0x200, 0.75f },
+    { NPC_STYP_WARNBANG, 0x200, 0.1f },
+    { NPC_STYP_OUCH, 0x200, 0.1f },
+    { NPC_STYP_DIZZY, 0x200, 0.1f },
+    { NPC_STYP_EXCLAIM, 0x200, 0.5f },
+    { NPC_STYP_CHEERING, 0xA00, 0.25f },
+    { NPC_STYP_LIGHTNING, 0xA00, 0.1f },
+    { NPC_STYP_DANCE, 0x400, 0.2f },
+    { NPC_STYP_DEATH, 0x2200, 1.0f },
+    { NPC_STYP_DEATHJELLY, 0x2C00, 1.0f },
+    { NPC_STYP_TIKIEXPLODE, 0x400, 0.1f },
+    { NPC_STYP_TIKITHUNDER, 0x1A00, 0.1f },
     { NPC_STYP_LISTEND, 0x200, -1.0f },
 };
 NPCSndTrax g_sndTrax_Universal[] = {
@@ -47,19 +56,30 @@ NPCSndTrax g_sndTrax_Villager[] = {
     { NPC_STYP_LISTEND, NULL, 0 },
 };
 NPCSndTrax g_sndTrax_Squidward[] = {
-    { NPC_STYP_EXCLAIM, "clarinet_1", 0 }, { NPC_STYP_EXCLAIM, "clarinet_2", 0 },
-    { NPC_STYP_EXCLAIM, "clarinet_3", 0 }, { NPC_STYP_EXCLAIM, "clarinet_4", 0 },
-    { NPC_STYP_EXCLAIM, "clarinet_5", 0 }, { NPC_STYP_LISTEND, NULL, 0 },
+    { NPC_STYP_EXCLAIM, "clarinet_1", 0 },
+    { NPC_STYP_EXCLAIM, "clarinet_2", 0 },
+    { NPC_STYP_EXCLAIM, "clarinet_3", 0 },
+    { NPC_STYP_EXCLAIM, "clarinet_4", 0 },
+    { NPC_STYP_EXCLAIM, "clarinet_5", 0 },
+    { NPC_STYP_LISTEND, NULL, 0 },
 };
 NPCSndTrax g_sndTrax_VillagerCoStar[] = {
-    { NPC_STYP_EXCLAIM, "Bounce", 0 },       { NPC_STYP_EXCLAIM, "Bowl_hitplate", 0 },
-    { NPC_STYP_EXCLAIM, "Bump_beep1", 0 },   { NPC_STYP_EXCLAIM, "Bump_hit1", 0 },
-    { NPC_STYP_EXCLAIM, "Bump_hit2", 0 },    { NPC_STYP_EXCLAIM, "Bus_dooropen", 0 },
-    { NPC_STYP_EXCLAIM, "CarAlarm", 0 },     { NPC_STYP_EXCLAIM, "Check1", 0 },
-    { NPC_STYP_EXCLAIM, "Gate_hit2", 0 },    { NPC_STYP_EXCLAIM, "Metal_tube_hit", 0 },
-    { NPC_STYP_EXCLAIM, "NPC_GL_jump", 0 },  { NPC_STYP_EXCLAIM, "Pop_in", 0 },
-    { NPC_STYP_EXCLAIM, "Pop_out", 0 },      { NPC_STYP_EXCLAIM, "Sailflap", 0 },
-    { NPC_STYP_EXCLAIM, "SlapLeaf_hit", 0 }, { NPC_STYP_LISTEND, NULL, 0 },
+    { NPC_STYP_EXCLAIM, "Bounce", 0 },
+    { NPC_STYP_EXCLAIM, "Bowl_hitplate", 0 },
+    { NPC_STYP_EXCLAIM, "Bump_beep1", 0 },
+    { NPC_STYP_EXCLAIM, "Bump_hit1", 0 },
+    { NPC_STYP_EXCLAIM, "Bump_hit2", 0 },
+    { NPC_STYP_EXCLAIM, "Bus_dooropen", 0 },
+    { NPC_STYP_EXCLAIM, "CarAlarm", 0 },
+    { NPC_STYP_EXCLAIM, "Check1", 0 },
+    { NPC_STYP_EXCLAIM, "Gate_hit2", 0 },
+    { NPC_STYP_EXCLAIM, "Metal_tube_hit", 0 },
+    { NPC_STYP_EXCLAIM, "NPC_GL_jump", 0 },
+    { NPC_STYP_EXCLAIM, "Pop_in", 0 },
+    { NPC_STYP_EXCLAIM, "Pop_out", 0 },
+    { NPC_STYP_EXCLAIM, "Sailflap", 0 },
+    { NPC_STYP_EXCLAIM, "SlapLeaf_hit", 0 },
+    { NPC_STYP_LISTEND, NULL, 0 },
 };
 NPCSndTrax g_sndTrax_VillagerMale[] = {
     { NPC_STYP_LISTEND, NULL, 0 },
@@ -114,9 +134,12 @@ NPCSndTrax g_sndTrax_Fodder[] = {
     { NPC_STYP_LISTEND, NULL, 0 },
 };
 NPCSndTrax g_sndTrax_FodBomb[] = {
-    { NPC_STYP_DEATH, "Fod_destroy", 0 },   { NPC_STYP_ALERT, "Fod3_alert", 0 },
-    { NPC_STYP_WARNBANG, "Fod3_alert", 0 }, { NPC_STYP_ATTACK, "Fod3_attack", 0 },
-    { NPC_STYP_OUCH, "Fod_hit", 0 },        { NPC_STYP_LISTEND, NULL, 0 },
+    { NPC_STYP_DEATH, "Fod_destroy", 0 },
+    { NPC_STYP_ALERT, "Fod3_alert", 0 },
+    { NPC_STYP_WARNBANG, "Fod3_alert", 0 },
+    { NPC_STYP_ATTACK, "Fod3_attack", 0 },
+    { NPC_STYP_OUCH, "Fod_hit", 0 },
+    { NPC_STYP_LISTEND, NULL, 0 },
 };
 NPCSndTrax g_sndTrax_FodBzzt[] = {
     { NPC_STYP_OUCH, "Fod_hit", 0 },
@@ -155,8 +178,10 @@ NPCSndTrax g_sndTrax_Sleepy[] = {
     { NPC_STYP_LISTEND, NULL, 0 },
 };
 NPCSndTrax g_sndTrax_Chuck[] = {
-    { NPC_STYP_ALERT, "Chu_alert", 0 },  { NPC_STYP_WEPLAUNCH, "Chu_cock", 0 },
-    { NPC_STYP_ATTACK, "Chu_throw", 0 }, { NPC_STYP_OUCH, "Fod_hit", 0 },
+    { NPC_STYP_ALERT, "Chu_alert", 0 },
+    { NPC_STYP_WEPLAUNCH, "Chu_cock", 0 },
+    { NPC_STYP_ATTACK, "Chu_throw", 0 },
+    { NPC_STYP_OUCH, "Fod_hit", 0 },
     { NPC_STYP_LISTEND, NULL, 0 },
 };
 NPCSndTrax g_sndTrax_ArfArf[] = {
@@ -171,13 +196,17 @@ NPCSndTrax g_sndTrax_ArfDog[] = {
     { NPC_STYP_LISTEND, NULL, 0 },
 };
 NPCSndTrax g_sndTrax_Tubelet[] = {
-    { NPC_STYP_ALERT, "Tube_alert", 0 }, { NPC_STYP_UNBONKED, "Tube_spawn", 0 },
-    { NPC_STYP_BONKED, "Tube_pop", 0 },  { NPC_STYP_WARNBANG, "Tube_pop", 0 },
+    { NPC_STYP_ALERT, "Tube_alert", 0 },
+    { NPC_STYP_UNBONKED, "Tube_spawn", 0 },
+    { NPC_STYP_BONKED, "Tube_pop", 0 },
+    { NPC_STYP_WARNBANG, "Tube_pop", 0 },
     { NPC_STYP_LISTEND, NULL, 0 },
 };
 NPCSndTrax g_sndTrax_Slick[] = {
-    { NPC_STYP_ALERT, "Slk_alert1", 0 }, { NPC_STYP_DIZZY, "Slk_hit1", 0 },
-    { NPC_STYP_OUCH, "Slk_hit2", 0 },    { NPC_STYP_ATTACK, "Slk_attack1", 0 },
+    { NPC_STYP_ALERT, "Slk_alert1", 0 },
+    { NPC_STYP_DIZZY, "Slk_hit1", 0 },
+    { NPC_STYP_OUCH, "Slk_hit2", 0 },
+    { NPC_STYP_ATTACK, "Slk_attack1", 0 },
     { NPC_STYP_LISTEND, NULL, 0 },
 };
 NPCSndTrax g_sndTrax_KingJelly[] = {
@@ -189,6 +218,7 @@ NPCSndTrax g_sndTrax_Dutchman[] = {
 NPCSndTrax g_sndTrax_BossSandy[] = {
     { NPC_STYP_LISTEND, NULL, 0 },
 };
+// clang-format on
 
 // leftovers from the dwarf
 //NPCSndTrax g_sndTrax_Prawn[] = { { NPC_STYP_LISTEND, NULL, 0 }, };

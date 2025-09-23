@@ -8,6 +8,7 @@
 #include "zGlobals.h"
 #include "zNPCTypes.h"
 #include "zNPCSndTable.h"
+#include "zNPCSndLists.h"
 #include "zNPCSupport.h"
 #include "zNPCFXCinematic.h"
 
@@ -30,7 +31,6 @@ extern S32 g_hash_lassanim[3];
 extern volatile S32 g_skipDescent;
 extern NPCConfig* g_ncfghead;
 static zNPCSettings* g_dflt_npcsettings;
-extern NPCSndTrax g_sndTrax_General[];
 extern F32 lbl_803CE4C0;
 extern S32 g_flg_wonder;
 extern S32 g_isConversation;
@@ -171,7 +171,7 @@ void zNPCCommon_SceneFinish()
 {
     zNPCCommon::ConfigSceneDone();
     NPCSupport_SceneFinish();
-    xDebugRemoveTweak(zNPCTypeCommon_strings + 0x42b);
+    xDebugRemoveTweak("NPC"); //(zNPCTypeCommon_strings + 0x42b);
 }
 
 void zNPCCommon_SceneReset()
@@ -749,7 +749,7 @@ S32 zNPCCommon::NPCMessage(NPCMsg* mail)
 void zNPCCommon::Move(xScene* xscn, F32 dt, xEntFrame* frm)
 {
     bool retval = false;
-    if ((npcset.useNavSplines) && ((flg_move)&8))
+    if ((npcset.useNavSplines) && ((flg_move) & 8))
         if (this->drv_data && (this->drv_data->driver || this->drv_data->odriver))
         {
             retval = true;
@@ -2430,7 +2430,7 @@ void zNPCCommon_WonderReset()
 U32 zNPCCommon::CanDoSplines()
 {
     bool retval = false;
-    if ((npcset.useNavSplines) && ((flg_move)&8))
+    if ((npcset.useNavSplines) && ((flg_move) & 8))
     {
         retval = true;
     }

@@ -11,6 +11,7 @@
 #include "zFX.h"
 #include "zGlobals.h"
 #include "zNPCSndTable.h"
+#include "zNPCSndLists.h"
 #include "zNPCTypeBossSandy.h"
 #include "xMarkerAsset.h"
 #include "zCamera.h"
@@ -111,8 +112,6 @@ static const tweak_callback newsfish_cb = {};
 static const tweak_callback shockwave_cb = {};
 
 extern zGlobals globals;
-
-extern NPCSndTrax g_sndTrax_BossSandy[1];
 
 static S32 idleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
 static S32 tauntCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
@@ -259,7 +258,6 @@ U32 HeadNotShocked(xAnimTransition*, xAnimSingle*, void*)
     return !(sSandyPtr->bossFlags & 0x100);
 }
 
-
 xAnimTable* ZNPC_AnimTable_BossSandyHead()
 {
     xAnimTable* table;
@@ -273,14 +271,14 @@ xAnimTable* ZNPC_AnimTable_BossSandyHead()
     xAnimTableNewState(table, "Shocked01", 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
                        xAnimDefaultBeforeEnter, NULL, NULL);
 
-    xAnimTableNewTransition(table, "Idle01", "Carried01", HeadIsCarried, NULL, 0, 0, 0.0f, 0.0f,
-                            0, 0, 0.25f, NULL);
-    xAnimTableNewTransition(table, "Carried01", "Idle01", HeadNotCarried, NULL, 0, 0, 0.0f,
-                            0.0f, 0, 0, 0.25f, NULL);
-    xAnimTableNewTransition(table, "Idle01", "Shocked01", HeadIsShocked, NULL, 0, 0, 0.0f, 0.0f,
-                            0, 0, 0.25f, NULL);
-    xAnimTableNewTransition(table, "Shocked01", "Idle01", HeadNotShocked, NULL, 0, 0, 0.0f,
-                            0.0f, 0, 0, 0.25f, NULL);
+    xAnimTableNewTransition(table, "Idle01", "Carried01", HeadIsCarried, NULL, 0, 0, 0.0f, 0.0f, 0,
+                            0, 0.25f, NULL);
+    xAnimTableNewTransition(table, "Carried01", "Idle01", HeadNotCarried, NULL, 0, 0, 0.0f, 0.0f, 0,
+                            0, 0.25f, NULL);
+    xAnimTableNewTransition(table, "Idle01", "Shocked01", HeadIsShocked, NULL, 0, 0, 0.0f, 0.0f, 0,
+                            0, 0.25f, NULL);
+    xAnimTableNewTransition(table, "Shocked01", "Idle01", HeadNotShocked, NULL, 0, 0, 0.0f, 0.0f, 0,
+                            0, 0.25f, NULL);
 
     return table;
 }
