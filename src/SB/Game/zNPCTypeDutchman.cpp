@@ -34,11 +34,14 @@
 
 static U32 dutchman_count;
 
+extern NPCSndTrax g_sndTrax_Dutchman;
+
 namespace
 {
 
     struct sound_property
     {
+        U32 asset; // unknown whether or not this belongs here. Just copied from other structs with same name. Also needed for matching a function
         F32 volume;
         F32 range_inner;
         F32 range_outer;
@@ -159,6 +162,7 @@ namespace
         tweak_callback cb_sound;
 
         void register_tweaks(bool init, xModelAssetParam* ap, U32 apsize, const char*);
+        void load(xModelAssetParam*, U32);
     };
 
     struct sound_data_type
@@ -181,6 +185,7 @@ namespace
         F32 scale;
     };
 
+    static delay_goal sequence[3][16];
     static sound_data_type sound_data[6];
     static sound_asset sound_assets[6];
     static xBinaryCamera boss_cam;
@@ -229,8 +234,9 @@ namespace
 
     static tweak_group tweak;
 
-    static void set_volume(S32 which, U32, F32 new_vol)
+    static void set_volume(S32 which, U32 unk, F32 new_vol)
     {
+        xSndSetVol(tweak.sound->asset * unk, new_vol);
     }
 
     void tweak_group::register_tweaks(bool init, xModelAssetParam* ap, U32 apsize, const char*)
@@ -1275,6 +1281,16 @@ void zNPCDutchman::RenderExtra()
     RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)&oldcmp);
 }
 
+void zNPCDutchman::ParseINI()
+{
+    zNPCCommon::ParseINI();
+    cfg_npc->snd_traxShare = &g_sndTrax_Dutchman;
+    NPCS_SndTablePrepare(&g_sndTrax_Dutchman);
+    cfg_npc->snd_trax = &g_sndTrax_Dutchman;
+    NPCS_SndTablePrepare(&g_sndTrax_Dutchman);
+    tweak.load(parmdata, pdatsize);
+}
+
 void zNPCDutchman::SelfSetup()
 {
     xBehaveMgr* bmgr = xBehaveMgr_GetSelf();
@@ -1352,14 +1368,13 @@ U32 zNPCDutchman::AnimPick(S32 rawgoal, en_NPC_GOAL_SPOT gspot, xGoal* goal)
 
 void zNPCDutchman::LassoNotify(en_LASSO_EVENT event)
 {
-    if ((event != 3) && (event < 3) && (event > 1))
+    if ((event != 3) && (event < 3) && (event < 2))
     {
-        // xPsyche::GoalSet(NPC_GOAL_DUTCHMANCAUGHT, 1);
+        psy_instinct->GoalSet('NGMF', 1);
     }
 
     zNPCCommon::LassoNotify(event);
 }
-//NPC_GOAL_DUTCHMANCAUGHT
 
 // double zNPCDutchman::goal_delay()
 // {
@@ -1393,6 +1408,16 @@ void zNPCDutchman::update_round()
     stage = -1;
 }
 
+S32 zNPCDutchman::next_goal()
+{
+    return 0;
+}
+
+F32 zNPCDutchman::goal_delay()
+{
+    return 0;
+}
+
 void zNPCDutchman::decompose()
 {
     if (flag.fighting != 0)
@@ -1402,7 +1427,7 @@ void zNPCDutchman::decompose()
         disable_emitter(*fadein_emitter);
         disable_emitter(*fadeout_emitter);
         zCameraEnableTracking(CO_BOSS);
-        boss_cam.stop;
+        boss_cam.stop();
     }
 }
 
@@ -1410,8 +1435,17 @@ void zNPCDutchman::render_debug()
 {
 }
 
-void zNPCDutchman::update_animation(float)
+void zNPCDutchman::update_animation(F32)
 {
+}
+
+void zNPCDutchman::update_camera(F32 dt)
+{
+    zCameraDisableTracking(CO_BOSS);
+    if ((zCameraIsTrackingDisabled() & -9) == 0)
+    {
+        boss_cam.update(dt);
+    }
 }
 
 void zNPCDutchman::kill_wave(zNPCDutchman::wave_data& wave)
@@ -1450,7 +1484,7 @@ void zNPCDutchman::stop_hand_trail()
 void zNPCDutchman::dissolve(F32 delay)
 {
     F32 volume;
-    if (delay == 0.0f)
+    if (delay <= 0.0f)
     {
         flag.fade = FADE_TELEPORT;
         disable_emitter(*fadeout_emitter);
@@ -1483,13 +1517,138 @@ void zNPCDutchman::dissolve(F32 delay)
     }
 }
 
+void zNPCDutchman::coalesce(F32 delay)
+{
+    reappear();
+    if (delay <= 0.0f)
+    {
+        flag.fade = FADE_NONE;
+        disable_emitter(*fadein_emitter);
+        disable_emitter(*dissolve_emitter);
+        set_alpha(1.0f);
+        stop_eye_glow();
+        stop_hand_trail();
+        if (fade.sound_handle != 0)
+        {
+            kill_sound(2, fade.sound_handle);
+            fade.sound_handle = 0;
+        }
+    }
+    else
+    {
+        flag.fade = FADE_COALESCE;
+        fade.time = 0.0f;
+        fade.duration = delay;
+        fade.iduration = 1.0f / fade.duration;
+        enable_emitter(*fadein_emitter);
+        enable_emitter(*dissolve_emitter);
+        set_alpha(0.0f);
+        start_eye_glow();
+        start_hand_trail();
+        if (fade.sound_handle != 0)
+        {
+            set_volume(2, fade.sound_handle, 1.0f);
+        }
+    }
+}
+
+void zNPCDutchman::reset_blob_mat()
+{
+    // Decomp.me says 90%
+    F32 temp;
+    F32 temp2;
+
+    temp = isin(tweak.flame.blob_pitch);
+    temp2 = icos(tweak.flame.blob_pitch);
+    flames.blob_mat.right.assign(1.0f, 0.0f, 0.0f);
+    flames.blob_mat.up.assign(0.0f, temp2, temp);
+    flames.blob_mat.at.assign(0.0f, -temp, temp2);
+}
+
 void zNPCDutchman::reset_lasso_anim()
 {
     xAnimPlaySetState(0, lassdata->holdGuideAnim, 0);
 }
 
+void zNPCDutchman::update_fade(F32 delay)
+{
+    F32 frac;
+    if (flag.fade != FADE_TELEPORT)
+    {
+        if (flag.fade < 1)
+        {
+            if (flag.fade < 4)
+            {
+                fade.time = fade.time + delay;
+                if (fade.time >= fade.duration)
+                {
+                    flag.fade = FADE_TELEPORT;
+                    disable_emitter(*fadeout_emitter);
+                    set_alpha(0.0f);
+                    vanish();
+                    set_volume(2, fade.sound_handle, 1.0f);
+                }
+                else
+                {
+                    frac = fade.time * fade.iduration;
+                    set_alpha(1.0f - frac);
+                    set_volume(2, fade.sound_handle, frac);
+                }
+            }
+        }
+        else if (flag.fade < 4)
+        {
+            fade.time = fade.time + delay;
+            if (fade.time >= fade.duration)
+            {
+                flag.fade = FADE_NONE;
+                disable_emitter(*fadein_emitter);
+                disable_emitter(*dissolve_emitter);
+                set_alpha(1.0f);
+                stop_eye_glow();
+                stop_hand_trail();
+                reappear();
+                kill_sound(2, fade.sound_handle);
+                fade.sound_handle = 0;
+            }
+            else
+            {
+                frac = fade.time * fade.iduration;
+                set_alpha(frac);
+                set_volume(2, fade.sound_handle, 1.0f - frac);
+            }
+        }
+    }
+}
+
 void zNPCDutchman::add_splash(const xVec3&, float)
 {
+}
+
+void zNPCDutchman::start_fight()
+{
+    if (flag.fighting == 0 && life <= 0)
+    {
+        flag.fighting = 1;
+        psy_instinct->GoalSet(0, 0);
+        zCameraDisableTracking(CO_BOSS);
+        boss_cam.start(globals.camera);
+        boss_cam.set_targets((xVec3&)globals.player.ent.model->Mat->pos, (xVec3&)model->Mat->pos,
+                             2.0f);
+    }
+}
+
+void zNPCDutchman::set_life(S32 lf)
+{
+    life = range_limit<S32>(life, 0, 3);
+    if (life < lf)
+    {
+        flag.hurting = 1;
+        for (S32 i = life; i < life; i++)
+        {
+            zEntEvent((xBase*)lf, (xBase*)lf, 0x1d7); // Haven't found 0x1d7. only 0x1d8 and 0x1d4
+        }
+    }
 }
 
 void zNPCDutchman::start_beam()
@@ -1532,6 +1691,21 @@ void zNPCDutchman::stop_flames()
     flag.flaming = false;
 }
 
+void zNPCDutchman::get_eye_loc(S32 idx) const
+{
+    // Not sure if this is correct.
+    static size_t lookup;
+    xModelGetBoneLocation(*model, lookup << 2 + idx);
+}
+
+void zNPCDutchman::get_hand_loc(S32) const
+{
+}
+
+void zNPCDutchman::get_splash_loc() const
+{
+}
+
 void zNPCDutchman::vanish()
 {
     old.moreFlags = moreFlags;
@@ -1555,13 +1729,25 @@ void zNPCDutchman::reset_speed()
 {
 }
 
+void zNPCDutchman::render_beam()
+{
+}
+
 xFactoryInst* zNPCGoalDutchmanInitiate::create(S32 who, RyzMemGrow* grow, void* info)
 {
     return new (who, grow) zNPCGoalDutchmanInitiate(who, (zNPCDutchman&)*info);
 }
 
+S32 zNPCGoalDutchmanInitiate::Enter(F32 dt, void* updCtxt)
+{
+    owner.get_orbit();
+    owner.face_player();
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
 S32 zNPCGoalDutchmanInitiate::Exit(F32 dt, void* updCtxt)
 {
+    owner.turn.accel = tweak.turn_accel;
     return xGoal::Exit(dt, updCtxt);
 }
 
@@ -1581,12 +1767,12 @@ S32 zNPCGoalDutchmanIdle::Exit(F32 dt, void* updCtxt)
     return xGoal::Exit(dt, updCtxt);
 }
 
-S32 zNPCGoalDutchmanIdle::Process(en_trantype* trantype, float dt, void* updCtxt, xScene* xscn)
+S32 zNPCGoalDutchmanIdle::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
 {
-    owner.goal_delay();
-    if (owner.delay == owner.delay)
+    F32 tmpFlt = owner.goal_delay();
+    if (owner.delay >= tmpFlt)
     {
-        owner.delay = 1;
+        owner.delay = 0;
 
         owner.next_goal();
     }
@@ -1648,6 +1834,10 @@ xFactoryInst* zNPCGoalDutchmanBeam::create(S32 who, RyzMemGrow* grow, void* info
 S32 zNPCGoalDutchmanBeam::Exit(F32 dt, void* updCtxt)
 {
     return xGoal::Exit(dt, updCtxt);
+}
+
+void zNPCGoalDutchmanBeam::update_stop(F32 dt)
+{
 }
 
 xFactoryInst* zNPCGoalDutchmanFlame::create(S32 who, RyzMemGrow* grow, void* info)

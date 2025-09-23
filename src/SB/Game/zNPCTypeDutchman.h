@@ -124,10 +124,10 @@ struct zNPCDutchman : zNPCSubBoss
     {
         xVec2 dir; //0x2d4
         F32 vel; //0x2dc
-        F32 accel; //0x2e0
-        F32 max_vel; //0x2e4
+        F32 accel; //0x2e4
+        F32 max_vel; //0x2e8
     } turn;
-    move_info move; //0x2e8
+    move_info move;
     struct
     {
         U8 moreFlags; //0x31c
@@ -181,6 +181,7 @@ struct zNPCDutchman : zNPCSubBoss
                  S32* handled);
     void Render();
     void RenderExtra();
+    void ParseINI();
     void SelfSetup();
     void render_debug();
     void update_turn(F32);
@@ -202,12 +203,15 @@ struct zNPCDutchman : zNPCSubBoss
     void start_flames();
     void stop_flames();
     U8 check_player_damage();
+    void get_eye_loc(S32) const;
     void get_hand_loc(S32) const;
+    void get_splash_loc() const;
     void start_hand_trail();
     void stop_hand_trail();
     void refresh_reticle();
     void update_hand_trail(F32);
     void dissolve(F32);
+    void coalesce(F32);
     void reset_lasso_anim();
     void update_fade(F32);
     void update_slime(F32);
@@ -218,8 +222,8 @@ struct zNPCDutchman : zNPCSubBoss
     S32 LassoSetup();
     void update_round();
     void decompose();
-    void next_goal();
-    void goal_delay();
+    S32 next_goal();
+    F32 goal_delay();
     void start_eye_glow();
     void stop_eye_glow();
     void update_eye_glow(F32);
@@ -231,6 +235,8 @@ struct zNPCDutchman : zNPCSubBoss
 
     void enable_emitter(zParEmitter&) const;
     void disable_emitter(zParEmitter&) const;
+    void turning() const; // Not sure this is the correct return type
+    void turning(F32) const; // Not sure this is the correct return type
     U8 PhysicsFlags() const;
     U8 ColPenByFlags() const;
     U8 ColChkByFlags() const;
@@ -251,6 +257,7 @@ struct zNPCGoalDutchmanInitiate : zNPCGoalCommon
     {
     }
 
+    S32 Enter(float, void*);
     S32 Exit(float, void*);
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
@@ -344,6 +351,7 @@ struct zNPCGoalDutchmanBeam : zNPCGoalCommon
     }
 
     S32 Exit(float, void*);
+    void update_stop(F32 dt);
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
 

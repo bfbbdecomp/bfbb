@@ -151,6 +151,8 @@ void xModel_SceneExit(RpWorld* world);
 xSphere* xModelGetLocalSBound(xModelInstance* model);
 void xModelGetBoneMat(xMat4x3& mat, const xModelInstance& model, size_t index);
 void xModelInstanceUpgradeBrotherShared(xModelInstance* inst, U32 flags);
+xVec3 xModelGetBoneLocation(const xModelInstance& model,
+                            size_t index); // Based off the usage in zNPCTypeDutchman
 
 inline void xModelSetFrame(xModelInstance* modelInst, const xMat4x3* frame)
 {
