@@ -15,6 +15,7 @@ struct xParInterp
     F32 oofreq;
 
     void set(F32, F32, F32, U32);
+    void set(F32); // Used in zNPCDutchman
 };
 
 // Size 0x138

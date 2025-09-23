@@ -7,6 +7,9 @@
 #include "xBehaviour.h"
 #include "zNPCTypeCommon.h"
 #include "zNPCGoals.h"
+#include "xCamera.h"
+#include "zCamera.h"
+#include "xMath3.h"
 
 namespace auto_tweak
 {
@@ -169,26 +172,45 @@ struct zNPCDutchman : zNPCSubBoss
     RwRaster* laser_raster;
 
     zNPCDutchman(S32 myType);
+    void Init(xEntAsset* asset);
     void Setup();
+    void Reset();
     void Destroy();
+    void Process(xScene*, F32);
+    S32 SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* toParamWidget,
+                 S32* handled);
     void Render();
+    void RenderExtra();
     void SelfSetup();
     void render_debug();
-    void update_animation(float);
+    void update_turn(F32);
+    void update_move(F32);
+    void update_animation(F32);
+    void update_camera(F32);
     void kill_wave(zNPCDutchman::wave_data&);
-    void add_splash(const xVec3&, float);
+    void add_splash(const xVec3&, F32);
     void vanish();
     void reappear();
     void turn_to_face(const xVec3&);
     void face_player();
+    void update_flames(F32);
+    void start_fight();
+    void set_life(S32);
     void start_beam();
     void stop_beam();
+    void set_alpha(F32);
     void start_flames();
     void stop_flames();
+    U8 check_player_damage();
     void get_hand_loc(S32) const;
     void start_hand_trail();
     void stop_hand_trail();
+    void refresh_reticle();
+    void update_hand_trail(F32);
+    void dissolve(F32);
     void reset_lasso_anim();
+    void update_fade(F32);
+    void update_slime(F32);
     void reset_speed();
     void Damage(en_NPC_DAMAGE_TYPE, xBase*, const xVec3*);
     U32 AnimPick(S32 rawgoal, en_NPC_GOAL_SPOT gspot, xGoal* goal);
@@ -200,7 +222,15 @@ struct zNPCDutchman : zNPCSubBoss
     void goal_delay();
     void start_eye_glow();
     void stop_eye_glow();
+    void update_eye_glow(F32);
     void get_orbit() const; //Weak
+    xVec3 get_center() const; //Weak
+    void reset_blob_mat();
+    void render_beam();
+    void render_halo();
+
+    void enable_emitter(zParEmitter&) const;
+    void disable_emitter(zParEmitter&) const;
     U8 PhysicsFlags() const;
     U8 ColPenByFlags() const;
     U8 ColChkByFlags() const;
