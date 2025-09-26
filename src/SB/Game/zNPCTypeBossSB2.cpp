@@ -1132,28 +1132,6 @@ void zNPCB_SB2::Destroy()
 
 void zNPCB_SB2::NewTime(xScene* x, float y)
 {
-    //this->
-    if(1 != 0)
-    {
-        zNPCB_SB2::move_nodes();
-    }
-
-    if(1 != 0)
-    {
-        zNPCB_SB2::move_hand(zNPCB_SB2::hands[1], 0);
-    }
-
-    zNPCB_SB2::update_bounds();
-    zNPCB_SB2::update_platforms(0.0f);
-    zNPCB_SB2::update_slugs(0.0f);
-    //xModelGetBoneLocation(const xModelInstance&, unsigned long);
-    //xVec3::operator=(const xVec3&);
-    //xVec3::operator=(const xVec3&);
-    //xModelGetBoneLocation(const xModelInstance&, unsigned long);
-    //xVec3::operator=(const xVec3&);
-    //xModelGetBoneLocation(const xModelInstance&, unsigned long);
-    //xVec3::operator=(const xVec3&);
-    zNPCCommon::NewTime(x, y);
 }
 
 void zNPCB_SB2::render_debug()
