@@ -90,9 +90,10 @@ namespace
         { 7, "RSB_armhit2", 0, 0 },    { 8, "RSB_armsmash", 0, 0 }, { 9, "RSB_foor_impact", 0, 0 },
     };
 
-    S32 set_alpha_blend(xModelInstance*)
+    void set_alpha_blend(xModelInstance* model)
     {
-        return 0; // to-do
+        model->PipeFlags &= ~0xFF0C;
+        model->PipeFlags |= 0x6508;
     }
 
     F32 max(float maxFloat1, float maxFloat2) //Temp names till file is further
@@ -1129,6 +1130,9 @@ void zNPCB_SB2::Destroy()
     zNPCCommon::Destroy();
 }
 
+void zNPCB_SB2::NewTime(xScene* x, float y)
+{
+}
 
 void zNPCB_SB2::render_debug()
 {
@@ -1223,7 +1227,12 @@ S32 zNPCB_SB2::player_on_ground() const
 
 void zNPCB_SB2::abandon_slugs()
 {
-   
+    slug_data* pCurSlug      = &slugs[0];
+    slug_data* pLastSlug     = &pCurSlug[3];
+    for (; pCurSlug != pLastSlug; pCurSlug++)
+    {
+         pCurSlug->abandoned = 1;
+    }
 }
 
 void zNPCB_SB2::reset_stage()
@@ -1394,11 +1403,9 @@ S32 zNPCGoalBossSB2Death::Process(en_trantype*, F32, void*, xScene*)
     return 0;
 }
 
-// WEAK
-
-void zNPCB_SB2::choose_hand() //53%
+void zNPCB_SB2::choose_hand()
 {
-    S32 rand;
-    rand = xrand() >> 0xd & 1;
-
+    S32 r = xrand();
+    S32 b = (r >> 13) & 1;
+    this->active_hand = (b == 0 ? LEFT_HAND : RIGHT_HAND);
 }
