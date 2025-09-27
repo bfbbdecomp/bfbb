@@ -37,34 +37,10 @@ extern zParEmitter* g_pemit_aqualeak;
 extern xParEmitterCustomSettings g_parf_aqualeak;
 extern const xVec3 g_O3;
 
-static char* g_strz_folkanim[26] =
-{
-    "Unknown",
-    "Idle01",
-    "Move01",
-    "Hurt01",
-    "Yawn01",
-    "Talk01",
-    "Flee01",
-    "Fear01",
-    "Pray01",
-    "Clap01",
-    "Special01",
-    "Ride01",
-    "Bump01",
-    "Fall01",
-    "Land01",
-    "Weep01",
-    "Swim01",
-    "Idle02",
-    "Idle03",
-    "Idle04",
-    "Yawn02",
-    "Yawn03",
-    "Yawn04",
-    "Talk02",
-    "Talk03",
-    "Talk04",
+static char* g_strz_folkanim[26] = {
+    "Unknown", "Idle01",    "Move01", "Hurt01", "Yawn01", "Talk01", "Flee01", "Fear01", "Pray01",
+    "Clap01",  "Special01", "Ride01", "Bump01", "Fall01", "Land01", "Weep01", "Swim01", "Idle02",
+    "Idle03",  "Idle04",    "Yawn02", "Yawn03", "Yawn04", "Talk02", "Talk03", "Talk04",
 };
 
 // Taken from zNPCTypeVillager.s
@@ -291,7 +267,7 @@ xAnimTable* ZNPC_AnimTable_Villager()
 
 xAnimTable* ZNPC_AnimTable_Villager(xAnimTable* callerTable)
 {
-    S32 ourAnims[11] = { Idle01, Move01, Hurt01, Yawn01, Talk01, Flee01,
+    S32 ourAnims[11] = { Idle01, Move01, Hurt01, Yawn01,    Talk01, Flee01,
                          Fear01, Pray01, Clap01, Special01, Unknown };
     xAnimTable* table = callerTable;
     char** names = g_strz_folkanim;
@@ -421,7 +397,6 @@ xAnimTable* ZNPC_AnimTableSuperFriend(xAnimTable* callerTable)
     return table;
 }
 
-
 U8 zNPCVillager::PhysicsFlags() const
 {
     S32 flags = 0;
@@ -463,8 +438,8 @@ void zNPCVillager::Reset()
 void zNPCVillager::ParseINI()
 {
     zNPCCommon::ParseINI();
-    cfg_npc->snd_traxShare = &g_sndTrax_Villager;
-    NPCS_SndTablePrepare((NPCSndTrax*)&g_sndTrax_Villager);
+    cfg_npc->snd_traxShare = g_sndTrax_Villager;
+    NPCS_SndTablePrepare(g_sndTrax_Villager);
     zNPCVillager::ParseNonRandTalk();
 }
 

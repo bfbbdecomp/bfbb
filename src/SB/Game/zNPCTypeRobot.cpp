@@ -1,6 +1,7 @@
 #include "zNPCTypeRobot.h"
 #include "zNPCSupplement.h"
 #include "zNPCSupport.h"
+#include "zNPCSndLists.h"
 #include "zNPCGoalRobo.h"
 #include "zNPCTypes.h"
 #include "zNPCGoalStd.h"
@@ -22,23 +23,6 @@ extern S32 g_needuvincr_bzzt;
 extern S32 g_needuvincr_nightlight;
 extern S32 g_needuvincr_slickshield;
 extern S32 cnt_alerthokey__11zNPCFodBzzt;
-
-extern NPCSndTrax g_sndTrax_Robot[2];
-extern NPCSndTrax g_sndTrax_Fodder;
-extern NPCSndTrax g_sndTrax_FodBomb[6];
-extern NPCSndTrax g_sndTrax_FodBzzt[3];
-extern NPCSndTrax g_sndTrax_Chomper[4];
-extern NPCSndTrax g_sndTrax_Hammer[3];
-extern NPCSndTrax g_sndTrax_TarTar[4];
-
-extern NPCSndTrax g_sndTrax_Monsoon[];
-extern NPCSndTrax g_sndTrax_Sleepy[];
-extern NPCSndTrax g_sndTrax_ArfArf[];
-extern NPCSndTrax g_sndTrax_ArfDog[];
-extern NPCSndTrax g_sndTrax_Chuck[];
-extern NPCSndTrax g_sndTrax_Tubelet[];
-extern NPCSndTrax g_sndTrax_Slick[];
-extern NPCSndTrax g_sndTrax_Glove[];
 
 extern F32 zNPCRobot_f_0_0;
 extern F32 zNPCRobot_f_1_0;
@@ -365,115 +349,114 @@ void zNPCSleepy::ParseINI()
 
     NPCConfig* cfg = cfg_npc;
     zNPCRobot::ParseINI();
-    cfg->snd_trax = &g_sndTrax_Sleepy[0];
-    NPCS_SndTablePrepare(&g_sndTrax_Sleepy[0]);
+    cfg->snd_trax = g_sndTrax_Sleepy;
+    NPCS_SndTablePrepare(g_sndTrax_Sleepy);
     // Scheduling issue with init.
     if (init == 0)
     {
         rad_minimum = 5.0f;
         init = 1;
     }
-    float fVar1 = cfg_npc->rad_detect;
-    cfg_npc->rad_detect = MAX(rad_minimum, fVar1);
+    cfg_npc->rad_detect = MAX(rad_minimum, cfg_npc->rad_detect);
 }
 
 void zNPCMonsoon::ParseINI()
 {
     NPCConfig* cfg = cfg_npc;
     zNPCRobot::ParseINI();
-    cfg->snd_trax = &g_sndTrax_Monsoon[0];
-    NPCS_SndTablePrepare(&g_sndTrax_Monsoon[0]);
+    cfg->snd_trax = g_sndTrax_Monsoon;
+    NPCS_SndTablePrepare(g_sndTrax_Monsoon);
 }
 
 void zNPCSlick::ParseINI()
 {
     NPCConfig* cfg = cfg_npc;
     zNPCRobot::ParseINI();
-    cfg->snd_trax = &g_sndTrax_Slick[0];
-    NPCS_SndTablePrepare(&g_sndTrax_Slick[0]);
+    cfg->snd_trax = g_sndTrax_Slick;
+    NPCS_SndTablePrepare(g_sndTrax_Slick);
 }
 
 void zNPCChuck::ParseINI()
 {
     NPCConfig* cfg = cfg_npc;
     zNPCRobot::ParseINI();
-    cfg->snd_trax = &g_sndTrax_Chuck[0];
-    NPCS_SndTablePrepare(&g_sndTrax_Chuck[0]);
+    cfg->snd_trax = g_sndTrax_Chuck;
+    NPCS_SndTablePrepare(g_sndTrax_Chuck);
 }
 
 void zNPCTubeSlave::ParseINI()
 {
     NPCConfig* cfg = cfg_npc;
     zNPCRobot::ParseINI();
-    cfg->snd_trax = &g_sndTrax_Tubelet[0];
-    NPCS_SndTablePrepare(&g_sndTrax_Tubelet[0]);
+    cfg->snd_trax = g_sndTrax_Tubelet;
+    NPCS_SndTablePrepare(g_sndTrax_Tubelet);
 }
 
 void zNPCTubelet::ParseINI()
 {
     NPCConfig* cfg = cfg_npc;
     zNPCRobot::ParseINI();
-    cfg->snd_trax = &g_sndTrax_Tubelet[0];
-    NPCS_SndTablePrepare(&g_sndTrax_Tubelet[0]);
+    cfg->snd_trax = g_sndTrax_Tubelet;
+    NPCS_SndTablePrepare(g_sndTrax_Tubelet);
 }
 
 void zNPCArfDog::ParseINI()
 {
     NPCConfig* cfg = cfg_npc;
     zNPCRobot::ParseINI();
-    cfg->snd_trax = &g_sndTrax_ArfDog[0];
-    NPCS_SndTablePrepare(&g_sndTrax_ArfDog[0]);
+    cfg->snd_trax = g_sndTrax_ArfDog;
+    NPCS_SndTablePrepare(g_sndTrax_ArfDog);
 }
 
 void zNPCArfArf::ParseINI()
 {
     NPCConfig* cfg = cfg_npc;
     zNPCRobot::ParseINI();
-    cfg->snd_trax = &g_sndTrax_ArfArf[0];
-    NPCS_SndTablePrepare(&g_sndTrax_ArfArf[0]);
+    cfg->snd_trax = g_sndTrax_ArfArf;
+    NPCS_SndTablePrepare(g_sndTrax_ArfArf);
 }
 
 void zNPCTarTar::ParseINI()
 {
     zNPCRobot::ParseINI();
-    cfg_npc->snd_trax = &g_sndTrax_TarTar[0];
-    NPCS_SndTablePrepare(&g_sndTrax_TarTar[0]);
+    cfg_npc->snd_trax = g_sndTrax_TarTar;
+    NPCS_SndTablePrepare(g_sndTrax_TarTar);
 }
 
 void zNPCGlove::ParseINI()
 {
     NPCConfig* cfg = cfg_npc;
     zNPCRobot::ParseINI();
-    cfg->snd_trax = &g_sndTrax_Glove[0];
-    NPCS_SndTablePrepare(&g_sndTrax_Glove[0]);
+    cfg->snd_trax = g_sndTrax_Glove;
+    NPCS_SndTablePrepare(g_sndTrax_Glove);
 }
 
 void zNPCHammer::ParseINI()
 {
     zNPCRobot::ParseINI();
-    cfg_npc->snd_trax = &g_sndTrax_Hammer[0];
-    NPCS_SndTablePrepare(&g_sndTrax_Hammer[0]);
+    cfg_npc->snd_trax = g_sndTrax_Hammer;
+    NPCS_SndTablePrepare(g_sndTrax_Hammer);
 }
 
 void zNPCChomper::ParseINI()
 {
     zNPCRobot::ParseINI();
-    cfg_npc->snd_trax = &g_sndTrax_Chomper[0];
-    NPCS_SndTablePrepare(&g_sndTrax_Chomper[0]);
+    cfg_npc->snd_trax = g_sndTrax_Chomper;
+    NPCS_SndTablePrepare(g_sndTrax_Chomper);
 }
 
 void zNPCFodBomb::ParseINI()
 {
     zNPCRobot::ParseINI();
-    cfg_npc->snd_trax = &g_sndTrax_FodBomb[0];
-    NPCS_SndTablePrepare(&g_sndTrax_FodBomb[0]);
+    cfg_npc->snd_trax = g_sndTrax_FodBomb;
+    NPCS_SndTablePrepare(g_sndTrax_FodBomb);
 }
 
 void zNPCFodBzzt::ParseINI()
 {
     zNPCRobot::ParseINI();
-    cfg_npc->snd_trax = &g_sndTrax_FodBzzt[0];
-    NPCS_SndTablePrepare(&g_sndTrax_FodBzzt[0]);
+    cfg_npc->snd_trax = g_sndTrax_FodBzzt;
+    NPCS_SndTablePrepare(g_sndTrax_FodBzzt);
 }
 
 void zNPCArfDog::Init(xEntAsset* asset)
@@ -829,9 +812,9 @@ S32 zNPCTubelet::Respawn(const xVec3* pos, zMovePoint* mvptFirst, zMovePoint* mv
 
 void zNPCFodder::ParseINI()
 {
-    zNPCCommon::ParseINI();
-    cfg_npc->snd_trax = &g_sndTrax_Fodder;
-    NPCS_SndTablePrepare(&g_sndTrax_Fodder);
+    zNPCRobot::ParseINI();
+    cfg_npc->snd_trax = g_sndTrax_Fodder;
+    NPCS_SndTablePrepare(g_sndTrax_Fodder);
 }
 
 /*

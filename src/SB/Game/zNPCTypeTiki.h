@@ -20,9 +20,9 @@ struct zNPCTiki : zNPCCommon
     F32 landHt; // 0x328
     xEnt* nonTikiParent; // 0x32c
     xVec3 nonTikiParentDisp; // 0x330
-    U8 numParents; // 0x33c
+    U32 numParents; // 0x33c
     zNPCTiki* parents[4]; // 0x340
-    U8 numChildren;
+    U32 numChildren;
     zNPCTiki* children[4];
     zNPCTiki* nextOrphan; // 0x364
     U32 updatedParents;
@@ -58,7 +58,7 @@ struct zNPCTiki : zNPCCommon
     virtual void DuploNotice();
     virtual S32 CanRope();
     S32 SetCarryState(en_NPC_CARRY_STATE cs);
-    virtual void AnimPick();
+    virtual U32 AnimPick(int, en_NPC_GOAL_SPOT, xGoal*);
 };
 
 void ZNPC_Tiki_Startup();

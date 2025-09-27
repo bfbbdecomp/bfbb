@@ -11,6 +11,7 @@
 #include "zFX.h"
 #include "zGlobals.h"
 #include "zNPCSndTable.h"
+#include "zNPCSndLists.h"
 #include "zNPCTypeBossSandy.h"
 #include "xMarkerAsset.h"
 #include "zCamera.h"
@@ -111,8 +112,6 @@ static const tweak_callback newsfish_cb = {};
 static const tweak_callback shockwave_cb = {};
 
 extern zGlobals globals;
-
-extern NPCSndTrax g_sndTrax_BossSandy[1];
 
 static S32 idleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
 static S32 tauntCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
