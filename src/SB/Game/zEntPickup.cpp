@@ -10,6 +10,7 @@
 #include "zUI.h"
 
 #include "xMath.h"
+#include "xMathInlines.h"
 #include "xFX.h"
 #include "xstransvc.h"
 #include "iAnim.h"
