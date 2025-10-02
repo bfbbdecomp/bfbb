@@ -41,7 +41,6 @@ namespace
 
     struct sound_property
     {
-        U32 asset; // unknown whether or not this belongs here. Just copied from other structs with same name. Also needed for matching a function
         F32 volume;
         F32 range_inner;
         F32 range_outer;
@@ -236,7 +235,7 @@ namespace
 
     static void set_volume(S32 which, U32 unk, F32 new_vol)
     {
-        xSndSetVol(tweak.sound->asset * unk, new_vol);
+        xSndSetVol(tweak.sound->volume * unk, new_vol);
     }
 
     void tweak_group::register_tweaks(bool init, xModelAssetParam* ap, U32 apsize, const char*)
