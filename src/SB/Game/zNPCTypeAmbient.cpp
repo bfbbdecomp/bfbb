@@ -1,11 +1,11 @@
 #include <types.h>
 
 #include "xVec3.h"
-#include "xBound.h"
 #include "xMath3.h"
 
 #include "zGlobals.h"
 #include "zNPCGoalAmbient.h"
+#include "zNPCSndLists.h"
 #include "zNPCTypeAmbient.h"
 #include "zNPCTypes.h"
 #include <xutil.h>
@@ -14,13 +14,11 @@
 
 extern char* g_strz_ambianim[12];
 extern S32 g_hash_ambianim[12];
-extern NPCSndTrax g_sndTrax_Jelly[4];
 extern zGlobals globals;
 extern F32 zNPCTypeAmbientx40600000;
 extern F32 zNPCTypeAmbientx405f66f3;
 extern F32 zNPCTypeAmbientx3f400000;
 extern F32 zNPCTypeAmbientx3edf66f3;
-extern NPCSndTrax g_sndTrax_Neptune;
 extern F32 _882;
 extern F32 _883;
 
@@ -230,20 +228,20 @@ void zNPCJelly::ParseINI()
     selfType = xNPCBasic::SelfType();
     if (selfType == NPC_TYPE_JELLYBLUE)
     {
-        cfg_npc->spd_moveMax = zNPCTypeAmbientx40600000;
-        cfg_npc->spd_turnMax = zNPCTypeAmbientx405f66f3;
+        cfg_npc->spd_moveMax = 3.5f; //zNPCTypeAmbientx40600000;
+        cfg_npc->spd_turnMax = 3.4906585f; //zNPCTypeAmbientx405f66f3;
     }
     else if (selfType == NPC_TYPE_JELLYPINK)
     {
         if (globals.sceneCur->sceneID == 'JF04') //DAT_803c2518 is globals.sceneCur->sceneID
         {
-            cfg_npc->spd_moveMax = zNPCTypeAmbientx40600000;
-            cfg_npc->spd_turnMax = zNPCTypeAmbientx405f66f3;
+            cfg_npc->spd_moveMax = 3.5f; //zNPCTypeAmbientx40600000;
+            cfg_npc->spd_turnMax = 3.4906585f; //zNPCTypeAmbientx405f66f3;
         }
         else
         {
-            cfg_npc->spd_moveMax = zNPCTypeAmbientx3f400000;
-            cfg_npc->spd_turnMax = zNPCTypeAmbientx3edf66f3;
+            cfg_npc->spd_moveMax = 0.75f; //zNPCTypeAmbientx3f400000;
+            cfg_npc->spd_turnMax = 0.43633232f; //zNPCTypeAmbientx3edf66f3;
         }
     }
 }
@@ -396,8 +394,8 @@ void zNPCNeptune::ParseINI()
 {
     zNPCAmbient::ParseINI();
     cfg_npc->snd_traxShare = NULL;
-    cfg_npc->snd_trax = &g_sndTrax_Neptune;
-    NPCS_SndTablePrepare(&g_sndTrax_Neptune);
+    cfg_npc->snd_trax = g_sndTrax_Neptune;
+    NPCS_SndTablePrepare(g_sndTrax_Neptune);
 }
 
 void zNPCNeptune::Reset()

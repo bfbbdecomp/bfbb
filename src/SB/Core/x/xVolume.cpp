@@ -1,8 +1,6 @@
-#include <types.h>
-
-#include "xBound.h"
-#include "xLinkAsset.h"
 #include "xVolume.h"
+
+#include <types.h>
 
 void xVolume::Init(xVolumeAsset* asset)
 {
