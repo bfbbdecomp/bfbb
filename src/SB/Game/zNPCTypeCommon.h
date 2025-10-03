@@ -10,6 +10,8 @@
 #include "xSFX.h"
 #include "xstransvc.h"
 #include "xDraw.h"
+#include "xstransvc.h"
+#include "xDraw.h"
 
 #include "zNPCSndTable.h"
 #include "zMovePoint.h"

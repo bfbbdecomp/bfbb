@@ -181,6 +181,7 @@ struct zNPCDutchman : zNPCSubBoss
                  S32* handled);
     void Render();
     void RenderExtra();
+    void ParseINI();
     void SelfSetup();
     void render_debug();
     void update_turn(F32);
@@ -208,6 +209,7 @@ struct zNPCDutchman : zNPCSubBoss
     void refresh_reticle();
     void update_hand_trail(F32);
     void dissolve(F32);
+    void coalesce(F32);
     void reset_lasso_anim();
     void update_fade(F32);
     void update_slime(F32);

@@ -31,12 +31,22 @@ namespace
 
         if (shared.delay_events == 0)
         {
-            zEntEvent(shared.active, shared.active, event);
+            shared.triggered.push_back();
+            shared.triggered.back();
+            shared.active->id = 0;
         }
         else
         {
-            shared.triggered.push_back();
+            zEntEvent(shared.active, shared.active, event);
         }
+    }
+
+    static void flush_triggered()
+    {
+    }
+
+    static void reset_auto_wait()
+    {
     }
 
     void trigger_pads(U32 pressed)
@@ -227,7 +237,7 @@ namespace
         // HACK
         return (char*)(asset) + 4;
     }
-        
+
 } // namespace
 
 void ztalkbox::load(const asset_type& tasset)
