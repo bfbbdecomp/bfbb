@@ -1,8 +1,9 @@
 #ifndef ZNPCTYPEVILLAGER_H
 #define ZNPCTYPEVILLAGER_H
 
-#include "zNPCTypeCommon.h"
+#include "zNPCSndLists.h"
 #include "zNPCSupport.h"
+#include "zNPCTypeCommon.h"
 #include "zTaskBox.h"
 #include "zPlatform.h"
 #include "xShadow.h"
@@ -229,15 +230,5 @@ S32 zParamGetFloatList(xModelAssetParam* parmdata, U32 pdatsize, const char* str
                        F32* non_choices, F32 len_mvptspline);
 void zNPCVillager_SceneFinish();
 void zNPCVillager_SceneTimestep(xScene* xscn, F32 dt);
-
-extern NPCSndTrax g_sndTrax_Villager;
-extern NPCSndTrax g_sndTrax_VillagerMale;
-extern NPCSndTrax g_sndTrax_VillagerFemale;
-extern NPCSndTrax g_sndTrax_VillagerElder;
-extern NPCSndTrax g_sndTrax_VillagerEldess;
-extern NPCSndTrax g_sndTrax_VillagerBoy;
-extern NPCSndTrax g_sndTrax_VillagerGirl;
-extern NPCSndTrax g_sndTrax_VillagerCoStar;
-extern NPCSndTrax g_sndTrax_Squidward;
 
 #endif

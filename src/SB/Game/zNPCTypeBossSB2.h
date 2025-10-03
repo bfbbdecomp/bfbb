@@ -216,6 +216,12 @@ struct zNPCB_SB2 : zNPCBoss
     zNPCB_SB2(S32 myType);
     void SelfSetup();
     void Destroy();
+    void NewTime(xScene*, float);
+    void move_nodes();
+    void move_hand(zNPCB_SB2::hand_data&, float);
+    void update_bounds();
+    void update_platforms(float);
+    void update_slugs(float);
     void render_debug();
     void decompose();
     void show_nodes();
@@ -235,8 +241,6 @@ struct zNPCB_SB2 : zNPCBoss
     void abandon_slugs();
     void set_vulnerable(bool);
     void say(int);
-
-    // WEAK
     void choose_hand();
 };
 
