@@ -33,6 +33,7 @@
 #define SOUND_MORE_BIZARRE 5
 
 static U32 dutchman_count;
+extern NPCSndTrax g_sndTrax_Dutchman;
 
 namespace
 {
@@ -159,6 +160,7 @@ namespace
         tweak_callback cb_sound;
 
         void register_tweaks(bool init, xModelAssetParam* ap, U32 apsize, const char*);
+        void load(xModelAssetParam*, U32);
     };
 
     struct sound_data_type
@@ -1275,6 +1277,16 @@ void zNPCDutchman::RenderExtra()
     RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)&oldcmp);
 }
 
+void zNPCDutchman::ParseINI()
+{
+    zNPCCommon::ParseINI();
+    cfg_npc->snd_traxShare = &g_sndTrax_Dutchman;
+    NPCS_SndTablePrepare(&g_sndTrax_Dutchman);
+    cfg_npc->snd_trax = &g_sndTrax_Dutchman;
+    NPCS_SndTablePrepare(&g_sndTrax_Dutchman);
+    tweak.load(parmdata, pdatsize);
+}
+
 void zNPCDutchman::SelfSetup()
 {
     xBehaveMgr* bmgr = xBehaveMgr_GetSelf();
@@ -1414,6 +1426,15 @@ void zNPCDutchman::update_animation(float)
 {
 }
 
+void zNPCDutchman::update_camera(F32 dt)
+{
+    zCameraDisableTracking(CO_BOSS);
+    if ((zCameraIsTrackingDisabled() & -9) == 0)
+    {
+        boss_cam.update(dt);
+    }
+}
+
 void zNPCDutchman::kill_wave(zNPCDutchman::wave_data& wave)
 {
     kill_sound(1, wave.sound_handle);
@@ -1483,13 +1504,138 @@ void zNPCDutchman::dissolve(F32 delay)
     }
 }
 
+void zNPCDutchman::coalesce(F32 delay)
+{
+    reappear();
+    if (delay <= 0.0f)
+    {
+        flag.fade = FADE_NONE;
+        disable_emitter(*fadein_emitter);
+        disable_emitter(*dissolve_emitter);
+        set_alpha(1.0f);
+        stop_eye_glow();
+        stop_hand_trail();
+        if (fade.sound_handle != 0)
+        {
+            kill_sound(2, fade.sound_handle);
+            fade.sound_handle = 0;
+        }
+    }
+    else
+    {
+        flag.fade = FADE_COALESCE;
+        fade.time = 0.0f;
+        fade.duration = delay;
+        fade.iduration = 1.0f / fade.duration;
+        enable_emitter(*fadein_emitter);
+        enable_emitter(*dissolve_emitter);
+        set_alpha(0.0f);
+        start_eye_glow();
+        start_hand_trail();
+        if (fade.sound_handle != 0)
+        {
+            set_volume(2, fade.sound_handle, 1.0f);
+        }
+    }
+}
+
+void zNPCDutchman::reset_blob_mat()
+{
+    // Decomp.me says 90%
+    F32 temp;
+    F32 temp2;
+
+    temp = isin(tweak.flame.blob_pitch);
+    temp2 = icos(tweak.flame.blob_pitch);
+    flames.blob_mat.right.assign(1.0f, 0.0f, 0.0f);
+    flames.blob_mat.up.assign(0.0f, temp2, temp);
+    flames.blob_mat.at.assign(0.0f, -temp, temp2);
+}
+
 void zNPCDutchman::reset_lasso_anim()
 {
     xAnimPlaySetState(0, lassdata->holdGuideAnim, 0);
 }
 
+void zNPCDutchman::update_fade(F32 delay)
+{
+    F32 frac;
+    if (flag.fade != FADE_TELEPORT)
+    {
+        if (flag.fade < 1)
+        {
+            if (flag.fade < 4)
+            {
+                fade.time = fade.time + delay;
+                if (fade.time >= fade.duration)
+                {
+                    flag.fade = FADE_TELEPORT;
+                    disable_emitter(*fadeout_emitter);
+                    set_alpha(0.0f);
+                    vanish();
+                    set_volume(2, fade.sound_handle, 1.0f);
+                }
+                else
+                {
+                    frac = fade.time * fade.iduration;
+                    set_alpha(1.0f - frac);
+                    set_volume(2, fade.sound_handle, frac);
+                }
+            }
+        }
+        else if (flag.fade < 4)
+        {
+            fade.time = fade.time + delay;
+            if (fade.time >= fade.duration)
+            {
+                flag.fade = FADE_NONE;
+                disable_emitter(*fadein_emitter);
+                disable_emitter(*dissolve_emitter);
+                set_alpha(1.0f);
+                stop_eye_glow();
+                stop_hand_trail();
+                reappear();
+                kill_sound(2, fade.sound_handle);
+                fade.sound_handle = 0;
+            }
+            else
+            {
+                frac = fade.time * fade.iduration;
+                set_alpha(frac);
+                set_volume(2, fade.sound_handle, 1.0f - frac);
+            }
+        }
+    }
+}
+
 void zNPCDutchman::add_splash(const xVec3&, float)
 {
+}
+
+void zNPCDutchman::start_fight()
+{
+    if (flag.fighting == 0 && life <= 0)
+    {
+        flag.fighting = 1;
+        psy_instinct->GoalSet(0, 0);
+        zCameraDisableTracking(CO_BOSS);
+        boss_cam.start(globals.camera);
+        boss_cam.set_targets((xVec3&)globals.player.ent.model->Mat->pos, (xVec3&)model->Mat->pos,
+                             2.0f);
+    }
+}
+
+void zNPCDutchman::set_life(S32 lf)
+{
+    life = range_limit<S32>(life, 0, 3);
+    if (life < lf)
+    {
+        flag.hurting = 1;
+        for (S32 i = life; i < life; i++)
+        {
+            zEntEvent((xBase*)lf, (xBase*)lf, 0x1d7); // Haven't found 0x1d7. only 0x1d8 and 0x1d4
+        }
+    }
 }
 
 void zNPCDutchman::start_beam()

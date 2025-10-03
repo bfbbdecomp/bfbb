@@ -11,7 +11,7 @@
 
 #define ANIM_Unknown 0 // 0x0
 #define ANIM_Idle01 1 // 0x04
-#define ANIM_Idle02 2 // 0x08 
+#define ANIM_Idle02 2 // 0x08
 #define ANIM_Idle03 3 // 0xC
 #define ANIM_Fidget01 4 //
 #define ANIM_Fidget02 5
@@ -78,6 +78,10 @@ namespace
 
         void register_tweaks(bool init, xModelAssetParam* ap, U32 apsize);
     }; // namespace tweak_group
+
+    void kill_sound(S32, U32)
+    {
+    }
 } // namespace
 
 /*
@@ -259,8 +263,31 @@ void aqua_beam::stop()
     firing = 0;
 }
 
+void aqua_beam::update(F32 dt)
+{
+    time += dt;
+    if ((cfg.duration >= 0.0f) && (time >= cfg.duration))
+    {
+        firing = 0;
+    }
+    update_rings(dt);
+}
+
 void aqua_beam::render()
 {
+}
+
+void aqua_beam::kill_ring()
+{
+    // TODO: found this in an old ss i had
+    // just putting it back
+    ring.queue.back();
+    xModelInstanceFree((xModelInstance*)this);
+    if (this != 0)
+    {
+        kill_sound(3, (U32)this);
+    }
+    ring.queue.pop_back();
 }
 
 xAnimTable* ZNPC_AnimTable_Prawn()
@@ -355,26 +382,33 @@ void zNPCPrawn::Render()
 // {
 // }
 /* zNPCPrawn::update_round (void) */
-void zNPCPrawn::update_round() {
+void zNPCPrawn::update_round()
+{
     S32 var_r4;
     S32 temp_r3;
     S32 var_r30;
-    zNPCPrawn *var_r31;
-    zNPCSpawner **temp_r3_2;
+    zNPCPrawn* var_r31;
+    zNPCSpawner** temp_r3_2;
 
     temp_r3 = this->life;
-    if (temp_r3 == 0) {
+    if (temp_r3 == 0)
+    {
         this->round = 3;
-    } else {
-        this->round = 2 - ((S32) ((temp_r3 - 1) * 3) / (s32) this->cfg_npc->useBoxBound);
+    }
+    else
+    {
+        this->round = 2 - ((S32)((temp_r3 - 1) * 3) / (s32)this->cfg_npc->useBoxBound);
     }
     var_r30 = 0;
     var_r31 = this;
-    do {
+    do
+    {
         temp_r3_2 = var_r31->spawner;
-        if (temp_r3_2 != NULL) {
+        if (temp_r3_2 != NULL)
+        {
             var_r4 = 4;
-            if (var_r30 > (s32) this->round) {
+            if (var_r30 > (s32)this->round)
+            {
                 var_r4 = 3;
             }
             //Notify__11zNPCSpawnerF13en_SM_NOTICESPv(temp_r3_2, (en_SM_NOTICES) var_r4, NULL);
@@ -388,21 +422,25 @@ void zNPCPrawn::update_round() {
 // {
 // }
 /* zNPCPrawn::decompose (void) */
-void zNPCPrawn::decompose() {
+void zNPCPrawn::decompose()
+{
     S32 i;
-    zNPCPrawn *var_r31;
-    zNPCSpawner **temp_r3;
+    zNPCPrawn* var_r31;
+    zNPCSpawner** temp_r3;
 
     var_r31 = this;
     vanish();
-    if ((U8) var_r31->fighting != 0) {
+    if ((U8)var_r31->fighting != 0)
+    {
         var_r31->fighting = 0;
         //set_floor_state(var_r31, (zNPCPrawn::floor_state_enum) 0, 1, 1);
         //hide_model(var_r31);
         i = 0;
-        do {
+        do
+        {
             temp_r3 = var_r31->spawner;
-            if (temp_r3 != NULL) {
+            if (temp_r3 != NULL)
+            {
                 //Notify__11zNPCSpawnerF13en_SM_NOTICESPv(temp_r3, (en_SM_NOTICES) 6, NULL);
                 //Notify__11zNPCSpawnerF13en_SM_NOTICESPv(var_r31->unk2D0, (en_SM_NOTICES) 7, NULL);
                 0; //pass
@@ -431,24 +469,31 @@ void zNPCPrawn::apply_pending()
 // {
 // }
 /* zNPCPrawn::set_floor_state (zNPCPrawn::floor_state_enum, bool, bool) */
-void zNPCPrawn::set_floor_state(zNPCPrawn::floor_state_enum arg0, bool arg1, bool arg2) {
+void zNPCPrawn::set_floor_state(zNPCPrawn::floor_state_enum arg0, bool arg1, bool arg2)
+{
     U32 offset;
     U32 temp_r0;
     U32 temp_r3;
-    z_disco_floor *temp_r4;
+    z_disco_floor* temp_r4;
 
-    if (((S32) arg0 != (S32) this->floor_state) || (arg2 != 0)) {
-        this->floor_state = (floor_state_enum) arg0;
+    if (((S32)arg0 != (S32)this->floor_state) || (arg2 != 0))
+    {
+        this->floor_state = (floor_state_enum)arg0;
         //get_floor_info(this, arg0, (zNPCPrawn::range_type *) &this->unk304, &this->unk30C, &this->unk310);
-        if (arg1 != 0) {
+        if (arg1 != 0)
+        {
             apply_pending();
             return;
         }
         temp_r4 = this->disco;
         temp_r3 = temp_r4->state;
-        if ((temp_r3 < (U32) temp_r4->min_state || (temp_r0 = temp_r4->max_state, ((temp_r3 > temp_r0) != 0)))) {
+        if ((temp_r3 < (U32)temp_r4->min_state ||
+             (temp_r0 = temp_r4->max_state, ((temp_r3 > temp_r0) != 0))))
+        {
             offset = 1;
-        } else {
+        }
+        else
+        {
             offset = (temp_r0 - temp_r3) + 1;
         }
         this->pending.counter = temp_r4->state_counter + offset;
@@ -471,8 +516,9 @@ void zNPCPrawn::set_floor_state(zNPCPrawn::floor_state_enum arg0, bool arg1, boo
 // {
 // }
 /* zNPCPrawn::reappear (void) */
-void zNPCPrawn::reappear() {
-    xModelInstance *temp_r6;
+void zNPCPrawn::reappear()
+{
+    xModelInstance* temp_r6;
 
     temp_r6 = this->model;
     temp_r6->Flags |= 3;
@@ -566,7 +612,8 @@ void xDebugAddTweak(const char*, xVec3*, const tweak_callback*, void*, U32)
 // {
 // }
 /* zNPCPrawn::turning (void) const */
-void zNPCPrawn::turning() const {
+void zNPCPrawn::turning() const
+{
     F32 spC;
     F32 sp8;
     F32 temp_f2;
@@ -574,7 +621,7 @@ void zNPCPrawn::turning() const {
     F32 temp_f2_3;
     F32 temp_f3;
     S8 var_r0;
-    RwMatrix *temp_r6;
+    RwMatrix* temp_r6;
 
     var_r0 = 0;
     temp_r6 = this->model->Mat;
