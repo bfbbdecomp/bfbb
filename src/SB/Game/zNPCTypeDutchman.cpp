@@ -33,7 +33,6 @@
 #define SOUND_MORE_BIZARRE 5
 
 static U32 dutchman_count;
-extern NPCSndTrax g_sndTrax_Dutchman;
 
 namespace
 {
@@ -1280,10 +1279,10 @@ void zNPCDutchman::RenderExtra()
 void zNPCDutchman::ParseINI()
 {
     zNPCCommon::ParseINI();
-    cfg_npc->snd_traxShare = &g_sndTrax_Dutchman;
-    NPCS_SndTablePrepare(&g_sndTrax_Dutchman);
-    cfg_npc->snd_trax = &g_sndTrax_Dutchman;
-    NPCS_SndTablePrepare(&g_sndTrax_Dutchman);
+    cfg_npc->snd_traxShare = g_sndTrax_Dutchman;
+    NPCS_SndTablePrepare(g_sndTrax_Dutchman);
+    cfg_npc->snd_trax = g_sndTrax_Dutchman;
+    NPCS_SndTablePrepare(g_sndTrax_Dutchman);
     tweak.load(parmdata, pdatsize);
 }
 
