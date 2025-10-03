@@ -157,7 +157,7 @@ struct zNPCB_SB2 : zNPCBoss
 
     struct
     {
-        bool face_player;
+        bool face_player; //0x2b4
         bool face_follow;
         bool dizzy; //0x2b6
         move_enum move;
@@ -324,6 +324,7 @@ struct zNPCGoalBossSB2Chop : zNPCGoalCommon
     zNPCB_SB2& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
+    S32 Enter(F32 dt, void*);
     S32 Exit(float, void*);
 };
 

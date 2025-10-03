@@ -1368,6 +1368,31 @@ S32 zNPCGoalBossSB2Swipe::can_start() const
     return tempStart != 0;
 }
 
+S32 zNPCGoalBossSB2Chop::Enter(F32 dt, void* updCtxt)
+{
+    targetted = 0;
+    started = 0;
+    owner.flag.face_player = true;
+
+    owner.choose_hand();
+    owner.activate_hand(owner.active_hand, true);
+
+    if (owner.active_hand == 0)
+    {
+        begin_anim = g_hash_bossanim[50];
+        loop_anim = g_hash_bossanim[51];
+        end_anim = g_hash_bossanim[52];
+    }
+    else
+    {
+        begin_anim = g_hash_bossanim[53];
+        loop_anim = g_hash_bossanim[54];
+        end_anim = g_hash_bossanim[55];
+    }
+
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
 S32 zNPCGoalBossSB2Chop::Exit(float dt, void* updCtxt)
 {
     owner.deactivate_hand(owner.active_hand);
