@@ -264,16 +264,14 @@ void xFX_SceneEnter(RpWorld* world)
 
         if (ent->model)
         {
-            // non-matching: strings are getting cached for some reason
+            U32 bubble = 0;
 
-            U32 bubble;
-
-            bubble = (ent->id == xStrHash(_stringBase0_7));
-            bubble |= (ent->id == xStrHash(_stringBase0_7 + 13));
-            bubble |= (ent->id == xStrHash(_stringBase0_7 + 28));
-            bubble |= (ent->id == xStrHash(_stringBase0_7 + 42));
-            bubble |= (ent->id == xStrHash(_stringBase0_7 + 62));
-            bubble |= (ent->id == xStrHash(_stringBase0_7 + 75));
+            bubble |= (ent->id == xStrHash("bubble buddy"));
+            bubble |= (ent->id == xStrHash("bubble missile"));
+            bubble |= (ent->id == xStrHash("bubble helmet"));
+            bubble |= (ent->id == xStrHash("bubble bowling ball"));
+            bubble |= (ent->id == xStrHash("bubble shoeL"));
+            bubble |= (ent->id == xStrHash("bubble shoeR"));
 
             if (bubble)
             {

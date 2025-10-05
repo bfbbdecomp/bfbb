@@ -180,7 +180,9 @@ struct aqua_beam
     void reset();
     void start();
     void stop();
-    bool kill_ring();
+    void update(F32);
+    void update_rings(F32);
+    void kill_ring();
     void render();
 };
 

@@ -1583,7 +1583,7 @@ S32 zNPCGoalKJTaunt::Exit(float dt, void* updCtxt)
 
 S32 zNPCGoalKJDamage::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
 {
-    // TODO
+    zNPCKingJelly& kj = *(zNPCKingJelly*)this->psyche->clt_owner;
     return 0;
 }
 
