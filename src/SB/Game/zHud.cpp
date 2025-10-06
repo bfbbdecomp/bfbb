@@ -1,8 +1,18 @@
 #include "xHud.h"
+#include "xHudText.h"
+#include "xHudFontMeter.h"
+#include "xString.h"
 #include "zHud.h"
+#include "zScene.h"
 
 #include <types.h>
 #include <string.h>
+
+// TODO: This also lives in zCombo - those should be moved to a header at some point
+struct widget_chunk : xBase
+{
+    xhud::text_widget w;
+};
 
 namespace zhud
 {
