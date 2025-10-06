@@ -1354,7 +1354,32 @@ S32 zNPCGoalBossSB2Hit::Exit(F32 dt, void* updCtxt)
     return xGoal::Exit(dt, updCtxt);
 }
 
-S32 zNPCGoalBossSB2Swipe::Exit(float dt, void* updCtxt)
+S32 zNPCGoalBossSB2Swipe::Enter(F32 dt, void* updCtxt)
+{
+    owner.flag.face_player = 1;
+    said = 0;
+    holding = 0;
+    started = 0;
+
+    owner.choose_hand();
+
+    if (owner.active_hand == 0)
+    {
+        begin_anim = g_hash_bossanim[56];
+        loop_anim = g_hash_bossanim[57];
+        end_anim = g_hash_bossanim[58];
+    }
+    else
+    {
+        begin_anim = g_hash_bossanim[59];
+        loop_anim = g_hash_bossanim[60];
+        end_anim = g_hash_bossanim[61];
+    }
+
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSB2Swipe::Exit(F32 dt, void* updCtxt)
 {
     owner.flag.face_player = true;
     owner.deactivate_hand(owner.active_hand);
