@@ -96,11 +96,29 @@ namespace zhud
             }
         }
     }
-    
+
     void zhud::init()
     {
         inited = true;
         xhud::init();
+    }
+    
+    void zhud::setup() 
+    {
+        S32 i;
+        U32 id;
+        widget_chunk * wc;
+        // special_data & special;
+        // xhud::font_meter_widget & meter;
+        
+        U32* values = value;
+        xhud::setup();
+
+        for ( i = 0; i < 7; i++ ) {
+            id = xStrHash(widget_resources[i]);
+            wc = (widget_chunk*) zSceneFindObject(id);
+            wc->w.enable();
+        }
     }
     
     void zhud::destroy()
@@ -109,5 +127,25 @@ namespace zhud
         memset(widgets, 0x0, 0x24);
         xhud::destroy();
         last_paused = true;
+    }
+
+    void zhud::update(F32 dt)
+    {
+         
+    }
+
+    void zhud::render()
+    {
+        xhud::render();
+    }    
+
+    void zhud::show()
+    {
+
+    }
+
+    void zhud::hide()
+    {
+
     }
 }
