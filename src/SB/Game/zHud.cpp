@@ -57,11 +57,44 @@ namespace zhud
 
         bool inited;
         bool last_paused = true;
-    }
-    
-    void zhud::render()
-    {
-        xhud::render();
+
+        static void hide_widget(xhud::widget& widget, xhud::motive& motive)
+        {
+            widget.hide();
+        }
+
+        static void ping_widget(xhud::widget& widget)
+        {
+            widget.show();
+            widget.add_motive(xhud::motive((F32*)&widget.rc.loc.x, 0.02f, 0.0f, 0.5f, xhud::shake_motive_update, NULL));
+        }
+
+        static void delay_hide_widget(xhud::widget& widget) {
+            widget.add_motive(xhud::motive(NULL, 0.0f, 4.0f, 0.0f, xhud::delay_motive_update, (void*)hide_widget));
+        }
+
+        static xhud::widget* get_meter_widget(S32 index) {
+            static U32 meter_type = xStrHash(((xhud::meter_widget*) widgets[index])->res.type_name());
+
+            return widgets[index];
+        }
+
+        static xhud::widget* get_model_widget(S32 index) {
+            static U32 model_type = xStrHash(((xhud::model_asset*) widgets[index]->a)->type_name());
+
+            return widgets[index];
+        }
+
+        static void on_pause() {
+            show();
+        }
+
+        // Surely there was some debug code here that got debug macro'd away?
+        static void on_unpause() {
+            if (inited) {
+                return;
+            }
+        }
     }
     
     void zhud::init()
