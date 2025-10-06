@@ -96,13 +96,13 @@ namespace
         model->PipeFlags |= 0x6508;
     }
 
-    F32 max(float maxFloat1, float maxFloat2) //Temp names till file is further
+    F32 max(F32 maxF321, F32 maxF322) //Temp names till file is further
     {
-        if (maxFloat1 > maxFloat2)
+        if (maxF321 > maxF322)
         {
-            return maxFloat1;
+            return maxF321;
         }
-        return maxFloat2;
+        return maxF322;
     }
 
     S32 tweak()
@@ -118,7 +118,7 @@ namespace
         }
     }
 
-    S32 play_sound(int, const xVec3*, float)
+    S32 play_sound(int, const xVec3*, F32)
     {
         return 0; // to-do
     }
@@ -1130,7 +1130,7 @@ void zNPCB_SB2::Destroy()
     zNPCCommon::Destroy();
 }
 
-void zNPCB_SB2::NewTime(xScene* x, float y)
+void zNPCB_SB2::NewTime(xScene* x, F32 y)
 {
 }
 
@@ -1246,7 +1246,7 @@ void zNPCB_SB2::destroy_glow_light()
     xLightKit_Destroy(&glow_light.kit);
 }
 
-S32 zNPCGoalBossSB2Intro::Enter(float dt, void* updCtxt)
+S32 zNPCGoalBossSB2Intro::Enter(F32 dt, void* updCtxt)
 {
     if (owner.said_intro == 0)
     {
@@ -1259,36 +1259,36 @@ S32 zNPCGoalBossSB2Intro::Enter(float dt, void* updCtxt)
     
 }
 
-S32 zNPCGoalBossSB2Intro::Exit(float dt, void* updCtxt)
+S32 zNPCGoalBossSB2Intro::Exit(F32 dt, void* updCtxt)
 {
     zEntPlayerControlOn(CONTROL_OWNER_BOSS);
     return xGoal::Exit(dt, updCtxt);
 }
 
-S32 zNPCGoalBossSB2Idle::Enter(float dt, void* updCtxt)
+S32 zNPCGoalBossSB2Idle::Enter(F32 dt, void* updCtxt)
 {
     transitioning = 1;
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
-S32 zNPCGoalBossSB2Idle::Exit(float dt, void* updCtxt)
+S32 zNPCGoalBossSB2Idle::Exit(F32 dt, void* updCtxt)
 {
     return xGoal::Exit(dt, updCtxt);
 }
 
-S32 zNPCGoalBossSB2Taunt::Enter(float dt, void* updCtxt)
+S32 zNPCGoalBossSB2Taunt::Enter(F32 dt, void* updCtxt)
 {
     play_sound(0, &owner.sound_loc.mouth , 1.0f);
     owner.flag.face_player = 1;
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
-S32 zNPCGoalBossSB2Taunt::Exit(float dt, void* updCtxt)
+S32 zNPCGoalBossSB2Taunt::Exit(F32 dt, void* updCtxt)
 {
     return xGoal::Exit(dt, updCtxt);
 }
 
-S32 zNPCGoalBossSB2Dizzy::Enter(float dt, void* updCtxt)
+S32 zNPCGoalBossSB2Dizzy::Enter(F32 dt, void* updCtxt)
 {
     sicked = 0;
     owner.flag.face_player = 0;
@@ -1297,7 +1297,7 @@ S32 zNPCGoalBossSB2Dizzy::Enter(float dt, void* updCtxt)
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
-S32 zNPCGoalBossSB2Dizzy::Exit(float dt, void* updCtxt)
+S32 zNPCGoalBossSB2Dizzy::Exit(F32 dt, void* updCtxt)
 {
     S32 tempDizzy;
     owner.set_vulnerable(true);
@@ -1316,7 +1316,7 @@ S32 zNPCGoalBossSB2Dizzy::Exit(float dt, void* updCtxt)
     return xGoal::Exit(dt, updCtxt);
 }
 
-S32 zNPCGoalBossSB2Hit::Enter(float dt, void* updCtxt) 
+S32 zNPCGoalBossSB2Hit::Enter(F32 dt, void* updCtxt) 
 {
     // Function needs set up differently
     // im just dumb
@@ -1348,7 +1348,7 @@ S32 zNPCGoalBossSB2Hit::Enter(float dt, void* updCtxt)
 return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
-S32 zNPCGoalBossSB2Hit::Exit(float dt, void* updCtxt)
+S32 zNPCGoalBossSB2Hit::Exit(F32 dt, void* updCtxt)
 {
     owner.set_vulnerable(true);
     return xGoal::Exit(dt, updCtxt);
@@ -1393,7 +1393,7 @@ S32 zNPCGoalBossSB2Chop::Enter(F32 dt, void* updCtxt)
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
-S32 zNPCGoalBossSB2Chop::Exit(float dt, void* updCtxt)
+S32 zNPCGoalBossSB2Chop::Exit(F32 dt, void* updCtxt)
 {
     owner.deactivate_hand(owner.active_hand);
     return xGoal::Exit(dt, updCtxt);
@@ -1412,13 +1412,13 @@ S32 zNPCGoalBossSB2Karate::can_start() const
     return tempStart != 0;
 }
 
-S32 zNPCGoalBossSB2Death::Enter(float dt, void* updCtxt)
+S32 zNPCGoalBossSB2Death::Enter(F32 dt, void* updCtxt)
 {
     owner.decompose();
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
-S32 zNPCGoalBossSB2Death::Exit(float dt, void* updCtxt)
+S32 zNPCGoalBossSB2Death::Exit(F32 dt, void* updCtxt)
 {
     return xGoal::Exit(dt, updCtxt);
 }

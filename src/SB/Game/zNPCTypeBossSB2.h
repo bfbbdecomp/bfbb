@@ -216,17 +216,18 @@ struct zNPCB_SB2 : zNPCBoss
     zNPCB_SB2(S32 myType);
     void SelfSetup();
     void Destroy();
-    void NewTime(xScene*, float);
+    void NewTime(xScene*, F32);
     void move_nodes();
-    void move_hand(zNPCB_SB2::hand_data&, float);
+    void move_hand(zNPCB_SB2::hand_data&, F32);
     void update_bounds();
-    void update_platforms(float);
-    void update_slugs(float);
+    void update_platforms(F32);
+    void update_slugs(F32);
     void render_debug();
     void decompose();
     void show_nodes();
     void ouchie();
     void destroy_glow_light();
+    void say(U32);
     void Render();
     F32 AttackTimeLeft();
     void HoldUpDude();
@@ -242,6 +243,7 @@ struct zNPCB_SB2 : zNPCBoss
     void set_vulnerable(bool);
     void say(int);
     void choose_hand();
+    U32 facing() const;
 };
 
 struct zNPCGoalBossSB2Intro : zNPCGoalCommon
@@ -249,8 +251,8 @@ struct zNPCGoalBossSB2Intro : zNPCGoalCommon
     zNPCB_SB2& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
-    S32 Enter(float, void*);
-    S32 Exit(float, void*);
+    S32 Enter(F32, void*);
+    S32 Exit(F32, void*);
 };
 
 struct zNPCGoalBossSB2Idle : zNPCGoalCommon
@@ -259,8 +261,8 @@ struct zNPCGoalBossSB2Idle : zNPCGoalCommon
     zNPCB_SB2& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
-    S32 Enter(float, void*);
-    S32 Exit(float, void*);
+    S32 Enter(F32, void*);
+    S32 Exit(F32, void*);
 };
 
 struct zNPCGoalBossSB2Taunt : zNPCGoalCommon
@@ -268,8 +270,8 @@ struct zNPCGoalBossSB2Taunt : zNPCGoalCommon
     zNPCB_SB2& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
-    S32 Enter(float, void*);
-    S32 Exit(float, void*);
+    S32 Enter(F32, void*);
+    S32 Exit(F32, void*);
 };
 
 struct zNPCGoalBossSB2Dizzy : zNPCGoalCommon
@@ -278,8 +280,8 @@ struct zNPCGoalBossSB2Dizzy : zNPCGoalCommon
     zNPCB_SB2& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
-    S32 Enter(float, void*);
-    S32 Exit(float, void*);
+    S32 Enter(F32, void*);
+    S32 Exit(F32, void*);
 };
 
 struct zNPCGoalBossSB2Hit : zNPCGoalCommon
@@ -287,8 +289,8 @@ struct zNPCGoalBossSB2Hit : zNPCGoalCommon
     zNPCB_SB2& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
-    S32 Enter(float, void*);
-    S32 Exit(float, void*);
+    S32 Enter(F32, void*);
+    S32 Exit(F32, void*);
 };
 
 struct zNPCGoalBossSB2Hunt : zNPCGoalCommon
@@ -310,7 +312,8 @@ struct zNPCGoalBossSB2Swipe : zNPCGoalCommon
     zNPCB_SB2& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
-    S32 Exit(float, void*);
+    S32 Enter(F32 dt, void* updCtxt);
+    S32 Exit(F32 dt, void* updCtxt);
     S32 can_start() const;
 };
 
@@ -324,8 +327,8 @@ struct zNPCGoalBossSB2Chop : zNPCGoalCommon
     zNPCB_SB2& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
-    S32 Enter(F32 dt, void*);
-    S32 Exit(float, void*);
+    S32 Enter(F32 dt, void* updCtxt);
+    S32 Exit(F32 dt, void* updCtxt);
 };
 
 struct zNPCGoalBossSB2Karate : zNPCGoalCommon
@@ -335,7 +338,8 @@ struct zNPCGoalBossSB2Karate : zNPCGoalCommon
     zNPCB_SB2& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
-    S32 Exit(float, void*);
+    S32 Enter(F32 dt, void* updCtxt);
+    S32 Exit(F32, void*);
     S32 can_start() const;
 };
 
@@ -345,8 +349,8 @@ struct zNPCGoalBossSB2Death : zNPCGoalCommon
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
     S32 Process(en_trantype*, F32, void*, xScene*);
-    S32 Enter(float, void*);
-    S32 Exit(float, void*);
+    S32 Enter(F32, void*);
+    S32 Exit(F32, void*);
 };
 
 xAnimTable* ZNPC_AnimTable_BossSB2();
