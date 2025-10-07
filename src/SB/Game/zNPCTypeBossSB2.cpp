@@ -1,5 +1,6 @@
 
 #include "zNPCTypeBossSB2.h"
+#include "PowerPC_EABI_Support/MSL_C++/MSL_Common/Include/new.h"
 #include "xLightKit.h"
 #include "zNPCGoalCommon.h"
 #include <types.h>
@@ -1134,10 +1135,6 @@ void zNPCB_SB2::NewTime(xScene* x, F32 y)
 {
 }
 
-void zNPCB_SB2::render_debug()
-{
-}
-
 void zNPCB_SB2::decompose()
 {
 }
@@ -1246,6 +1243,15 @@ void zNPCB_SB2::destroy_glow_light()
     xLightKit_Destroy(&glow_light.kit);
 }
 
+void zNPCB_SB2::say(U32)
+{
+}
+
+xFactoryInst* zNPCGoalBossSB2Intro::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBossSB2Intro(who, (zNPCB_SB2&)*info);
+}
+
 S32 zNPCGoalBossSB2Intro::Enter(F32 dt, void* updCtxt)
 {
     if (owner.said_intro == 0)
@@ -1256,13 +1262,17 @@ S32 zNPCGoalBossSB2Intro::Enter(F32 dt, void* updCtxt)
     owner.delay = 0.0f;
     zEntPlayerControlOff(CONTROL_OWNER_BOSS);
     return zNPCGoalCommon::Enter(dt, updCtxt);
-    
 }
 
 S32 zNPCGoalBossSB2Intro::Exit(F32 dt, void* updCtxt)
 {
     zEntPlayerControlOn(CONTROL_OWNER_BOSS);
     return xGoal::Exit(dt, updCtxt);
+}
+
+xFactoryInst* zNPCGoalBossSB2Idle::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBossSB2Idle(who, (zNPCB_SB2&)*info);
 }
 
 S32 zNPCGoalBossSB2Idle::Enter(F32 dt, void* updCtxt)
@@ -1276,6 +1286,11 @@ S32 zNPCGoalBossSB2Idle::Exit(F32 dt, void* updCtxt)
     return xGoal::Exit(dt, updCtxt);
 }
 
+xFactoryInst* zNPCGoalBossSB2Taunt::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBossSB2Taunt(who, (zNPCB_SB2&)*info);
+}
+
 S32 zNPCGoalBossSB2Taunt::Enter(F32 dt, void* updCtxt)
 {
     play_sound(0, &owner.sound_loc.mouth , 1.0f);
@@ -1286,6 +1301,11 @@ S32 zNPCGoalBossSB2Taunt::Enter(F32 dt, void* updCtxt)
 S32 zNPCGoalBossSB2Taunt::Exit(F32 dt, void* updCtxt)
 {
     return xGoal::Exit(dt, updCtxt);
+}
+
+xFactoryInst* zNPCGoalBossSB2Dizzy::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBossSB2Dizzy(who, (zNPCB_SB2&)*info);
 }
 
 S32 zNPCGoalBossSB2Dizzy::Enter(F32 dt, void* updCtxt)
@@ -1314,6 +1334,11 @@ S32 zNPCGoalBossSB2Dizzy::Exit(F32 dt, void* updCtxt)
         owner.say(0xb);
     }
     return xGoal::Exit(dt, updCtxt);
+}
+
+xFactoryInst* zNPCGoalBossSB2Hit::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBossSB2Hit(who, (zNPCB_SB2&)*info);
 }
 
 S32 zNPCGoalBossSB2Hit::Enter(F32 dt, void* updCtxt) 
@@ -1352,6 +1377,16 @@ S32 zNPCGoalBossSB2Hit::Exit(F32 dt, void* updCtxt)
 {
     owner.set_vulnerable(true);
     return xGoal::Exit(dt, updCtxt);
+}
+
+xFactoryInst* zNPCGoalBossSB2Hunt::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBossSB2Hunt(who, (zNPCB_SB2&)*info);
+}
+
+xFactoryInst* zNPCGoalBossSB2Swipe::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBossSB2Swipe(who, (zNPCB_SB2&)*info);
 }
 
 S32 zNPCGoalBossSB2Swipe::Enter(F32 dt, void* updCtxt)
@@ -1393,6 +1428,11 @@ S32 zNPCGoalBossSB2Swipe::can_start() const
     return tempStart != 0;
 }
 
+xFactoryInst* zNPCGoalBossSB2Chop::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBossSB2Chop(who, (zNPCB_SB2&)*info);
+}
+
 S32 zNPCGoalBossSB2Chop::Enter(F32 dt, void* updCtxt)
 {
     targetted = 0;
@@ -1424,7 +1464,17 @@ S32 zNPCGoalBossSB2Chop::Exit(F32 dt, void* updCtxt)
     return xGoal::Exit(dt, updCtxt);
 }
 
-S32 zNPCGoalBossSB2Karate::Exit(float dt, void* updCtxt)
+xFactoryInst* zNPCGoalBossSB2Karate::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBossSB2Karate(who, (zNPCB_SB2&)*info);
+}
+
+S32 zNPCGoalBossSB2Karate::Enter(F32 dt, void* updCtxt)
+{
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSB2Karate::Exit(F32 dt, void* updCtxt)
 {
     owner.abandon_slugs();
     return xGoal::Exit(dt, updCtxt);
@@ -1435,6 +1485,11 @@ S32 zNPCGoalBossSB2Karate::can_start() const
     S32 tempStart;
     tempStart = owner.player_platform();
     return tempStart != 0;
+}
+
+xFactoryInst* zNPCGoalBossSB2Death::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBossSB2Death(who, (zNPCB_SB2&)*info);
 }
 
 S32 zNPCGoalBossSB2Death::Enter(F32 dt, void* updCtxt)
@@ -1458,4 +1513,28 @@ void zNPCB_SB2::choose_hand()
     S32 r = xrand();
     S32 b = (r >> 13) & 1;
     this->active_hand = (b == 0 ? LEFT_HAND : RIGHT_HAND);
+}
+
+xVec3& zNPCB_SB2::location() const
+{
+    return (xVec3&)(this->model->Mat->pos);
+}
+
+void zNPCB_SB2::render_debug()
+{
+}
+
+xVec3& zNPCB_SB2::get_home() const
+{
+    return (xVec3&)(this->asset->pos);
+}
+
+xVec3& zNPCB_SB2::start_location() const
+{
+    return (xVec3&)(this->asset->pos);
+}
+
+xVec3& zNPCB_SB2::facing() const
+{
+    return (xVec3&)(this->model->Mat->at);
 }

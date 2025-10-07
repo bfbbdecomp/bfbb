@@ -243,11 +243,18 @@ struct zNPCB_SB2 : zNPCBoss
     void set_vulnerable(bool);
     void say(int);
     void choose_hand();
-    U32 facing() const;
+    xVec3& location() const;
+    xVec3& get_home() const;
+    xVec3& start_location() const;
+    xVec3& facing() const;
 };
 
 struct zNPCGoalBossSB2Intro : zNPCGoalCommon
 {
+    zNPCGoalBossSB2Intro::zNPCGoalBossSB2Intro(S32 goalID, zNPCB_SB2& npc) : zNPCGoalCommon(goalID), owner(npc)
+    {
+    }
+
     zNPCB_SB2& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
@@ -257,6 +264,10 @@ struct zNPCGoalBossSB2Intro : zNPCGoalCommon
 
 struct zNPCGoalBossSB2Idle : zNPCGoalCommon
 {
+    zNPCGoalBossSB2Idle::zNPCGoalBossSB2Idle(S32 goalID, zNPCB_SB2& npc) : zNPCGoalCommon(goalID), owner(npc)
+    {
+    }
+
     U8 transitioning;
     zNPCB_SB2& owner;
 
@@ -267,6 +278,10 @@ struct zNPCGoalBossSB2Idle : zNPCGoalCommon
 
 struct zNPCGoalBossSB2Taunt : zNPCGoalCommon
 {
+    zNPCGoalBossSB2Taunt::zNPCGoalBossSB2Taunt(S32 goalID, zNPCB_SB2& npc) : zNPCGoalCommon(goalID), owner(npc)
+    {
+    }
+
     zNPCB_SB2& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
@@ -276,6 +291,10 @@ struct zNPCGoalBossSB2Taunt : zNPCGoalCommon
 
 struct zNPCGoalBossSB2Dizzy : zNPCGoalCommon
 {
+    zNPCGoalBossSB2Dizzy::zNPCGoalBossSB2Dizzy(S32 goalID, zNPCB_SB2& npc) : zNPCGoalCommon(goalID), owner(npc)
+    {
+    }
+
     U8 sicked;
     zNPCB_SB2& owner;
 
@@ -286,6 +305,10 @@ struct zNPCGoalBossSB2Dizzy : zNPCGoalCommon
 
 struct zNPCGoalBossSB2Hit : zNPCGoalCommon
 {
+    zNPCGoalBossSB2Hit::zNPCGoalBossSB2Hit(S32 goalID, zNPCB_SB2& npc) : zNPCGoalCommon(goalID), owner(npc)
+    {
+    }
+
     zNPCB_SB2& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
@@ -295,6 +318,10 @@ struct zNPCGoalBossSB2Hit : zNPCGoalCommon
 
 struct zNPCGoalBossSB2Hunt : zNPCGoalCommon
 {
+    zNPCGoalBossSB2Hunt::zNPCGoalBossSB2Hunt(S32 goalID, zNPCB_SB2& npc) : zNPCGoalCommon(goalID), owner(npc)
+    {
+    }
+
     U8 following;
     zNPCB_SB2& owner;
 
@@ -303,6 +330,10 @@ struct zNPCGoalBossSB2Hunt : zNPCGoalCommon
 
 struct zNPCGoalBossSB2Swipe : zNPCGoalCommon
 {
+    zNPCGoalBossSB2Swipe::zNPCGoalBossSB2Swipe(S32 goalID, zNPCB_SB2& npc) : zNPCGoalCommon(goalID), owner(npc)
+    {
+    }
+
     U8 started;
     U8 holding;
     U8 said;
@@ -319,6 +350,10 @@ struct zNPCGoalBossSB2Swipe : zNPCGoalCommon
 
 struct zNPCGoalBossSB2Chop : zNPCGoalCommon
 {
+    zNPCGoalBossSB2Chop::zNPCGoalBossSB2Chop(S32 goalID, zNPCB_SB2& npc) : zNPCGoalCommon(goalID), owner(npc)
+    {
+    }
+
     U8 started;
     U8 targetted;
     U32 begin_anim;
@@ -333,6 +368,10 @@ struct zNPCGoalBossSB2Chop : zNPCGoalCommon
 
 struct zNPCGoalBossSB2Karate : zNPCGoalCommon
 {
+    zNPCGoalBossSB2Karate::zNPCGoalBossSB2Karate(S32 goalID, zNPCB_SB2& npc) : zNPCGoalCommon(goalID), owner(npc)
+    {
+    }
+    
     U8 emitted[3];
     U8 started;
     zNPCB_SB2& owner;
@@ -345,6 +384,10 @@ struct zNPCGoalBossSB2Karate : zNPCGoalCommon
 
 struct zNPCGoalBossSB2Death : zNPCGoalCommon
 {
+    zNPCGoalBossSB2Death::zNPCGoalBossSB2Death(S32 goalID, zNPCB_SB2& npc) : zNPCGoalCommon(goalID), owner(npc)
+    {
+    }
+
     zNPCB_SB2& owner;
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
