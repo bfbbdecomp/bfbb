@@ -97,13 +97,13 @@ namespace
         model->PipeFlags |= 0x6508;
     }
 
-    F32 max(F32 maxF321, F32 maxF322) //Temp names till file is further
+    F32 max(F32 f0, F32 f1)
     {
-        if (maxF321 > maxF322)
+        if (f0 > f1)
         {
-            return maxF321;
+            return f0;
         }
-        return maxF322;
+        return f1;
     }
 
     S32 tweak()
@@ -1517,7 +1517,7 @@ void zNPCB_SB2::choose_hand()
 
 xVec3& zNPCB_SB2::location() const
 {
-    return (xVec3&)(this->model->Mat->pos);
+    return reinterpret_cast<xVec3&>(this->model->Mat->pos);
 }
 
 void zNPCB_SB2::render_debug()
@@ -1526,15 +1526,15 @@ void zNPCB_SB2::render_debug()
 
 xVec3& zNPCB_SB2::get_home() const
 {
-    return (xVec3&)(this->asset->pos);
+    return reinterpret_cast<xVec3&>(this->asset->pos);
 }
 
 xVec3& zNPCB_SB2::start_location() const
 {
-    return (xVec3&)(this->asset->pos);
+    return reinterpret_cast<xVec3&>(this->asset->pos);
 }
 
 xVec3& zNPCB_SB2::facing() const
 {
-    return (xVec3&)(this->model->Mat->at);
+    return reinterpret_cast<xVec3&>(this->model->Mat->at);
 }
