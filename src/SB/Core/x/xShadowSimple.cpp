@@ -24,6 +24,74 @@ void xQuickCullForLine(xQCData* q, const xLine3* ln)
     xQuickCullForLine(&xqc_def_ctrl, q, ln);
 }
 
+void xShadowSimple_CacheInit(xShadowSimpleCache* cache, xEnt* ent, u8 alpha)
+{
+    S32 i;
+    S32 n;
+    U32 j;
+    class zSimpleShadowTableHeader* sst;
+    class RwRaster* raster;
+    U32 flags;
+    U32 size;
+    class RwTexture* tex;
+    /////////////////////////////////////
+    U32 sp8;
+    S32 var_r20;
+    S32 var_r24;
+    U32 var_r31;
+
+    //memset(NULL, 0x98);
+    cache->corner[0].z = 1e38f;
+    cache->corner[1].y = 1e38f;
+    cache->flags = 4;
+    cache->alpha = alpha;
+
+    // u32 sp8;
+    // s32 var_r20;
+    // s32 var_r24;
+    // u32 var_r31;
+
+    // memset(NULL, 0x98);
+
+
+    if (ent->model != NULL)
+    {
+        if ((U32)(ent->model->shadowID + 0x21530000) != -0x4111U)
+        {
+            return;
+        }
+        var_r31 = 0U;
+        var_r20 = 0;
+        for (i = 0; i < xSTAssetCountByType('SHDW'); i += 1)
+        {
+            sst = (zSimpleShadowTableHeader*)xSTFindAssetByType('SHDW', i, &sp8);
+            var_r24 = 0;
+            for (j = 0; j < (U32)sst->num; j += 1)
+            {
+                if ((U32)ent->model->modelID == 0)
+                {
+                    if (xSTFindAsset(sst->num, NULL) != NULL)
+                    {
+                        var_r31 = (U32)xSTFindAsset(sst->num, NULL);
+                        var_r20 = sst->num;
+                    }
+                    else
+                    {
+                        var_r31 = 0xDEADBEEFU;
+                    }
+                }
+            }
+        }
+        if ((var_r31 == 0U) || ((U32)(var_r31 + 0x21530000) == -0x4111U))
+        {
+            var_r31 = sShadRaster->width;
+        }
+        cache->corner[1].x = var_r31;
+        cache->flags |= (S16)var_r20;
+        ent->model->shadowID = var_r31;
+    }
+}
+
 void xShadowSimple_Init()
 {
     memset(sCollQueue, 0, sizeof(sCollQueue));
