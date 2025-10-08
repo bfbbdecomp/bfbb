@@ -366,10 +366,6 @@ void zNPCPrawn::SelfSetup()
     psy->SetSafety(NPC_GOAL_PRAWNIDLE);
 }
 
-void zNPCPrawn::render_debug()
-{
-}
-
 void zNPCPrawn::Render()
 {
     xNPCBasic::Render();
@@ -608,6 +604,15 @@ void xDebugAddTweak(const char*, xVec3*, const tweak_callback*, void*, U32)
 {
 }
 
+xVec3& zNPCPrawn::get_center() const
+{
+    return reinterpret_cast<xVec3&>(this->model->Mat->pos);
+}
+
+void zNPCPrawn::render_debug()
+{
+}
+
 // void zNPCPrawn::turning() const
 // {
 // }
@@ -628,14 +633,19 @@ void zNPCPrawn::turning() const
     temp_f3 = this->turn.vel;
 }
 
-U8 zNPCPrawn::PhysicsFlags() const
+xVec3& zNPCPrawn::get_facing() const
 {
-    return 3;
+    return reinterpret_cast<xVec3&>(this->model->Mat->at);
 }
 
-U8 zNPCPrawn::ColPenByFlags() const
+U8 zNPCPrawn::ColChkFlags() const
 {
-    return 16;
+    return 0;
+}
+
+U8 zNPCPrawn::ColPenFlags() const
+{
+    return 0;
 }
 
 U8 zNPCPrawn::ColChkByFlags() const
@@ -643,7 +653,17 @@ U8 zNPCPrawn::ColChkByFlags() const
     return 16;
 }
 
-U8 zNPCPrawn::ColPenFlags() const
+U8 zNPCPrawn::ColPenByFlags() const
 {
-    return 0;
+    return 16;
+}
+
+U8 zNPCPrawn::PhysicsFlags() const
+{
+    return 3;
+}
+
+S32 zNPCPrawn::IsAlive()
+{
+    return this->life != 0;
 }

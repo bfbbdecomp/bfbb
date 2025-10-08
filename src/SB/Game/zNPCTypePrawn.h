@@ -261,11 +261,15 @@ struct zNPCPrawn : zNPCSubBoss
     void decompose();
     void set_floor_state(zNPCPrawn::floor_state_enum, bool, bool);
     void Damage(en_NPC_DAMAGE_TYPE, xBase*, const xVec3*);
-
-    U8 PhysicsFlags() const;
-    U8 ColPenByFlags() const;
-    U8 ColChkByFlags() const;
+    
+    xVec3& get_center() const;
+    xVec3& get_facing() const;
+    U8 ColChkFlags() const;
     U8 ColPenFlags() const;
+    U8 ColChkByFlags() const;
+    U8 ColPenByFlags() const;
+    U8 PhysicsFlags() const;
+    S32 IsAlive();
 };
 
 struct zNPCGoalPrawnIdle : zNPCGoalCommon
