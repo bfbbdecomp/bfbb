@@ -250,6 +250,7 @@ struct zNPCPrawn : zNPCSubBoss
     void render_debug();
     void Render();
     void update_particles(float);
+    void Destroy();
     void NewTime(xScene*, float);
     void SelfSetup();
     void apply_pending();

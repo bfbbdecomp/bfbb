@@ -1,7 +1,9 @@
 #include "zNPCTypePrawn.h"
 
+#include "rwcore.h"
 #include "xDebug.h"
 
+#include "zNPCTypeCommon.h"
 #include <types.h>
 
 #define f1052 1.0f
@@ -82,6 +84,84 @@ namespace
     void kill_sound(S32, U32)
     {
     }
+
+    struct television
+    {
+        RwCamera* cam;
+        RwRaster* raster;
+        RwRaster* bgraster;
+        RpWorld* world;
+        RwTexture* texture;
+        U32 vert_buffer_used;
+        RwRGBA bgcolor;
+        F32 rcz;
+        F32 w;
+        F32 h;
+
+        void create(S32, S32);
+        void destroy();
+        void set_background(iColor_tag);
+        void set_model_texture(xModelInstance&);
+        void update(xModelInstance&, xLightKit*);
+        void render_static();
+        void render_background();
+        void set_vert(rwGameCube2DVertex&, F32, F32, F32, F32);
+        void move(const xVec3&, const xVec3&);
+    };
+
+    void create(S32 i1, S32 i2)
+    {
+    }
+
+    void destroy()
+    {
+    }
+
+    void television::set_background(iColor_tag t)
+    {
+        this->bgraster = 0;
+        this->bgcolor.red = t.r;
+        this->bgcolor.green = t.g;
+        this->bgcolor.blue = t.b;
+        this->bgcolor.alpha = t.a;
+    }
+
+    void set_model_texture(xModelInstance& m)
+    {
+    }
+
+    void television::update(xModelInstance& m, xLightKit* l)
+    {
+    }
+
+    void television::render_static()
+    {
+    }
+
+    void television::render_background()
+    {
+    }
+
+    void television::set_vert(rwGameCube2DVertex& vert, F32 f1, F32 f2, F32 f3, F32 f4)
+    {
+        vert.x = f1;
+        vert.y = f2;
+        vert.z = 1.0f;
+        vert.u = f3;
+        vert.v = f4;
+        vert.emissiveColor.red = 0xff;
+        vert.emissiveColor.green = 0xff;
+        vert.emissiveColor.blue = 0xff;
+        vert.emissiveColor.alpha = 0xff;
+    }
+
+    void television::move(const xVec3& v1, const xVec3& v2)
+    {
+        RwFrameTranslate((RwFrame*)this->cam->object.object.parent, (const RwV3d*)&v1, rwCOMBINEREPLACE);
+    }
+
+    static television closeup[9]; // Unconfirmed size
+
 } // namespace
 
 /*
@@ -339,6 +419,12 @@ xAnimTable* ZNPC_AnimTable_Prawn()
                             0, 0, 0x10, 0, 0, 0, 0, 0, f1455, 0);
 
     return table;
+}
+
+void zNPCPrawn::Destroy()
+{
+    zNPCCommon::Destroy();
+    closeup[0].destroy();
 }
 
 void zNPCPrawn::NewTime(xScene* xscn, float dt)
