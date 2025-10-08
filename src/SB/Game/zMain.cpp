@@ -38,7 +38,7 @@ static S32 sShowMenuOnBoot;
 S32 gGameSfxReport;
 static st_SERIAL_PERCID_SIZE* g_xser_sizeinfo;
 
-void zLedgeAdjust(zLedgeGrabParams* params);
+static void zLedgeAdjust(zLedgeGrabParams* params);
 void zMainMemCardRenderText(const char*, bool);
 void RenderText(const char*, bool);
 
@@ -113,9 +113,14 @@ void zMainInitGlobals()
     iTimeGet();
 }
 
-void ParseFloatList(F32* dest, char* strbuf, S32 max)
+static void ParseFloatList(F32* dest, char* strbuf, S32 max)
 {
     xStrParseFloatList(dest, strbuf, max);
+}
+
+void zLedgeAdjust(zLedgeGrabParams* params)
+{
+    params->animGrab *= (1.0f / 30);
 }
 
 void zMainParseINIGlobals(xIniFile* ini)
@@ -593,38 +598,30 @@ void zMainMemLvlChkCB()
     zSceneMemLvlChkCB();
 }
 
-void zLedgeAdjust(zLedgeGrabParams* params)
-{
-    params->animGrab *= (1.0f / 30);
-}
-
 void zMainShowProgressBar()
 {
     S32 progBar;
-    size_t str;
     char loadingText[12];
     char auStack_cc[64];
     char acStack_8c[64];
-    char formattedStr[72];
+    char formattedStr[64];
 
-    if (zMenuIsFirstBoot() != 0)
+    if (zMenuIsFirstBoot())
     {
-        if (100 < percentageDone)
+        if (percentageDone > 100)
         {
             percentageDone = 100;
         }
         progBar = percentageDone / 10;
         strcpy(loadingText, "Loading...");
-        memset(formattedStr, 0, 0x40);
-        memset(acStack_8c, 0, 0x40);
-        strcpy(auStack_cc, loadingText);
-        auStack_cc[progBar] = '\0';
-        str = strlen(loadingText);
-        memcpy(auStack_cc, acStack_8c + progBar, progBar); // 3rd arg should have progBar - sVar2
-        sprintf(formattedStr, "{font=0}{h*2}{w*2}%s{color=FFFFFFFF}%s{~:c}", auStack_cc,
-                acStack_8c);
-        zMainMemCardRenderText(formattedStr, '\x01');
-        percentageDone = percentageDone + 10;
+        memset(auStack_cc, 0, 64);
+        memset(formattedStr, 0, 64);
+        strcpy(acStack_8c, loadingText);
+        acStack_8c[progBar] = '\0';
+        memcpy(formattedStr, &loadingText[progBar], strlen(loadingText) - progBar);
+        sprintf(auStack_cc, "{font=0}{h*2}{w*2}%s{color=FFFFFFFF}%s{~:c}", acStack_8c, formattedStr);
+        zMainMemCardRenderText(auStack_cc, '\x01');
+        percentageDone += 10;
     }
 }
 
@@ -662,8 +659,7 @@ void zMainLoop()
 
     do
     {
-        xSTLoadStep(time);
-    } while (time < 1.0f);
+    } while (xSTLoadStep('BOOT') < 1.0f);
 
     xSTDisconnect('BOOT', 1);
     time = iTimeGet();
@@ -675,14 +671,13 @@ void zMainLoop()
 
     do
     {
-        xSTLoadStep(time);
-    } while (time < 1.0f);
+    } while (xSTLoadStep('PLAT') < 1.0f);
 
-    xSTDisconnect(0x504c4154, 1);
+    xSTDisconnect('PLAT', 1);
     zMainShowProgressBar();
     iTimeGet();
     xShadowSimple_Init();
-    globals.pickupTable = (zAssetPickupTable*)xSTFindAssetByType('PLAT', 0, 0);
+    globals.pickupTable = (zAssetPickupTable*)xSTFindAssetByType('PICK', 0, 0);
     // globals.pickupTable = zPickupTableInit();
     // zPickupTableInit hasnt been implemented yet
     xMemPushBase();
@@ -699,8 +694,7 @@ void zMainLoop()
     iTimeDiffSec(time);
     do
     {
-        xSTLoadStep(time);
-    } while (time < 1.0f);
+    } while (xSTLoadStep('MNU4') < 1.0f);
     xSTDisconnect('MNU4', 1);
     zMainShowProgressBar();
     time = iTimeGet();
@@ -720,8 +714,7 @@ void zMainLoop()
     iTimeDiffSec(time);
     do
     {
-        xSTLoadStep(time);
-    } while (time < 1.0f);
+    } while (xSTLoadStep('MNU5') < 1.0f);
     xSTDisconnect('MNU5', 1);
     zMainShowProgressBar();
     time = iTimeGet();
@@ -765,14 +758,14 @@ void zMainMemCardSpaceQuery()
     S32 status;
 }
 
-void zMainMemCardQueryPost(S32 needed, S32 available, S32 neededFiles, S32 unk0)
+static void zMainMemCardQueryPost(S32 needed, S32 available, S32 neededFiles, S32 unk0)
 {
-    RwCamera* cam = 0;
-    RwRGBA* colour = 0;
+    RwCamera* cam = nullptr;
+    RwRGBA colour = {};
     RwInt32 clearMode = 3;
 
     cam = iCameraCreate(640, 480, 0);
-    RwCameraClear(cam, colour, clearMode);
+    RwCameraClear(cam, &colour, clearMode);
     RwCameraBeginUpdate(cam);
     render_mem_card_no_space(needed, available, neededFiles, unk0);
     RwCameraEndUpdate(cam);
@@ -782,12 +775,12 @@ void zMainMemCardQueryPost(S32 needed, S32 available, S32 neededFiles, S32 unk0)
 
 void zMainMemCardRenderText(const char* a, bool enabled)
 {
-    RwCamera* cam = 0;
-    RwRGBA* colour = 0;
+    RwCamera* cam = nullptr;
+    RwRGBA colour = {};
     RwInt32 clearMode = 3;
 
     cam = iCameraCreate(640, 480, 0);
-    RwCameraClear(cam, colour, clearMode);
+    RwCameraClear(cam, &colour, clearMode);
     RwCameraBeginUpdate(cam);
     RenderText(a, enabled);
     RwCameraEndUpdate(cam);
@@ -803,7 +796,7 @@ void zMainLoadFontHIP()
     time = iTimeGet();
     xUtil_idtag2string('FONT', 0);
     iTimeDiffSec(time);
-    xSTPreLoadScene('FONT', NULL, 0x1);
+    xSTPreLoadScene('FONT', NULL, 1);
     time = iTimeGet();
     xUtil_idtag2string('FONT', 0);
     iTimeDiffSec(time);
@@ -814,8 +807,7 @@ void zMainLoadFontHIP()
 
     do
     {
-        xSTLoadStep(time);
-    } while (time < 1.0f);
+    } while (xSTLoadStep('FONT') < 1.0f);
 
     xSTDisconnect('FONT', 1);
     time = iTimeGet();
