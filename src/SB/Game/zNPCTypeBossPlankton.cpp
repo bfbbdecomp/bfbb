@@ -1303,15 +1303,6 @@ S32 zNPCBPlankton::next_goal()
     return tempR;
 }
 
-xVec3& zNPCBPlankton::location() const
-{
-    return reinterpret_cast<xVec3&>(this->model->Mat->pos);
-}
-
-void zNPCBPlankton::render_debug()
-{
-}
-
 void zNPCBPlankton::reset_territories()
 {
 }
@@ -1440,45 +1431,6 @@ void zNPCBPlankton::follow_camera()
     flag.follow = FOLLOW_CAMERA;
     follow.delay = follow.max_delay = 0.0f;
     flag.move = MOVE_ORBIT;
-}
-
-void zNPCBPlankton::enable_emitter(xParEmitter& p1) const
-{
-    p1.emit_flags |= 1;
-}
-
-void zNPCBPlankton::disable_emitter(xParEmitter& p1) const
-{
-}
-
-U8 zNPCBPlankton::ColPenByFlags() const
-{
-    return 16;
-}
-
-U8 zNPCBPlankton::PhysicsFlags() const
-{
-    return 3;
-}
-
-S32 zNPCBPlankton::IsAlive()
-{
-    return 1;
-}
-
-U8 zNPCBPlankton::ColPenFlags() const
-{
-    return 0;
-}
-
-U8 zNPCBPlankton::ColChkFlags() const
-{
-    return 0;
-}
-
-U8 zNPCBPlankton::ColChkByFlags() const
-{
-    return 16;
 }
 
 xFactoryInst* zNPCGoalBPlanktonIdle::create(S32 who, RyzMemGrow* grow, void* info)
@@ -1782,4 +1734,52 @@ S32 zNPCGoalBPlanktonBomb::Exit(F32 dt, void* updCtxt)
 S32 zNPCGoalBPlanktonBomb::Process(en_trantype*, F32, void*, xScene*)
 {
     return 0;
+}
+
+xVec3& zNPCBPlankton::location() const
+{
+    return reinterpret_cast<xVec3&>(this->model->Mat->pos);
+}
+
+void zNPCBPlankton::render_debug()
+{
+}
+
+void zNPCBPlankton::enable_emitter(xParEmitter& p1) const
+{
+    p1.emit_flags |= 1;
+}
+
+void zNPCBPlankton::disable_emitter(xParEmitter& p1) const
+{
+}
+
+U8 zNPCBPlankton::ColChkFlags() const
+{
+    return 0;
+}
+
+U8 zNPCBPlankton::ColPenFlags() const
+{
+    return 0;
+}
+
+U8 zNPCBPlankton::ColChkByFlags() const
+{
+    return 16;
+}
+
+U8 zNPCBPlankton::ColPenByFlags() const
+{
+    return 16;
+}
+
+U8 zNPCBPlankton::PhysicsFlags() const
+{
+    return 3;
+}
+
+S32 zNPCBPlankton::IsAlive()
+{
+    return 1;
 }
