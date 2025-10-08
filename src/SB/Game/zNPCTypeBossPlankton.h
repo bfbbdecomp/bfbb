@@ -119,15 +119,14 @@ struct zNPCBPlankton : zNPCBoss
     void PostSetup();
     void Reset();
     void Destroy();
-    void Process(xScene*, float);
-    S32 SysEvent(xBase*, xBase*, unsigned int, const float*, xBase*, int*);
+    void Process(xScene*, F32);
+    S32 SysEvent(xBase*, xBase*, unsigned int, const F32*, xBase*, int*);
     void Render();
     void RenderExtraPostParticles();
     void ParseINI();
     void SelfSetup();
     U32 AnimPick(int, en_NPC_GOAL_SPOT, xGoal*);
     S32 next_goal();
-    void render_debug();
     void update_turn(F32);
     void update_move(F32);
     void check_player_damage();
@@ -155,16 +154,19 @@ struct zNPCBPlankton : zNPCBoss
     void follow_camera();
     void reset_speed();
     void refresh_orbit();
-    S32 IsAlive();
-    void give_control();
-    U8 ColPenFlags() const;
-    U8 ColChkFlags() const;
-    U8 ColChkByFlags() const;
 
-    // Not yet organized / WEAK
+    xVec3& location() const;
+    void face_player();
+    void render_debug();
+    void give_control();
     void enable_emitter(xParEmitter&) const;
     void disable_emitter(xParEmitter&) const;
-    void face_player();
+    U8 ColChkFlags() const;
+    U8 ColPenFlags() const;
+    U8 ColChkByFlags() const;
+    U8 ColPenByFlags() const;
+    U8 PhysicsFlags() const;
+    S32 IsAlive();
 };
 
 struct zNPCGoalBPlanktonIdle : zNPCGoalCommon
@@ -178,6 +180,7 @@ struct zNPCGoalBPlanktonIdle : zNPCGoalCommon
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
     S32 Enter(F32, void*);
     S32 Exit(F32, void*);
+    S32 Process(en_trantype*, F32, void*, xScene*);
 
     S32 get_yaw(F32&, F32&) const;
     S32 apply_yaw(F32);
@@ -194,6 +197,7 @@ struct zNPCGoalBPlanktonAttack : zNPCGoalCommon
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
     S32 Enter(F32, void*);
     S32 Exit(F32, void*);
+    S32 Process(en_trantype*, F32, void*, xScene*);
 };
 
 struct zNPCGoalBPlanktonAmbush : zNPCGoalCommon
@@ -207,6 +211,7 @@ struct zNPCGoalBPlanktonAmbush : zNPCGoalCommon
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
     S32 Enter(F32, void*);
     S32 Exit(F32, void*);
+    S32 Process(en_trantype*, F32, void*, xScene*);
 };
 
 struct zNPCGoalBPlanktonFlank : zNPCGoalCommon
@@ -219,6 +224,9 @@ struct zNPCGoalBPlanktonFlank : zNPCGoalCommon
     }
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
+    S32 Enter(F32, void*);
+    S32 Exit(F32, void*);
+    S32 Process(en_trantype*, F32, void*, xScene*);
 };
 
 struct zNPCGoalBPlanktonEvade : zNPCGoalCommon
@@ -231,6 +239,9 @@ struct zNPCGoalBPlanktonEvade : zNPCGoalCommon
     }
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
+    S32 Enter(F32, void*);
+    S32 Exit(F32, void*);
+    S32 Process(en_trantype*, F32, void*, xScene*);
 };
 
 struct zNPCGoalBPlanktonHunt : zNPCGoalCommon
@@ -243,9 +254,9 @@ struct zNPCGoalBPlanktonHunt : zNPCGoalCommon
     }
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
-
     S32 Enter(F32, void*);
     S32 Exit(F32, void*);
+    S32 Process(en_trantype*, F32, void*, xScene*);
 };
 
 struct zNPCGoalBPlanktonTaunt : zNPCGoalCommon
@@ -257,6 +268,8 @@ struct zNPCGoalBPlanktonTaunt : zNPCGoalCommon
     }
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
+    S32 Enter(F32, void*);
+    S32 Exit(F32, void*);
     S32 Process(en_trantype*, F32, void*, xScene*);
 };
 
@@ -269,6 +282,8 @@ struct zNPCGoalBPlanktonMove : zNPCGoalCommon
     }
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
+    S32 Enter(F32, void*);
+    S32 Exit(F32, void*);
     S32 Process(en_trantype*, F32, void*, xScene*);
 };
 
@@ -295,6 +310,9 @@ struct zNPCGoalBPlanktonFall : zNPCGoalCommon
     }
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
+    S32 Enter(F32, void*);
+    S32 Exit(F32 dt, void* updCtxt);
+    S32 Process(en_trantype*, F32, void*, xScene*);
 };
 
 struct zNPCGoalBPlanktonDizzy : zNPCGoalCommon
@@ -306,8 +324,9 @@ struct zNPCGoalBPlanktonDizzy : zNPCGoalCommon
     }
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
-    S32 Enter(float, void*);
-    S32 Exit(float, void*);
+    S32 Enter(F32, void*);
+    S32 Exit(F32, void*);
+    S32 Process(en_trantype*, F32, void*, xScene*);
 };
 
 struct zNPCGoalBPlanktonBeam : zNPCGoalCommon
@@ -329,12 +348,12 @@ struct zNPCGoalBPlanktonBeam : zNPCGoalCommon
     }
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
-    S32 Enter(float, void*);
-    S32 Exit(float, void*);
-    S32 Process(en_trantype*, float, void*, xScene*);
-    S32 update_cool_down(float);
-    S32 update_warm_up(float);
-    S32 update_fire(float);
+    S32 Enter(F32, void*);
+    S32 Exit(F32, void*);
+    S32 Process(en_trantype*, F32, void*, xScene*);
+    S32 update_cool_down(F32);
+    S32 update_warm_up(F32);
+    S32 update_fire(F32);
 };
 
 struct zNPCGoalBPlanktonWall : zNPCGoalCommon
@@ -346,7 +365,9 @@ struct zNPCGoalBPlanktonWall : zNPCGoalCommon
     }
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
-    S32 Process(en_trantype*, float, void*, xScene*);
+    S32 Enter(F32, void*);
+    S32 Exit(F32, void*);
+    S32 Process(en_trantype*, F32, void*, xScene*);
 };
 
 struct zNPCGoalBPlanktonMissle : zNPCGoalCommon
@@ -358,7 +379,9 @@ struct zNPCGoalBPlanktonMissle : zNPCGoalCommon
     }
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
-    S32 Process(en_trantype*, float, void*, xScene*);
+    S32 Enter(F32, void*);
+    S32 Exit(F32, void*);
+    S32 Process(en_trantype*, F32, void*, xScene*);
 };
 
 struct zNPCGoalBPlanktonBomb : zNPCGoalCommon
@@ -370,9 +393,9 @@ struct zNPCGoalBPlanktonBomb : zNPCGoalCommon
     }
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
-    S32 Enter(float, void*);
-    S32 Exit(float, void*);
-    S32 Process(en_trantype*, float, void*, xScene*);
+    S32 Enter(F32, void*);
+    S32 Exit(F32, void*);
+    S32 Process(en_trantype*, F32, void*, xScene*);
 };
 
 xAnimTable* ZNPC_AnimTable_BossPlankton();
