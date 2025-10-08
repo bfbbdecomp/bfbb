@@ -20,9 +20,9 @@ struct zNPCTiki : zNPCCommon
     F32 landHt; // 0x328
     xEnt* nonTikiParent; // 0x32c
     xVec3 nonTikiParentDisp; // 0x330
-    U32 numParents; // 0x33c
+    U8 numParents; // 0x33c
     zNPCTiki* parents[4]; // 0x340
-    U32 numChildren;
+    U8 numChildren;
     zNPCTiki* children[4];
     zNPCTiki* nextOrphan; // 0x364
     U32 updatedParents;

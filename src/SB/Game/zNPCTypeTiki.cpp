@@ -214,17 +214,15 @@ void zNPCTiki::Reset()
 
     timeToLive = 0.0f;
     tikiFlag = 0;
-    parents[0] = NULL;
-    parents[1] = NULL;
-    parents[2] = NULL;
-    parents[3] = NULL;
+    for(int i=0; i < sizeof(parents[0]); i++) {
+        parents[i] = NULL;
+    }
     numParents = 0; // needs to store as byte
     contactParent = 0xffffffff;
 
-    children[0] = NULL;
-    children[1] = NULL;
-    children[2] = NULL;
-    children[3] = NULL;
+    for(int i=0; i < sizeof(children[0]); i++) {
+        children[i] = NULL;
+    }
     numChildren = 0; // needs to store as byte
     vel = 0.0f;
     nonTikiParent = NULL;
