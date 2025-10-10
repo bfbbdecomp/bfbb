@@ -252,6 +252,7 @@ struct zNPCPrawn : zNPCSubBoss
     void update_particles(float);
     void Destroy();
     void NewTime(xScene*, float);
+    void ParseINI();
     void SelfSetup();
     void apply_pending();
     void vanish();
