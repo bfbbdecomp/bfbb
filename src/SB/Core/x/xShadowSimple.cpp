@@ -34,11 +34,9 @@ void xShadowSimple_CacheInit(xShadowSimpleCache* cache, xEnt* ent, u8 alpha)
     U32 flags;
     U32 size;
     class RwTexture* tex;
-    /////////////////////////////////////
-    U32 sp8;
+
     S32 var_r20;
     S32 var_r24;
-    U32 var_r31;
 
     //memset(NULL, 0x98);
     cache->corner[0].z = 1e38f;
@@ -46,25 +44,17 @@ void xShadowSimple_CacheInit(xShadowSimpleCache* cache, xEnt* ent, u8 alpha)
     cache->flags = 4;
     cache->alpha = alpha;
 
-    // u32 sp8;
-    // s32 var_r20;
-    // s32 var_r24;
-    // u32 var_r31;
-
-    // memset(NULL, 0x98);
-
-
     if (ent->model != NULL)
     {
         if ((U32)(ent->model->shadowID + 0x21530000) != -0x4111U)
         {
             return;
         }
-        var_r31 = 0U;
+        flags = 0U;
         var_r20 = 0;
         for (i = 0; i < xSTAssetCountByType('SHDW'); i += 1)
         {
-            sst = (zSimpleShadowTableHeader*)xSTFindAssetByType('SHDW', i, &sp8);
+            sst = (zSimpleShadowTableHeader*)xSTFindAssetByType('SHDW', i, &size);
             var_r24 = 0;
             for (j = 0; j < (U32)sst->num; j += 1)
             {
@@ -72,23 +62,23 @@ void xShadowSimple_CacheInit(xShadowSimpleCache* cache, xEnt* ent, u8 alpha)
                 {
                     if (xSTFindAsset(sst->num, NULL) != NULL)
                     {
-                        var_r31 = (U32)xSTFindAsset(sst->num, NULL);
+                        flags = (U32)xSTFindAsset(sst->num, NULL);
                         var_r20 = sst->num;
                     }
                     else
                     {
-                        var_r31 = 0xDEADBEEFU;
+                        flags = 0xDEADBEEFU;
                     }
                 }
             }
         }
-        if ((var_r31 == 0U) || ((U32)(var_r31 + 0x21530000) == -0x4111U))
+        if ((flags == 0U) || ((U32)(flags + 0x21530000) == -0x4111U))
         {
-            var_r31 = sShadRaster->width;
+            flags = sShadRaster->width;
         }
-        cache->corner[1].x = var_r31;
+        cache->corner[1].x = flags;
         cache->flags |= (S16)var_r20;
-        ent->model->shadowID = var_r31;
+        ent->model->shadowID = flags;
     }
 }
 
