@@ -118,6 +118,7 @@ enum _xCollsIdx
 struct xScene;
 
 void xCollideInit(xScene* sc);
+void xCollideCalcTri(xCollis::tri_data&, const xModelInstance&, const xVec3&, const xVec3&);
 S32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat);
 S32 xSweptSphereToModel(xSweptSphere* sws, RpAtomic* model, RwMatrix* mat);
 S32 xSweptSphereToScene(xSweptSphere* sws, xScene* sc, xEnt* mover, U8 collType);
@@ -144,6 +145,10 @@ void xVec3AddScaled(xVec3*, const xVec3*, F32);
 xVec3 xCollisTriHit(const xCollis::tri_data& tri, const xModelInstance& model);
 bool xModelAnimCollDirty(const xModelInstance& cm);
 void xModelAnimCollRefresh(const xModelInstance& cm);
+void xModelAnimCollRestore(const xModelInstance& cm);
+void xModelAnimCollApply(const xModelInstance& cm);
+
+_xCollsIdx xCollideGetCollsIdx(const xCollis* coll, const xVec3* tohit, const xMat3x3* mat);
 
 inline bool xSphereHitsVCircle(const xSphere& s, const xVec3& c, F32 r)
 {
