@@ -5,6 +5,7 @@
 
 #include "xMath2.h"
 #include "xPtankPool.h"
+#include "xShadow.h"
 #include "xVec3.h"
 
 #include "zLightning.h"
@@ -313,6 +314,8 @@ void NPAR_EmitDroplets(en_nparmode, const xVec3*, const xVec3*);
 void NPCC_MakeStreakInfo(en_npcstreak styp, StreakInfo* info);
 U32 xFXStreakStart(StreakInfo* styp);
 U32 NPCC_StreakCreate(en_npcstreak styp);
+void NPCC_RenderProjTextureFaceCamera(RwRaster* rast, F32 factor, xVec3* pos, F32 radius,
+                                      F32 height, xShadowCache* cache, S32 fillCache, xEnt* ent);
 void UpdateAndRender(NPARMgmt param_1, F32 dt);
 F32 BOWL3(F32 param_1);
 F32 QUB(F32 param_1);

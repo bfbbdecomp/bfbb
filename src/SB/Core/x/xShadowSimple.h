@@ -1,7 +1,18 @@
 #ifndef XSHADOWSIMPLE_H
 #define XSHADOWSIMPLE_H
 
+#include "types.h"
 #include "xEnt.h"
+
+struct xShadowSimpleQueue
+{
+    // total size: 0x14
+    xShadowSimpleCache* cache; // offset 0x0, size 0x4
+    u32 priority; // offset 0x4, size 0x4
+    xEnt* ent; // offset 0x8, size 0x4
+    F32 radius; // offset 0xC, size 0x4
+    F32 ecc; // offset 0x10, size 0x4
+};
 
 struct xShadowSimplePoly
 {
@@ -32,6 +43,11 @@ struct xShadowSimpleCache
     F32 dydx;
     F32 dydz;
     xVec3 corner[4];
+};
+
+struct zSimpleShadowTableHeader {
+    // total size: 0x4
+    U32 num;
 };
 
 void xShadowSimple_Render();

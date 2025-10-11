@@ -1,5 +1,6 @@
 
 #include "zNPCTypeBossSB2.h"
+#include "PowerPC_EABI_Support/MSL_C++/MSL_Common/Include/new.h"
 #include "xLightKit.h"
 #include "zNPCGoalCommon.h"
 #include <types.h>
@@ -96,13 +97,13 @@ namespace
         model->PipeFlags |= 0x6508;
     }
 
-    F32 max(float maxFloat1, float maxFloat2) //Temp names till file is further
+    F32 max(F32 f0, F32 f1)
     {
-        if (maxFloat1 > maxFloat2)
+        if (f0 > f1)
         {
-            return maxFloat1;
+            return f0;
         }
-        return maxFloat2;
+        return f1;
     }
 
     S32 tweak()
@@ -118,7 +119,7 @@ namespace
         }
     }
 
-    S32 play_sound(int, const xVec3*, float)
+    S32 play_sound(int, const xVec3*, F32)
     {
         return 0; // to-do
     }
@@ -1130,11 +1131,7 @@ void zNPCB_SB2::Destroy()
     zNPCCommon::Destroy();
 }
 
-void zNPCB_SB2::NewTime(xScene* x, float y)
-{
-}
-
-void zNPCB_SB2::render_debug()
+void zNPCB_SB2::NewTime(xScene* x, F32 y)
 {
 }
 
@@ -1246,7 +1243,16 @@ void zNPCB_SB2::destroy_glow_light()
     xLightKit_Destroy(&glow_light.kit);
 }
 
-S32 zNPCGoalBossSB2Intro::Enter(float dt, void* updCtxt)
+void zNPCB_SB2::say(U32)
+{
+}
+
+xFactoryInst* zNPCGoalBossSB2Intro::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBossSB2Intro(who, (zNPCB_SB2&)*info);
+}
+
+S32 zNPCGoalBossSB2Intro::Enter(F32 dt, void* updCtxt)
 {
     if (owner.said_intro == 0)
     {
@@ -1256,39 +1262,53 @@ S32 zNPCGoalBossSB2Intro::Enter(float dt, void* updCtxt)
     owner.delay = 0.0f;
     zEntPlayerControlOff(CONTROL_OWNER_BOSS);
     return zNPCGoalCommon::Enter(dt, updCtxt);
-    
 }
 
-S32 zNPCGoalBossSB2Intro::Exit(float dt, void* updCtxt)
+S32 zNPCGoalBossSB2Intro::Exit(F32 dt, void* updCtxt)
 {
     zEntPlayerControlOn(CONTROL_OWNER_BOSS);
     return xGoal::Exit(dt, updCtxt);
 }
 
-S32 zNPCGoalBossSB2Idle::Enter(float dt, void* updCtxt)
+xFactoryInst* zNPCGoalBossSB2Idle::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBossSB2Idle(who, (zNPCB_SB2&)*info);
+}
+
+S32 zNPCGoalBossSB2Idle::Enter(F32 dt, void* updCtxt)
 {
     transitioning = 1;
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
-S32 zNPCGoalBossSB2Idle::Exit(float dt, void* updCtxt)
+S32 zNPCGoalBossSB2Idle::Exit(F32 dt, void* updCtxt)
 {
     return xGoal::Exit(dt, updCtxt);
 }
 
-S32 zNPCGoalBossSB2Taunt::Enter(float dt, void* updCtxt)
+xFactoryInst* zNPCGoalBossSB2Taunt::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBossSB2Taunt(who, (zNPCB_SB2&)*info);
+}
+
+S32 zNPCGoalBossSB2Taunt::Enter(F32 dt, void* updCtxt)
 {
     play_sound(0, &owner.sound_loc.mouth , 1.0f);
     owner.flag.face_player = 1;
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
-S32 zNPCGoalBossSB2Taunt::Exit(float dt, void* updCtxt)
+S32 zNPCGoalBossSB2Taunt::Exit(F32 dt, void* updCtxt)
 {
     return xGoal::Exit(dt, updCtxt);
 }
 
-S32 zNPCGoalBossSB2Dizzy::Enter(float dt, void* updCtxt)
+xFactoryInst* zNPCGoalBossSB2Dizzy::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBossSB2Dizzy(who, (zNPCB_SB2&)*info);
+}
+
+S32 zNPCGoalBossSB2Dizzy::Enter(F32 dt, void* updCtxt)
 {
     sicked = 0;
     owner.flag.face_player = 0;
@@ -1297,7 +1317,7 @@ S32 zNPCGoalBossSB2Dizzy::Enter(float dt, void* updCtxt)
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
-S32 zNPCGoalBossSB2Dizzy::Exit(float dt, void* updCtxt)
+S32 zNPCGoalBossSB2Dizzy::Exit(F32 dt, void* updCtxt)
 {
     S32 tempDizzy;
     owner.set_vulnerable(true);
@@ -1316,7 +1336,12 @@ S32 zNPCGoalBossSB2Dizzy::Exit(float dt, void* updCtxt)
     return xGoal::Exit(dt, updCtxt);
 }
 
-S32 zNPCGoalBossSB2Hit::Enter(float dt, void* updCtxt) 
+xFactoryInst* zNPCGoalBossSB2Hit::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBossSB2Hit(who, (zNPCB_SB2&)*info);
+}
+
+S32 zNPCGoalBossSB2Hit::Enter(F32 dt, void* updCtxt) 
 {
     // Function needs set up differently
     // im just dumb
@@ -1348,13 +1373,48 @@ S32 zNPCGoalBossSB2Hit::Enter(float dt, void* updCtxt)
 return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
-S32 zNPCGoalBossSB2Hit::Exit(float dt, void* updCtxt)
+S32 zNPCGoalBossSB2Hit::Exit(F32 dt, void* updCtxt)
 {
     owner.set_vulnerable(true);
     return xGoal::Exit(dt, updCtxt);
 }
 
-S32 zNPCGoalBossSB2Swipe::Exit(float dt, void* updCtxt)
+xFactoryInst* zNPCGoalBossSB2Hunt::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBossSB2Hunt(who, (zNPCB_SB2&)*info);
+}
+
+xFactoryInst* zNPCGoalBossSB2Swipe::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBossSB2Swipe(who, (zNPCB_SB2&)*info);
+}
+
+S32 zNPCGoalBossSB2Swipe::Enter(F32 dt, void* updCtxt)
+{
+    owner.flag.face_player = 1;
+    said = 0;
+    holding = 0;
+    started = 0;
+
+    owner.choose_hand();
+
+    if (owner.active_hand == 0)
+    {
+        begin_anim = g_hash_bossanim[56];
+        loop_anim = g_hash_bossanim[57];
+        end_anim = g_hash_bossanim[58];
+    }
+    else
+    {
+        begin_anim = g_hash_bossanim[59];
+        loop_anim = g_hash_bossanim[60];
+        end_anim = g_hash_bossanim[61];
+    }
+
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSB2Swipe::Exit(F32 dt, void* updCtxt)
 {
     owner.flag.face_player = true;
     owner.deactivate_hand(owner.active_hand);
@@ -1368,13 +1428,53 @@ S32 zNPCGoalBossSB2Swipe::can_start() const
     return tempStart != 0;
 }
 
-S32 zNPCGoalBossSB2Chop::Exit(float dt, void* updCtxt)
+xFactoryInst* zNPCGoalBossSB2Chop::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBossSB2Chop(who, (zNPCB_SB2&)*info);
+}
+
+S32 zNPCGoalBossSB2Chop::Enter(F32 dt, void* updCtxt)
+{
+    targetted = 0;
+    started = 0;
+    owner.flag.face_player = true;
+
+    owner.choose_hand();
+    owner.activate_hand(owner.active_hand, true);
+
+    if (owner.active_hand == 0)
+    {
+        begin_anim = g_hash_bossanim[50];
+        loop_anim = g_hash_bossanim[51];
+        end_anim = g_hash_bossanim[52];
+    }
+    else
+    {
+        begin_anim = g_hash_bossanim[53];
+        loop_anim = g_hash_bossanim[54];
+        end_anim = g_hash_bossanim[55];
+    }
+
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSB2Chop::Exit(F32 dt, void* updCtxt)
 {
     owner.deactivate_hand(owner.active_hand);
     return xGoal::Exit(dt, updCtxt);
 }
 
-S32 zNPCGoalBossSB2Karate::Exit(float dt, void* updCtxt)
+xFactoryInst* zNPCGoalBossSB2Karate::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBossSB2Karate(who, (zNPCB_SB2&)*info);
+}
+
+S32 zNPCGoalBossSB2Karate::Enter(F32 dt, void* updCtxt)
+{
+    return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSB2Karate::Exit(F32 dt, void* updCtxt)
 {
     owner.abandon_slugs();
     return xGoal::Exit(dt, updCtxt);
@@ -1387,13 +1487,18 @@ S32 zNPCGoalBossSB2Karate::can_start() const
     return tempStart != 0;
 }
 
-S32 zNPCGoalBossSB2Death::Enter(float dt, void* updCtxt)
+xFactoryInst* zNPCGoalBossSB2Death::create(S32 who, RyzMemGrow* grow, void* info)
+{
+    return new (who, grow) zNPCGoalBossSB2Death(who, (zNPCB_SB2&)*info);
+}
+
+S32 zNPCGoalBossSB2Death::Enter(F32 dt, void* updCtxt)
 {
     owner.decompose();
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
-S32 zNPCGoalBossSB2Death::Exit(float dt, void* updCtxt)
+S32 zNPCGoalBossSB2Death::Exit(F32 dt, void* updCtxt)
 {
     return xGoal::Exit(dt, updCtxt);
 }
@@ -1408,4 +1513,28 @@ void zNPCB_SB2::choose_hand()
     S32 r = xrand();
     S32 b = (r >> 13) & 1;
     this->active_hand = (b == 0 ? LEFT_HAND : RIGHT_HAND);
+}
+
+xVec3& zNPCB_SB2::location() const
+{
+    return reinterpret_cast<xVec3&>(this->model->Mat->pos);
+}
+
+void zNPCB_SB2::render_debug()
+{
+}
+
+xVec3& zNPCB_SB2::get_home() const
+{
+    return reinterpret_cast<xVec3&>(this->asset->pos);
+}
+
+xVec3& zNPCB_SB2::start_location() const
+{
+    return reinterpret_cast<xVec3&>(this->asset->pos);
+}
+
+xVec3& zNPCB_SB2::facing() const
+{
+    return reinterpret_cast<xVec3&>(this->model->Mat->at);
 }
