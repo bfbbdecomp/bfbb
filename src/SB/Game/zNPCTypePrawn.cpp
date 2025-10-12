@@ -171,8 +171,6 @@ namespace
     {
         RwFrameTranslate((RwFrame*)this->cam->object.object.parent, (const RwV3d*)&v1, rwCOMBINEREPLACE);
         xMat3x3LookAt((xMat3x3*)this->cam->object.object.parent, &v2, &v1);
-
-        //this->cam->frustumCorners[0] = this->world->worldOrigin;
     }
 
     static television closeup[9]; // Unconfirmed size
@@ -342,7 +340,6 @@ void tweak_group::register_tweaks(bool init, xModelAssetParam* ap, U32 apsize, c
 void aqua_beam::load(const aqua_beam::config& c, U32 i)
 {
     void* a = xSTFindAsset(i, 0);
-
     aqua_beam::load(c, *(RpAtomic*)a);
 }
 

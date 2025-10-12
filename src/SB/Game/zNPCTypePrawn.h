@@ -266,7 +266,7 @@ struct zNPCPrawn : zNPCSubBoss
     void decompose();
     void set_floor_state(zNPCPrawn::floor_state_enum, bool, bool);
     void Damage(en_NPC_DAMAGE_TYPE, xBase*, const xVec3*);
-    
+
     xVec3& get_center() const;
     xVec3& get_facing() const;
     U8 ColChkFlags() const;
