@@ -237,6 +237,8 @@ F32 xDangleClamp(F32 a)
 
 void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
 {
+	// Todo: These variable names aren't all right.
+    F32 var_f31;
     F32 offset;
     F32 t1;
     F32 t2;
@@ -248,28 +250,27 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
     F32 dx;
 
     F32 temp_f1_2;
-    F32 temp_f28;
-    F32 temp_f29;
-    F32 var_f0;
-    F32 var_f2;
-    F32 var_f31;
-    S32 var_r0;
-    S32 var_r0_2;
-    S32 var_r0_3;
     S32 var_r0_4;
     S32 var_r3_2;
     S32 var_r3_3;
+    S32 var_r0;
+    S32 var_r0_2;
+    S32 var_r0_3;
+    S32 var_r3;
     S32 var_r3_4;
     S32 var_r4;
-    S8 var_r3;
+    F32 var_f0;
+    F32 var_f2;
+    F32 temp_f29;
+    F32 temp_f28;
 
     temp_f29 = endx - x;
-    var_r3 = 1;
+    var_r3 = 1; // Possible missing debug subroutine
     if (!((F32)__fabs(v) < 0.001f))
     {
         if (v < 0.0f)
         {
-            var_r4 = 1;
+            var_r4 = var_r3;
         }
         else
         {
@@ -288,7 +289,7 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
             var_r3 = 0;
         }
     }
-    if (var_r3 != 0)
+    if (var_r3 & 0xff)
     {
         var_f31 = 1e38f;
     }
@@ -309,14 +310,14 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
     oldv = v;
     newv = oldv + dv;
 
-    if ((F32)__fabs(newv) == maxv)
+    if ((F32)__fabs(newv) <= maxv)
     {
         v = newv;
         var_f0 = 0.5f * dv * dt;
     }
     else
     {
-        if ((F32)__fabs(oldv) == maxv)
+        if ((F32)__fabs(oldv) <= maxv)
         {
             v = range_limit(newv, -maxv, maxv);
             if (oldv != v)
@@ -527,11 +528,14 @@ void xAccelStop(F32& x, F32& v, F32 a, F32 dt)
 
 void xFuncPiece_EndPoints(xFuncPiece* func, F32 pi, F32 pf, F32 fi, F32 ff)
 {
-    F32 xfinv; // from DWARF data
+	F32 xfinv; // from DWARF data
+	F32 df; // not from DWARF data
 
     func->end = pf - pi;
+    xfinv = (1.0f / func->end);
+	df = ff - fi;
     func->order = 1;
     func->coef[0] = fi;
-    func->coef[1] = (ff - fi) * (1.0f / func->end);
+    func->coef[1] = df * xfinv;
     xFuncPiece_ShiftPiece(func, func, -pi);
 }
