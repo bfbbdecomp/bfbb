@@ -177,6 +177,8 @@ struct aqua_beam
     } squiggle;
 
     S32 ring_sounds; //0xf54
+    void load(const aqua_beam::config&, U32);
+    void load(const aqua_beam::config&, RpAtomic&);
     void reset();
     void start();
     void stop();
@@ -250,6 +252,7 @@ struct zNPCPrawn : zNPCSubBoss
     void render_debug();
     void Render();
     void update_particles(float);
+    void Init(xEntAsset*);
     void Destroy();
     void NewTime(xScene*, float);
     void ParseINI();

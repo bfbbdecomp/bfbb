@@ -3,7 +3,10 @@
 #include "rwcore.h"
 #include "xDebug.h"
 
+#include "xMemMgr.h"
+#include "zEntCruiseBubble.h"
 #include "zNPCTypeCommon.h"
+#include "zRenderState.h"
 #include <types.h>
 
 #define f1052 1.0f
@@ -84,6 +87,10 @@ namespace
 
     static tweak_group tweak;
 
+    void init_sound()
+    {
+    }
+
     void kill_sound(S32, U32)
     {
     }
@@ -143,6 +150,8 @@ namespace
 
     void television::render_background()
     {
+        zRenderState(SDRS_Fill);
+        RwRenderStateSet(rwRENDERSTATETEXTURERASTER, this->bgraster);
     }
 
     void television::set_vert(rwGameCube2DVertex& vert, F32 x, F32 y, F32 u, F32 v)
@@ -162,18 +171,16 @@ namespace
     {
         RwFrameTranslate((RwFrame*)this->cam->object.object.parent, (const RwV3d*)&v1, rwCOMBINEREPLACE);
         xMat3x3LookAt((xMat3x3*)this->cam->object.object.parent, &v2, &v1);
-        //RwV3d::operator=(this->cam->object.object.parent);
+
+        //this->cam->frustumCorners[0] = this->world->worldOrigin;
     }
 
     static television closeup[9]; // Unconfirmed size
 
-    //S32 load_patterns(xModelAssetParam*, U32, const char*, zNPCPrawn::range_type*, S32);
-} // namespace
+    xBinaryCamera boss_cam;
 
-S32 load_patterns(xModelAssetParam*, U32, const char*, zNPCPrawn::range_type*, S32)
-{
-    return 0;
-}
+    S32 load_patterns(xModelAssetParam*, U32, const char*, zNPCPrawn::range_type*, S32);
+} // namespace
 
 void tweak_group::load(xModelAssetParam* p, U32 i)
 {
@@ -332,6 +339,17 @@ void tweak_group::register_tweaks(bool init, xModelAssetParam* ap, U32 apsize, c
     */
 }
 
+void aqua_beam::load(const aqua_beam::config& c, U32 i)
+{
+    void* a = xSTFindAsset(i, 0);
+
+    aqua_beam::load(c, *(RpAtomic*)a);
+}
+
+void aqua_beam::load(const aqua_beam::config& c, RpAtomic& a)
+{
+}
+
 void aqua_beam::reset() // I don't know whats wrong here. Probably a simple error
 {
     firing = 0;
@@ -437,6 +455,20 @@ xAnimTable* ZNPC_AnimTable_Prawn()
     return table;
 }
 
+void zNPCPrawn::Init(xEntAsset* a)
+{
+    boss_cam.init();
+    init_sound();
+    zNPCCommon::Init(a);
+    memset(&this->flag, 0, 1);
+    this->flg_move = 1;
+    this->flg_vuln = 0x11;
+    this->chkby = 0x10;
+    this->penby = 0x10;
+    this->beam.load(this->beam.cfg, xStrHash("glow_ring_add.dff"));
+    closeup[0].create(0x100, 0x100);
+}
+
 void zNPCPrawn::Destroy()
 {
     zNPCCommon::Destroy();
@@ -517,11 +549,6 @@ void zNPCPrawn::ParseINI() // do other parse function after
     tweak.danger.transition_delay = zParamGetFloat(this->parmdata, this->pdatsize, "danger.transition_delay", 0.2f);
     tweak.danger.cycle_delay = zParamGetFloat(this->parmdata, this->pdatsize, "danger.cycle_delay", 6.0f);
     tweak.danger.pattern_offset = zParamGetInt(this->parmdata, this->pdatsize, "danger.pattern_offset", 0x5d);
-
-    memcpy(tweak.context, tweak.context, 0);
-
-
-    tweak.danger.pattern_size = load_patterns(this->parmdata, 0, "tweak.danger.pattern[%d]", &this->pending.pattern, 0x14);
 }
 
 void zNPCPrawn::SelfSetup()
