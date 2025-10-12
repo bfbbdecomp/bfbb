@@ -67,7 +67,7 @@ void zNPCTiki_InitStacking(zScene* zsc)
         {
             tiki->FindParents(zsc);
 
-            if (tiki->numParents == 0)
+            if (*(U8*)(&tiki->numParents) == 0)
             {
                 F32 dh = tiki->landHt - tiki->bound.box.box.lower.y;
 
@@ -218,14 +218,14 @@ void zNPCTiki::Reset()
     parents[1] = NULL;
     parents[2] = NULL;
     parents[3] = NULL;
-    numParents = 0; // needs to store as byte
+    *(U8*)(&numParents) = 0; // needs to store as byte
     contactParent = 0xffffffff;
 
     children[0] = NULL;
     children[1] = NULL;
     children[2] = NULL;
     children[3] = NULL;
-    numChildren = 0; // needs to store as byte
+    *(U8*)(&numChildren) = 0; // needs to store as byte
     vel = 0.0f;
     nonTikiParent = NULL;
 
@@ -663,12 +663,12 @@ static void genericTikiRender(xEnt* ent)
     }
 
     F32 dot = 2.0f;
+    xVec3 tmp;
 
     if ((globals.player.ControlOff & 0x23f3) == 0)
     {
-        xVec3* tmp = NULL;
-        xVec3Sub(tmp, &ent->bound.box.center, &globals.camera.mat.pos);
-        dot = xVec3Dot(tmp, &globals.camera.mat.at);
+        xVec3Sub(&tmp, &ent->bound.box.center, &globals.camera.mat.pos);
+        dot = xVec3Dot(&tmp, &globals.camera.mat.at);
     }
 
     if (dot < 1.5f)
@@ -690,7 +690,7 @@ static void genericTikiRender(xEnt* ent)
         return;
     }
 
-    xModelRender(ent->model->Next);
+    xModelRender(ent->model);
 }
 
 // .text (d8)
