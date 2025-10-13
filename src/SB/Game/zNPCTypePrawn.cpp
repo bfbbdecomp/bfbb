@@ -173,7 +173,7 @@ namespace
         xMat3x3LookAt((xMat3x3*)this->cam->object.object.parent, &v2, &v1);
     }
 
-    static television closeup[9]; // Unconfirmed size
+    static television closeup[1];
 
     xBinaryCamera boss_cam;
 
@@ -480,7 +480,7 @@ void zNPCPrawn::NewTime(xScene* xscn, float dt)
 
 
 
-void zNPCPrawn::ParseINI() // do other parse function after
+void zNPCPrawn::ParseINI()
 {
     zNPCCommon::ParseINI();
     tweak.load(this->parmdata, this->pdatsize);
