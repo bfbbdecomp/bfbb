@@ -45,6 +45,11 @@ struct xShadowSimpleCache
     xVec3 corner[4];
 };
 
+struct zSimpleShadowTableHeader {
+    // total size: 0x4
+    U32 num;
+};
+
 void xShadowSimple_Render();
 void xShadowSimple_Add(xShadowSimpleCache* cache, xEnt* ent, F32 radius, F32 ecc);
 void xShadowSimple_CacheInit(xShadowSimpleCache* cache, xEnt* ent, U8 alpha);
