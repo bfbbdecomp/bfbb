@@ -475,7 +475,7 @@ config.libs = [
             Object(Equivalent, "SB/Core/gc/iAnim.cpp"),
             Object(NonMatching, "SB/Core/gc/iAnimSKB.cpp"),
             Object(NonMatching, "SB/Core/x/iCamera.cpp"),
-            Object(NonMatching, "SB/Core/gc/iCollide.cpp"),
+            Object(NonMatching, "SB/Core/gc/iCollide.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/gc/iCollideFast.cpp"),
             Object(Matching, "SB/Core/gc/iDraw.cpp"),
             Object(Equivalent, "SB/Core/gc/iEnv.cpp"),
