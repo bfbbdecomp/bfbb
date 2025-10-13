@@ -173,7 +173,7 @@ namespace
         xMat3x3LookAt((xMat3x3*)this->cam->object.object.parent, &v2, &v1);
     }
 
-    static television closeup[1];
+    static television closeup;
 
     xBinaryCamera boss_cam;
 
@@ -463,13 +463,13 @@ void zNPCPrawn::Init(xEntAsset* a)
     this->chkby = 0x10;
     this->penby = 0x10;
     this->beam.load(this->beam.cfg, xStrHash("glow_ring_add.dff"));
-    closeup[0].create(0x100, 0x100);
+    closeup.create(0x100, 0x100);
 }
 
 void zNPCPrawn::Destroy()
 {
     zNPCCommon::Destroy();
-    closeup[0].destroy();
+    closeup.destroy();
 }
 
 void zNPCPrawn::NewTime(xScene* xscn, float dt)
