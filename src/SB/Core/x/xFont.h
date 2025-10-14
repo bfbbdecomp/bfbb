@@ -157,6 +157,45 @@ struct xtextbox
 
     static callback text_cb;
 
+    xtextbox& operator=(const xtextbox& rhs)
+	{
+		this->font.id = rhs.font.id;
+
+		*(S32*)(&this->font.width)  = *(S32*)(&rhs.font.width);
+		*(S32*)(&this->font.height) = *(S32*)(&rhs.font.height);
+		*(S32*)(&this->font.space)  = *(S32*)(&rhs.font.space);
+
+		*(S32*)(&this->font.color)  = *(S32*)(&rhs.font.color);
+
+		*(S32*)(&this->font.clip.x) = *(S32*)(&rhs.font.clip.x);
+		*(S32*)(&this->font.clip.y) = *(S32*)(&rhs.font.clip.y);
+		*(S32*)(&this->font.clip.w) = *(S32*)(&rhs.font.clip.w);
+		*(S32*)(&this->font.clip.h) = *(S32*)(&rhs.font.clip.h);
+
+		*(S32*)(&this->bounds.x) = *(S32*)(&rhs.bounds.x);
+		*(S32*)(&this->bounds.y) = *(S32*)(&rhs.bounds.y);
+		*(S32*)(&this->bounds.w) = *(S32*)(&rhs.bounds.w);
+		*(S32*)(&this->bounds.h) = *(S32*)(&rhs.bounds.h);
+
+		this->flags = rhs.flags;
+
+		this->line_space = rhs.line_space;
+		this->tab_stop = rhs.tab_stop;
+		this->left_indent = rhs.left_indent;
+		this->right_indent = rhs.right_indent;
+
+		this->cb = rhs.cb;
+		this->context = rhs.context;
+		this->texts = rhs.texts;
+		this->text_sizes = rhs.text_sizes;
+		this->texts_size = rhs.texts_size;
+		this->text.text = rhs.text.text;
+		this->text.size = rhs.text.size;
+		this->text_hash = rhs.text_hash;
+
+		return *this;
+	}
+
     static void text_render(const jot& j, const xtextbox& tb, F32 x, F32 y);
     static tag_entry_list read_tag(const substr& s);
     static tag_entry* find_entry(const tag_entry_list& el, const substr& name);
