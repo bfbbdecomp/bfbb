@@ -177,6 +177,8 @@ struct aqua_beam
     } squiggle;
 
     S32 ring_sounds; //0xf54
+    void load(const aqua_beam::config&, U32);
+    void load(const aqua_beam::config&, RpAtomic&);
     void reset();
     void start();
     void stop();
@@ -250,7 +252,10 @@ struct zNPCPrawn : zNPCSubBoss
     void render_debug();
     void Render();
     void update_particles(float);
+    void Init(xEntAsset*);
+    void Destroy();
     void NewTime(xScene*, float);
+    void ParseINI();
     void SelfSetup();
     void apply_pending();
     void vanish();
@@ -262,10 +267,14 @@ struct zNPCPrawn : zNPCSubBoss
     void set_floor_state(zNPCPrawn::floor_state_enum, bool, bool);
     void Damage(en_NPC_DAMAGE_TYPE, xBase*, const xVec3*);
 
-    U8 PhysicsFlags() const;
-    U8 ColPenByFlags() const;
-    U8 ColChkByFlags() const;
+    xVec3& get_center() const;
+    xVec3& get_facing() const;
+    U8 ColChkFlags() const;
     U8 ColPenFlags() const;
+    U8 ColChkByFlags() const;
+    U8 ColPenByFlags() const;
+    U8 PhysicsFlags() const;
+    S32 IsAlive();
 };
 
 struct zNPCGoalPrawnIdle : zNPCGoalCommon

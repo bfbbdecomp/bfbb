@@ -1,3 +1,4 @@
+#include "xVec3Inlines.h"
 #include <types.h>
 
 #include "xAnim.h"
@@ -563,6 +564,115 @@ void zNPCBSandy_BossDamageEffect_Init()
     {
         BDErecord[i].BDEminst = NULL;
     }
+}
+
+void zNPCBSandy::InitFX()
+{
+    this->timeToNextBolt[0] = 0.0f;
+    this->timeToNextBolt[1] = 0.0f;
+    this->maxLightningWait[0] = 0.0f;
+    this->maxLightningWait[1] = 0.0f;
+
+    xMat4x3Copy((xMat4x3*)&this->sparkTransform[0][0], (xMat4x3*)&this->hangingScoreboard->model->Mat);
+    xMat4x3Copy((xMat4x3*)&this->sparkTransform[0][1], (xMat4x3*)&this->hangingScoreboard->model->Mat);
+    xMat4x3Copy((xMat4x3*)&this->sparkTransform[1][0], (xMat4x3*)&this->crashedScoreboard->model->Mat);
+    xVec3SMul((xVec3*)&this->sparkTransform[1][1], (xVec3*)&this->crashedScoreboard->model->Mat, 0.8f);
+    xVec3SMul((xVec3*)&this->sparkTransform[1][1].up, (xVec3*)&this->crashedScoreboard->model->Mat->at, -0.8f);
+    xVec3SMul((xVec3*)&this->sparkTransform[1][1].at, (xVec3*)&this->crashedScoreboard->model->Mat->up, 0.8f);
+    xVec3Copy((xVec3*)&this->sparkTransform[1][1].pos, (xVec3*)&this->crashedScoreboard->model->Mat->pos);
+    xVec3AddScaled((xVec3*)&this->sparkTransform[1][1].pos, (xVec3*)&this->crashedScoreboard->model->Mat->up, 4.5f);
+    xVec3AddScaled((xVec3*)&this->sparkTransform[1][1].pos, (xVec3*)&this->crashedScoreboard->model->Mat->at, 5.0f);
+    xVec3Init((xVec3*)&this->endPoints[0][0], -2.0f, 2.0f, 0.0f);
+    xVec3Init((xVec3*)&this->endPoints[0][1], 2.0f, 2.0f, 0.0f);
+
+    this->sparks[0].type = 0x3;
+    this->sparks[0].setup_degrees = 66.0f;
+    this->sparks[0].move_degrees = 66.0f;
+    this->sparks[0].rot_radius = 66.0f;
+    this->sparks[0].total_points = 0x10;
+    this->sparks[0].end_points = 0;
+    this->sparks[0].time = 0.25f;
+    this->sparks[0].arc_height = -1.5f;
+    this->sparks[0].thickness = 1.0f;
+    this->sparks[0].color.r = 0xa0;
+    this->sparks[0].color.g = 0xa0;
+    this->sparks[0].color.b = 0xff;
+    this->sparks[0].color.a = 0xc8;
+    this->sparks[0].rand_radius = 13.0f;
+    this->sparks[0].flags = 0x1c28;
+
+    xVec3Init((xVec3*)&this->endPoints[0][2], -2.0f, 2.0f, 0.0f);
+    xVec3Init((xVec3*)&this->endPoints[0][3], 2.0f, 2.0f, 0.0f);
+
+    this->sparks[1].type = 0x3;
+    this->sparks[1].setup_degrees = 66.0f;
+    this->sparks[1].move_degrees = 66.0f;
+    this->sparks[1].rot_radius = 66.0f;
+    this->sparks[1].total_points = 0x10;
+    this->sparks[1].end_points = 0;
+    this->sparks[1].time = 0.25f;
+    this->sparks[1].arc_height = -1.5f;
+    this->sparks[1].thickness = 1.0f;
+    this->sparks[1].color.r = 0xc8;
+    this->sparks[1].color.g = 0xc8;
+    this->sparks[1].color.b = 0x37;
+    this->sparks[1].color.a = 0xc8;
+    this->sparks[1].rand_radius = 13.0f;
+    this->sparks[1].flags = 0x1c28;
+
+    xVec3Init((xVec3*)&this->endPoints[1][0], 0.0f, 2.0f, 0.0f);
+    xVec3Init((xVec3*)&this->endPoints[1][1], 3.5f, 2.0f, 0.0f);
+
+    this->sparks[2].type = 0x3;
+    this->sparks[2].setup_degrees = 66.0f;
+    this->sparks[2].move_degrees = 66.0f;
+    this->sparks[2].rot_radius = 66.0f;
+    this->sparks[2].total_points = 0x8;
+    this->sparks[2].end_points = 0;
+    this->sparks[2].time = 0.25f;
+    this->sparks[2].arc_height = -1.5f;
+    this->sparks[2].thickness = 1.0f;
+    this->sparks[2].color.r = 0xa0;
+    this->sparks[2].color.g = 0xa0;
+    this->sparks[2].color.b = 0xff;
+    this->sparks[2].color.a = 0xc8;
+    this->sparks[2].rand_radius = 13.0f;
+    this->sparks[2].flags = 0x1c20;
+
+    xVec3Init((xVec3*)&this->endPoints[1][2], 0.0f, 2.0f, 0.0f);
+    xVec3Init((xVec3*)&this->endPoints[1][3], 3.5f, 2.0f, 0.0f);
+
+    this->sparks[3].type = 0x3;
+    this->sparks[3].zeus_normal_offset = 1.0f;
+    this->sparks[3].zeus_back_offset = -1.0f;
+    this->sparks[3].zeus_side_offset = 0.0f;
+    this->sparks[3].total_points = 0xa;
+    this->sparks[3].end_points = 0;
+    this->sparks[3].time = 0.25f;
+    this->sparks[3].arc_height = -2.5f;
+    this->sparks[3].thickness = 1.0f;
+    this->sparks[3].color.r = 0xc8;
+    this->sparks[3].color.g = 0xc8;
+    this->sparks[3].color.b = 0x37;
+    this->sparks[3].color.a = 0xc8;
+    this->sparks[3].rand_radius = 15.0f;
+    this->sparks[3].flags = 0x1c20;
+    this->sparks[4].type = 0x3;
+    this->sparks[4].color.r = 0xc8;
+    this->sparks[4].color.g = 0xc8;
+    this->sparks[4].color.b = 0xc8;
+    this->sparks[4].color.a = 0xff;
+    this->sparks[4].time = 1.0f;
+    this->sparks[4].thickness = 1.0f;
+    this->sparks[4].flags = 0x110;
+    this->sparks[5].type = 0x3;
+    this->sparks[5].color.r = 0x32;
+    this->sparks[5].color.g = 0x32;
+    this->sparks[5].color.b = 0xc8;
+    this->sparks[5].color.a = 0xff;
+    this->sparks[5].time = 1.0f;
+    this->sparks[5].thickness = 1.0f;
+    this->sparks[5].flags = 0x110;
 }
 
 static void UpdateSandyBossCam(zNPCBSandy* sandy, F32 dt)

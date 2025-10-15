@@ -168,17 +168,17 @@ static void xBoundOBBIsectRay(const xBox* b, const xMat4x3* m, const xRay3* r, x
     {
         F32 len2 = SQR(m->right.x) + SQR(m->right.y) + SQR(m->right.z);
 
-        if ((F32)iabs(len2 - 1.0f) <= 0.0000099999997f)
+        if ((F32)iabs(len2 - 1.0f) <= 0.00001f)
         {
             // non-matching: incorrect instruction + order
 
             scale.x = 1.0f;
 
-            mnormal.right.x = m->right.x;
-            mnormal.right.y = m->right.y;
-            mnormal.right.z = m->right.z;
+            mnormal.right.x = SQR(m->right.x);
+            mnormal.right.y = SQR(m->right.y);
+            mnormal.right.z = SQR(m->right.z);
         }
-        else if ((F32)iabs(len2) <= 0.0000099999997f)
+        else if ((F32)iabs(len2) <= 0.00001f)
         {
             // non-matching: incorrect order
 
@@ -203,17 +203,17 @@ static void xBoundOBBIsectRay(const xBox* b, const xMat4x3* m, const xRay3* r, x
     {
         F32 len2 = SQR(m->up.x) + SQR(m->up.y) + SQR(m->up.z);
 
-        if ((F32)iabs(len2 - 1.0f) <= 0.0000099999997f)
+        if ((F32)iabs(len2 - 1.0f) <= 0.00001f)
         {
             // non-matching: incorrect instruction + order
 
             scale.y = 1.0f;
 
-            mnormal.up.x = m->up.x;
-            mnormal.up.y = m->up.y;
-            mnormal.up.z = m->up.z;
+            mnormal.up.x = SQR(m->up.x);
+            mnormal.up.y = SQR(m->up.y);
+            mnormal.up.z = SQR(m->up.z);
         }
-        else if ((F32)iabs(len2) <= 0.0000099999997f)
+        else if ((F32)iabs(len2) <= 0.00001f)
         {
             // non-matching: incorrect order
 
@@ -238,17 +238,17 @@ static void xBoundOBBIsectRay(const xBox* b, const xMat4x3* m, const xRay3* r, x
     {
         F32 len2 = SQR(m->at.x) + SQR(m->at.y) + SQR(m->at.z);
 
-        if ((F32)iabs(len2 - 1.0f) <= 0.0000099999997f)
+        if ((F32)iabs(len2 - 1.0f) <= 0.00001f)
         {
             // non-matching: incorrect instruction + order
 
             scale.z = 1.0f;
 
-            mnormal.at.x = m->at.x;
-            mnormal.at.y = m->at.y;
-            mnormal.at.z = m->at.z;
+            mnormal.at.x = SQR(m->at.x);
+            mnormal.at.y = SQR(m->at.y);
+            mnormal.at.z = SQR(m->at.z);
         }
-        else if ((F32)iabs(len2) <= 0.0000099999997f)
+        else if ((F32)iabs(len2) <= 0.00001f)
         {
             // non-matching: incorrect order
 
