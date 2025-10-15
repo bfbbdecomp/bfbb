@@ -776,7 +776,9 @@ S32 iSphereHitsModel3(const xSphere* b, const xModelInstance* m, xCollis* colls,
         xModelAnimCollApply(*m);
     }
 
-    for (U8 idx = 0; idx < ncolls; idx++)
+    U8 idx;
+    U8 i;
+    for (idx = 0; idx < ncolls; idx++)
     {
         if (colls[idx].flags & 0x2000)
         {
@@ -796,7 +798,7 @@ S32 iSphereHitsModel3(const xSphere* b, const xModelInstance* m, xCollis* colls,
 
     cbisx_local.t.sphere.radius = b->r / mscale;
 
-    for (U8 i = 0; i < ncolls; i++)
+    for (i = 0; i < ncolls; i++)
     {
         colls[i].flags &= ~1;
         colls[i].dist = FLOAT_MAX;
@@ -819,7 +821,7 @@ S32 iSphereHitsModel3(const xSphere* b, const xModelInstance* m, xCollis* colls,
 
     if (colls->flags & 0x1F00)
     {
-        for (U8 i = 0; i < cbnumcs; i++)
+        for (i = 0; i < cbnumcs; i++)
         {
             if ((colls[i].flags & 1) == 0)
             {
@@ -827,7 +829,8 @@ S32 iSphereHitsModel3(const xSphere* b, const xModelInstance* m, xCollis* colls,
             }
             if (colls[i].flags & 0x2000)
             {
-                xCollideCalcTri(colls[i].tri, *m, *(xVec3*)&cbisx_local.t.sphere.center, colls[i].tohit);
+                xCollideCalcTri(colls[i].tri, *m, *(xVec3*)&cbisx_local.t.sphere.center,
+                                colls[i].tohit);
             }
             xMat3x3RMulVec(&colls[i].tohit, mat, &colls[i].tohit);
             xMat3x3RMulVec(&colls[i].depen, mat, &colls[i].depen);
@@ -842,5 +845,263 @@ S32 iSphereHitsModel3(const xSphere* b, const xModelInstance* m, xCollis* colls,
         xModelAnimCollRestore(*m);
     }
 
-    return ncolls;
+    return cbnumcs;
+}
+
+U32 iRayHitsEnv(const xRay3* r, const xEnv* env, xCollis* coll)
+{
+    RpIntersection isx;
+    isx.type = rpINTERSECTLINE;
+    if (r->flags & 0x400)
+    {
+        isx.t.line.start.x = (r->dir.x * r->min_t);
+        isx.t.line.start.x += r->origin.x;
+        isx.t.line.start.y = (r->dir.y * r->min_t);
+        isx.t.line.start.y += r->origin.y;
+        isx.t.line.start.z = (r->dir.z * r->dir.z);
+        isx.t.line.start.z += r->origin.z;
+    }
+    else
+    {
+        isx.t.line.start.x = r->origin.x;
+        isx.t.line.start.y = r->origin.y;
+        isx.t.line.start.z = r->origin.z;
+    }
+
+    if (r->flags & 0x800)
+    {
+        F32 len;
+        if (r->flags & 0x400)
+        {
+            len = r->max_t - r->min_t;
+        }
+        else
+        {
+            len = r->max_t;
+        }
+
+        isx.t.line.end.x = r->dir.x * len;
+        isx.t.line.end.y = r->dir.y * len;
+        isx.t.line.end.z = r->dir.z * len;
+    }
+    else
+    {
+        isx.t.line.end.x = r->dir.x;
+        isx.t.line.end.y = r->dir.y;
+        isx.t.line.end.z = r->dir.z;
+    }
+
+    isx.t.line.end.x = isx.t.line.start.x + isx.t.line.end.x;
+    isx.t.line.end.y = isx.t.line.start.y + isx.t.line.end.y;
+    isx.t.line.end.z = isx.t.line.start.z + isx.t.line.end.z;
+    coll->flags &= ~1;
+    coll->dist = FLOAT_MAX;
+    cbray = *r;
+
+    if ((r->flags & 0x800) == 0)
+    {
+        cbray.max_t = 1.0f;
+    }
+    if (r->flags & 0x400)
+    {
+        cbray.max_t -= cbray.min_t;
+    }
+
+    if (env->geom->jsp != NULL)
+    {
+        sCollidingJSP = 1;
+        xClumpColl_ForAllIntersections(env->geom->jsp->colltree, &isx, rayHitsEnvCB, coll);
+        sCollidingJSP = 0;
+    }
+    else
+    {
+        RpCollisionWorldForAllIntersections(env->geom->world, &isx, rayHitsEnvCB, coll);
+        if (env->geom->collision != NULL)
+        {
+            RpCollisionWorldForAllIntersections(env->geom->collision, &isx, rayHitsEnvCB, coll);
+        }
+    }
+
+    RwV3d temp = isx.t.line.start;
+    isx.t.line.start = isx.t.line.end;
+    isx.t.line.end = temp;
+
+    RpCollisionWorldForAllIntersections(env->geom->collision, &isx, rayHitsEnvBackwardCB, coll);
+    if (env->geom->collision != NULL)
+    {
+        RpCollisionWorldForAllIntersections(env->geom->collision, &isx, rayHitsEnvBackwardCB, coll);
+    }
+
+    if (r->flags & 0x400)
+    {
+        coll->dist += cbray.min_t;
+    }
+
+    return coll->flags & 1;
+}
+
+U32 iRayHitsModel(const xRay3* r, const xModelInstance* m, xCollis* coll)
+{
+    if (m->Flags & 0x800)
+    {
+        xModelAnimCollApply(*m);
+    }
+
+    RpIntersection isx;
+    isx.type = rpINTERSECTLINE;
+    if (r->flags & 0x400)
+    {
+        isx.t.line.start.x = (r->dir.x * r->min_t);
+        isx.t.line.start.x += r->origin.x;
+        isx.t.line.start.y = (r->dir.y * r->min_t);
+        isx.t.line.start.y += r->origin.y;
+        isx.t.line.start.z = (r->dir.z * r->dir.z);
+        isx.t.line.start.z += r->origin.z;
+    }
+    else
+    {
+        isx.t.line.start.x = r->origin.x;
+        isx.t.line.start.y = r->origin.y;
+        isx.t.line.start.z = r->origin.z;
+    }
+
+    F32 len;
+    if (r->flags & 0x800)
+    {
+        if (r->flags & 0x400)
+        {
+            len = r->max_t - r->min_t;
+        }
+        else
+        {
+            len = r->max_t;
+        }
+
+        isx.t.line.end.x = r->dir.x * len;
+        isx.t.line.end.y = r->dir.y * len;
+        isx.t.line.end.z = r->dir.z * len;
+    }
+    else
+    {
+        isx.t.line.end.x = r->dir.x;
+        isx.t.line.end.y = r->dir.y;
+        isx.t.line.end.z = r->dir.z;
+    }
+
+    isx.t.line.end.x = isx.t.line.start.x + isx.t.line.end.x;
+    isx.t.line.end.y = isx.t.line.start.y + isx.t.line.end.y;
+    isx.t.line.end.z = isx.t.line.start.z + isx.t.line.end.z;
+    cbray = *r;
+
+    if ((r->flags & 0x800) == 0)
+    {
+        cbray.max_t = 1.0f;
+    }
+    if (r->flags & 0x400)
+    {
+        cbray.max_t -= cbray.min_t;
+    }
+
+    xMat4x3* mat = (xMat4x3*)m->Mat;
+    RwFrameTransform((RwFrame*)m->Data->object.object.parent, (RwMatrix*)mat, rwCOMBINEREPLACE);
+
+    len = xVec3Length(&mat->right);
+    cbray.max_t /= len;
+    coll->flags &= ~1;
+    coll->dist = FLOAT_MAX;
+
+    if (coll->flags & 0x800)
+    {
+        coll->flags |= 0x400;
+    }
+
+    RpAtomicForAllIntersections(m->Data, &isx, rayHitsModelCB, coll);
+
+    RwV3d temp = isx.t.line.start;
+    isx.t.line.start = isx.t.line.end;
+    isx.t.line.end = temp;
+
+    RpAtomicForAllIntersections(m->Data, &isx, rayHitsModelBackwardCB, coll);
+
+    coll->dist *= len;
+    if (coll->flags & 0x400)
+    {
+        coll->dist += cbray.min_t;
+    }
+
+    if (coll->flags & 0x2000 && coll->flags & 1)
+    {
+        xVec3 center;
+        xMat4x3Tolocal(&center, mat, &r->origin);
+        xVec3 heading;
+        xMat4x3Tolocal(&heading, (xMat4x3*)m->Mat, &coll->tohit);
+
+        xCollideCalcTri(coll->tri, *m, center, heading);
+    }
+
+    if (m->Flags & 0x800)
+    {
+        xModelAnimCollRestore(*m);
+    }
+
+    return coll->flags & 1;
+}
+
+void iSphereForModel(xSphere* o, const xModelInstance* m)
+{
+    RpAtomic* imodel = m->Data;
+    RpGeometry* geom = imodel->geometry;
+    if (geom->triangles == NULL)
+    {
+        o->center.x = imodel->boundingSphere.center.x;
+        o->center.y = imodel->boundingSphere.center.y;
+        o->center.z = imodel->boundingSphere.center.z;
+        o->r = imodel->boundingSphere.radius;
+        return;
+    }
+
+    if (geom->numMorphTargets > 1 || geom->numMorphTargets >= 1)
+    {
+        RpMorphTarget* mtgt = geom->morphTarget;
+        iSphereInitBoundVec(o, (xVec3*)mtgt->verts);
+
+        for (U16 idx = 1; idx < geom->numVertices; idx++)
+        {
+            iSphereBoundVec(o, o, (xVec3*)&mtgt->verts[idx]);
+        }
+    }
+}
+
+void iBoxForModel(xBox* o, const xModelInstance* m)
+{
+    iBoxForModelLocal(o, m);
+    xVec3AddTo(&o->upper, (xVec3*)&m->Mat->pos);
+    xVec3AddTo(&o->lower, (xVec3*)&m->Mat->pos);
+}
+
+void iBoxForModelLocal(xBox* o, const xModelInstance* m)
+{
+    RpAtomic* imodel = m->Data;
+    RpGeometry* geom = imodel->geometry;
+    if (geom->triangles == NULL)
+    {
+        o->lower.x = imodel->boundingSphere.center.x - imodel->boundingSphere.radius;
+        o->lower.y = imodel->boundingSphere.center.y - imodel->boundingSphere.radius;
+        o->lower.z = imodel->boundingSphere.center.z - imodel->boundingSphere.radius;
+        o->upper.x = imodel->boundingSphere.center.x + imodel->boundingSphere.radius;
+        o->upper.y = imodel->boundingSphere.center.y + imodel->boundingSphere.radius;
+        o->upper.z = imodel->boundingSphere.center.z + imodel->boundingSphere.radius;
+        return;
+    }
+
+    if (geom->numMorphTargets > 1 || geom->numMorphTargets >= 1)
+    {
+        RpMorphTarget* mtgt = geom->morphTarget;
+        iBoxInitBoundVec(o, (xVec3*)mtgt->verts);
+
+        for (U16 idx = 1; idx < geom->numVertices; idx++)
+        {
+            iBoxBoundVec(o, o, (xVec3*)&mtgt->verts[idx]);
+        }
+    }
 }

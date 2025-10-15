@@ -1240,11 +1240,11 @@ F32 xrmod(F32 ang)
 
 xVec3& xVec3::operator/=(F32 f)
 {
-    F32 f2 = 1.0f;
+    F32 f2 = 1.0f / f;
 
-    this->x *= f2 / f;
-    this->y *= f2 / f;
-    this->z *= f2 / f;
+    this->x *= f2;
+    this->y *= f2;
+    this->z *= f2;
 
     return *this;
 }

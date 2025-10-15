@@ -789,6 +789,23 @@ struct rwGameCube2DVertex
     RwRGBA emissiveColor;
     RwReal u;
     RwReal v;
+
+	rwGameCube2DVertex& operator=(const rwGameCube2DVertex& rhs)
+	{
+		this->x = rhs.x;
+		this->y = rhs.y;
+		this->z = rhs.z;
+
+		this->emissiveColor.red = rhs.emissiveColor.red;
+		this->emissiveColor.green = rhs.emissiveColor.green;
+		this->emissiveColor.blue = rhs.emissiveColor.blue;
+		this->emissiveColor.alpha = rhs.emissiveColor.alpha;
+
+		this->u = rhs.u;
+		this->v = rhs.v;
+
+		return *this;
+	}
 };
 
 typedef rwGameCube2DVertex RwIm2DVertex;
