@@ -57,13 +57,16 @@ struct zNPCFish : zNPCVillager
     void CheckDoChat();
     void Reset();
     void SelfSetup();
+    xEntDrive* PRIV_GetDriverData();
 };
 
 struct zNPCBubbleBuddy : zNPCFish
 {
     zNPCBubbleBuddy(S32 myType);
 
+    void Init(xEntAsset*);
     void Reset();
+    void Render();
 };
 
 enum en_BBOY_PLATANIM

@@ -1,7 +1,11 @@
 #include "zNPCTypeVillager.h"
 
+#include "xVec3.h"
+#include "zGlobals.h"
+#include "zNPCTypeCommon.h"
 #include "zNPCTypes.h"
 #include "zNPCGoals.h"
+#include "zTaskBox.h"
 
 #define Unknown 0
 #define Idle01 1
@@ -170,6 +174,11 @@ void zNPCVillager_SceneReset()
 void zNPCVillager_ScenePostInit()
 {
     FOLK_InitEffects();
+}
+
+void zNPCVillager_SceneTimestep(xScene *xscn, F32 dt)
+{
+    zNPCBubbleBuddy_AlphaUpdate(dt);
 }
 
 void zNPCVillager_SceneTimestep(F32 dt)
@@ -530,14 +539,6 @@ void FOLK_InitEffects()
 }
 */
 
-void FOLK_KillEffects()
-{
-}
-
-void zNPCNewsFish::SelfSetup()
-{
-}
-
 void zNPCFish::CheckDoChat()
 {
 }
@@ -649,40 +650,52 @@ void zNPCBubbleBuddy::Reset() // possible scheduling meme?
     flags |= 0x40;
 }
 
-void ztaskbox::callback::on_talk_start()
+void FOLK_InitEffects()
+{
+    g_pemit_aqualeak = zParEmitterFind("PAREMIT_FOLK_SANDYB_LEAK");
+    g_parf_aqualeak.custom_flags = 0x300;
+    xVec3Copy(&g_parf_aqualeak.pos, 0);
+    xVec3Copy(&g_parf_aqualeak.vel, 0);
+}
+
+void FOLK_KillEffects()
 {
 }
 
-void ztaskbox::callback::on_talk_stop()
+ztaskbox::callback::callback()
 {
 }
 
-U8 zNPCNewsFishTV::PhysicsFlags() const
+F32 zNPCVillager::GenShadCacheRad()
 {
-    return 0;
+    return 1.5f;
 }
 
-U8 zNPCNewsFishTV::ColPenByFlags() const
+void zNPCBubbleBuddy::Render()
 {
-    return 0;
+    this->flg_xtrarend |= 1;
 }
 
-U8 zNPCNewsFishTV::ColChkByFlags() const
+xEntDrive* zNPCFish::PRIV_GetDriverData()
 {
-    return 0;
+    return &raw_drvdata;
 }
 
-U8 zNPCNewsFishTV::ColPenFlags() const
+U8 zNPCVillager::ColChkByFlags() const
 {
-    return 0;
+    return 24;
 }
 
-U8 zNPCNewsFishTV::ColChkFlags() const
+U8 zNPCVillager::ColPenByFlags() const
 {
-    return 0;
+    return 24;
 }
 
-U8 zNPCMerManChair::PhysicsFlags() const
+void zNPCNewsFish::SelfSetup()
+{
+}
+
+U8 zNPCMerManChair::ColChkFlags() const
 {
     return 0;
 }
@@ -692,17 +705,66 @@ U8 zNPCMerManChair::ColPenFlags() const
     return 0;
 }
 
-U8 zNPCMerManChair::ColChkFlags() const
+U8 zNPCMerManChair::PhysicsFlags() const
 {
     return 0;
 }
 
-U8 zNPCVillager::ColPenByFlags() const
+void HiThere::on_talk_stop()
 {
-    return 24;
+    if (this->npc)
+    {
+        zNPCMsg_SendMsg(NPC_MID_TALKOFF, this->npc);
+    }
 }
 
-U8 zNPCVillager::ColChkByFlags() const
+void HiThere::on_talk_start()
 {
-    return 24;
+    if (this->npc)
+    {
+        zNPCMsg_SendMsg(NPC_MID_TALKON, this->npc);
+    }
+}
+
+U8 zNPCNewsFishTV::ColChkFlags() const
+{
+    return 0;
+}
+
+U8 zNPCNewsFishTV::ColPenFlags() const
+{
+    return 0;
+}
+
+U8 zNPCNewsFishTV::ColChkByFlags() const
+{
+    return 0;
+}
+
+U8 zNPCNewsFishTV::ColPenByFlags() const
+{
+    return 0;
+}
+
+U8 zNPCNewsFishTV::PhysicsFlags() const
+{
+    return 0;
+}
+
+U32 NPCTarget::HaveTarget()
+{
+    return ((-*(U32*)this | *(U32*)this) >> 0x1f);
+}
+
+U32 ztaskbox::StatusGet() const
+{
+    return this->state;
+}
+
+void ztaskbox::callback::on_talk_start()
+{
+}
+
+void ztaskbox::callback::on_talk_stop()
+{
 }
