@@ -10,6 +10,10 @@
 
 struct HiThere : ztaskbox::callback
 {
+    HiThere() : ztaskbox::callback()
+    {
+    }
+
     zNPCCommon* npc;
 
     virtual void on_talk_start();
@@ -22,7 +26,9 @@ struct zNPCVillager : zNPCCommon
     ztaskbox* converse; //0x2a8
     S32 current_talk_anim;
 
-    zNPCVillager(S32 myType);
+    zNPCVillager(S32 myType) :zNPCCommon(myType)
+    {
+    }
 
     void FindMyConverse();
     U8 ColPenByFlags() const;
@@ -50,7 +56,10 @@ struct zNPCFish : zNPCVillager
     F32 tmr_checkagain;
     xEntDrive raw_drvdata;
 
-    zNPCFish(S32 myType);
+    zNPCFish(S32 myType) : zNPCVillager(myType)
+    {
+    }
+
     void Init(xEntAsset*);
     void ParseINI();
     void FishSoundTables();
@@ -62,7 +71,9 @@ struct zNPCFish : zNPCVillager
 
 struct zNPCBubbleBuddy : zNPCFish
 {
-    zNPCBubbleBuddy(S32 myType);
+    zNPCBubbleBuddy(S32 myType) : zNPCFish(myType)
+    {
+    }
 
     void Init(xEntAsset*);
     void Reset();
@@ -84,7 +95,9 @@ struct zNPCBalloonBoy : zNPCFish
     xShadowCache* shadCache;
     static RwRaster* rast_shadBalloon;
 
-    zNPCBalloonBoy(S32 myType);
+    zNPCBalloonBoy(S32 myType) : zNPCFish(myType)
+    {
+    }
 
     void Init(xEntAsset* asset);
     void SelfSetup();
@@ -99,7 +112,10 @@ struct zNPCSandyBikini : zNPCVillager
 {
     F32 tmr_leakCycle; //0xac
 
-    zNPCSandyBikini(S32 myType);
+    zNPCSandyBikini(S32 myType) : zNPCVillager(myType)
+    {
+    }
+
     void Reset();
     void Process(xScene* xscn, float dt);
     void VFXLeakyFaucet(float dt);
@@ -109,7 +125,10 @@ struct zNPCMerManChair : zNPCVillager
 {
     S32 flg_mermanchair;
 
-    zNPCMerManChair(S32 myType);
+    zNPCMerManChair(S32 myType) : zNPCVillager(myType)
+    {
+    }
+
     void Init(xEntAsset*);
     U8 PhysicsFlags() const;
     U8 ColPenFlags() const;
@@ -143,7 +162,9 @@ struct zNPCNewsFish : zNPCVillager
     S32 IsTalking();
     void reset_said();
 
-    zNPCNewsFish(S32 myType);
+    zNPCNewsFish(S32 myType) : zNPCVillager(myType)
+    {
+    }
 
     // Vtable Information
     // 0x00000000; // 0x0
@@ -204,7 +225,10 @@ struct zNPCNewsFish : zNPCVillager
 
 struct zNPCNewsFishTV : zNPCVillager
 {
-    zNPCNewsFishTV(S32 myType);
+    zNPCNewsFishTV(S32 myType) : zNPCVillager(myType)
+    {
+    }
+    
     U8 PhysicsFlags() const;
     U8 ColPenByFlags() const;
     U8 ColChkByFlags() const;

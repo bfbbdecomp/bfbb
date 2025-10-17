@@ -654,8 +654,8 @@ void FOLK_InitEffects()
 {
     g_pemit_aqualeak = zParEmitterFind("PAREMIT_FOLK_SANDYB_LEAK");
     g_parf_aqualeak.custom_flags = 0x300;
-    xVec3Copy(&g_parf_aqualeak.pos, 0);
-    xVec3Copy(&g_parf_aqualeak.vel, 0);
+    xVec3Copy(&g_parf_aqualeak.pos, &g_O3);
+    xVec3Copy(&g_parf_aqualeak.vel, &g_O3);
 }
 
 void FOLK_KillEffects()
