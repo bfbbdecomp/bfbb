@@ -3,13 +3,14 @@
 
 #include "zNPCGoalCommon.h"
 #include "zNPCGoalStd.h"
-class zNPCGoalNotice : public zNPCGoalPushAnim
+struct zNPCGoalNotice : public zNPCGoalPushAnim
 {
-public:
     zNPCGoalNotice(S32 id) : zNPCGoalPushAnim(id)
     {
         SetFlags(2);
     }
+
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
 };
 
 void ROBO_PrepRoboCop();

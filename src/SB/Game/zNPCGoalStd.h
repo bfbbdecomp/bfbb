@@ -475,6 +475,7 @@ public:
     }
 
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
     S32 flg_evade; // offset 0x4C, size 0x4
 };
 
@@ -934,6 +935,7 @@ public:
     S32 Resume(F32 dt, void* updCtxt);
     S32 Enter(F32 dt, void* updCtxt);
     void Detonate();
+    void SonarHoming(F32);
     S32 flg_attack; // offset 0x4C, size 0x4
     en_alertbomb alertbomb; // offset 0x50, size 0x4
     F32 tmr_nextping; // offset 0x54, size 0x4

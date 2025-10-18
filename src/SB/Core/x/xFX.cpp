@@ -1,10 +1,12 @@
 #include "xFX.h"
 
+#include "iFX.h"
+#include "iMath.h"
+
 #include "xDebug.h"
 #include "xstransvc.h"
-
 #include "xScrFx.h"
-#include "iMath.h"
+
 #include "zEntPickup.h"
 #include "zParEmitter.h"
 #include "zSurface.h"
@@ -16,6 +18,8 @@
 #include <rpmatfx.h>
 #include <rwplcore.h>
 #include <rpskin.h>
+
+// no clue why this file is so out of order
 
 /* boot.HIP texture IDs */
 #define ID_gloss_edge 0xB8C2351E
@@ -32,6 +36,7 @@ static U32 num_fx_atomics = 0;
 static U32 xfx_initted = 0;
 
 xFXStreak sStreakList[10];
+xFXShine sShineList[2];
 
 static void LightResetFrame(RpLight* light);
 
@@ -67,6 +72,37 @@ void xFXInit()
 
 static U32 Im3DBufferPos = 0;
 static RwTexture* g_txtr_drawRing = NULL;
+
+static xFXBubbleParams defaultBFX = {
+    // pass1, pass2, pass3, padding
+    1, 1, 1, 0,
+    // pass1_alpha, pass2_alpha, pass3_alpha, pass1_fbsk
+    0, 0, 192, 0xFFFFFFFF,
+    // fresnel_map, fresnel_map_coeff
+    ID_gloss_edge, 0.75f,
+    // env_map, env_map_coeff
+    ID_rainbowfilm_smooth32, 0.5f
+};
+
+static U32 bfx_curr = 0;
+static xFXBubbleParams* BFX = &defaultBFX;
+
+static U32 sFresnelMap = 0;
+static U32 sEnvMap = 0;
+static S32 sTweaked = 0;
+
+xFXRing ringlist[RING_COUNT];
+
+static RxPipeline* xFXanimUVPipeline = NULL;
+F32 xFXanimUVRotMat0[2] = { 1.0f, 0.0f };
+F32 xFXanimUVRotMat1[2] = { 0.0f, 1.0f };
+F32 xFXanimUVTrans[2] = { 0.0f, 0.0f };
+F32 xFXanimUVScale[2] = { 1.0f, 1.0f };
+F32 xFXanimUV2PRotMat0[2] = { 1.0f, 0.0f };
+F32 xFXanimUV2PRotMat1[2] = { 0.0f, 1.0f };
+F32 xFXanimUV2PTrans[2] = { 0.0f, 0.0f };
+F32 xFXanimUV2PScale[2] = { 1.0f, 1.0f };
+RwTexture* xFXanimUV2PTexture = NULL;
 
 static void DrawRingSetup()
 {
@@ -411,55 +447,77 @@ void xFXAuraUpdate(F32)
 
 U32 xFXanimUVCreate()
 {
-    return 0;
+    if (xFXanimUVPipeline == NULL)
+    {
+        xFXanimUVPipeline = iFXanimUVCreatePipe();
+    }
+    return (-(U32)xFXanimUVPipeline | (U32)xFXanimUVPipeline) >> 0x1f;
 }
 
-struct xFXBubbleParams
+namespace
 {
-    U32 pass1 : 1;
-    U32 pass2 : 1;
-    U32 pass3 : 1;
-    U32 padding : 5;
-    U8 pass1_alpha;
-    U8 pass2_alpha;
-    U8 pass3_alpha;
-    U32 pass1_fbmsk;
-    U32 fresnel_map;
-    F32 fresnel_map_coeff;
-    U32 env_map;
-    F32 env_map_coeff;
-};
+    struct vert_data
+    {
+        xVec3 loc;
+        xVec3 norm;
+        RwRGBA color;
+        RwTexCoords uv;
+        F32 depth;
+    };
 
-static xFXBubbleParams defaultBFX = {
-    // pass1, pass2, pass3, padding
-    1, 1, 1, 0,
-    // pass1_alpha, pass2_alpha, pass3_alpha, pass1_fbsk
-    0, 0, 192, 0xFFFFFFFF,
-    // fresnel_map, fresnel_map_coeff
-    ID_gloss_edge, 0.75f,
-    // env_map, env_map_coeff
-    ID_rainbowfilm_smooth32, 0.5f
-};
+    struct tri_data
+    {
+        vert_data vert[3];
+    };
 
-static U32 bfx_curr = 0;
-static xFXBubbleParams* BFX = &defaultBFX;
+    // TODO: Check all lerp return types. Only the first is in dwarf
+    void lerp(vert_data& v, F32 frac, const vert_data& v0, const vert_data& v1);
+    void lerp(RwTexCoords& unk0, F32 unk1, const RwTexCoords& unk2, const RwTexCoords& unk3);
+    F32 lerp(F32& unk0, F32 unk1, F32 unk2, F32 unk3);
+    void lerp(RwRGBA& unk0, F32 unk1, RwRGBA unk2, RwRGBA unk3);
+    void lerp(U8& unk0, F32 unk1, U8 unk2, U8 unk3);
+    void lerp(xVec3& unk0, F32 unk1, const xVec3& unk2, const xVec3& unk3);
 
-static U32 sFresnelMap = 0;
-static U32 sEnvMap = 0;
-static S32 sTweaked = 0;
+    void lerp(vert_data& v, F32 frac, const vert_data& v0, const vert_data& v1)
+    // Yes, These are the actual parameter names for this function from the dwarf
+    {
+        lerp(v.loc, frac, v0.loc, v1.loc);
+        lerp(v.norm, frac, v0.norm, v1.norm);
+        lerp(v.color, frac, v0.color, v1.color);
+        lerp(v.uv, frac, v0.uv, v1.uv);
+    }
 
-xFXRing ringlist[RING_COUNT];
+    void lerp(RwTexCoords& unk0, F32 unk1, const RwTexCoords& unk2, const RwTexCoords& unk3)
+    {
+        lerp(unk0.u, unk1, unk2.u, unk3.u);
+        lerp(unk0.v, unk1, unk2.v, unk3.v);
+    }
 
-static RxPipeline* xFXanimUVPipeline = NULL;
-F32 xFXanimUVRotMat0[2] = { 1.0f, 0.0f };
-F32 xFXanimUVRotMat1[2] = { 0.0f, 1.0f };
-F32 xFXanimUVTrans[2] = { 0.0f, 0.0f };
-F32 xFXanimUVScale[2] = { 1.0f, 1.0f };
-F32 xFXanimUV2PRotMat0[2] = { 1.0f, 0.0f };
-F32 xFXanimUV2PRotMat1[2] = { 0.0f, 1.0f };
-F32 xFXanimUV2PTrans[2] = { 0.0f, 0.0f };
-F32 xFXanimUV2PScale[2] = { 1.0f, 1.0f };
-RwTexture* xFXanimUV2PTexture = NULL;
+    F32 lerp(F32& unk0, F32 unk1, F32 unk2, F32 unk3)
+    {
+        return (unk0 = unk2 + (unk3 - unk2) * unk1);
+    }
+
+    void lerp(RwRGBA& unk0, F32 unk1, RwRGBA unk2, RwRGBA unk3)
+    {
+        lerp(unk0.red, unk1, unk2.red, unk3.red);
+        lerp(unk0.green, unk1, unk2.green, unk3.green);
+        lerp(unk0.blue, unk1, unk2.blue, unk3.blue);
+        lerp(unk0.alpha, unk1, unk2.alpha, unk3.alpha);
+    }
+
+    void lerp(U8& unk0, F32 unk1, U8 unk2, U8 unk3)
+    {
+    }
+
+    void lerp(xVec3& unk0, F32 unk1, const xVec3& unk2, const xVec3& unk3)
+    {
+        lerp(unk0.x, unk1, unk2.x, unk3.x);
+        lerp(unk0.y, unk1, unk2.y, unk3.y);
+        lerp(unk0.z, unk1, unk2.z, unk3.z);
+    }
+
+} // namespace
 
 namespace
 {
@@ -622,8 +680,9 @@ void xFXanimUVSetTranslation(const xVec3* translation)
     xFXanimUVTrans[1] = translation->y;
 }
 
-void xFXStreakUpdate(U32, const xVec3*, const xVec3*)
+void xFXStreakUpdate(U32 id, const xVec3* a, const xVec3* b)
 {
+    xFXStreak* s;
 }
 
 void xFXStreakStart(F32, F32, F32, U32, const iColor_tag*, const iColor_tag*, S32)
@@ -656,6 +715,11 @@ void xParInterp::set(F32 value1, F32 value2, F32 freq, U32 interp)
 
 void xFXShineInit()
 {
+    for (S32 i = 0; i < 2; i++)
+    {
+        memset(&sShineList[0], 0, sizeof(xFXShine));
+        sShineList[i] = sShineList[i];
+    }
 }
 
 U32 xFXShineStart(const xVec3*, F32, F32, F32, F32, U32, const iColor_tag*, const iColor_tag*, F32,
@@ -663,6 +727,26 @@ U32 xFXShineStart(const xVec3*, F32, F32, F32, F32, U32, const iColor_tag*, cons
 {
     return 2;
 }
+
+namespace
+{
+    S32 compare_ribbons(const void* e1, const void* e2)
+    {
+        return 0;
+    }
+
+    void sort_ribbons()
+    {
+    }
+
+    void activate_ribbon(xFXRibbon*)
+    {
+    }
+
+    void deactivate_ribbon(xFXRibbon*)
+    {
+    }
+} // namespace
 
 void xFXShineUpdate(F32)
 {
@@ -976,21 +1060,37 @@ RpMaterial* MaterialSetBumpEnvMap(RpMaterial* material, RwTexture* envMap, F32 e
     return material;
 }
 
-RpAtomic* xFXanimUVAtomicSetup(RpAtomic*)
+RpAtomic* xFXanimUVAtomicSetup(RpAtomic* atomic)
 {
-    return NULL;
+    if (atomic == 0)
+    {
+        return atomic;
+    }
+    if (xFXanimUVPipeline == 0)
+    {
+        return atomic;
+    }
+    atomic->pipeline = xFXanimUVPipeline;
+    return atomic;
 }
 
 void xFXRenderProximityFade(const xModelInstance&, F32, F32)
 {
 }
 
-void xFXanimUV2PSetAngle(F32)
+void xFXanimUV2PSetAngle(F32 angle)
 {
+    xFXanimUV2PRotMat0[0] = isin(angle);
+    angle = xFXanimUV2PRotMat0[0];
+    xFXanimUV2PRotMat0[1] = xFXanimUV2PRotMat0[0];
+    xFXanimUV2PRotMat1[0] = icos(angle);
+    xFXanimUV2PRotMat1[1] = xFXanimUV2PRotMat1[0];
 }
 
-void xFXanimUV2PSetTranslation(const xVec3*)
+void xFXanimUV2PSetTranslation(const xVec3* trans)
 {
+    xFXanimUV2PTrans[0] = trans->x;
+    xFXanimUV2PTrans[1] = trans->y;
 }
 
 RpAtomic* xFXShinyRender(RpAtomic* atomic)
@@ -1100,6 +1200,9 @@ void xFXStreakRender()
 
 void xFXRibbonSceneEnter()
 {
+    xDebugRemoveTweak("FX|Ribbon");
+
+    active_ribbons_size = 0;
 }
 
 void xFXRibbonUpdate(F32)
@@ -1116,7 +1219,7 @@ void tier_queue<xFXRibbon::joint_data>::clear()
 
 void xFXRibbon::set_default_config()
 {
-    cfg.life_time = 0.0f;
+    cfg.life_time = 1.0f;
     cfg.blend_src = 5;
     cfg.blend_dst = 6;
     cfg.pivot = 0.5f;
@@ -1133,23 +1236,36 @@ void xFXRibbon::refresh_config()
     }
 }
 
-void xFXRibbon::set_texture(const char*)
+void xFXRibbon::set_raster(RwRaster* rast)
 {
+    this->raster = rast;
+    if (activated <= 0)
+    {
+        return;
+    }
+    ribbons_dirty = true;
 }
 
 void xFXRibbon::set_texture(RwTexture*)
 {
 }
 
-void xFXRibbon::set_texture(U32)
+void xFXRibbon::set_texture(U32 id)
 {
 }
 
-void xFXRibbon::start_render()
+void xFXRibbon::set_texture(const char* name)
 {
-    RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)cfg.blend_src);
-    RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)cfg.blend_dst);
-    RwRenderStateSet(rwRENDERSTATETEXTURERASTER, (void*)raster);
+    xStrHash(name);
+    set_texture((U32)name);
+}
+
+void xFXRibbon::set_curve(const curve_node* curve, size_t size)
+{
+    curve_size = size;
+    (this->curve) = ((curve_node*)curve);
+    xFXRibbon::debug_update_curve();
+    xFXRibbon::update_curve_tweaks();
 }
 
 void xFXRibbon::insert(const xVec3&, const xVec3&, F32, F32, U32)
@@ -1160,8 +1276,29 @@ void xFXRibbon::insert(const xVec3&, F32, F32, F32, U32)
 {
 }
 
-void xFXRibbon::set_curve(const xFXRibbon::curve_node*, unsigned long)
+void xFXRibbon::activate()
 {
+    if (activated == 0)
+    {
+        activate_ribbon(this);
+        activated = 1;
+    }
+}
+
+void xFXRibbon::deactivate()
+{
+    if (activated != 0)
+    {
+        deactivate_ribbon(this);
+        activated = 0;
+    }
+}
+
+void xFXRibbon::start_render()
+{
+    RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)cfg.blend_src);
+    RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)cfg.blend_dst);
+    RwRenderStateSet(rwRENDERSTATETEXTURERASTER, (void*)raster);
 }
 
 void xFXRibbon::update_curve_tweaks()
