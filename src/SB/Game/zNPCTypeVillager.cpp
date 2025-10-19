@@ -622,10 +622,6 @@ void zNPCSandyBikini::Process(xScene* xscn, F32 dt) //100% code match
 
 void zNPCSandyBikini::VFXLeakyFaucet(F32 dt)
 {
-    NPCC_TmrCycle(&this->tmr_leakCycle, dt, 0.3f);
-    //this->BonePos(0x11);
-    //this->BonePos(0);
-    xMat3x3RMulVec((xVec3*)this->BonePos(0x11), (xMat3x3*)this->BonePos(0), 0);
 }
 
 void zNPCBalloonBoy::Init(xEntAsset* asset)
@@ -739,18 +735,6 @@ S32 NPC_BubBud_RenderCB(RpAtomic*)
 
 S32 FOLK_grul_goAlert(xGoal* rawgoal, void* x, en_trantype* trantype, F32 f1, void* y)
 {
-    ((zNPCCommon*)rawgoal->psyche->clt_owner)->SomethingWonderful();
-
-    if ((rawgoal->psyche->clt_owner = 0))
-    {
-        ((zNPCVillager*)rawgoal->psyche->clt_owner)->PlayerIsStaring();
-
-        if ((rawgoal->psyche->clt_owner = 0))
-        {
-            rawgoal->goalID = 0;
-        }
-    }
-
     return 0;
 }
 
