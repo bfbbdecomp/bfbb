@@ -643,11 +643,57 @@ void zNPCBalloonBoy::PlatAnimSync()
     zNPCCommon::AnimCurState();
 }
 
+void zNPCBubbleBuddy::Init(xEntAsset* a)
+{
+    zNPCFish::Init(a);
+
+    this->aid_fresnelTxtr = 0;
+    this->txtr_fresnel = 0;
+    this->rast_fresnel = 0;
+    this->aid_enviroTxtr = 0;
+    this->txtr_enviro = 0;
+    this->rast_enviro = 0;
+}
+
+void zNPCBubbleBuddy::Setup()
+{
+    zNPCCommon::Setup();
+    if (!this->rast_fresnel && !this->rast_enviro)
+    {
+        this->aid_fresnelTxtr = xStrHash("gloss_edge");
+        this->txtr_fresnel = NPCC_FindRWTexture(this->aid_fresnelTxtr);
+        this->rast_fresnel = NPCC_FindRWRaster(this->txtr_fresnel);
+        this->aid_enviroTxtr = xStrHash("gloss_edge");
+        this->txtr_enviro = NPCC_FindRWTexture(this->aid_enviroTxtr);
+        this->rast_enviro = NPCC_FindRWRaster(this->txtr_enviro);
+    }
+
+    this->model->PipeFlags = (this->model->PipeFlags & 0xffffffdf) | 0x10;
+}
+
 void zNPCBubbleBuddy::Reset() // possible scheduling meme?
 {
     zNPCFish::Reset();
     // flags = flags | 0x40;
     flags |= 0x40;
+}
+
+void zNPCBubbleBuddy::RenderExtra()
+{
+    if (xEntIsVisible(this) && !(this->model->Flags & 0x400))
+    {
+        RwRenderStateGet(rwRENDERSTATECULLMODE, 0);
+        RwRenderStateSet(rwRENDERSTATECULLMODE, (void*)0x3);
+        xModelRender(this->model);
+        RwRenderStateSet(rwRENDERSTATECULLMODE, (void*)0x2);
+        xModelRender(this->model);
+        RwRenderStateSet(rwRENDERSTATECULLMODE, (void*)0);
+    }
+}
+
+S32 NPC_BubBud_RenderCB(RpAtomic*)
+{
+    return 0;
 }
 
 void FOLK_InitEffects()
@@ -669,6 +715,11 @@ ztaskbox::callback::callback()
 F32 zNPCVillager::GenShadCacheRad()
 {
     return 1.5f;
+}
+
+zNPCNewsFish* zNPCNewsFish::get_said(zNPCNewsFish::say_enum s)
+{
+    return (zNPCNewsFish*)((char*)this + 0x2b0 + (s * 8));
 }
 
 void zNPCBubbleBuddy::Render()
