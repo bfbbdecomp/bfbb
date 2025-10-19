@@ -608,6 +608,10 @@ void zNPCNewsFish::TalkOnScreen(S32 talkOnScreen)
     return;
 }
 
+void zNPCNewsFish::reset_said()
+{
+}
+
 void zNPCSandyBikini::Reset() //100% code match
 {
     zNPCVillager::Reset();
