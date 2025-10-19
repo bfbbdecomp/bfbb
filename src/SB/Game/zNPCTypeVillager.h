@@ -39,7 +39,7 @@ struct zNPCVillager : zNPCCommon
     void Reset();
     void ParseINI();
     void ParseNonRandTalk();
-    void Process(xScene* xscn, float dt);
+    void Process(xScene* xscn, F32 dt);
     void SelfSetup();
     void SpeakBegin();
     void SpeakEnd();
@@ -109,6 +109,7 @@ struct zNPCBalloonBoy : zNPCFish
     }
 
     void Init(xEntAsset* asset);
+    void Reset();
     void SelfSetup();
     void Render();
     void PlatShadRend();
@@ -119,15 +120,15 @@ struct zNPCBalloonBoy : zNPCFish
 
 struct zNPCSandyBikini : zNPCVillager
 {
-    F32 tmr_leakCycle; //0xac
+    F32 tmr_leakCycle; //0x2b0
 
     zNPCSandyBikini(S32 myType) : zNPCVillager(myType)
     {
     }
 
     void Reset();
-    void Process(xScene* xscn, float dt);
-    void VFXLeakyFaucet(float dt);
+    void Process(xScene* xscn, F32 dt);
+    void VFXLeakyFaucet(F32 dt);
 };
 
 struct zNPCMerManChair : zNPCVillager
@@ -330,7 +331,7 @@ xAnimTable* ZNPC_AnimTable_BalloonBoy();
 xAnimTable* ZNPC_AnimTable_BalloonBoy(xAnimTable* callerTable);
 xAnimTable* ZNPC_AnimTable_SuperFriend();
 xAnimTable* ZNPC_AnimTable_SuperFriend(xAnimTable* callerTable);
-S32 FOLK_grul_goAlert(xGoal*, void*, en_trantype*, float, void*);
+S32 FOLK_grul_goAlert(xGoal*, void*, en_trantype*, F32, void*);
 void FOLK_KillEffects();
 void FOLK_InitEffects();
 void zNPCVillager_ScenePostInit();
@@ -340,7 +341,7 @@ void ZNPC_Villager_Startup();
 void ZNPC_Villager_Shutdown();
 xFactoryInst* ZNPC_Create_Villager(S32 who, RyzMemGrow* growCtxt, void*);
 void ZNPC_Destroy_Villager(xFactoryInst* inst);
-S32 zParamGetFloatList(xModelAssetParam* parmdata, U32 pdatsize, const char* str32, S32 found,
+S32 zParamGetF32List(xModelAssetParam* parmdata, U32 pdatsize, const char* str32, S32 found,
                        F32* non_choices, F32 len_mvptspline);
 void zNPCVillager_SceneFinish();
 void zNPCVillager_SceneTimestep(xScene* xscn, F32 dt);

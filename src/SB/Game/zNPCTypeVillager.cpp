@@ -1,5 +1,6 @@
 #include "zNPCTypeVillager.h"
 
+#include "xMath3.h"
 #include "xVec3.h"
 #include "zGlobals.h"
 #include "zNPCTypeCommon.h"
@@ -471,7 +472,7 @@ void zNPCVillager::ParseNonRandTalk()
     //
 }
 
-void zNPCVillager::Process(xScene* xscn, float dt)
+void zNPCVillager::Process(xScene* xscn, F32 dt)
 {
     zNPCVillager::ChkCheatSize();
     if (psy_instinct != 0)
@@ -551,6 +552,26 @@ void zNPCMerManChair::Init(xEntAsset*) //Seems to load an extra value?
     flg_vuln = flg_vuln & 0x9effffff;
 }
 
+void zNPCNewsFish::Reset()
+{
+    if (!this->was_reset)
+    {
+        this->was_reset = 1;
+        this->soundHandle = 0;
+        this->currSoundID = 0;
+        this->nextSoundID = 0;
+        this->jawData = 0;
+        this->jawTime = 0.0f;
+        this->screenLerp = 0.0f;
+
+        zNPCVillager::Reset();
+        zNPCNewsFish::reset_said();
+        
+        xDebugAddTweak("NPC|zNPCNewsFish|screen|on screen|x", this->onScreenCoords.x, -5.0f, 5.0f, 0, 0, 0);
+
+    }
+}
+
 void zNPCNewsFish::SpeakStop()
 {
     S32 tempvar = zNPCNewsFish::IsTalking();
@@ -580,21 +601,24 @@ void zNPCNewsFish::TalkOnScreen(S32 talkOnScreen)
     return;
 }
 
-void zNPCNewsFish::reset_said()
-{
-    //
-}
-
 void zNPCSandyBikini::Reset() //100% code match
 {
     zNPCVillager::Reset();
     tmr_leakCycle = 0.0;
 }
 
-void zNPCSandyBikini::Process(xScene* xscn, float dt) //100% code match
+void zNPCSandyBikini::Process(xScene* xscn, F32 dt) //100% code match
 {
     zNPCVillager::Process(xscn, dt);
     zNPCSandyBikini::VFXLeakyFaucet(dt);
+}
+
+void zNPCSandyBikini::VFXLeakyFaucet(F32 dt)
+{
+    NPCC_TmrCycle(&this->tmr_leakCycle, dt, 0.3f);
+    //this->BonePos(0x11);
+    //this->BonePos(0);
+    xMat3x3RMulVec((xVec3*)this->BonePos(0x11), (xMat3x3*)this->BonePos(0), 0);
 }
 
 void zNPCBalloonBoy::Init(xEntAsset* asset)
@@ -606,6 +630,16 @@ void zNPCBalloonBoy::Init(xEntAsset* asset)
 
     //cfg_npc 0x1d8
     //bound.type 0x84
+}
+
+void zNPCBalloonBoy::Reset()
+{
+    zNPCFish::Reset();
+    
+    if(!this->rast_shadBalloon)
+    {
+        this->rast_shadBalloon = NPCC_FindRWRaster("shadow_balloons");
+    }
 }
 
 void zNPCBalloonBoy::SelfSetup() //100% code match
@@ -693,6 +727,23 @@ void zNPCBubbleBuddy::RenderExtra()
 
 S32 NPC_BubBud_RenderCB(RpAtomic*)
 {
+    return 0;
+}
+
+S32 FOLK_grul_goAlert(xGoal* rawgoal, void* x, en_trantype* trantype, F32 f1, void* y)
+{
+    ((zNPCCommon*)rawgoal->psyche->clt_owner)->SomethingWonderful();
+
+    if ((rawgoal->psyche->clt_owner = 0))
+    {
+        ((zNPCVillager*)rawgoal->psyche->clt_owner)->PlayerIsStaring();
+
+        if ((rawgoal->psyche->clt_owner = 0))
+        {
+            rawgoal->goalID = 0;
+        }
+    }
+
     return 0;
 }
 
