@@ -18,6 +18,11 @@ namespace xhud
         model_info model[2];
         xVec3 offset;
         U32 fill_forward;
+
+        static const char* type_name()
+        {
+            return "hud:meter:unit";
+        }
     };
 
     struct unit_meter_widget : meter_widget
@@ -26,7 +31,16 @@ namespace xhud
         xModelInstance* model[2][6];
         F32 anim_time;
 
-        static void load(xBase& data, xDynAsset& asset, size_t);
+        unit_meter_widget(const unit_meter_asset& other_widget);
+
+        void load(xBase& data, xDynAsset& asset, size_t);
+        void destruct();
+        void destroy();
+        U32 type() const;
+        bool is(U32 id) const;
+        void setup();
+        void update(F32 dt);
+        void render();
     };
 } // namespace xhud
 
