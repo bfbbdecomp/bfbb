@@ -5,6 +5,7 @@
 #include "xString.h"
 #include "xHudMeter.h"
 #include "xHudModel.h"
+#include "xHud.h"
 
 struct special_data {
     char* hud_model;
