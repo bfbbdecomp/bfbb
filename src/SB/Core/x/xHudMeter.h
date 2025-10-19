@@ -53,6 +53,11 @@ namespace xhud
         {
             updater(dt);
         }
+
+        U32 changing() const
+        {
+            return (value == end_value) ^ 1;
+        }
     };
 } // namespace xhud
 

@@ -141,6 +141,16 @@ namespace xhud
             return flag.enabled;
         }
 
+        U32 showing() const
+        {
+            return activity == ACT_SHOW;
+        }
+
+        U32 hiding() const
+        {
+            return activity == ACT_HIDE;
+        }
+
         static block_allocator* motive_allocator();
     };
 
