@@ -7,6 +7,7 @@
 #include "zNPCTypes.h"
 #include "zNPCGoals.h"
 #include "zTaskBox.h"
+#include "xDebug.h"
 
 #define Unknown 0
 #define Idle01 1
@@ -567,8 +568,14 @@ void zNPCNewsFish::Reset()
         zNPCVillager::Reset();
         zNPCNewsFish::reset_said();
         
-        xDebugAddTweak("NPC|zNPCNewsFish|screen|on screen|x", this->onScreenCoords.x, -5.0f, 5.0f, 0, 0, 0);
-
+        xDebugAddTweak("NPC|zNPCNewsFish|screen|on screen|x", &this->onScreenCoords.x, -5.0f, 5.0f, 0, 0, 0);
+        xDebugAddTweak("NPC|zNPCNewsFish|screen|on screen|y", &this->onScreenCoords.y, -5.0f, 5.0f, 0, 0, 0);
+        xDebugAddTweak("NPC|zNPCNewsFish|screen|off screen|x", &this->offScreenCoords.x, -5.0f, 5.0f, 0, 0, 0);
+        xDebugAddTweak("NPC|zNPCNewsFish|screen|off screen|y", &this->offScreenCoords.y, -5.0f, 5.0f, 0, 0, 0);
+        xDebugAddTweak("NPC|zNPCNewsFish|screen|size", &this->screenSize, 0.0001f, 1000000000.0f, 0, 0, 0);
+        xDebugAddTweak("NPC|zNPCNewsFish|screen|rotation", &this->screenRot, -1000000000.0f, 1000000000.0f, 0, 0, 0);
+        xDebugAddTweak("NPC|zNPCNewsFish|screen|appearSpeed", &this->appearSpeed, 0.0f, 1000000000.0f, 0, 0, 0);
+        xDebugAddTweak("NPC|zNPCNewsFish|screen|disappearSpeed", &this->disappearSpeed, 0.0f, 1000000000.0f, 0, 0, 0);
     }
 }
 
