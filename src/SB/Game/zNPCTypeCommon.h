@@ -495,6 +495,7 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
     RwV3d* BonePos(S32 unk) const;
     xVec3* MatPosSet(xVec3* pos);
     void XZVecToPlayer(xVec3* unk1, F32* unk2);
+    F32 XZDstSqToPlayer(xVec3* unk1, F32* unk2);
     F32 XZDstSqToPos(const xVec3* unk1, xVec3* unk2, F32* unk3);
     void XZVecToPos(xVec3* unk1, const xVec3* unk2, F32* unk3);
     void XYZVecToPos(xVec3* dest, xVec3* unk2)

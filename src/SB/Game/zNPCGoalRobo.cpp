@@ -202,6 +202,24 @@ xFactoryInst* GOALCreate_Robotic(S32 who, RyzMemGrow* grow, void*)
     return goal;
 }
 
+S32 zNPCGoalNotice::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    zNPCRobot* npc = (zNPCRobot*)(psyche->clt_owner);
+    xVec3 dir_dest;
+
+    xVec3Sub(&dir_dest, xEntGetPos(&globals.player.ent), npc->Pos());
+    dir_dest.y = 0.0f;
+
+    if (xVec3Length2(&dir_dest) > 1.0f)
+    {
+        xVec3Normalize(&dir_dest, &dir_dest);
+        npc->TurnToFace(dt, &dir_dest, 12.566371f);
+    }
+
+    npc->VelStop();
+    return zNPCGoalPushAnim::Process(trantype, dt, updCtxt, xscn);
+}
+
 void zNPCGoalTubeLasso::ChkPrelimTran(en_trantype* trantype, int* nextgoal)
 {
     zNPCTubeSlave* npc = (zNPCTubeSlave*)(psyche->clt_owner);
@@ -364,6 +382,83 @@ void zNPCGoalAlertFodBomb::Detonate()
         xVec3* center = xEntGetCenter(npc);
         haz->Start(center, -1.0f);
     }
+}
+
+void zNPCGoalAlertFodBomb::SonarHoming(F32 dt)
+{
+    // The var length was not in dwarf. copied from other functions
+    zNPCRobot* npc = (zNPCRobot*)this->psyche->clt_owner;
+    xVec3 pos_plyr;
+    xVec3 dir_dest;
+    F32 spd_pursuit;
+    F32 acc_pursuit;
+    F32 spd_turnrate;
+    F32 rot;
+    F32 length;
+    xVec3 dir;
+    xVec3 xStack_a8;
+    xVec3 xStack_9c;
+    xVec3 xStack_90;
+    xVec3 xStack_84;
+    xVec3 xStack_78;
+    xVec3 xStack_6c;
+    xVec3 xStack_60;
+
+    zEntPlayer_PredictPos(&pos_plyr, 0.5f, 1.0f, 0);
+
+    if (npc->XZDstSqToPlayer(0, 0) < npc->XZDstSqToPos(&xStack_a8, 0, 0))
+    {
+        xVec3Copy(&dir_dest, xEntGetPos(&globals.player.ent));
+    }
+
+    xVec3Sub(&pos_plyr, &dir_dest, npc->arena.Pos());
+
+    length = xVec3Length(&pos_plyr);
+    if (length < 1.0f)
+    {
+        xVec3Copy(&pos_plyr, NPCC_faceDir(&globals.player.ent));
+    }
+    else
+    {
+        xVec3SMulBy(&pos_plyr, 1.0f / length);
+    }
+
+    xVec3Cross(&pos_plyr, &g_Y3, &pos_plyr);
+    xVec3Sub(&pos_plyr, xEntGetPos(&globals.player.ent), npc->Pos());
+
+    length = xVec3Length(&pos_plyr);
+    if (length < 1.0f)
+    {
+        xVec3Copy(&pos_plyr, NPCC_rightDir(&globals.player.ent));
+    }
+    else
+    {
+        xVec3SMulBy(&pos_plyr, 1.0f / length);
+    }
+
+    xVec3Sub(&pos_plyr, npc->arena.Pos(), npc->zNPCCommon::Pos());
+
+    length = xVec3Length(&pos_plyr);
+    if (length < 1.0f)
+    {
+        xVec3Copy(&pos_plyr, NPCC_rightDir(&globals.player.ent));
+    }
+    else
+    {
+        xVec3SMulBy(&pos_plyr, 1.0f / length);
+    }
+
+    xVec3Dot(&pos_plyr, &dir_dest);
+    xVec3Copy(&pos_plyr, &dir_dest);
+
+    if (zGameExtras_CheatFlags() & 0x800)
+    {
+        spd_turnrate = 6.0f;
+    }
+
+    npc->ThrottleAdjust(dt, 6.0f, -1.0f);
+    NPCC_ang_toXZDir(npc->frame->rot.angle + (npc->TurnToFace(dt, &pos_plyr, spd_turnrate)), &dir);
+    npc->ThrottleApply(dt, &dir, 0);
 }
 
 void zNPCGoalTubeAttack::MaryzFury()
@@ -787,6 +882,71 @@ S32 zNPCGoalAlertFodder::Process(en_trantype* trantype, F32 dt, void* updCtxt, x
     return this->xGoal::Process(trantype, dt, updCtxt, NULL);
 }
 
+void zNPCGoalAlertFodder::FlankPlayer(F32 dt)
+{
+    zNPCRobot* npc = (zNPCRobot*)this->psyche->clt_owner;
+    xVec3 dir_dest;
+    xVec3 pos_plyr;
+    xVec3 xStack_58;
+    xVec3 xStack_64;
+    xVec3 xStack_70;
+    xVec3 xStack_7c;
+    xVec3 dir;
+    F32 rot;
+    F32 length;
+
+    zEntPlayer_PredictPos(&dir_dest, 0.5f, 1.0f, 1);
+
+    if (npc->XZDstSqToPlayer(0, 0) < npc->XZDstSqToPos(&dir_dest, 0, 0))
+    {
+        xVec3Copy(&dir_dest, xEntGetPos(&globals.player.ent));
+    }
+
+    xVec3Sub(&pos_plyr, &dir_dest, npc->arena.Pos());
+
+    length = xVec3Length(&pos_plyr);
+    if (length < 1.0f)
+    {
+        xVec3Copy(&pos_plyr, NPCC_faceDir(&globals.player.ent));
+    }
+    else
+    {
+        xVec3SMulBy(&pos_plyr, 1.0f / length);
+    }
+
+    xVec3Cross(&xStack_58, &g_Y3, &pos_plyr);
+    xVec3Sub(&xStack_64, xEntGetPos(&globals.player.ent), npc->Pos());
+
+    length = xVec3Length(&xStack_64);
+    if (length < 1.0f)
+    {
+        xVec3Copy(&xStack_64, NPCC_rightDir(&globals.player.ent));
+    }
+    else
+    {
+        xVec3SMulBy(&xStack_64, 1.0f / length);
+    }
+
+    xVec3Sub(&xStack_70, npc->arena.Pos(), npc->zNPCCommon::Pos());
+
+    length = xVec3Length(&xStack_70);
+    if (length < 1.0f)
+    {
+        xVec3Copy(&xStack_70, NPCC_rightDir(npc));
+    }
+    else
+    {
+        xVec3SMulBy(&xStack_70, 1.0f / length);
+    }
+
+    xVec3Dot(&xStack_70, &xStack_64);
+    xVec3Copy(&xStack_7c, &xStack_64);
+
+    npc->ThrottleAdjust(dt, 6.0f, -1.0f);
+    NPCC_ang_toXZDir(npc->frame->rot.angle + (npc->TurnToFace(dt, &xStack_7c, 12.566371f)), &dir);
+    npc->ThrottleApply(dt, &dir, 0);
+}
+
 void zNPCGoalAlertFodder::GetInArena(F32 dt)
 {
     zNPCRobot* npc;
@@ -1008,6 +1168,54 @@ void zNPCGoalAlertFodBzzt::GetInArena(F32 dt)
     }
 
     npc->ThrottleAdjust(dt, 6.0f, -1.0f);
+    npc->ThrottleApply(dt, &dir, 0);
+}
+
+void zNPCGoalAlertFodBzzt::DeathRayRender()
+{
+}
+
+void zNPCGoalAlertFodder::MoveEvade(F32 dt)
+{
+    zNPCRobot* npc = (zNPCRobot*)this->psyche->clt_owner;
+    xVec3 dir_dest;
+    xVec3 pos_plyr;
+    xVec3 xStack_58;
+    xVec3 xStack_64;
+    xVec3 xStack_70;
+    xVec3 xStack_7c;
+    xVec3 dir;
+    F32 rot;
+    F32 length;
+
+    xVec3Sub(&dir_dest, npc->arena.Pos(), npc->zNPCCommon::Pos());
+
+    length = xVec3Length(&dir_dest);
+    if (length < 1.0f)
+    {
+        xVec3Copy(&dir_dest, NPCC_rightDir(npc));
+    }
+    else
+    {
+        xVec3SMulBy(&dir_dest, 1.0f / length);
+    }
+
+    xVec3Sub(&xStack_70, xEntGetPos(&globals.player.ent), npc->zNPCCommon::Pos());
+
+    length = xVec3Length(&xStack_70);
+    if (length < 1.0f)
+    {
+        xVec3Copy(&xStack_70, NPCC_rightDir(npc));
+    }
+    else
+    {
+        xVec3SMulBy(&xStack_70, 1.0f / length);
+    }
+
+    xVec3SMul(&dir_dest, &xStack_70, dt);
+
+    npc->ThrottleAdjust(dt, 6.0f, -1.0f);
+    NPCC_ang_toXZDir(npc->frame->rot.angle + (npc->TurnToFace(dt, &xStack_7c, 12.566371f)), &dir);
     npc->ThrottleApply(dt, &dir, 0);
 }
 
@@ -1368,6 +1576,42 @@ S32 zNPCGoalAttackChomper::Enter(F32 dt, void* updCtxt)
     return zNPCGoalPushAnim::Enter(dt, updCtxt);
 }
 
+void zNPCGoalAlertChomper::CirclePlayer(F32 dt)
+{
+    zNPCRobot* npc = (zNPCRobot*)this->psyche->clt_owner;
+    xVec3 pos_plyr;
+    xVec3 dir_plyr;
+    xVec3 dir_dest;
+    F32 rot;
+    xVec3 dir;
+    F32 length;
+
+    zEntPlayer_PredictPos(&pos_plyr, 1.3f, 1.0f, 0);
+
+    if (npc->XZDstSqToPlayer(0, 0) < npc->XZDstSqToPos(&pos_plyr, 0, 0))
+    {
+        xVec3Copy(&dir_dest, xEntGetPos(&globals.player.ent));
+    }
+
+    npc->XZVecToPlayer(&pos_plyr, &rot);
+
+    length = xVec3Length(&pos_plyr);
+    if (length < 1.0f)
+    {
+        xVec3Copy(&pos_plyr, NPCC_rightDir(&globals.player.ent));
+    }
+    else
+    {
+        xVec3SMulBy(&pos_plyr, 1.0f / length);
+    }
+
+    xVec3SMul(&dir_dest, &pos_plyr, dt);
+
+    npc->ThrottleAdjust(dt, 5.0f, 10.0f);
+    NPCC_ang_toXZDir(npc->frame->rot.angle + (npc->TurnToFace(dt, &pos_plyr, 4.712389f)), &dir);
+    npc->ThrottleApply(dt, &dir, 0);
+}
+
 S32 zNPCGoalEvilPat::Enter(F32 dt, void* updCtxt)
 {
     zNPCCommon* npc = ((zNPCCommon*)(psyche->clt_owner));
@@ -1440,6 +1684,42 @@ S32 zNPCGoalTaunt::Enter(F32 dt, void* updCtxt)
     return zNPCGoalLoopAnim::Enter(dt, updCtxt);
 }
 
+S32 zNPCGoalTaunt::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    zNPCRobot* npc = (zNPCRobot*)(psyche->clt_owner);
+    xVec3 dir_dest;
+    F32 timeToLaugh;
+
+    npc->VelStop();
+    npc->AnimDuration(NULL);
+
+    timeToLaugh = 0.5f;
+    if ((timeToLaugh * 0.5f) > 0.5f)
+    {
+        globals.player.DamageTimer = timeToLaugh;
+    }
+
+    if (globals.player.DamageTimer > 0.5f)
+    {
+        if (cnt_loop > 1)
+        {
+            cnt_loop = 1;
+        }
+    }
+
+    xVec3Sub(&dir_dest, xEntGetPos(&globals.player.ent), npc->Pos());
+    dir_dest.y = 0.0f;
+    xVec3Length2(&dir_dest);
+
+    if (globals.player.DamageTimer > 1.0f)
+    {
+        xVec3Normalize(&dir_dest, &dir_dest);
+        npc->TurnToFace(0, &dir_dest, -1.0f);
+    }
+
+    return zNPCGoalLoopAnim::Process(trantype, dt, updCtxt, xscn);
+}
+
 S32 zNPCGoalAttackArfMelee::Enter(F32 dt, void* updCtxt)
 {
     zNPCCommon* npc = ((zNPCCommon*)(psyche->clt_owner));
@@ -1496,6 +1776,17 @@ S32 zNPCGoalEvade::Enter(F32 dt, void* updCtxt)
     }
 
     return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalEvade::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    zNPCRobot* npc = (zNPCRobot*)(psyche->clt_owner);
+    xVec3 dir_dest;
+    S32 nextgoal;
+
+    // xPsyche::TimerGet(XPSY_TYMR_CURGOAL);
+
+    return 0;
 }
 
 S32 zNPCGoalHokeyPokey::Enter(F32 dt, void* updCtxt)

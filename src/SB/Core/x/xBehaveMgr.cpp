@@ -97,7 +97,7 @@ void xBehaveMgr::Startup(S32 size, S32 tmpAlloc)
 {
     goalFactory = new ('BMGR', NULL) xFactory(tmpAlloc);
 
-    RegBuiltIn();
+    g_behavmgr->RegBuiltIn();
     XOrdInit(&psylist, size, 0);
     psypool = (xPsyche*)xMemAlloc(gActiveHeap, size * 0x68, 0);
     memset(psypool, 0, size * 0x68);

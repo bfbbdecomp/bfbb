@@ -12,6 +12,7 @@ xMemHeap_tag gxHeap[3];
 
 U32 gActiveHeap;
 void (*sMemBaseNotifyFunc)();
+typedef U32 xMemAddr;
 
 void xMemDebug_SoakLog(const char*)
 {
@@ -172,7 +173,110 @@ void* xMemGrowAlloc(U32 heapID, U32 size)
 }
 #endif
 
-//
+#define XMEMHEAP_GET_0x8000(flags) (S32)(((flags) >> 15) & 0x1)
+
+U32 xMemGetBlockInfo(xMemHeap_tag* heap, U32 size, S32 align, xMemBlkInfo_tag* info)
+{
+    S32 header_size;
+    S32 total;
+    S32 hdr;
+    S32 pre;
+    S32 block;
+    S32 post;
+    S32 dir;
+    xHeapState_tag* sp = &heap->state[heap->state_idx];
+    S32 r10;
+
+    dir = (heap->flags & 0x100) ? -1 : 1;
+    r10 = sizeof(xMemBlock_tag);
+    r10 &= -XMEMHEAP_GET_0x8000(heap->flags);
+    header_size = r10;
+
+    if (heap->flags & 0x100)
+    {
+        hdr = -header_size;
+
+        S32 remainder = (align - 1) & (sp->curr - header_size - size);
+
+        block = -(S32)(header_size + size + remainder);
+        pre = block;
+        post = block + size;
+        total = -pre;
+    }
+    else
+    {
+        hdr = 0;
+
+        S32 remainder = (align - 1) & (sp->curr + header_size);
+        if (!remainder)
+            remainder = align;
+
+        block = align + header_size - remainder;
+        pre = block;
+        post = block + size;
+        total = post;
+    }
+
+    total = (S32)ROUND_UP_PTR(total, 4);
+
+    if (heap->flags & 0x10000)
+    {
+        info->header = &heap->blk[sp->blk_ct];
+    }
+    else
+    {
+        info->header = (xMemBlock_tag*)(sp->curr + hdr);
+    }
+
+    info->pre = sp->curr + pre;
+    info->block = sp->curr + block;
+    info->post = sp->curr + post;
+    info->curr = sp->curr + dir * total;
+    info->waste = total - (header_size + size);
+    info->total = total;
+
+    return total;
+}
+
+void* xMemGrowAlloc(U32 heapID, U32 size)
+{
+    size = (S32)ROUND_UP_PTR(size, 4);
+
+    U32 oldalignsize;
+    U32 newalignsize;
+    xMemHeap_tag* heap = &gxHeap[heapID];
+    xMemBlock_tag* hdr = heap->lastblk;
+    xHeapState_tag* sp = &heap->state[heap->state_idx];
+
+    oldalignsize = hdr->size;
+    newalignsize = hdr->size + size;
+    if (sp->used + (newalignsize - oldalignsize) > heap->size)
+    {
+        return NULL;
+    }
+
+    void* memptr;
+
+    if (heap->flags & 0x100)
+    {
+        memptr = (void*)(hdr->addr - size);
+        hdr->addr = (xMemAddr)memptr;
+        sp->curr -= newalignsize - oldalignsize;
+    }
+    else
+    {
+        memptr = (void*)(hdr->addr + hdr->size);
+        sp->curr += newalignsize - oldalignsize;
+    }
+
+    sp->used += newalignsize - oldalignsize;
+    hdr->size += size;
+
+    memset(memptr, 0, size);
+
+    return memptr;
+}
+
 void* xMemAlloc(U32 heapID, U32 size, S32 align)
 {
     // This variable not in DWARF

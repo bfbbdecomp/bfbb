@@ -29,6 +29,7 @@ extern F32 zNPCRobot_f_1_0;
 
 zNPCSlick* g_slick_slipfx_owner;
 
+U32 g_hash_roboanim[41] = { 0 };
 char* g_strz_roboanim[41] = {
     "Unknown",        "Idle01",          "Fidget01",       "Move01",       "Notice01",
     "Taunt01",        "Respawn01",       "LassoGrab01",    "LassoHold01",  "StunBegin01",
@@ -54,7 +55,6 @@ U32 g_hash_nytlytanim[2];
 U32 g_hash_ttsanim[2];
 U32 g_hash_cloudanim[3];
 U32 g_hash_shieldanim[2];
-U32 g_hash_roboanim[41];
 
 char* g_strz_cloudanim[3];
 
@@ -79,6 +79,41 @@ void zNPCSleepy_Timestep(F32 dt)
 
 void zNPCFodBzzt_DoTheHokeyPokey(F32 dt);
 void ZNPC_Destroy_Robot(xFactoryInst* inst);
+
+void ZNPC_Robot_Startup()
+{
+    for (S32 i = 0; i < 41; i++)
+    {
+        g_hash_roboanim[i] = xStrHash(g_strz_roboanim[i]);
+    }
+
+    for (S32 i = 0; i < 2; i++)
+    {
+        g_hash_ttsanim[i] = xStrHash(g_strz_ttsanim[i]);
+    }
+
+    for (S32 i = 0; i < 3; i++)
+    {
+        g_hash_cloudanim[i] = xStrHash(g_strz_cloudanim[i]);
+    }
+
+    for (S32 i = 0; i < 2; i++)
+    {
+        g_hash_nytlytanim[i] = xStrHash(g_strz_nytlytanim[i]);
+    }
+
+    for (S32 i = 0; i < 2; i++)
+    {
+        g_hash_flotanim[i] = xStrHash(g_strz_flotanim[i]);
+    }
+
+    for (S32 i = 0; i < 2; i++)
+    {
+        g_hash_shieldanim[i] = xStrHash(g_strz_shieldanim[i]);
+    }
+
+    PlayTheFiddle();
+}
 
 void PlayTheFiddle()
 {
