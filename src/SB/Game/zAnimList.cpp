@@ -75,7 +75,7 @@ void zAnimListInit()
             }
 
             xAnimFile* afile = xAnimFileNew(buf, "", 0, NULL);
-            if (buf0)
+            if ((S32)buf0)
             {
                 xAnimTableNewState(atbl, astnames[0][j], 0x20, 0, 1.0f, NULL, NULL, 0.0f, NULL,
                                    NULL, xAnimDefaultBeforeEnter, NULL, NULL);
@@ -84,12 +84,12 @@ void zAnimListInit()
             }
             else
             {
-                xAnimTableNewState(atbl, astnames[1][j], 0, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                xAnimTableNewState(atbl, astnames[0][j], 0, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
                                    xAnimDefaultBeforeEnter, NULL, NULL);
             }
 
             xAnimTableAddFile(atbl, afile, astnames[0][j]);
-            xAnimTableNewState(atbl, astnames[1][j], 0, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+            xAnimTableNewState(atbl, astnames[1][j], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
                                xAnimDefaultBeforeEnter, NULL, NULL);
             xAnimTableAddFile(atbl, afile, astnames[1][j]);
             anused[i]++;
