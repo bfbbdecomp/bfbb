@@ -8,6 +8,7 @@
 #include "zEnt.h"
 #include "zEntPlayer.h"
 #include "zScene.h"
+#include "zCutsceneMgr.h"
 
 struct zGlobalSettings
 {
@@ -112,7 +113,6 @@ struct zEntHangable;
 struct zPlatform;
 struct xSurface;
 struct zAssetPickupTable;
-struct zCutsceneMgr;
 
 struct zCheckPoint
 {
