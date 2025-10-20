@@ -1,7 +1,13 @@
 #include "zNPCTypeVillager.h"
 
+#include "xMath3.h"
+#include "xVec3.h"
+#include "zGlobals.h"
+#include "zNPCTypeCommon.h"
 #include "zNPCTypes.h"
 #include "zNPCGoals.h"
+#include "zTaskBox.h"
+#include "xDebug.h"
 
 #define Unknown 0
 #define Idle01 1
@@ -172,6 +178,11 @@ void zNPCVillager_ScenePostInit()
     FOLK_InitEffects();
 }
 
+void zNPCVillager_SceneTimestep(xScene *xscn, F32 dt)
+{
+    zNPCBubbleBuddy_AlphaUpdate(dt);
+}
+
 void zNPCVillager_SceneTimestep(F32 dt)
 {
     zNPCBubbleBuddy_AlphaUpdate(dt);
@@ -311,7 +322,7 @@ xAnimTable* ZNPC_AnimTable_BalloonBoy()
     return ZNPC_AnimTable_BalloonBoy(NULL);
 }
 
-xAnimTable* ZNPC_AnimTableBalloonBoy(xAnimTable* callerTable)
+xAnimTable* ZNPC_AnimTable_BalloonBoy(xAnimTable* callerTable)
 {
     S32 ourAnims[7] = { Ride01, Bump01, Fall01, Land01, Weep01, Swim01, Unknown };
     xAnimTable* table = callerTable;
@@ -352,7 +363,7 @@ xAnimTable* ZNPC_AnimTable_SuperFriend()
     return ZNPC_AnimTable_SuperFriend(NULL);
 }
 
-xAnimTable* ZNPC_AnimTableSuperFriend(xAnimTable* callerTable)
+xAnimTable* ZNPC_AnimTable_SuperFriend(xAnimTable* callerTable)
 {
     S32 ourAnims[10] = { Idle02, Idle03, Idle04, Yawn02, Yawn03,
                          Yawn04, Talk02, Talk03, Talk04, Unknown };
@@ -462,7 +473,7 @@ void zNPCVillager::ParseNonRandTalk()
     //
 }
 
-void zNPCVillager::Process(xScene* xscn, float dt)
+void zNPCVillager::Process(xScene* xscn, F32 dt)
 {
     zNPCVillager::ChkCheatSize();
     if (psy_instinct != 0)
@@ -530,14 +541,6 @@ void FOLK_InitEffects()
 }
 */
 
-void FOLK_KillEffects()
-{
-}
-
-void zNPCNewsFish::SelfSetup()
-{
-}
-
 void zNPCFish::CheckDoChat()
 {
 }
@@ -548,6 +551,32 @@ void zNPCMerManChair::Init(xEntAsset*) //Seems to load an extra value?
     flg_move = 1;
     flg_vuln = -1;
     flg_vuln = flg_vuln & 0x9effffff;
+}
+
+void zNPCNewsFish::Reset()
+{
+    if (!this->was_reset)
+    {
+        this->was_reset = 1;
+        this->soundHandle = 0;
+        this->currSoundID = 0;
+        this->nextSoundID = 0;
+        this->jawData = 0;
+        this->jawTime = 0.0f;
+        this->screenLerp = 0.0f;
+
+        zNPCVillager::Reset();
+        zNPCNewsFish::reset_said();
+        
+        xDebugAddTweak("NPC|zNPCNewsFish|screen|on screen|x", &this->onScreenCoords.x, -5.0f, 5.0f, 0, 0, 0);
+        xDebugAddTweak("NPC|zNPCNewsFish|screen|on screen|y", &this->onScreenCoords.y, -5.0f, 5.0f, 0, 0, 0);
+        xDebugAddTweak("NPC|zNPCNewsFish|screen|off screen|x", &this->offScreenCoords.x, -5.0f, 5.0f, 0, 0, 0);
+        xDebugAddTweak("NPC|zNPCNewsFish|screen|off screen|y", &this->offScreenCoords.y, -5.0f, 5.0f, 0, 0, 0);
+        xDebugAddTweak("NPC|zNPCNewsFish|screen|size", &this->screenSize, 0.0001f, 1000000000.0f, 0, 0, 0);
+        xDebugAddTweak("NPC|zNPCNewsFish|screen|rotation", &this->screenRot, -1000000000.0f, 1000000000.0f, 0, 0, 0);
+        xDebugAddTweak("NPC|zNPCNewsFish|screen|appearSpeed", &this->appearSpeed, 0.0f, 1000000000.0f, 0, 0, 0);
+        xDebugAddTweak("NPC|zNPCNewsFish|screen|disappearSpeed", &this->disappearSpeed, 0.0f, 1000000000.0f, 0, 0, 0);
+    }
 }
 
 void zNPCNewsFish::SpeakStop()
@@ -581,7 +610,6 @@ void zNPCNewsFish::TalkOnScreen(S32 talkOnScreen)
 
 void zNPCNewsFish::reset_said()
 {
-    //
 }
 
 void zNPCSandyBikini::Reset() //100% code match
@@ -590,10 +618,14 @@ void zNPCSandyBikini::Reset() //100% code match
     tmr_leakCycle = 0.0;
 }
 
-void zNPCSandyBikini::Process(xScene* xscn, float dt) //100% code match
+void zNPCSandyBikini::Process(xScene* xscn, F32 dt) //100% code match
 {
     zNPCVillager::Process(xscn, dt);
     zNPCSandyBikini::VFXLeakyFaucet(dt);
+}
+
+void zNPCSandyBikini::VFXLeakyFaucet(F32 dt)
+{
 }
 
 void zNPCBalloonBoy::Init(xEntAsset* asset)
@@ -605,6 +637,16 @@ void zNPCBalloonBoy::Init(xEntAsset* asset)
 
     //cfg_npc 0x1d8
     //bound.type 0x84
+}
+
+void zNPCBalloonBoy::Reset()
+{
+    zNPCFish::Reset();
+    
+    if(!this->rast_shadBalloon)
+    {
+        this->rast_shadBalloon = NPCC_FindRWRaster("shadow_balloons");
+    }
 }
 
 void zNPCBalloonBoy::SelfSetup() //100% code match
@@ -642,6 +684,34 @@ void zNPCBalloonBoy::PlatAnimSync()
     zNPCCommon::AnimCurState();
 }
 
+void zNPCBubbleBuddy::Init(xEntAsset* a)
+{
+    zNPCFish::Init(a);
+
+    this->aid_fresnelTxtr = 0;
+    this->txtr_fresnel = 0;
+    this->rast_fresnel = 0;
+    this->aid_enviroTxtr = 0;
+    this->txtr_enviro = 0;
+    this->rast_enviro = 0;
+}
+
+void zNPCBubbleBuddy::Setup()
+{
+    zNPCCommon::Setup();
+    if (!this->rast_fresnel && !this->rast_enviro)
+    {
+        this->aid_fresnelTxtr = xStrHash("gloss_edge");
+        this->txtr_fresnel = NPCC_FindRWTexture(this->aid_fresnelTxtr);
+        this->rast_fresnel = NPCC_FindRWRaster(this->txtr_fresnel);
+        this->aid_enviroTxtr = xStrHash("gloss_edge");
+        this->txtr_enviro = NPCC_FindRWTexture(this->aid_enviroTxtr);
+        this->rast_enviro = NPCC_FindRWRaster(this->txtr_enviro);
+    }
+
+    this->model->PipeFlags = (this->model->PipeFlags & 0xffffffdf) | 0x10;
+}
+
 void zNPCBubbleBuddy::Reset() // possible scheduling meme?
 {
     zNPCFish::Reset();
@@ -649,40 +719,75 @@ void zNPCBubbleBuddy::Reset() // possible scheduling meme?
     flags |= 0x40;
 }
 
-void ztaskbox::callback::on_talk_start()
+void zNPCBubbleBuddy::RenderExtra()
 {
+    if (xEntIsVisible(this) && !(this->model->Flags & 0x400))
+    {
+        RwRenderStateGet(rwRENDERSTATECULLMODE, 0);
+        RwRenderStateSet(rwRENDERSTATECULLMODE, (void*)0x3);
+        xModelRender(this->model);
+        RwRenderStateSet(rwRENDERSTATECULLMODE, (void*)0x2);
+        xModelRender(this->model);
+        RwRenderStateSet(rwRENDERSTATECULLMODE, (void*)0);
+    }
 }
 
-void ztaskbox::callback::on_talk_stop()
-{
-}
-
-U8 zNPCNewsFishTV::PhysicsFlags() const
-{
-    return 0;
-}
-
-U8 zNPCNewsFishTV::ColPenByFlags() const
-{
-    return 0;
-}
-
-U8 zNPCNewsFishTV::ColChkByFlags() const
+S32 NPC_BubBud_RenderCB(RpAtomic*)
 {
     return 0;
 }
 
-U8 zNPCNewsFishTV::ColPenFlags() const
+S32 FOLK_grul_goAlert(xGoal* rawgoal, void* x, en_trantype* trantype, F32 f1, void* y)
 {
     return 0;
 }
 
-U8 zNPCNewsFishTV::ColChkFlags() const
+void FOLK_InitEffects()
 {
-    return 0;
+    g_pemit_aqualeak = zParEmitterFind("PAREMIT_FOLK_SANDYB_LEAK");
+    g_parf_aqualeak.custom_flags = 0x300;
+    xVec3Copy(&g_parf_aqualeak.pos, &g_O3);
+    xVec3Copy(&g_parf_aqualeak.vel, &g_O3);
 }
 
-U8 zNPCMerManChair::PhysicsFlags() const
+void FOLK_KillEffects()
+{
+}
+
+ztaskbox::callback::callback()
+{
+}
+
+F32 zNPCVillager::GenShadCacheRad()
+{
+    return 1.5f;
+}
+
+void zNPCBubbleBuddy::Render()
+{
+    this->flg_xtrarend |= 1;
+}
+
+xEntDrive* zNPCFish::PRIV_GetDriverData()
+{
+    return &raw_drvdata;
+}
+
+U8 zNPCVillager::ColChkByFlags() const
+{
+    return 24;
+}
+
+U8 zNPCVillager::ColPenByFlags() const
+{
+    return 24;
+}
+
+void zNPCNewsFish::SelfSetup()
+{
+}
+
+U8 zNPCMerManChair::ColChkFlags() const
 {
     return 0;
 }
@@ -692,17 +797,66 @@ U8 zNPCMerManChair::ColPenFlags() const
     return 0;
 }
 
-U8 zNPCMerManChair::ColChkFlags() const
+U8 zNPCMerManChair::PhysicsFlags() const
 {
     return 0;
 }
 
-U8 zNPCVillager::ColPenByFlags() const
+void HiThere::on_talk_stop()
 {
-    return 24;
+    if (this->npc)
+    {
+        zNPCMsg_SendMsg(NPC_MID_TALKOFF, this->npc);
+    }
 }
 
-U8 zNPCVillager::ColChkByFlags() const
+void HiThere::on_talk_start()
 {
-    return 24;
+    if (this->npc)
+    {
+        zNPCMsg_SendMsg(NPC_MID_TALKON, this->npc);
+    }
+}
+
+U8 zNPCNewsFishTV::ColChkFlags() const
+{
+    return 0;
+}
+
+U8 zNPCNewsFishTV::ColPenFlags() const
+{
+    return 0;
+}
+
+U8 zNPCNewsFishTV::ColChkByFlags() const
+{
+    return 0;
+}
+
+U8 zNPCNewsFishTV::ColPenByFlags() const
+{
+    return 0;
+}
+
+U8 zNPCNewsFishTV::PhysicsFlags() const
+{
+    return 0;
+}
+
+U32 NPCTarget::HaveTarget()
+{
+    return (*(U32*)this != 0);
+}
+
+U32 ztaskbox::StatusGet() const
+{
+    return this->state;
+}
+
+void ztaskbox::callback::on_talk_start()
+{
+}
+
+void ztaskbox::callback::on_talk_stop()
+{
 }
