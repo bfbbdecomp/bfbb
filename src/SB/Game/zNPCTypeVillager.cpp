@@ -322,7 +322,7 @@ xAnimTable* ZNPC_AnimTable_BalloonBoy()
     return ZNPC_AnimTable_BalloonBoy(NULL);
 }
 
-xAnimTable* ZNPC_AnimTableBalloonBoy(xAnimTable* callerTable)
+xAnimTable* ZNPC_AnimTable_BalloonBoy(xAnimTable* callerTable)
 {
     S32 ourAnims[7] = { Ride01, Bump01, Fall01, Land01, Weep01, Swim01, Unknown };
     xAnimTable* table = callerTable;
@@ -363,7 +363,7 @@ xAnimTable* ZNPC_AnimTable_SuperFriend()
     return ZNPC_AnimTable_SuperFriend(NULL);
 }
 
-xAnimTable* ZNPC_AnimTableSuperFriend(xAnimTable* callerTable)
+xAnimTable* ZNPC_AnimTable_SuperFriend(xAnimTable* callerTable)
 {
     S32 ourAnims[10] = { Idle02, Idle03, Idle04, Yawn02, Yawn03,
                          Yawn04, Talk02, Talk03, Talk04, Unknown };
@@ -761,11 +761,6 @@ ztaskbox::callback::callback()
 F32 zNPCVillager::GenShadCacheRad()
 {
     return 1.5f;
-}
-
-zNPCNewsFish* zNPCNewsFish::get_said(zNPCNewsFish::say_enum s)
-{
-    return (zNPCNewsFish*)((char*)this + 0x2b0 + (s * 8));
 }
 
 void zNPCBubbleBuddy::Render()
