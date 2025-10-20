@@ -202,6 +202,7 @@ struct zNPCDutchman : zNPCSubBoss
     void set_alpha(F32);
     void start_flames();
     void stop_flames();
+    void get_eye_loc(S32) const;
     U8 check_player_damage();
     void get_hand_loc(S32) const;
     void start_hand_trail();
@@ -220,8 +221,8 @@ struct zNPCDutchman : zNPCSubBoss
     S32 LassoSetup();
     void update_round();
     void decompose();
-    void next_goal();
-    void goal_delay();
+    S32 next_goal();
+    S32 goal_delay();
     void start_eye_glow();
     void stop_eye_glow();
     void update_eye_glow(F32);
@@ -253,7 +254,8 @@ struct zNPCGoalDutchmanInitiate : zNPCGoalCommon
     {
     }
 
-    S32 Exit(float, void*);
+    S32 Enter(F32, void*);
+    S32 Exit(F32, void*);
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
@@ -266,9 +268,9 @@ struct zNPCGoalDutchmanIdle : zNPCGoalCommon
     {
     }
 
-    S32 Enter(float, void*);
-    S32 Exit(float, void*);
-    S32 Process(en_trantype*, float, void*, xScene*);
+    S32 Enter(F32, void*);
+    S32 Exit(F32, void*);
+    S32 Process(en_trantype*, F32, void*, xScene*);
 
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
 };
