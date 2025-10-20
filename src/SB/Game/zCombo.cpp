@@ -47,12 +47,22 @@ static F32 comboMaxTime = 1.0f;
 static F32 comboDisplayTime = 2.0f;
 
 static zComboReward comboReward[16] = {
-    { 0, "", {}, 0, NULL },   { 0, "", {}, 0, NULL },  { 2, "", {}, 0, NULL },
-    { 3, "", {}, 0, NULL },   { 3, "", {}, 0, NULL },  { 5, "", {}, 0, NULL },
-    { 10, "", {}, 0, NULL },  { 15, "", {}, 0, NULL }, { 20, "", {}, 0, NULL },
-    { 25, "", {}, 0, NULL },  { 30, "", {}, 0, NULL }, { 40, "", {}, 0, NULL },
-    { 50, "", {}, 0, NULL },  { 60, "", {}, 0, NULL }, { 75, "", {}, 0, NULL },
-    { 100, "", {}, 0, NULL },
+    { 0, "", {}, 0, NULL },
+    { 0, "INTENTIONALLY BLANK TXT", {}, 0, NULL },
+    { 2, "", {}, 0, NULL },
+    { 3, "COMBO_01_TXT", {}, 0, NULL },
+    { 3, "COMBO_02_TXT", {}, 0, NULL },
+    { 5, "COMBO_03_TXT", {}, 0, NULL },
+    { 10, "COMBO_04_TXT", {}, 0, NULL },
+    { 15, "COMBO_05_TXT", {}, 0, NULL },
+    { 20, "COMBO_06_TXT", {}, 0, NULL },
+    { 25, "COMBO_07_TXT", {}, 0, NULL },
+    { 30, "COMBO_08_TXT", {}, 0, NULL },
+    { 40, "COMBO_09_TXT", {}, 0, NULL },
+    { 50, "COMBO_10_TXT", {}, 0, NULL },
+    { 60, "COMBO_11_TXT", {}, 0, NULL },
+    { 75, "COMBO_12_TXT", {}, 0, NULL },
+    { 100, "COMBO_13_TXT", {}, 0, NULL },
 };
 
 void fillCombo(zComboReward* reward)
@@ -92,38 +102,33 @@ void fillCombo(zComboReward* reward)
     reward->rewardNum = j;
 }
 
-void zCombo_Add(S32 arg0)
+void zCombo_Add(S32 points)
 {
     if (comboTimer < 0.0f)
     {
-        comboTimer = comboMaxTime;
-        comboPending = arg0 - 1;
-        return;
+        comboTimer = 1.0f;
+        comboPending = points - 1;
     }
-    comboTimer = comboMaxTime;
-    comboCounter += arg0;
-    if ((S32)comboPending != 0)
+    else
     {
-        comboCounter += comboPending;
-        comboPending = 0;
+        comboTimer = 1.0f;
+        comboCounter += points;
+        if (comboPending != 0)
+        {
+            comboCounter += comboPending;
+            comboPending = 0;
+        }
     }
 }
 
-// Can't get the floating point instructions to go in the right order
-// the zCombo_float32_3 = zCombo_float_minusone always gets lifted to the
-// start regardless of what order the code is in, despite it remaining
-// after the other assignments in the original assembly.
 void zCombo_Setup()
 {
-    // FIXME: define values
-    // zCombo_int32_3 = 0;
-    // zCombo_int32_2 = 0;
-    // zCombo_int32_1 = 0;
-    // zCombo_float32_3 = zCombo_float_minusone;
+    comboCounter = 0;
+    comboLastCounter = 0;
+    comboPending = 0;
+    comboTimer = -1.0f;
 
-    // "HUD_TEXT_COMBOMESSAGE"
-    U32 id = xStrHash(zCombo_Strings + 0xc1);
-    comboHUD = (widget_chunk*)zSceneFindObject(id);
+    comboHUD = (widget_chunk*)zSceneFindObject(xStrHash("HUD_TEXT_COMBOMESSAGE"));
 
     if (comboHUD != NULL)
     {
@@ -133,8 +138,7 @@ void zCombo_Setup()
 
     for (int i = 0; i < 16; ++i)
     {
-        id = xStrHash(comboReward[i].textName);
-        comboReward[i].textAsset = (xTextAsset*)xSTFindAsset(id, 0);
+        comboReward[i].textAsset = (xTextAsset*)xSTFindAsset(xStrHash(comboReward[i].textName), 0);
     }
 
     comboReward[0].reward = globals.player.g.ShinyValueCombo0;
@@ -144,7 +148,7 @@ void zCombo_Setup()
     comboReward[4].reward = globals.player.g.ShinyValueCombo4;
     comboReward[5].reward = globals.player.g.ShinyValueCombo5;
     comboReward[6].reward = globals.player.g.ShinyValueCombo6;
-    comboReward[6].reward = globals.player.g.ShinyValueCombo6;
+    comboReward[7].reward = globals.player.g.ShinyValueCombo7;
     comboReward[8].reward = globals.player.g.ShinyValueCombo8;
     comboReward[9].reward = globals.player.g.ShinyValueCombo9;
     comboReward[10].reward = globals.player.g.ShinyValueCombo10;
@@ -153,37 +157,20 @@ void zCombo_Setup()
     comboReward[13].reward = globals.player.g.ShinyValueCombo13;
     comboReward[14].reward = globals.player.g.ShinyValueCombo14;
     comboReward[15].reward = globals.player.g.ShinyValueCombo15;
-    // FIXME: zCombo_float32_1
-    // zCombo_float32_1 = globals.player.g.ComboTimer;
+
+    comboMaxTime = globals.player.g.ComboTimer;
 
     for (int i = 0; i < 16; ++i)
     {
         fillCombo(&comboReward[i]);
     }
 
-    // "TEXTBOX_BUNGEE_HELP"
-    id = xStrHash(zCombo_Strings + 0xd7);
-    sHideText[0] = (ztextbox*)zSceneFindObject(id);
-
-    // "DIALOG_TEXTBOX"
-    id = xStrHash(zCombo_Strings + 0xeb);
-    sHideText[1] = (ztextbox*)zSceneFindObject(id);
-
-    // "MESSAGE_02_TEXTBOX"
-    id = xStrHash(zCombo_Strings + 0xfa);
-    sHideText[2] = (ztextbox*)zSceneFindObject(id);
-
-    // "PROMPT_TEXTBOX"
-    id = xStrHash(zCombo_Strings + 0x10d);
-    sHideText[3] = (ztextbox*)zSceneFindObject(id);
-
-    // "QUIT_TEXTBOX"
-    id = xStrHash(zCombo_Strings + 0x11c);
-    sHideText[4] = (ztextbox*)zSceneFindObject(id);
-
-    // "MNU4 NPCTALK"
-    id = xStrHash(zCombo_Strings + 0x129);
-    sHideUIF = (zUIFont*)zSceneFindObject(id);
+    sHideText[0] = (ztextbox*)zSceneFindObject(xStrHash("TEXTBOX_BUNGEE_HELP"));
+    sHideText[1] = (ztextbox*)zSceneFindObject(xStrHash("DIALOG_TEXTBOX"));
+    sHideText[2] = (ztextbox*)zSceneFindObject(xStrHash("MESSAGE_02_TEXTBOX"));
+    sHideText[3] = (ztextbox*)zSceneFindObject(xStrHash("PROMPT_TEXTBOX"));
+    sHideText[4] = (ztextbox*)zSceneFindObject(xStrHash("QUIT_TEXTBOX"));
+    sHideUIF = (zUIFont*)zSceneFindObject(xStrHash("MNU4 NPCTALK"));
 }
 
 void zComboHideMessage(xhud::widget& w, xhud::motive& motive)
@@ -305,7 +292,7 @@ void zCombo_Update(F32 dt)
 
             if (comboHUD != NULL)
             {
-                comboHUD->w.add_motive(xhud::motive(NULL, comboDisplayTime, (F32)0.0f, (F32)0.0f,
+                comboHUD->w.add_motive(xhud::motive(NULL, 0.0f, comboDisplayTime, (F32)0.0f,
                                                     xhud::delay_motive_update,
                                                     (void*)zComboHideMessage));
             }
