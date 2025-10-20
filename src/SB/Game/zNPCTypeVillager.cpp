@@ -850,7 +850,7 @@ U8 zNPCNewsFishTV::PhysicsFlags() const
 
 U32 NPCTarget::HaveTarget()
 {
-    return ((-*(U32*)this | *(U32*)this) >> 0x1f);
+    return (*(U32*)this != 0);
 }
 
 U32 ztaskbox::StatusGet() const
