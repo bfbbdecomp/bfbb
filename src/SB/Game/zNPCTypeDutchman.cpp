@@ -206,6 +206,7 @@ namespace
     static xParEmitterCustomSettings slime_emitter_settings;
     static zParEmitter* hand_trail_emitter;
     static zParEmitter* blob_emitter;
+    static delay_goal sequence[3][16];
 
     static void init_sound()
     {
@@ -1404,6 +1405,23 @@ void zNPCDutchman::update_round()
     stage = -1;
 }
 
+S32 zNPCDutchman::next_goal()
+{
+    stage++;
+
+    if (sequence + (round << 7) + (stage * 8) == 0)
+    {
+        stage = 0;
+    }
+    delay = 0.0f;
+    return (S32)sequence + (round * 128) + (stage * 8);
+}
+
+S32 zNPCDutchman::goal_delay()
+{
+    return (S32)sequence + (round * 128) + (stage * 8 + 4);
+}
+
 void zNPCDutchman::decompose()
 {
     if (flag.fighting != 0)
@@ -1416,6 +1434,21 @@ void zNPCDutchman::decompose()
         boss_cam.stop;
     }
 }
+
+namespace
+{
+    void set_yaw_matrix(xMat3x3& mat, F32 dt)
+    {
+        F32 tempSin;
+        F32 tempCos;
+
+        tempSin = isin(dt);
+        tempCos = icos(dt);
+        mat.right.assign(tempCos, 0.0f, -tempSin);
+        mat.up.assign(0.0f, 1.0f, 0.0f);
+        mat.at.assign(tempSin, 0.0f, tempCos);
+    }
+} // namespace
 
 void zNPCDutchman::render_debug()
 {
@@ -1677,6 +1710,12 @@ void zNPCDutchman::stop_flames()
     flag.flaming = false;
 }
 
+void zNPCDutchman::get_eye_loc(S32 index) const
+{
+    S32 lookup = 0;
+    xModelGetBoneLocation(*model, lookup + index * 4);
+}
+
 void zNPCDutchman::vanish()
 {
     old.moreFlags = moreFlags;
@@ -1703,6 +1742,14 @@ void zNPCDutchman::reset_speed()
 xFactoryInst* zNPCGoalDutchmanInitiate::create(S32 who, RyzMemGrow* grow, void* info)
 {
     return new (who, grow) zNPCGoalDutchmanInitiate(who, (zNPCDutchman&)*info);
+}
+
+S32 zNPCGoalDutchmanInitiate::Enter(F32 dt, void* updCtxt)
+{
+    owner.get_orbit();
+    owner.nav_curr->PosGet();
+
+    return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
 S32 zNPCGoalDutchmanInitiate::Exit(F32 dt, void* updCtxt)
