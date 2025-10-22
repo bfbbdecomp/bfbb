@@ -16,6 +16,7 @@ namespace oob_state
     void read_persistent(xSerial& s);
     void write_persistent(xSerial& s);
     void load_settings(xIniFile& ini);
+    void init();
 
     float oob_timer();
 
