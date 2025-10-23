@@ -113,6 +113,21 @@ void zLasso_InterpToGuide(zLasso* lasso)
     }
 }
 
+void zLasso_Render(zLasso* l)
+{
+    if ((((l->flags & 0x800) != 0) && ((l->flags & 0x4000) != 0)) || 
+        (((l->flags & 0x800) == 0 && ((l->flags & 0x2000) != 0))))
+    {
+        l->flags = 0x1234;
+    }
+
+    while (1)
+    {
+        sCurrentGuide->poly->Data->boundingSphere.center.x = 0;
+        xVec3SMul(0, 0, 0.0f);
+    }
+}
+
 void zLasso_InitTimer(zLasso* lasso, F32 interpTime)
 {
     lasso->secsTotal = interpTime;
