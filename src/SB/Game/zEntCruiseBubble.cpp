@@ -706,6 +706,20 @@ namespace cruise_bubble
             xQuatFromMat(&quat, &mat);
         }
 
+        void start_trail()
+        {
+            if (shared.flags & 0x80)
+            {
+                return;
+            }
+
+            shared.flags = shared.flags | 0x180;
+            shared.fov_default = 0.0f;
+            shared.dialog_freq = 0.0f;
+
+            cruise_bubble::refresh_trail(shared.trail.mat, shared.trail.dir);
+        }
+
         void stop_trail()
         {
             shared.flags &= 0xffffff7f;
@@ -806,6 +820,31 @@ namespace cruise_bubble
             return *(xVec3*)&globals.player.ent.model->Mat->pos;
         }
 
+        void update_player(xScene& s, F32 dt)
+        {
+            // register usage and stack scheduling differing
+            xVec3 pre_update_loc = cruise_bubble::get_player_loc();
+            xVec3 drive_motion;
+
+            bool stop = zEntPlayer_MinimalUpdate(&globals.player.ent, &s, dt, drive_motion) ||
+                        globals.player.Health < shared.player_health;
+
+            if (!stop)
+            {
+                shared.player_motion += cruise_bubble::get_player_loc() - pre_update_loc - drive_motion;
+
+                if (shared.player_motion.length2() > zEntCruiseBubble_f_0_25)
+                {
+                    stop = true;
+                }
+            }
+
+            if (stop)
+            {
+                cruise_bubble::kill(true, false);
+            }
+        }
+
         void render_player()
         {
             zEntPlayer_MinimalRender(&globals.player.ent);
@@ -858,6 +897,45 @@ namespace cruise_bubble
                 }
             }
         }
+
+		void init_states()
+		{
+			static state_player_halt player_halt;
+			shared.states[0] = (state_type*)&player_halt;
+
+			static state_player_aim player_aim;
+			shared.states[1] = (state_type*)&player_aim;
+
+			static state_player_fire player_fire;
+			shared.states[2] = (state_type*)&player_fire;
+
+			static state_player_wait player_wait;
+			shared.states[3] = (state_type*)&player_wait;
+
+			static state_missle_appear missle_appear;
+			shared.states[4] = (state_type*)&missle_appear;
+
+			static state_missle_fly missle_fly;
+			shared.states[5] = (state_type*)&missle_fly;
+
+			static state_missle_explode missle_explode;
+			shared.states[6] = (state_type*)&missle_explode;
+
+			static state_camera_aim camera_aim;
+			shared.states[7] = (state_type*)&camera_aim;
+
+			static state_camera_seize camera_seize;
+			shared.states[8] = (state_type*)&camera_seize;
+
+			static state_camera_attach camera_attach;
+			shared.states[9] = (state_type*)&camera_attach;
+
+			static state_camera_survey camera_survey;
+			shared.states[10] = (state_type*)&camera_survey;
+
+			static state_camera_restore camera_return;
+			shared.states[11] = (state_type*)&camera_return;
+		}
 
         void init_debug()
         {
@@ -961,6 +1039,117 @@ namespace cruise_bubble
             x = zEntCruiseBubble_f_0_5 + ((F32)a + t * ((F32)b - (F32)a));
         }
 
+        void update_hud(F32 dt)
+        {
+            if (hud.gizmos_used == 0)
+            {
+                return;
+            }
+
+            hud.alpha = range_limit<F32>(hud.alpha_vel * dt + hud.alpha, zEntCruiseBubble_f_0_0,
+                                         zEntCruiseBubble_f_1_0);
+            hud.glow = range_limit<F32>(hud.glow_vel * dt + hud.glow, zEntCruiseBubble_f_0_0,
+                                        zEntCruiseBubble_f_1_0);
+
+            // scheduling off
+            F32 vel_frac = ((state_missle_fly*)shared.states[STATE_MISSLE_FLY])->vel /
+                           current_tweak->missle.fly.max_vel;
+
+            hud.uv_wind.offset_vel.assign(current_tweak->hud.wind.du, current_tweak->hud.wind.dv);
+            hud.uv_wind.offset_vel *= vel_frac;
+            hud.model.wind->Alpha = vel_frac;
+            hud.uv_wind.update(dt);
+
+            // sheduling off for i and zEntCruiseBubble_f_n1_0
+            for (S32 i = 1; i < hud.gizmos_used; ++i)
+            {
+                if ((hud.gizmo[i].flags & 0x1) == 0)
+                {
+                    hud.gizmo[i].alpha_vel = zEntCruiseBubble_f_n1_0 / current_tweak->hud.time_fade;
+                }
+            }
+
+            S32 i = 0;
+            while (i < hud.gizmos_used)
+            {
+                update_gizmo(hud.gizmo[i], dt);
+                if (hud.gizmo[i].alpha <= zEntCruiseBubble_f_0_0)
+                {
+                    hud.gizmos_used -= 1;
+                    hud.gizmo[i] = hud.gizmo[hud.gizmos_used];
+                }
+                else
+                {
+                    ++i;
+                }
+            }
+
+            for (S32 i = 1; i < hud.gizmos_used; ++i)
+            {
+                hud.gizmo[i].flags &= 0xfffffffe;
+            }
+        }
+
+        void show_gizmo(hud_gizmo& gizmo, const basic_rect<F32>& rect, xModelInstance* m)
+        {
+            gizmo.flags = 0x1;
+            gizmo.bound = rect;
+            gizmo.alpha = zEntCruiseBubble_f_0_0;
+            gizmo.alpha_vel = zEntCruiseBubble_f_1_0 / current_tweak->hud.time_fade;
+            gizmo.glow = zEntCruiseBubble_f_1_0;
+            gizmo.glow_vel = zEntCruiseBubble_f_n1_0 / current_tweak->hud.time_glow;
+            gizmo.opacity = zEntCruiseBubble_f_1_0;
+            gizmo.target = NULL;
+            gizmo.model = m;
+        }
+
+        void update_gizmo(cruise_bubble::hud_gizmo& gizmo, F32 dt)
+        {
+            gizmo.alpha = range_limit<F32>(gizmo.alpha_vel * dt + gizmo.alpha, zEntCruiseBubble_f_0_0,
+                                           zEntCruiseBubble_f_1_0);
+            gizmo.glow = range_limit<F32>(gizmo.glow_vel * dt + gizmo.glow, zEntCruiseBubble_f_0_0,
+                                          zEntCruiseBubble_f_1_0);
+        }
+
+        void flash_hud()
+        {
+            // nice meme
+            hud.glow = zEntCruiseBubble_f_1_0;
+            hud.glow_vel = zEntCruiseBubble_f_n1_0 / current_tweak->hud.time_glow;
+        }
+
+        void render_timer(F32 alpha, F32 glow)
+        {
+            state_missle_fly* state = (state_missle_fly*)shared.state[THREAD_MISSLE];
+            if (state == NULL || state->type != STATE_MISSLE_FLY)
+            {
+                return;
+            }
+
+            F32 life = state->life;
+            char buffer[16];
+            sprintf(buffer, "%02d:%02d", (S32)life,
+                    ((S32)(zEntCruiseBubble_f_100_0 * life)) - (100 * (S32)life));
+
+            F32 dsize = glow * current_tweak->hud.timer.glow_size;
+            // zEntCruiseBubble_f_0_0 is loaded too early, should be just before the call
+            xfont font =
+                xfont::create(current_tweak->hud.timer.font, current_tweak->hud.timer.font_width + dsize,
+                              current_tweak->hud.timer.font_height + dsize, zEntCruiseBubble_f_0_0, g_WHITE,
+                              screen_bounds);
+            // register use for copying fields into font off, also causes a larger stack frame
+            // also the color tags are loaded too early, should be just before the call
+            cruise_bubble::lerp(font.color, glow, zEntCruiseBubble_color_80_00_00_FF,
+                                zEntCruiseBubble_color_FF_14_14_FF);
+            font.color.a = (S32)(zEntCruiseBubble_f_255_0 * alpha + zEntCruiseBubble_f_0_5);
+
+            basic_rect<F32> bound = font.bounds(buffer);
+            F32 x = current_tweak->hud.timer.x - bound.x - zEntCruiseBubble_f_0_5 * bound.w;
+            F32 y = current_tweak->hud.timer.y - bound.y - zEntCruiseBubble_f_0_5 * bound.h;
+
+            font.render(buffer, x, y);
+        }
+
         void lerp(iColor_tag& c, F32 t, iColor_tag a, iColor_tag b)
         {
             lerp(c.r, t, a.r, b.r);
@@ -1011,6 +1200,63 @@ namespace cruise_bubble
             gizmo->model = hud.model.target;
             gizmo->target = target;
             gizmo->opacity = opacity;
+        }
+
+        void update_trail(F32 dt)
+        {
+            // will match once file complete
+            // casting from S32 to float uses a float constant which cannot be extern'd
+
+            if ((shared.flags & 0x80) == 0)
+            {
+                return;
+            }
+
+            shared.trail.samples += dt * current_tweak->trail.sample_rate;
+            S32 samples = (S32)shared.trail.samples;
+
+            if (samples <= 0)
+            {
+                shared.trail.samples = zEntCruiseBubble_f_0_0;
+                samples = 1;
+            }
+            else
+            {
+                // float cast
+                shared.trail.samples -= (F32)samples;
+            }
+
+            xMat4x3 end_mat;
+            xQuat end_dir;
+            cruise_bubble::refresh_trail(end_mat, end_dir);
+
+            // float cast
+            F32 ds = zEntCruiseBubble_f_1_0 / (F32)samples;
+            F32 ddt = dt * ds;
+            xVec3 dloc = (end_mat.pos - shared.trail.mat.pos) * ds;
+            S32 flip = 0;
+            F32 s = ds;
+
+            xMat4x3 mat[2];
+            mat[0] = shared.trail.mat;
+
+            for (int i = 0; i < samples; ++i)
+            {
+                xMat4x3* mat0 = mat + flip;
+                flip = flip ^ 1;
+                xMat4x3* mat1 = mat + flip;
+
+                xQuat subdir;
+                xQuatSlerp(&subdir, &shared.trail.dir, &end_dir, s);
+                xQuatToMat(&subdir, mat1);
+                mat1->pos = mat0->pos + dloc;
+                add_trail_sample(mat0->pos, mat0->right, mat1->pos, mat1->right, ddt);
+                s += ds;
+            }
+
+            shared.trail.mat = end_mat;
+            shared.trail.dir = end_dir;
+            shared.flags = shared.flags & 0xfffffeff;
         }
 
         void refresh_missle_model()
@@ -1078,6 +1324,32 @@ namespace cruise_bubble
             render_timer(hud.alpha, hud.glow);
         }
 
+        void show_hud()
+        {
+            // scheduling and register usage off
+            hud.gizmos_used = 1;
+            basic_rect<F32> reticle_bound;
+            reticle_bound.set_size(current_tweak->hud.reticle.size);
+            // reticle_bound gets loaded again as r3 here which shouldn't be
+            // might be a non functional match for edge cases
+            reticle_bound.center(zEntCruiseBubble_f_0_5, zEntCruiseBubble_f_0_5);
+            show_gizmo(hud.gizmo[0], reticle_bound, hud.model.reticle);
+
+            hud.model.wind->Alpha = zEntCruiseBubble_f_0_0;
+            // scheduling off for this float
+            hud.alpha = zEntCruiseBubble_f_0_0;
+            hud.alpha_vel = zEntCruiseBubble_f_1_0 / current_tweak->hud.time_fade;
+
+            flash_hud();
+        }
+
+        void hide_hud()
+        {
+            hud.gizmos_used = 0;
+            // float scheduling ...
+            hud.model.wind->Alpha = zEntCruiseBubble_f_0_0;
+        }
+
         // return type guessed based on return type of zEntRecurseModelInfo and xModelInstanceAlloc
         xModelInstance* load_model(U32 aid)
         {
@@ -1101,6 +1373,25 @@ namespace cruise_bubble
                 return NULL;
             }
             return xModelInstanceAlloc((RpAtomic*)model, NULL, 0, 0, NULL);
+        }
+
+        void init_hud()
+        {
+            // should use stbu here and save an addi instruction
+            // which should also fix the rest of the function by correcting offsets
+
+            hud.hiding = false;
+            hud.alpha = zEntCruiseBubble_f_0_0;
+            hud.alpha_vel = zEntCruiseBubble_f_0_0;
+            hud.glow = zEntCruiseBubble_f_0_0;
+            hud.gizmos_used = 0;
+
+            hud.model.reticle = load_model(xStrHash("ui_3dicon_reticle"));
+            hud.model.target = load_model(xStrHash("ui_3dicon_target_lock"));
+            hud.model.wind = load_model(xStrHash("ui_3dicon_missile_frame02"));
+
+            hud.uv_wind.init(hud.model.wind->Data);
+            hud.uv_wind.offset_vel.assign(current_tweak->hud.wind.du, current_tweak->hud.wind.dv);
         }
 
         void render_debug()
@@ -1138,6 +1429,23 @@ namespace cruise_bubble
                 explode_decal.set_curve(&cheat_explode_curve[0], 3);
                 explode_decal.set_texture("par_cruise_explode");
             }
+            explode_decal.refresh_config();
+        }
+
+        void init_explode_decal()
+        {
+            explode_decal.init(1, "Cruise Bubble Explosion");
+            explode_decal.set_default_config();
+
+            // r0 should be use here
+            explode_decal.cfg.flags = 0x3;
+            // scheduling off here
+            explode_decal.cfg.life_time = zEntCruiseBubble_f_0_5;
+            explode_decal.cfg.blend_src = 5;
+            explode_decal.cfg.blend_dst = 2;
+
+            explode_decal.set_curve(explode_curve, 3);
+            explode_decal.set_texture("par_cruise_explosion");
             explode_decal.refresh_config();
         }
 
@@ -1295,22 +1603,39 @@ namespace cruise_bubble
             shared.missle_model = model;
         }
 
+        void reset_wake_ribbons()
+        {
+            wake_ribbon[0].set_default_config();
+            wake_ribbon[0].cfg.blend_src = 5;
+            wake_ribbon[0].cfg.blend_dst = 2;
+
+            if ((shared.flags & 0x200) == 0)
+            {
+                wake_ribbon[0].set_texture("lightning");
+                wake_ribbon[1].set_texture("lightning");
+                wake_ribbon[0].set_curve(&wake_ribbon_curve[0], 2);
+                wake_ribbon[1].set_curve(&wake_ribbon_curve[0], 2);
+
+                wake_ribbon[0].cfg.life_time = zEntCruiseBubble_f_3_0;
+            }
+            else
+            {
+                wake_ribbon[0].set_texture("lightning");
+                wake_ribbon[1].set_texture("lightning");
+                wake_ribbon[0].set_curve(&cheat_wake_ribbon_curve[0], 2);
+                wake_ribbon[1].set_curve(&cheat_wake_ribbon_curve[0], 2);
+
+                wake_ribbon[0].cfg.life_time = zEntCruiseBubble_f_3_0;
+            }
+            wake_ribbon[0].cfg.pivot = zEntCruiseBubble_f_1_0;
+            wake_ribbon[1].cfg = wake_ribbon[0].cfg;
+
+            wake_ribbon[0].refresh_config();
+            wake_ribbon[1].refresh_config();
+        }
+
     } // namespace
 } // namespace cruise_bubble
-
-void cruise_bubble::start_trail()
-{
-    if (shared.flags & 0x80)
-    {
-        return;
-    }
-
-    shared.flags = shared.flags | 0x180;
-    shared.fov_default = zEntCruiseBubble_f_0_0;
-    shared.dialog_freq = zEntCruiseBubble_f_0_0;
-
-    cruise_bubble::refresh_trail(shared.trail.mat, shared.trail.dir);
-}
 
 void cruise_bubble::state_type::start()
 {
@@ -1325,31 +1650,6 @@ void cruise_bubble::state_type::stop()
 void cruise_bubble::state_type::abort()
 {
     // empty
-}
-
-void cruise_bubble::update_player(xScene& s, F32 dt)
-{
-    // register usage and stack scheduling differing
-    xVec3 pre_update_loc = cruise_bubble::get_player_loc();
-    xVec3 drive_motion;
-
-    bool stop = zEntPlayer_MinimalUpdate(&globals.player.ent, &s, dt, drive_motion) ||
-                globals.player.Health < shared.player_health;
-
-    if (!stop)
-    {
-        shared.player_motion += cruise_bubble::get_player_loc() - pre_update_loc - drive_motion;
-
-        if (shared.player_motion.length2() > zEntCruiseBubble_f_0_25)
-        {
-            stop = true;
-        }
-    }
-
-    if (stop)
-    {
-        cruise_bubble::kill(true, false);
-    }
 }
 
 void cruise_bubble::state_type::render()
@@ -1410,131 +1710,6 @@ cruise_bubble::state_player_halt::state_player_halt() : state_type(STATE_PLAYER_
 {
 }
 
-void cruise_bubble::reset_wake_ribbons()
-{
-    wake_ribbon[0].set_default_config();
-    wake_ribbon[0].cfg.blend_src = 5;
-    wake_ribbon[0].cfg.blend_dst = 2;
-
-    if ((shared.flags & 0x200) == 0)
-    {
-        wake_ribbon[0].set_texture("lightning");
-        wake_ribbon[1].set_texture("lightning");
-        wake_ribbon[0].set_curve(&wake_ribbon_curve[0], 2);
-        wake_ribbon[1].set_curve(&wake_ribbon_curve[0], 2);
-
-        wake_ribbon[0].cfg.life_time = zEntCruiseBubble_f_3_0;
-    }
-    else
-    {
-        wake_ribbon[0].set_texture("lightning");
-        wake_ribbon[1].set_texture("lightning");
-        wake_ribbon[0].set_curve(&cheat_wake_ribbon_curve[0], 2);
-        wake_ribbon[1].set_curve(&cheat_wake_ribbon_curve[0], 2);
-
-        wake_ribbon[0].cfg.life_time = zEntCruiseBubble_f_3_0;
-    }
-    wake_ribbon[0].cfg.pivot = zEntCruiseBubble_f_1_0;
-    wake_ribbon[1].cfg = wake_ribbon[0].cfg;
-
-    wake_ribbon[0].refresh_config();
-    wake_ribbon[1].refresh_config();
-}
-
-void cruise_bubble::init_explode_decal()
-{
-    explode_decal.init(1, "Cruise Bubble Explosion");
-    explode_decal.set_default_config();
-
-    // r0 should be use here
-    explode_decal.cfg.flags = 0x3;
-    // scheduling off here
-    explode_decal.cfg.life_time = zEntCruiseBubble_f_0_5;
-    explode_decal.cfg.blend_src = 5;
-    explode_decal.cfg.blend_dst = 2;
-
-    explode_decal.set_curve(explode_curve, 3);
-    explode_decal.set_texture("par_cruise_explosion");
-    explode_decal.refresh_config();
-}
-
-void cruise_bubble::update_trail(F32 dt)
-{
-    // will match once file complete
-    // casting from S32 to float uses a float constant which cannot be extern'd
-
-    if ((shared.flags & 0x80) == 0)
-    {
-        return;
-    }
-
-    shared.trail.samples += dt * current_tweak->trail.sample_rate;
-    S32 samples = (S32)shared.trail.samples;
-
-    if (samples <= 0)
-    {
-        shared.trail.samples = zEntCruiseBubble_f_0_0;
-        samples = 1;
-    }
-    else
-    {
-        // float cast
-        shared.trail.samples -= (F32)samples;
-    }
-
-    xMat4x3 end_mat;
-    xQuat end_dir;
-    cruise_bubble::refresh_trail(end_mat, end_dir);
-
-    // float cast
-    F32 ds = zEntCruiseBubble_f_1_0 / (F32)samples;
-    F32 ddt = dt * ds;
-    xVec3 dloc = (end_mat.pos - shared.trail.mat.pos) * ds;
-    S32 flip = 0;
-    F32 s = ds;
-
-    xMat4x3 mat[2];
-    mat[0] = shared.trail.mat;
-
-    for (int i = 0; i < samples; ++i)
-    {
-        xMat4x3* mat0 = mat + flip;
-        flip = flip ^ 1;
-        xMat4x3* mat1 = mat + flip;
-
-        xQuat subdir;
-        xQuatSlerp(&subdir, &shared.trail.dir, &end_dir, s);
-        xQuatToMat(&subdir, mat1);
-        mat1->pos = mat0->pos + dloc;
-        add_trail_sample(mat0->pos, mat0->right, mat1->pos, mat1->right, ddt);
-        s += ds;
-    }
-
-    shared.trail.mat = end_mat;
-    shared.trail.dir = end_dir;
-    shared.flags = shared.flags & 0xfffffeff;
-}
-
-void init_hud()
-{
-    // should use stbu here and save an addi instruction
-    // which should also fix the rest of the function by correcting offsets
-
-    //FIXME: HUD is undefined
-    // hud.hiding = false;
-    // hud.alpha = zEntCruiseBubble_f_0_0;
-    // hud.alpha_vel = zEntCruiseBubble_f_0_0;
-    // hud.glow = zEntCruiseBubble_f_0_0;
-    // hud.gizmos_used = 0;
-
-    // hud.model.reticle = load_model(xStrHash("ui_3dicon_reticle"));
-    // hud.model.target = load_model(xStrHash("ui_3dicon_target_lock"));
-    // hud.model.wind = load_model(xStrHash("ui_3dicon_missile_frame02"));
-
-    // hud.uv_wind.init(hud.model.wind->Data);
-    // hud.uv_wind.offset_vel.assign(current_tweak->hud.wind.du, current_tweak->hud.wind.dv);
-}
-
 bool cruise_bubble::uv_animated_model::init(RpAtomic* m)
 {
     this->model = m;
@@ -1592,117 +1767,6 @@ bool cruise_bubble::uv_animated_model::get_uv(RwTexCoords*& coords, S32& size, R
     return coords != NULL;
 }
 
-void cruise_bubble::show_gizmo(hud_gizmo& gizmo, const basic_rect<F32>& rect, xModelInstance* m)
-{
-    gizmo.flags = 0x1;
-    gizmo.bound = rect;
-    gizmo.alpha = zEntCruiseBubble_f_0_0;
-    gizmo.alpha_vel = zEntCruiseBubble_f_1_0 / current_tweak->hud.time_fade;
-    gizmo.glow = zEntCruiseBubble_f_1_0;
-    gizmo.glow_vel = zEntCruiseBubble_f_n1_0 / current_tweak->hud.time_glow;
-    gizmo.opacity = zEntCruiseBubble_f_1_0;
-    gizmo.target = NULL;
-    gizmo.model = m;
-}
-
-void cruise_bubble::update_gizmo(cruise_bubble::hud_gizmo& gizmo, F32 dt)
-{
-    gizmo.alpha = range_limit<F32>(gizmo.alpha_vel * dt + gizmo.alpha, zEntCruiseBubble_f_0_0,
-                                   zEntCruiseBubble_f_1_0);
-    gizmo.glow = range_limit<F32>(gizmo.glow_vel * dt + gizmo.glow, zEntCruiseBubble_f_0_0,
-                                  zEntCruiseBubble_f_1_0);
-}
-
-void cruise_bubble::flash_hud()
-{
-    // nice meme
-    hud.glow = zEntCruiseBubble_f_1_0;
-    hud.glow_vel = zEntCruiseBubble_f_n1_0 / current_tweak->hud.time_glow;
-}
-
-void cruise_bubble::render_timer(F32 alpha, F32 glow)
-{
-    state_missle_fly* state = (state_missle_fly*)shared.state[THREAD_MISSLE];
-    if (state == NULL || state->type != STATE_MISSLE_FLY)
-    {
-        return;
-    }
-
-    F32 life = state->life;
-    char buffer[16];
-    sprintf(buffer, "%02d:%02d", (S32)life,
-            ((S32)(zEntCruiseBubble_f_100_0 * life)) - (100 * (S32)life));
-
-    F32 dsize = glow * current_tweak->hud.timer.glow_size;
-    // zEntCruiseBubble_f_0_0 is loaded too early, should be just before the call
-    xfont font =
-        xfont::create(current_tweak->hud.timer.font, current_tweak->hud.timer.font_width + dsize,
-                      current_tweak->hud.timer.font_height + dsize, zEntCruiseBubble_f_0_0, g_WHITE,
-                      screen_bounds);
-    // register use for copying fields into font off, also causes a larger stack frame
-    // also the color tags are loaded too early, should be just before the call
-    cruise_bubble::lerp(font.color, glow, zEntCruiseBubble_color_80_00_00_FF,
-                        zEntCruiseBubble_color_FF_14_14_FF);
-    font.color.a = (S32)(zEntCruiseBubble_f_255_0 * alpha + zEntCruiseBubble_f_0_5);
-
-    basic_rect<F32> bound = font.bounds(buffer);
-    F32 x = current_tweak->hud.timer.x - bound.x - zEntCruiseBubble_f_0_5 * bound.w;
-    F32 y = current_tweak->hud.timer.y - bound.y - zEntCruiseBubble_f_0_5 * bound.h;
-
-    font.render(buffer, x, y);
-}
-
-void cruise_bubble::update_hud(F32 dt)
-{
-    if (hud.gizmos_used == 0)
-    {
-        return;
-    }
-
-    hud.alpha = range_limit<F32>(hud.alpha_vel * dt + hud.alpha, zEntCruiseBubble_f_0_0,
-                                 zEntCruiseBubble_f_1_0);
-    hud.glow = range_limit<F32>(hud.glow_vel * dt + hud.glow, zEntCruiseBubble_f_0_0,
-                                zEntCruiseBubble_f_1_0);
-
-    // scheduling off
-    F32 vel_frac = ((state_missle_fly*)shared.states[STATE_MISSLE_FLY])->vel /
-                   current_tweak->missle.fly.max_vel;
-
-    hud.uv_wind.offset_vel.assign(current_tweak->hud.wind.du, current_tweak->hud.wind.dv);
-    hud.uv_wind.offset_vel *= vel_frac;
-    hud.model.wind->Alpha = vel_frac;
-    hud.uv_wind.update(dt);
-
-    // sheduling off for i and zEntCruiseBubble_f_n1_0
-    for (S32 i = 1; i < hud.gizmos_used; ++i)
-    {
-        if ((hud.gizmo[i].flags & 0x1) == 0)
-        {
-            hud.gizmo[i].alpha_vel = zEntCruiseBubble_f_n1_0 / current_tweak->hud.time_fade;
-        }
-    }
-
-    S32 i = 0;
-    while (i < hud.gizmos_used)
-    {
-        update_gizmo(hud.gizmo[i], dt);
-        if (hud.gizmo[i].alpha <= zEntCruiseBubble_f_0_0)
-        {
-            hud.gizmos_used -= 1;
-            hud.gizmo[i] = hud.gizmo[hud.gizmos_used];
-        }
-        else
-        {
-            ++i;
-        }
-    }
-
-    for (S32 i = 1; i < hud.gizmos_used; ++i)
-    {
-        hud.gizmo[i].flags &= 0xfffffffe;
-    }
-}
-
 void cruise_bubble::uv_animated_model::update(F32 dt)
 {
     if (zEntCruiseBubble_f_0_0 == this->offset_vel.x &&
@@ -1715,32 +1779,6 @@ void cruise_bubble::uv_animated_model::update(F32 dt)
     this->offset.x = xfmod(this->offset.x, zEntCruiseBubble_f_1_0);
     this->offset.y = xfmod(this->offset.y, zEntCruiseBubble_f_1_0);
     this->refresh();
-}
-
-void cruise_bubble::show_hud()
-{
-    // scheduling and register usage off
-    hud.gizmos_used = 1;
-    basic_rect<F32> reticle_bound;
-    reticle_bound.set_size(current_tweak->hud.reticle.size);
-    // reticle_bound gets loaded again as r3 here which shouldn't be
-    // might be a non functional match for edge cases
-    reticle_bound.center(zEntCruiseBubble_f_0_5, zEntCruiseBubble_f_0_5);
-    show_gizmo(hud.gizmo[0], reticle_bound, hud.model.reticle);
-
-    hud.model.wind->Alpha = zEntCruiseBubble_f_0_0;
-    // scheduling off for this float
-    hud.alpha = zEntCruiseBubble_f_0_0;
-    hud.alpha_vel = zEntCruiseBubble_f_1_0 / current_tweak->hud.time_fade;
-
-    flash_hud();
-}
-
-void cruise_bubble::hide_hud()
-{
-    hud.gizmos_used = 0;
-    // float scheduling ...
-    hud.model.wind->Alpha = zEntCruiseBubble_f_0_0;
 }
 
 void cruise_bubble::tweak_group::load(xModelAssetParam* params, U32 size)
@@ -2590,9 +2628,9 @@ bool cruise_bubble::update(xScene* s, F32 dt)
         return false;
     }
 
-    update_player(*s, dt);
+    cruise_bubble::update_player(*s, dt);
     cruise_bubble::update_missle(*s, dt);
-    update_hud(dt);
+    cruise_bubble::update_hud(dt);
     return true;
 }
 
@@ -2681,6 +2719,15 @@ void cruise_bubble::insert_player_animations(xAnimTable& table)
                                 zEntCruiseBubble_f_0_0, 0, 0, zEntCruiseBubble_f_0_15, NULL);
 
     xMemPopTemp(start_from);
+}
+
+xAnimTable* cruise_bubble::anim_table()
+{
+    xAnimTable* table = xAnimTableNew("Cruise Bubble", 0, 0);
+    shared.astate.missle.fire = xAnimTableNewState(table, "fire", 0x20, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    shared.astate.missle.fly  = xAnimTableNewState(table, "fly",  0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+    shared.atran.missle.fly = xAnimTableNewTransition(table, "fire", "fly", NULL, NULL, 0x10, 0, 0.0f, 0.0f, 0, 0, 0.15f, NULL);
+    return table;
 }
 
 bool cruise_bubble::active()
@@ -3424,6 +3471,14 @@ cruise_bubble::state_enum cruise_bubble::state_camera_aim::update(F32 dt)
         }
     }
     return STATE_CAMERA_AIM;
+}
+
+void cruise_bubble::state_camera_aim::apply_turn() const
+{
+    xMat3x3 mat;
+
+    xQuatToMat(&this->facing, &mat);
+    xCameraRotate(&globals.camera, mat, 0.0f, 0.0f, 0.0f);
 }
 
 void cruise_bubble::state_camera_seize::start()
