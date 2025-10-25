@@ -901,40 +901,40 @@ namespace cruise_bubble
 		void init_states()
 		{
 			static state_player_halt player_halt;
-			shared.states[0] = &player_halt;
+			shared.states[STATE_PLAYER_HALT] = &player_halt;
 
 			static state_player_aim player_aim;
-			shared.states[1] = &player_aim;
+			shared.states[STATE_PLAYER_AIM] = &player_aim;
 
 			static state_player_fire player_fire;
-			shared.states[2] = &player_fire;
+			shared.states[STATE_PLAYER_FIRE] = &player_fire;
 
 			static state_player_wait player_wait;
-			shared.states[3] = &player_wait;
+			shared.states[STATE_PLAYER_WAIT] = &player_wait;
 
 			static state_missle_appear missle_appear;
-			shared.states[4] = &missle_appear;
+			shared.states[STATE_MISSLE_APPEAR] = &missle_appear;
 
 			static state_missle_fly missle_fly;
-			shared.states[5] = &missle_fly;
+			shared.states[STATE_MISSLE_FLY] = &missle_fly;
 
 			static state_missle_explode missle_explode;
-			shared.states[6] = &missle_explode;
+			shared.states[STATE_MISSLE_EXPLODE] = &missle_explode;
 
 			static state_camera_aim camera_aim;
-			shared.states[7] = &camera_aim;
+			shared.states[STATE_CAMERA_AIM] = &camera_aim;
 
 			static state_camera_seize camera_seize;
-			shared.states[8] = &camera_seize;
+			shared.states[STATE_CAMERA_SEIZE] = &camera_seize;
 
 			static state_camera_attach camera_attach;
-			shared.states[9] = &camera_attach;
+			shared.states[STATE_CAMERA_ATTACH] = &camera_attach;
 
 			static state_camera_survey camera_survey;
-			shared.states[10] = &camera_survey;
+			shared.states[STATE_CAMERA_SURVEY] = &camera_survey;
 
 			static state_camera_restore camera_return;
-			shared.states[11] = &camera_return;
+			shared.states[STATE_CAMERA_RESTORE] = &camera_return;
 		}
 
         void init_debug()
