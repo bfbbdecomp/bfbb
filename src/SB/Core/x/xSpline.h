@@ -8,10 +8,6 @@ struct xCoef
     F32 a[4];
 };
 
-static F32 sBasisUniformBspline[4][4];
-static F32 sBasisBezier[4][4];
-static F32 sBasisHermite[4][4];
-
 struct xCoef3
 {
     xCoef x;

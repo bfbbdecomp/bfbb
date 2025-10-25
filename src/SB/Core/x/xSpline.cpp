@@ -7,6 +7,10 @@
 #include <mem.h>
 #include <xVec3.h>
 
+static F32 sBasisUniformBspline[4][4];
+static F32 sBasisBezier[4][4];
+static F32 sBasisHermite[4][4];
+
 void Tridiag_Solve(F32* a, F32* b, F32* c, xVec3* d, xVec3* x, S32 n)
 {
     S32 j;
