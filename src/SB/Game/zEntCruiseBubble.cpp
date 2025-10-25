@@ -901,40 +901,40 @@ namespace cruise_bubble
 		void init_states()
 		{
 			static state_player_halt player_halt;
-			shared.states[0] = (state_type*)&player_halt;
+			shared.states[0] = &player_halt;
 
 			static state_player_aim player_aim;
-			shared.states[1] = (state_type*)&player_aim;
+			shared.states[1] = &player_aim;
 
 			static state_player_fire player_fire;
-			shared.states[2] = (state_type*)&player_fire;
+			shared.states[2] = &player_fire;
 
 			static state_player_wait player_wait;
-			shared.states[3] = (state_type*)&player_wait;
+			shared.states[3] = &player_wait;
 
 			static state_missle_appear missle_appear;
-			shared.states[4] = (state_type*)&missle_appear;
+			shared.states[4] = &missle_appear;
 
 			static state_missle_fly missle_fly;
-			shared.states[5] = (state_type*)&missle_fly;
+			shared.states[5] = &missle_fly;
 
 			static state_missle_explode missle_explode;
-			shared.states[6] = (state_type*)&missle_explode;
+			shared.states[6] = &missle_explode;
 
 			static state_camera_aim camera_aim;
-			shared.states[7] = (state_type*)&camera_aim;
+			shared.states[7] = &camera_aim;
 
 			static state_camera_seize camera_seize;
-			shared.states[8] = (state_type*)&camera_seize;
+			shared.states[8] = &camera_seize;
 
 			static state_camera_attach camera_attach;
-			shared.states[9] = (state_type*)&camera_attach;
+			shared.states[9] = &camera_attach;
 
 			static state_camera_survey camera_survey;
-			shared.states[10] = (state_type*)&camera_survey;
+			shared.states[10] = &camera_survey;
 
 			static state_camera_restore camera_return;
-			shared.states[11] = (state_type*)&camera_return;
+			shared.states[11] = &camera_return;
 		}
 
         void init_debug()
