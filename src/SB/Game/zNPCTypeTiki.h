@@ -30,16 +30,12 @@ struct zNPCTiki : zNPCCommon
     void* tikiAnim;
     F32 tikiAnimTime;
 
-    zNPCTiki(S32);
-
     void RemoveFromFamily();
 
     void Init(xEntAsset* entass);
     void Reset();
     void Setup();
     void Process(xScene* xscn, F32 dt);
-    void BUpdate(xVec3* pos);
-    virtual void Move(xScene* xscn, F32 dt, xEntFrame*);
     S32 SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* toParamWidget,
                  S32* handled);
     void AddChild(zNPCTiki* child);
@@ -50,19 +46,61 @@ struct zNPCTiki : zNPCCommon
     void ParseINI();
     void SelfSetup();
     S32 IsHealthy();
-    virtual S32 IsAlive();
-    U8 PhysicsFlags() const;
-    U8 ColChkByFlags() const;
-    U8 ColPenFlags() const;
-    U8 ColChkFlags() const;
-    U8 ColPenByFlags() const;
     virtual void Damage(en_NPC_DAMAGE_TYPE damtype, xBase* who, const xVec3* vec_hit);
-    virtual S32 Respawn(xVec3* pos, zMovePoint* mvptFirst, zMovePoint* mvptSpawnRef);
-    virtual void DuploOwner(zNPCCommon* duper);
-    virtual void DuploNotice();
-    virtual S32 CanRope();
     S32 SetCarryState(en_NPC_CARRY_STATE cs);
-    virtual U32 AnimPick(int, en_NPC_GOAL_SPOT, xGoal*);
+
+    zNPCTiki(S32 myType) : zNPCCommon(myType)
+    {
+    }
+
+    virtual S32 CanRope()
+    {
+        return 1;
+    }
+
+    virtual U32 AnimPick(int, en_NPC_GOAL_SPOT, xGoal*)
+    {
+        return xStrHash("Idle");
+    }
+
+    virtual void Move(xScene* xscn, F32 dt, xEntFrame*)
+    {
+    }
+
+    virtual void BUpdate(xVec3* pos)
+    {
+        xEntDefaultBoundUpdate(this, pos);
+    }
+
+    virtual S32 IsAlive()
+    {
+        return (0x200 - (tikiFlag & 0x300) | (tikiFlag & 0x300) - 0x200) >> 0x1f;
+    }
+
+    virtual U8 ColChkFlags() const
+    {
+        return 0;
+    }
+
+    virtual U8 ColPenFlags() const
+    {
+        return 0;
+    }
+
+    virtual U8 ColChkByFlags() const
+    {
+        return 24;
+    }
+
+    virtual U8 ColPenByFlags() const
+    {
+        return 24;
+    }
+
+    virtual U8 PhysicsFlags() const
+    {
+        return 0;
+    }
 };
 
 void ZNPC_Tiki_Startup();
@@ -78,7 +116,7 @@ void ZNPC_Destroy_Tiki(xFactoryInst* inst);
 
 xAnimTable* ZNPC_AnimTable_Tiki();
 
-void loveyFloat(zNPCTiki*, F32);
+static void loveyFloat(zNPCTiki*, F32);
 static S32 loveyIdleCB(xGoal*, void*, enum en_trantype*, F32, void*);
 static S32 loveyPatrolCB(xGoal*, void*, enum en_trantype*, F32, void*);
 static S32 quietIdleCB(xGoal*, void*, enum en_trantype*, F32, void*);
