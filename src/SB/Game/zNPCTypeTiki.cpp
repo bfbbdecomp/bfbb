@@ -48,6 +48,17 @@ static F32 sLoveyIconOffset = -1.375f;
 static F32 timeSinceLastExplode = 100.0f;
 static F32 g_tmr_talkytiki = -1.0f;
 
+static S32 loveyIdleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 loveyPatrolCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 quietIdleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 quietHideCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 thunderIdleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 thunderCountCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 tikiDyingCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 tikiDeadCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static void genericTikiRender(xEnt* ent);
+static void loveyTikiRender(xEnt* ent);
+
 void ZNPC_Tiki_Startup()
 {
     for (S32 i = 0; i < ANIM_COUNT; i++)
@@ -558,38 +569,43 @@ S32 zNPCTiki::SetCarryState(en_NPC_CARRY_STATE cs)
         return 0;
     }
 
-    if (cs >= zNPCCARRY_ATTEMPTPICKUP && cs < zNPCCARRY_THROW)
+    if (cs >= zNPCCARRY_THROW)
     {
-        if (this->numChildren == 0)
+        if (cs < 4)
         {
+            if (this->numChildren == 0)
+            {
+                return 1;
+            }
+
+            if (this->children[0] != NULL &&
+                this->children[0]->bound.box.box.lower.y < 0.2f + this->bound.box.box.upper.y)
+            {
+                return 0;
+            }
+
+            if (this->children[1] != NULL &&
+                this->children[1]->bound.box.box.lower.y < 0.2f + this->bound.box.box.upper.y)
+            {
+                return 0;
+            }
+
+            if (this->children[2] != NULL &&
+                this->children[2]->bound.box.box.lower.y < 0.2f + this->bound.box.box.upper.y)
+            {
+                return 0;
+            }
+
+            if (this->children[3] != NULL &&
+                this->children[3]->bound.box.box.lower.y < 0.2f + this->bound.box.box.upper.y)
+            {
+                return 0;
+            }
+
             return 1;
         }
 
-        if (this->children[0] != NULL &&
-            this->children[0]->bound.box.box.lower.y < (0.2f + this->bound.box.box.upper.y))
-        {
-            return 0;
-        }
-
-        if (this->children[1] != NULL &&
-            this->children[1]->bound.box.box.lower.y < (0.2f + this->bound.box.box.upper.y))
-        {
-            return 0;
-        }
-
-        if (this->children[2] != NULL &&
-            this->children[2]->bound.box.box.lower.y < (0.2f + this->bound.box.box.upper.y))
-        {
-            return 0;
-        }
-
-        if (this->children[3] != NULL &&
-            this->children[3]->bound.box.box.lower.y < (0.2f + this->bound.box.box.upper.y))
-        {
-            return 0;
-        }
-
-        return 1;
+        return 0;
     }
 
     if (cs != zNPCCARRY_NONE)

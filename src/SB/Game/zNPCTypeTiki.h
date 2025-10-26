@@ -89,12 +89,12 @@ struct zNPCTiki : zNPCCommon
 
     virtual U8 ColChkByFlags() const
     {
-        return 24;
+        return 0x18;
     }
 
     virtual U8 ColPenByFlags() const
     {
-        return 24;
+        return 0x18;
     }
 
     virtual U8 PhysicsFlags() const
@@ -115,17 +115,5 @@ xFactoryInst* ZNPC_Create_Tiki(S32 who, RyzMemGrow* grow, void*);
 void ZNPC_Destroy_Tiki(xFactoryInst* inst);
 
 xAnimTable* ZNPC_AnimTable_Tiki();
-
-static void loveyFloat(zNPCTiki*, F32);
-static S32 loveyIdleCB(xGoal*, void*, enum en_trantype*, F32, void*);
-static S32 loveyPatrolCB(xGoal*, void*, enum en_trantype*, F32, void*);
-static S32 quietIdleCB(xGoal*, void*, enum en_trantype*, F32, void*);
-static S32 quietHideCB(xGoal*, void*, enum en_trantype*, F32, void*);
-static S32 thunderIdleCB(xGoal*, void*, enum en_trantype*, F32, void*);
-static S32 thunderCountCB(xGoal*, void*, enum en_trantype*, F32, void*);
-static S32 tikiDyingCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
-static S32 tikiDeadCB(xGoal* rawgoal, void*, en_trantype*, F32, void*);
-static void genericTikiRender(xEnt* ent);
-static void loveyTikiRender(xEnt* ent);
 
 #endif
