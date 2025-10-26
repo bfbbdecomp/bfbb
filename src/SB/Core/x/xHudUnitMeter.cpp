@@ -15,7 +15,7 @@ namespace xhud
 
 void xhud::unit_meter_widget::load(xBase& data, xDynAsset& asset, size_t arg2)
 {
-    this->init_base(data, asset, sizeof(xBase) + sizeof(unit_meter_widget));
+    init_base(data, asset, sizeof(xBase) + sizeof(unit_meter_widget));
     unit_meter_widget* widget = (unit_meter_widget*)(&data + 1);
     new (widget) unit_meter_widget((unit_meter_asset&)asset);
 }

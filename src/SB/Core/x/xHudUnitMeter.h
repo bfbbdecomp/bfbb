@@ -33,7 +33,7 @@ namespace xhud
 
         unit_meter_widget(const unit_meter_asset& other_widget);
 
-        void load(xBase& data, xDynAsset& asset, size_t);
+        static void load(xBase& data, xDynAsset& asset, size_t arg2);
         void destruct();
         void destroy();
         U32 type() const;
