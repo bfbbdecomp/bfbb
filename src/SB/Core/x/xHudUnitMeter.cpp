@@ -23,10 +23,11 @@ void xhud::unit_meter_widget::load(xBase& data, xDynAsset& asset, size_t arg2)
 xhud::unit_meter_widget::unit_meter_widget(const xhud::unit_meter_asset& a) : meter_widget(a)
 {
     S32 i, j;
-    for (i = 0; i < 12; i++)
-    {
-        pings.tail = a.sound.start_increment;
-    }
+    // for (i = 0; i < 18; i++)
+    // {
+        res.id = a.id;
+        res.baseType = a.baseType;
+    // }
 
     anim_time = 0.0f;
 
@@ -96,23 +97,57 @@ void xhud::unit_meter_widget::update(F32 dt)
     }
 
     for (S32 i = 0; i < units; i++) {
-        // TODO: Correct the control flow for this conditional
         S32 which = 0;
-        if (!res.fill_forward || (!(i >= value) && !res.fill_forward) || (i >= value))
+        if ((res.fill_forward && value >= i + 1) || (!res.fill_forward && value >= units - i))
         {
             which = 1;
         }
         
-        xModelInstance* m = model[which][i];
-        if (m != NULL && m->Anim != NULL && !(m->Anim->Single->State->Data->Duration >= 0.0f))
+        xModelInstance* m = model[i][which];
+        if (m != NULL && m->Anim != NULL && !(m->Anim->Single->State->Data->Duration <= 0.0f))
         {
+            // TODO: Float ops aren't quite right
             F32 duration = i * 0.1f + anim_time;
             if (duration > m->Anim->Single->State->Data->Duration) {
-                duration = xfmod(i * 0.1f + anim_time, m->Anim->Single->State->Data->Duration);
+                duration = xfmod(duration, m->Anim->Single->State->Data->Duration);
             }
 
             m->Anim->Single->Time = duration;
             xModelEval(m);
         }
+    }
+}
+
+void xhud::unit_meter_widget::render()
+{
+    render_context unitrc = this->rc;
+    
+    S32 units = 0.5f + max_value;
+    if (units > 6)
+    {
+        units = 6;
+    }
+
+    for (S32 i = 0; i < units; i++)
+    {
+        S32 which = 0;
+        if ((res.fill_forward && value >= i + 1) || (!res.fill_forward && value >= units - i))
+        {
+            which = 1;
+        }
+
+        if (model[i][which] == NULL)
+        {
+            continue;
+        }
+
+        unitrc.loc.x = res.offset.x * i + rc.loc.x + res.model[which].loc.x;
+        unitrc.loc.y = res.offset.y * i + rc.loc.y + res.model[which].loc.y;
+        unitrc.loc.z = res.offset.z * i + rc.loc.z + res.model[which].loc.z;
+        unitrc.size.x = rc.size.x * res.model[which].size.x;
+        unitrc.size.y = rc.size.y * res.model[which].size.y;
+        unitrc.size.z = rc.size.z * res.model[which].size.z;
+
+        render_model(*model[i][which], unitrc);
     }
 }
