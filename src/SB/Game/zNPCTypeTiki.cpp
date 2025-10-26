@@ -1,14 +1,21 @@
 #include "iAnim.h"
 #include "iModel.h"
 #include "rwcore.h"
+#include "rwplcore.h"
 #include "types.h"
 #include "xDebug.h"
+#include "xEnt.h"
 #include "xMath.h"
 #include "xModel.h"
+#include "xNPCBasic.h"
+#include "xScrFx.h"
 #include "xString.h"
+#include "xVec3.h"
 #include "xutil.h"
 #include "zFX.h"
 #include "zGlobals.h"
+#include "zGoo.h"
+#include "zMovePoint.h"
 #include "zNPCGoals.h"
 #include "zNPCGoalTiki.h"
 #include "zNPCHazard.h"
@@ -17,8 +24,11 @@
 #include "zNPCTypeCommon.h"
 #include "zNPCTypes.h"
 #include "zNPCTypeTiki.h"
+#include "zSurface.h"
 
 #define ANIM_COUNT 2
+#define NUM_PARENTS 4
+#define NUM_CHILDREN 4
 
 // .bss
 static xParEmitterCustomSettings loveyEmitterInfo;
@@ -37,6 +47,17 @@ static F32 sLoveyIconDist = 4.5f;
 static F32 sLoveyIconOffset = -1.375f;
 static F32 timeSinceLastExplode = 100.0f;
 static F32 g_tmr_talkytiki = -1.0f;
+
+static S32 loveyIdleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 loveyPatrolCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 quietIdleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 quietHideCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 thunderIdleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 thunderCountCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 tikiDyingCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static S32 tikiDeadCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*);
+static void genericTikiRender(xEnt* ent);
+static void loveyTikiRender(xEnt* ent);
 
 void ZNPC_Tiki_Startup()
 {
@@ -57,7 +78,8 @@ void zNPCTiki_InitStacking(zScene* zsc)
         xNPCBasic* npc = (xNPCBasic*)zsc->npcs[i];
 
         U32 type = npc->SelfType() & ~0xFF;
-        if (type != 'NTT\0') // NPC_TYPE_TIKI_WOOD
+
+        if (type != 'NTT\0')
         {
             continue;
         }
@@ -67,7 +89,7 @@ void zNPCTiki_InitStacking(zScene* zsc)
         {
             tiki->FindParents(zsc);
 
-            if (*(U8*)(&tiki->numParents) == 0)
+            if (tiki->numParents == 0)
             {
                 F32 dh = tiki->landHt - tiki->bound.box.box.lower.y;
 
@@ -84,7 +106,7 @@ void zNPCTiki_InitStacking(zScene* zsc)
     orphanList = NULL;
 }
 
-// need to do more of this
+// a couple assignments are in the wrong order
 void zNPCTiki_InitFX(zScene* scene)
 {
     RwTexture* tex;
@@ -96,11 +118,11 @@ void zNPCTiki_InitFX(zScene* scene)
     }
 
     // clang-format off
-    thunderEmitterInfo.custom_flags = 0xf5e;
     thunderEmitterInfo.vel.x = 0.0f;
     thunderEmitterInfo.vel.y = -0.3f;
     thunderEmitterInfo.vel.z = 0.0f;
-    thunderEmitterInfo.vel_angle_variation = 4.712389f;
+    thunderEmitterInfo.custom_flags = 0xf5e;
+    thunderEmitterInfo.vel_angle_variation = DEG2RAD(270);
     thunderEmitterInfo.rate.set(100.0f, 100.0f, 1.0f, 0);
     thunderEmitterInfo.life.set(2.0f, 2.0f, 1.0f, 0);
     thunderEmitterInfo.size_birth.set(0.8f, 0.8f, 1.0f, 0);
@@ -113,11 +135,11 @@ void zNPCTiki_InitFX(zScene* scene)
     thunderEmitterInfo.color_death[1].set(0.0f, 0.0f, 1.0f, 0);
     thunderEmitterInfo.color_death[2].set(0.0f, 0.0f, 1.0f, 0);
     thunderEmitterInfo.color_death[3].set(255.0f, 255.0f, 1.0f, 0);
-    loveyEmitterInfo.custom_flags = 0xf5e;
     loveyEmitterInfo.vel.x = 0.0f;
     loveyEmitterInfo.vel.y = -0.5f;
     loveyEmitterInfo.vel.z = 0.0f;
-    loveyEmitterInfo.vel_angle_variation = 1.5707964f;
+    loveyEmitterInfo.custom_flags = 0xf5e;
+    loveyEmitterInfo.vel_angle_variation = DEG2RAD(90);
     loveyEmitterInfo.rate.set(100.0f, 100.0f, 1.0f, 0);
     loveyEmitterInfo.life.set(2.0f, 2.0f, 1.0f, 0);
     loveyEmitterInfo.size_birth.set(0.5f, 0.5f, 1.0f, 0);
@@ -132,52 +154,174 @@ void zNPCTiki_InitFX(zScene* scene)
     loveyEmitterInfo.color_death[3].set(0.0f, 0.0f, 1.0f, 0);
     // clang-format on
     tex = (RwTexture*)xSTFindAsset(xStrHash("target"), 0x0);
-    if (tex == NULL)
-    {
-        sHelmetRast = 0;
-    }
-    else
+    if (tex != NULL)
     {
         sHelmetRast = tex->raster;
     }
+    else
+    {
+        sHelmetRast = 0;
+    }
+
     NPCC_MakeLightningInfo(NPC_LYT_TIKITHUNDER, &sThunderLightningInfo);
     sThunderLightningInfo.time = 0.3f;
 }
 
 void zNPCTiki_ExplodeFX(zNPCTiki* tiki)
 {
-    xVec3 shockwavePos;
-    NPCHazard* haz;
-    zScene* zsc;
-    unsigned int i;
+    if (tiki->myNPCType == NPC_TYPE_TIKI_THUNDER)
+    {
+        xScrFXGlareAdd((xVec3*)&tiki->model->Mat->pos, 0.7f, 0.2f, 5.0f, 1.0f, 1.0f, 0.75f, 1.0f,
+                       NULL);
+
+        xVec3 pos;
+        xVec3Copy(&pos, (xVec3*)&tiki->model->Mat->pos);
+        pos.y += 0.35f;
+
+        NPCHazard* haz = HAZ_Acquire();
+        if (haz)
+        {
+            haz->ConfigHelper(NPC_HAZ_THUNDER);
+            haz->SetNPCOwner(tiki);
+            haz->Start(&tiki->bound.box.center, -1.0f);
+        }
+
+        zScene* scene = globals.sceneCur;
+
+        for (U32 idx = 0, i = 0; idx < scene->num_npcs; idx++, i += 4)
+        {
+            zNPCTiki* other = *((zNPCTiki**)scene->npcs + i);
+            if (other == tiki || !other->flg_vuln)
+                continue;
+
+            xVec3 delta;
+            xVec3Sub(&delta, (xVec3*)&tiki->model->Mat->pos, (xVec3*)&other->model->Mat->pos);
+            F32 dist2 = xVec3Length2(&delta);
+
+            if (dist2 < 25.0f)
+            {
+                if ((other->myNPCType & ~0xFF) == NPC_TYPE_TIKI_WOOD)
+                    other->timeToLive = dist2 * 0.012f;
+
+                other->Damage(DMGTYP_THUNDER_TIKI_EXPLOSION, 0, 0);
+            }
+        }
+
+        for (U32 idx = 0, i = 0; idx < scene->num_dyns; idx++, i += 4)
+        {
+            xBase* dyn = *((xBase**)scene->dyns + i);
+            if (dyn->baseType != 0x1B)
+                continue;
+
+            xModelInstance* model = *((xModelInstance**)((char*)dyn + 2));
+            xVec3 delta;
+            xVec3Sub(&delta, (xVec3*)&tiki->model->Mat->pos, (xVec3*)&model->Mat->pos);
+
+            if (xVec3Length2(&delta) < 25.0f)
+                zEntEvent(dyn, 0x3A);
+        }
+
+        {
+            xVec3 delta;
+            xVec3Sub(&delta, (xVec3*)&tiki->model->Mat->pos,
+                     (xVec3*)&globals.player.ent.model->Mat->pos);
+
+            if (xVec3Length2(&delta) < 25.0f)
+                zEntEvent((xBase*)&globals.player, 0x3A);
+        }
+    }
+
+    if (tiki->explosion && tiki->explosion->initCB)
+        tiki->explosion->initCB(tiki->explosion, tiki->model, 0, 0);
+
+    tiki->SndPlayRandom(NPC_STYP_TIKIEXPLODE);
 }
 
+// WIP
 static void zNPCTiki_PickTikisToAnimate()
 {
     xCollis* coll;
     xCollis* cend;
     xNPCBasic* npc;
     zNPCTiki* currOrphan;
+
+    coll = globals.player.ent.collis->colls;
+    cend = coll + globals.player.ent.collis->idx;
+
+    for (; coll < cend; ++coll)
+    {
+        if ((coll->flags & 1) != 0 && coll->optr != NULL)
+        {
+            void* pv = coll->optr;
+
+            if (*((char*)pv + 4) == '+' && (((*(U32*)((char*)pv + 0xF4)) & ~0xFF) ==
+                                            (U32)('N' << 24 | 'T' << 16 | 'T' << 8 | '0')))
+            {
+                U32* pf = (U32*)((char*)pv + 0x2A0);
+                *pf &= ~0xC0;
+            }
+        }
+    }
+
+    for (currOrphan = orphanList; currOrphan != NULL; currOrphan = currOrphan->nextOrphan)
+    {
+        if (currOrphan->isCulled == 0)
+        {
+            currOrphan->tikiFlag &= ~0xC0;
+        }
+
+        if (currOrphan->nextOrphan == currOrphan)
+        {
+            break;
+        }
+    }
+
+    npc = (xNPCBasic*)globals.player.carry.grabbed;
+    if (npc != NULL)
+    {
+        void* pv = (void*)npc;
+        if (*((char*)pv + 4) == '+' && (((*(U32*)((char*)pv + 0xF4)) & ~0xFF) ==
+                                        (U32)('N' << 24 | 'T' << 16 | 'T' << 8 | '0')))
+        {
+            U32* pf = (U32*)((char*)pv + 0x2A0);
+            *pf &= ~0xC0;
+        }
+    }
+
+    if ((xrand() & 0x3F) == 0)
+    {
+        whichTikiToAnimate = (S32)(numTikisOnScreen * xurand()) + 1;
+    }
+    else
+    {
+        whichTikiToAnimate = -1;
+    }
+
+    numTikisOnScreen = 0;
 }
 
+// Scheduling issue
 void zNPCTiki_Timestep(xScene* xscn, F32 dt)
 {
     zNPCTiki_PickTikisToAnimate();
     zNPCTiki_ReparentOrphans();
     timeSinceLastExplode += dt;
-    g_tmr_talkytiki -= dt;
-    if (g_tmr_talkytiki < -1.0f)
+
+    if (-1.0f > g_tmr_talkytiki - dt)
     {
         g_tmr_talkytiki = -1.0f;
     }
-    return;
+    else
+    {
+        g_tmr_talkytiki -= dt;
+    }
 }
 
 void zNPCTiki_ReparentOrphans()
 {
     zNPCTiki* holder;
 
-    if ((globals.sceneCur)->sceneID == 'BB04')
+    if (globals.sceneCur->sceneID == 'BB04')
     {
         while (orphanList != NULL)
         {
@@ -261,25 +405,23 @@ void zNPCTiki::Reset()
     }
     else
     {
-        flg_vuln = 0xffff0001;
+        flg_vuln = ~0xFFFE;
     }
 
     timeToLive = 0.0f;
     tikiFlag = 0;
-	
-    parents[0] = NULL;
-    parents[1] = NULL;
-    parents[2] = NULL;
-    parents[3] = NULL;
-    *(U8*)(&numParents) = 0; // needs to store as byte
-    contactParent = 0xffffffff;
+    for (int i = 0; i < sizeof(parents[0]); i++)
+    {
+        parents[i] = NULL;
+    }
+    numParents = 0;
+    contactParent = ~0x0;
 
-    children[0] = NULL;
-    children[1] = NULL;
-    children[2] = NULL;
-    children[3] = NULL;
-    *(U8*)(&numChildren) = 0; // needs to store as byte
-	
+    for (int i = 0; i < sizeof(children[0]); i++)
+    {
+        children[i] = NULL;
+    }
+    numChildren = 0;
     vel = 0.0f;
     nonTikiParent = NULL;
 
@@ -289,7 +431,6 @@ void zNPCTiki::Reset()
         break;
     case NPC_TYPE_TIKI_LOVEY:
         t1 = 0.0f;
-        // .sdata2 @1084 (-0.25f) incomplete
         t2 = -0.25f;
         t3 = -0.25f;
         xVec3Copy((xVec3*)&v1, (xVec3*)&model->Mat->pos);
@@ -317,57 +458,66 @@ void zNPCTiki::Setup()
 }
 
 void zNPCTiki::Init(xEntAsset* entass)
-
 {
     int iVar1;
     xAnimPlay* pxVar2;
     xModelInstance* nextModel;
-    xVec3* local_28 = NULL;
-    xVec3* local_1c = NULL;
 
-    ((zNPCCommon*)this)->Init(entass);
-    this->flags = this->flags | 0x40;
-    this->baseFlags = this->baseFlags | 0x10;
+    zNPCCommon::Init(entass);
+
+    this->flags |= 0x40;
+    this->baseFlags |= 0x10;
     iBoxForModel(&this->bound.box.box, this->model);
-    for (nextModel = this->model->Next; nextModel != 0x0; nextModel = nextModel->Next)
+
+    for (nextModel = this->model->Next; nextModel != NULL; nextModel = nextModel->Next)
     {
-        xVec3Copy(local_1c, &this->bound.qcd.min);
-        xVec3Copy(local_28, &this->bound.box.box.upper);
-        iBoxForModel(&this->bound.box.box, this->model->Next);
-        if (this->bound.box.box.lower.x > local_1c->x)
+        xVec3 local_1c;
+        xVec3 local_28;
+
+        xVec3Copy(&local_1c, &this->bound.box.box.lower);
+        xVec3Copy(&local_28, &this->bound.box.box.upper);
+
+        iBoxForModel(&this->bound.box.box, nextModel);
+
+        if (this->bound.box.box.lower.x > local_1c.x)
         {
-            this->bound.box.box.lower.x = local_1c->x;
+            this->bound.box.box.lower.x = local_1c.x;
         }
-        if (this->bound.box.box.lower.y > local_1c->y)
+        if (this->bound.box.box.lower.y > local_1c.y)
         {
-            this->bound.box.box.lower.y = local_1c->y;
+            this->bound.box.box.lower.y = local_1c.y;
         }
-        if (this->bound.box.box.lower.z > local_1c->z)
+        if (this->bound.box.box.lower.z > local_1c.z)
         {
-            this->bound.box.box.lower.z = local_1c->z;
+            this->bound.box.box.lower.z = local_1c.z;
         }
-        if (this->bound.box.box.upper.x < local_28->x)
+
+        if (this->bound.box.box.upper.x < local_28.x)
         {
-            this->bound.box.box.upper.x = local_28->x;
+            this->bound.box.box.upper.x = local_28.x;
         }
-        if (this->bound.box.box.upper.y < local_28->y)
+        if (this->bound.box.box.upper.y < local_28.y)
         {
-            this->bound.box.box.upper.y = local_28->y;
+            this->bound.box.box.upper.y = local_28.y;
         }
-        if (this->bound.box.box.upper.z < local_28->z)
+        if (this->bound.box.box.upper.z < local_28.z)
         {
-            this->bound.box.box.upper.z = local_28->z;
+            this->bound.box.box.upper.z = local_28.z;
         }
     }
+
     this->origLocalBound.type = XBOUND_TYPE_BOX;
-    xVec3Sub(&this->origLocalBound.qcd.min, &this->bound.qcd.min, (xVec3*)&(this->model->Mat->pos));
+    xVec3Sub(&this->origLocalBound.box.box.lower, &this->bound.box.box.lower,
+             (xVec3*)&(this->model->Mat->pos));
     xVec3Sub(&this->origLocalBound.box.box.upper, &this->bound.box.box.upper,
              (xVec3*)&(this->model->Mat->pos));
-    xVec3Add(&this->origLocalBound.qcd.min, &this->origLocalBound.qcd.min,
+    xVec3Add(&this->origLocalBound.box.box.lower, &this->origLocalBound.box.box.lower,
              &this->origLocalBound.box.box.upper);
-    xVec3SMulBy(&this->origLocalBound.qcd.min, 0.5f);
+    xVec3SMulBy(&this->origLocalBound.box.box.lower, 0.5f);
+
     this->nextOrphan = NULL;
-    iVar1 = ((xNPCBasic*)this)->SelfType();
+
+    iVar1 = this->SelfType();
     if (iVar1 == NPC_TYPE_TIKI_WOOD)
     {
         this->render = loveyTikiRender;
@@ -376,11 +526,12 @@ void zNPCTiki::Init(xEntAsset* entass)
     {
         this->render = genericTikiRender;
     }
+
     pxVar2 = this->model->Anim;
     if (pxVar2 == NULL)
     {
         this->tikiAnim = NULL;
-        this->tikiFlag &= 0xffffff3f;
+        this->tikiFlag &= ~0xC0;
         this->tikiFlag |= 0x40;
     }
     else
@@ -388,8 +539,9 @@ void zNPCTiki::Init(xEntAsset* entass)
         this->tikiAnim = *pxVar2->Single->State->Data->RawData;
         this->tikiAnimTime = this->model->Anim->Single->Time;
         this->model->Anim = NULL;
-        this->tikiFlag &= 0xffffff3f;
+        this->tikiFlag &= ~0xC0;
     }
+
     return;
 }
 
@@ -407,9 +559,7 @@ void zNPCTiki::Damage(en_NPC_DAMAGE_TYPE damtype, xBase* who, const xVec3* vec_h
 
 S32 zNPCTiki::SetCarryState(en_NPC_CARRY_STATE cs)
 {
-    S32 i = 0;
-
-    if (((xNPCBasic*)this)->SelfType() == NPC_TYPE_TIKI_LOVEY)
+    if (this->SelfType() == NPC_TYPE_TIKI_LOVEY)
     {
         return 0;
     }
@@ -428,27 +578,26 @@ S32 zNPCTiki::SetCarryState(en_NPC_CARRY_STATE cs)
                 return 1;
             }
 
-            // unrolled child loop
             if (this->children[0] != NULL &&
-                (this->children[0]->bound.box.box.lower.y < (0.2f + this->bound.box.box.upper.y)))
+                this->children[0]->bound.box.box.lower.y < 0.2f + this->bound.box.box.upper.y)
             {
                 return 0;
             }
 
             if (this->children[1] != NULL &&
-                (this->children[1]->bound.box.box.lower.y < (0.2f + this->bound.box.box.upper.y)))
+                this->children[1]->bound.box.box.lower.y < 0.2f + this->bound.box.box.upper.y)
             {
                 return 0;
             }
 
             if (this->children[2] != NULL &&
-                (this->children[2]->bound.box.box.lower.y < (0.2f + this->bound.box.box.upper.y)))
+                this->children[2]->bound.box.box.lower.y < 0.2f + this->bound.box.box.upper.y)
             {
                 return 0;
             }
 
             if (this->children[3] != NULL &&
-                (this->children[3]->bound.box.box.lower.y < (0.2f + this->bound.box.box.upper.y)))
+                this->children[3]->bound.box.box.lower.y < 0.2f + this->bound.box.box.upper.y)
             {
                 return 0;
             }
@@ -461,15 +610,10 @@ S32 zNPCTiki::SetCarryState(en_NPC_CARRY_STATE cs)
 
     if (cs != zNPCCARRY_NONE)
     {
-        if (cs >= 0)
-        {
-            this->tikiFlag |= 0x10;
-            this->landHt = -9.9999997E+37f;
-            RemoveFromFamily();
-            return 1;
-        }
-
-        return 0;
+        this->tikiFlag |= 0x10;
+        this->landHt = FLOAT_MIN;
+        RemoveFromFamily();
+        return 1;
     }
 
     if ((this->tikiFlag & 0x10) == 0)
@@ -477,27 +621,27 @@ S32 zNPCTiki::SetCarryState(en_NPC_CARRY_STATE cs)
         return 0;
     }
 
-    this->tikiFlag &= 0xFFFFFFEF;
+    this->tikiFlag &= ~0x10;
 
     if (this->frame != NULL)
     {
-        (this->frame->mat).up.x = 0.0f;
-        (this->frame->mat).up.y = 1.0f;
-        (this->frame->mat).up.z = 0.0f;
+        this->frame->mat.up.x = 0.0f;
+        this->frame->mat.up.y = 1.0f;
+        this->frame->mat.up.z = 0.0f;
     }
 
-    (this->model->Mat->up).x = 0.0f;
-    (this->model->Mat->up).y = 1.0f;
-    (this->model->Mat->up).z = 0.0f;
+    this->model->Mat->up.x = 0.0f;
+    this->model->Mat->up.y = 1.0f;
+    this->model->Mat->up.z = 0.0f;
 
-    if (((xNPCBasic*)this)->SelfType() == NPC_TYPE_TIKI_STONE)
+    if (this->SelfType() == NPC_TYPE_TIKI_STONE)
     {
         this->tikiFlag |= 0x25;
         this->bound.type = XBOUND_TYPE_BOX;
     }
     else
     {
-        ((zNPCCommon*)this)->Damage(DMGTYP_SIDE, 0, NULL);
+        this->Damage(DMGTYP_SIDE, 0, NULL);
     }
 
     return 1;
@@ -518,25 +662,25 @@ void zNPCTiki::SelfSetup()
     goal = psy->AddGoal(NPC_GOAL_TIKIIDLE, NULL);
     goal->flg_travFilter = 0;
 
-    if (this->myNPCType == NPC_GOAL_TIKIPATROL)
+    switch (this->myNPCType)
     {
+    case NPC_GOAL_TIKIPATROL:
         goal->SetCallbacks(loveyIdleCB, NULL, 0, NULL);
         goal = psy->AddGoal(NPC_GOAL_TIKIPATROL, NULL);
         goal->SetCallbacks(loveyPatrolCB, NULL, 0, NULL);
-    }
-
-    else if (this->myNPCType < NPC_GOAL_TIKICOUNT && NPC_GOAL_TIKIIDLE < this->myNPCType)
-    {
+        break;
+    case NPC_GOAL_TIKIHIDE:
         goal->SetCallbacks(quietIdleCB, NULL, 0, NULL);
         goal = psy->AddGoal(NPC_GOAL_TIKIHIDE, NULL);
         goal->SetCallbacks(quietHideCB, NULL, 0, NULL);
-    }
-
-    else if (this->myNPCType == NPC_GOAL_TIKICOUNT)
-    {
+        break;
+    case NPC_GOAL_TIKICOUNT:
         goal->SetCallbacks(thunderIdleCB, NULL, 0, NULL);
         goal = psy->AddGoal(NPC_GOAL_TIKICOUNT, NULL);
         goal->SetCallbacks(thunderCountCB, NULL, 0, NULL);
+        break;
+    default:
+        break;
     }
 
     goal = psy->AddGoal(NPC_GOAL_TIKIDYING, NULL);
@@ -575,96 +719,71 @@ void zNPCTiki::Process(xScene* xscn, F32 dt)
     F32 dh;
     // Ghidra-generated:
     F32 fVar1;
-    F32 fVar2;
-    char* puVar3;
-    S32 iVar4;
-    U32 uVar5;
-    xModelInstance* pxVar6;
-    xPsyche* this_00;
-    RwMatrixTag* pRVar7;
-    xEnt* pxVar8;
-    RwV3d* pRVar9;
-    xEntFrame* pxVar10;
-    zNPCTiki* pzVar11;
-    zNPCTiki* pzVar12;
-    S32 iVar13;
-    S32 iVar14;
-    F32* pfVar15;
-    S32 iVar16;
-    U32 in_register_00004008;
-    F64 dVar17;
-    U64 uVar18;
-    F64 dVar19;
-    F32 fStack_88;
-    F32 local_84 = 0.0f;
-    F32 afStack_7c[3];
-    F32 fStack_70;
-    F32 local_6c = 0.0f;
-    F32 fStack_64;
+    xVec3 fStack_88;
+    xVec3 afStack_7c;
+    xVec3 fStack_70;
+    xVec3 fStack_64;
     F32 local_60;
     F32 local_54;
-    F32 afStack_4c[6];
+    xVec3 afStack_4c;
 
     if ((this->numChildren == NULL) || ((this->tikiFlag & 8) != 0))
     {
-        this->tikiFlag = this->tikiFlag & 0xfffffff7;
+        this->tikiFlag &= ~8;
+
         if ((this->tikiFlag & 0x300) == 0x200)
         {
             this->Process(xscn, dt);
         }
         else
         {
-            if ((this->tikiAnim != 0x0) && ((this->tikiFlag & 0xc0) == 0))
+            if (this->tikiAnim && ((this->tikiFlag & 0xC0) == 0))
             {
-                dVar17 = iAnimDuration(this->tikiAnim);
-                this->tikiAnimTime = this->tikiAnimTime + dt;
-                if (dVar17 <= this->tikiAnimTime)
+                duration = iAnimDuration(this->tikiAnim);
+                this->tikiAnimTime += dt;
+
+                if (this->tikiAnimTime >= duration)
                 {
-                    if ((xrand() & 1) == 0)
+                    if (xrand() & 1)
                     {
-                        this->tikiAnimTime = 0.0f;
-                        this->tikiFlag = this->tikiFlag & 0xffffff3f;
-                        this->tikiFlag = this->tikiFlag | 0x40;
+                        this->tikiAnimTime -= duration;
                     }
                     else
                     {
-                        this->tikiAnimTime = this->tikiAnimTime - dVar17;
+                        this->tikiAnimTime = 0.0f;
+                        this->tikiFlag = (this->tikiFlag & ~0xC0) | 0x40;
                     }
                 }
 
-                iAnimEval(this->tikiAnim, this->tikiAnimTime, (U32)0, (xVec3*)giAnimScratch + 0x410,
-                          (xQuat*)giAnimScratch);
-                iModelAnimMatrices(this->model->Data, (xQuat*)giAnimScratch,
-                                   (xVec3*)giAnimScratch + 0x410, this->model->Mat);
+                q0 = (xQuat*)giAnimScratch;
+                t0 = (xVec3*)(giAnimScratch + 0x410);
+                iAnimEval(this->tikiAnim, this->tikiAnimTime, (U32)0, (xVec3*)t0, (xQuat*)q0);
+
+                iModelAnimMatrices(this->model->Data, q0, t0, this->model->Mat + 1);
             }
             xVec3Copy(t0, (xVec3*)&this->model->Mat->pos);
             if (this->numParents != 0)
             {
-                int uVar5 = 0;
-                pzVar11 = this;
-                do
+                for (i = 0; i < 4; ++i)
                 {
-                    pzVar12 = pzVar11->parents[0];
-                    if ((pzVar12 != 0x0) && ((this->updatedParents & 1 << uVar5) == 0))
+                    if (this->parents[i] && !(this->updatedParents & (1 << i)))
                     {
-                        pzVar12->tikiFlag = pzVar12->tikiFlag | 8;
-                        //(**(*(pzVar11->parents[0]->super_zNPCCommon).field1_0x1b8 + 0x1c))(dt, pzVar11->parents[0], xscn);
+                        this->parents[i]->tikiFlag |= 8;
+                        this->parents[i]->Process(xscn, dt);
                     }
-                    uVar5 = uVar5 + 1;
-                    pzVar11->id = pzVar11->baseType;
-                } while (uVar5 < 4);
+                }
             }
+
             if ((this->tikiFlag & 0x300) == 0x100)
             {
                 this->RemoveFromFamily();
-                this->tikiFlag = this->tikiFlag & 0xfffffcff;
-                this->tikiFlag = this->tikiFlag | 0x200;
+                this->tikiFlag = (this->tikiFlag & ~0x300) | 0x200;
             }
             else
             {
-                if ((this->tikiFlag & 4) != 0)
+                if (this->tikiFlag & 4)
                 {
-                    if (this->nextOrphan == 0x0)
+                    if (this->nextOrphan == NULL)
                     {
                         this->nextOrphan = orphanList;
                         orphanList = this;
@@ -674,77 +793,74 @@ void zNPCTiki::Process(xScene* xscn, F32 dt)
                         xprintf("what the ...\n");
                     }
                 }
-                this->tikiFlag = this->tikiFlag & 0xfffffffb;
-                this_00 = this->psy_instinct;
-                if (this_00 != 0x0)
+
+                this->tikiFlag &= ~4;
+
+                if (this->psy_instinct)
                 {
-                    this_00->Timestep(dt, 0);
+                    this->psy_instinct->Timestep(dt, 0);
                 }
-                this->Process(xscn, dt);
-                if (*&this->numParents != '\0')
+
+                zNPCCommon::Process(xscn, dt);
+
+                if (this->numParents)
                 {
-                    iVar13 = 0;
-                    iVar16 = 2;
-                    pzVar11 = this;
-                    do
+                    for (i = 0; i < 4; i++)
                     {
-                        iVar4 = this->contactParent;
-                        if ((iVar13 != iVar4) && (pzVar11->parents[0] != 0x0))
+                        if (this->parents[i] && i != this->contactParent)
                         {
-                            if (iVar4 == -1)
+                            S32 p = this->contactParent;
+                            if (p == -1 || this->parents[p]->bound.box.box.upper.y <
+                                               this->parents[i]->bound.box.box.upper.y)
                             {
-                                this->contactParent = iVar13;
-                            }
-                            else if (this->parents[iVar4]->bound.qcd.min.z <
-                                     pzVar11->parents[0]->bound.box.box.upper.y)
-                            {
-                                this->contactParent = iVar13;
+                                this->contactParent = i;
                             }
                         }
-                        iVar4 = this->contactParent;
-                        iVar14 = iVar13 + 1;
-                        if ((iVar14 != iVar4) && (pzVar11->parents[1] != 0x0))
-                        {
-                            if (iVar4 == -1)
-                            {
-                                this->contactParent = iVar14;
-                            }
-                            else if ((this->parents[iVar4]->bound.box.box.upper.y) <
-                                     (pzVar11->parents[1]->bound.box.box.upper.y))
-                            {
-                                this->contactParent = iVar14;
-                            }
-                        }
-                        pzVar11 = (zNPCTiki*)pzVar11->link;
-                        iVar13 = iVar13 + 2;
-                        iVar16 = iVar16 + -1;
-                    } while (iVar16 != 0);
+                    }
                 }
-                if ((this->tikiFlag & 1) != 0)
+
+                if (this->tikiFlag & 1)
                 {
-                    this->vel = -(10.0f * dt - this->vel);
-                    pRVar7 = this->model->Mat;
+                    this->vel -= 10.0f * dt;
                     fVar1 = dt * this->vel;
-                    (pRVar7->pos).y = (pRVar7->pos).y + fVar1;
-                    *(&this->bound.box.box.lower.y) += fVar1;
+
+                    this->model->Mat->pos.y += fVar1;
+
+                    this->bound.box.box.lower.y += fVar1;
                     this->bound.box.box.upper.y += fVar1;
-                    this->bound.sph.center.y = this->bound.sph.center.y + fVar1;
-                    if (*&this->numParents == '\0')
+                    this->bound.sph.center.y += fVar1;
+
+                    if (this->numParents == 0)
                     {
-                        fVar1 = *(&this->bound.box.box.lower.y);
-                        if (fVar1 < this->landHt)
+                        if (this->bound.box.box.lower.y < this->landHt)
                         {
-                            fVar2 = this->landHt - fVar1;
-                            *(&this->bound.box.box.lower.y) = fVar1 + fVar2;
-                            this->bound.box.box.upper.y += fVar2;
-                            this->bound.sph.center.y += fVar2;
-                            pRVar7 = this->model->Mat;
-                            (pRVar7->pos).y = (pRVar7->pos).y + fVar2;
-                            this->tikiFlag = this->tikiFlag & 0xfffffffe;
-                            if ((this->tikiFlag & 2) != 0)
+                            F32 diff = this->landHt - this->bound.box.box.lower.y;
+                            this->bound.box.box.lower.y += diff;
+                            this->bound.box.box.upper.y += diff;
+                            this->bound.sph.center.y += diff;
+                            this->model->Mat->pos.y += diff;
+
+                            this->tikiFlag &= ~1;
+
+                            if (this->tikiFlag & 2)
                             {
-                                //(**(*(this->super_zNPCCommon).field1_0x1b8 + 0x80))(this, 0xe, 0,0);
+                                //this-> 0x1b8 -> EventFunc(this, 0xE, 0, 0);
                             }
+
+                            if (this->vel < -0.1f)
+                            {
+                                this->SndPlayRandom(NPC_STYP_TIKISTACK);
+                            }
+
+                            this->vel = 0.0f;
+                        }
+                    }
+                    else
+                    {
+                        xBound& parentBound = this->parents[this->contactParent]->bound;
+                        if (this->bound.box.box.lower.y < parentBound.box.box.upper.y)
+                        {
+                            this->tikiFlag &= ~1;
                             if (this->vel < -0.1f)
                             {
                                 this->SndPlayRandom(NPC_STYP_TIKISTACK);
@@ -752,273 +868,251 @@ void zNPCTiki::Process(xScene* xscn, F32 dt)
                             this->vel = 0.0f;
                         }
                     }
-                    else if (*(&this->bound.box.box.lower.y) <
-                             *(&this->parents[this->contactParent]->bound.box.box.upper.y))
-                    {
-                        this->tikiFlag = this->tikiFlag & 0xfffffffe;
-                        if (this->vel < -0.1f)
-                        {
-                            this->SndPlayRandom(NPC_STYP_TIKISTACK);
-                        }
-                        this->vel = 0.0f;
-                    }
                 }
-                if (*&this->numParents == '\0')
+
+                if (this->numParents == 0)
                 {
-                    pxVar8 = this->nonTikiParent;
-                    if (pxVar8 != 0x0)
+                    nonTikiParent = this->nonTikiParent;
+                    if (this->nonTikiParent)
                     {
-                        if (((pxVar8->chkby & 0x10) == 0) || ((pxVar8->penby & 0x10) == 0))
+                        if (!(this->nonTikiParent->chkby & 0x10) ||
+                            !(this->nonTikiParent->penby & 0x10))
                         {
-                            this->nonTikiParent = 0x0;
-                            this->tikiFlag = this->tikiFlag | 5;
-                            this->landHt = -1.0e38f;
+                            this->nonTikiParent = NULL;
+                            this->tikiFlag |= 5;
+                            this->landHt = FLOAT_MIN;
                         }
                         else
                         {
-                            xVec3Copy(t0, (xVec3*)&pxVar8->model->Mat->pos);
-                            /*xVec3AddScaled((xVec3*)&this->nonTikiParent->model->Mat->right, &t0,
-                                           (this->nonTikiParentDisp).x);
-                            xVec3AddScaled((xVec3*)&this->nonTikiParent->model->Mat->up, &t0,
-                                           (this->nonTikiParentDisp).y);
-                            xVec3AddScaled((xVec3*)&this->nonTikiParent->model->Mat->at, &t0,
-                                           (this->nonTikiParentDisp).z);
-                            xVec3SubFrom(&t0, &(this->model->Mat->pos).x);
-                            if ((this->tikiFlag & 1) != 0)
+                            RwMatrix& matP = *this->nonTikiParent->model->Mat;
+                            xVec3 delta;
+                            delta.x = (matP.pos.x + matP.right.x * this->nonTikiParentDisp.x +
+                                       matP.up.x * this->nonTikiParentDisp.y +
+                                       matP.at.x * this->nonTikiParentDisp.z) -
+                                      this->model->Mat->pos.x;
+                            delta.y = (matP.pos.y + matP.right.y * this->nonTikiParentDisp.x +
+                                       matP.up.y * this->nonTikiParentDisp.y +
+                                       matP.at.y * this->nonTikiParentDisp.z) -
+                                      this->model->Mat->pos.y;
+                            delta.z = (matP.pos.z + matP.right.z * this->nonTikiParentDisp.x +
+                                       matP.up.z * this->nonTikiParentDisp.y +
+                                       matP.at.z * this->nonTikiParentDisp.z) -
+                                      this->model->Mat->pos.z;
+
+                            if (this->tikiFlag & 1)
                             {
-                                local_54 = 0.0f;
+                                delta.y = 0.0f;
                             }
-                            xVec3AddTo(&this->bound.qcd.min, &t0);
-                            xVec3AddTo(&this->bound.sph.r, &t0);
-                            xVec3AddTo(&this->bound.field_3, &t0);
-                            uVar18 = xVec3AddTo(&(this->model->Mat->pos).x, &t0);
-                            if (((this->tikiFlag & 1) == 0) &&
-                                (this->nonTikiParent->baseType == '\x18'))
+
+                            xVec3AddTo(&this->bound.box.box.upper, &delta);
+                            xVec3AddTo(&this->bound.box.box.lower, &delta);
+                            xVec3AddTo(&this->bound.sph.center, &delta);
+                            xVec3AddTo((xVec3*)&this->model->Mat->pos, &delta);
+
+                            if (!(this->tikiFlag & 1) &&
+                                this->nonTikiParent->baseType == eBaseTypeButton)
                             {
-                                zEntButton_Hold(uVar18, param_2, param_3, param_4, param_5, param_6,
-                                                param_7, param_8, this->nonTikiParent, 0x2000);
-                            }*/
+                                zEntButton_Hold((_zEntButton*)this->nonTikiParent, 0x2000);
+                            }
                         }
                     }
                 }
                 else
                 {
-                    pRVar7 = this->model->Mat;
-                    (pRVar7->pos).x =
-                        (pRVar7->pos).x + (this->parents[this->contactParent]->deltaPos).x;
-                    pRVar7 = this->model->Mat;
-                    (pRVar7->pos).z =
-                        (pRVar7->pos).z + (this->parents[this->contactParent]->deltaPos).z;
-                    if ((this->tikiFlag & 1) == 0)
+                    this->model->Mat = this->model->Mat;
+                    this->model->Mat->pos.x += this->parents[this->contactParent]->deltaPos.x;
+                    this->model->Mat->pos.z += this->parents[this->contactParent]->deltaPos.z;
+
+                    if (!(this->tikiFlag & 1))
                     {
-                        fVar1 = this->bound.box.box.lower.y;
-                        fVar2 = this->parents[this->contactParent]->bound.box.box.upper.y - fVar1;
-                        this->bound.box.box.lower.y = fVar1 + fVar2;
-                        this->bound.box.box.upper.y += fVar2;
-                        this->bound.sph.center.y = this->bound.sph.center.y + fVar2;
-                        pRVar7 = this->model->Mat;
-                        (pRVar7->pos).y = (pRVar7->pos).y + fVar2;
+                        xBound& parentBound = this->parents[this->contactParent]->bound;
+                        xBound& bound = this->bound;
+
+                        dy = parentBound.box.box.upper.y - bound.box.box.lower.y;
+                        bound.box.box.lower.y += dy;
+                        bound.box.box.upper.y += dy;
+                        bound.sph.center.y += dy;
+                        this->model->Mat->pos.y += dy;
                     }
                 }
-                xVec3Copy((xVec3*)&(this->model->Mat->at), &(this->lastAt));
-                if (this->isCulled == '\0')
+                xVec3Copy((xVec3*)&this->model->Mat->at, &this->lastAt);
+                if (!this->isCulled)
                 {
-                    //xVec3Sub(&fStack_64, *(globals._1796_4_ + 0x4c) + 0x30,
-                    //&(this->model->Mat->pos).x);
-                    local_60 = 0.0f;
-                    //dt = xVec3Length2(&fStack_64);
-                    if ((dt < 400.0f) && (this->isCulled == '\0')) //&&
-                    //(numTikisOnScreen = numTikisOnScreen + 1,
-                    // numTikisOnScreen == whichTikiToAnimate))
+                    xVec3Sub(&fStack_64, (xVec3*)&globals.player.ent.model->Mat->pos,
+                             (xVec3*)&((this->model)->Mat->pos));
+                    local_60 = 0.0099999998f;
+                    F32 dVar19 = xVec3Length2(&fStack_64);
+                    if (((dVar19 < 400.0f) && (!this->isCulled)) &&
+                        (numTikisOnScreen = numTikisOnScreen + 1,
+                         numTikisOnScreen == whichTikiToAnimate))
                     {
-                        this->tikiFlag = this->tikiFlag & 0xffffff3f;
+                        this->tikiFlag &= ~0xC0;
                     }
-                    /*if ((globals._7172_4_ != this) && (globals._7176_4_ != this))
+                    if ((globals.player.drv.odriver != this) && (globals.player.drv.driver != this))
                     {
-                        if ((1.0f < dt) && (dt < 400.0f))
+                        if ((1.0f < dVar19) && (dVar19 < 400.0f))
                         {
-                            xVec3AddScaled(0.2f / dt, &(this->model->Mat->at).x, &fStack_64);
-                            pRVar9 = &this->model->Mat->at;
-                            xVec3Normalize(&pRVar9->x, &pRVar9->x);
+                            xVec3AddScaled((xVec3*)&((this->model)->Mat->at), &fStack_64,
+                                           0.2f / dVar19);
+                            xVec3Normalize((xVec3*)&((this->model)->Mat->at),
+                                           (xVec3*)&((this->model)->Mat->at));
                         }
-                        if (((dt < @861) && (g_tmr_talkytiki < 0.0f)) &&
+                        if (((dVar19 < 100.0f) && (g_tmr_talkytiki < 0.0099999998f)) &&
                             ((this->tikiFlag & 0x300) == 0))
                         {
-                            zNPCCommon::ISeePlayer(&this->super_zNPCCommon);
-                            dt = xurand();
-                            g_tmr_talkytiki = 90.0f * 0.25f * (dt - 0.5f) + 90.0f;
+                            this->ISeePlayer();
+                            dVar19 = xurand();
+                            g_tmr_talkytiki = 90.0f * 0.25f * (dVar19 - 0.5f) + 90.0f;
                         }
-                    }*/
-                    pRVar7 = this->model->Mat;
-                    xVec3Cross((xVec3*)&pRVar7, (xVec3*)&(pRVar7->up), (xVec3*)&(pRVar7->at));
+                    }
+
+                    xVec3Cross((xVec3*)&((this->model)->Mat->right),
+                               (xVec3*)&((this->model)->Mat->up),
+                               (xVec3*)&((this->model)->Mat->at));
                 }
-                xVec3Copy((xVec3*)&(this->lastAt), (xVec3*)&(this->model->Mat->at));
-                pxVar6 = this->model;
-                dt = (pxVar6->Scale).x;
+                xVec3Copy(&this->lastAt, (xVec3*)&this->model->Mat->at);
+                dt = (this->model->Scale).x;
                 if (dt == 0.0f)
                 {
-                    xVec3Add((xVec3*)&this->bound.box.box.upper, (xVec3*)&(pxVar6->Mat->pos),
-                             (xVec3*)&this->origLocalBound.box.box.upper);
-                    xVec3Add(&this->bound.qcd.min, (xVec3*)&(this->model->Mat->pos),
-                             &this->origLocalBound.qcd.min);
-                    xVec3Add(&this->bound.box.box.upper, (xVec3*)&(this->model->Mat->pos),
-                             &this->origLocalBound.box.box.upper);
+                    // clang-format off
+                    xVec3Add(&this->bound.cyl.center, (xVec3*)&this->model->Mat->pos, &this->origLocalBound.cyl.center);
+                    xVec3Add(&this->bound.qcd.min, (xVec3*)&this->model->Mat->pos, &this->origLocalBound.qcd.min);
+                    xVec3Add(&this->bound.box.box.upper, (xVec3*)&this->model->Mat->pos, &this->origLocalBound.box.box.upper);
                 }
                 else
                 {
-                    /*xVec3SMul(dt, &fStack_70, &this->origLocalBound.sph.r);
-                    xVec3SMul((this->model->Scale).x, afStack_7c,
-                              &this->origLocalBound.qcd.min);
-                    xVec3SMul((this->model->Scale).x, &fStack_88,
-                              &this->origLocalBound.field_3);
-                    xVec3Add(&this->bound.sph.r, &(this->model->Mat->pos).x, &fStack_70);
-                    xVec3Add(&this->bound.qcd.min, &(this->model->Mat->pos).x, afStack_7c);
-                    xVec3Add(&this->bound.field_3, &(this->model->Mat->pos).x, &fStack_88);*/
-                    local_6c += 0.0001f;
-                    local_84 += 0.00005f;
+                    xVec3SMul(&fStack_70, &this->origLocalBound.cyl.center, dt);
+                    xVec3SMul(&afStack_7c, &this->origLocalBound.cyl.center, (this->model->Scale).x);
+                    xVec3SMul(&fStack_88, &this->origLocalBound.cyl.center, (this->model->Scale).x);
+                    xVec3Add(&fStack_70, &this->bound.cyl.center, (xVec3*)&(this->model->Mat->pos));
+                    xVec3Add(&afStack_7c, &this->bound.qcd.min, (xVec3*)&(this->model->Mat->pos));
+                    xVec3Add(&fStack_88, &this->bound.cyl.center, (xVec3*)&(this->model->Mat->pos));
+                    afStack_7c.x += 0.0001f;
+                    fStack_70.x += 0.00005f;
+                    // clang-format on
                 }
-                //xVec3Sub(&(this->deltaPos).x, &(this->model->Mat->pos).x, afStack_4c);
-                if (*&this->numChildren != '\0')
+
+                xVec3Sub(&this->deltaPos, (xVec3*)&this->model->Mat->pos, &afStack_4c);
+
+                if (this->numChildren != 0)
                 {
-                    uVar5 = 0;
-                    pzVar11 = this;
-                    do
+                    for (i = 0; i < 4; ++i)
                     {
-                        if (pzVar11->children[0] != 0x0)
+                        if (this->children[i])
                         {
-                            ParentUpdated(pzVar11->children[0]);
+                            this->ParentUpdated(this->children[i]);
                         }
-                        uVar5 = uVar5 + 1;
-                        //pzVar11 = pzVar11->baseType;
-                    } while (uVar5 < 4);
+                    }
                 }
+
                 this->updatedParents = 0;
-                pxVar10 = this->frame;
-                if (pxVar10 != 0x0)
+
+                if (this->frame)
                 {
-                    pxVar10->mode = 0x30000;
+                    this->frame->mode = 0x30000;
                 }
             }
         }
     }
-    return;
 }
 
 // WIP: unsure of what enum/constants toEvent uses, and no xrefs seem to show up
 S32 zNPCTiki::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
                        xBase* toParamWidget, S32* handled)
 {
-    if (toEvent == 0x54) // 84
+    *handled = FALSE;
+
+    switch (toEvent)
     {
+    case 0x32:
+    {
+        if ((this->tikiFlag & 0x300) != 0x200 && this->explosion && this->explosion->initCB)
+        {
+            this->explosion->initCB(this->explosion, this->model, 0, 0);
+        }
+
+        this->RemoveFromFamily();
+
+        if (this->SelfType() != NPC_TYPE_TIKI_LOVEY)
+        {
+            this->tikiFlag = (this->tikiFlag | 5) & ~8;
+            this->vel = 0.0f;
+            this->landHt = -1e38f;
+        }
+
+        *handled = TRUE;
+        break;
+    }
+
+    case 0x54:
         this->chkby = 0;
         *handled = TRUE;
-    }
-    else if (toEvent < 0x54)
+        break;
+
+    case 4:
+    case 0x56:
+    case 0x1F8:
+    case 0x1F9:
     {
-        if (toEvent == 0x32) // 50
+        if (toEvent == 0x56)
         {
-            // No
-            //if (((this->tikiFlag & 0x300) != 0x200) && this->explosion && this->explosion->shrap)
-            //{
-            //this->explosion->shrap->Emit(this->model, 0, 0);
-            //}
-
-            this->RemoveFromFamily();
-            //this->brain->Destroy(this);
-
-            if (((xNPCBasic*)this)->SelfType() != 'NTT1')
+            this->chkby = 0;
+            if ((this->tikiFlag & 0x300) != 0x200)
             {
-                this->tikiFlag |= 5;
-                this->tikiFlag &= ~8;
-                this->vel = 0.0f;
-                this->landHt = -9.9999997E+37f;
+                this->RestoreColFlags();
             }
-
-            *handled = TRUE;
         }
-        else if (toEvent == 4)
+
+        if (xEntIsVisible(this) && toParam)
         {
-            if (xEntIsVisible(this) && toParam && ((S32)(0.5f + *toParam) == 'M'))
+            S32 code = (S32)(0.5f + toParam[0]);
+            if (code == 'M')
             {
                 zFXPopOff(*this, toParam[1], toParam[2]);
             }
-
-            xEntHide(this);
-            *handled = TRUE;
         }
-        else if (toEvent == 3)
+
+        xEntHide(this);
+        *handled = TRUE;
+        break;
+    }
+
+    case 3:
+    case 0x1F7:
+    {
+        if ((this->tikiFlag & 0x300) != 0x200)
         {
-            if (((this->tikiFlag & 0x300) != 0x200))
+            xEntShow(this);
+
+            if (toParam)
             {
-                xEntShow(this);
-                if (toParam && ((S32)(0.5f + *toParam) == 'M'))
-                {
+                S32 code = (S32)(0.5f + toParam[0]);
+                if (code == 'M')
                     zFXPopOn(*this, toParam[1], toParam[2]);
-                }
             }
+        }
+
+        *handled = TRUE;
+        break;
+    }
+
+    default:
+        if (toEvent > 0x31 && toEvent <= 0x53 && (this->tikiFlag & 0x300) != 0x200)
+        {
+            this->RestoreColFlags();
             *handled = TRUE;
         }
-        else if (toEvent > 0x31 && toEvent <= 0x53) // 50–83
-        {
-            if ((this->tikiFlag & 0x300) != 0x200)
-            {
-                ((xNPCBasic*)this)->RestoreColFlags();
-            }
-            *handled = TRUE;
-        }
-    }
-    else if (toEvent == 0x56) // 86
-    {
-        this->chkby = 0;
-
-        if (xEntIsVisible(this) && toParam && ((S32)(0.5f + *toParam) == 'M'))
-        {
-            zFXPopOff(*this, toParam[1], toParam[2]);
-        }
-
-        xEntHide(this);
-        *handled = TRUE;
-    }
-    else if (toEvent < 0x56)
-    {
-        if ((this->tikiFlag & 0x300) != 0x200)
-        {
-            ((xNPCBasic*)this)->RestoreColFlags();
-            xEntShow(this);
-            if (toParam && ((S32)(0.5f + *toParam) == 'M'))
-            {
-                zFXPopOn(*this, toParam[1], toParam[2]);
-            }
-        }
-        *handled = TRUE;
-    }
-    else if (toEvent == 0x1F7) // 503
-    {
-        if ((this->tikiFlag & 0x300) != 0x200)
-        {
-            xEntShow(this);
-            if (toParam && ((S32)(0.5f + *toParam) == 'M'))
-            {
-                zFXPopOn(*this, toParam[1], toParam[2]);
-            }
-        }
-        *handled = TRUE;
-    }
-    else if (toEvent == 0x1F8 || toEvent == 0x1F9) // 504–505
-    {
-        if (xEntIsVisible(this) && toParam && ((S32)(0.5f + *toParam) == 'M'))
-        {
-            zFXPopOff(*this, toParam[1], toParam[2]);
-        }
-
-        xEntHide(this);
-        *handled = TRUE;
+        break;
     }
 
-    if (*handled == 0)
+    if (*handled)
+    {
+        return TRUE;
+    }
+    else
+    {
         return zNPCCommon::SysEvent(from, to, toEvent, toParam, toParamWidget, handled);
-
-    return TRUE;
+    }
 }
 
 void zNPCTiki::AddChild(zNPCTiki* child)
@@ -1041,7 +1135,7 @@ void zNPCTiki::RemoveChild(zNPCTiki* child)
     if (this->numChildren == 0)
         return;
 
-    while (this->children[i & 0xff] != child && (i & 0xff) < 4)
+    while (this->children[i & 0xff] != child && (i & 0xff) < sizeof(this->children[0]))
     {
         i++;
     }
@@ -1060,7 +1154,7 @@ void zNPCTiki::RemoveParent(zNPCTiki* parent)
     if (this->numParents == 0)
         return;
 
-    while (this->parents[i & 0xff] != parent && (i & 0xff) < 4)
+    while (this->parents[i & 0xff] != parent && (i & 0xff) < sizeof(this->parents[0]))
     {
         i++;
     }
@@ -1071,8 +1165,7 @@ void zNPCTiki::RemoveParent(zNPCTiki* parent)
         this->numParents--;
     }
 
-    // non-matching: https://decomp.me/scratch/E0dej
-    if ((i & 0xff) == this->contactParent)
+    if ((U8)i == this->contactParent)
     {
         this->contactParent = -1;
         this->tikiFlag |= 1;
@@ -1081,9 +1174,167 @@ void zNPCTiki::RemoveParent(zNPCTiki* parent)
     this->tikiFlag |= 4;
 }
 
+// WIP
 void zNPCTiki::FindParents(zScene* zsc)
 {
-    return;
+    xCollis c = {
+        0b00000100, // flags
+        0, // oid
+        NULL, // optr
+        NULL, // mptr
+        0.0f, // dist
+        { 0.0f, 0.0f, 0.0f }, // norm
+        { 0.0f, 0.0f, 0.0f }, // tohit
+        { 0.0f, 0.0f, 0.0f }, // depen
+        { 0.0f, 0.0f, 0.0f }, // hdng
+        { 0.0f, 0.0f, 0.0f } // union tuv/tri
+    };
+    xRay3 ray;
+
+    zSurfaceProps* prop;
+    F32 oldLower;
+    F32 oldUpper;
+    S32 i;
+    xNPCBasic* npc;
+    zNPCTiki* tiki;
+    U8 couldBe;
+
+    xVec3Copy(&ray.origin, (xVec3*)&((this->model)->Mat->pos));
+    ray.dir.x = 0.0f;
+    ray.dir.y = -1.0f;
+    ray.dir.z = 0.0f;
+    ray.min_t = 0.0f;
+    ray.max_t = 300.0f;
+    ray.flags = 0xc00;
+
+    this->tikiFlag &= ~0x2;
+
+    xRayHitsTikiLandableScene(globals.sceneCur, &ray, &c);
+
+    if ((c.flags & 1) == 0)
+    {
+        this->landHt = FLOAT_MIN;
+    }
+    else
+    {
+        if (c.optr != NULL)
+        {
+            this->nonTikiParent = (xEnt*)c.optr;
+
+            xVec3Sub(&ray.origin, &ray.origin, (xVec3*)&((xEnt*)c.optr)->model->Mat->pos);
+            F32 dist = ray.max_t - c.dist;
+
+            if (zGooIs(this->nonTikiParent, oldLower, 0))
+                this->tikiFlag |= 2;
+
+            xSurface* surf = zSurfaceGetSurface(&c);
+            if (surf != NULL && surf->state == '\0' && surf->moprops != NULL)
+            {
+                if (((U32*)surf->moprops)[0] != 0 && ((U32*)surf->moprops)[2] != 0)
+                    this->tikiFlag |= 2;
+            }
+
+            this->nonTikiParentDisp.x =
+                xVec3Dot(&ray.origin, (xVec3*)&this->nonTikiParent->model->Mat->right);
+            this->nonTikiParentDisp.y =
+                xVec3Dot(&ray.origin, (xVec3*)&this->nonTikiParent->model->Mat->up);
+            this->nonTikiParentDisp.z =
+                xVec3Dot(&ray.origin, (xVec3*)&this->nonTikiParent->model->Mat->at);
+
+            F32 mag2 = xVec3Length2((xVec3*)&this->nonTikiParent->model->Mat->right);
+            if (mag2 > 0.00001f)
+            {
+                xVec3SMulBy(&this->nonTikiParentDisp, 1.0f / mag2);
+            }
+        }
+        else
+        {
+            this->nonTikiParent = NULL;
+            xVec3Init(&this->nonTikiParentDisp, 0.0f, 0.0f, 0.0f);
+        }
+
+        this->landHt = ray.origin.y - c.dist;
+    }
+
+    if ((this->tikiFlag & 0x20) != 0)
+    {
+        oldUpper = this->bound.box.box.lower.y;
+        oldLower = this->bound.box.box.upper.y;
+        this->bound.box.box.lower.y *= 0.5f;
+        F32 temp = this->bound.box.box.lower.y + this->bound.box.box.upper.y * 0.5f;
+        this->bound.box.box.lower.y = temp;
+        this->bound.box.box.upper.y = (temp + oldLower) - oldUpper;
+    }
+
+    i = 0;
+    if (zsc->num_npcs != 0)
+    {
+        for (S32 idx = 0; i < zsc->num_npcs; i++, idx += 4)
+        {
+            tiki = (zNPCTiki*)&(*zsc->npcs[idx]);
+
+            bool validParent = true;
+            if (tiki == this || (tiki->myNPCType & ~0xFF) != NPC_TYPE_TIKI_WOOD ||
+                (tiki->tikiFlag & 0x300) != 0 || (tiki->tikiFlag & 0x10) != 0 ||
+                (this->landHt + 0.1f > tiki->bound.box.box.upper.y) ||
+                (this->bound.box.box.lower.x + 0.1f > tiki->bound.box.box.upper.x) ||
+                (this->bound.box.box.lower.z + 0.1f > tiki->bound.box.box.upper.z))
+            {
+                validParent = false;
+            }
+
+            zNPCTiki* cur = this;
+            for (S32 couldBe = 0; couldBe < 4; ++couldBe)
+            {
+                zNPCTiki* p = cur->parents[0];
+                if (p == tiki)
+                {
+                    validParent = false;
+                    break;
+                }
+
+                if (p && this->landHt < p->bound.box.box.upper.y)
+                {
+                    p->RemoveChild(this);
+                    cur->parents[0] = NULL;
+                    this->numParents--;
+                    if (couldBe == this->contactParent)
+                    {
+                        this->contactParent = -1;
+                        this->tikiFlag |= 1;
+                    }
+                }
+
+                cur = (zNPCTiki*)&(cur->nextprod);
+            }
+
+            if (validParent && tiki->numChildren < 4 && this->numParents < 4)
+            {
+                for (U8 i = 0; this->parents[i & 0xff] != NULL; i++)
+                    ;
+                this->parents[i & 0xff] = tiki;
+                tiki->AddChild(this);
+                this->numParents++;
+            }
+        }
+    }
+
+    if ((this->tikiFlag & 0x20) != 0)
+    {
+        this->bound.box.box.upper.y = oldUpper;
+        this->bound.box.box.lower.y = oldLower;
+        this->tikiFlag &= ~0x20;
+    }
+
+    if (this->numParents == 0)
+    {
+        this->tikiFlag |= 1;
+    }
+    else
+    {
+        this->tikiFlag &= ~0x2;
+        this->nonTikiParent = NULL;
+    }
 }
 
 void zNPCTiki::ParentUpdated(zNPCTiki* parent)
@@ -1098,26 +1349,29 @@ void zNPCTiki::ParentUpdated(zNPCTiki* parent)
     }
 }
 
+// Regswap
 void zNPCTiki::RemoveFromFamily()
 {
     U8 i;
 
-    for (i = 0; i < 4; i++)
+    for (i = 0; i < sizeof(this->parents[0]); i++)
     {
-        if (this->parents[i] != NULL)
+        zNPCTiki* temp = this->parents[i];
+        if (temp != NULL)
         {
-            RemoveChild(this->parents[i]);
+            this->RemoveChild(temp);
             this->parents[i] = NULL;
         }
     }
     this->numParents = 0;
     this->contactParent = -1;
 
-    for (i = 0; i < 4; i++)
+    for (i = 0; i < sizeof(this->children[0]); i++)
     {
-        if (this->children[i] != NULL)
+        zNPCTiki* temp = this->children[i];
+        if (temp != NULL)
         {
-            RemoveParent(this->children[i]);
+            this->RemoveParent(temp);
             this->children[i] = NULL;
         }
     }
@@ -1127,49 +1381,331 @@ void zNPCTiki::RemoveFromFamily()
     xVec3Init(&this->nonTikiParentDisp, 0.0f, 0.0f, 0.0f);
 }
 
-void loveyFloat(zNPCTiki* tiki, F32 dt)
+// Incomplete data
+static void loveyFloat(zNPCTiki* tiki, F32 dt)
 {
-    F32 unk_float;
-    xVec3* unk_vec = NULL;
+    xVec3 up_vec;
 
-    xVec3Init(unk_vec, 0.0f, 1.0f, 0.0f);
-    unk_float = 0.2f * icos(4.0f * tiki->t1);
+    xVec3Init(&up_vec, 0.0f, 1.0f, 0.0f);
+
+    F32 amplitude = icos(tiki->t1 * 4.0f) * 0.2f;
+
     xVec3Copy((xVec3*)&tiki->model->Mat->pos, &tiki->v1);
-    xVec3AddScaled((xVec3*)&tiki->model->Mat->pos, unk_vec, unk_float);
+    xVec3AddScaled((xVec3*)&tiki->model->Mat->pos, &up_vec, amplitude);
+
     tiki->t1 += dt;
-    if (6.2831855f < tiki->t1)
+    if (tiki->t1 > 6.2831855f)
     {
         tiki->t1 -= 6.2831855f;
     }
+
     tiki->t2 += 0.25f;
-    if (0.2501f < tiki->t2)
+    if (tiki->t2 > 0.2501f)
     {
         tiki->t2 = -0.25f;
         tiki->t3 += 0.25f;
-        if (0.2501f < tiki->t3)
+        if (tiki->t3 > 0.2501f)
         {
             tiki->t3 = -0.25f;
         }
     }
-    return;
 }
 
-S32 loveyIdleCB(xGoal*, void*, enum en_trantype*, F32, void*);
-S32 loveyPatrolCB(xGoal*, void*, enum en_trantype*, F32, void*);
-S32 quietIdleCB(xGoal*, void*, enum en_trantype*, F32, void*);
-S32 quietHideCB(xGoal*, void*, enum en_trantype*, F32, void*);
-S32 thunderIdleCB(xGoal*, void*, enum en_trantype*, F32, void*);
-S32 thunderCountCB(xGoal*, void*, enum en_trantype*, F32, void*);
+static S32 loveyIdleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
+{
+    zNPCTiki* tiki = (zNPCTiki*)rawgoal->GetOwner();
+    zNPCGoalTikiIdle* goal = (zNPCGoalTikiIdle*)rawgoal;
+    S32 nextgoal = 0;
 
-// very close, but there are some float order issues
+    if (tiki->nav_curr != NULL)
+    {
+        goal->tmr_wait = MAX(-1.0f, goal->tmr_wait - dt);
+
+        if (tiki->npcset.allowPatrol != 0 && (goal->tmr_wait < 0.0f || tiki->nav_curr->on == NULL))
+        {
+            tiki->MvptCycle();
+
+            if (tiki->nav_dest != NULL)
+            {
+                nextgoal = NPC_GOAL_TIKIPATROL;
+                *trantype = GOAL_TRAN_SET;
+            }
+            else
+            {
+                goal->tmr_wait = zMovePointGetDelay(tiki->nav_curr);
+            }
+        }
+    }
+
+    loveyFloat(tiki, dt);
+
+    return nextgoal;
+}
+
+static S32 loveyPatrolCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
+{
+    zNPCTiki* tiki;
+    S32 nextgoal;
+    F32 dVar2;
+    xVec3 afStack_38;
+
+    tiki = (zNPCTiki*)rawgoal->GetOwner();
+    zNPCGoalTikiPatrol* cur_goal = (zNPCGoalTikiPatrol*)rawgoal;
+    nextgoal = 0;
+    xVec3AddScaled(&(tiki->v1), &cur_goal->vel, dt);
+    xVec3Sub(&afStack_38, &cur_goal->dest_pos, &(tiki->v1));
+    dVar2 = xVec3Dot(&afStack_38, &cur_goal->vel);
+    if (dVar2 < 0.0f)
+    {
+        xVec3Copy(&(tiki->v1), &cur_goal->dest_pos);
+        *trantype = GOAL_TRAN_SET;
+        nextgoal = NPC_GOAL_TIKIIDLE;
+    }
+    loveyFloat(tiki, dt);
+    return nextgoal;
+}
+
+static S32 quietIdleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
+{
+    zNPCTiki* tiki = (zNPCTiki*)rawgoal->GetOwner();
+    zNPCGoalTikiIdle* goal = (zNPCGoalTikiIdle*)rawgoal;
+    S32 nextgoal = 0;
+    xVec3 tmp;
+
+    xVec3Sub(&tmp, (xVec3*)&tiki->model->Mat->pos, (xVec3*)&globals.player.ent.model->Mat->pos);
+    F32 scale = xVec3Length2(&tmp);
+
+    // non-matching:
+    bool notSneaking =
+        !(globals.player.Speed > 1 || globals.player.ent.model == globals.player.model_sandy ||
+          globals.player.ent.model != globals.player.model_patrick);
+
+    if (scale < 25.0f && notSneaking)
+    {
+        nextgoal = NPC_GOAL_TIKIHIDE;
+        *trantype = GOAL_TRAN_SET;
+    }
+    else
+    {
+        if (scale < 50.0f && notSneaking)
+        {
+            tiki->tikiFlag &= ~0xC0;
+        }
+        scale = tiki->model->Scale.x;
+        if (scale != 0.0f)
+        {
+            scale = 0.75f * dt + scale;
+            xEntShow(tiki);
+            tiki->RestoreColFlags();
+            if (scale > 1.0f)
+            {
+                tiki->model->Scale.x = tiki->model->Scale.y = tiki->model->Scale.z = 0.0f;
+            }
+            else
+            {
+                tiki->model->Scale.x = tiki->model->Scale.y = tiki->model->Scale.z = scale;
+            }
+        }
+    }
+
+    return nextgoal;
+}
+
+// Regswap, incomplete data
+static S32 quietHideCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
+{
+    zNPCTiki* tiki = (zNPCTiki*)rawgoal->GetOwner();
+    S32 nextgoal = 0;
+    xVec3 tmp;
+
+    xVec3Sub(&tmp, (xVec3*)&tiki->model->Mat->pos, (xVec3*)&globals.player.ent.model->Mat->pos);
+    F32 scale = xVec3Length2(&tmp);
+
+    if (scale > 25.0f)
+    {
+        *trantype = GOAL_TRAN_SET;
+        nextgoal = NPC_GOAL_TIKIIDLE;
+    }
+    else
+    {
+        // Regswap
+        if (tiki->model->Scale.x == 0.0f)
+        {
+            tiki->model->Scale.x = tiki->model->Scale.y = tiki->model->Scale.z = 1.0f;
+        }
+
+        scale = tiki->model->Scale.x - 2.0f * dt;
+        if (scale < 0.00001f)
+        {
+            scale = 0.00001f;
+            xEntHide(tiki);
+            tiki->RestoreColFlags();
+        }
+
+        tiki->model->Scale.x = tiki->model->Scale.y = tiki->model->Scale.z = scale;
+    }
+
+    return nextgoal;
+}
+
+// WIP
+static S32 thunderIdleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
+{
+    zNPCTiki* tiki = (zNPCTiki*)rawgoal->GetOwner();
+    zNPCGoalTikiIdle* goal = (zNPCGoalTikiIdle*)rawgoal;
+    S32 nextgoal = 0;
+    F32 f;
+
+    tiki->t1 = -0.75f * dt + tiki->t1;
+    if (tiki->t1 < 0.0f)
+    {
+        tiki->t1 += 1.0f;
+    }
+
+    f = tiki->t1;
+    f = (f * f + 1.0f) - f;
+    tiki->model->RedMultiplier = f;
+    tiki->model->GreenMultiplier = f;
+    tiki->model->BlueMultiplier = f;
+
+    goal->tmr_wait -= dt;
+    if (goal->tmr_wait < 0.0f)
+    {
+        xVec3 vec;
+        xVec3Sub(&vec, (xVec3*)&tiki->model->Mat->pos, &globals.player.ent.model->Scale);
+
+        F32 dist2 = xVec3Length2(&vec);
+
+        F32 max_dist = globals.player.SlideTrackSliding + 0.91400003f;
+
+        if (dist2 < max_dist * max_dist)
+        {
+            if ((globals.player.RootUpTarget.x) == 0)
+            {
+                tiki->t1 = 0.0f;
+                nextgoal = NPC_GOAL_TIKICOUNT;
+                *trantype = GOAL_TRAN_SET;
+            }
+            else
+            {
+                tiki->Damage(DMGTYP_SIDE, 0, 0);
+            }
+        }
+    }
+
+    return nextgoal;
+}
+
+// WIP
+static S32 thunderCountCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
+{
+    F32 gfactor;
+    F32 factor;
+    xVec3 sPos;
+    xVec3 ePos;
+    F32 hght;
+
+    zNPCTiki* tiki = (zNPCTiki*)rawgoal->GetOwner();
+    zNPCGoalTikiCount* goal = (zNPCGoalTikiCount*)rawgoal;
+    S32 nextgoal = 0;
+
+    factor = goal->tmr_count - dt;
+    gfactor = -1.0f;
+    if (factor >= -1.0f)
+    {
+        gfactor = factor;
+    }
+    goal->tmr_count = gfactor;
+
+    if (gfactor < 0.0f)
+    {
+        *trantype = GOAL_TRAN_SET;
+        nextgoal = NPC_GOAL_TIKIDYING;
+    }
+
+    factor = -1.0f / ((tiki->collis->chk) + 1.0f) + 1.0f;
+    gfactor = (factor * 8.0f - factor * 8.0f) * 0.75f + 0.25f;
+
+    if (tiki->gridb.data == NULL && globals.player.carry.grabbed == tiki)
+    {
+        *((F32*)tiki->gridb.data) = 1.0f;
+        S32 tmpChk = tiki->collis->chk;
+        tmpChk += 3;
+        tiki->collis->chk = tmpChk;
+    }
+
+    tiki->model->RedMultiplier = gfactor;
+    tiki->model->BlueMultiplier = 1.0f - gfactor;
+    tiki->model->GreenMultiplier = (factor - factor) * 0.75f + 0.25f;
+
+    tiki->tikiFlag &= ~0xC0;
+
+    hght = tiki->t1 - dt;
+    tiki->t1 = hght;
+
+    if (hght < 0.0f)
+    {
+        hght = xurand();
+        (tiki->t1) = hght * 0.5f + 0.9f;
+
+        if ((xrand() & 7) == 0)
+        {
+            tiki->t1 = 0.2f;
+        }
+
+        xVec3Copy((xVec3*)&sPos, (xVec3*)&tiki->model->Mat->pos);
+        sPos.y += 2.6f;
+        sPos.x += (tiki->t2);
+        sPos.z += (tiki->t3);
+
+        xVec3Copy((xVec3*)&ePos, (xVec3*)&tiki->model->Mat->pos);
+
+        hght = xurand();
+        ePos.y += hght;
+
+        gfactor = xurand();
+        ePos.x += (1.0f - hght) * (gfactor - 0.5f);
+
+        gfactor = xurand();
+        ePos.z += (1.0f - hght) * (gfactor - 0.5f);
+
+        sThunderLightningInfo.start = &sPos;
+        sThunderLightningInfo.end = &ePos;
+
+        zLightningAdd(&sThunderLightningInfo);
+        tiki->SndPlayRandom(NPC_STYP_TIKITHUNDER);
+    }
+
+    xVec3Copy((xVec3*)&thunderEmitterInfo.pos, (xVec3*)&tiki->model->Mat->pos);
+    thunderEmitterInfo.pos.y += 3.0f;
+    thunderEmitterInfo.pos.x += tiki->t2;
+    thunderEmitterInfo.pos.z += tiki->t3;
+    xParEmitterEmitCustom(cloudEmitter, 1.0f / 60, &thunderEmitterInfo);
+
+    tiki->t2 += 0.25f;
+    if (tiki->t2 > 0.5001f)
+    {
+        tiki->t2 = 0.5001f;
+
+        tiki->t3 += 0.25f;
+        if (tiki->t3 > 0.5001f)
+        {
+            tiki->t3 = 0.5001f;
+        }
+    }
+
+    return nextgoal;
+}
+
 static S32 tikiDyingCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 {
+    rawgoal->GetOwner();
+    zNPCGoalTikiDying* goal = (zNPCGoalTikiDying*)rawgoal;
     S32 nextgoal = 0;
-    zNPCGoalTikiDying* goal = (zNPCGoalTikiDying*)rawgoal->GetOwner();
 
-    goal->tmr_dying = (-1 > goal->tmr_dying - dt) ? -1 : goal->tmr_dying - dt;
+    goal->tmr_dying = (-1.0f > goal->tmr_dying - dt) ? -1.0f : goal->tmr_dying - dt;
 
-    if (goal->tmr_dying < 0)
+    if (goal->tmr_dying < 0.0f)
     {
         *trantype = GOAL_TRAN_SET;
         nextgoal = NPC_GOAL_TIKIDEAD;
@@ -1184,6 +1720,7 @@ static S32 tikiDeadCB(xGoal* rawgoal, void*, en_trantype*, F32, void*)
     return 0;
 }
 
+// Incomplete data
 static void genericTikiRender(xEnt* ent)
 {
     if (!ent->model || !xEntIsVisible(ent))
@@ -1225,19 +1762,11 @@ static void genericTikiRender(xEnt* ent)
 // WIP
 static void loveyTikiRender(xEnt* ent)
 {
-    xModelInstance* model;
-    F32 factor;
     xShadowCache cache;
     xVec3 center;
-    S32 shadowResult;
-    S32 alphaTooLow;
-    xVec3 shadVec;
-    F32 dot;
-    xModelInstance* curr;
+    xModelInstance* model = ent->model;
 
-    model = ent->model;
-
-    if (model == (xModelInstance*)0x0)
+    if (model == NULL)
         return;
 
     if (xEntIsVisible(ent) == 0)
@@ -1246,134 +1775,84 @@ static void loveyTikiRender(xEnt* ent)
     if ((model->Flags & 0x400) != 0)
         return;
 
-    xVec3Sub(&shadVec, &globals.player.ent.bound.mat->at, (xVec3*)&(model->Mat->pos));
+    xVec3 shadVec;
+    S32 nextgoal = 0;
 
-    factor = 1.0f - xVec3Length2(&shadVec) / 25.0f;
+    xVec3Sub(&shadVec, (xVec3*)&globals.player.ent.model->Mat->pos, (xVec3*)&model->Mat->pos);
+    shadVec.y = 0.0f;
+    F32 factor = 1.0f - xVec3Length2(&shadVec) / 25.0f;
 
-    if (gCurrentPlayer != 0)
+    if (gCurrentPlayer != eCurrentPlayerSpongeBob)
     {
         factor = -1.0f;
     }
 
-    shadowResult = 0;
-    if (0.0f < factor)
-    {
-        if (1.0f < factor)
-        {
-            factor = 1.0f;
-        }
+    cache.polyCount = 0;
 
-        xVec3Copy(&center, (xVec3*)&(ent->model->Mat->pos));
+    if (factor > 0.0f)
+    {
+        if (factor > 1.0f)
+            factor = 1.0f;
+
+        xVec3Copy(&center, (xVec3*)&model->Mat->pos);
+        center.y += sLoveyIconOffset;
 
         NPCC_RenderProjTextureFaceCamera(sHelmetRast, factor, &center, 0.7f,
-                                         sLoveyIconDist + sLoveyIconOffset, NULL, 1, ent);
+                                         sLoveyIconDist + sLoveyIconOffset, &cache, 1, ent);
     }
 
-    alphaTooLow = 0;
+    S32 alphaTooLow = 0;
 
     center.x = model->Mat->pos.x;
     center.y = model->Mat->pos.y - 10.0f;
     center.z = model->Mat->pos.z;
 
-    shadowResult = iModelCullPlusShadow(model->Data, model->Mat, &center, &alphaTooLow);
+    S32 shadowResult = iModelCullPlusShadow(model->Data, model->Mat, &center, &alphaTooLow);
 
     if (shadowResult == 0)
     {
-        dot = 2.0f;
+        F32 dot = 2.0f;
         if ((globals.player.ControlOff & 0x23f3) == 0)
         {
-            xVec3Sub(&shadVec, &(ent->bound).qcd.min, &globals.camera.mat.pos);
+            xVec3Sub(&shadVec, &(ent->bound).cyl.center, &globals.camera.mat.pos);
             dot = xVec3Dot(&shadVec, &globals.camera.mat.at);
         }
 
         if (dot < 1.5f)
         {
-            model->Alpha = -(3.0f * globals.update_dt - model->Alpha);
+            model->Alpha -= 3.0f * globals.update_dt;
             if (model->Alpha < 0.0f)
             {
                 model->Alpha = 0.0f;
+                // non-matching:
                 alphaTooLow = 1;
             }
         }
         else
         {
-            model->Alpha = 3.0f * globals.update_dt + model->Alpha;
-            if (1.0f < model->Alpha)
+            model->Alpha += 3.0f * globals.update_dt;
+            if (model->Alpha > 1.0f)
             {
                 model->Alpha = 1.0f;
             }
         }
 
-        for (curr = model->Next; curr != NULL; curr = curr->Next)
+        for (xModelInstance* curr = model->Next; curr != NULL; curr = curr->Next)
         {
             curr->Alpha = model->Alpha;
         }
 
+        // non-matching:
         if (alphaTooLow)
+        {
             return;
+        }
 
-        xModelRender(model->Next);
+        xModelRender(model);
     }
 
-    if (((factor < 0.5f) || (shadowResult == 0)) && (alphaTooLow == 0))
+    if ((factor < 0.5f || cache.polyCount == 0) && alphaTooLow == 0)
     {
         xShadowSimple_Add(ent->simpShadow, ent, 0.667f, 1.0f);
     }
-
-    return;
-}
-
-// .text (d8)
-
-zNPCTiki::zNPCTiki(S32 myType) : zNPCCommon(myType)
-{
-}
-
-S32 zNPCTiki::CanRope()
-{
-    return 1;
-}
-
-U32 zNPCTiki::AnimPick(int, en_NPC_GOAL_SPOT, xGoal*)
-{
-    return xStrHash("Idle");
-}
-
-void zNPCTiki::Move(xScene* xscn, F32 dt, xEntFrame*)
-{
-}
-
-void zNPCTiki::BUpdate(xVec3* pos)
-{
-    xEntDefaultBoundUpdate(this, pos);
-}
-
-S32 zNPCTiki::IsAlive()
-{
-    return (0x200 - (tikiFlag & 0x300) | (tikiFlag & 0x300) - 0x200) >> 0x1f;
-}
-
-U8 zNPCTiki::ColChkFlags() const
-{
-    return 0;
-}
-
-U8 zNPCTiki::ColPenFlags() const
-{
-    return 0;
-}
-
-U8 zNPCTiki::ColChkByFlags() const
-{
-    return 24;
-}
-
-U8 zNPCTiki::ColPenByFlags() const
-{
-    return 24;
-}
-
-U8 zNPCTiki::PhysicsFlags() const
-{
-    return 0;
 }
