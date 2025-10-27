@@ -1,12 +1,13 @@
 #include "xMovePoint.h"
 
+#include "xMathInlines.h"
 #include <types.h>
 
 #include "xMath.h"
 #include "xScene.h"
 #include "xMemMgr.h"
 
-F32 xVec3Hdng(xVec3* a, const xVec3* b, const xVec3* c);
+inline F32 xVec3Hdng(xVec3* a, const xVec3* b, const xVec3* c);
 
 void xMovePointInit(xMovePoint* ent, xMovePointAsset* asset)
 {
@@ -106,33 +107,29 @@ void xMovePointSplineSetup(xMovePoint* m)
     xSpline3_ArcInit(m->spl, 20);
 }
 
-// If you uncomment the numPoints variable then this function is a perfect match
-// minus ordering. In the original assembly some variable fetches are lifted to
-// places earlier in the assembly listing than what this comiles to for some
-// reason.
-// The r27-30 registers used to hold the main varibles of the function are all
-// perfect matches with this code.
-extern float xMovePoint_float_0;
-F32 xMovePointGetNext(xMovePoint* m, xMovePoint* prev, xMovePoint** next, xVec3* hdng)
+// Scratch: https://decomp.me/scratch/JFBBX
+F32 xMovePointGetNext(const xMovePoint* m, const xMovePoint* prev, xMovePoint** next, xVec3* hdng)
 {
     if (m->asset->numPoints < 1)
     {
         *next = NULL;
-        return xMovePoint_float_0;
+        return 0.0f;
     }
 
     xMovePoint* previousOption = NULL;
 
-    S32 rnd = xrand() % m->node_wt_sum;
+    xMovePoint** n;
+    xMovePointAsset* a;
+    S32 rnd;
 
-    // The debug symbols don't show a dedicated numPoints var, but if it isn't
-    // present, then getting numPoints isn't lifted outside of the loop, which
-    // it is in the original assembly.
-    U16 numPoints = m->asset->numPoints;
+    rnd = xrand() % m->node_wt_sum;
 
-    for (U16 idx = 0; idx < m->asset->numPoints; ++idx)
+    n = m->nodes;
+    a = m->asset;
+
+    for (U16 idx = 0; idx < a->numPoints; idx++)
     {
-        *next = m->nodes[idx];
+        *next = n[idx];
         rnd -= (*next)->asset->wt;
         if ((*next)->on == 0)
         {
@@ -160,7 +157,7 @@ F32 xMovePointGetNext(xMovePoint* m, xMovePoint* prev, xMovePoint** next, xVec3*
         }
         else
         {
-            return xMovePoint_float_0;
+            return 0.0f;
         }
     }
 
@@ -170,11 +167,46 @@ F32 xMovePointGetNext(xMovePoint* m, xMovePoint* prev, xMovePoint** next, xVec3*
     }
     else
     {
-        return xMovePoint_float_0;
+        return 0.0f;
     }
 }
 
 xVec3* xMovePointGetPos(const xMovePoint* m)
 {
     return m->pos;
+}
+
+inline F32 xVec3Hdng(xVec3* a, const xVec3* b, const xVec3* c)
+{
+    F32 dx = c->x - b->x;
+    F32 dy = c->y - b->y;
+    F32 dz = c->z - b->z;
+    F32 len2 = dx * dx + dy * dy + dz * dz;
+    F32 len, invLen, ret;
+
+    if (xeq(len2, 1.0f, 0.00001f))
+    {
+        a->x = dx;
+        a->y = dy;
+        a->z = dz;
+        ret = 1.0f;
+    }
+    else if (xeq(len2, 0.0f, 0.00001f))
+    {
+        a->x = 0.0f;
+        a->y = 1.0f;
+        a->z = 0.0f;
+        ret = 0.0f;
+    }
+    else
+    {
+        len = xsqrt(len2);
+        invLen = 1.0f / len;
+        a->x = dx * invLen;
+        a->y = dy * invLen;
+        a->z = dz * invLen;
+        ret = len;
+    }
+
+    return ret;
 }

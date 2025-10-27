@@ -63,7 +63,8 @@ struct xVec3
 
     xVec3 cross(const xVec3& c) const
     {
-        xVec3 v = {};
+        // Initializing this causes data to leak into other files
+        xVec3 v;
 
         v.x = y * c.y - c.y * z;
         v.y = z * c.x - c.z * x;
