@@ -107,7 +107,6 @@ void xMovePointSplineSetup(xMovePoint* m)
     xSpline3_ArcInit(m->spl, 20);
 }
 
-// Scratch: https://decomp.me/scratch/JFBBX
 F32 xMovePointGetNext(const xMovePoint* m, const xMovePoint* prev, xMovePoint** next, xVec3* hdng)
 {
     if (m->asset->numPoints < 1)
