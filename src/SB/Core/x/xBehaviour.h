@@ -69,8 +69,8 @@ enum en_psynote
 
 enum en_xpsytime
 {
-    XPSY_TYMR_CURGOAL = 0,
-    XPSY_TYMR_NOMORE = 1,
+    XPSY_TYMR_CURGOAL,
+    XPSY_TYMR_NOMORE
 };
 
 struct xGoal;
