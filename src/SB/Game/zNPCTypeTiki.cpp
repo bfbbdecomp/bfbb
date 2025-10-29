@@ -1605,15 +1605,13 @@ static S32 thunderCountCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, 
         nextgoal = NPC_GOAL_TIKIDYING;
     }
 
-    factor = -1.0f / ((goal->tmr_count) + 1.0f) + 1.0f;
-
     if (goal->beingCarried == FALSE && globals.player.carry.grabbed == tiki)
     {
         goal->beingCarried = TRUE;
         goal->tmr_count += 3.0f;
     }
 
-    // 8.0f needs to be after 3.0f for .sdata2 to match
+    factor = -1.0f / ((goal->tmr_count) + 1.0f) + 1.0f;
     gfactor = (factor * 8.0f - factor * 8.0f) * 0.75f + 0.25f;
 
     tiki->model->RedMultiplier = gfactor;
