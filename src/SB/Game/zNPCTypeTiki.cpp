@@ -1544,7 +1544,7 @@ static S32 thunderIdleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, v
     S32 nextgoal = 0;
     F32 f;
 
-    tiki->t1 = -(0.75f * dt + tiki->t1);
+    tiki->t1 = -(0.75f * dt - tiki->t1);
     if (tiki->t1 < 0.0f)
     {
         tiki->t1 += 1.0f;
@@ -1647,7 +1647,7 @@ static S32 thunderCountCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, 
         ePos.y += hght;
 
         gfactor = xurand();
-        ePos.x += (1.0f - hght) * (gfactor - 0.5f);
+        ePos.x += (gfactor - 0.5f) * (1.0f - hght);
 
         gfactor = xurand();
         ePos.z += (1.0f - hght) * (gfactor - 0.5f);
