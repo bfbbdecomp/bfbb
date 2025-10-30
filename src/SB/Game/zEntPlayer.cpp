@@ -212,6 +212,9 @@ static F32 sBubbleBowlTimer;
 static U32 sSpatulaGrabbed;
 S32 gWaitingToAutoSave;
 
+xMat4x3 sCameraLastMat;
+xVec3 sDriveVel;
+
 static enum {
     WallJumpResult_NoJump,
     WallJumpResult_Jump,
@@ -4014,8 +4017,6 @@ void zEntPlayer_GiveLevelPickupCurrentLevel(S32 quantity)
     }
 }
 
-xVec3 sDriveVel;
-
 void zEntPlayerJumpAddDriver(xEnt* ent)
 {
     if (sDriveVel.y > 0.0f)
@@ -4050,8 +4051,6 @@ xVec3* GetPosVec(xBase* base)
 
     return vec;
 }
-
-xMat4x3 sCameraLastMat;
 
 void zEntPlayer_StoreCheckPoint(xVec3* pos, F32 rot, U32 initCamID)
 {
