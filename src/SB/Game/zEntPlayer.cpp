@@ -6830,11 +6830,7 @@ static void dampen_velocity(xVec3& v1, const xVec3& v2, F32 f)
 {
 	F32 f0 = v1.x * v2.x;
 
-	S32 v1_old[3];
-
-	v1_old[0] = *(S32*)(&v1.x);
-	v1_old[1] = *(S32*)(&v1.y);
-	v1_old[2] = *(S32*)(&v1.z);
+	xVec3 v1_old = v1;
 
 	F32 f3 = v2.y;
 	F32 f4 = -((f * f0) - v1.x);
@@ -6849,7 +6845,7 @@ static void dampen_velocity(xVec3& v1, const xVec3& v2, F32 f)
 	f0 = f3 * v2.z;
 	v1.z = -((f * f0) - f3);
 
-	S32 oldV1Neg = (*(F32*)(&v1_old[0]) < 0.0f) ? 1 : 0;
+	S32 oldV1Neg = (v1_old.x < 0.0f) ? 1 : 0;
 	S32 newV1Neg = (v1.x < 0.0f) ? 1 : 0;
 
 	if (newV1Neg != oldV1Neg)
@@ -6857,18 +6853,18 @@ static void dampen_velocity(xVec3& v1, const xVec3& v2, F32 f)
 		v1.x = 0.0f;
 	}
 
-	newV1Neg = (*(F32*)(&v1_old[1]) < 0.0f) ? 1 : 0;
-	oldV1Neg = (v1.y < 0.0f) ? 1 : 0;
+    oldV1Neg = (v1_old.y < 0.0f) ? 1 : 0;
+	newV1Neg = (v1.y < 0.0f) ? 1 : 0;
 
-	if (oldV1Neg != newV1Neg)
+	if (newV1Neg != oldV1Neg)
     {
         v1.y = 0.0f;
     }
 
-	newV1Neg = (*(F32*)(&v1_old[2]) < 0.0f) ? 1 : 0;
-	oldV1Neg = (v1.z < 0.0f) ? 1 : 0;
+	oldV1Neg = (v1_old.z < 0.0f) ? 1 : 0;
+	newV1Neg = (v1.z < 0.0f) ? 1 : 0;
 
-	if (oldV1Neg != newV1Neg)
+	if (newV1Neg != oldV1Neg)
 	{
 		v1.z = 0.0f;
 	}
