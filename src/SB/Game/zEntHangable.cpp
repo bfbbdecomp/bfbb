@@ -15,7 +15,7 @@ static zParEmitter* sCandleSmokeEmitter;
 static U32 sChandelierHash;
 static zParEmitter* sMountEmitter;
 
-static void zEntHangable_Update(zEntHangable* ent, xScene*, F32 dt);
+void zEntHangable_Update(zEntHangable* ent, xScene*, F32 dt);
 S32 zEntHangableEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase*);
 
 void zEntHangable_SetupFX()
