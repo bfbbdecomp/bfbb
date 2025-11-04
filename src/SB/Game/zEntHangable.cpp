@@ -127,7 +127,7 @@ static void zEntHangable_UpdateFX(zEntHangable* ent)
             emitter = sCandleSmokeEmitter;
         }
 
-        for (S32 i = 0; i < sizeof(offset_rlii0006) / sizeof(xVec3); i++)
+        for (S32 i = 0; i < (S32)(sizeof(offset_rlii0006) / sizeof(xVec3)); i++)
         {
             xVec3 mul;
             xMat3x3RMulVec(&mul, xEntGetFrame(ent), &local_offset[i]);
