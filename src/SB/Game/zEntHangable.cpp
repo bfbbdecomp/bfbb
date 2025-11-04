@@ -169,7 +169,7 @@ S32 zEntHangableEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
     return 0;
 }
 
-static bool HangableIsMovingTooMuch(xVec3* a, xVec3* b, xVec3* c, xVec3* d)
+static S32 HangableIsMovingTooMuch(xVec3* a, xVec3* b, xVec3* c, xVec3* d)
 {
     F32 dist = ((d->x * d->x) + (d->y * d->y) + (d->z * d->z)) -
                ((c->x * c->x) + (c->y * c->y) + (c->z * c->z));
@@ -180,8 +180,114 @@ static bool HangableIsMovingTooMuch(xVec3* a, xVec3* b, xVec3* c, xVec3* d)
     return 0;
 }
 
-void zEntHangable_SetMatrix(zEntHangable* ent, F32 f)
+// Equivalent: scheduling.
+void zEntHangable_SetMatrix(zEntHangable* ent, F32 dt)
 {
+    xMat4x3 spinMat;
+    xMat3x3 tmpMat;
+    S32 moving;
+    xVec3* opos;
+    xVec3* pos;
+    xVec3* orot;
+    xVec3 rot;
+
+    xVec3Sub(&spinMat.up, &ent->pivot, &ent->endpos);
+    xVec3Normalize(&spinMat.up, &spinMat.up);
+
+    opos = &spinMat.at;
+    opos->x = 0.0f;
+    opos->y = 0.0f;
+    opos->z = 1.0f;
+
+    xVec3Cross(&spinMat.right, &spinMat.up, opos);
+    xVec3Normalize(&spinMat.right, &spinMat.right);
+    xMat3x3RotC(&tmpMat, spinMat.up.x, spinMat.up.y, spinMat.up.z, ent->spin);
+    xMat3x3RMulVec(&spinMat.right, &tmpMat, &spinMat.right);
+    xVec3Cross(opos, &spinMat.right, &spinMat.up);
+
+    spinMat.pos.x = 0.0f;
+    spinMat.pos.y = -ent->hangInfo->pivotOffset;
+    spinMat.pos.z = 0.0f;
+
+    xMat3x3RMulVec(&spinMat.pos, &spinMat, &spinMat.pos);
+
+    spinMat.pos.x += ent->pivot.x;
+    spinMat.pos.y += ent->pivot.y;
+    spinMat.pos.z += ent->pivot.z;
+    spinMat.flags = 0;
+
+    *(xMat4x3*)(ent->model->Mat) = *(xMat4x3*)(&spinMat);
+
+    opos = &ent->frame->oldmat.pos;
+    orot = &ent->frame->oldrot.axis;
+    pos = (xVec3 *)&ent->model->Mat->pos;
+    xMat3x3GetEuler((xMat3x3*)ent->model->Mat, &rot);
+
+    if
+    (
+    (opos->x != pos->x) || (opos->y != pos->y) || (opos->z != pos->z) ||
+    (orot->x != rot.x)  || (orot->y != rot.y)  || (orot->z != rot.z)
+    )
+    {
+        moving = 1;
+        if (ent->moving != 1)
+        {
+            zEntEvent((xBase *)ent, eEventStartMoving);
+        }
+    }
+    else
+    {
+        moving = 0;
+        if (ent->moving != 0)
+        {
+            zEntEvent((xBase *)ent, eEventStopMoving);
+        }
+    }
+
+    ent->moving = moving;
+
+    if (ent->asset->modelInfoID != sChandelierHash)
+    {
+        return;
+    }
+
+    if (ent->candle_state == 0)
+    {
+        ent->candle_timer -= dt;
+        if (ent->candle_timer <= 0.0f)
+        {
+            ent->candle_timer = 0.0f;
+            moving = HangableIsMovingTooMuch(orot, &rot, opos, pos);
+            if (moving != 0)
+            {
+                ent->candle_state = 1;
+                ent->candle_timer = (xurand() * 10.0f) + 10.0f;
+            }
+        }
+    }
+    else if (ent->candle_state == 1)
+    {
+        ent->candle_timer -= dt;
+        if (ent->candle_timer <= 0.0f)
+        {
+            ent->candle_timer = (xurand() * 5.0f) + 10.0f;
+            ent->candle_state = 2;
+        }
+    }
+    else
+    {
+        ent->candle_timer -= dt;
+        if (ent->candle_timer <= 0.0f)
+        {
+            ent->candle_timer = 0.0f;
+            moving = HangableIsMovingTooMuch(orot, &rot, opos, pos);
+            if (moving == 0)
+            {
+                ent->candle_timer = 3.0f;
+                ent->candle_state = 0;
+            }
+        }
+    }
 }
 
 void zEntHangable_Save(zEntHangable* ent, xSerial* s)
