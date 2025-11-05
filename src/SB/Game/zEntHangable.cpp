@@ -17,6 +17,8 @@ static zParEmitter* sMountEmitter;
 
 void zEntHangable_Update(zEntHangable* ent, xScene*, F32 dt);
 S32 zEntHangableEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase*);
+void zEntHangable_FollowUpdate(zEntHangable* ent);
+void zEntHangable_SetMatrix(zEntHangable* ent, F32 dt);
 
 void zEntHangable_SetupFX()
 {
@@ -137,9 +139,6 @@ static void zEntHangable_UpdateFX(zEntHangable* ent)
     }
 }
 
-void zEntHangable_FollowUpdate(zEntHangable*);
-void zEntHangable_SetMatrix(zEntHangable*, F32);
-
 void zEntHangable_Update(zEntHangable* ent, xScene*, F32 dt)
 {
     xVec3 sub;
@@ -234,10 +233,76 @@ static void zEntHangableMountFX(zEntHangable* ent)
 
 S32 zEntHangableEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase*)
 {
-    zEntHangable* ent; // r20
-    zEnt* follow; // r2
-    // FloatAndVoid dist; // r29+0x20C
-    return 0;
+    FloatAndVoid dist;
+    zEntHangable* ent = (zEntHangable*)to;
+    U32 wasVisible = xEntIsVisible(ent);
+    zEnt* follow = (zEnt*)from;
+
+    switch ((S32)toEvent)
+    {
+        case eEventVisible:
+        case eEventFastVisible:
+            xEntShow(ent);
+            break;
+        case eEventInvisible:
+        case eEventFastInvisible:
+            xEntHide(ent);
+            break;
+        case eEventCollisionOn:
+            ent->enabled = 1;
+            break;
+        case eEventMount:
+            zEntHangableMountFX(ent);
+            if ((ent->asset->modelInfoID == sChandelierHash) && (ent->candle_state == 0))
+            {
+                ent->candle_timer = 3.0f;
+            }
+            break;
+        case eEventDismount:
+            ent->enabled = -2;
+            break;
+        case eEventCollisionOff:
+            ent->enabled = 0;
+            break;
+        case eEventCollision_Visible_On:
+            xEntShow(ent);
+            ent->enabled = 1;
+            break;
+        case eEventCollision_Visible_Off:
+            xEntHide(ent);
+            ent->enabled = 0;
+            break;
+        case eEventReset:
+            zEntHangable_Reset(ent);
+            break;
+        case eEventSwingerFollow:
+            zEntHangable_SetFollow(ent, follow);
+            break;
+        case eEventSetUpdateDistance:
+            if (globals.updateMgr != NULL)
+            {
+                if (*toParam <= 0.0f)
+                {
+                    xUpdateCull_SetCB(globals.updateMgr, ent, xUpdateCull_AlwaysTrueCB, NULL);
+                }
+                else
+                {
+                    dist.f = *toParam * *toParam;
+                    xUpdateCull_SetCB(globals.updateMgr, ent, xUpdateCull_DistanceSquaredCB, dist.v);
+                }
+            }
+            break;
+    }
+    if ((wasVisible == 0) && (xEntIsVisible(ent) != 0))
+    {
+        ent->vel.x = 0.0f;
+        ent->vel.y = 0.0f;
+        ent->vel.z = 0.0f;
+        ent->endpos.x = ent->pivot.x;
+        ent->endpos.y = ent->pivot.y - ent->hangInfo->leverArm;
+        ent->endpos.z = ent->pivot.z;
+    }
+    return 1;
 }
 
 static S32 HangableIsMovingTooMuch(xVec3* a, xVec3* b, xVec3* c, xVec3* d)
