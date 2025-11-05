@@ -137,9 +137,80 @@ static void zEntHangable_UpdateFX(zEntHangable* ent)
     }
 }
 
+void zEntHangable_FollowUpdate(zEntHangable*);
+void zEntHangable_SetMatrix(zEntHangable*, F32);
+
 void zEntHangable_Update(zEntHangable* ent, xScene*, F32 dt)
 {
+    xVec3 sub;
     xVec3 unitHang;
+    F32 dot;
+
+    xMat3x3GetEuler((xMat3x3*)ent->model->Mat, &ent->frame->oldrot.axis);
+    ent->frame->oldmat = *(xMat4x3*)(ent->model->Mat);
+
+    if ((ent->enabled < 0) && (ent->enabled++, ent->enabled == 0))
+    {
+        ent->enabled = 1;
+    }
+
+    zEntHangable_UpdateFX(ent);
+
+    if (!(ent->hangInfo->flags & 0x80000000))
+    {
+        ent->hangInfo->leverArm -= globals.player.ent.bound.cyl.r;
+        ent->hangInfo->flags |= 0x80000000;
+    }
+
+    ent->grabTimer = 0.0f > ent->grabTimer - dt ? 0.0f : ent->grabTimer - dt;
+
+    if (globals.player.HangEnt == ent)
+    {
+        return;
+    }
+
+    zEntHangable_FollowUpdate(ent);
+
+    unitHang.x = 0.0f;
+    unitHang.y = -ent->hangInfo->gravity;
+    unitHang.z = 0.0f;
+
+    xVec3Sub(&sub, &ent->endpos, &ent->pivot);
+    xVec3Normalize(&sub, &sub);
+
+    dot = xVec3Dot(&sub, &unitHang);
+    unitHang.x = -((dot * sub.x) - unitHang.x);
+    unitHang.y = -((dot * sub.y) - unitHang.y);
+    unitHang.z = -((dot * sub.z) - unitHang.z);
+
+    ent->vel.x = (unitHang.x * dt) + ent->vel.x;
+    ent->vel.y = (unitHang.y * dt) + ent->vel.y;
+    ent->vel.z = (unitHang.z * dt) + ent->vel.z;
+
+    dot = xVec3Dot(&sub, &ent->vel);
+    ent->vel.x = -((dot * sub.x) - ent->vel.x);
+    ent->vel.y = -((dot * sub.y) - ent->vel.y);
+    ent->vel.z = -((dot * sub.z) - ent->vel.z);
+
+    xVec3SMul(&ent->vel, &ent->vel, 0.97f);
+
+    if (xVec3Length2(&ent->vel) < 0.001f)
+    {
+        ent->vel.x = 0.0f;
+        ent->vel.y = 0.0f;
+        ent->vel.z = 0.0f;
+    }
+
+    ent->endpos.x = ent->vel.x * dt + ent->endpos.x;
+    ent->endpos.y = ent->vel.y * dt + ent->endpos.y;
+    ent->endpos.z = ent->vel.z * dt + ent->endpos.z;
+
+    xVec3Sub(&sub, &ent->endpos, &ent->pivot);
+    xVec3Normalize(&sub, &sub);
+    xVec3SMul(&sub, &sub, ent->hangInfo->leverArm);
+    xVec3Add(&ent->endpos, &ent->pivot, &sub);
+
+    zEntHangable_SetMatrix(ent, dt);
 }
 
 // Equivalent; scheduling.
