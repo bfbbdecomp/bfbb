@@ -78,8 +78,8 @@ void zEntHangable_Init(zEntHangable* ent, xEntAsset* asset)
 
     if (ent->linkCount)
     {
-        xEnt* next = (xEnt*)&((xEntMotion*)(ent->asset))[1]; // Not in DWARF, but anything to make this less of an eyesore.
-        ent->link = (xLinkAsset*)(&next->link); // Maybe...???
+        xEnt* next = (xEnt*)&((xEntMotion*)(ent->asset))[1];
+        ent->link = (xLinkAsset*)(&next->link);
     }
     else
     {
