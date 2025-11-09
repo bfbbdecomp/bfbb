@@ -5,6 +5,13 @@
 #include "xMovePoint.h"
 #include "xColor.h"
 
+#define XENTMOTION_TYPE_ER 0 // Extend / Retract
+#define XENTMOTION_TYPE_ORB 1 // Orbital
+#define XENTMOTION_TYPE_SPL 2 // Spline
+#define XENTMOTION_TYPE_MP 3 // Movepoint
+#define XENTMOTION_TYPE_MECH 4 // Mechanism
+#define XENTMOTION_TYPE_PEN 5 // Pendulum
+
 struct xEntMotionERData
 {
     xVec3 ret_pos;
