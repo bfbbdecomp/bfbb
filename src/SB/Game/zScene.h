@@ -44,6 +44,7 @@ void zSceneUpdateSFXWidgets();
 void zSceneSwitch(_zPortal* p, S32 forceSameScene);
 void zSceneSave(zScene* ent, xSerial* s);
 void zSceneLoad(zScene* ent, xSerial* s);
+void zSceneReset();
 void zSceneSetup();
 void zSceneUpdate(F32 dt);
 void zSceneRender();

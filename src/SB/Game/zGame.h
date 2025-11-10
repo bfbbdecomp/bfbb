@@ -5,11 +5,13 @@
 #include "zGameState.h"
 
 extern _CurrentPlayer gPendingPlayer;
-extern F32 sTimeElapsed;
 extern U32 gLevelChanged;
 extern U32 startPressed;
 extern U8 sHackSmoothedUpdate;
 extern U32 gBusStopIsRunning;
+extern F32 sTimeElapsed;
+extern iTime sTimeCurrent;
+extern iTime sTimeLast;
 
 enum eGameWhereAmI
 {
@@ -99,10 +101,6 @@ enum eGameWhereAmI
     eGameWhere_SetupPlayerCamera,
     eGameWhere_SetupPlayerEnd
 };
-
-extern iTime sTimeCurrent;
-extern iTime sTimeLast;
-extern F32 sTimeElapsed;
 
 void zGameSetupPlayer();
 void xDrawBegin();

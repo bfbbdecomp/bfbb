@@ -14,7 +14,9 @@ template <class T> struct basic_rect
     const static basic_rect m_Unit;
 
     basic_rect& assign(T x, T y, T w, T h);
+    basic_rect& contract(T s);
     basic_rect& contract(T x, T y, T w, T h);
+    basic_rect& expand(T s);
     basic_rect& expand(T x, T y, T w, T h);
     basic_rect& move(T x, T y);
     basic_rect& scale(T s);

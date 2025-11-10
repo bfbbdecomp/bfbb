@@ -41,6 +41,7 @@ RpAtomic* HackAlphaCB(RpAtomic* atomic, void* data);
 void zCutSceneNamesTable_clearAll();
 void zCutsceneMgrPlayStart(zCutsceneMgr* t);
 S32 zCutsceneMgrEventCB(xBase*, xBase* to, U32 toEvent, const F32*, xBase*);
+void zCutsceneMgrFinishLoad(xBase* to);
 
 void zCutsceneMgrKillFX(zCutsceneMgr* t);
 void zCutsceneMgrUpdateFX(zCutsceneMgr* t);
