@@ -90,14 +90,14 @@ struct xFXRibbon
     void set_raster(RwRaster*);
 };
 
-class xFXStreakElem
+struct xFXStreakElem
 {
     U32 flag;
     xVec3 p[2];
     F32 a;
 };
 
-class xFXStreak
+struct xFXStreak
 {
     U32 flags;
     F32 frequency;
@@ -163,6 +163,8 @@ struct xFXBubbleParams
 
 #define RING_COUNT 8
 
+extern xFXStreak sStreakList[10];
+extern xFXShine sShineList[2];
 extern xFXRing ringlist[RING_COUNT];
 
 void xFXStartup();
@@ -198,6 +200,7 @@ void xFXStreakInit();
 void xFXStreakUpdate(F32 dt);
 void xFXStreakUpdate(U32 streakID, const xVec3*, const xVec3*);
 void xFXStreakRender();
+U32 xFXStreakStart(F32 frequency, F32 alphaFadeRate, F32 alphaStart, U32 textureID, const iColor_tag* edge_a, const iColor_tag* edge_b, S32 taper);
 void xFXStreakStop(U32);
 void xFXShineInit();
 void xFXShineUpdate(F32 dt);

@@ -27,16 +27,19 @@
 
 extern const char _stringBase0_7[];
 
-RpAtomicCallBackRender gAtomicRenderCallBack = NULL;
-F32 EnvMapShininess = 1.0f;
-RpLight* MainLight = NULL;
-
-static U32 num_fx_atomics = 0;
-
-static U32 xfx_initted = 0;
-
+/* Global variables from .comm segment */
+xFXRing ringlist[RING_COUNT];
 xFXStreak sStreakList[10];
 xFXShine sShineList[2];
+
+RpAtomicCallBackRender gAtomicRenderCallBack = NULL;
+RpLight* MainLight = NULL;
+F32 EnvMapShininess = 1.0f;
+
+/* End global variables */
+
+static U32 num_fx_atomics = 0;
+static U32 xfx_initted = 0;
 
 static void LightResetFrame(RpLight* light);
 
@@ -90,8 +93,6 @@ static xFXBubbleParams* BFX = &defaultBFX;
 static U32 sFresnelMap = 0;
 static U32 sEnvMap = 0;
 static S32 sTweaked = 0;
-
-xFXRing ringlist[RING_COUNT];
 
 static RxPipeline* xFXanimUVPipeline = NULL;
 F32 xFXanimUVRotMat0[2] = { 1.0f, 0.0f };
@@ -685,8 +686,76 @@ void xFXStreakUpdate(U32 id, const xVec3* a, const xVec3* b)
     xFXStreak* s;
 }
 
-void xFXStreakStart(F32, F32, F32, U32, const iColor_tag*, const iColor_tag*, S32)
+U32 xFXStreakStart(F32 frequency, F32 alphaFadeRate, F32 alphaStart, U32 textureID, const iColor_tag* edge_a, const iColor_tag* edge_b, S32 taper)
 {
+    for (U32 i = 0; i < 10; i++) 
+    {
+        if (sStreakList[i].flags == 0x0)
+        {
+            sStreakList[i].flags = 0x1;
+
+            if (taper != 0)
+            {
+                sStreakList[i].flags |= 0x4;
+            }
+
+            sStreakList[i].frequency = frequency;
+            sStreakList[i].alphaFadeRate = alphaFadeRate;
+            sStreakList[i].alphaStart = alphaStart;
+            sStreakList[i].head = 0;
+            sStreakList[i].elapsed = 0.0f;
+            sStreakList[i].lifetime = 0.0f;
+            sStreakList[i].textureRasterPtr = NULL;
+            sStreakList[i].texturePtr = NULL;
+
+            for (S32 j = 0; j < 50; j++)
+            {
+                sStreakList[i].elem[j].flag = 0x0;
+            }
+
+            if (edge_a != NULL)
+            {
+                sStreakList[i].color_a = *edge_a;
+            }
+            else
+            {
+                sStreakList[i].color_a.a = 255;
+                sStreakList[i].color_a.b = 255;
+                sStreakList[i].color_a.g = 255;
+                sStreakList[i].color_a.r = 255;
+            }
+
+            if (edge_b != NULL)
+            {
+                sStreakList[i].color_b = *edge_a;
+            }
+            else
+            {
+                sStreakList[i].color_b.a = 255;
+                sStreakList[i].color_b.b = 255;
+                sStreakList[i].color_b.g = 255;
+                sStreakList[i].color_b.r = 255;
+            }
+
+            if (textureID == 0)
+            {
+                textureID = xStrHash("fx_streak1");
+            }
+
+            sStreakList[i].texturePtr = (RwTexture*) xSTFindAsset(textureID, NULL);
+            if (sStreakList[i].texturePtr != NULL)
+            {
+                sStreakList[i].textureRasterPtr = RwTextureGetRaster(sStreakList[i].texturePtr);
+            }
+            else
+            {
+                return 0;
+            }
+
+        }
+    }
+
+    return 10;
 }
 
 void xFXStreakStop(U32)
