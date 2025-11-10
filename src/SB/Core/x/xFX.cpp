@@ -685,7 +685,7 @@ void xFXStreakUpdate(U32 id, const xVec3* a, const xVec3* b)
     xFXStreak* s;
 }
 
-void xFXStreakStart(F32, F32, F32, U32, const iColor_tag*, const iColor_tag*, S32)
+U32 xFXStreakStart(F32 frequency, F32 alphaFadeRate, F32 alphaStart, U32 textureID, const iColor_tag* edge_a, const iColor_tag* edge_b, S32 taper)
 {
 }
 
