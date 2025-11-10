@@ -368,7 +368,14 @@ struct zPlayerLassoInfo
     xAnimState* zeroAnim;
 };
 
-class PlayerStreakInfo
+struct Melee_cbData {
+    xEnt* ent; // offset 0x0, size 0x4
+    zScene* zsc; // offset 0x4, size 0x4
+    xBound * meleeB; // offset 0x8, size 0x4
+    S32 hitsomething; // offset 0xC, size 0x4
+};
+
+struct PlayerStreakInfo
 {
     U32 activated;
     U32 streakID;
@@ -386,6 +393,7 @@ class PlayerStreakInfo
 
 extern _CurrentPlayer gCurrentPlayer;
 extern S32 gWaitingToAutoSave;
+extern S32 gSpongeBall;
 
 void zEntPlayer_Load(xEnt*, xSerial*);
 

@@ -61,6 +61,7 @@ static F32 sCatchCapsuleTimer;
 static F32 stuck_timer;
 static F32 not_stuck_timer;
 static xVec3 stuck_start_loc;
+S32 gSpongeBall;
 
 // Multidimensional sound arrays for each player type
 static U32 sPlayerSnd[ePlayer_MAXTYPES][ePlayerSnd_Total] = {};
@@ -219,11 +220,38 @@ static enum {
     WallJumpResult_NoJump,
     WallJumpResult_Jump,
 } sWallJumpResult;
-static class xVec3 sWallNormal;
-static class zSurfaceProps* sWallCollisionSurface;
+static xVec3 sWallNormal;
+static xModelTag sSandyLFoot; 
+static xModelTag sSandyRFoot; 
+static xModelTag sSandyLHand; 
+static xModelTag sSandyRHand; 
+static xModelTag sSandyLKnee; 
+static xModelTag sSandyRKnee; 
+static xModelTag sSandyLElbow;
+static xModelTag sSandyRElbow;
+static xModelTag sSpongeBobLKnee;
+static xModelTag sSpongeBobRKnee;
+static xModelTag sSpongeBobLElbow;
+static xModelTag sSpongeBobRElbow;
+static xModelTag sSpongeBobLFoot;
+static xModelTag sSpongeBobRFoot;
+static xModelTag sSpongeBobLHand;
+static xModelTag sSpongeBobRHand;
+static xModelTag sPatrickLFoot;
+static xModelTag sPatrickRFoot;
+static xModelTag sPatrickLHand;
+static xModelTag sPatrickRHand;
+static xModelTag sPatrickLKnee;
+static xModelTag sPatrickRKnee;
+static xModelTag sPatrickLElbow;
+static xModelTag sPatrickRElbow;
+static xModelTag sPatrickMelee;
+static zSurfaceProps* sWallCollisionSurface;
 static float sTongueDblSpeedMult;
 
 static void PlayerSwingUpdate(xEnt* ent, F32 mag, F32 angle, F32 dt);
+static S32 CheckObjectAgainstMeleeBound(xEnt* ent, void* data);
+static void zEntPlayer_PredictionUpdate(xEnt* ent, F32 dt);
 
 void zEntPlayer_SpawnWandBubbles(xVec3* center, U32 count)
 {
@@ -2289,7 +2317,58 @@ static U32 StunStartFallCB(xAnimTransition*, xAnimSingle*, void*)
     return 0;
 }
 
-static U32 StunRadiusCB(xAnimTransition*, xAnimSingle*, void*);
+static U32 StunRadiusCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    zEntPlayer_SNDPlay(ePlayerSnd_BellySmash, 0.0f);
+    if ((xrand() & 0x3) == 3)
+    {
+        zEntPlayer_SNDPlayStreamRandom(ePlayerStreamSnd_BellySmashComment1, ePlayerStreamSnd_BellySmashComment3,
+                                       0.0f);
+    }
+
+    if (tslide_lastrealvel.y > -1.0f)
+    {
+        
+        zPadAddRumble(eRumble_Medium, 0.1f, 0, 0x0);
+    }
+    else if (stun_power_tmr < 0.4f)
+    {
+        zPadAddRumble(eRumble_Heavy, 0.15f, 0, 0x0);
+    }
+    else if (stun_power_tmr < 1.0f)
+    {
+        zPadAddRumble(eRumble_VeryHeavy, 0.3f, 0, 0x0);
+    }
+    else
+    {
+        zPadAddRumble(eRumble_VeryHeavyHi, 0.6f, 0, 0x0);
+    }
+
+    return 0;
+}
+
+static S32 MeleeAttackBoundCollide(xEnt* ent, zScene* zscn, xBound* meleeB)
+{
+    Melee_cbData cbdata;
+    xVec3 pos;
+
+    cbdata.ent = ent;
+    cbdata.zsc = zscn;
+    cbdata.meleeB = meleeB;
+    cbdata.hitsomething = 0;
+    xVec3Copy(&pos, xBoundCenter(meleeB));
+
+    xGridCheckPosition(&colls_grid, &pos, &meleeB->qcd, CheckObjectAgainstMeleeBound, &cbdata);
+    xGridCheckPosition(&colls_oso_grid, &pos, &meleeB->qcd, CheckObjectAgainstMeleeBound, &cbdata);
+    xGridCheckPosition(&npcs_grid, &pos, &meleeB->qcd, CheckObjectAgainstMeleeBound, &cbdata);
+
+    return cbdata.hitsomething;
+}
+
+static S32 CheckObjectAgainstMeleeBound(xEnt* ent, void* data)
+{
+    return 0;
+}
 
 // Equivalent: sda relocation scheduling + regswap
 static U32 BounceCB(xAnimTransition*, xAnimSingle*, void*)
@@ -3757,15 +3836,276 @@ static void zEntPlayer_StreakFX(xEnt* ent, F32)
 {
     S32 i;
     S32 p;
-    S32 cp;
+    S32 cp = 0;
 
-    for (S32 i = 0; i < 6; i++)
+    for (S32 i = 0; i < 3; i++)
     {
-        for (S32 p = 0; p < 2; p++)
+        for (S32 p = 0; p < 4; p++)
         {
-            //sStreakInfo[i][p] = 0;
+            sStreakInfo[i][p].activated = FALSE;
         }
     }
+
+    if (ent->model == globals.player.model_sandy)
+    {
+        cp = 1;
+    }
+    else if (ent->model == globals.player.model_patrick)
+    {
+        cp = 2;
+    }
+
+    if (globals.player.SlideTrackSliding & 0x1)
+    {
+        if (cp == 1)
+        {
+            if (strstr(ent->model->Anim->Single->State->Name, "Tail") != NULL)
+            {
+                sStreakInfo[1][0].activated = TRUE;
+                sStreakInfo[1][1].activated = TRUE;
+            }
+        }
+        else if (cp == 0 && strcmp(ent->model->Anim->Single->State->Name, "TongueJump01") == 0 || strcmp(ent->model->Anim->Single->State->Name, "TongueJumpXtra01") == 0 || strcmp(ent->model->Anim->Single->State->Name, "TongueDJumpApex01") == 0)
+        {
+            sStreakInfo[0][2].activated = TRUE;
+            sStreakInfo[0][3].activated = TRUE;
+        }
+    }
+    else if (cp == 1)
+    {
+        sStreakInfo[1][0].activated = TRUE;
+        sStreakInfo[1][1].activated = TRUE;
+    }
+    else
+    {
+        sStreakInfo[cp][2].activated = TRUE;
+        sStreakInfo[cp][3].activated = TRUE;
+    }
+
+    if (globals.player.Jump_Springboard != NULL)
+    {
+        sStreakInfo[cp][0].activated = TRUE;
+        sStreakInfo[cp][1].activated = TRUE;
+    }
+
+    if (cp == 1)
+    {
+        if (strcmp(ent->model->Anim->Single->State->Name,"Melee01") == 0)
+        {
+            sStreakInfo[1][1].activated = TRUE;
+        }
+        else if (strcmp(ent->model->Anim->Single->State->Name,"JumpMelee01") == 0)
+        {
+            sStreakInfo[1][2].activated = 1;
+        }
+        else if (strcmp(ent->model->Anim->Single->State->Name,"LassoSwing") == 0)
+        {
+            sStreakInfo[1][2].activated = TRUE;
+            sStreakInfo[1][3].activated = TRUE;
+        }
+        else if (globals.player.IsCoptering)
+        {
+            sStreakInfo[1][1].activated = 1;
+        }
+    }
+    else if (cp == 2)
+    {
+        if (strcmp(ent->model->Anim->Single->State->Name,"BbowlWindup01") == 0) {
+            sStreakInfo[0][1].activated = 1;
+        }
+    }
+    else if (cp == 0 && strcmp(ent->model->Anim->Single->State->Name, "Stunfall") == 0 || strcmp(ent->model->Anim->Single->State->Name, "Stunjump") == 0)
+    {
+        sStreakInfo[2][1].activated = TRUE;
+        sStreakInfo[2][0].activated = TRUE;
+        sStreakInfo[2][3].activated = TRUE;
+        sStreakInfo[2][2].activated = TRUE;
+    }
+
+    for (i = 0; i < 3; i++)
+    {
+        for (p = 0; p < 4; p++)
+        {
+            if (sStreakInfo[i][p].activated && sStreakInfo[i][p].streakID == 0xdead)
+            {
+                sStreakInfo[i][p].streakID = xFXStreakStart(0.0f, 4.0f, sStreakInfo[i][p].alphaStart, 0x0, &sStreakInfo[i][p].colA, &sStreakInfo[i][p].colB, sStreakInfo[i][p].streakTaper);
+            }
+            else
+            {
+                if (!sStreakInfo[i][p].activated && sStreakInfo[i][p].streakID != 0xdead)
+                {
+                    xFXStreakStop(sStreakInfo[i][p].streakID);
+                    sStreakInfo[i][p].streakID = 0xdead;
+                }
+            }
+
+            if (sStreakInfo[i][p].streakID != 0xdead)
+            {
+                iModelTagEval(ent->model->Data, sStreakInfo[i][p].tagA, globals.player.model_spongebob->Mat, &sStreakInfo[i][p].a);
+                iModelTagEval(ent->model->Data, sStreakInfo[i][p].tagB, globals.player.model_spongebob->Mat, &sStreakInfo[i][p].b);
+            }
+            else
+            {
+                iModelTagEval(ent->model->Data, sStreakInfo[i][p].tagA, ent->model->Mat, &sStreakInfo[i][p].a);
+                iModelTagEval(ent->model->Data, sStreakInfo[i][p].tagB, ent->model->Mat, &sStreakInfo[i][p].b);
+            }
+
+            xFXStreakUpdate(sStreakInfo[i][p].streakID, &sStreakInfo[i][p].a, &sStreakInfo[i][p].b);
+        }
+    }
+}
+
+static void zEntPlayer_SpringboardFX(xEnt* ent, F32 dt)
+{
+    xVec3 temp1;
+    xVec3 temp2;
+    xParEmitterCustomSettings info;
+
+    if (globals.player.Jump_Springboard != NULL && ent->frame->vel.y >= 0.0f)
+    {
+        xVec3Copy(&temp1, (xVec3*)&ent->model->Mat->pos);
+        temp1.y += 1.5f;
+
+        xVec3Copy(&temp2, (xVec3*)&ent->model->Mat->right);
+
+        temp2 *= 0.15f;
+        xVec3Add(&temp1, &temp1, &temp2);
+
+        if (gPTankDisable)
+        {
+            static F32 sLastSpringboardBubbleEmit = 0.0f;
+            sLastSpringboardBubbleEmit += dt;
+
+            if (!(sLastSpringboardBubbleEmit > 0.02f))
+            {
+                return;
+            }
+            
+            sLastSpringboardBubbleEmit = 0.0f;
+
+            info.custom_flags = 0x35E;
+            info.pos = temp1;
+            info.vel.x = 1.0f;
+            info.vel.z = 0.0f;
+            info.vel.y = 0.0f;
+            info.vel_angle_variation = PI * 2.0f;
+            info.rate.set(100.0f, 100.0f, 1.0f, 0);
+            info.life.set(1.0f, 1.0f, 1.0f, 0);
+
+            F32 size = 0.15f * xurand() + 0.05f;
+
+            info.size_birth.set(size, size, 1.0f, 0);
+
+            size *= 1.2f;
+            info.size_death.set(size, size, 1.0f, 0);
+            
+            xParEmitterEmitCustom(sEmitSpinBubbles, dt, &info);
+        }
+        else
+        {
+            zFX_SpawnBubbleTrail((xVec3*)&globals.player.ent.model->Mat->pos, 3);
+        }
+    }
+}
+
+static void getPadDefl(_tagPadAnalog* stick, class xVec2* v)
+{
+
+}
+
+static void zEntPlayer_BoulderVehicleRender(zEnt* ent)
+{
+    xShadow_ListAdd(boulderVehicle);
+}
+
+static void zEntPlayer_BoulderVehicleMove(xEnt* ent, xScene* scn, F32, xEntFrame* frame)
+{
+    frame->mode = 0x30000;
+}
+
+static void zEntPlayer_BoulderVehicleUpdate(xEnt* ent, xScene* sc, F32 dt)
+{
+    xEntCollis collis;
+    S32 i;
+    xEnt* dyn;
+    xEntBoulder* boul;
+    F32 padDefl;
+    xVec3 rotFudge;
+    F32 ang;
+    xMat3x3 rotM;
+    xVec3 heading;
+    F32 angle;
+    F32 mag;
+    
+    gSpongeBall = TRUE;
+    xEntBoulder* shouldDamagePlayer = FALSE;
+    zEntPlayer_PredictionUpdate(ent, dt);
+    
+    xVec3Copy(&ent->frame->oldmat.pos, &ent->frame->mat.pos);
+
+    U8 chkBackup = ent->collis->chk;
+    U8 penBackup = ent->collis->pen;
+    ent->collis->chk = 0x0;
+    ent->collis->pen = 0x0;
+    
+    if (boulderVehicle != NULL && globals.player.ControlOff == FALSE)
+    {
+        bvTimeToIdle -= dt;
+        
+        xVec2 inputDefl;
+        getPadDefl(&globals.pad0->analog1, &inputDefl);
+
+        if (globals.pad0->on & 0x20)
+        {
+            inputDefl.y = 1.0f;
+        }
+        
+        if (globals.pad0->on & 0x80)
+        {
+            inputDefl.y = -1.0f;
+        }
+        
+        if (globals.pad0->on & 0x40)
+        {
+            inputDefl.x = 1.0f;
+        }
+        
+        if (globals.pad0->on & 0x10)
+        {
+            inputDefl.x = -1.0f;
+        }
+
+        xVec3 tempRight;
+        xVec3Copy(&tempRight, &globals.camera.mat.right);
+
+        F32 normLength = xVec3Length2(&tempRight);
+        if (normLength > 0.0001f)
+        {
+            normLength = xsqrt(normLength);
+            xVec3SMulBy(&tempRight, 1.0f / normLength);
+        }
+        else
+        {
+            xVec3Copy(&tempRight, &globals.player.ent.collis->colls[0].norm);
+        }
+
+        xVec3 tempAt;
+        xVec3Copy(&tempAt, &globals.camera.mat.at);
+    }
+
+    // 0x5D0
+    if (boulderVehicle != NULL)
+    {
+        
+    }
+}
+
+static void zEntPlayer_PredictionUpdate(xEnt* ent, F32 dt)
+{
+    zPlayerGlobals* g;
+    F32 lastVel;
+    F32 newAngV;
+    F32 r;
 }
 
 void zEntPlayer_PatrickLaunch(xEnt* patLauncher)
