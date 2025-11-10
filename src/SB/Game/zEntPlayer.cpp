@@ -8,6 +8,7 @@
 #include "iAnim.h"
 #include "iMath.h"
 #include "iSnd.h"
+#include "iTRC.h"
 
 #include "xDebug.h"
 #include "xEnt.h"
@@ -21,6 +22,7 @@
 #include "xSnd.h"
 #include "xstransvc.h"
 #include "xTRC.h"
+#include "xutil.h"
 #include "xVec3.h"
 #include "xVec3Inlines.h"
 
@@ -193,6 +195,9 @@ static S32 lin_goo;
 static F32 in_goo_tmr;
 static U32 player_hitlist_anim;
 S32 player_hit;
+static xEnt* mount_object;
+static U32 mount_type;
+static F32 mount_tmr;
 static S32 player_hit_anim = 1;
 static U32 player_dead_anim = 1;
 static U32 player_idle_anim;
@@ -206,6 +211,9 @@ static U32 sShouldBubbleBowl;
 static F32 sBubbleBowlTimer;
 static U32 sSpatulaGrabbed;
 S32 gWaitingToAutoSave;
+
+xMat4x3 sCameraLastMat;
+xVec3 sDriveVel;
 
 static enum {
     WallJumpResult_NoJump,
@@ -3517,40 +3525,40 @@ S32 zEntPlayer_IsSneaking()
     }
 }
 
-// The cmpw instruction used in `if ((S32)non_choices[j] - 1 == i)` has its
-// operands in the wrong order.
 S32 load_talk_filter(U8* filter, xModelAssetParam* params, U32 params_size, S32 max_size)
 {
-    S32 found = 0;
-    F32* non_choices = (F32*)xMemPushTemp(max_size * 4);
-    S32 size =
-        20; // FIXME Define zEntPlayer_Strings for line: zParamGetFloatList(params, params_size, zEntPlayer_Strings + 0x29ec, max_size, non_choices, non_choices);
+	// Not sure about these variable names.
+    F32* non_choice; // Not in DWARF.
+    S32 size = 0;
+    F32* non_choices = (F32 *)xMemPushTemp(max_size * sizeof(F32));
+    S32 found = zParamGetFloatList(params, params_size, "NonRandomTalkAnims", max_size, non_choices, non_choices);
 
-    for (S32 i = 0; i < max_size; i++)
-    {
-        bool skip = false;
-        for (S32 j = 0; j < size; j++)
-        {
-            if ((S32)non_choices[j] - 1 == i)
+	for (S32 i = 0; i < max_size; i++)
+	{
+		bool skip = false;
+		non_choice = non_choices;
+        for (S32 j = 0; j < found; j++)
+		{
+            if ((S32)*non_choice - 1 == i)
             {
                 skip = true;
                 break;
             }
-        }
-
+            non_choice++;
+		}
         if (!skip)
         {
-            filter[found++] = i;
+            filter[size] = (U8)i;
+            size++;
         }
-    }
-
-    if (found <= 0)
+	}
+    if (size <= 0)
     {
-        found = 1;
-        filter[0] = 0;
+        *filter = '\0';
+        size = 1;
     }
     xMemPopTemp(non_choices);
-    return found;
+    return size;
 }
 
 static U32 count_talk_anims(xAnimTable* anims)
@@ -3621,9 +3629,55 @@ F32 det3x3top1(float a, float b, float c, float d, float e, float f)
     return -((d * b) - ((a * e) + ((d * c) + ret)));
 }
 
+// Equivalent; scheduling.
+void PlayerMountHackUpdate(F32 delta)
+{
+    mount_tmr = delta + mount_tmr;
+    if ((mount_tmr > 0.1f) && (mount_object != NULL))
+    {
+        zEntEvent(mount_object, mount_type);
+        mount_object = NULL;
+        mount_type = 0;
+    }
+}
+
+void PlayerMountHackTakeAction(xEnt* ent, U32 type)
+{
+    if (mount_tmr > 0.1f)
+    {
+        zEntEvent(ent, type);
+    }
+	else
+	{
+        mount_object = ent;
+        mount_type = type;
+	}
+    mount_tmr = 0.0f;
+}
+
 void zEntPlayerExit(xEnt* ent)
 {
     bungee_state::destroy();
+}
+
+void PlayerHitAnimInit(xModelInstance* model, xAnimTransition* tran, U32* index)
+{
+    *index = 0;
+    xAnimState* state = model->Anim->Table->StateList;
+    while ((state != NULL) && (*index < 8))
+    {
+        if (strncmp(state->Name, "Hit0", 4) == 0)
+        {
+            tran[*index].Dest = state;
+            tran[*index].Callback = NULL;
+            tran[*index].SrcTime = 0.0;
+            tran[*index].DestTime = 0.0;
+            tran[*index].BlendRecip = 5.0f;
+            tran[*index].BlendOffset = NULL;
+            (*index)++;
+        }
+        state = state->Next;
+    }
 }
 
 void zEntPlayerPreReset()
@@ -3639,7 +3693,7 @@ void zEntPlayerPreReset()
 F32 ComputeFudge(F32 a, F32 b)
 {
     F32 min = MIN(a, b);
-    a = (min - 0.075f) / -0.175f;
+    a = (min - -0.175f) / 0.074999996f; // Will not match with 0.075f.
 
     if (0.0f > MIN(a, 1.0f))
     {
@@ -3729,6 +3783,64 @@ void zEntPlayerUpdateModel()
     {
         zEntPlayerUpdateModelSB();
     }
+}
+
+void zEntPlayerEmitTongueBubbles()
+{
+    xModelInstance* model = globals.player.sb_models[6];
+    U8 rand;
+    xVec3 vec;
+
+    if ((model->Flags & 1) && (rand = xrand(), rand < 0x80))
+    {
+        xVec3Copy(&vec, (xVec3*)&model->Mat->pos);
+        vec.y -= 0.5f;
+        zFX_SpawnBubbleTrail(&vec, 1);
+    }
+}
+
+void zEntPlayerEmitSlideBubbles()
+{
+    xModelInstance* model = globals.player.ent.model;
+    U8 rand;
+    xVec3 vec;
+
+    if ((model->Flags & 1) && (rand = xrand(), rand < 0x80))
+    {
+        xVec3Copy(&vec, (xVec3*)&model->Mat->pos);
+        vec.y -= 0.5f;
+        zFX_SpawnBubbleTrail(&vec, 1);
+    }
+}
+
+void zEntPlayerCheckHelmetPop()
+{
+    xVec3 vec;
+    xModelInstance* model = globals.player.sb_models[7];
+    if ((globals.player.IsBubbleBashing == 0) || (globals.player.sb_models[7]->Flags & 1))
+    {
+		return;
+	}
+    xMat4x3Mul((xMat4x3 *)globals.player.sb_models[7]->Mat, (xMat4x3 *)(&globals.player.ent.model->Mat[5]), (xMat4x3 *)(globals.player.ent.model)->Mat);
+    xVec3Copy(&vec, (xVec3 *)&model->Mat->pos);
+    vec.y += 0.35f;
+    zFX_SpawnBubbleHit(&vec, 0x32);
+    globals.player.IsBubbleBashing = 0;
+
+}
+
+void zEntPlayer_setBoulderMode(U32 mode)
+{
+	if (mode != 0)
+	{
+        boulderRollShouldStart = 1;
+        boulderRollShouldEnd = 0;
+    }
+	else
+	{
+        boulderRollShouldStart = 0;
+        boulderRollShouldEnd = 1;
+	}
 }
 
 S32 zEntPlayer_Damage(xBase* src, U32 damage, const xVec3* knockback)
@@ -3905,6 +4017,14 @@ void zEntPlayer_GiveLevelPickupCurrentLevel(S32 quantity)
     }
 }
 
+void zEntPlayerJumpAddDriver(xEnt* ent)
+{
+    if (sDriveVel.y > 0.0f)
+    {
+        ent->frame->vel.y += sDriveVel.y;
+    }
+}
+
 xVec3* GetPosVec(xBase* base)
 {
     xVec3* vec = (xVec3*)&g_O3;
@@ -3930,6 +4050,46 @@ xVec3* GetPosVec(xBase* base)
     }
 
     return vec;
+}
+
+void zEntPlayer_StoreCheckPoint(xVec3* pos, F32 rot, U32 initCamID)
+{
+    if (pos != NULL)
+    {
+		globals.player.cp.pos = *pos;
+        globals.player.cp.rot = rot;
+        globals.player.cp.initCamID = initCamID;
+    }
+}
+
+void zEntPlayer_LoadCheckPoint()
+{
+    xEnt& p = globals.player.ent;
+    xModelInstance& m = *p.model;
+    xEntFrame& f = *p.frame;
+    zCheckPoint& cp =  globals.player.cp;
+
+	f.mat.pos = cp.pos;
+	f.oldmat.pos = cp.pos;
+    f.rot.angle = cp.rot;
+    f.rot.axis = xVec3::create(0.0f, 1.0f, 0.0f);
+
+    xMat3x3Euler(&f.mat, f.rot.angle, 0, 0);
+    *(xMat4x3*)(m.Mat) = f.mat;
+    xCameraSetTargetMatrix(&globals.camera, xEntGetFrame(&globals.player.ent));
+    xCameraSetTargetOMatrix(&globals.camera, &sCameraLastMat);
+
+    if (sPlayerDiedLastTime != 0)
+    {
+        sPlayerDiedLastTime = 0;
+        zEntPlayer_SNDPlayStreamRandom(0x00, 0x01, ePlayerStreamSnd_EnterScene1, ePlayerStreamSnd_EnterScene3, 0.3f);
+        zEntPlayer_SNDPlayStreamRandom(0x02, 0x04, ePlayerStreamSnd_EnterScene1, ePlayerStreamSnd_EnterScene4, 0.3f);
+        zEntPlayer_SNDPlayStreamRandom(0x05, 0x0A, ePlayerStreamSnd_EnterScene1, ePlayerStreamSnd_EnterScene5, 0.3f);
+        zEntPlayer_SNDPlayStreamRandom(0x0B, 0x19, ePlayerStreamSnd_EnterScene1, ePlayerStreamSnd_EnterScene6, 0.3f);
+        zEntPlayer_SNDPlayStreamRandom(0x1A, 0x64, ePlayerStreamSnd_EnterScene1, ePlayerStreamSnd_EnterScene7, 0.3f);
+    }
+
+    zCameraReset(&globals.camera);
 }
 
 static void _SetupRumble(_tagePlayerSnd player_snd, _tagRumbleType type, float time)
@@ -6629,6 +6789,176 @@ xAnimTable* zEntPlayer_AnimTable()
 
     return animTable;
 }
+
+void iCameraSetBlurriness(F32 amount);
+
+// Equivalent; scheduling issues.
+static void zEntPlayer_UpdateVelocityBlur()
+{
+    F32 start_vel2;
+    F32 peak_vel2;
+	F32 vel; // not in DWARF
+
+	static F32 start_vel = 10.0f;
+	static F32 peak_vel = 50.0f;
+	static F32 max_blur = 0.5f;
+
+    if (start_vel >= peak_vel)
+    {
+		return;
+	}
+
+    start_vel2 = start_vel * start_vel;
+    peak_vel2 = peak_vel * peak_vel;
+    vel = globals.player.ent.frame->vel.length2();
+    if (vel < start_vel2)
+    {
+        iCameraSetBlurriness(0);
+    }
+    else
+    {
+        start_vel2 = (vel / (peak_vel2 - start_vel2));
+        if (start_vel2 > 1.0f)
+        {
+            start_vel2 = 1.0f;
+        }
+        iCameraSetBlurriness(start_vel2 * max_blur);
+    }
+}
+
+static void dampen_velocity(xVec3& v1, const xVec3& v2, F32 f)
+{
+	F32 f0 = v1.x * v2.x;
+
+	xVec3 v1_old = v1;
+
+	F32 f3 = v2.y;
+	F32 f4 = -((f * f0) - v1.x);
+
+	v1.x = f4;
+	f4 = v1.y;
+	f3 = f4 * f3;
+	f3 = -((f * f3) - f4);
+
+	v1.y = f3;
+	f3 = v1.z;
+	f0 = f3 * v2.z;
+	v1.z = -((f * f0) - f3);
+
+	S32 oldV1Neg = (v1_old.x < 0.0f) ? 1 : 0;
+	S32 newV1Neg = (v1.x < 0.0f) ? 1 : 0;
+
+	if (newV1Neg != oldV1Neg)
+	{
+		v1.x = 0.0f;
+	}
+
+    oldV1Neg = (v1_old.y < 0.0f) ? 1 : 0;
+	newV1Neg = (v1.y < 0.0f) ? 1 : 0;
+
+	if (newV1Neg != oldV1Neg)
+    {
+        v1.y = 0.0f;
+    }
+
+	oldV1Neg = (v1_old.z < 0.0f) ? 1 : 0;
+	newV1Neg = (v1.z < 0.0f) ? 1 : 0;
+
+	if (newV1Neg != oldV1Neg)
+	{
+		v1.z = 0.0f;
+	}
+}
+
+static void player_sound_hop_load(U32 hopid, S32 hip_or_hop)
+{
+    S64 t;
+
+    xMemPushBase();
+    t = iTimeGet();
+    xUtil_idtag2string(hopid, 0);
+    iTimeDiffSec(t);
+    xSTPreLoadScene(hopid, NULL, hip_or_hop);
+    t = iTimeGet();
+    xUtil_idtag2string(hopid, 0);
+    iTimeDiffSec(t);
+    xSTQueueSceneAssets(hopid, hip_or_hop);
+    t = iTimeGet();
+    xUtil_idtag2string(hopid, 0);
+    iTimeDiffSec(t);
+    while (xSTLoadStep(hopid) < 1.0f)
+    {
+		iTRCDisk::CheckDVDAndResetState();
+    }
+    xSTDisconnect(hopid, hip_or_hop);
+    t = iTimeGet();
+    xUtil_idtag2string(hopid, 0);
+    iTimeDiffSec(t);
+}
+
+static S32 g_flg_loaded;
+
+void zEntPlayer_LoadSounds()
+{
+    U32 bufsize;
+    void* info;
+
+    player_sound_hop_load('SPSB', 2);
+    g_flg_loaded |= 2;
+
+	info = xSTFindAsset(0x791025ac, &bufsize);
+    if (info != NULL)
+    {
+        player_sound_hop_load('SPPA', 2);
+        g_flg_loaded |= 0x08;
+    }
+
+	info = xSTFindAsset(0xc0e34b23, &bufsize);
+    if (info != NULL)
+    {
+        player_sound_hop_load('SPSC', 2);
+        g_flg_loaded |= 0x20;
+    }
+
+    zEntPlayer_SNDInit();
+}
+
+void zEntPlayer_UnloadSounds()
+{
+    if (g_flg_loaded == 0)
+    {
+		return;
+	}
+    if (g_flg_loaded & 0x10)
+    {
+        xSTUnLoadScene('SPSC', 1);
+    }
+    if (g_flg_loaded & 0x20)
+    {
+        xSTUnLoadScene('SPSC', 2);
+        iSndSceneExit();
+    }
+    if (g_flg_loaded & 0x04)
+    {
+        xSTUnLoadScene('SPPA', 1);
+    }
+    if (g_flg_loaded & 0x08)
+    {
+        xSTUnLoadScene('SPPA', 2);
+        iSndSceneExit();
+    }
+    if (g_flg_loaded & 0x01)
+    {
+        xSTUnLoadScene('SPSB', 1);
+    }
+    if (g_flg_loaded & 0x02)
+    {
+        xSTUnLoadScene('SPSB', 2);
+        iSndSceneExit();
+    }
+    g_flg_loaded = 0;
+}
+
 
 void dont_move(xEnt* ent, xScene* scene, F32 dt, xEntFrame* frame)
 {

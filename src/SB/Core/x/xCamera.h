@@ -291,6 +291,7 @@ void xCameraLookYPR(xCamera* cam, U32 flags, F32 yaw, F32 pitch, F32 roll, F32 t
 F32 xCameraGetFOV(const xCamera* cam);
 void xCameraDoCollisions(S32 do_collis, S32 owner);
 void xCameraSetTargetMatrix(xCamera* cam, xMat4x3* mat);
+void xCameraSetTargetOMatrix(xCamera* cam, xMat4x3* mat);
 void xCameraFXShake(F32 maxTime, F32 magnitude, F32 cycleMax, F32 rotate_magnitude, F32 radius,
                     xVec3* epicenter, xVec3* player);
 

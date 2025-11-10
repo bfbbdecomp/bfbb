@@ -446,7 +446,6 @@ void zEntPlayerControlOff(zControlOwner owner);
 void zEntPlayerControlOn(zControlOwner owner);
 
 void zEntPlayer_StoreCheckPoint(xVec3* pos, F32 rot, U32 initCamID);
-S32 load_talk_filter(U8* filter, xModelAssetParam* params, U32 params_size, S32 max_size);
 
 S32 zEntPlayer_DamageNPCKnockBack(xBase* src, U32 damage, xVec3* npcPos);
 
