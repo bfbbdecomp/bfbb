@@ -8,6 +8,7 @@
 #include "iAnim.h"
 #include "iMath.h"
 #include "iSnd.h"
+#include "iTRC.h"
 
 #include "xDebug.h"
 #include "xEnt.h"
@@ -21,6 +22,7 @@
 #include "xSnd.h"
 #include "xstransvc.h"
 #include "xTRC.h"
+#include "xutil.h"
 #include "xVec3.h"
 #include "xVec3Inlines.h"
 
@@ -59,6 +61,7 @@ static F32 sCatchCapsuleTimer;
 static F32 stuck_timer;
 static F32 not_stuck_timer;
 static xVec3 stuck_start_loc;
+S32 gSpongeBall;
 
 // Multidimensional sound arrays for each player type
 static U32 sPlayerSnd[ePlayer_MAXTYPES][ePlayerSnd_Total] = {};
@@ -193,6 +196,9 @@ static S32 lin_goo;
 static F32 in_goo_tmr;
 static U32 player_hitlist_anim;
 S32 player_hit;
+static xEnt* mount_object;
+static U32 mount_type;
+static F32 mount_tmr;
 static S32 player_hit_anim = 1;
 static U32 player_dead_anim = 1;
 static U32 player_idle_anim;
@@ -207,15 +213,45 @@ static F32 sBubbleBowlTimer;
 static U32 sSpatulaGrabbed;
 S32 gWaitingToAutoSave;
 
+xMat4x3 sCameraLastMat;
+xVec3 sDriveVel;
+
 static enum {
     WallJumpResult_NoJump,
     WallJumpResult_Jump,
 } sWallJumpResult;
-static class xVec3 sWallNormal;
-static class zSurfaceProps* sWallCollisionSurface;
+static xVec3 sWallNormal;
+static xModelTag sSandyLFoot; 
+static xModelTag sSandyRFoot; 
+static xModelTag sSandyLHand; 
+static xModelTag sSandyRHand; 
+static xModelTag sSandyLKnee; 
+static xModelTag sSandyRKnee; 
+static xModelTag sSandyLElbow;
+static xModelTag sSandyRElbow;
+static xModelTag sSpongeBobLKnee;
+static xModelTag sSpongeBobRKnee;
+static xModelTag sSpongeBobLElbow;
+static xModelTag sSpongeBobRElbow;
+static xModelTag sSpongeBobLFoot;
+static xModelTag sSpongeBobRFoot;
+static xModelTag sSpongeBobLHand;
+static xModelTag sSpongeBobRHand;
+static xModelTag sPatrickLFoot;
+static xModelTag sPatrickRFoot;
+static xModelTag sPatrickLHand;
+static xModelTag sPatrickRHand;
+static xModelTag sPatrickLKnee;
+static xModelTag sPatrickRKnee;
+static xModelTag sPatrickLElbow;
+static xModelTag sPatrickRElbow;
+static xModelTag sPatrickMelee;
+static zSurfaceProps* sWallCollisionSurface;
 static float sTongueDblSpeedMult;
 
 static void PlayerSwingUpdate(xEnt* ent, F32 mag, F32 angle, F32 dt);
+static S32 CheckObjectAgainstMeleeBound(xEnt* ent, void* data);
+static void zEntPlayer_PredictionUpdate(xEnt* ent, F32 dt);
 
 void zEntPlayer_SpawnWandBubbles(xVec3* center, U32 count)
 {
@@ -2281,7 +2317,58 @@ static U32 StunStartFallCB(xAnimTransition*, xAnimSingle*, void*)
     return 0;
 }
 
-static U32 StunRadiusCB(xAnimTransition*, xAnimSingle*, void*);
+static U32 StunRadiusCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    zEntPlayer_SNDPlay(ePlayerSnd_BellySmash, 0.0f);
+    if ((xrand() & 0x3) == 3)
+    {
+        zEntPlayer_SNDPlayStreamRandom(ePlayerStreamSnd_BellySmashComment1, ePlayerStreamSnd_BellySmashComment3,
+                                       0.0f);
+    }
+
+    if (tslide_lastrealvel.y > -1.0f)
+    {
+        
+        zPadAddRumble(eRumble_Medium, 0.1f, 0, 0x0);
+    }
+    else if (stun_power_tmr < 0.4f)
+    {
+        zPadAddRumble(eRumble_Heavy, 0.15f, 0, 0x0);
+    }
+    else if (stun_power_tmr < 1.0f)
+    {
+        zPadAddRumble(eRumble_VeryHeavy, 0.3f, 0, 0x0);
+    }
+    else
+    {
+        zPadAddRumble(eRumble_VeryHeavyHi, 0.6f, 0, 0x0);
+    }
+
+    return 0;
+}
+
+static S32 MeleeAttackBoundCollide(xEnt* ent, zScene* zscn, xBound* meleeB)
+{
+    Melee_cbData cbdata;
+    xVec3 pos;
+
+    cbdata.ent = ent;
+    cbdata.zsc = zscn;
+    cbdata.meleeB = meleeB;
+    cbdata.hitsomething = 0;
+    xVec3Copy(&pos, xBoundCenter(meleeB));
+
+    xGridCheckPosition(&colls_grid, &pos, &meleeB->qcd, CheckObjectAgainstMeleeBound, &cbdata);
+    xGridCheckPosition(&colls_oso_grid, &pos, &meleeB->qcd, CheckObjectAgainstMeleeBound, &cbdata);
+    xGridCheckPosition(&npcs_grid, &pos, &meleeB->qcd, CheckObjectAgainstMeleeBound, &cbdata);
+
+    return cbdata.hitsomething;
+}
+
+static S32 CheckObjectAgainstMeleeBound(xEnt* ent, void* data)
+{
+    return 0;
+}
 
 // Equivalent: sda relocation scheduling + regswap
 static U32 BounceCB(xAnimTransition*, xAnimSingle*, void*)
@@ -3517,40 +3604,40 @@ S32 zEntPlayer_IsSneaking()
     }
 }
 
-// The cmpw instruction used in `if ((S32)non_choices[j] - 1 == i)` has its
-// operands in the wrong order.
 S32 load_talk_filter(U8* filter, xModelAssetParam* params, U32 params_size, S32 max_size)
 {
-    S32 found = 0;
-    F32* non_choices = (F32*)xMemPushTemp(max_size * 4);
-    S32 size =
-        20; // FIXME Define zEntPlayer_Strings for line: zParamGetFloatList(params, params_size, zEntPlayer_Strings + 0x29ec, max_size, non_choices, non_choices);
+	// Not sure about these variable names.
+    F32* non_choice; // Not in DWARF.
+    S32 size = 0;
+    F32* non_choices = (F32 *)xMemPushTemp(max_size * sizeof(F32));
+    S32 found = zParamGetFloatList(params, params_size, "NonRandomTalkAnims", max_size, non_choices, non_choices);
 
-    for (S32 i = 0; i < max_size; i++)
-    {
-        bool skip = false;
-        for (S32 j = 0; j < size; j++)
-        {
-            if ((S32)non_choices[j] - 1 == i)
+	for (S32 i = 0; i < max_size; i++)
+	{
+		bool skip = false;
+		non_choice = non_choices;
+        for (S32 j = 0; j < found; j++)
+		{
+            if ((S32)*non_choice - 1 == i)
             {
                 skip = true;
                 break;
             }
-        }
-
+            non_choice++;
+		}
         if (!skip)
         {
-            filter[found++] = i;
+            filter[size] = (U8)i;
+            size++;
         }
-    }
-
-    if (found <= 0)
+	}
+    if (size <= 0)
     {
-        found = 1;
-        filter[0] = 0;
+        *filter = '\0';
+        size = 1;
     }
     xMemPopTemp(non_choices);
-    return found;
+    return size;
 }
 
 static U32 count_talk_anims(xAnimTable* anims)
@@ -3621,9 +3708,55 @@ F32 det3x3top1(float a, float b, float c, float d, float e, float f)
     return -((d * b) - ((a * e) + ((d * c) + ret)));
 }
 
+// Equivalent; scheduling.
+void PlayerMountHackUpdate(F32 delta)
+{
+    mount_tmr = delta + mount_tmr;
+    if ((mount_tmr > 0.1f) && (mount_object != NULL))
+    {
+        zEntEvent(mount_object, mount_type);
+        mount_object = NULL;
+        mount_type = 0;
+    }
+}
+
+void PlayerMountHackTakeAction(xEnt* ent, U32 type)
+{
+    if (mount_tmr > 0.1f)
+    {
+        zEntEvent(ent, type);
+    }
+	else
+	{
+        mount_object = ent;
+        mount_type = type;
+	}
+    mount_tmr = 0.0f;
+}
+
 void zEntPlayerExit(xEnt* ent)
 {
     bungee_state::destroy();
+}
+
+void PlayerHitAnimInit(xModelInstance* model, xAnimTransition* tran, U32* index)
+{
+    *index = 0;
+    xAnimState* state = model->Anim->Table->StateList;
+    while ((state != NULL) && (*index < 8))
+    {
+        if (strncmp(state->Name, "Hit0", 4) == 0)
+        {
+            tran[*index].Dest = state;
+            tran[*index].Callback = NULL;
+            tran[*index].SrcTime = 0.0;
+            tran[*index].DestTime = 0.0;
+            tran[*index].BlendRecip = 5.0f;
+            tran[*index].BlendOffset = NULL;
+            (*index)++;
+        }
+        state = state->Next;
+    }
 }
 
 void zEntPlayerPreReset()
@@ -3639,7 +3772,7 @@ void zEntPlayerPreReset()
 F32 ComputeFudge(F32 a, F32 b)
 {
     F32 min = MIN(a, b);
-    a = (min - 0.075f) / -0.175f;
+    a = (min - -0.175f) / 0.074999996f; // Will not match with 0.075f.
 
     if (0.0f > MIN(a, 1.0f))
     {
@@ -3703,15 +3836,276 @@ static void zEntPlayer_StreakFX(xEnt* ent, F32)
 {
     S32 i;
     S32 p;
-    S32 cp;
+    S32 cp = 0;
 
-    for (S32 i = 0; i < 6; i++)
+    for (S32 i = 0; i < 3; i++)
     {
-        for (S32 p = 0; p < 2; p++)
+        for (S32 p = 0; p < 4; p++)
         {
-            //sStreakInfo[i][p] = 0;
+            sStreakInfo[i][p].activated = FALSE;
         }
     }
+
+    if (ent->model == globals.player.model_sandy)
+    {
+        cp = 1;
+    }
+    else if (ent->model == globals.player.model_patrick)
+    {
+        cp = 2;
+    }
+
+    if (globals.player.SlideTrackSliding & 0x1)
+    {
+        if (cp == 1)
+        {
+            if (strstr(ent->model->Anim->Single->State->Name, "Tail") != NULL)
+            {
+                sStreakInfo[1][0].activated = TRUE;
+                sStreakInfo[1][1].activated = TRUE;
+            }
+        }
+        else if (cp == 0 && strcmp(ent->model->Anim->Single->State->Name, "TongueJump01") == 0 || strcmp(ent->model->Anim->Single->State->Name, "TongueJumpXtra01") == 0 || strcmp(ent->model->Anim->Single->State->Name, "TongueDJumpApex01") == 0)
+        {
+            sStreakInfo[0][2].activated = TRUE;
+            sStreakInfo[0][3].activated = TRUE;
+        }
+    }
+    else if (cp == 1)
+    {
+        sStreakInfo[1][0].activated = TRUE;
+        sStreakInfo[1][1].activated = TRUE;
+    }
+    else
+    {
+        sStreakInfo[cp][2].activated = TRUE;
+        sStreakInfo[cp][3].activated = TRUE;
+    }
+
+    if (globals.player.Jump_Springboard != NULL)
+    {
+        sStreakInfo[cp][0].activated = TRUE;
+        sStreakInfo[cp][1].activated = TRUE;
+    }
+
+    if (cp == 1)
+    {
+        if (strcmp(ent->model->Anim->Single->State->Name,"Melee01") == 0)
+        {
+            sStreakInfo[1][1].activated = TRUE;
+        }
+        else if (strcmp(ent->model->Anim->Single->State->Name,"JumpMelee01") == 0)
+        {
+            sStreakInfo[1][2].activated = 1;
+        }
+        else if (strcmp(ent->model->Anim->Single->State->Name,"LassoSwing") == 0)
+        {
+            sStreakInfo[1][2].activated = TRUE;
+            sStreakInfo[1][3].activated = TRUE;
+        }
+        else if (globals.player.IsCoptering)
+        {
+            sStreakInfo[1][1].activated = 1;
+        }
+    }
+    else if (cp == 2)
+    {
+        if (strcmp(ent->model->Anim->Single->State->Name,"BbowlWindup01") == 0) {
+            sStreakInfo[0][1].activated = 1;
+        }
+    }
+    else if (cp == 0 && strcmp(ent->model->Anim->Single->State->Name, "Stunfall") == 0 || strcmp(ent->model->Anim->Single->State->Name, "Stunjump") == 0)
+    {
+        sStreakInfo[2][1].activated = TRUE;
+        sStreakInfo[2][0].activated = TRUE;
+        sStreakInfo[2][3].activated = TRUE;
+        sStreakInfo[2][2].activated = TRUE;
+    }
+
+    for (i = 0; i < 3; i++)
+    {
+        for (p = 0; p < 4; p++)
+        {
+            if (sStreakInfo[i][p].activated && sStreakInfo[i][p].streakID == 0xdead)
+            {
+                sStreakInfo[i][p].streakID = xFXStreakStart(0.0f, 4.0f, sStreakInfo[i][p].alphaStart, 0x0, &sStreakInfo[i][p].colA, &sStreakInfo[i][p].colB, sStreakInfo[i][p].streakTaper);
+            }
+            else
+            {
+                if (!sStreakInfo[i][p].activated && sStreakInfo[i][p].streakID != 0xdead)
+                {
+                    xFXStreakStop(sStreakInfo[i][p].streakID);
+                    sStreakInfo[i][p].streakID = 0xdead;
+                }
+            }
+
+            if (sStreakInfo[i][p].streakID != 0xdead)
+            {
+                iModelTagEval(ent->model->Data, sStreakInfo[i][p].tagA, globals.player.model_spongebob->Mat, &sStreakInfo[i][p].a);
+                iModelTagEval(ent->model->Data, sStreakInfo[i][p].tagB, globals.player.model_spongebob->Mat, &sStreakInfo[i][p].b);
+            }
+            else
+            {
+                iModelTagEval(ent->model->Data, sStreakInfo[i][p].tagA, ent->model->Mat, &sStreakInfo[i][p].a);
+                iModelTagEval(ent->model->Data, sStreakInfo[i][p].tagB, ent->model->Mat, &sStreakInfo[i][p].b);
+            }
+
+            xFXStreakUpdate(sStreakInfo[i][p].streakID, &sStreakInfo[i][p].a, &sStreakInfo[i][p].b);
+        }
+    }
+}
+
+static void zEntPlayer_SpringboardFX(xEnt* ent, F32 dt)
+{
+    xVec3 temp1;
+    xVec3 temp2;
+    xParEmitterCustomSettings info;
+
+    if (globals.player.Jump_Springboard != NULL && ent->frame->vel.y >= 0.0f)
+    {
+        xVec3Copy(&temp1, (xVec3*)&ent->model->Mat->pos);
+        temp1.y += 1.5f;
+
+        xVec3Copy(&temp2, (xVec3*)&ent->model->Mat->right);
+
+        temp2 *= 0.15f;
+        xVec3Add(&temp1, &temp1, &temp2);
+
+        if (gPTankDisable)
+        {
+            static F32 sLastSpringboardBubbleEmit = 0.0f;
+            sLastSpringboardBubbleEmit += dt;
+
+            if (!(sLastSpringboardBubbleEmit > 0.02f))
+            {
+                return;
+            }
+            
+            sLastSpringboardBubbleEmit = 0.0f;
+
+            info.custom_flags = 0x35E;
+            info.pos = temp1;
+            info.vel.x = 1.0f;
+            info.vel.z = 0.0f;
+            info.vel.y = 0.0f;
+            info.vel_angle_variation = PI * 2.0f;
+            info.rate.set(100.0f, 100.0f, 1.0f, 0);
+            info.life.set(1.0f, 1.0f, 1.0f, 0);
+
+            F32 size = 0.15f * xurand() + 0.05f;
+
+            info.size_birth.set(size, size, 1.0f, 0);
+
+            size *= 1.2f;
+            info.size_death.set(size, size, 1.0f, 0);
+            
+            xParEmitterEmitCustom(sEmitSpinBubbles, dt, &info);
+        }
+        else
+        {
+            zFX_SpawnBubbleTrail((xVec3*)&globals.player.ent.model->Mat->pos, 3);
+        }
+    }
+}
+
+static void getPadDefl(_tagPadAnalog* stick, class xVec2* v)
+{
+
+}
+
+static void zEntPlayer_BoulderVehicleRender(zEnt* ent)
+{
+    xShadow_ListAdd(boulderVehicle);
+}
+
+static void zEntPlayer_BoulderVehicleMove(xEnt* ent, xScene* scn, F32, xEntFrame* frame)
+{
+    frame->mode = 0x30000;
+}
+
+static void zEntPlayer_BoulderVehicleUpdate(xEnt* ent, xScene* sc, F32 dt)
+{
+    xEntCollis collis;
+    S32 i;
+    xEnt* dyn;
+    xEntBoulder* boul;
+    F32 padDefl;
+    xVec3 rotFudge;
+    F32 ang;
+    xMat3x3 rotM;
+    xVec3 heading;
+    F32 angle;
+    F32 mag;
+    
+    gSpongeBall = TRUE;
+    xEntBoulder* shouldDamagePlayer = FALSE;
+    zEntPlayer_PredictionUpdate(ent, dt);
+    
+    xVec3Copy(&ent->frame->oldmat.pos, &ent->frame->mat.pos);
+
+    U8 chkBackup = ent->collis->chk;
+    U8 penBackup = ent->collis->pen;
+    ent->collis->chk = 0x0;
+    ent->collis->pen = 0x0;
+    
+    if (boulderVehicle != NULL && globals.player.ControlOff == FALSE)
+    {
+        bvTimeToIdle -= dt;
+        
+        xVec2 inputDefl;
+        getPadDefl(&globals.pad0->analog1, &inputDefl);
+
+        if (globals.pad0->on & 0x20)
+        {
+            inputDefl.y = 1.0f;
+        }
+        
+        if (globals.pad0->on & 0x80)
+        {
+            inputDefl.y = -1.0f;
+        }
+        
+        if (globals.pad0->on & 0x40)
+        {
+            inputDefl.x = 1.0f;
+        }
+        
+        if (globals.pad0->on & 0x10)
+        {
+            inputDefl.x = -1.0f;
+        }
+
+        xVec3 tempRight;
+        xVec3Copy(&tempRight, &globals.camera.mat.right);
+
+        F32 normLength = xVec3Length2(&tempRight);
+        if (normLength > 0.0001f)
+        {
+            normLength = xsqrt(normLength);
+            xVec3SMulBy(&tempRight, 1.0f / normLength);
+        }
+        else
+        {
+            xVec3Copy(&tempRight, &globals.player.ent.collis->colls[0].norm);
+        }
+
+        xVec3 tempAt;
+        xVec3Copy(&tempAt, &globals.camera.mat.at);
+    }
+
+    // 0x5D0
+    if (boulderVehicle != NULL)
+    {
+        
+    }
+}
+
+static void zEntPlayer_PredictionUpdate(xEnt* ent, F32 dt)
+{
+    zPlayerGlobals* g;
+    F32 lastVel;
+    F32 newAngV;
+    F32 r;
 }
 
 void zEntPlayer_PatrickLaunch(xEnt* patLauncher)
@@ -3729,6 +4123,64 @@ void zEntPlayerUpdateModel()
     {
         zEntPlayerUpdateModelSB();
     }
+}
+
+void zEntPlayerEmitTongueBubbles()
+{
+    xModelInstance* model = globals.player.sb_models[6];
+    U8 rand;
+    xVec3 vec;
+
+    if ((model->Flags & 1) && (rand = xrand(), rand < 0x80))
+    {
+        xVec3Copy(&vec, (xVec3*)&model->Mat->pos);
+        vec.y -= 0.5f;
+        zFX_SpawnBubbleTrail(&vec, 1);
+    }
+}
+
+void zEntPlayerEmitSlideBubbles()
+{
+    xModelInstance* model = globals.player.ent.model;
+    U8 rand;
+    xVec3 vec;
+
+    if ((model->Flags & 1) && (rand = xrand(), rand < 0x80))
+    {
+        xVec3Copy(&vec, (xVec3*)&model->Mat->pos);
+        vec.y -= 0.5f;
+        zFX_SpawnBubbleTrail(&vec, 1);
+    }
+}
+
+void zEntPlayerCheckHelmetPop()
+{
+    xVec3 vec;
+    xModelInstance* model = globals.player.sb_models[7];
+    if ((globals.player.IsBubbleBashing == 0) || (globals.player.sb_models[7]->Flags & 1))
+    {
+		return;
+	}
+    xMat4x3Mul((xMat4x3 *)globals.player.sb_models[7]->Mat, (xMat4x3 *)(&globals.player.ent.model->Mat[5]), (xMat4x3 *)(globals.player.ent.model)->Mat);
+    xVec3Copy(&vec, (xVec3 *)&model->Mat->pos);
+    vec.y += 0.35f;
+    zFX_SpawnBubbleHit(&vec, 0x32);
+    globals.player.IsBubbleBashing = 0;
+
+}
+
+void zEntPlayer_setBoulderMode(U32 mode)
+{
+	if (mode != 0)
+	{
+        boulderRollShouldStart = 1;
+        boulderRollShouldEnd = 0;
+    }
+	else
+	{
+        boulderRollShouldStart = 0;
+        boulderRollShouldEnd = 1;
+	}
 }
 
 S32 zEntPlayer_Damage(xBase* src, U32 damage, const xVec3* knockback)
@@ -3905,6 +4357,14 @@ void zEntPlayer_GiveLevelPickupCurrentLevel(S32 quantity)
     }
 }
 
+void zEntPlayerJumpAddDriver(xEnt* ent)
+{
+    if (sDriveVel.y > 0.0f)
+    {
+        ent->frame->vel.y += sDriveVel.y;
+    }
+}
+
 xVec3* GetPosVec(xBase* base)
 {
     xVec3* vec = (xVec3*)&g_O3;
@@ -3930,6 +4390,46 @@ xVec3* GetPosVec(xBase* base)
     }
 
     return vec;
+}
+
+void zEntPlayer_StoreCheckPoint(xVec3* pos, F32 rot, U32 initCamID)
+{
+    if (pos != NULL)
+    {
+		globals.player.cp.pos = *pos;
+        globals.player.cp.rot = rot;
+        globals.player.cp.initCamID = initCamID;
+    }
+}
+
+void zEntPlayer_LoadCheckPoint()
+{
+    xEnt& p = globals.player.ent;
+    xModelInstance& m = *p.model;
+    xEntFrame& f = *p.frame;
+    zCheckPoint& cp =  globals.player.cp;
+
+	f.mat.pos = cp.pos;
+	f.oldmat.pos = cp.pos;
+    f.rot.angle = cp.rot;
+    f.rot.axis = xVec3::create(0.0f, 1.0f, 0.0f);
+
+    xMat3x3Euler(&f.mat, f.rot.angle, 0, 0);
+    *(xMat4x3*)(m.Mat) = f.mat;
+    xCameraSetTargetMatrix(&globals.camera, xEntGetFrame(&globals.player.ent));
+    xCameraSetTargetOMatrix(&globals.camera, &sCameraLastMat);
+
+    if (sPlayerDiedLastTime != 0)
+    {
+        sPlayerDiedLastTime = 0;
+        zEntPlayer_SNDPlayStreamRandom(0x00, 0x01, ePlayerStreamSnd_EnterScene1, ePlayerStreamSnd_EnterScene3, 0.3f);
+        zEntPlayer_SNDPlayStreamRandom(0x02, 0x04, ePlayerStreamSnd_EnterScene1, ePlayerStreamSnd_EnterScene4, 0.3f);
+        zEntPlayer_SNDPlayStreamRandom(0x05, 0x0A, ePlayerStreamSnd_EnterScene1, ePlayerStreamSnd_EnterScene5, 0.3f);
+        zEntPlayer_SNDPlayStreamRandom(0x0B, 0x19, ePlayerStreamSnd_EnterScene1, ePlayerStreamSnd_EnterScene6, 0.3f);
+        zEntPlayer_SNDPlayStreamRandom(0x1A, 0x64, ePlayerStreamSnd_EnterScene1, ePlayerStreamSnd_EnterScene7, 0.3f);
+    }
+
+    zCameraReset(&globals.camera);
 }
 
 static void _SetupRumble(_tagePlayerSnd player_snd, _tagRumbleType type, float time)
@@ -6629,6 +7129,176 @@ xAnimTable* zEntPlayer_AnimTable()
 
     return animTable;
 }
+
+void iCameraSetBlurriness(F32 amount);
+
+// Equivalent; scheduling issues.
+static void zEntPlayer_UpdateVelocityBlur()
+{
+    F32 start_vel2;
+    F32 peak_vel2;
+	F32 vel; // not in DWARF
+
+	static F32 start_vel = 10.0f;
+	static F32 peak_vel = 50.0f;
+	static F32 max_blur = 0.5f;
+
+    if (start_vel >= peak_vel)
+    {
+		return;
+	}
+
+    start_vel2 = start_vel * start_vel;
+    peak_vel2 = peak_vel * peak_vel;
+    vel = globals.player.ent.frame->vel.length2();
+    if (vel < start_vel2)
+    {
+        iCameraSetBlurriness(0);
+    }
+    else
+    {
+        start_vel2 = (vel / (peak_vel2 - start_vel2));
+        if (start_vel2 > 1.0f)
+        {
+            start_vel2 = 1.0f;
+        }
+        iCameraSetBlurriness(start_vel2 * max_blur);
+    }
+}
+
+static void dampen_velocity(xVec3& v1, const xVec3& v2, F32 f)
+{
+	F32 f0 = v1.x * v2.x;
+
+	xVec3 v1_old = v1;
+
+	F32 f3 = v2.y;
+	F32 f4 = -((f * f0) - v1.x);
+
+	v1.x = f4;
+	f4 = v1.y;
+	f3 = f4 * f3;
+	f3 = -((f * f3) - f4);
+
+	v1.y = f3;
+	f3 = v1.z;
+	f0 = f3 * v2.z;
+	v1.z = -((f * f0) - f3);
+
+	S32 oldV1Neg = (v1_old.x < 0.0f) ? 1 : 0;
+	S32 newV1Neg = (v1.x < 0.0f) ? 1 : 0;
+
+	if (newV1Neg != oldV1Neg)
+	{
+		v1.x = 0.0f;
+	}
+
+    oldV1Neg = (v1_old.y < 0.0f) ? 1 : 0;
+	newV1Neg = (v1.y < 0.0f) ? 1 : 0;
+
+	if (newV1Neg != oldV1Neg)
+    {
+        v1.y = 0.0f;
+    }
+
+	oldV1Neg = (v1_old.z < 0.0f) ? 1 : 0;
+	newV1Neg = (v1.z < 0.0f) ? 1 : 0;
+
+	if (newV1Neg != oldV1Neg)
+	{
+		v1.z = 0.0f;
+	}
+}
+
+static void player_sound_hop_load(U32 hopid, S32 hip_or_hop)
+{
+    S64 t;
+
+    xMemPushBase();
+    t = iTimeGet();
+    xUtil_idtag2string(hopid, 0);
+    iTimeDiffSec(t);
+    xSTPreLoadScene(hopid, NULL, hip_or_hop);
+    t = iTimeGet();
+    xUtil_idtag2string(hopid, 0);
+    iTimeDiffSec(t);
+    xSTQueueSceneAssets(hopid, hip_or_hop);
+    t = iTimeGet();
+    xUtil_idtag2string(hopid, 0);
+    iTimeDiffSec(t);
+    while (xSTLoadStep(hopid) < 1.0f)
+    {
+		iTRCDisk::CheckDVDAndResetState();
+    }
+    xSTDisconnect(hopid, hip_or_hop);
+    t = iTimeGet();
+    xUtil_idtag2string(hopid, 0);
+    iTimeDiffSec(t);
+}
+
+static S32 g_flg_loaded;
+
+void zEntPlayer_LoadSounds()
+{
+    U32 bufsize;
+    void* info;
+
+    player_sound_hop_load('SPSB', 2);
+    g_flg_loaded |= 2;
+
+	info = xSTFindAsset(0x791025ac, &bufsize);
+    if (info != NULL)
+    {
+        player_sound_hop_load('SPPA', 2);
+        g_flg_loaded |= 0x08;
+    }
+
+	info = xSTFindAsset(0xc0e34b23, &bufsize);
+    if (info != NULL)
+    {
+        player_sound_hop_load('SPSC', 2);
+        g_flg_loaded |= 0x20;
+    }
+
+    zEntPlayer_SNDInit();
+}
+
+void zEntPlayer_UnloadSounds()
+{
+    if (g_flg_loaded == 0)
+    {
+		return;
+	}
+    if (g_flg_loaded & 0x10)
+    {
+        xSTUnLoadScene('SPSC', 1);
+    }
+    if (g_flg_loaded & 0x20)
+    {
+        xSTUnLoadScene('SPSC', 2);
+        iSndSceneExit();
+    }
+    if (g_flg_loaded & 0x04)
+    {
+        xSTUnLoadScene('SPPA', 1);
+    }
+    if (g_flg_loaded & 0x08)
+    {
+        xSTUnLoadScene('SPPA', 2);
+        iSndSceneExit();
+    }
+    if (g_flg_loaded & 0x01)
+    {
+        xSTUnLoadScene('SPSB', 1);
+    }
+    if (g_flg_loaded & 0x02)
+    {
+        xSTUnLoadScene('SPSB', 2);
+        iSndSceneExit();
+    }
+    g_flg_loaded = 0;
+}
+
 
 void dont_move(xEnt* ent, xScene* scene, F32 dt, xEntFrame* frame)
 {

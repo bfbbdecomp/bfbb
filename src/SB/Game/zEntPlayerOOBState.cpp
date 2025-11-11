@@ -2,6 +2,7 @@
 #include "zGlobals.h"
 
 #include "xMath.h"
+#include "xMathInlines.h"
 
 #include <types.h>
 
@@ -44,18 +45,70 @@ namespace oob_state
         tagFixed fixed;
         xMat4x3 shared_target;
 
+        static void set_camera(bool instant)
+        {
+            xCamera& cam = globals.camera;
+            xVec3 target_offset;
+            F32 tm;
+            F32 tm_acc;
+
+            shared_target = g_I3;
+            shared_target.pos = globals.player.ent.model->Scale;
+
+            globals.camera.tgt_omat = &shared_target;
+            globals.camera.tgt_mat = globals.camera.tgt_omat;
+
+            zCameraDisableInput();
+            zCameraSetBbounce(0);
+            zCameraSetLongbounce(0);
+            zCameraSetHighbounce(0);
+            zCameraDisableTracking(CO_OOB);
+            xCameraDoCollisions(0, 6);
+
+            if (instant)
+            {
+                tm = 0.0f;
+            }
+            else
+            {
+                tm = 0.3f;
+            }
+
+            if (instant != NULL)
+            {
+                tm_acc = 0.0f;
+            }
+            else
+            {
+                tm_acc = 0.1f;
+            }
+
+            xCameraMove(&cam, 40, (xatan2(cam.mat.at.x, cam.mat.at.z) + PI), fixed.cam_dist,
+                        cam.pcur, tm, tm_acc, fixed.cam_height);
+
+            cam.tgt_mat->pos - cam.mat.pos;
+            cam.tgt_mat->pos.normal();
+
+            xCameraLookYPR(&cam, NULL, xatan2(cam.mat.up.x, cam.mat.up.z), 0.0f, 0.0f, 0.0f, 0.0f,
+                           0.0f);
+
+            zCameraTweakGlobal_Init();
+        }
+
         static void reset_camera()
         {
-            // xMat4x3 ma, is not correct. This is a major placeholder.
-            // Simply have not figured out what the data/global is supposed to be
-            // FIXME: Correct this function
-
-            xMat4x3* ma = xEntGetFrame(&(xEnt)globals.player.ent);
+            globals.camera.tgt_omat = xEntGetFrame(&(xEnt)globals.player.ent);
+            globals.camera.tgt_mat = globals.camera.tgt_omat;
 
             zCameraEnableInput();
             zCameraEnableTracking(CO_OOB);
             xCameraDoCollisions(1, 6);
             zCameraTweakGlobal_Init();
+        }
+
+        static void move_up(xVec3& vec, F32 arg1)
+        {
+            xMat4x3Tolocal(&vec, &globals.camera.mat, &vec);
         }
 
         static bool assume_player_is_stupid()
@@ -85,6 +138,10 @@ namespace oob_state
         }
 
         static void move_hand(float dt /* r29+0x10 */)
+        {
+        }
+
+        static void render_fade()
         {
         }
 
@@ -187,6 +244,58 @@ public:
         float decay; // offset 0x4, size 0x4
     } turn; // offset 0x50, size 0x8
 } fixed; // size: 0x58, address: 0x5CDE00 */
+
+void oob_state::load_settings(xIniFile& ini)
+{
+    fixed.hand_model = xIniGetString(&ini, "player.state.out_of_bounds.hand_model", "hand");
+    fixed.out_time = xIniGetFloat(&ini, "player.state.out_of_bounds.out_time", 9.0f);
+    fixed.reset_time = xIniGetFloat(&ini, "player.state.out_of_bounds.reset_time", 3.0f);
+    fixed.cam_dist = xIniGetFloat(&ini, "player.state.out_of_bounds.cam_dist", 3.0f);
+    fixed.cam_height = xIniGetFloat(&ini, "player.state.out_of_bounds.cam_height", 1.0f);
+    fixed.cam_pitch =
+        (xIniGetFloat(&ini, "player.state.out_of_bounds.cam_pitch", 10.0f) * 0.017453292f);
+    fixed.reorient_time = xIniGetFloat(&ini, "player.state.out_of_bounds.reorient_time", 0.25f);
+    fixed.in_loc.x = xIniGetFloat(&ini, "player.state.out_of_bounds.in_loc.x", 0.2f);
+    fixed.in_loc.y = xIniGetFloat(&ini, "player.state.out_of_bounds.in_loc.y", 0.0f);
+    fixed.out_loc.x = xIniGetFloat(&ini, "player.state.out_of_bounds.out_loc.x", 1.0f);
+    fixed.out_loc.y = xIniGetFloat(&ini, "player.state.out_of_bounds.out_loc.y", 0.0f);
+    fixed.grab.in_wait_time =
+        xIniGetFloat(&ini, "player.state.out_of_bounds.grab.in_wait_time", 0.0f);
+    fixed.grab.in_vel = xIniGetFloat(&ini, "player.state.out_of_bounds.grab.in_vel", 2.0f);
+    fixed.grab.in_stop_dist =
+        xIniGetFloat(&ini, "player.state.out_of_bounds.grab.in_stop_dist", 0.05f);
+    fixed.grab.out_wait_time =
+        xIniGetFloat(&ini, "player.state.out_of_bounds.grab.out_wait_time", 0.5f);
+    fixed.grab.out_vel = xIniGetFloat(&ini, "player.state.out_of_bounds.grab.out_vel", 0.5f);
+    fixed.grab.out_start_dist =
+        xIniGetFloat(&ini, "player.state.out_of_bounds.grab.out_start_dist", 0.1f);
+    fixed.grab.fade_start_time =
+        xIniGetFloat(&ini, "player.state.out_of_bounds.grab.fade_start_time", 0.0f);
+    fixed.grab.fade_time = xIniGetFloat(&ini, "player.state.out_of_bounds.grab.fade_time", 2.0f);
+    fixed.drop.in_vel = xIniGetFloat(&ini, "player.state.out_of_bounds.drop.in_vel", 0.5f);
+    fixed.drop.in_stop_dist =
+        xIniGetFloat(&ini, "player.state.out_of_bounds.drop.in_stop_dist", 0.1f);
+    fixed.drop.out_wait_time =
+        xIniGetFloat(&ini, "player.state.out_of_bounds.drop.out_wait_time", 0.5f);
+    fixed.drop.out_vel = xIniGetFloat(&ini, "player.state.out_of_bounds.drop.out_vel", 2.0f);
+    fixed.drop.out_start_dist =
+        xIniGetFloat(&ini, "player.state.out_of_bounds.drop.out_start_dist", 0.05f);
+    fixed.drop.fade_start_time =
+        xIniGetFloat(&ini, "player.state.out_of_bounds.drop.fade_start_time", 0.0f);
+    fixed.drop.fade_time = xIniGetFloat(&ini, "player.state.out_of_bounds.drop.fade_time", 1.5f);
+    fixed.hand_size_x = xIniGetFloat(&ini, "player.state.out_of_bounds.hand_size_x", 0.4f);
+    fixed.hand_size_y = xIniGetFloat(&ini, "player.state.out_of_bounds.hand_size_y", 0.4f);
+    fixed.hand_yaw =
+        (xIniGetFloat(&ini, "player.state.out_of_bounds.hand_yaw", 0.0f) * 0.017453292f);
+    fixed.hand_pitch =
+        (xIniGetFloat(&ini, "player.state.out_of_bounds.hand_pitch", 0.0f) * 0.017453292f);
+    fixed.hand_roll =
+        (xIniGetFloat(&ini, "player.state.out_of_bounds.hand_roll", 90.0f) * 0.017453292f);
+}
+
+void oob_state::init()
+{
+}
 
 #define TODO_FIX_FLOAT 0.000000000000
 

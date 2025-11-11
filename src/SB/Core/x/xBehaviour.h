@@ -67,6 +67,12 @@ enum en_psynote
     PSY_NOTE_FORCE = 0x7fffffff
 };
 
+enum en_xpsytime
+{
+    XPSY_TYMR_CURGOAL,
+    XPSY_TYMR_NOMORE
+};
+
 struct xGoal;
 
 struct xPSYNote
@@ -110,6 +116,7 @@ struct xPsyche : RyzMemData
     {
         return gid_safegoal;
     }
+	xGoal* GetPrevRecovery(S32 gid);
     S32 Timestep(F32 dt, void* updCtxt);
     xGoal* FindGoal(S32 gid);
     S32 GoalSet(S32 gid, S32 r5);
@@ -125,10 +132,15 @@ struct xPsyche : RyzMemData
     void BrainExtend();
     void BrainEnd();
     xGoal* AddGoal(S32 gid, void* createData);
+	void ForceTran(F32, void*);
     void FreshWipe();
+	F32 TimerGet(en_xpsytime tymr);
+	void TimerClear();
+	void SetTopState(en_GOALSTATE);
     void SetOwner(xBase*, void*);
     void KillBrain(xFactory*);
     void Lobotomy(xFactory*);
+	void TimerUpdate(F32 dt);
     void SetSafety(S32 goalID)
     {
         gid_safegoal = goalID;

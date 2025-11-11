@@ -89,7 +89,7 @@ struct tweak_callback
 };
 
 void xprintf(const char* msg, ...);
-S32 xDebugModeAdd(char* mode, void(*debugFunc));
+S32 xDebugModeAdd(const char* mode, void(*debugFunc)());
 void xDebugInit();
 void xDebugUpdate();
 void xDebugExit();

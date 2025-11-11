@@ -8,12 +8,11 @@
 #include "zNPCTypes.h"
 #include "zNPCSupplement.h"
 #include "xMath.h"
+#include "zGameExtras.h"
 
 extern U32 g_hash_hazanim[3];
 extern char* g_strz_hazanim[3];
-extern NPCHazard g_hazards[64];
 extern UVAModelInfo g_haz_uvAnimInfo[30];
-extern S32 g_cnt_activehaz;
 extern NPCHazard* g_haz_uvAnimQue[27];
 extern RpAtomic* g_hazard_rawModel[30];
 extern xAnimTable* g_haz_animTable[30];
@@ -21,6 +20,31 @@ extern const xVec3 g_O3;
 extern F32 _958_Hazard; // 0.0f
 extern F32 _959_Hazard; // 1.0f
 extern F32 _1041_Hazard; // -1.0f
+
+static S32 g_cnt_activehaz;
+static xParEmitterCustomSettings g_parf_default;
+static xParEmitterCustomSettings g_parf_zapwarn;
+static xParEmitterCustomSettings g_parf_zapwave;
+static xParEmitterCustomSettings g_parf_zaprain;
+static RwRaster * g_rast_hazshad[30];
+static zParEmitter* g_pemit_default;
+static zParEmitter* g_pemit_zapwarn;
+static zParEmitter* g_pemit_zapwave;
+static zParEmitter* g_pemit_zaprain;
+
+static en_hazmodel g_funfrag_choices[8] = {
+    NPC_HAZMDL_FUNFRAG_WRENCH,
+    NPC_HAZMDL_FUNFRAG_JOYSTICK,
+    NPC_HAZMDL_FUNFRAG_SINK,
+    NPC_HAZMDL_FUNFRAG_DUCK,
+    NPC_HAZMDL_FUNFRAG_BRA,
+    NPC_HAZMDL_FUNFRAG_HEADPHONES,
+    NPC_HAZMDL_FUNFRAG_CELLPHONE,
+    NPC_HAZMDL_FUNFRAG_SHOE,
+};
+
+static char* g_strz_hazModel[30];
+static NPCHazard g_hazards[64];
 
 void zNPCHazard_Startup()
 {
@@ -72,6 +96,18 @@ void zNPCHazard_SceneReset()
 void zNPCHazard_ScenePostInit()
 {
     zNPCHazard_InitEffects();
+}
+
+void zNPCHazard_InitEffects()
+{
+    g_pemit_default = zParEmitterFind("PAREMIT_CLOUD");
+    g_pemit_zapwarn = zParEmitterFind("PAREMIT_ROMON_ZAPWARN");
+    g_pemit_zapwave = zParEmitterFind("PAREMIT_ROMON_ZAPWAVE");
+    g_pemit_zaprain = zParEmitterFind("PAREMIT_DUPLO_STEAM");
+
+    g_parf_default.custom_flags = 0x100;
+
+    // TODO...
 }
 
 void zNPCHazard_KillEffects()
@@ -286,6 +322,24 @@ void NPCHazard::TypData_RotMatApply(xMat3x3* mat)
     xMat3x3Mul(frame, mat, frame);
     xModelSetFrame(this->mdl_hazard, (xMat4x3*)frame);
 }
+
+en_hazmodel NPCHazard::PickFunFrag()
+{
+    S32 choices[8] = {};
+    S32 cnt_choice = 0;
+
+    for (S32 i = 0; i < 8; i++)
+    {
+        S32 idx = g_funfrag_choices[i];
+        if (g_hazard_rawModel[idx] != NULL)
+        {
+            choices[cnt_choice++] = idx;
+        }
+    }
+
+    return (en_hazmodel)xUtil_choose<S32>(choices, cnt_choice, NULL);
+}
+
 
 void NPCHazard::StagColStat()
 {

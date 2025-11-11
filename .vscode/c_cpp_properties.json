@@ -1,37 +1,37 @@
 {
-  "configurations": [
-    {
-      "name": "Default",
-      "defines": [
-        "__MWERKS__",
-        "GAMECUBE"
-      ],
-      "includePath": [
-        "${workspaceFolder}/include",
-        "${workspaceFolder}/include/bink",
-        "${workspaceFolder}/src/PowerPC_EABI_Support/include",
-        "${workspaceFolder}/src/PowerPC_EABI_Support/include/PowerPC_EABI_Support/MSL_C/MSL_Common",
-        "${workspaceFolder}/src/PowerPC_EABI_Support/include/PowerPC_EABI_Support/MSL_C++",
-        "${workspaceFolder}/include/inline",
-        "${workspaceFolder}/src/dolphin/include",
-        "${workspaceFolder}/src/dolphin/src",
-        "${workspaceFolder}/include/rwsdk",
-        "${workspaceFolder}/src/SB/Core/gc",
-        "${workspaceFolder}/src/SB/Core/x",
-        "${workspaceFolder}/src/SB/Game"
-      ],
-      "cStandard": "c99",
-      "cppStandard": "c++98",
-      "intelliSenseMode": "linux-clang-x86",
-      "compilerPath": "",
-      "configurationProvider": "ms-vscode.makefile-tools",
-      "browse": {
-        "path": [
-          "${workspaceFolder}/include"
-        ],
-        "limitSymbolsToIncludedHeaders": false
-      }
-    }
-  ],
-  "version": 4
+    "configurations": [
+        {
+            "name": "Default",
+            "defines": [
+                "__MWERKS__",
+                "GAMECUBE"
+            ],
+            "includePath": [
+                "${workspaceFolder}/include",
+                "${workspaceFolder}/include/bink",
+                "${workspaceFolder}/src/PowerPC_EABI_Support/include",
+                "${workspaceFolder}/src/PowerPC_EABI_Support/include/PowerPC_EABI_Support/MSL_C/MSL_Common",
+                "${workspaceFolder}/src/PowerPC_EABI_Support/include/PowerPC_EABI_Support/MSL_C++/MSL_Common/Include",
+                "${workspaceFolder}/include/inline",
+                "${workspaceFolder}/src/dolphin/include",
+                "${workspaceFolder}/src/dolphin/src",
+                "${workspaceFolder}/include/rwsdk",
+                "${workspaceFolder}/src/SB/Core/gc",
+                "${workspaceFolder}/src/SB/Core/x",
+                "${workspaceFolder}/src/SB/Game"
+            ],
+            "cStandard": "c99",
+            "cppStandard": "c++98",
+            "intelliSenseMode": "linux-clang-x86",
+            "compilerPath": "",
+            "configurationProvider": "ms-vscode.makefile-tools",
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/include"
+                ],
+                "limitSymbolsToIncludedHeaders": false
+            }
+        }
+    ],
+    "version": 4
 }
