@@ -42,6 +42,21 @@ template <class T> struct static_queue
     T* _buffer;
     void clear();
     void init(unsigned long);
+
+    bool empty() const
+    {
+        return size();
+    }
+
+    bool size() const
+    {
+        return _size;
+    }
+
+    bool full() const;
+    void pop_back();
+    void push_front();
+    T& front();
 };
 
 template <class T, U32 N> struct fixed_queue
@@ -59,6 +74,11 @@ template <class T, U32 N> struct fixed_queue
     void back();
     void pop_back();
     bool empty() const;
+};
+
+template <class T> struct iterator {
+    U32 _it;
+    static_queue<T>* _owner;
 };
 
 #endif
