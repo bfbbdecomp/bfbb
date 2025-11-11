@@ -84,6 +84,24 @@ char* var_text(const substr& str);
 U32 zVarEntryCB_SndFXVol(void*);
 U32 zVarEntryCB_SndMusicVol(void*);
 
+// These structs were used in deadstripped functions.
+// This function is here to force the symbols to be linked.
+void __deadstripped_zNPCGlyph()
+{
+    const char _449[0x0C] = {};
+    const char _450[0x0C] = {};
+    const char _454[0x0C] = {};
+    const char _485[0x0C] = {};
+
+    const char _617[0x28] = {};
+    const char _618[0x28] = {};
+    const char _619[0x28] = {};
+    const char _620[0x28] = {};
+    const char _621[0x28] = {};
+    const char _622[0x28] = {};
+    const char _623[0x28] = {};
+}
+
 // var_text callbacks
 namespace
 {
@@ -132,22 +150,6 @@ namespace
     {
         static char buffer[0x80];
         char corruptedNames[3][64];
-
-        // Random unused readonly structs. All we know is that these are
-        // initialized, but never referenced, and that these two groups
-        // should be in different functions (just WHICH functions, idk.)
-        const char _449[0x0C] = {};
-        const char _450[0x0C] = {};
-        const char _454[0x0C] = {};
-        const char _485[0x0C] = {};
-
-        const char _617[0x28] = {};
-        const char _618[0x28] = {};
-        const char _619[0x28] = {};
-        const char _620[0x28] = {};
-        const char _621[0x28] = {};
-        const char _622[0x28] = {};
-        const char _623[0x28] = {};
 
         S32 corruptCount = zMenuGetCorruptFiles(corruptedNames);
         strcpy(buffer, "");
