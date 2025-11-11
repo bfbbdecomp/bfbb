@@ -9,6 +9,13 @@
 #include <types.h>
 #include <rwcore.h>
 
+struct ptank_pool__color_mat_uv2 : ptank_pool {
+    iColor_tag* color;
+    xMat4x3* mat;
+    xVec2* uv;
+    S32 stride;
+};
+
 struct xDecalEmitter
 {
     enum texture_mode
