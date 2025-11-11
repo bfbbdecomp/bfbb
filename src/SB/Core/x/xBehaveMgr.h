@@ -27,7 +27,11 @@ struct xBehaveMgr : RyzMemData
     void ScenePrepare();
     void SceneFinish();
     void SceneReset();
-    xFactory* GetFactory();
+
+    xFactory* GetFactory()
+    {
+        return this->goalFactory;
+    }
 };
 
 void xBehaveMgr_ScenePrepare();
