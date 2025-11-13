@@ -1,5 +1,6 @@
 #include "zLasso.h"
 
+#include "xMath3.h"
 #include "xMathInlines.h"
 
 #include "iModel.h"
@@ -109,6 +110,14 @@ void zLasso_InterpToGuide(zLasso* lasso)
         }
 
         xMat4x3Toworld(&lasso->tgCenter, (xMat4x3*)sCurrentGuide->poly->Mat, &lasso->tgCenter);
+    }
+}
+
+void zLasso_Render(zLasso* l)
+{
+    if ((((l->flags & 0x800) != 0) && ((l->flags & 0x4000) != 0)) || 
+        (((l->flags & 0x800) == 0 && ((l->flags & 0x2000) != 0))))
+    {
     }
 }
 
@@ -255,4 +264,23 @@ void zLasso_scenePrepare()
 {
     sNumGuideLists = 0;
     sCurrentGuide = NULL;
+}
+
+void xMat4x3RotC(xMat4x3* m, F32 f1, F32 f2, F32 f3, F32 f4)
+{
+    xMat3x3RotC(m, f1, f2, f3, f4);
+    xVec3Copy(&m->pos, &g_O3);
+}
+
+void xMat4x3Rot(xMat4x3* m, const xVec3* v, F32 f)
+{
+    xMat4x3RotC(m, v->x, v->y, v->z, f);
+}
+
+void vec2vecMat(xMat4x3* m, xVec3* v1, xVec3* v2)
+{
+    xVec3 v3;
+    xVec3Cross(&v3, v1, v2);
+    F32 f1 = xasin(xVec3Normalize(&v3, &v3));
+    xMat4x3Rot(m, &v3, f1);
 }
