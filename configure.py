@@ -486,11 +486,7 @@ config.libs = [
             Object(Matching, "SB/Core/gc/iMath.cpp"),
             Object(NonMatching, "SB/Core/gc/iMath3.cpp"),
             Object(NonMatching, "SB/Core/gc/iMemMgr.cpp"),
-<<<<<<< HEAD
-            Object(NonMatching, "SB/Core/gc/iMix.c"),
-=======
-            Object(Matching, "SB/Core/gc/iMix.c", extra_cflags=["-sym on"]),
->>>>>>> f73e3f6 (Fix build by using correct types)
+            Object(Matching, "SB/Core/gc/iMix.c"),
             Object(NonMatching, "SB/Core/gc/iModel.cpp"),
             Object(NonMatching, "SB/Core/gc/iMorph.cpp"),
             Object(Equivalent, "SB/Core/gc/iPad.cpp"),
