@@ -19,6 +19,8 @@
 #include "xTRC.h"
 #include "xutil.h"
 
+zSaveLoadGame zSaveLoadGameTable[3];
+
 U32 saveSuccess;
 F32 time_last;
 F32 time_current;

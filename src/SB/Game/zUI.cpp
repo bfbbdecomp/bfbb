@@ -60,6 +60,8 @@ struct menuWorldInfo
     menuTaskInfo taskInfo[TASK_COUNT];
 };
 
+_zUI* sSorted[768];
+zUIMgr gUIMgr;
 static U32 sSortedCount = 0;
 
 static RwIm2DVertex Vertex[4];

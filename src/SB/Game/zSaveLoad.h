@@ -22,7 +22,7 @@ struct zSaveLoadUI
 };
 
 
-zSaveLoadGame zSaveLoadGameTable[3];
+extern zSaveLoadGame zSaveLoadGameTable[3];
 
 void zUpdateThumbIcon();
 void zSaveLoad_Tick();
