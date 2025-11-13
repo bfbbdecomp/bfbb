@@ -226,6 +226,72 @@ void xDecalEmitter::update(F32 dt)
     xVec4 * _loc; // r2
     F32 par_dist; // r1
 
-    debug_update(dt);
 
+}
+
+namespace
+{
+    void lerp(F32& out, F32 t, F32 a, F32 b)
+    {
+        out = a + (b - a) * t;
+    }
+}
+
+namespace
+{
+    void lerp(U8& out, F32 t, U8 a, U8 b);
+
+    void lerp(iColor_tag& out, F32 t, const iColor_tag& a, const iColor_tag& b)
+    {
+        lerp(out.r, t, a.r, b.r);
+        lerp(out.g, t, a.g, b.g);
+        lerp(out.b, t, a.b, b.b);
+        lerp(out.a, t, a.a, b.a);
+    }
+
+    void lerp(U8& out, F32 t, U8 a, U8 b)
+    {
+        out = ((F32)a + ((F32)b - (F32)a) * t) + 0.5f;
+    }
+}
+
+void xDecalEmitter::update_frac(xDecalEmitter::unit_data& unit)
+{
+    U32 i;
+    for (i = this->curve_index; i < this->curve_size - 2; i++)
+    {
+        if (unit.age >= this->curve[i].time && unit.age <= this->curve[i + 1].time)
+        {
+            break;
+        }
+
+        this->curve_index++;
+    }
+
+    unit.curve_index = i;
+
+    F32 curve_time = this->curve[this->curve_index].time;
+    unit.frac = (1.0f / this->curve[this->curve_index + 1].time) * (unit.age - curve_time);
+}
+
+void get_render_data(const xDecalEmitter::unit_data& unit, F32 scale, iColor_tag& color, xMat4x3& mat, xVec2& uv0, xVec2& uv1)
+{
+    
+}
+
+
+S32 xDecalEmitter::select_texture_unit()
+{
+    switch (this->cfg.texture.mode)
+    {
+    case TM_RANDOM:
+        return (xrand() / 8192) % this->texture.units;
+    case TM_CYCLE:
+        S32 id = this->texture.prev;
+        this->texture.prev = this->texture.prev + 1;
+        return id % this->texture.units;
+    case TM_DEFAULT:
+    default:
+        return 0;
+    }    
 }

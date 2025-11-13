@@ -87,6 +87,8 @@ struct xDecalEmitter
     void emit(const xMat4x3& mat, S32 texture_index);
     void emit(const xMat4x3& mat, const xVec3& scale, S32 texture_index);
     void update(F32 dt);
+    void update_frac(xDecalEmitter::unit_data& unit);
+    void get_render_data(const xDecalEmitter::unit_data& unit, F32 scale, iColor_tag& color, xMat4x3& mat, xVec2& uv0, xVec2& uv1);
     S32 select_texture_unit();
 
     bool need_update() const
