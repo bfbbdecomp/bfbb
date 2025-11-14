@@ -1,11 +1,10 @@
 #include "iSnd.h"
 
 #include <types.h>
-#include <dolphin/ax.h>
+#include <dolphin/mix.h>
 
 #include "intrin.h"
 
-#include "iMix.h"
 #include "xCutscene.h"
 #include "xSnd.h"
 #include "xMath.h"
@@ -61,7 +60,7 @@ U32 iVolFromX(F32 param1)
 
 void iSndVolUpdate(xSndVoiceInfo* info, vinfo* vinfo)
 {
-    MIXUnMute((int*)vinfo->voice);
+    MIXUnMute(vinfo->voice);
     xSndInternalUpdateVoicePos(info);
     if ((info->flags & 8) != 0)
     {
