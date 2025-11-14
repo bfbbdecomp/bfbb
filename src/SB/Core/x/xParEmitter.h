@@ -7,6 +7,27 @@
 #include "xParGroup.h"
 #include "xParSys.h"
 
+enum en_xParEmitterEmitTypes
+{
+    eParEmitterPoint,
+    eParEmitterCircleEdge,
+    eParEmitterCircle,
+    eParEmitterRectEdge,
+    eParEmitterRect,
+    eParEmitterLine,
+    eParEmitterVolume,
+    eParEmitterSphereEdge1,
+    eParEmitterSphere,
+    eParEmitterOffsetPoint,
+    eParEmitterSphereEdge2,
+    eParEmitterSphereEdge3,
+    eParEmitterVCylEdge,
+    eParEmitterOCircleEdge,
+    eParEmitterOCircle,
+    eParEmitterEntityBone,
+    eParEmitterEntityBound
+};
+
 struct xParInterp
 {
     F32 val[2];
@@ -17,7 +38,7 @@ struct xParInterp
     void set(F32, F32, F32, U32);
     void set(F32); // Used in zNPCDutchman
     void order();
-    void operator=(const xParInterp&);
+    void operator=(const xParInterp& p);
 };
 
 // Size 0x138
@@ -112,7 +133,7 @@ void xParEmitterInit(void* b, void* tasset);
 void xParEmitterInit(xBase* b, xParEmitterAsset* pea);
 void xParEmitterSetup(xParEmitter* t);
 void xParEmitterReset(xParEmitter* t);
-S32 xParEmitterEventCB(xBase* to1, xBase* to2, U32 toEvent, F32* unused1, xBase* unused2);
+S32 xParEmitterEventCB(xBase* to, xBase* from, U32 toEvent, F32* toParam, xBase* toParamWidget);
 xPar* xParEmitterEmitCustom(xParEmitter* p, F32 dt, xParEmitterCustomSettings* info);
 U32 xParEmitterCull(xParEmitter* t, xPar* p);
 F32 xParInterpCompute(S32 interp_mode, xParInterp* r, F32 time, S32 time_has_elapsed, F32 lastVal);

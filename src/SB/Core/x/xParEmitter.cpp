@@ -8,6 +8,7 @@
 #include <xGroup.h>
 #include <zGlobals.h>
 #include <xDebug.h>
+#include <xEvent.h>
 
 void add_tweaks(xParEmitter& pe)
 {
@@ -15,38 +16,37 @@ void add_tweaks(xParEmitter& pe)
 
 S32 xParInterpConvertInterpMode(xParInterp* p)
 {
-    U32 interp_val;
+    U32 interp_val = p->interp;
 
-    interp_val = p->interp;
     if (interp_val < 8)
     {
         return interp_val;
     }
-    if (interp_val == xStrHash("s_ConstA_004ff970"))
+    if (interp_val == xStrHash("ConstA"))
     {
         return 0;
     }
-    if (interp_val == xStrHash("s_ConstB_004ff977"))
+    if (interp_val == xStrHash("ConstB"))
     {
         return 1;
     }
-    if (interp_val == xStrHash("&DAT_004ff97e"))
+    if (interp_val == xStrHash("Sine"))
     {
         return 4;
     }
-    if (interp_val == xStrHash("s_Cosine_004ff983"))
+    if (interp_val == xStrHash("Cosine"))
     {
         return 5;
     }
-    if (interp_val == xStrHash("s_Linear_004ff98a"))
+    if (interp_val == xStrHash("Linear"))
     {
         return 3;
     }
-    if (interp_val == xStrHash("&DAT_004ff991"))
+    if (interp_val == xStrHash("Step"))
     {
         return 7;
     }
-    if (interp_val == xStrHash("s_Random_004ff996"))
+    if (interp_val == xStrHash("Random"))
     {
         return 2;
     }
@@ -100,7 +100,7 @@ void xParEmitterInit(xBase* b, xParEmitterAsset* pea)
     t = prop;
     bEmitter->attachTo = 0;
     bEmitter->emit_volume = 0;
-    for (i = 0; i < 0xE; i += 1)
+    for (i = 0; i < 14; i++)
     {
         if (t->param[1] == t->param[2])
         {
@@ -143,7 +143,7 @@ void xParEmitterInit(xBase* b, xParEmitterAsset* pea)
     }
     bEmitter->oocull_distance_sqr = temp_oocull;
     bEmitter->emit_volume = 0;
-    if ((pea->emit_type == 0xE) || (pea->emit_type == 0xD))
+    if ((pea->emit_type == eParEmitterOCircle) || (pea->emit_type == eParEmitterOCircleEdge))
     {
         vec_length = (pea->e_circle.dir).length2();
         if (vec_length < 0.001f)
@@ -161,30 +161,30 @@ void xParEmitterInit(xBase* b, xParEmitterAsset* pea)
 void xParEmitterSetup(xParEmitter* t)
 {
     xParEmitterAsset* pea;
-    xBase* temp_base;
+    xEnt* ent;
 
-    if (t->parSys != (xParSys*)0x0)
+    if (t->parSys != NULL)
     {
-        t->group = *(xParGroup**)(t->parSys + 0x20);
+        t->group = t->parSys->group;
     }
-    if ((t->tasset->attachToID != 0) && (t->tasset->emit_type == '\t'))
+    if ((t->tasset->attachToID != 0) && (t->tasset->emit_type == eParEmitterOffsetPoint))
     {
-        temp_base = zSceneFindObject(t->tasset->attachToID);
-        iModelTagSetup(&t->tag, *(RpAtomic**)(*(S32*)&temp_base[2].baseType + 0x10),
-                       *(F32*)&t->tasset->e_entbound, (t->tasset->e_entbound).expand,
-                       (t->tasset->e_entbound).deflection);
+        ent = (xEnt*)zSceneFindObject(t->tasset->attachToID);
+        iModelTagSetup(&t->tag, ent->model->Data, *(F32*)&t->tasset->e_entbound,
+                       (t->tasset->e_entbound).expand, (t->tasset->e_entbound).deflection);
     }
-    temp_base = (xBase*)0x0;
+    ent = NULL;
     if (t->tasset->attachToID != 0)
     {
-        temp_base = zSceneFindObject(t->tasset->attachToID);
+        ent = (xEnt*)zSceneFindObject(t->tasset->attachToID);
     }
-    t->attachTo = temp_base;
-    if (((t->tasset->emit_type != '\x10') && (t->tasset->emit_type != '\x0F')) &&
-        (t->tasset->emit_type == '\x06'))
+    t->attachTo = ent;
+    if (((t->tasset->emit_type != eParEmitterEntityBound) &&
+         (t->tasset->emit_type != eParEmitterEntityBone)) &&
+        (t->tasset->emit_type == eParEmitterVolume))
     {
-        temp_base = zSceneFindObject(t->tasset->attachToID);
-        t->emit_volume = temp_base;
+        ent = (xEnt*)zSceneFindObject(t->tasset->attachToID);
+        t->emit_volume = ent;
     }
     add_tweaks(*t);
     return;
@@ -196,27 +196,27 @@ void xParEmitterReset(xParEmitter* t)
     t->emit_flags = t->tasset->emit_flags;
 }
 
-S32 xParEmitterEventCB(xBase* to1, xBase* to2, U32 toEvent, F32* unused1, xBase* unused2)
+S32 xParEmitterEventCB(xBase* to, xBase* from, U32 toEvent, F32* toParam, xBase* toParamWidget)
 {
     xParEmitterCustomSettings sp8;
 
     switch ((S32)toEvent)
     {
-    case 0xA:
-        xParEmitterReset((xParEmitter*)to2);
+    case eEventReset:
+        xParEmitterReset((xParEmitter*)from);
         break;
-    case 0x26:
+    case eEventOn:
         *(U8*)(toEvent + 0x30) |= 1;
         break;
-    case 0x27:
+    case eEventOff:
         if (*(U8*)(toEvent + 0x30) & 1)
         {
             *(U8*)(toEvent + 0x30) = *(U8*)(toEvent + 0x30) ^ 1;
         }
         break;
-    case 0xFA:
+    case eEventEmit:
         memset(&sp8, 0, 0x16C);
-        xParEmitterEmitCustom((xParEmitter*)to2, 0.033333335f, &sp8);
+        xParEmitterEmitCustom((xParEmitter*)from, 0.033333335f, &sp8);
         break;
     }
     return 1;
@@ -231,7 +231,7 @@ xPar* xParEmitterEmitCustom(xParEmitter* p, F32 dt, xParEmitterCustomSettings* i
 
     custom_flags = info->custom_flags;
     p_tasset = p->tasset;
-    if ((custom_flags & 1) != 0)
+    if ((custom_flags & 0x1) != 0)
     {
         sSaveEmmiterSettings(p_tasset, p_tasset, 0.0);
         sSaveEmmiterPropSettings(p->prop, p->prop, 0.0);
@@ -244,7 +244,7 @@ xPar* xParEmitterEmitCustom(xParEmitter* p, F32 dt, xParEmitterCustomSettings* i
     {
         p->prop->value[0] = info->value[0];
     }
-    if ((custom_flags & 2) != 0)
+    if ((custom_flags & 0x2) != 0)
     {
         p->prop->life = info->life;
     }
@@ -252,11 +252,11 @@ xPar* xParEmitterEmitCustom(xParEmitter* p, F32 dt, xParEmitterCustomSettings* i
     {
         p->emit_volume = info->emit_volume;
     }
-    if ((custom_flags & 4) != 0)
+    if ((custom_flags & 0x4) != 0)
     {
         p->prop->size_birth = info->size_birth;
     }
-    if ((custom_flags & 8) != 0)
+    if ((custom_flags & 0x8) != 0)
     {
         p->prop->size_death = info->size_death;
     }
@@ -287,14 +287,15 @@ xPar* xParEmitterEmitCustom(xParEmitter* p, F32 dt, xParEmitterCustomSettings* i
     {
         p_tasset = p->tasset;
         emit_type = p_tasset->emit_type;
-        if ((emit_type == '\b') || (emit_type == '\v') || (emit_type == '\n') ||
-            (emit_type == '\a') || (emit_type == '\x02') || (emit_type == '\x01') ||
-            (emit_type == '\x0e' || (emit_type == '\r')))
+        if ((emit_type == eParEmitterSphere) || (emit_type == eParEmitterSphereEdge3) ||
+            (emit_type == eParEmitterSphereEdge2) || (emit_type == eParEmitterSphereEdge1) ||
+            (emit_type == eParEmitterCircle) || (emit_type == eParEmitterCircleEdge) ||
+            (emit_type == eParEmitterOCircle || (emit_type == eParEmitterOCircleEdge)))
         {
             *(F32*)&p_tasset->e_entbound = info->radius;
         }
     }
-    if ((custom_flags & 1) != 0)
+    if ((custom_flags & 0x1) != 0)
     {
         sSaveEmmiterSettings(p_tasset, p_tasset, 0.0);
         sSaveEmmiterPropSettings(p->prop, p->prop, 0.0);
@@ -341,9 +342,7 @@ F32 xParInterpCompute(S32 interp_mode, xParInterp* r, F32 time, S32 time_has_ela
 
 {
     F32 val;
-    F32 val_0;
-
-    val_0 = r->val[0];
+    F32 val_0 = r->val[0];
 
     val = time;
     switch (interp_mode)
@@ -456,13 +455,13 @@ xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
     S32 group_ptr_chk;
     U32 temp_maxPar;
 
-    if (pe->parSys == 0)
+    if (pe->parSys == NULL)
     {
-        p = (xPar*)0x0;
+        p = NULL;
     }
     else
-    {
-        p = (xPar*)0x0;
+    { // TODO: could probably be less nested
+        p = NULL;
         pea = pe->tasset;
         prop = pe->prop;
         pe->rate_time = pe->rate_time + emit_dt;
@@ -487,21 +486,21 @@ xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
         }
         if (rate_has_elapsed == 0)
         {
-            p = (xPar*)0x0;
+            p = NULL;
         }
         else
         {
             ps = pe->parSys;
-            if (ps == (xParSys*)0x0)
+            if (ps == NULL)
             {
-                p = (xPar*)0x0;
+                p = NULL;
             }
             else
             {
                 group_ptr_chk = *(S32*)(ps->group);
                 if (group_ptr_chk == 0)
                 {
-                    p = (xPar*)0x0;
+                    p = NULL;
                 }
                 else
                 {
@@ -524,7 +523,7 @@ xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
                             {
                                 emitAgain = false;
                                 marker = false;
-                                attach_ent = (xEnt*)0x0;
+                                attach_ent = NULL;
                                 if ((g != (xGroup*)0x0) && (g->baseType == '\x11'))
                                 {
                                     if (count == 0xFFFFFFFF)
@@ -537,12 +536,12 @@ xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
                                         attachGroupIndex = xrand();
                                         attach_ent = (xEnt*)xGroupGetItemPtr(
                                             g, (S32)attachGroupIndex % (S32)attachGroupTotal);
-                                        if (attach_ent == (xEnt*)0x0)
+                                        if (attach_ent == NULL)
                                         {
                                             attachGroupIndex = xGroupGetItem(
                                                 g, (S32)attachGroupIndex % attachGroupTotal);
                                             attach_ent = (xEnt*)xSTFindAsset(attachGroupIndex, 0);
-                                            if (attach_ent != (xEnt*)0x0)
+                                            if (attach_ent != NULL)
                                             {
                                                 marker = true;
                                             }
@@ -551,11 +550,11 @@ xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
                                     else
                                     {
                                         attach_ent = (xEnt*)xGroupGetItemPtr(g, count);
-                                        if (attach_ent == (xEnt*)0x0)
+                                        if (attach_ent == NULL)
                                         {
                                             attachGroupIndex = xGroupGetItem(g, count);
                                             attach_ent = (xEnt*)xSTFindAsset(attachGroupIndex, 0);
-                                            if (attach_ent != (xEnt*)0x0)
+                                            if (attach_ent != NULL)
                                             {
                                                 marker = true;
                                             }
@@ -564,18 +563,18 @@ xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
                                         emitAgain = count % attachGroupTotal;
                                     }
                                 }
-                                if (attach_ent == (xEnt*)0x0)
+                                if (attach_ent == NULL)
                                 {
                                     emitPosition = pea->pos;
                                 }
                                 else if ((attach_ent->baseType) == '\r')
                                 {
-                                    attach_ent = (xEnt*)0x0;
+                                    attach_ent = NULL;
                                 }
                                 else if (marker)
                                 {
                                     emitPosition = pea->pos;
-                                    attach_ent = (xEnt*)0x0;
+                                    attach_ent = NULL;
                                 }
                                 else
                                 {
@@ -587,15 +586,15 @@ xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
                                     else
                                     {
                                         emitPosition = 0;
-                                        attach_ent = (xEnt*)0x0;
+                                        attach_ent = NULL;
                                     }
                                 }
-                                if ((((pe->emit_flags & 0x10) == 0) ||
-                                     (attach_ent == (xEnt*)0x0)) ||
+                                if ((((pe->emit_flags & 0x10) == 0) || (attach_ent == NULL)) ||
                                     (xEntIsVisible(attach_ent) != 0))
                                 {
                                     bone_mat = (xMat4x3*)0x0;
-                                    if ((pea->emit_type == '\x0f') && (attach_ent != (xEnt*)0x0))
+                                    if ((pea->emit_type == eParEmitterEntityBone) &&
+                                        (attach_ent != NULL))
                                     {
                                         bone_mat = xParEmitterTransformEntBone(
                                             emitPosition, bone_vel, *pea, *attach_ent);
@@ -616,7 +615,7 @@ xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
                                             // May need a vector operation here
                                         }
                                     }
-                                    for (i = 0; i < rate_has_elapsed; i += 1)
+                                    for (i = 0; i < rate_has_elapsed; i++)
                                     {
                                         p = xParGroupAddPar(ps->group);
                                         if (p == (xPar*)0x0)
@@ -675,40 +674,43 @@ xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
                                             xParEmitterEmitSetTexIdxs(p, ps);
                                             switch (pea->emit_type)
                                             {
-                                            case '\0':
+                                            case eParEmitterPoint:
                                                 xParEmitterEmitPoint(p, pea, par_dt);
                                                 break;
-                                            case '\x01':
+                                            case eParEmitterCircleEdge:
                                                 xParEmitterEmitCircleEdge(p, pea, par_dt);
                                                 break;
-                                            case '\x02':
+                                            case eParEmitterCircle:
                                                 xParEmitterEmitCircle(p, pea, par_dt);
                                                 break;
-                                            case '\x03':
+                                            case eParEmitterRectEdge:
                                                 xParEmitterEmitRectEdge(p, pea, par_dt);
                                                 break;
-                                            case '\x04':
+                                            case eParEmitterRect:
                                                 xParEmitterEmitRect(p, pea, par_dt);
                                                 break;
-                                            case '\x05':
+                                            case eParEmitterLine:
                                                 xParEmitterEmitLine(p, pea, par_dt);
                                                 break;
-                                            case '\n':
-                                                xParEmitterEmitSphereEdge(p, pea, par_dt, 10);
+                                            case eParEmitterSphereEdge2:
+                                                xParEmitterEmitSphereEdge(p, pea, par_dt,
+                                                                          eParEmitterSphereEdge2);
                                                 break;
-                                            case '\v':
-                                                xParEmitterEmitSphereEdge(p, pea, par_dt, 0xb);
+                                            case eParEmitterSphereEdge3:
+                                                xParEmitterEmitSphereEdge(p, pea, par_dt,
+                                                                          eParEmitterSphereEdge3);
                                                 break;
-                                            case '\a':
-                                                xParEmitterEmitSphereEdge(p, pea, par_dt, 7);
+                                            case eParEmitterSphereEdge1:
+                                                xParEmitterEmitSphereEdge(p, pea, par_dt,
+                                                                          eParEmitterSphereEdge1);
                                                 break;
-                                            case '\b':
+                                            case eParEmitterSphere:
                                                 xParEmitterEmitSphere(p, pea, par_dt);
                                                 break;
 
-                                            case '\x06':
+                                            case eParEmitterVolume:
                                                 attach_ent = (xEnt*)pe->emit_volume;
-                                                if (attach_ent != (xEnt*)0x0)
+                                                if (attach_ent != NULL)
                                                 {
                                                     if ((attach_ent->baseType) == '\x1d')
                                                     {
@@ -723,19 +725,19 @@ xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
                                                 }
                                                 break;
 
-                                            case '\t':
+                                            case eParEmitterOffsetPoint:
                                                 xParEmitterEmitOffsetPoint(pe, p, pea, attach_ent);
                                                 break;
-                                            case '\f':
+                                            case eParEmitterVCylEdge:
                                                 xParEmitterEmitVCylEdge(p, pea, par_dt);
                                                 break;
-                                            case '\r':
+                                            case eParEmitterOCircleEdge:
                                                 xParEmitterEmitOCircleEdge(p, pea, par_dt);
                                                 break;
-                                            case '\x0e':
+                                            case eParEmitterOCircle:
                                                 xParEmitterEmitOCircle(p, pea, par_dt);
                                                 break;
-                                            case '\x0f':
+                                            case eParEmitterEntityBone:
                                                 if (bone_mat != 0)
                                                 {
                                                     p->m_vel += bone_vel;
@@ -743,8 +745,8 @@ xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
                                                                            *bone_mat);
                                                 }
                                                 break;
-                                            case '\x10':
-                                                if (attach_ent != (xEnt*)0x0)
+                                            case eParEmitterEntityBound:
+                                                if (attach_ent != NULL)
                                                 {
                                                     xParEmitterEmitEntBound(p, pea, par_dt,
                                                                             attach_ent);
@@ -789,7 +791,6 @@ void xParEmitterUpdate(xBase* to, xScene*, F32 dt)
 void xParEmitterDestroy()
 {
     xDebugRemoveTweak("Particle Emitters");
-    return;
 }
 
 void xParInterp::order()
