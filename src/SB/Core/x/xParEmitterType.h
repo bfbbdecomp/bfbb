@@ -2,6 +2,9 @@
 #define XPAREMITTERTYPE_H
 
 #include "xMath3.h"
+#include "xVolume.h"
+#include "xPar.h"
+#include "xEnt.h"
 
 struct xPECircle
 {
@@ -65,5 +68,25 @@ struct xPEEntBound
     F32 expand;
     F32 deflection;
 };
+
+void xParEmitterEmitPoint(xPar* p, xParEmitterAsset* a, F32 dt);
+void xParEmitterAngleVariation(xPar* p, xParEmitterAsset* a);
+void xParEmitterEmitCircleEdge(xPar* p, xParEmitterAsset* a, F32 dt);
+void xParEmitterEmitCircle(xPar* p, xParEmitterAsset* a, F32 dt);
+void xParEmitterEmitRect(xPar* p, xParEmitterAsset* a, F32 dt);
+void xParEmitterEmitRectEdge(xPar* p, xParEmitterAsset* a, F32 dt);
+void xParEmitterEmitLine(xPar* p, xParEmitterAsset* a, F32 dt);
+void xParEmitterEmitSphere(xPar* p, xParEmitterAsset* a, F32 dt);
+void xParEmitterEmitSphereEdge(xPar* p, xParEmitterAsset* a, F32 dt, S32 subtype);
+void xParEmitterEmitVolume(xPar* p, xParEmitterAsset* a, F32 dt, xVolume* vol);
+void xParEmitterEmitEntity(xPar* p, xParEmitterAsset* a, F32 dt, xEnt* ent);
+void xParEmitterEmitOffsetPoint(xParEmitter* pe, xPar* p, xParEmitterAsset* a, xEnt* ent);
+void xParEmitterEmitVCylEdge(xPar* p, xParEmitterAsset* a, F32 dt);
+void xParEmitterEmitOCircleEdge(xPar* p, xParEmitterAsset* a, F32 dt);
+void xParEmitterEmitOCircle(xPar* p, xParEmitterAsset* a, F32 dt);
+xMat4x3* xParEmitterTransformEntBone(xVec3& loc, xVec3& vel, xParEmitterAsset& a, xEnt& ent);
+void xParEmitterTransformEntBone(xVec3& loc, xVec3& vel, xParEmitterAsset& a, xMat4x3& mat);
+void xParEmitterEmitEntBone(xPar* p, xParEmitterAsset* a, F32 dt, xMat4x3& mat);
+void xParEmitterEmitEntBound(xPar* p, xParEmitterAsset* a, F32 dt, xEnt* ent);
 
 #endif
