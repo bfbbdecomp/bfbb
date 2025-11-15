@@ -233,6 +233,7 @@ void xDecalEmitter::update(F32 dt)
         //     continue;
         // }
 
+        pool.next();
         // update_frac(unit);
     }
     // {
