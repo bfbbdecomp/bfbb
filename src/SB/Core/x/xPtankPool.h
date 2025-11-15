@@ -7,7 +7,9 @@
 #include <rpworld.h>
 #include <rpptank.h>
 
-struct iColor_tag;
+#include "xMath3.h"
+#include "iColor.h"
+
 struct xVec2;
 struct xVec3;
 struct RpAtomic;
