@@ -4,6 +4,8 @@
 
 #include "xString.h"
 #include "xstransvc.h"
+#include "zGlobals.h"
+#include "containers.h"
 
 namespace 
 {
@@ -213,12 +215,31 @@ void xDecalEmitter::emit(const xMat4x3& mat, const xVec3& scale, S32 texture_ind
 
 void xDecalEmitter::update(F32 dt)
 {
-    float dage = this->ilife;
+    debug_update(dt);
+    F32 dage = this->ilife;
     
     ptank_pool__color_mat_uv2 pool;
     pool.reset();
     
-    iterator<unit_data> it; 
+    this->curve_index = 0;
+
+    for (static_queue<unit_data>::iterator it = this->units.begin(); it != this->units.end(); ++it)
+    {
+        // unit_data& unit = *it;
+        // unit.age += dt;
+
+        // if (unit.age >= this->cfg.life_time)
+        // {
+        //     continue;
+        // }
+
+        // update_frac(unit);
+    }
+    // {
+
+    // }
+
+    
     // unit_data& unit;
     // curve_node& node0;
     // curve_node& node1;
@@ -226,32 +247,19 @@ void xDecalEmitter::update(F32 dt)
     xVec4 * _loc; // r2
     F32 par_dist; // r1
 
+    pool.flush();
 
+    this->units.erase(this->units.begin(), this->units.end());
 }
 
 namespace
 {
+    void lerp(iColor_tag& out, F32 t, const iColor_tag& a, const iColor_tag& b);
+    void lerp(U8& out, F32 t, U8 a, U8 b);
+
     void lerp(F32& out, F32 t, F32 a, F32 b)
     {
         out = a + (b - a) * t;
-    }
-}
-
-namespace
-{
-    void lerp(U8& out, F32 t, U8 a, U8 b);
-
-    void lerp(iColor_tag& out, F32 t, const iColor_tag& a, const iColor_tag& b)
-    {
-        lerp(out.r, t, a.r, b.r);
-        lerp(out.g, t, a.g, b.g);
-        lerp(out.b, t, a.b, b.b);
-        lerp(out.a, t, a.a, b.a);
-    }
-
-    void lerp(U8& out, F32 t, U8 a, U8 b)
-    {
-        out = ((F32)a + ((F32)b - (F32)a) * t) + 0.5f;
     }
 }
 
@@ -274,11 +282,49 @@ void xDecalEmitter::update_frac(xDecalEmitter::unit_data& unit)
     unit.frac = (1.0f / this->curve[this->curve_index + 1].time) * (unit.age - curve_time);
 }
 
-void get_render_data(const xDecalEmitter::unit_data& unit, F32 scale, iColor_tag& color, xMat4x3& mat, xVec2& uv0, xVec2& uv1)
+void xDecalEmitter::get_render_data(const xDecalEmitter::unit_data& unit, F32 scale, iColor_tag& color, xMat4x3& mat, xVec2& uv0, xVec2& uv1)
 {
-    
+    lerp(color, unit.frac, this->curve[unit.curve_index].color, this->curve[unit.curve_index + 1].color);
+
+    if (this->cfg.flags & 0x2)
+    {
+        mat = globals.camera.mat;
+
+        mat.right *= scale * unit.mat.right.x;
+        mat.up *= scale * unit.mat.right.y;
+        mat.at *= scale * unit.mat.right.z;
+        mat.pos = unit.mat.pos;
+    }
+    else
+    {
+        mat = unit.mat;
+
+        mat.right *= scale;
+        mat.up *= scale;
+        mat.at *= scale;
+    }
+
+    uv1.x = this->curve_index * this->texture.size.x + this->cfg.texture.uv[0].x;
+    uv1.y = this->curve_index * this->texture.size.y + this->cfg.texture.uv[0].y;
+    uv0.x = this->curve_index * this->texture.size.x + this->cfg.texture.uv[1].x;
+    uv0.y = this->curve_index * this->texture.size.y + this->cfg.texture.uv[1].y;
 }
 
+namespace
+{
+    void lerp(iColor_tag& out, F32 t, const iColor_tag& a, const iColor_tag& b)
+    {
+        lerp(out.r, t, a.r, b.r);
+        lerp(out.g, t, a.g, b.g);
+        lerp(out.b, t, a.b, b.b);
+        lerp(out.a, t, a.a, b.a);
+    }
+
+    void lerp(U8& out, F32 t, U8 a, U8 b)
+    {
+        out = ((F32)a + ((F32)b - (F32)a) * t) + 0.5f;
+    }
+}
 
 S32 xDecalEmitter::select_texture_unit()
 {
