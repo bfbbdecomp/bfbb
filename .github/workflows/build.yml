@@ -255,12 +255,14 @@ jobs:
       - name: Download OK bot
         id: download-ok
         run: |
-          python ./tools/download_tool.py OK ok --tag v0.1.4
+          python ./tools/download_tool.py objdiff-cli objdiff --tag v3.3.1
+          python ./tools/download_tool.py OK ok --tag v0.2.0
 
       - name: Run OK command
         id: ok-command
         run: |
-          ./ok --previous artifacts/previous.json --current artifacts/progress.json pr > pr.txt
+          ./objdiff report changes artifacts/previous.json artifacts/progress.json -o artifacts/changes.json
+          ./ok --changes artifacts/changes.json pr > pr.txt
           cat pr.txt
       - name: PR comment with file
         uses: thollander/actions-comment-pull-request@v3

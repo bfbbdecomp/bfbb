@@ -60,6 +60,7 @@ void xSceneForAllDynamics(xScene* sc, xSceneEntCallback func, void* data);
 void xSceneForAllNPCs(xScene* sc, xSceneEntCallback func, void* data);
 void xRayHitsTikiLandableEnt(xScene* sc, xRay3* r, xQCData* qcr, xEnt* ent, void* colldata);
 void xRayHitsEnt(xScene* sc, xRay3* r, xQCData* qcr, xEnt* ent, void* colldata);
+void xRayHitsTikiLandableScene(xScene* sc, xRay3* r, xCollis* coll);
 void xRayHitsScene(xScene* sc, xRay3* r, xCollis* coll);
 void xRayHitsSceneFlags(xScene* sc, xRay3* r, xCollis* coll, U8 collType, U8 chk);
 

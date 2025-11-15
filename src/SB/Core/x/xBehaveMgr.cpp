@@ -209,12 +209,11 @@ void xPsyche::Amnesia(S32 i)
     while (g != NULL)
     {
         xGoal* thisg = g;
-        g = g->Next();
-        // this->goallist = this->goallist->Next();
+        g = thisg->Next();
 
-        if (i == 0 && this->GIDInStack(thisg->GetID()) != NULL)
+        if ((i != 0) || (this->GIDInStack(thisg->GetID()) == 0))
         {
-            continue;
+            thisg->Clear();
         }
     }
 }
@@ -237,4 +236,146 @@ S32 xPsyche::IndexInStack(S32 gid) const
     }
 
     return da_idx;
+}
+
+S32 xPsyche::GoalPopToBase(S32 overpend)
+{
+    if (this->flg_psyche & 4)
+    {
+        return 0;
+	}
+	else if (this->staktop < 1)
+    {
+        return 0;
+    }
+	else
+	{
+		xPsyche::GoalPop(this->goalstak[0]->GetID(), overpend);
+        if ((this->pendtype != PEND_TRAN_NONE) && ((this->flg_psyche & 1)))
+        {
+            this->ForceTran(0.01f, NULL);
+
+        }
+        return 1;
+	}
+}
+
+xGoal* xPsyche::GetCurGoal() const
+{
+    if (this->staktop < 0)
+    {
+        return NULL;
+    }
+    else
+    {
+        return this->goalstak[this->staktop];
+    }
+}
+
+S32 xPsyche::GIDOfActive() const
+{
+    if (this->staktop < 0)
+    {
+        return 0;
+    }
+    else
+    {
+        return this->goalstak[this->staktop]->GetID();
+    }
+}
+
+S32 xPsyche::GIDOfPending() const
+{
+    if (this->pendgoal != 0)
+    {
+        return this->pendgoal->GetID();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+xGoal* xPsyche::GetPrevRecovery(S32 gid)
+{
+    S32 idx_start = -1;
+    S32 i;
+    xGoal* recgoal = NULL;
+	xGoal* tmpgoal = NULL;
+
+    if (gid == 0)
+    {
+        for (idx_start = this->staktop; idx_start >= 0; idx_start--)
+        {
+            tmpgoal = this->goalstak[idx_start];
+            if (tmpgoal->GetFlags() & 8)
+            {
+                recgoal = tmpgoal;
+				break;
+            }
+        }
+    }
+    else
+    {
+        for (i = this->staktop; i >= 0; i--)
+        {
+            if (gid == this->goalstak[i]->GetID())
+            {
+                idx_start = i - 1;
+                break;
+            }
+        }
+        if (idx_start > 0)
+        {
+            for (S32 i = idx_start; i >= 0; i--)
+            {
+                tmpgoal = this->goalstak[i];
+                if (tmpgoal->GetFlags() & 8)
+                {
+                    recgoal = tmpgoal;
+					break;
+                }
+            }
+        }
+    }
+    return recgoal;
+}
+
+void xPsyche::SetTopState(en_GOALSTATE state)
+{
+    if (this->staktop >= 0)
+    {
+        this->goalstak[this->staktop]->SetState(state);
+    }
+}
+
+F32 xPsyche::TimerGet(en_xpsytime tymr)
+{
+    if (this->staktop < 0)
+    {
+        return -1.0f;
+    }
+	return *(&this->tmr_stack[0][this->staktop] + tymr); // ...what?
+}
+
+void xPsyche::TimerClear()
+{
+    if (this->staktop < 0)
+    {
+        return;
+    }
+	// Missing unreachable branch here. Otherwise functionally identical.
+	this->tmr_stack[0][this->staktop] = 0.0f;
+}
+
+void xPsyche::TimerUpdate(F32 dt)
+{
+    F32* p;
+    if (this->staktop < 0)
+    {
+		return;
+    }
+
+	p = &this->tmr_stack[0][this->staktop];
+	*p += dt;
 }
