@@ -1,8 +1,21 @@
 #include <dolphin.h>
 #include <dolphin/mtx.h>
-#include "fake_tgmath.h"
 
 static f32 Unit01[2] = { 0.0f, 1.0f };
+
+// MEME: if this function is not here, 0.0f and 1.0f have wrong order in .sdata2
+void C_MTXIdentity(Mtx mtx)
+{
+    mtx[0][0] = 1.0f;
+    mtx[0][1] = 0.0f;
+    mtx[0][2] = 0.0f;
+    mtx[1][0] = 0.0f;
+    mtx[1][1] = 1.0f;
+    mtx[1][2] = 0.0f;
+    mtx[2][0] = 0.0f;
+    mtx[2][1] = 0.0f;
+    mtx[2][2] = 1.0f;
+}
 
 void PSMTXIdentity(register Mtx m)
 {

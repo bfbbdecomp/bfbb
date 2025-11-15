@@ -225,13 +225,15 @@ void GXSetTevColor(GXTevRegID id, GXColor color)
     CHECK_GXBEGIN(740, "GXSetTevColor");
     rgba = *(u32*)&color;
 
-    regRA = (0xE0 + id * 2) << 24;
-    SET_REG_FIELD(745, regRA, 8, 0, rgba >> 24);
-    SET_REG_FIELD(746, regRA, 8, 12, rgba & 0xFF);
+    regRA = 0;
+    SET_REG_FIELD(0x185, regRA, 11, 0, color.r);
+    SET_REG_FIELD(0x186, regRA, 11, 12, color.a);
+    SET_REG_FIELD(0x187, regRA, 8, 24, 224 + id * 2);
 
-    regBG = (0xE1 + id * 2) << 24;
-    SET_REG_FIELD(749, regBG, 8, 0, (rgba >> 8) & 0xFF);
-    SET_REG_FIELD(750, regBG, 8, 12, (rgba >> 16) & 0xFF);
+    regBG = 0;
+    SET_REG_FIELD(0x18A, regBG, 11, 0, color.b);
+    SET_REG_FIELD(0x18B, regBG, 11, 12, color.g);
+    SET_REG_FIELD(0x18C, regBG, 8, 24, 225 + id * 2);
 
     GX_WRITE_RAS_REG(regRA);
     GX_WRITE_RAS_REG(regBG);
@@ -249,16 +251,16 @@ void GXSetTevColorS10(GXTevRegID id, GXColorS10 color)
     u32 regBG;
 
     CHECK_GXBEGIN(782, "GXSetTevColorS10");
-    sRG = *(u32*)&color;
-    sBA = *((u32*)&color + 1);
 
-    regRA = (0xE0 + id * 2) << 24;
-    SET_REG_FIELD(789, regRA, 11, 0, (sRG >> 16) & 0x7FF);
-    SET_REG_FIELD(790, regRA, 11, 12, sBA & 0x7FF);
+    regRA = 0;
+    SET_REG_FIELD(0x1AF, regRA, 11, 0, color.r & 0x7FF);
+    SET_REG_FIELD(0x1B0, regRA, 11, 12, color.a & 0x7FF);
+    SET_REG_FIELD(0x1B1, regRA, 8, 24, 224 + id * 2);
 
-    regBG = (0xE1 + id * 2) << 24;
-    SET_REG_FIELD(793, regBG, 11, 0, (sBA >> 16) & 0x7FF);
-    SET_REG_FIELD(794, regBG, 11, 12, sRG & 0x7FF);
+    regBG = 0;
+    SET_REG_FIELD(0x1B4, regBG, 11, 0, color.b & 0x7FF);
+    SET_REG_FIELD(0x1B5, regBG, 11, 12, color.g & 0x7FF);
+    SET_REG_FIELD(0x1B6, regBG, 8, 24, 225 + id * 2);
 
     GX_WRITE_RAS_REG(regRA);
     GX_WRITE_RAS_REG(regBG);
@@ -270,26 +272,24 @@ void GXSetTevColorS10(GXTevRegID id, GXColorS10 color)
 
 void GXSetTevKColor(GXTevKColorID id, GXColor color)
 {
-    u32 rgba;
     u32 regRA;
     u32 regBG;
 
-    CHECK_GXBEGIN(833, "GXSetTevKColor");
-    rgba = *(u32*)&color;
+    CHECK_GXBEGIN(0x341, "GXSetTevKColor");
+    regRA = 0;
+    SET_REG_FIELD(0x1E0, regRA, 8, 0, color.r);
+    SET_REG_FIELD(0x1E1, regRA, 8, 12, color.a);
+    SET_REG_FIELD(0x1E2, regRA, 4, 20, 8);
+    SET_REG_FIELD(0x1E3, regRA, 8, 24, 224 + id * 2);
 
-    regRA = (0xE0 + id * 2) << 24;
-    SET_REG_FIELD(838, regRA, 8, 0, rgba >> 24);
-    SET_REG_FIELD(839, regRA, 8, 12, rgba & 0xFF);
-    SET_REG_FIELD(839, regRA, 4, 20, 8);
-
-    regBG = (0xE1 + id * 2) << 24;
-    SET_REG_FIELD(843, regBG, 8, 0, (rgba >> 8) & 0xFF);
-    SET_REG_FIELD(844, regBG, 8, 12, (rgba >> 16) & 0xFF);
-    SET_REG_FIELD(845, regBG, 4, 20, 8);
+    regBG = 0;
+    SET_REG_FIELD(0x1E6, regBG, 8, 0, color.b);
+    SET_REG_FIELD(0x1E7, regBG, 8, 12, color.g);
+    SET_REG_FIELD(0x1E8, regBG, 4, 20, 8);
+    SET_REG_FIELD(0x1E9, regBG, 8, 24, 225 + id * 2);
 
     GX_WRITE_RAS_REG(regRA);
     GX_WRITE_RAS_REG(regBG);
-
     __GXData->bpSentNot = 0;
 }
 

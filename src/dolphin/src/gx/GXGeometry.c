@@ -68,7 +68,7 @@ void __GXSendFlushPrim(void)
     u32 numD = __GXData->vNum * __GXData->vLim;
 
     GX_WRITE_U8(0x98);
-    GX_WRITE_U16(__GXData->vNum);
+    // GX_WRITE_U16(__GXData->vNum);
     for (i = 0; i < numD; i += 4)
     {
         GX_WRITE_U32(0);
@@ -127,7 +127,6 @@ void GXSetCullMode(GXCullMode mode)
     GXCullMode hwMode;
 
     CHECK_GXBEGIN(557, "GXSetCullMode");
-#if DEBUG
     switch (mode)
     {
     case GX_CULL_FRONT:
@@ -140,10 +139,6 @@ void GXSetCullMode(GXCullMode mode)
         hwMode = mode;
         break;
     }
-#else
-    hwMode = (mode >> 1) & 1;
-    __rlwimi(hwMode, mode, 1, 30, 30);
-#endif
 
     SET_REG_FIELD(570, __GXData->genMode, 2, 14, hwMode);
     __GXData->dirtyState |= 4;
@@ -151,7 +146,6 @@ void GXSetCullMode(GXCullMode mode)
 
 void GXGetCullMode(GXCullMode* mode)
 {
-#if DEBUG
     GXCullMode hwMode = GET_REG_FIELD(__GXData->genMode, 2, 14);
 
     switch (hwMode)
@@ -166,11 +160,6 @@ void GXGetCullMode(GXCullMode* mode)
         *mode = hwMode;
         break;
     }
-#else
-    // fake match?
-    GXCullMode hwMode = __GXData->genMode;
-    *mode = ((hwMode >> 0xD) & 0x2) | (((((int)hwMode >> 0xE) & 0x2) >> 0x1));
-#endif
 }
 
 void GXSetCoPlanar(GXBool enable)

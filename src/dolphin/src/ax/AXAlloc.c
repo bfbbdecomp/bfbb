@@ -199,7 +199,7 @@ AXVPB* AXAcquireVoice(u32 priority, void (*callback)(void*), u32 userContext)
         __AXStackHead[0] = __AXStackHead[0]->next;
     }
 
-    if (p == 0)
+    if (p == NULL)
     {
         for (i = 1; i < priority; i++)
         {

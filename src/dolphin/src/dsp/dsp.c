@@ -132,9 +132,17 @@ DSPTaskInfo* DSPAssertTask(DSPTaskInfo* task)
         __DSP_rude_task_pending = 1;
         if (__DSP_curr_task->state == 1)
         {
-            OSDisableInterrupts();
-            OSRestoreInterrupts(FALSE);
+            u32 enabled;
+
+            enabled = OSDisableInterrupts();
+
+            __DSPRegs[DSP_CONTROL_STATUS] = (__DSPRegs[DSP_CONTROL_STATUS] &
+                                             ~(DSP_CSR_AIDINT | DSP_CSR_ARINT | DSP_CSR_DSPINT)) |
+                                            DSP_CSR_PIINT;
+
+            OSRestoreInterrupts(enabled);
         }
+
         OSRestoreInterrupts(old);
         return task;
     }

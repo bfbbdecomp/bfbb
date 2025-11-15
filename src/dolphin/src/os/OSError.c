@@ -20,11 +20,6 @@ __declspec(weak) void OSReport(const char* msg, ...)
     va_end(args);
 }
 
-__declspec(weak) static void OSVReport(const char* msg, va_list list)
-{
-    vprintf(msg, list);
-}
-
 __declspec(weak) void OSPanic(const char* file, int line, const char* msg, ...)
 {
     va_list marker;

@@ -666,7 +666,7 @@ config.libs = [
             Object(Matching, "dolphin/src/card/CARDDelete.c"),
             Object(Matching, "dolphin/src/card/CARDStat.c"),
             Object(Matching,"dolphin/src/card/CARDStatEx.c"),
-            Object(NonMatching, "dolphin/src/card/CARDNet.c"),
+            Object(Matching, "dolphin/src/card/CARDNet.c"),
         ]
     ),
     DolphinLib(
@@ -678,17 +678,17 @@ config.libs = [
     DolphinLib(
         "dsp",
         [
-            Object(NonMatching, "dolphin/src/dsp/dsp.c"),
+            Object(Matching, "dolphin/src/dsp/dsp.c"),
             Object(Matching, "dolphin/src/dsp/dsp_debug.c"),
-            Object(NonMatching, "dolphin/src/dsp/dsp_task.c")
-        ]
+            Object(Matching, "dolphin/src/dsp/dsp_task.c")
+        ]        
     ),
     DolphinLib(
         "dvd",
         [
-            Object(NonMatching, "dolphin/src/dvd/dvdlow.c"),
+            Object(Matching, "dolphin/src/dvd/dvdlow.c"),
             Object(Matching, "dolphin/src/dvd/dvdfs.c"),
-            Object(NonMatching, "dolphin/src/dvd/dvd.c"),
+            Object(Matching, "dolphin/src/dvd/dvd.c"),
             Object(Matching, "dolphin/src/dvd/dvdqueue.c"),
             Object(Matching, "dolphin/src/dvd/dvderror.c"),
             Object(Matching, "dolphin/src/dvd/dvdidutils.c"),
@@ -708,14 +708,14 @@ config.libs = [
         [
             Object(NonMatching, "dolphin/src/gx/GXInit.c"),
             Object(NonMatching, "dolphin/src/gx/GXFifo.c"),
-            Object(NonMatching, "dolphin/src/gx/GXAttr.c"),
+            Object(Matching, "dolphin/src/gx/GXAttr.c"),
             Object(Matching, "dolphin/src/gx/GXMisc.c"),
             Object(NonMatching, "dolphin/src/gx/GXGeometry.c"),
             Object(Matching, "dolphin/src/gx/GXFrameBuf.c"),
             Object(NonMatching, "dolphin/src/gx/GXLight.c"),
-            Object(NonMatching, "dolphin/src/gx/GXTexture.c"),
-            Object(NonMatching, "dolphin/src/gx/GXBump.c"),
-            Object(NonMatching, "dolphin/src/gx/GXTev.c"),
+            Object(Matching, "dolphin/src/gx/GXTexture.c"),
+            Object(Matching, "dolphin/src/gx/GXBump.c"),
+            Object(Matching, "dolphin/src/gx/GXTev.c"),
             Object(NonMatching, "dolphin/src/gx/GXPixel.c"),
             Object(NonMatching, "dolphin/src/gx/GXDraw.c"),
             Object(Matching, "dolphin/src/gx/GXDisplayList.c"),
@@ -726,8 +726,8 @@ config.libs = [
     DolphinLib(
         "mtx",
         [
-            Object(NonMatching, "dolphin/src/mtx/mtx.c"),
-            Object(NonMatching, "dolphin/src/mtx/mtx44.c"),
+            Object(Matching, "dolphin/src/mtx/mtx.c"),
+            Object(Matching, "dolphin/src/mtx/mtx44.c"),
         ]
     ),
     DolphinLib(
@@ -745,15 +745,15 @@ config.libs = [
     DolphinLib(
         "os",
         [
-            Object(NonMatching, "dolphin/src/os/OS.c"),
+            Object(Matching, "dolphin/src/os/OS.c"),
             Object(Matching, "dolphin/src/os/OSAlarm.c"),
             Object(Matching, "dolphin/src/os/OSAlloc.c"),
             Object(Matching, "dolphin/src/os/OSArena.c"),
             Object(Matching, "dolphin/src/os/OSAudioSystem.c"),
             Object(Matching, "dolphin/src/os/OSCache.c"),
             Object(Matching, "dolphin/src/os/OSContext.c"),
-            Object(NonMatching, "dolphin/src/os/OSError.c"),
-            Object(NonMatching, "dolphin/src/os/OSFont.c"),
+            Object(Matching, "dolphin/src/os/OSError.c"),
+            Object(Matching, "dolphin/src/os/OSFont.c"),
             Object(Matching, "dolphin/src/os/OSInterrupt.c"),
             Object(Matching, "dolphin/src/os/OSLink.c"),
             Object(Matching, "dolphin/src/os/OSMemory.c"),
@@ -773,13 +773,13 @@ config.libs = [
         "pad",
         [
             Object(Matching, "dolphin/src/pad/Padclamp.c"),
-            Object(NonMatching, "dolphin/src/pad/Pad.c")
+            Object(Matching, "dolphin/src/pad/Pad.c")
         ]
     ),
     DolphinLib(
         "si",
         [
-            Object(NonMatching, "dolphin/src/si/SIBios.c"),
+            Object(Matching, "dolphin/src/si/SIBios.c"),
             Object(Matching, "dolphin/src/si/SISamplingRate.c"),
         ]
     ),

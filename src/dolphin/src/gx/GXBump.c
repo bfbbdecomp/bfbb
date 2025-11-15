@@ -189,12 +189,15 @@ void GXSetNumIndStages(u8 nIndStages)
     __GXData->dirtyState |= 6;
 }
 
+#pragma dont_inline on
 void GXSetTevDirect(GXTevStageID tev_stage)
 {
     CHECK_GXBEGIN(373, "GXSetTevDirect");
     GXSetTevIndirect(tev_stage, GX_INDTEXSTAGE0, GX_ITF_8, GX_ITB_NONE, GX_ITM_OFF, GX_ITW_OFF,
                      GX_ITW_OFF, GX_FALSE, GX_FALSE, GX_ITBA_OFF);
 }
+
+#pragma dont_inline off
 
 void __GXUpdateBPMask(void)
 {
