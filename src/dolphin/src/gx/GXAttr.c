@@ -32,7 +32,12 @@
     ASSERTMSGLINE(line, (attr) > GX_VA_TEX7MTXIDX || (type) <= GX_VA_TEX0MTXIDX,                   \
                   "GXSetVtxDesc: GX_VA_*MTXIDX accepts GX_NONE or GX_DIRECT only")
 
-static void __GXXfVtxSpecs(void)
+#define GX_CP_LOAD_REG(addr, data)                                                                 \
+    GXWGFifo.s8 = 0x08;                                                                            \
+    GXWGFifo.s8 = (addr);                                                                          \
+    GXWGFifo.s32 = (data);
+
+inline void __GXXfVtxSpecs(void)
 {
     u32 nCols = 0;
     u32 nNrm;
@@ -370,23 +375,17 @@ void GXSetVtxAttrFmtv(GXVtxFmt vtxfmt, const GXVtxAttrFmtList* list)
 
 void __GXSetVAT(void)
 {
-    s32 i;
-    u32 dirty = __GXData->dirtyVAT;
+    u8 i;
 
-    i = 0;
-    do
+    for (i = 0; i < 8; i++)
     {
-        if (dirty & 1)
+        if (__GXData->dirtyVAT & (1 << (u8)i))
         {
-            GX_WRITE_SOME_REG4(8, i | 0x70, __GXData->vatA[i], i - 12);
-            GX_WRITE_SOME_REG4(8, i | 0x80, __GXData->vatB[i], i - 12);
-            GX_WRITE_SOME_REG4(8, i | 0x90, __GXData->vatC[i], i - 12);
+            GX_WRITE_SOME_REG4(GX_LOAD_CP_REG, i | 0x70, __GXData->vatA[i], i - 12);
+            GX_WRITE_SOME_REG4(GX_LOAD_CP_REG, i | 0x80, __GXData->vatB[i], i - 12);
+            GX_WRITE_SOME_REG4(GX_LOAD_CP_REG, i | 0x90, __GXData->vatC[i], i - 12);
         }
-
-        dirty >>= 1;
-        i++;
-    } while (dirty != 0);
-
+    }
     __GXData->dirtyVAT = 0;
 }
 
@@ -411,25 +410,37 @@ static inline u8 GetFracForNrm(GXCompType type)
     return frac;
 }
 
-void GXSetArray(GXAttr attr, void* base_ptr, u8 stride)
+void GXSetArray(GXAttr attr, void* basePtr, u8 stride)
 {
-    GXAttr cpAttr;
-    u32 phyAddr;
+    s32 idx;
+    s32 newAttr;
+    s32 attrReg;
 
-    attr; // needed to match
-
-    CHECK_GXBEGIN(963, "GXSetArray");
-    if (attr == GX_VA_NBT)
+    newAttr = attr;
+    if (newAttr == GX_VA_NBT)
     {
-        attr = GX_VA_NRM;
+        newAttr = GX_VA_NRM;
     }
 
-    //CHECK_ATTRNAME5(966, attr);
-    cpAttr = attr - GX_VA_POS;
-    phyAddr = (u32)base_ptr & 0x3FFFFFFF;
+    attrReg = newAttr - GX_VA_POS;
 
-    GX_WRITE_SOME_REG2(8, cpAttr | 0xA0, phyAddr, cpAttr - 12);
-    GX_WRITE_SOME_REG3(8, cpAttr | 0xB0, stride, cpAttr - 12);
+    GX_CP_LOAD_REG(0xA0 | attrReg,
+                   // Address -> offset?
+                   (u32)basePtr & ~0xC0000000);
+
+    idx = attrReg - 12;
+    if (idx >= 0 && idx < 4)
+    {
+        __GXData->indexBase[idx] = (u32)basePtr & ~0xC0000000;
+    }
+
+    GX_CP_LOAD_REG(0xB0 | attrReg, stride);
+
+    idx = attrReg - 12;
+    if (idx >= 0 && idx < 4)
+    {
+        __GXData->indexStride[idx] = stride;
+    }
 }
 
 void GXInvalidateVtxCache(void)

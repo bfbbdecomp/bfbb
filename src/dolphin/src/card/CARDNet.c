@@ -8,37 +8,36 @@
 u16 __CARDVendorID = 0xFFFF;
 u8 __CARDPermMask = 28;
 
-s32 CARDSetAttributesAsync(s32 chan, s32 fileNo, u8 attr, CARDCallback callback)
+s32 CARDSetAttributesAsync(s32 channel, s32 cardFile, u8 permissions, CARDCallback callback)
 {
-    CARDDir dirent;
-    s32 result;
-
-    if (attr & ~__CARDPermMask)
+    CARDDir dir;
+    s32 res;
+    if (permissions & ~__CARDPermMask)
     {
         return CARD_RESULT_NOPERM;
     }
 
-    result = __CARDGetStatusEx(chan, fileNo, &dirent);
-    if (result < 0)
+    res = __CARDGetStatusEx(channel, cardFile, &dir);
+    if (res < 0)
     {
-        return result;
+        return res;
     }
 
-    if ((CARDCheckAttr(dirent.permission, 0x20) && !CARDCheckAttr(attr, 0x20)) ||
-        (CARDCheckAttr(dirent.permission, 0x40) && !CARDCheckAttr(attr, 0x40)))
-    {
-        return CARD_RESULT_NOPERM;
-    }
-
-    if ((CARDCheckAttr(attr, 0x20) && CARDCheckAttr(attr, 0x40)) ||
-        (CARDCheckAttr(attr, 0x20) && CARDCheckAttr(dirent.permission, 0x40)) ||
-        (CARDCheckAttr(attr, 0x40) && CARDCheckAttr(dirent.permission, 0x20)))
+    if (((dir.permission & 0x20u) && !(permissions & 0x20u)) ||
+        ((dir.permission & 0x40u) && !(permissions & 0x40u)))
     {
         return CARD_RESULT_NOPERM;
     }
 
-    dirent.permission = attr;
-    return __CARDSetStatusExAsync(chan, fileNo, &dirent, callback);
+    if (((permissions & 0x20u) && (permissions & 0x40u)) ||
+        ((permissions & 0x20u) && (dir.permission & 0x40u)) ||
+        ((permissions & 0x40u) && (dir.permission & 0x20u)))
+    {
+        return CARD_RESULT_NOPERM;
+    }
+
+    dir.permission = permissions;
+    return __CARDSetStatusExAsync(channel, cardFile, &dir, callback);
 }
 
 s32 CARDSetAttributes(s32 chan, s32 fileNo, u8 attr)

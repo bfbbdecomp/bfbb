@@ -1,8 +1,16 @@
-#include <math.h>
+// #include "PowerPC_EABI_Support/MSL_C/MSL_Common/math_api.h"
+// #include <math.h>
+
+// TODO: The above are both commented out because of some weird calling quirk
+// Using the externed cosf fixes this issue.
+
 #include <dolphin/gx.h>
 #include <dolphin/os.h>
 
 #include <gx/__gx.h>
+
+extern float cosf(float x);
+extern float sqrtf(float x);
 
 // GXLightObj private data
 typedef struct

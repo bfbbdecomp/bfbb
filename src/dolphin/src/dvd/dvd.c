@@ -1052,7 +1052,7 @@ static void cbForStateBusy(u32 intType)
     }
 }
 
-static BOOL issueCommand(s32 prio, DVDCommandBlock* block)
+static inline BOOL issueCommand(s32 prio, DVDCommandBlock* block)
 {
     BOOL level;
     BOOL result;
@@ -1134,20 +1134,6 @@ BOOL DVDReadDiskID(DVDCommandBlock* block, DVDDiskID* diskID, DVDCBCallback call
     idle = issueCommand(2, block);
     return idle;
 }
-
-BOOL DVDPrepareStreamAbsAsync(DVDCommandBlock* block, u32 length, u32 offset,
-                              DVDCBCallback callback)
-{
-    BOOL idle;
-    block->command = 6;
-    block->length = length;
-    block->offset = offset;
-    block->callback = callback;
-
-    idle = issueCommand(1, block);
-    return idle;
-}
-
 BOOL DVDCancelStreamAsync(DVDCommandBlock* block, DVDCBCallback callback)
 {
     BOOL idle;
@@ -1157,76 +1143,6 @@ BOOL DVDCancelStreamAsync(DVDCommandBlock* block, DVDCBCallback callback)
     return idle;
 }
 
-s32 DVDCancelStream(DVDCommandBlock* block)
-{
-    BOOL result;
-    s32 state;
-    BOOL enabled;
-    s32 retVal;
-
-    result = DVDCancelStreamAsync(block, cbForCancelStreamSync);
-
-    if (result == FALSE)
-    {
-        return -1;
-    }
-
-    enabled = OSDisableInterrupts();
-
-    while (TRUE)
-    {
-        state = ((volatile DVDCommandBlock*)block)->state;
-
-        if (state == 0 || state == -1 || state == 10)
-        {
-            retVal = (s32)block->transferredSize;
-            break;
-        }
-
-        OSSleepThread(&__DVDThreadQueue);
-    }
-
-    OSRestoreInterrupts(enabled);
-    return retVal;
-}
-static void cbForCancelStreamSync(s32 result, DVDCommandBlock* block)
-{
-    block->transferredSize = (u32)result;
-    OSWakeupThread(&__DVDThreadQueue);
-}
-BOOL DVDStopStreamAtEndAsync(DVDCommandBlock* block, DVDCBCallback callback)
-{
-    BOOL idle;
-
-    block->command = 8;
-    block->callback = callback;
-
-    idle = issueCommand(1, block);
-
-    return idle;
-}
-BOOL DVDGetStreamErrorStatusAsync(DVDCommandBlock* block, DVDCBCallback callback)
-{
-    BOOL idle;
-
-    block->command = 9;
-    block->callback = callback;
-
-    idle = issueCommand(1, block);
-
-    return idle;
-}
-BOOL DVDGetStreamPlayAddrAsync(DVDCommandBlock* block, DVDCBCallback callback)
-{
-    BOOL idle;
-
-    block->command = 10;
-    block->callback = callback;
-
-    idle = issueCommand(1, block);
-
-    return idle;
-}
 BOOL DVDInquiryAsync(DVDCommandBlock* block, DVDDriveInfo* info, DVDCBCallback callback)
 {
     BOOL idle;
@@ -1316,7 +1232,7 @@ BOOL DVDSetAutoInvalidation(BOOL autoInval)
     return prev;
 }
 
-void DVDPause(void)
+inline void DVDPause(void)
 {
     BOOL level;
     level = OSDisableInterrupts();

@@ -6,7 +6,7 @@
 
 extern OSTime __OSGetSystemTime();
 static const char* __OSVersion =
-    "<< Dolphin SDK - OS\trelease build: Jul 23 2003 11:27:16 (0x2301) >>";
+    "<< Dolphin SDK - OS\trelease build: Apr 17 2003 12:33:06 (0x2301) >>";
 // needs to be "<< Dolphin SDK - DSP\trelease build: Apr 17 2003 12:34:16 (0x2301) >>"?
 extern char _db_stack_end[];
 
@@ -269,6 +269,7 @@ void OSInit(void)
         // HEAP //
         // set up bottom of heap (ArenaLo)
         // grab address from BootInfo if it exists, otherwise use default __ArenaLo
+
         OSSetArenaLo((BootInfo->arenaLo == NULL) ? __ArenaLo : BootInfo->arenaLo);
 
         // if the input arenaLo is null, and debug flag location exists (and flag is < 2),
@@ -306,7 +307,7 @@ void OSInit(void)
 
         // begin OS reporting
         OSReport("\nDolphin OS\n");
-        OSReport("Kernel built : %s %s\n", "Jul 23 2003", "11:27:16");
+        OSReport("Kernel built : %s %s\n", "Apr 17 2003", "12:33:06");
         OSReport("Console Type : ");
 
         // this is a function in the same file, but it doesn't seem to match

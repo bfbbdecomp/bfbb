@@ -782,6 +782,20 @@ s32 EXIGetID(s32 chan, u32 dev, u32* id)
     return err ? 0 : !0;
 }
 
+// static char unused1[] = "Memory Card 59";
+// static char unused2[] = "Memory Card 123";
+// static char unused3[] = "Memory Card 251";
+// static char unused4[] = "Memory Card 507";
+// static char unused5[] = "Memory Card 1019";
+// static char unused6[] = "Memory Card 2043";
+// static char unused7[] = "USB Adapter";
+// static char unused8[] = "Net Card";
+// static char unused9[] = "Artist Ether";
+// static char unused10[] = "Broadband Adapter";
+// static char unused11[] = "Stream Hanger";
+// static char unused12[] = "IS-DOL-VIEWER";
+
+// Unused function, but kept to match the data above
 char* EXIGetTypeString(u32 type)
 {
     switch (type)

@@ -57,7 +57,7 @@ typedef struct OSFontHeader
 u16 OSGetFontEncode(void);
 u16 OSSetFontEncode(u16 encode);
 BOOL OSInitFont(OSFontHeader* fontData);
-char* OSGetFontTexture(const char* string, void** image, s32* x, s32* y, s32* width);
+char* OSGetFontTexture(char* string, void** image, s32* x, s32* y, s32* width);
 
 #ifdef __cplusplus
 }

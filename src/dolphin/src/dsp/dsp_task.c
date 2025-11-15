@@ -424,3 +424,21 @@ void __DSP_remove_task(DSPTaskInfo* task)
         task->next->prev = task->prev;
     }
 }
+
+// Unused, but close enough.
+void __DSP_add_task(DSPTaskInfo* task)
+{
+    if (__DSP_last_task == NULL)
+    {
+        __DSP_first_task = __DSP_last_task = __DSP_curr_task = task;
+        task->next = task->prev = NULL;
+    }
+    else
+    {
+        __DSP_last_task->next = task;
+        task->next = NULL;
+        task->prev = __DSP_last_task;
+        __DSP_last_task = task;
+    }
+    __DSP_debug_printf("__DSP_add_task() : Added task    : 0x%08X\n", (u32)(task->next));
+}

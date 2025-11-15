@@ -3,42 +3,8 @@
 #include <dolphin/os.h>
 
 #include <gx/__gx.h>
-//C :\Users\Colin\Desktop\battle decomp\bfbb - decomp\src\dolphin\src\gx\__gx.h
 
-void GXProject(f32 x, f32 y, f32 z, const Mtx mtx, const f32* pm, const f32* vp, f32* sx, f32* sy,
-               f32* sz)
-{
-    Vec peye;
-    f32 xc;
-    f32 yc;
-    f32 zc;
-    f32 wc;
-
-    ASSERTMSGLINE(168, pm && vp && sx && sy && sz, "GXGet*: invalid null pointer");
-
-    peye.x = mtx[0][3] + ((mtx[0][2] * z) + ((mtx[0][0] * x) + (mtx[0][1] * y)));
-    peye.y = mtx[1][3] + ((mtx[1][2] * z) + ((mtx[1][0] * x) + (mtx[1][1] * y)));
-    peye.z = mtx[2][3] + ((mtx[2][2] * z) + ((mtx[2][0] * x) + (mtx[2][1] * y)));
-    if (pm[0] == 0.0f)
-    {
-        xc = (peye.x * pm[1]) + (peye.z * pm[2]);
-        yc = (peye.y * pm[3]) + (peye.z * pm[4]);
-        zc = pm[6] + (peye.z * pm[5]);
-        wc = 1.0f / -peye.z;
-    }
-    else
-    {
-        xc = pm[2] + (peye.x * pm[1]);
-        yc = pm[4] + (peye.y * pm[3]);
-        zc = pm[6] + (peye.z * pm[5]);
-        wc = 1.0f;
-    }
-    *sx = (vp[2] / 2.0f) + (vp[0] + (wc * (xc * vp[2] / 2.0f)));
-    *sy = (vp[3] / 2.0f) + (vp[1] + (wc * (-yc * vp[3] / 2.0f)));
-    *sz = vp[5] + (wc * (zc * (vp[5] - vp[4])));
-}
-
-static void WriteProjPS(const register f32 proj[6], register volatile void* dest)
+inline void WriteProjPS(const register f32 proj[6], register volatile void* dest)
 {
     register f32 p01, p23, p45;
 
@@ -52,7 +18,7 @@ static void WriteProjPS(const register f32 proj[6], register volatile void* dest
     }
 }
 
-static void Copy6Floats(const register f32 src[6], register volatile f32* dest)
+inline void Copy6Floats(const register f32 src[6], register volatile f32* dest)
 {
     register f32 ps01, ps23, ps45;
 
@@ -66,7 +32,7 @@ static void Copy6Floats(const register f32 src[6], register volatile f32* dest)
     }
 }
 
-void __GXSetProjection(void)
+inline void __GXSetProjection(void)
 {
     u32 reg = 0x00061020;
     GX_WRITE_U8(0x10);
@@ -148,7 +114,7 @@ void GXGetProjectionv(f32* ptr)
 #endif
 }
 
-static void WriteMTXPS4x3(const register f32 mtx[3][4], register volatile f32* dest)
+inline void WriteMTXPS4x3(const register f32 mtx[3][4], register volatile f32* dest)
 {
     register f32 a00_a01;
     register f32 a02_a03;
@@ -173,7 +139,7 @@ static void WriteMTXPS4x3(const register f32 mtx[3][4], register volatile f32* d
     }
 }
 
-static void WriteMTXPS3x3from3x4(register f32 mtx[3][4], register volatile f32* dest)
+inline void WriteMTXPS3x3from3x4(register f32 mtx[3][4], register volatile f32* dest)
 {
     register f32 a00_a01;
     register f32 a02_a03;
@@ -198,7 +164,7 @@ static void WriteMTXPS3x3from3x4(register f32 mtx[3][4], register volatile f32* 
     }
 }
 
-static void WriteMTXPS3x3(register f32 mtx[3][3], register volatile f32* dest)
+inline void WriteMTXPS3x3(register f32 mtx[3][3], register volatile f32* dest)
 {
     register f32 a00_a01;
     register f32 a02_a10;
@@ -220,7 +186,7 @@ static void WriteMTXPS3x3(register f32 mtx[3][3], register volatile f32* dest)
     }
 }
 
-static void WriteMTXPS4x2(const register f32 mtx[2][4], register volatile f32* dest)
+inline void WriteMTXPS4x2(const register f32 mtx[2][4], register volatile f32* dest)
 {
     register f32 a00_a01;
     register f32 a02_a03;
@@ -482,6 +448,9 @@ void GXSetClipMode(GXClipMode mode)
 
 void __GXSetMatrixIndex(GXAttr matIdxAttr)
 {
+    // Function should be equivalent, but there seems to be a reg issue.
+    // The "__GXData->matIdxA" shouldn't show up twice in asm
+    // But it is for some reason.
     if (matIdxAttr < GX_VA_TEX4MTXIDX)
     {
         GX_WRITE_SOME_REG4(8, 0x30, __GXData->matIdxA, -12);

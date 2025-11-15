@@ -29,46 +29,6 @@ static void __GXWriteFifoIntReset(u8 hiWatermarkClr, u8 loWatermarkClr);
 static char __data_0[] = "[GXOverflowHandler]";
 #endif
 
-static void GXOverflowHandler(__OSInterrupt interrupt, OSContext* context)
-{
-#if DEBUG
-    if (__gxVerif->verifyLevel > GX_WARN_SEVERE)
-    {
-        OSReport(__data_0);
-    }
-#endif
-    ASSERTLINE(LINE(377, 377, 381), !GXOverflowSuspendInProgress);
-
-    __GXOverflowCount++;
-    __GXWriteFifoIntEnable(0, 1);
-    __GXWriteFifoIntReset(1, 0);
-    GXOverflowSuspendInProgress = TRUE;
-
-#if DEBUG
-    if (__gxVerif->verifyLevel > GX_WARN_SEVERE)
-    {
-        OSReport("[GXOverflowHandler Sleeping]");
-    }
-#endif
-    OSSuspendThread(__GXCurrentThread);
-}
-
-static void GXUnderflowHandler(s16 interrupt, OSContext* context)
-{
-#if DEBUG
-    if (__gxVerif->verifyLevel > GX_WARN_SEVERE)
-    {
-        OSReport("[GXUnderflowHandler]");
-    }
-#endif
-    ASSERTLINE(LINE(419, 419, 423), GXOverflowSuspendInProgress);
-
-    OSResumeThread(__GXCurrentThread);
-    GXOverflowSuspendInProgress = FALSE;
-    __GXWriteFifoIntReset(1, 1);
-    __GXWriteFifoIntEnable(1, 0);
-}
-
 #define SOME_SET_REG_MACRO(reg, size, shift, val)                                                  \
     do                                                                                             \
     {                                                                                              \
@@ -76,7 +36,7 @@ static void GXUnderflowHandler(s16 interrupt, OSContext* context)
             (u32)__rlwimi((u32)(reg), (val), (shift), (32 - (shift) - (size)), (31 - (shift)));    \
     } while (0);
 
-static void GXBreakPointHandler(__OSInterrupt interrupt, OSContext* context)
+inline void GXBreakPointHandler(__OSInterrupt interrupt, OSContext* context)
 {
     OSContext exceptionContext;
 
@@ -97,11 +57,18 @@ static void GXCPInterruptHandler(__OSInterrupt interrupt, OSContext* context)
     __GXData->cpStatus = GX_GET_CP_REG(0);
     if (GET_REG_FIELD(__GXData->cpEnable, 1, 3) && GET_REG_FIELD(__GXData->cpStatus, 1, 1))
     {
-        GXUnderflowHandler(interrupt, context);
+        OSResumeThread(__GXCurrentThread);
+        GXOverflowSuspendInProgress = FALSE;
+        __GXWriteFifoIntReset(1, 1);
+        __GXWriteFifoIntEnable(1, 0);
     }
     if (GET_REG_FIELD(__GXData->cpEnable, 1, 2) && GET_REG_FIELD(__GXData->cpStatus, 1, 0))
     {
-        GXOverflowHandler(interrupt, context);
+        __GXOverflowCount++;
+        __GXWriteFifoIntEnable(0, 1);
+        __GXWriteFifoIntReset(1, 0);
+        GXOverflowSuspendInProgress = TRUE;
+        OSSuspendThread(__GXCurrentThread);
     }
     if (GET_REG_FIELD(__GXData->cpEnable, 1, 5) && GET_REG_FIELD(__GXData->cpStatus, 1, 4))
     {

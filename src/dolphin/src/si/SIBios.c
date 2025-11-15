@@ -72,7 +72,7 @@ BOOL SIIsChanBusy(s32 chan)
     return (Packet[chan].chan != -1 || Si.chan == chan);
 }
 
-static void SIClearTCInterrupt()
+inline void SIClearTCInterrupt()
 {
     u32 reg;
 
@@ -141,7 +141,7 @@ static u32 CompleteTransfer()
     return sr;
 }
 
-static void SITransferNext(s32 chan)
+inline void SITransferNext(s32 chan)
 {
     int i;
     SIPacket* packet;
@@ -401,24 +401,6 @@ static BOOL __SITransfer(s32 chan, void* output, u32 outputBytes, void* input, u
     return TRUE;
 }
 
-u32 SISync(void)
-{
-    BOOL enabled;
-    u32 sr;
-
-    while (__SIRegs[13] & 1)
-        ;
-
-    enabled = OSDisableInterrupts();
-    sr = CompleteTransfer();
-
-    SITransferNext(SI_MAX_CHAN);
-
-    OSRestoreInterrupts(enabled);
-
-    return sr;
-}
-
 u32 SIGetStatus(s32 chan)
 {
     BOOL enabled;
@@ -443,11 +425,6 @@ u32 SIGetStatus(s32 chan)
 void SISetCommand(s32 chan, u32 command)
 {
     __SIRegs[3 * chan] = command;
-}
-
-u32 SIGetCommand(s32 chan)
-{
-    return __SIRegs[3 * chan];
 }
 
 void SITransferCommands(void)
@@ -627,7 +604,7 @@ BOOL SITransfer(s32 chan, void* output, u32 outputBytes, void* input, u32 inputB
     return TRUE;
 }
 
-static void CallTypeAndStatusCallback(s32 chan, u32 type)
+inline void CallTypeAndStatusCallback(s32 chan, u32 type)
 {
     SITypeAndStatusCallback callback;
     int i;
@@ -794,82 +771,6 @@ u32 SIGetTypeAsync(s32 chan, SITypeAndStatusCallback callback)
     }
     OSRestoreInterrupts(enabled);
     return type;
-}
-
-u32 SIDecodeType(u32 type)
-{
-    u32 error;
-
-    error = type & 0xff;
-    type &= ~0xff;
-
-    if (error & SI_ERROR_NO_RESPONSE)
-    {
-        return SI_ERROR_NO_RESPONSE;
-    }
-    if (error & (SI_ERROR_UNDER_RUN | SI_ERROR_OVER_RUN | SI_ERROR_COLLISION | SI_ERROR_UNKNOWN))
-    {
-        return SI_ERROR_UNKNOWN;
-    }
-    if (error)
-    {
-        return SI_ERROR_BUSY;
-    }
-
-    if ((type & SI_TYPE_MASK) == SI_TYPE_N64)
-    {
-        switch (type & 0xffff0000)
-        {
-        case SI_N64_CONTROLLER:
-        case SI_N64_MIC:
-        case SI_N64_KEYBOARD:
-        case SI_N64_MOUSE:
-        case SI_GBA:
-            return type & 0xffff0000;
-            break;
-        }
-        return SI_ERROR_UNKNOWN;
-    }
-
-    if ((type & SI_TYPE_MASK) != SI_TYPE_GC)
-    {
-        return SI_ERROR_UNKNOWN;
-    }
-    switch (type & 0xffff0000)
-    {
-    case SI_GC_CONTROLLER:
-    case SI_GC_STEERING:
-        return type & 0xffff0000;
-        break;
-    }
-
-    if ((type & 0xffe00000) == SI_GC_KEYBOARD)
-    {
-        return SI_GC_KEYBOARD;
-    }
-
-    if ((type & SI_GC_WIRELESS) && !(type & SI_WIRELESS_IR))
-    {
-        if ((type & SI_GC_WAVEBIRD) == SI_GC_WAVEBIRD)
-        {
-            return SI_GC_WAVEBIRD;
-        }
-        else if (!(type & SI_WIRELESS_STATE))
-        {
-            return SI_GC_RECEIVER;
-        }
-    }
-
-    if ((type & SI_GC_CONTROLLER) == SI_GC_CONTROLLER)
-    {
-        return SI_GC_CONTROLLER;
-    }
-    return SI_ERROR_UNKNOWN;
-}
-
-u32 SIProbe(s32 chan)
-{
-    return SIDecodeType(SIGetType(chan));
 }
 
 char* SIGetTypeString(u32 type)

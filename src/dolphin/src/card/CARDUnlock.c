@@ -38,23 +38,31 @@ typedef struct DecodeParameters
 
 static unsigned long int next = 1;
 
-static int CARDRand(void)
+inline int CARDRand(void)
 {
     next = next * 1103515245 + 12345;
     return (int)((unsigned int)(next / 65536) % 32768);
 }
 
-static u32 GetInitVal(void)
-{
-    u32 tmp = 0;
-    u32 tick;
+// static u32 GetInitVal(void)
+// {
+//     u32 tmp = 0;
+//     u32 tick;
 
-    tick = OSGetTick();
-    next = tmp;
-    tmp = 0x7fec8000;
-    tmp |= CARDRand();
-    tmp &= 0xfffff000;
-    return tmp;
+//     tick = OSGetTick();
+//     next = tmp;
+//     tmp = 0x7fec8000;
+//     tmp |= CARDRand();
+//     tmp &= 0xfffff000;
+//     return tmp;
+// }
+
+inline u32 GetInitVal(void)
+{
+    // OSTick tick = OSGetTick();
+    next = OSGetTick();
+    // CARDRand();
+    return (CARDRand() | 0x7FEC0000) & ~(4096 - 1);
 }
 
 static u32 exnor(u32 data, u32 lshift)
@@ -157,8 +165,7 @@ static s32 DummyLen(void)
 
     wk = 1;
     max = 0;
-    tick = OSGetTick();
-    next = tick;
+    next = OSGetTick();
 
     tmp = CARDRand();
     tmp &= 0x0000001f;

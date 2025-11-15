@@ -178,16 +178,26 @@ void __AXOutInit(u32 outputBufferMode)
 #ifdef DEBUG
     OSReport("Initializing AXOut code module\n");
 #endif
+    u32 i;
+    u32* dst;
+    u32* dst2;
 
     __AXOutputBufferMode = outputBufferMode;
     __AXOutFrame = 0;
     __AXAiDmaFrame = 0;
     __AXDebugSteppingMode = 0;
 
-    BUFFER_MEMSET(__AXOutBuffer, 0x1E0);
+    for (dst = (u32*)__AXOutBuffer, i = 0; i < sizeof(__AXOutBuffer) / sizeof(u32); i++)
+    {
+        *dst++ = 0;
+    }
     DCFlushRange(__AXOutBuffer, sizeof(__AXOutBuffer));
 
-    BUFFER_MEMSET(__AXOutSBuffer, 0xA0);
+    for (dst2 = (u32*)__AXOutSBuffer, i = 0; i < sizeof(__AXOutSBuffer) / sizeof(u32); i++)
+    {
+        *dst2++ = 0;
+    }
+
     DCFlushRange(__AXOutSBuffer, sizeof(__AXOutSBuffer));
 
     __AXOutInitDSP();
