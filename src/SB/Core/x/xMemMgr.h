@@ -86,6 +86,7 @@ struct xMemPool
 
 extern U32 gActiveHeap;
 
+void xMemDebug_SoakLog(const char*);
 void xMemInit();
 void xMemExit();
 void xMemInitHeap(xMemHeap_tag* heap, U32 base, U32 size, U32 flags);
