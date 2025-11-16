@@ -11,18 +11,6 @@
 #include <rwcore.h>
 #include <types.h>
 
-enum fx_when_enum
-{
-    FX_WHEN_LAUNCH,
-    FX_WHEN_IMPACT,
-    FX_WHEN_BIRTH,
-    FX_WHEN_DEATH,
-    FX_WHEN_HEAD,
-    FX_WHEN_TAIL,
-    FX_WHEN_KILL,
-    MAX_FX_WHEN
-};
-
 enum fx_type_enum
 {
     FX_TYPE_PARTICLE,
@@ -44,6 +32,18 @@ enum fx_orient_enum
 
 struct xLaserBoltEmitter
 {
+    enum fx_when_enum
+    {
+        FX_WHEN_LAUNCH,
+        FX_WHEN_IMPACT,
+        FX_WHEN_BIRTH,
+        FX_WHEN_DEATH,
+        FX_WHEN_HEAD,
+        FX_WHEN_TAIL,
+        FX_WHEN_KILL,
+        MAX_FX_WHEN
+    };
+
     struct config
     {
         F32 radius;
@@ -61,16 +61,6 @@ struct xLaserBoltEmitter
     };
 
     struct bolt;
-
-    struct static_queue
-    {
-        U32 _first;
-        U32 _size;
-        U32 _max_size;
-        U32 _max_size_mask;
-        bolt* _buffer;
-    };
-
     struct effect_data
     {
         struct effect_callback
@@ -107,15 +97,15 @@ struct xLaserBoltEmitter
     };
 
     config cfg;
-    static_queue bolts;
+    static_queue<bolt> bolts;
     F32 ialpha;
     RwRaster* bolt_raster;
     S32 start_collide;
     effect_data* fx[7];
     U32 fxsize[7];
 
-    void init(U32 max_bolts, const char*);
-    void set_texture(char* name);
+    void init(u32 max_bolts, const char* texture_name);
+    void set_texture(const char* name);
     void set_texture(U32 aid);
     void set_texture(RwTexture* tex);
     void set_texture(RwRaster* raster);
@@ -129,10 +119,20 @@ struct xLaserBoltEmitter
     void collide_update(bolt& b);
     RxObjSpace3DVertex* render(bolt& b, RxObjSpace3DVertex* vert);
     RxObjSpace3DVertex* get_vert_buffer(S32& dat);
-    void applyDamage(bolt& b);
+    void apply_damage(bolt& b);
     void reset_fx(fx_when_enum when);
 
     U32 visible() const;
+
+    void debug_init(const char* texture_name)
+    {
+
+    }
+
+    void debug_refresh_effects(fx_when_enum when)
+    {
+
+    }
 };
 
 #endif
