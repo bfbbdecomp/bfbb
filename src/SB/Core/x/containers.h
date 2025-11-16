@@ -51,7 +51,7 @@ template <class T> struct static_queue
             return _owner->_buffer[_it];
         }
 
-        operator!=(const iterator& other) const
+        bool operator!=(const iterator& other) const
         {
             return _it != other._it;
         }
