@@ -217,48 +217,53 @@ namespace
 {
     void lerp(iColor_tag& out, F32 t, const iColor_tag& a, const iColor_tag& b);
     void lerp(U8& out, F32 t, U8 a, U8 b);
+    void lerp(F32& out, F32 t, F32 a, F32 b);
 }  // end of anonymous namespace
 
 void xDecalEmitter::update(F32 dt)
 {
-    // curve_node& node0;
-    // curve_node& node1;
-    F32 scale; // r20
-    xVec4* _loc; // r2
-    F32 par_dist; // r1
-
+    // Unused from DWARF
+    // xVec4* _loc; // r2
+    // F32 par_dist; // r1
+    
     debug_update(dt);
-    F32 dage = this->ilife;
+    F32 dage = dt * this->ilife;
     
     ptank_pool__color_mat_uv2 pool;
     pool.reset();
     
     pool.rs.texture = this->texture.asset;
+    pool.rs.src_blend = this->cfg.blend_src;
+    pool.rs.dst_blend = this->cfg.blend_dst;
     pool.rs.flags = this->cfg.flags & 0x1;
     this->curve_index = 0;
-
+    
     static_queue<unit_data>::iterator it = this->units.begin();
     for (; it != this->units.end(); ++it)
     {
         unit_data& unit = *it;
-        unit.age += dt;
-
+        unit.age += dage;
+        
         if (unit.age >= 1.0f)
         {
-            continue;
+            break;
         }
         
         update_frac(unit);
-        lerp(pool.color[0], unit.frac, this->curve[unit.curve_index].color, this->curve[unit.curve_index + 1].color);
-
-        *((F32*)&unit.mat.pos.z + 1) = unit.frac * dage;  // Definitely something weird here
+        curve_node& node0 = this->curve[unit.curve_index];
+        curve_node& node1 = this->curve[unit.curve_index+1];
+        
+        F32 scale;
+        lerp(scale, unit.frac, node0.scale, node1.scale);
+        
+        *((F32*)&unit.mat.pos.z + 1) = unit.cull_size * scale;
         pool.next();
         if (!pool.valid())
         {
             break;
         }
 
-        get_render_data(unit, dage, pool.color[0], pool.mat[0], pool.uv[0], pool.uv[1]);
+        get_render_data(unit, scale, pool.color[0], pool.mat[0], pool.uv[0], pool.uv[1]);
     }
 
     pool.flush();
