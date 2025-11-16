@@ -5,6 +5,7 @@
 #include "xMath3.h"
 #include "containers.h"
 #include "iColor.h"
+#include "xPtankPool.h"
 
 #include <types.h>
 #include <rwcore.h>
@@ -63,17 +64,47 @@ struct xDecalEmitter
         xVec2 isize;
         S32 prev;
     } texture;
-    static_queue<unit_data*> units;
+    static_queue<unit_data> units;
     curve_node* curve;
     U32 curve_size;
     U32 curve_index;
     F32 ilife;
 
-    void set_curve(const curve_node* curve, size_t size);
-    void refresh_config();
-    void set_texture(const char* name);
-    void set_default_config();
     void init(S32 max_size, const char*);
+    void set_default_config();
+    void set_texture(const char* name);
+    void set_texture(U32 id);
+    void set_texture(RwTexture* texture);
+    void refresh_config();
+    void set_curve(const curve_node* curve, size_t size);
+    void emit(const xMat4x3& mat, S32 texture_index);
+    void emit(const xMat4x3& mat, const xVec3& scale, S32 texture_index);
+    void update(F32 dt);
+    void update_frac(xDecalEmitter::unit_data& unit);
+    void get_render_data(const xDecalEmitter::unit_data& unit, F32 scale, iColor_tag& color, xMat4x3& mat, xVec2& uv0, xVec2& uv1);
+    S32 select_texture_unit();
+
+    bool need_update() const
+    {
+        return !units.empty() || debug_need_update();
+    }
+
+    bool debug_need_update() const
+    {
+        return 0;
+    }
+
+    void debug_init(const char* texture_name)
+    {
+    }
+
+    void debug_update_curve()
+    {
+    }
+
+    void debug_update(F32 dt)
+    {
+    }
 };
 
 void xDecalInit();

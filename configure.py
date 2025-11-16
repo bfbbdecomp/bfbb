@@ -570,7 +570,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zNPCTypeDutchman.cpp"),
             Object(Matching, "SB/Game/zCameraFly.cpp"),
             Object(Matching, "SB/Core/x/xCurveAsset.cpp"),
-            Object(NonMatching, "SB/Core/x/xDecal.cpp"),
+            Object(NonMatching, "SB/Core/x/xDecal.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Core/x/xLaserBolt.cpp"),
             Object(NonMatching, "SB/Game/zCameraTweak.cpp"),
             Object(NonMatching, "SB/Core/x/xPtankPool.cpp"),
