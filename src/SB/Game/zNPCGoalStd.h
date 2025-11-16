@@ -1,7 +1,6 @@
 #ifndef ZNPCGOALSTD_H
 #define ZNPCGOALSTD_H
 
-#include "types.h"
 #include "zNPCGoalCommon.h"
 #include "zNPCHazard.h"
 
