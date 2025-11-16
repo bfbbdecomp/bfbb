@@ -407,6 +407,7 @@ xAnimTable* zPatrick_AnimTable();
 xAnimTable* zEntPlayer_AnimTable();
 xAnimTable* zSpongeBobTongue_AnimTable();
 
+void zEntPlayer_Init(xEnt* ent, xEntAsset* asset);
 void zEntPlayerExit(xEnt*);
 void zEntPlayerPreReset();
 void zEntPlayerReset(xEnt* ent);

@@ -1,102 +1,133 @@
+#include "zCamera.h"
+#include "zCombo.h"
+#include "zCutsceneMgr.h"
+#include "zEntPlayer.h"
+#include "zFX.h"
 #include "zGame.h"
 #include "zGameExtras.h"
+#include "zGameState.h"
 #include "zGlobals.h"
+#include "zHud.h"
+#include "zLOD.h"
+#include "zMenu.h"
+#include "zMusic.h"
 #include "zParPTank.h"
 #include "zSaveLoad.h"
-#include "zGameState.h"
-#include "zMenu.h"
-#include "zCamera.h"
-#include "zMusic.h"
-#include "zHud.h"
-#include "zFX.h"
-#include "zCombo.h"
-#include "zLOD.h"
 
 #include "iDraw.h"
-#include "xTRC.h"
+#include "iSystem.h"
+#include "iTRC.h"
+
+#include "xDebug.h"
 #include "xFont.h"
+#include "xMarkerAsset.h"
 #include "xMath.h"
+#include "xMemMgr.h"
 #include "xModel.h"
 #include "xScrFx.h"
 #include "xSkyDome.h"
+#include "xTRC.h"
+#include "xUtil.h"
 
 #include <types.h>
 
+#include <stdio.h>
+
+const static basic_rect<F32> screen_bounds =
+{
+    0.0f, 0.0f, 1.0f, 1.0f
+};
+
+static U32 sPlayerMarkerStartID;
+static U32 sPlayerMarkerStartCamID;
+static F32 sPlayerStartAngle;
+static S32 sPortalling;
 extern eGameMode gGameMode;
-extern eGameWhereAmI gGameWhereAmI;
+static F32 sGameOverTimer;
+F32 sTimeElapsed;
+iTime sTimeLast;
+iTime sTimeCurrent;
 extern RpLight* DirectionalLight;
 extern RpWorld* World;
 extern RwCamera* sGameScreenTransCam;
 extern _tagTRCPadInfo gTrcPad[4];
 extern S32 g_hiphopReloadHIP;
 extern S32 g_hiphopForcePortal;
+xPortalAsset dummyPortalAsset;
+_zPortal dummyPortal;
+U32 gSoak;
+static U32 loadMeter;
 
-static S32 sGameOverTimer;
-float sTimeElapsed;
-S64 sTimeLast;
-S64 sTimeCurrent;
+void xMemDebug_SoakLog(const char*);
+void zCutsceneMgrFinishExit(xBase* to);
 
-extern F32 lbl_803CDA28;
+char* soaklevels_gameorder[] =
+{
+	"HB02",
+    "HB01",
+    "HB03",
+    "HB04",
+    "JF01",
+    "JF02",
+    "JF03",
+    "JF04",
+    "JF01",
+    "BB01",
+    "BB02",
+    "BB03",
+    "BB04",
+    "GL01",
+    "GL02",
+    "GL03",
+    "B101",
+    "HB01",
+    "HB05",
+    "HB06",
+    "HB09",
+    "BC01",
+    "BC02",
+    "BC03",
+    "BC04",
+    "BC05",
+    "HB09",
+    "RB01",
+    "RB02",
+    "RB03",
+    "HB09",
+    "SM01",
+    "SM02",
+    "SM03",
+    "SM04",
+    "B201",
+    "HB01",
+    "DB01",
+    "DB02",
+    "DB03",
+    "DB04",
+    "DB06",
+    "KF01",
+    "KF02",
+    "KF04",
+    "KF05",
+    "GY01",
+    "GY02",
+    "GY03",
+    "GY04",
+    "HB07",
+    "HB08",
+    "B302",
+    "B303",
+    "HB10",
+    "PG12",
+	NULL
+};
 
-extern F32 lbl_803CDA10; // R, G, B
-extern F32 lbl_803CF5AC; // A
+char** soaklevels = soaklevels_gameorder;
 
-extern F32 lbl_803CDA54;
-extern F32 lbl_803CDA58;
+F32 soaktime = 4.0f;
 
 // Taken from zGame.s
 // Defining these here makes the stringBase0 offsets match in the later functions.
-static char* str1 = "HB02";
-static char* str2 = "HB01";
-static char* str3 = "HB03";
-static char* str4 = "HB04";
-static char* str5 = "JF01";
-static char* str6 = "JF02";
-static char* str7 = "JF03";
-static char* str8 = "JF04";
-static char* str9 = "BB01";
-static char* str10 = "BB02";
-static char* str11 = "BB03";
-static char* str12 = "BB04";
-static char* str13 = "GL01";
-static char* str14 = "GL02";
-static char* str15 = "GL03";
-static char* str16 = "B101";
-static char* str17 = "HB05";
-static char* str18 = "HB06";
-static char* str19 = "HB09";
-static char* str20 = "BC01";
-static char* str21 = "BC02";
-static char* str22 = "BC03";
-static char* str23 = "BC04";
-static char* str24 = "BC05";
-static char* str25 = "RB01";
-static char* str26 = "RB02";
-static char* str27 = "RB03";
-static char* str28 = "SM01";
-static char* str29 = "SM02";
-static char* str30 = "SM03";
-static char* str31 = "SM04";
-static char* str32 = "B201";
-static char* str33 = "DB01";
-static char* str34 = "DB02";
-static char* str35 = "DB03";
-static char* str36 = "DB04";
-static char* str37 = "DB06";
-static char* str38 = "KF01";
-static char* str39 = "KF02";
-static char* str40 = "KF04";
-static char* str41 = "KF05";
-static char* str42 = "GY01";
-static char* str43 = "GY02";
-static char* str44 = "GY03";
-static char* str45 = "GY04";
-static char* str46 = "HB07";
-static char* str47 = "HB08";
-static char* str48 = "B302";
-static char* str49 = "B303";
-static char* str50 = "HB10";
-static char* str51 = "PG12";
 static char* str52 = "techbutton6_click";
 static char* str53 = "SAVING GAME ICON UI";
 static char* str54 = "MNU4 AUTO SAVE FAILED";
@@ -198,6 +229,113 @@ static char* str149 = "eGameWhere_SetupPlayerInit";
 static char* str150 = "eGameWhere_SetupPlayerCamera";
 static char* str151 = "eGameWhere_SetupPlayerEnd";
 
+static U32 PickNextSoak()
+{
+    U32 nextsoak;
+    U32 tag;
+
+    static S32 soakidx = 0;
+    static S32 soakcnt = 0;
+
+    static enum en_SOAK_DIR
+    {
+        SOAK_FOR,
+        SOAK_BACK,
+        SOAK_RAND,
+        SOAK_NOMORE,
+        SOAK_FORCE = 2147483647,
+    } soakdir = SOAK_FOR;
+
+    static S32 justwrap = 0;
+    char* name = NULL;
+
+    if (soakcnt <= 0)
+    {
+        while (soaklevels[soakcnt] != NULL)
+        {
+            soakcnt++;
+        }
+    }
+
+    if (soakcnt == 0)
+    {
+        return 0;
+    }
+
+    switch (soakdir)
+    {
+        case SOAK_FOR:
+            // Phantom branch here.
+            name = soaklevels[soakidx];
+            soakidx++;
+            if (*(volatile S32*)(&soakidx) < soakcnt)
+            {
+                break;
+            }
+            if (justwrap != 0)
+            {
+                soakidx = 0;
+            }
+            else
+            {
+                soakidx = soakcnt - 2;
+                soakdir = SOAK_BACK;
+            }
+            break;
+        case SOAK_BACK:
+            name = soaklevels[soakidx];
+            soakidx--;
+            if (*(volatile S32*)(&soakidx) >= 0)
+            {
+                break;
+            }
+            if (justwrap != 0)
+            {
+                soakidx = soakcnt - 1;
+            }
+            else
+            {
+                soakidx = 0;
+                soakdir = SOAK_RAND;
+            }
+            break;
+        default:
+            if (globals.sceneCur != NULL)
+            {
+                tag = globals.sceneCur->sceneID;
+            }
+            else
+            {
+                tag = 0;
+            }
+
+            S32 scoobydoobydoo = tag;
+
+            while (scoobydoobydoo == globals.sceneCur->sceneID)
+            {
+                name = (char *)xUtil_select(soaklevels, soakcnt, 0);
+                scoobydoobydoo = name[0] << 24 | name[1] << 16 | name[2] << 8 | name[3];
+            }
+
+            break;
+    }
+
+    char useme[5] = {};
+    if (useme[0] != '\0')
+    {
+        name = &useme[0];
+    }
+
+    nextsoak = (name[0] << 24) | (name[1] << 16) | (name[2] << 8) | name[3];
+
+    static S32 sumtotal = 0;
+    sumtotal++;
+
+    return nextsoak;
+}
+
+eGameWhereAmI gGameWhereAmI;
+
 // Scheduling, I guess
 void zGameInit(U32 theSceneID)
 {
@@ -261,8 +399,9 @@ void zGameSetup()
     gGameWhereAmI = eGameWhere_SetupScene;
     zSceneSetup();
     gGameWhereAmI = eGameWhere_SetupZFX;
-    xModel_SceneEnter(((globals.sceneCur)->env)->geom->world);
-    zFX_SceneEnter(((globals.sceneCur)->env)->geom->world);
+	RpWorld* world = globals.sceneCur->env->geom->world;
+    xModel_SceneEnter(world);
+    zFX_SceneEnter(world);
     gGameWhereAmI = eGameWhere_SetupPlayer;
     zGameSetupPlayer();
     gGameWhereAmI = eGameWhere_SetupCamera;
@@ -270,7 +409,7 @@ void zGameSetup()
     gGameWhereAmI = eGameWhere_SetupScrFX;
     xScrFxReset();
     gGameWhereAmI = eGameWhere_SetupSceneLoad;
-    zSceneLoad(globals.sceneCur, 0);
+    zSceneLoad(globals.sceneCur, NULL);
     gGameWhereAmI = eGameWhere_SetupMusicNotify;
     zMusicNotify(0);
     gGameWhereAmI = eGameWhere_SetupHudSetup;
@@ -315,13 +454,13 @@ S32 zGameIsPaused()
     return 0;
 }
 
-iTime t1;
+static iTime t1;
 
 static S32 zGameLoopContinue()
 {
     if (gGameMode == eGameMode_Game)
     {
-        return gGameState == 1 || gGameState == 3 || gGameState == 4;
+        return gGameState == eGameState_Play || gGameState == eGameState_GameOver || gGameState == eGameState_GameStats;
     }
     else
     {
@@ -336,7 +475,7 @@ static S32 zGameLoopContinue()
     return 1;
 }
 
-S32 zGameOkToPause()
+static S32 zGameOkToPause()
 {
     S32 uVar1 = 0;
 
@@ -395,7 +534,316 @@ void zGameStall()
         zGameModeSwitch(eGameMode_Stall);
         xSndPauseAll(1, 1);
         iPadStopRumble(globals.pad0);
-        zEntEvent("techbutton6_click", 24);
+        zEntEvent("techbutton6_click", eEventPlay);
+    }
+}
+
+static void zGame_HackDrawCard(F32 x, F32 y, F32 w, F32 h, RwRaster* rast);
+
+// Equivalent; scheduling.
+static void zGame_HackPostPortalAutoSaveDraw()
+{
+    U32 i;
+    RwCamera* ccam;
+	RwCamera* cam;
+    RwRaster* rast;
+    char str[2048];
+    RwTexture* tex; 
+    RwRGBA bg = {};
+	
+    cam = (RwCamera*)RwEngineInstance->curCamera;
+    if (cam != NULL)
+    {
+        RwCameraEndUpdate(cam);
+    }
+	
+    sprintf(str, "{font=0}{i:MNU4 AUTO SAVE TXT}");
+	
+    ccam = (RwCamera *)iCameraCreate(640, 480, 0);
+	
+    xtextbox tb = xtextbox::create
+	(
+	    xfont::create
+		(
+		    1, NSCREENX(19.0f), NSCREENY(22.0f), 0.0f,
+			xColorFromRGBA(0xFF, 0xE6, 0x00, 0xFF), 
+			screen_bounds
+		),
+		screen_bounds, 0, 0.0f, 0.0f, 0.0f, 0.0f
+	);
+	
+    tb.flags |= 2;
+    tb.bounds.assign(0.0f, 0.4125f, 1.0f, 0.25f);
+    tb.bounds.contract(0.025f);
+    tb.set_text(str);
+    tb.bounds.h  = tb.yextent(true);
+    tb.bounds.y = -((tb.bounds.h * 0.5f) - 0.5f);
+	tb.font.clip = tb.bounds;
+    tb.font.clip.expand(0.025f);
+    F32 yextent = tb.yextent(true);
+	
+    for (i = 0; i < 2; i++)
+    {
+        RwCameraClear(ccam, &bg, rwCAMERACLEARZ | rwCAMERACLEARIMAGE);
+        RwCameraBeginUpdate(ccam);
+        tex = (RwTexture*)xSTFindAsset(xStrHash("fx_boomball_smoke.RW3"), NULL);
+        if (tex != NULL)
+        {
+            rast = tex->raster;
+        }
+        else
+        {
+            rast = NULL;
+        }
+		
+        zGame_HackDrawCard(0.0f,   0.0f,   320.0f, 240.0f, rast);
+        zGame_HackDrawCard(320.0f, 0.0f,   320.0f, 240.0f, rast);
+        zGame_HackDrawCard(0.0f,   240.0f, 320.0f, 240.0f, rast);
+        zGame_HackDrawCard(320.0f, 240.0f, 320.0f, 240.0f, rast);
+		
+        tex = (RwTexture*)xSTFindAsset(xStrHash("ui_savinggame"), NULL);
+        if (tex == NULL)
+        {
+            tex = (RwTexture*)xSTFindAsset(xStrHash("ui_savinggame.RW3"), NULL);
+        }
+        if (tex != NULL)
+        {
+            rast = tex->raster;
+        }
+        else
+        {
+            rast = NULL;
+        }
+
+        zGame_HackDrawCard(275.0f, 350.0f, 90.0f, 90.0f, rast);
+
+        if (yextent > 0.0f)
+        {
+            render_fill_rect(tb.font.clip, xColorFromRGBA(0x00, 0x00, 0x00, 0xFF));
+            tb.render(true);
+        }
+		
+        RwCameraEndUpdate(ccam);
+        RwCameraShowRaster(ccam, NULL, 1);
+    }
+
+    iCameraDestroy(ccam);
+
+    if (cam != NULL)
+    {
+        RwCameraBeginUpdate(cam);
+    }
+}
+
+iColor_tag clear = { 0x00, 0x00, 0x00, 0x00 };
+iColor_tag black = { 0x00, 0x00, 0x00, 0xFF };
+
+static void zGameUpdateMode()
+{
+    xPortalAsset* passet;
+    char* id;
+    U32 nextSceneID;
+    xBase* sendTo;
+    xMarkerAsset* m;
+    U32 size;
+
+    if (gGameMode != 0x0C)
+    {
+        return;
+    }
+
+    if ((gSoak != 0) && (gGameState == eGameState_Play) && (globals.cmgr == NULL))
+    {
+        soaktime -= (1.0f / 30.0f);
+        if (soaktime < 0.0f)
+        {
+            id = xUtil_idtag2string(globals.sceneCur->sceneID, 0);
+            xMemDebug_SoakLog(id);
+            gGameState = eGameState_SceneSwitch;
+            dummyPortalAsset.assetCameraID = 0;
+            dummyPortalAsset.assetMarkerID = 0;
+            dummyPortalAsset.ang = 0.0f;
+            dummyPortalAsset.sceneID = PickNextSoak();
+            dummyPortal.passet = &dummyPortalAsset;
+            globals.sceneCur->pendingPortal = &dummyPortal;
+            soaktime = (xurand() * 4.0f) + 0.2f;
+        }
+    }
+
+    if (gGameState == eGameState_Play)
+    {
+        iTimeGameAdvance(sTimeElapsed);
+        if (globals.pad0->pressed & 1)
+        {
+            switch (zGameOkToPause())
+            {
+                case 0:
+                    xTRCReset();
+                    startPressed = 1;
+                    break;
+                case 1:
+                    zGamePause();
+                    break;
+                case 2:
+                    zGameStall();
+                    break;
+            }
+        }
+        else
+        {
+            startPressed = 0;
+        }
+    }
+    else if (gGameState == eGameState_GameStats)
+    {
+        return;
+    }
+    else if (gGameState == eGameState_SceneSwitch)
+    {
+        gGameWhereAmI = eGameWhere_ModeSceneSwitch;
+
+        passet = globals.sceneCur->pendingPortal->passet;
+
+        U32 d = *(char *)((int)&passet->sceneID + 3);
+        U32 c = *(char *)((int)&passet->sceneID + 0);
+        U32 b = *(char *)((int)&passet->sceneID + 2);
+        U32 a = *(char *)((int)&passet->sceneID + 1);
+
+        U32 x = (((b << 8) & 0xff00) | (((d << 24) & 0xff000000) | ((a << 16) & 0x00ffffff)) & 0xffff00ff);
+        U32 y = (((a << 8) & 0xff00) | (((c << 24) & 0xff000000) | ((b << 16) & 0x00ffffff)) & 0xffff00ff);
+
+        nextSceneID = x | c;
+        x = d | y;
+
+        if ((g_hiphopReloadHIP != 0) || ((g_hiphopForcePortal != 0) || (x != globals.sceneCur->sceneID)))
+        {
+            sPlayerMarkerStartID = passet->assetMarkerID;
+            sPlayerMarkerStartCamID = passet->assetCameraID;
+            sPlayerStartAngle = passet->ang;
+            sPortalling = 1;
+
+            gGameWhereAmI = eGameWhere_ModeCutsceneFinish;
+            if (globals.cmgr != NULL)
+            {
+                zCutsceneMgrFinishExit(globals.cmgr);
+            }
+
+            gGameWhereAmI = eGameWhere_ModeGameExit;
+            zGameExit();
+
+            gGameWhereAmI = eGameWhere_ModeGameInit;
+            zGameInit(nextSceneID);
+
+            gGameWhereAmI = eGameWhere_ModeGameSetup;
+            zGameSetup();
+
+            gGameWhereAmI = eGameWhere_ModeSwitchAutoSave;
+            if (gWaitingToAutoSave != 0)
+            {
+                zGame_HackPostPortalAutoSaveDraw();
+				
+                zSaveLoadPreAutoSave(1);
+                if (zSaveLoad_DoAutoSave() < 0)
+                {
+                    sendTo = (xBase *)zSceneFindObject(xStrHash("MNU4 AUTO SAVE FAILED"));
+                    if (sendTo != NULL)
+                    {
+                        zEntEvent(sendTo, eEventVisible);
+                    }
+                }
+				
+                sendTo = (xBase *)zSceneFindObject(xStrHash("SAVING GAME ICON UI"));
+                if (sendTo != NULL)
+                {
+                    zEntEvent(sendTo, eEventInvisible);
+                }
+				
+                zSaveLoadPreAutoSave(0);
+                gWaitingToAutoSave = 0;
+            }
+            gGameWhereAmI = eGameWhere_ModeSwitchCutsceneFinish;
+            if (globals.cmgr != NULL)
+            {
+                zCutsceneMgrFinishLoad(globals.cmgr);
+            }
+        }
+        else
+        {
+            if (sPlayerMarkerStartID != 0)
+            {
+                m = (xMarkerAsset*)xSTFindAsset(sPlayerMarkerStartID, &size);
+                if (m != NULL)
+                {
+                    xVec3Copy(&globals.player.ent.frame->mat.pos, &m->pos);
+                }
+                sPlayerMarkerStartID = 0;
+            }
+        }
+		
+        if (gSoak != 0)
+        {
+            sendTo = (xBase *)zSceneGetObject(eBaseTypeCamera, 0);
+            sPlayerMarkerStartCamID = sendTo->id;
+        }
+        else
+        {
+            sendTo = (xBase *)zSceneFindObject(sPlayerMarkerStartCamID);
+            if (sendTo == NULL)
+            {
+                xSTAssetName(sPlayerMarkerStartCamID);
+                sendTo = (xBase *)zSceneGetObject(eBaseTypeCamera, 0);
+                sPlayerMarkerStartCamID = sendTo->id;
+                xSTAssetName(sendTo->id);
+            }
+        }
+		
+        gGameWhereAmI = eGameWhere_ModeStoreCheckpoint;
+        if (sendTo != NULL)
+        {
+            zEntPlayer_StoreCheckPoint(&globals.player.ent.frame->mat.pos, globals.player.ent.frame->rot.angle, sPlayerMarkerStartCamID);
+        }
+		
+        sPlayerMarkerStartCamID = 0;
+		
+        if (gPendingPlayer != eCurrentPlayerCount)
+        {
+            gCurrentPlayer = gPendingPlayer;
+            gPendingPlayer = eCurrentPlayerCount;
+        }
+
+        iTime bus = (iTime)((GET_BUS_FREQUENCY() / 4) / 60.0f);
+        sTimeLast = iTimeGet() - bus;
+
+        zGameStateSwitch(eGameState_Play);
+    }
+    else if (gGameState == eGameState_LoseChance)
+    {
+        gGameWhereAmI = eGameWhere_LoseChanceReset;
+        zSceneReset();
+        gGameWhereAmI = eGameWhere_LoseChanceResetDone;
+        zGameStateSwitch(eGameState_Play);
+    }
+    else if (gGameState == eGameState_GameOver)
+    {
+        if (sGameOverTimer == 0.0f)
+        {
+            xScrFxFade(&clear, &black, 4.5f, NULL, 1);
+            sGameOverTimer = 5.0f;
+        }
+        else
+        {
+            sGameOverTimer = sGameOverTimer - sTimeElapsed;
+            xprintf("GAME OVER (%f secs)\n", *(volatile F32*)(&sGameOverTimer));
+            if (sGameOverTimer <= 0.0f)
+            {
+                sGameOverTimer = 0.0f;
+                zGameStateSwitch(eGameState_Exit);
+            }
+        }
+    }
+    else if (gGameState == eGameState_Exit)
+    {
+        sGameOverTimer = 0.0f;
     }
 }
 
@@ -408,13 +856,20 @@ void zGameUpdateTransitionBubbles()
 {
     gGameWhereAmI = eGameWhere_TransitionBubbles;
     sTimeCurrent = iTimeGet();
-    sTimeElapsed = iTimeDiffSec(sTimeLast, sTimeCurrent);
+	F32 diff = iTimeDiffSec(sTimeLast, sTimeCurrent);
+    sTimeElapsed = diff;
     sTimeLast = sTimeCurrent;
-    zParPTankUpdate(lbl_803CDA28 > sTimeElapsed ? sTimeElapsed : NULL);
+	if (sTimeElapsed > 0.5f)
+	{
+		zParPTankUpdate(sTimeElapsed);
+	}
+	else
+	{
+		zParPTankUpdate(0.5f);
+	}
     zParPTankRender();
 }
 
-// Tons of extra instructions for some reason
 void zGameScreenTransitionBegin()
 {
     gGameWhereAmI = eGameWhere_TransitionBegin;
@@ -426,12 +881,15 @@ void zGameScreenTransitionBegin()
         DirectionalLight = RpLightCreate(1);
         if (DirectionalLight != NULL)
         {
-            RwRGBAReal col = { lbl_803CDA10, lbl_803CDA10, lbl_803CDA10, lbl_803CF5AC };
+            RwRGBAReal col;
+			col.red = col.green = col.blue = 1.0f;
+			col.alpha = 0.0f;
             RpLightSetColor(DirectionalLight, &col);
             RwFrame* frame = RwFrameCreate();
             _rwObjectHasFrameSetFrame(DirectionalLight, frame);
-            RwBBox box = { lbl_803CDA54, lbl_803CDA54, lbl_803CDA54,
-                           lbl_803CDA58, lbl_803CDA58, lbl_803CDA58 };
+            RwBBox box;
+			box.sup.z = box.sup.y = box.sup.x =  10000.0f;
+			box.inf.z = box.inf.y = box.inf.x = -10000.0f;
             World = RpWorldCreate(&box);
             RpWorldAddCamera(World, sGameScreenTransCam);
             gGameWhereAmI = eGameWhere_TransitionSnapShot;
@@ -440,13 +898,170 @@ void zGameScreenTransitionBegin()
     }
 }
 
-//
 void zGameScreenTransitionUpdate(F32 percentComplete, char* msg)
 {
     if (!zMenuIsFirstBoot())
     {
         zGameScreenTransitionUpdate(percentComplete, msg, 0);
     }
+}
+
+U32 bgID = 0x1d33b0bb;
+F32 bgu2 = 1.333f;
+F32 bgv2 = 1.0f;
+U8 bgr = 0x60;
+U8 bgg = 0x60;
+U8 bgb = 0x60;
+U8 bga = 0x80;
+F32 bgu1;
+F32 bgv1;
+
+void zGameScreenTransitionUpdate(F32 percentComplete, char* msg, U8* rgba)
+{
+    RwTexture* tex;
+    RwRaster* ras;
+    rwGameCube2DVertex vx[4];
+
+    gGameWhereAmI = eGameWhere_TransitionUpdate;
+
+    if (zMenuIsFirstBoot())
+    {
+        return;
+    }
+
+    RwRGBA back_col = { 0xFF, 0x00, 0x00, 0x00 };
+    if (rgba != NULL)
+    {
+        back_col.red   = rgba[0];
+        back_col.green = rgba[1];
+        back_col.blue  = rgba[2];
+        back_col.alpha = rgba[3];
+    }
+
+    gGameWhereAmI = eGameWhere_TransitionPadUpdate;
+    xPadUpdate(globals.currentActivePad, sTimeElapsed);
+    xDrawBegin();
+
+    if (sGameScreenTransCam != NULL)
+    {
+        gGameWhereAmI = eGameWhere_TransitionTRCCheck;
+        iTRCDisk::CheckDVDAndResetState();
+
+        gGameWhereAmI = eGameWhere_TransitionCameraClear;
+        RwCameraClear(sGameScreenTransCam, &back_col, 3);
+
+        gGameWhereAmI = eGameWhere_TransitionCameraBegin;
+        RwCameraBeginUpdate(sGameScreenTransCam);
+
+        gGameWhereAmI = eGameWhere_TransitionRenderBackground;
+        tex = (RwTexture*)xSTFindAsset(bgID, NULL);
+        if ((tex != NULL) && (ras = (RwRaster*)tex->raster, ras != NULL))
+        {
+            RwRenderStateSet(rwRENDERSTATETEXTURERASTER, (void*)0);
+            RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)2);
+            RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)1);
+            RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)0);
+            RwRenderStateSet(rwRENDERSTATETEXTUREFILTER, (void*)2);
+            RwRenderStateSet(rwRENDERSTATETEXTURERASTER, ras);
+
+            F32 z = RwIm2DGetFarScreenZ();
+
+            vx[0].x = 0.0f;
+            vx[0].y = 0.0f;
+            vx[0].z = z;
+            vx[0].emissiveColor.red   = bgr;
+            vx[0].emissiveColor.green = bgb;
+            vx[0].emissiveColor.blue  = bgg;
+            vx[0].emissiveColor.alpha = bga;
+            vx[0].u = bgu1;
+            vx[0].v = bgv1;
+
+            vx[1].x = 0.0f;
+            vx[1].y = 480.0f;
+            vx[1].z = z;
+            vx[1].emissiveColor.red   = bgr;
+            vx[1].emissiveColor.green = bgb;
+            vx[1].emissiveColor.blue  = bgg;
+            vx[1].emissiveColor.alpha = bga;
+            vx[1].u = bgu1;
+            vx[1].v = bgv2;
+
+            vx[2].x = 640.0f;
+            vx[2].y = 0.0f;
+            vx[2].z = z;
+            vx[2].emissiveColor.red   = bgr;
+            vx[2].emissiveColor.green = bgb;
+            vx[2].emissiveColor.blue  = bgg;
+            vx[2].emissiveColor.alpha = bga;
+            vx[2].u = bgu2;
+            vx[2].v = bgv1;
+
+            vx[3].x = 640.0f;
+            vx[3].y = 480.0f;
+            vx[3].z = z;
+            vx[3].emissiveColor.red   = bgr;
+            vx[3].emissiveColor.green = bgb;
+            vx[3].emissiveColor.blue  = bgg;
+            vx[3].emissiveColor.alpha = bga;
+            vx[3].u = bgu2;
+            vx[3].v = bgv2;
+
+            RwIm2DRenderPrimitive(rwPRIMTYPETRISTRIP, &vx[0], 4);
+            RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)1);
+            RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)5);
+            RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)6);
+        }
+    }
+
+    xprintf("Loading... %3.2f\n", percentComplete);
+
+    if (msg != NULL)
+    {
+        xprintf(msg);
+    }
+
+    char meter[256] = "...";
+
+    switch ((loadMeter / 0x19) % 5)
+    {
+        case 0:
+            strcpy(meter, "   ");
+            break;
+        case 1:
+            strcpy(meter, ".  ");
+            break;
+        case 2:
+            strcpy(meter, ".. ");
+            break;
+        case 3:
+            strcpy(meter, "...");
+            break;
+        case 4:
+            loadMeter = 0;
+            break;
+    }
+
+    loadMeter++;
+
+    xDebugUpdate();
+
+    gGameWhereAmI = eGameWhere_TransitionSpawnBubbles;
+    zFX_SpawnBubbleWall();
+
+    gGameWhereAmI = eGameWhere_TransitionDrawEnd;
+    xDrawEnd();
+
+    if (sGameScreenTransCam != NULL)
+    {
+        gGameWhereAmI = eGameWhere_TransitionUpdateBubbles;
+        zGameUpdateTransitionBubbles();
+        gGameWhereAmI = eGameWhere_TransitionCameraEnd;
+        RwCameraEndUpdate(sGameScreenTransCam);
+        gGameWhereAmI = eGameWhere_TransitionCameraShowRaster;
+        RwCameraShowRaster(sGameScreenTransCam, NULL, 1);
+    }
+
+    gGameWhereAmI = eGameWhere_TransitionUpdateEnd;
 }
 
 void zGameScreenTransitionEnd()
@@ -476,6 +1091,48 @@ void zGameScreenTransitionEnd()
         World = 0;
     }
     gGameWhereAmI = eGameWhere_TransitionEnded;
+}
+
+void zGameSetupPlayer()
+{
+    xEntAsset* asset = (xEntAsset*)xSTFindAssetByType('PLYR', xSTAssetCountByType('PLYR') - 1, 0);
+    U32 size;
+    xMarkerAsset* m;
+	
+    asset->baseType = eBaseTypePlayer;
+	
+    if (sPortalling != 0)
+    {
+        if (sPlayerStartAngle > -1e8f)
+        {
+            asset->ang.x = (PI * sPlayerStartAngle) / 180.0f;
+        }
+        sPortalling = 0;
+    }
+	
+    asset->ang.y = 0.0f;
+    asset->ang.z = 0.0f;
+    gGameWhereAmI = eGameWhere_SetupPlayerInit;
+    zEntPlayer_Init(&globals.player.ent, asset);
+	
+    if (sPlayerMarkerStartID != 0)
+    {
+        m = (xMarkerAsset *)xSTFindAsset(sPlayerMarkerStartID, &size);
+        if (m != NULL)
+        {
+            xVec3Copy((xVec3 *)&globals.player.ent.frame->mat.pos,    &m->pos);
+            xVec3Copy((xVec3 *)&globals.player.ent.frame->oldmat.pos, &m->pos);
+            xVec3Copy((xVec3 *)&globals.player.ent.model->Mat->pos,   &m->pos);
+            xCameraSetTargetMatrix(&globals.camera, xEntGetFrame(&globals.player.ent));
+        }
+        sPlayerMarkerStartID = 0;
+    }
+	
+    gGameWhereAmI = eGameWhere_SetupPlayerCamera;
+    zCameraReset(&globals.camera);
+    zEntPlayer_StoreCheckPoint(&globals.player.ent.frame->mat.pos, globals.player.ent.frame->rot.angle, globals.camera.id);
+    gGameWhereAmI = eGameWhere_SetupPlayerEnd;
+	
 }
 
 void zGameStats_Init()
