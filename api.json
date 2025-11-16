@@ -1,0 +1,15 @@
+{
+  "matched_code": 543524,
+  "matched_data": 409676,
+  "matched_functions": 4744,
+  "total_code": 1642400,
+  "total_data": 1642400,
+  "total_functions": 7673,
+  "matched_code_percent": 33.09328,
+  "matched_data_percent": 24.94374,
+  "matched_functions_percent": 61.82719,
+  "fuzzy_match_percent": 53.998608,
+  "perfect_match": "33.09%",
+  "fuzzy_match": "54.00%",
+  "functions_matched": "61.83%"
+}
