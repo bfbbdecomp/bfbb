@@ -213,51 +213,60 @@ void xDecalEmitter::emit(const xMat4x3& mat, const xVec3& scale, S32 texture_ind
     udata.v = texture_index / this->cfg.texture.rows;
 }
 
+namespace
+{
+    void lerp(iColor_tag& out, F32 t, const iColor_tag& a, const iColor_tag& b);
+    void lerp(U8& out, F32 t, U8 a, U8 b);
+}  // end of anonymous namespace
+
 void xDecalEmitter::update(F32 dt)
 {
+    // curve_node& node0;
+    // curve_node& node1;
+    F32 scale; // r20
+    xVec4* _loc; // r2
+    F32 par_dist; // r1
+
     debug_update(dt);
     F32 dage = this->ilife;
     
     ptank_pool__color_mat_uv2 pool;
     pool.reset();
     
+    pool.rs.texture = this->texture.asset;
+    pool.rs.flags = this->cfg.flags & 0x1;
     this->curve_index = 0;
 
-    for (static_queue<unit_data>::iterator it = this->units.begin(); it != this->units.end(); ++it)
+    static_queue<unit_data>::iterator it = this->units.begin();
+    for (; it != this->units.end(); ++it)
     {
-        // unit_data& unit = *it;
-        // unit.age += dt;
+        unit_data& unit = *it;
+        unit.age += dt;
 
-        // if (unit.age >= this->cfg.life_time)
-        // {
-        //     continue;
-        // }
+        if (unit.age >= 1.0f)
+        {
+            continue;
+        }
+        
+        update_frac(unit);
+        lerp(pool.color[0], unit.frac, this->curve[unit.curve_index].color, this->curve[unit.curve_index + 1].color);
 
+        *((F32*)&unit.mat.pos.z + 1) = unit.frac * dage;  // Definitely something weird here
         pool.next();
-        // update_frac(unit);
+        if (!pool.valid())
+        {
+            break;
+        }
+
+        get_render_data(unit, dage, pool.color[0], pool.mat[0], pool.uv[0], pool.uv[1]);
     }
-    // {
-
-    // }
-
-    
-    // unit_data& unit;
-    // curve_node& node0;
-    // curve_node& node1;
-    F32 scale; // r20
-    xVec4 * _loc; // r2
-    F32 par_dist; // r1
 
     pool.flush();
-
-    this->units.erase(this->units.begin(), this->units.end());
+    this->units.erase(it, this->units.end());
 }
 
 namespace
 {
-    void lerp(iColor_tag& out, F32 t, const iColor_tag& a, const iColor_tag& b);
-    void lerp(U8& out, F32 t, U8 a, U8 b);
-
     void lerp(F32& out, F32 t, F32 a, F32 b)
     {
         out = a + (b - a) * t;
