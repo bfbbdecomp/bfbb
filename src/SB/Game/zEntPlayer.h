@@ -395,6 +395,8 @@ extern _CurrentPlayer gCurrentPlayer;
 extern S32 gWaitingToAutoSave;
 extern S32 gSpongeBall;
 
+void SetPlayerKillsVillainTimer(F32 time);
+
 void zEntPlayer_Load(xEnt*, xSerial*);
 
 S32 zEntPlayer_Damage(xBase* src, U32 damage);
