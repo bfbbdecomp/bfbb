@@ -1,6 +1,7 @@
 #ifndef ZNPCGOALSTD_H
 #define ZNPCGOALSTD_H
 
+#include "types.h"
 #include "zNPCGoalCommon.h"
 #include "zNPCHazard.h"
 
@@ -276,9 +277,10 @@ public:
         xGoal::SetFlags(2);
     }
 
-    S32 BombzAway(F32);
-    S32 Exit(F32 dt, void* updCtxt);
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Exit(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    S32 BombzAway(F32);
     S32 idx_launch; // offset 0x54, size 0x4
 };
 
@@ -291,7 +293,9 @@ public:
         xGoal::SetFlags(12);
     }
 
+    S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
 };
 
 class zNPCGoalLassoGrab : public zNPCGoalCommon
@@ -302,6 +306,9 @@ public:
     {
         xGoal::SetFlags(2);
     }
+
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    void DoTurnAway(F32 dt);
 };
 
 class zNPCGoalLassoThrow : public zNPCGoalCommon
@@ -314,7 +321,11 @@ public:
         flg_npcgable |= 1;
     }
 
+    S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    U8 CollReview(void*);
+    void ApplyYank(S32 left);
     S32 flg_throw; // offset 0x4C, size 0x4
     S32 floorBounce; // offset 0x50, size 0x4
     F32 tmr_colDelay; // offset 0x54, size 0x4
@@ -329,8 +340,9 @@ public:
         xGoal::SetFlags(6);
     }
 
-    S32 FireOne(S32);
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    S32 FireOne(S32);
     S32 idx_launch; // offset 0x6C, size 0x4
 };
 
@@ -345,8 +357,11 @@ public:
 
     S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    void PlayerTests();
     void FXStreakPrep();
     void FXStreakDone();
+    void FXStreakUpdate();
 
     U32 streakID[4]; // offset 0x54, size 0x10
 };
@@ -360,9 +375,12 @@ public:
         xGoal::SetFlags(6);
     }
 
-    S32 LaunchBone(F32 dt, S32 param_2);
+    S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
     void SetAttackMode(S32 a, S32 b);
+    S32 LaunchBone(F32 dt, S32 param_2);
+    S32 LaunchDoggie();
     S32 flg_attack; // offset 0x54, size 0x4
 };
 
@@ -451,6 +469,7 @@ public:
     }
 
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
 };
 
 class zNPCGoalStunned : public zNPCGoalCommon
@@ -462,8 +481,9 @@ public:
         xGoal::SetFlags(2);
     }
 
-    S32 InputInfo(NPCStunInfo* info);
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    S32 InputInfo(NPCStunInfo* info);
 };
 
 class zNPCGoalEvade : public zNPCGoalCommon
@@ -486,6 +506,8 @@ public:
     {
         SetFlags(2);
     }
+
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
 };
 
 enum en_slepatak
@@ -506,6 +528,15 @@ enum en_alertarf
     ARF_ALERT_FORCE = 2147483647,
 };
 
+enum en_arfdoes
+{
+    ARF_DOES_NOT = 0,
+    ARF_DOES_LOB = 1,
+    ARF_DOES_MELEE = 2,
+    ARF_DOES_NOMORE = 3,
+    ARF_DOES_FORCE = 2147483647,
+};
+
 class zNPCGoalAlertArf : public zNPCGoalCommon
 {
     // total size: 0x54
@@ -518,8 +549,11 @@ public:
     }
 
     S32 Enter(F32 dt, void* updCtxt);
-    S32 Resume(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);
+    S32 Resume(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    S32 NPCMessage(NPCMsg* mail);
+    en_arfdoes DecideAttack();
     en_alertarf alertarf; // offset 0x4C, size 0x4
     F32 tmr_reload; // offset 0x50, size 0x4
 };
@@ -543,8 +577,9 @@ public:
         xGoal::SetFlags(6);
     }
 
-    S32 Resume(F32 dt, void* updCtxt);
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Resume(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
     enum en_alertpuppy alertpup; // offset 0x4C, size 0x4
 };
 
@@ -562,8 +597,10 @@ public:
     en_slepatak sleepattack; // offset 0x5C, size 0x4
     F32 tmr_minAttack; // offset 0x60, size 0x4
 
-    S32 Exit(F32, void*);
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Exit(F32, void*);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    S32 NPCMessage(NPCMsg* mail);
 };
 
 class zNPCGoalChase : public zNPCGoalCommon
@@ -576,6 +613,8 @@ public:
     }
 
     S32 flg_chase; // offset 0x4C, size 0x4
+
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
 };
 
 struct zNPCGoalTaunt : zNPCGoalLoopAnim
@@ -623,6 +662,7 @@ public:
     }
 
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
     xVec3 dir_attack; // offset 0x54, size 0xC
     S32 flg_attack; // offset 0x60, size 0x4
 };
@@ -639,12 +679,12 @@ struct zNPCGoalAlertSlick : zNPCGoalCommon
         xGoal::SetFlags(6);
     }
 
-    void MoveCorner(F32 dt);
-    void GetInArena(F32 dt);
-    S32 NPCMessage(NPCMsg* mail);
-    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt);
-    S32 Resume(F32 dt, void* updCtxt);
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Resume(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    S32 NPCMessage(NPCMsg* mail);
+    void GetInArena(F32 dt);
+    void MoveCorner(F32 dt);
 };
 
 class zNPCGoalAlertTubelet : public zNPCGoalCommon
@@ -656,11 +696,13 @@ public:
         xGoal::SetFlags(6);
     }
 
-    void PeteAttackBegin();
     S32 Exit(F32 dt, void* updCtxt);
     S32 Enter(F32 dt, void* updCtxt);
     S32 Resume(F32 dt, void* updCtxt);
-    void PeteAttackBegin(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    void PeteAttackBegin();
+    void PeteAttackParSys(F32 dt, void* updCtxt);
+    void EmitSteam(F32 dt);
     S32 flg_attack; // offset 0x4C, size 0x4
     S32 cnt_nextlos; // offset 0x50, size 0x4
     F32 len_laser; // offset 0x54, size 0x4
@@ -682,11 +724,11 @@ struct zNPCGoalAlertChuck : zNPCGoalCommon
         xGoal::SetFlags(6);
     }
 
-    S32 ZoomMove(F32 dt);
-    void GetInArena(F32 dt);
-    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt);
-    S32 Resume(F32 dt, void* updCtxt);
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Resume(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    void GetInArena(F32 dt);
+    S32 ZoomMove(F32 dt);
 };
 
 class zNPCGoalAlertMonsoon : public zNPCGoalCommon
@@ -698,9 +740,11 @@ public:
         xGoal::SetFlags(6);
     }
 
-    S32 Resume(F32 dt, void* updCtxt);
     S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);
+    S32 Resume(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    void MoveCorner(F32 dt);
     xVec3 dir_attack; // offset 0x4C, size 0xC
     S32 flg_attack; // offset 0x58, size 0x4
     en_alertmony alertmony; // offset 0x5C, size 0x4
@@ -717,11 +761,16 @@ public:
         xGoal::SetFlags(6);
         flg_npcgable |= 1;
     }
-    S32 Suspend(F32 dt, void* updCtxt);
-    S32 Resume(F32 dt, void* updCtxt);
     S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);
+    S32 Suspend(F32 dt, void* updCtxt);
+    S32 Resume(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    void FXTurbulence();
+    void FXWhirlwind();
     void CalcAttackVector();
+    void CheckHandBones();
+    U8 CollReview(void*);
     F32 tmr_attack; // offset 0x4C, size 0x4
     F32 tmr_minAttack; // offset 0x50, size 0x4
     xVec3 pos_began; // offset 0x54, size 0xC
@@ -744,12 +793,12 @@ struct zNPCGoalAlertTarTar : zNPCGoalCommon
         xGoal::SetFlags(6);
     }
 
-    void GetInArena(F32 dt);
-    S32 HoppyUpdate(en_trantype* trantype, F32 dt);
-    S32 NPCMessage(NPCMsg* mail);
-    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt);
-    S32 Resume(F32 dt, void* updCtxt);
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Resume(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    S32 NPCMessage(NPCMsg* mail);
+    S32 HoppyUpdate(en_trantype* trantype, F32 dt);
+    void GetInArena(F32 dt);
 };
 
 struct zNPCGoalAlertChomper : zNPCGoalCommon
@@ -768,7 +817,7 @@ struct zNPCGoalAlertChomper : zNPCGoalCommon
     S32 CalcEvadePos(xVec3* pos);
     void GetInArena(F32 dt);
     void CirclePlayer(F32 dt);
-    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
     S32 Enter(F32 dt, void* updCtxt);
 };
 
@@ -783,6 +832,10 @@ public:
 
     S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    S32 PlayerInSpot(F32 dt);
+    void MoveChase(F32 dt);
+    void MoveEvade(F32 dt);
     S32 flg_attack; // offset 0x4C, size 0x4
     en_alertham alertham; // offset 0x50, size 0x4
     F32 tmr_alertham; // offset 0x54, size 0x4
@@ -805,16 +858,16 @@ struct zNPCGoalAlertFodBzzt : zNPCGoalCommon
         xGoal::SetFlags(6);
     }
 
-    void DeathRayRender();
-    void DeathRayUpdate(F32 dt);
-    void OrbitPlayer(F32 dt);
-    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt);
-    S32 Resume(F32 dt, void* updCtxt);
-    S32 Suspend(F32 dt, void* updCtxt);
-    S32 Exit(F32 dt, void* updCtxt);
     S32 Enter(F32 dt, void* updCtxt);
-    void GetInArena(F32 dt);
+    S32 Exit(F32 dt, void* updCtxt);
+    S32 Suspend(F32 dt, void* updCtxt);
+    S32 Resume(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
     void ToggleOrbit();
+    void OrbitPlayer(F32 dt);
+    void GetInArena(F32 dt);
+    void DeathRayUpdate(F32 dt);
+    void DeathRayRender();
 };
 
 struct zNPCGoalAttackFodder;
@@ -829,6 +882,8 @@ public:
     }
 
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    S32 SpitCloud();
     S32 idx_launch; // offset 0x54, size 0x4
 };
 
@@ -842,6 +897,10 @@ public:
     }
 
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    S32 NPCMessage(NPCMsg* mail);
+    void CacheAimPoint();
+    S32 ShootBlob(S32 zapidx);
     S32 flg_attack; // offset 0x54, size 0x4
     S32 idx_launch; // offset 0x58, size 0x4
     xVec3 pos_aimbase; // offset 0x5C, size 0xC
@@ -856,12 +915,13 @@ public:
         xGoal::SetFlags(2);
     }
 
-    void ModifyAnimSpeed();
+    S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    void TellBunnies();
+    void ModifyAnimSpeed();
     void FXStreakPrep();
     void FXStreakDone();
-    void TellBunnies();
-    S32 Enter(F32 dt, void* updCtxt);
     S32 flg_attack; // offset 0x54, size 0x4
     xVec3 pos_lastVert; // offset 0x58, size 0xC
     xVec3 pos_oldVert; // offset 0x64, size 0xC
@@ -878,6 +938,7 @@ public:
     }
 
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
 };
 
 struct zNPCGoalAttackFodder : zNPCGoalPushAnim
@@ -903,9 +964,9 @@ struct zNPCGoalAttackFodder : zNPCGoalPushAnim
         xGoal::SetFlags(2);
     }
 
-    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
-    S32 Exit(F32 dt, void* updCtxt);
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Exit(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
     S32 SyncCattleProd();
 };
 
@@ -919,7 +980,9 @@ public:
         xGoal::AddFlags(0x20000);
         flg_npcgauto &= 0xfffffff9;
     }
+    S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
     S32 flg_alert; // offset 0x4C, size 0x4
 };
 
@@ -934,6 +997,7 @@ public:
 
     S32 Resume(F32 dt, void* updCtxt);
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
     void Detonate();
     void SonarHoming(F32);
     S32 flg_attack; // offset 0x4C, size 0x4
@@ -976,14 +1040,16 @@ struct zNPCGoalDogLaunch : zNPCGoalCommon
         flg_npcgable = 1;
     }
 
-    void BubTrailCone(xVec3* pos, S32 num, xVec3* pos_rand, xVec3* vel_rand, xMat3x3* mat);
-    S32 BallisticUpdate(F32 dt);
-    void PreCollide();
-    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
     S32 Enter(F32 dt, void* updCtxt);
-    U8 CollReview(void*);
-    void SilentSwimout(xVec3* unk1, xVec3* unk2, zMovePoint* unk3);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
     void ViciousAttack(xVec3* unk1, xVec3* unk2, zMovePoint* unk3, S32 unk4);
+    void PreCollide();
+    S32 BallisticUpdate(F32 dt);
+    void BubTrailCone(xVec3* pos, S32 num, xVec3* pos_rand, xVec3* vel_rand, xMat3x3* mat);
+    void FurryFlurry();
+
+    void SilentSwimout(xVec3* unk1, xVec3* unk2, zMovePoint* unk3);
+    U8 CollReview(void*);
 };
 
 class zNPCGoalDogBark : public zNPCGoalLoopAnim
@@ -996,6 +1062,7 @@ public:
     }
 
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
 };
 
 class zNPCGoalDamage : public zNPCGoalCommon
@@ -1006,7 +1073,9 @@ public:
     {
         xGoal::SetFlags(12);
     }
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
     S32 NPCMessage(NPCMsg*);
+    S32 InputInfo(NPCDamageInfo* info);
     S32 flg_howtodie; // offset 0x4C, size 0x4
 };
 
@@ -1019,6 +1088,7 @@ public:
         xGoal::SetFlags(2);
     }
 
+    S32 Enter(F32 dt, void* updCtxt);
     S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
 };
 
@@ -1030,6 +1100,10 @@ public:
     {
         SetFlags(12);
     }
+
+    S32 Enter(F32 dt, void* updCtxt);
+    S32 NPCMessage(NPCMsg* mail);
+    void DieTheGoodDeath();
 };
 
 class NPCBullseye
@@ -1073,6 +1147,7 @@ public:
     {
     }
 
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
     void ChkPrelimTran(en_trantype*, int*);
 };
 
@@ -1084,8 +1159,10 @@ public:
     {
     }
 
-    void DeathByLasso(const xVec3*);
+    S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    void DeathByLasso(const xVec3*);
     S32 flg_tubedying; // offset 0x4C, size 0x4
     F32 spd_gothatway; // offset 0x50, size 0x4
     S32 cnt_loop; // offset 0x54, size 0x4
@@ -1107,7 +1184,9 @@ public:
     F32 ang_spinrate; // offset 0x50, size 0x4
     xVec3 vec_offsetPete; // offset 0x54, size 0xC
 
+    S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
     void CheckForTran(en_trantype*, int*);
 };
 
@@ -1120,6 +1199,7 @@ public:
     }
 
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
     void ChkPrelimTran(en_trantype* trantype, int* nextgoal);
     // total size: 0x4C
 };
@@ -1136,6 +1216,8 @@ public:
     void AttackDataReset();
     S32 Enter(F32 dt, void* updCtxt);
     S32 Resume(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    void MaryAttack(F32 dt, xScene* xscn);
     S32 MarySpinUp(F32 dt);
     void LaserRender();
     void MaryzBlessing();
@@ -1175,7 +1257,13 @@ public:
         xGoal::SetFlags(4);
     }
 
+    S32 Enter(F32 dt, void* updCtxt);
+    int Resume(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
     void ChkPrelimTran(en_trantype* trantype, int* nextgoal);
+    void MoveFrolic(F32 dt);
+    void DuckStackInterpInit();
+    S32 DuckStackInterp(F32 dt);
 
     S32 flg_duckling; // offset 0x4C, size 0x4
     F32 tmr_running; // offset 0x50, size 0x4
@@ -1197,6 +1285,8 @@ public:
         flg_npcgauto &= 0xfffffff9;
     }
 
+    S32 Enter(F32 dt, void* updCtxt);
+    S32 EvalRules(en_trantype* trantype, float dt, void* updCtxt);
     void ChkPrelimTran(en_trantype* trantype, int* nextgoal);
 };
 
@@ -1209,7 +1299,9 @@ public:
         SetFlags(2);
     }
 
+    S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
 
     F32 spd_gothatway; // offset 0x4C, size 0x4
     S32 cnt_loop; // offset 0x50, size 0x4
@@ -1225,10 +1317,13 @@ public:
         SetFlags(2);
     }
 
-    S32 InputInfo(NPCSpawnInfo* info);
     S32 Enter(F32, void*);
     S32 Exit(F32, void*);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
     F32 LaunchRoboBits();
+    void DoAppearFX(F32 dt);
+    void KickFromTheNest();
+    S32 InputInfo(NPCSpawnInfo* info);
     F32 tmr_respawn; // offset 0x4C, size 0x4
     F32 tmr_robobits; // offset 0x50, size 0x4
     S32 cnt_ring; // offset 0x54, size 0x4
@@ -1245,9 +1340,14 @@ public:
         flg_npcgable |= 1;
     }
 
-    void StreakDone();
-    void StreakPrep();
+    S32 Enter(F32, void*);
     S32 Exit(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    S32 InputInfo(NPCDamageInfo* info);
+    U8 CollReview(void*);
+    void StreakPrep();
+    void StreakDone();
+    void StreakUpdate();
     S32 flg_knock; // offset 0x4C, size 0x4
     xVec3 pos_bumper; // offset 0x50, size 0xC
     S32 floorBounce; // offset 0x5C, size 0x4
@@ -1264,6 +1364,9 @@ public:
         flg_npcgable |= 1;
     }
 
+    S32 Enter(F32, void*);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    U8 CollReview(void*);
     S32 NPCMessage(NPCMsg*);
     xVec3 dir_fling; // offset 0x54, size 0xC
     S32 flg_knock; // offset 0x60, size 0x4
@@ -1279,6 +1382,7 @@ public:
     }
 
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
     S32 flg_hokey; // offset 0x6C, size 0x4
     F32 ang_spinrate; // offset 0x70, size 0x4
 };
@@ -1292,8 +1396,10 @@ public:
         xGoal::SetFlags(2);
     }
 
-    S32 NPCMessage(NPCMsg* msg);
+    S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    S32 NPCMessage(NPCMsg* msg);
     F32 tmr_countdown; // offset 0x4C, size 0x4
 };
 
@@ -1322,6 +1428,7 @@ public:
     }
 
     S32 Enter(F32 dt, void* updCtxt);
+    S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
     void HoundPlayer(F32 dt);
 };
 
