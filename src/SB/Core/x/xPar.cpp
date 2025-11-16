@@ -4,10 +4,8 @@
 
 #define PAR_POOL_SIZE 2000
 
-extern xPar gParPool[PAR_POOL_SIZE];
-extern xPar* gParDead;
-extern F32 lbl_803CCF10; // 0.0f
-extern F32 lbl_803CCF14; // 255f
+xPar gParPool[PAR_POOL_SIZE];
+xPar* gParDead;
 
 // For some reason, it does not recompare gParDead and assumes the first comparison is valid for all.
 void xParMemInit()
@@ -65,23 +63,23 @@ void xParFree(xPar* par)
 
 void xParInit(xPar* p)
 {
-    p->m_pos.x = lbl_803CCF10;
-    p->m_pos.y = lbl_803CCF10;
-    p->m_pos.z = lbl_803CCF10;
-    p->m_vel.x = lbl_803CCF10;
-    p->m_vel.y = lbl_803CCF10;
-    p->m_vel.z = lbl_803CCF10;
-    p->m_size = lbl_803CCF10;
-    p->m_sizeVel = lbl_803CCF10;
-    p->m_lifetime = lbl_803CCF10;
-    p->m_cvel[0] = lbl_803CCF10;
-    p->m_cvel[1] = lbl_803CCF10;
-    p->m_cvel[2] = lbl_803CCF10;
-    p->m_cvel[3] = lbl_803CCF10;
-    p->m_cfl[0] = lbl_803CCF14;
-    p->m_cfl[1] = lbl_803CCF14;
-    p->m_cfl[2] = lbl_803CCF14;
-    p->m_cfl[3] = lbl_803CCF14;
+    p->m_pos.x = 0.0f;
+    p->m_pos.y = 0.0f;
+    p->m_pos.z = 0.0f;
+    p->m_vel.x = 0.0f;
+    p->m_vel.y = 0.0f;
+    p->m_vel.z = 0.0f;
+    p->m_size = 0.0f;
+    p->m_sizeVel = 0.0f;
+    p->m_lifetime = 0.0f;
+    p->m_cvel[0] = 0.0f;
+    p->m_cvel[1] = 0.0f;
+    p->m_cvel[2] = 0.0f;
+    p->m_cvel[3] = 0.0f;
+    p->m_cfl[0] = 255.0f;
+    p->m_cfl[1] = 255.0f;
+    p->m_cfl[2] = 255.0f;
+    p->m_cfl[3] = 255.0f;
     p->m_c[0] = 0xff;
     p->m_c[1] = 0xff;
     p->m_c[2] = 0xff;
