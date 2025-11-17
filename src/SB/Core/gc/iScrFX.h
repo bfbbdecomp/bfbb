@@ -18,8 +18,7 @@ struct _iMotionBlurData
 void iScrFxInit();
 void iScrFxBegin();
 void iScrFxEnd();
-void iScrFxDrawBox(F32 x1, F32 y1, F32 x2, F32 y2, U8 red, U8 green,
-                   U8 blue, U8 alpha);
+void iScrFxDrawBox(F32 x1, F32 y1, F32 x2, F32 y2, U8 red, U8 green, U8 blue, U8 alpha);
 void iCameraMotionBlurActivate(U32 activate);
 void iCameraSetBlurriness(F32 amount);
 void iScrFxCameraCreated(RwCamera* pCamera);

@@ -37,7 +37,7 @@ void iScrFxEnd()
 
 void iScrFxDrawBox(F32 x1, F32 y1, F32 x2, F32 y2, U8 red, U8 green, U8 blue, U8 alpha)
 {
-    U16 indices[4] = {0, 1, 2, 3};
+    U16 indices[4] = { 0, 1, 2, 3 };
     rwGameCube2DVertex v[4];
     F32 nearZ = RwIm2DGetNearScreenZ();
 
@@ -61,7 +61,6 @@ void iScrFxDrawBox(F32 x1, F32 y1, F32 x2, F32 y2, U8 red, U8 green, U8 blue, U8
 
     RwIm2DRenderIndexedPrimitive(rwPRIMTYPETRISTRIP, v, 4, indices, 4);
 }
-
 
 void iCameraMotionBlurActivate(U32 activate)
 {
