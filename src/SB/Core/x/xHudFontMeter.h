@@ -40,7 +40,7 @@ namespace xhud
         S32 last_value; // 0x124
         xfont xf; // 0x128
 
-        void load(xBase& data, xDynAsset& asset, u32 size_t);
+        static void load(xBase& data, xDynAsset& asset, size_t);
         font_meter_widget(xhud::font_meter_asset& init);
         void destruct();
         void destroy();
