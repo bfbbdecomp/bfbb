@@ -7,7 +7,8 @@
 
 void xhud::font_meter_widget::load(xBase& data, xDynAsset& asset, u32 size_t)
 {
-    widget::init_base((xBase&)*this, *(xBaseAsset*)&data, sizeof(xhud::font_meter_widget) + 0x10);
+    // Stub for now because this fails to build. 100% match locally though.
+    // widget::init_base((xBase&)*this, *(xBaseAsset*)&data, sizeof(xhud::font_meter_widget) + 0x10);
     // new (&this->rc.size)
     //     xhud::font_meter_widget(*(xhud::font_meter_asset*)&data); // TODO: proper size value
 }
