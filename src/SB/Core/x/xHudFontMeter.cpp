@@ -40,7 +40,7 @@ xhud::font_meter_widget::font_meter_widget(xhud::font_meter_asset& init) : meter
 
 void xhud::font_meter_widget::destruct()
 {
-    ((xhud::meter_widget*)this)->destruct();
+    xhud::meter_widget::destruct();
 }
 
 void xhud::font_meter_widget::destroy()
@@ -85,17 +85,17 @@ void xhud::font_meter_widget::update(F32 dt)
     U8 flag_1;
     U8 flag_2;
 
-    (*this).updater(dt);
-    this->xf.id = (this->font).id;
-    this->xf.space = (this->font).space;
-    a = (*this).rc.size.x;
+    this->updater(dt);
+    this->xf.id = this->font.id;
+    this->xf.space = this->font.space;
+    a = this->rc.size.x;
     this->font.w = a;
     this->xf.width = a;
-    a = (*this).rc.size.y;
+    a = this->rc.size.y;
     this->font.h = a;
     this->xf.height = a;
 
-    a = (*this).rc.a * (F32)this->start_font.c.a + 0.5;
+    a = this->rc.a * (F32)this->start_font.c.a + 0.5;
     if (a <= 0.0)
     {
         flag_1 = 0;
@@ -112,9 +112,9 @@ void xhud::font_meter_widget::update(F32 dt)
     {
         flag_1 = (U8)(S32)(a - 2.1474836e+09);
     }
-    (this->font).c.a = flag_1;
+    this->font.c.a = flag_1;
 
-    a = (*this).rc.a * (F32)this->start_font.drop_c.a + 0.5;
+    a = this->rc.a * (F32)this->start_font.drop_c.a + 0.5;
     if (a <= 0.0)
     {
         flag_1 = 0;
@@ -131,7 +131,7 @@ void xhud::font_meter_widget::update(F32 dt)
     {
         flag_1 = (U8)(S32)(a - 2.1474836e+09);
     }
-    (this->font).drop_c.a = flag_1;
+    this->font.drop_c.a = flag_1;
 
     new_value = (S32)(this->value + 0.5);
     if (this->last_value != new_value)
@@ -147,9 +147,9 @@ void xhud::font_meter_widget::update(F32 dt)
             flag_2 = ((font_meter_asset*)(this->a))->counter_mode;
         }
         sprintf(this->buffer, format_text[flag_2], new_value, (S32)(a + 0.5));
-        bounds = (&this->xf)->bounds(this->buffer);
-        (this->offset).x = -bounds.x;
-        (this->offset).y = -bounds.y;
+        bounds = this->xf.bounds(this->buffer);
+        this->offset.x = -bounds.x;
+        this->offset.y = -bounds.y;
     }
     return;
 }
@@ -161,18 +161,18 @@ void xhud::font_meter_widget::render()
     F32 temp_x;
     F32 y;
 
-    temp_x = (this->offset).x + this->rc.loc.x;
-    y = (this->offset).y + this->rc.loc.y;
-    if ((this->font).drop_c.a != '\0')
+    temp_x = this->offset.x + this->rc.loc.x;
+    y = this->offset.y + this->rc.loc.y;
+    if (this->font.drop_c.a != 0)
     {
-        (this->xf).color = (this->font).drop_c;
-        x = temp_x + (this->font).drop_x;
-        (this->xf).render(this->buffer, x, y + (this->font).drop_y);
+        this->xf.color = this->font.drop_c;
+        x = temp_x + this->font.drop_x;
+        this->xf.render(this->buffer, x, y + this->font.drop_y);
     }
-    if ((this->font).c.a != '\0')
+    if (this->font.c.a != 0)
     {
-        (this->xf).color = (this->font).c;
-        (this->xf).render(this->buffer, temp_x, y);
+        this->xf.color = this->font.c;
+        this->xf.render(this->buffer, temp_x, y);
     }
     return;
 }
