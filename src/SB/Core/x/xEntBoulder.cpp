@@ -62,10 +62,12 @@ void xEntBoulder_Render(xEnt* ent)
                     shadVec.x = model->Mat->pos.x;
                     shadVec.y = model->Mat->pos.y - 10.0f;
                     shadVec.z = model->Mat->pos.z;
+
                     if (iModelCullPlusShadow(model->Data, model->Mat, &shadVec, &shadowResult) == 0)
                     {
                         xModelRender(model);
                     }
+
                     if (shadowResult == 0)
                     {
                         if (ent->flags & 0x10)
@@ -415,18 +417,20 @@ void xEntBoulder_Update(xEntBoulder* ent, xScene* sc, F32 dt)
                 }
             }
 
-            if (boul->baseType == eBaseTypeButton)
+            _zEntButton* butt = (_zEntButton*)boul;
+            if (butt->baseType == eBaseTypeButton)
             {
-                zEntButton_Press((_zEntButton*)boul, 8);
-                zEntButton_Hold((_zEntButton*)boul, 0x1000);
+                zEntButton_Press(butt, 8);
+                zEntButton_Hold(butt, 0x1000);
             }
 
+            zPlatform* plat = ((zPlatform*)(boul));
             if
             (
                 (ent == globals.player.bubblebowl) &&
-                (boul->moreFlags & 0x10) &&
-                (boul->baseType == eBaseTypePlatform) &&
-                (boul->subType == 0x0C && (((zPlatform*)(boul))->passet->paddle.paddleFlags & 0x10))
+                (plat->moreFlags & 0x10) &&
+                (plat->baseType == eBaseTypePlatform) &&
+                (plat->subType == ZPLATFORM_SUBTYPE_PADDLE && (plat->passet->paddle.paddleFlags & 0x10))
             )
             {
                 zPlatform_PaddleCollide(&ent->collis->colls[i], (xVec3 *)(&ent->model->Mat->pos), &ent->vel, 1);
@@ -572,7 +576,9 @@ void xEntBoulder_Update(xEntBoulder* ent, xScene* sc, F32 dt)
             xVec3AddScaled(&sphDist, &scaleVel, -ent->basset->friction * dt);
         }
     }
+
     xVec3Copy(&ent->vel, &sphDist);
+
     if (numDepens != 0)
     {
         if (xVec3Length2(&depen) < 0.001f)
@@ -702,8 +708,8 @@ S32 xEntBoulder_KilledBySurface(xEntBoulder* ent, xScene* sc, F32 dt)
 
         if ((ent->basset->flags & 0x40) && (coll->optr != NULL) && (zGooIs((xEnt*)coll->optr, temp, 0)))
         {
-            xVec3AddScaled(&ent->vel, &coll->norm, (-(ent->basset->bounce + 1.0f) * xVec3Dot(&ent->vel, &coll->norm)));
-            zEntEvent((xBase *)ent, 0x25);
+            xVec3AddScaled(&ent->vel, &coll->norm, -(ent->basset->bounce + 1.0f) * xVec3Dot(&ent->vel, &coll->norm));
+            zEntEvent(ent, eEventKill);
             return 1;
         }
 
@@ -734,7 +740,7 @@ S32 xEntBoulder_KilledBySurface(xEntBoulder* ent, xScene* sc, F32 dt)
                     if (ent->hitpoints <= 0)
                     {
                         xVec3AddScaled(&ent->vel, &coll->norm, -(ent->basset->bounce + 1.0f) * xVec3Dot(&ent->vel, &coll->norm));
-                        zEntEvent((xBase *)ent, eEventKill);
+                        zEntEvent(ent, eEventKill);
                         return 1;
                     }
                     break;
@@ -871,16 +877,21 @@ void xEntBoulder_Reset(xEntBoulder* boul, xScene* sc)
     boul->penby = 0x10;
     boul->collis_chk = 0x2e;
     boul->collis_pen = 0;
+
     xEntReset(boul);
+
     if ((boul->id == 0x5f2e37b4) || (boul->id + 0xa0d1c84b <= 1) || (boul->id == 0x5f2e37b7))
     {
         boul->flags |= 0x10;
     }
+
     xVec3Init(&boul->force,     0.0f, 0.0f, 0.0f);
     xVec3Init(&boul->instForce, 0.0f, 0.0f, 0.0f);
     xVec3Init(&boul->vel,       0.0f, 0.0f, 0.0f);
     xVec3Init(&boul->rotVec,    1.0f, 0.0f, 0.0f);
+
     boul->angVel = 0.0f;
+
     if (boul->basset->flags & 0x200)
     {
         boul->timeToLive = boul->basset->killtimer;
@@ -889,8 +900,10 @@ void xEntBoulder_Reset(xEntBoulder* boul, xScene* sc)
     {
         boul->timeToLive = -1.0f;
     }
+
     boul->hitpoints = boul->basset->hitpoints;
     xEntBoulder_RealBUpdate(boul, (xVec3 *)&boul->model->Mat->pos);
+
     if ((globals.sceneCur->sceneID == 'BC04') && (boul->id == xStrHash("BALL_BOULDER")))
     {
         boul->collis_chk &= 0xf7;
@@ -944,9 +957,9 @@ void xBoulderGenerator_Init(xBoulderGenerator* bg, xBoulderGeneratorAsset* asset
     bg->lengthOfInitVel = xVec3Length(&bg->bgasset->initvel);
     if (bg->lengthOfInitVel > 1e-05f)
     {
-        (bg->perp1).x = (bg->bgasset->initvel).z - (bg->bgasset->initvel).y;
-        (bg->perp1).y = (bg->bgasset->initvel).x - (bg->bgasset->initvel).z;
-        (bg->perp1).z = (bg->bgasset->initvel).y - (bg->bgasset->initvel).x;
+        bg->perp1.x = bg->bgasset->initvel.z - bg->bgasset->initvel.y;
+        bg->perp1.y = bg->bgasset->initvel.x - bg->bgasset->initvel.z;
+        bg->perp1.z = bg->bgasset->initvel.y - bg->bgasset->initvel.x;
         xVec3Normalize(&bg->perp1, &bg->perp1);
         xVec3Cross(&bg->perp2, &bg->bgasset->initvel, &bg->perp1);
         xVec3SMulBy(&bg->perp1, bg->lengthOfInitVel);
@@ -975,70 +988,70 @@ static void BoulderGen_GiveBirth(xBoulderGenerator* gen, S32 param)
 
 static S32 GetBoulderForGenerating(xBoulderGenerator* bg)
 {
-    // TODO: Variable names.
-    S32 r31;
-    S32 r30;
-    S32 r29;
-    S32 r28 = -1;
-    S32 blah = bg->numBoulders >> 1;
+    S32 numList;
+    S32 j;
+    S32 i;
+    S32 oldestCulled = -1;
+    S32 minAge = bg->numBoulders >> 1;
 
-    for (r29 = 0, r31 = bg->numBoulders; r29 < r31; r29++)
+    for (i = 0, numList = bg->numBoulders; i < numList; i++)
     {
-        r30 = r29 + bg->nextBoulder;
-        if (r30 >= r31)
+        j = i + bg->nextBoulder;
+
+        if (j >= numList)
         {
-            r30 -= r31;
+            j -= numList;
         }
 
-        if (!xEntIsVisible(bg->boulderList[r30]))
+        if (!xEntIsVisible(bg->boulderList[j]))
         {
             break;
         }
 
-        if (bg->boulderAges[r30] < blah)
+        if (bg->boulderAges[j] < minAge)
         {
-
+            // :^)
         }
-        else if (r28 < 0)
+        else if (oldestCulled < 0)
         {
-            r28 = r30;
+            oldestCulled = j;
         }
-        else if (bg->boulderList[r28]->isCulled)
+        else if (bg->boulderList[oldestCulled]->isCulled)
         {
-            if (bg->boulderList[r30]->isCulled && (bg->boulderAges[r28] < bg->boulderAges[r30]))
+            if (bg->boulderList[j]->isCulled && (bg->boulderAges[oldestCulled] < bg->boulderAges[j]))
             {
-                r28 = r30;
+                oldestCulled = j;
             }
         }
-        else if (bg->boulderList[r30]->isCulled || (bg->boulderAges[r28] < bg->boulderAges[r30]))
+        else if (bg->boulderList[j]->isCulled || (bg->boulderAges[oldestCulled] < bg->boulderAges[j]))
         {
-            r28 = r30;
+            oldestCulled = j;
         }
     }
 
-    if (r29 == r31)
+    if (i == numList)
     {
-        if (r28 < 0)
+        if (oldestCulled < 0)
         {
-            r30 = (r31 - 1) * xurand();
-            if (r30 >= r31)
+            j = (numList - 1) * xurand();
+            if (j >= numList)
             {
-                r30 = r31 - 1;
+                j = numList - 1;
             }
         }
         else
         {
-            r30 = r28;
+            j = oldestCulled;
         }
     }
 
-    bg->nextBoulder = r30 + 1;
-    if (bg->nextBoulder >= r31)
+    bg->nextBoulder = j + 1;
+    if (bg->nextBoulder >= numList)
     {
         bg->nextBoulder = 0;
     }
 
-    return r30;
+    return j;
 }
 
 void xBoulderGenerator_Launch(xBoulderGenerator* bg, xVec3* pnt, F32 t)
@@ -1050,7 +1063,7 @@ void xBoulderGenerator_Launch(xBoulderGenerator* bg, xVec3* pnt, F32 t)
     if ((b != (xEntBoulder*)bg->objectPtr) || (!xEntIsVisible(b)))
     {
         xEntBoulder_Reset(b, globals.sceneCur);
-        zEntEvent((xBase *)b, 0x218);
+        zEntEvent(b, eEventBorn);
         b->update = (void(*)(xEnt*, xScene*, F32))xEntBoulder_Update;
         if (bg->isMarker)
         {
@@ -1064,6 +1077,7 @@ void xBoulderGenerator_Launch(xBoulderGenerator* bg, xVec3* pnt, F32 t)
         xVec3Copy(&b->rotVec, &bg->bgasset->initaxis);
         b->angVel = bg->bgasset->angvel;
     }
+
     invTime = (1.0f / t);
     b->vel.x = invTime * (pnt[0].x - b->model->Mat->pos.x);
     b->vel.z = invTime * (pnt[0].z - b->model->Mat->pos.z);
