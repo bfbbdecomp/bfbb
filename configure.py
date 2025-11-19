@@ -631,14 +631,14 @@ config.libs = [
         "ax",
         [
             Object(Matching, "dolphin/src/ax/AX.c"),
-            Object(NonMatching, "dolphin/src/ax/AXAlloc.c"),
+            Object(Matching, "dolphin/src/ax/AXAlloc.c"),
             Object(Matching, "dolphin/src/ax/AXAux.c"),
-            Object(NonMatching, "dolphin/src/ax/AXCL.c"),
-            Object(NonMatching, "dolphin/src/ax/AXOut.c"),
+            Object(Matching, "dolphin/src/ax/AXCL.c"),
+            Object(Matching, "dolphin/src/ax/AXOut.c"),
             Object(Matching, "dolphin/src/ax/AXSPB.c"),
-            Object(NonMatching, "dolphin/src/ax/AXVPB.c"),
+            Object(Matching, "dolphin/src/ax/AXVPB.c"),
             Object(Matching, "dolphin/src/ax/AXComp.c"),
-            Object(NonMatching, "dolphin/src/ax/DSPCode.c"),
+            Object(Matching, "dolphin/src/ax/DSPCode.c"),
             Object(Matching, "dolphin/src/ax/AXProf.c"),
         ],
     ),
@@ -699,25 +699,24 @@ config.libs = [
     DolphinLib(
         "exi",
         [
-            Object(NonMatching, "dolphin/src/exi/EXIBios.c"),
+            Object(Matching, "dolphin/src/exi/EXIBios.c"),
             Object(Matching, "dolphin/src/exi/EXIUart.c")
         ]
     ),
     DolphinLib(
         "gx",
         [
-            Object(NonMatching, "dolphin/src/gx/GXInit.c"),
-            Object(NonMatching, "dolphin/src/gx/GXFifo.c"),
+            Object(Matching, "dolphin/src/gx/GXInit.c"),
+            Object(Matching, "dolphin/src/gx/GXFifo.c"),
             Object(Matching, "dolphin/src/gx/GXAttr.c"),
             Object(Matching, "dolphin/src/gx/GXMisc.c"),
-            Object(NonMatching, "dolphin/src/gx/GXGeometry.c"),
+            Object(Matching, "dolphin/src/gx/GXGeometry.c"),
             Object(Matching, "dolphin/src/gx/GXFrameBuf.c"),
-            Object(NonMatching, "dolphin/src/gx/GXLight.c"),
+            Object(Matching, "dolphin/src/gx/GXLight.c"),
             Object(Matching, "dolphin/src/gx/GXTexture.c"),
             Object(Matching, "dolphin/src/gx/GXBump.c"),
             Object(Matching, "dolphin/src/gx/GXTev.c"),
-            Object(NonMatching, "dolphin/src/gx/GXPixel.c"),
-            Object(NonMatching, "dolphin/src/gx/GXDraw.c"),
+            Object(Matching, "dolphin/src/gx/GXPixel.c"),
             Object(Matching, "dolphin/src/gx/GXDisplayList.c"),
             Object(Matching, "dolphin/src/gx/GXTransform.c"),
             Object(Matching, "dolphin/src/gx/GXPerf.c")

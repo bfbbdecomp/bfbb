@@ -25,93 +25,97 @@ extern "C" {
 
 #define CARD_MAX_MOUNT_STEP (CARD_NUM_SYSTEM_BLOCK + 2)
 
-typedef struct CARDDir {
-  u8 gameName[4];
-  u8 company[2];
-  u8 _padding0;
-  u8 bannerFormat;
-  u8 fileName[CARD_FILENAME_MAX];
-  u32 time; // seconds since 01/01/2000 midnight
+typedef struct CARDDir
+{
+    u8 gameName[4];
+    u8 company[2];
+    u8 _padding0;
+    u8 bannerFormat;
+    u8 fileName[CARD_FILENAME_MAX];
+    u32 time; // seconds since 01/01/2000 midnight
 
-  u32 iconAddr; // 0xffffffff if not used
-  u16 iconFormat;
-  u16 iconSpeed;
+    u32 iconAddr; // 0xffffffff if not used
+    u16 iconFormat;
+    u16 iconSpeed;
 
-  u8 permission;
-  u8 copyTimes;
-  u16 startBlock;
-  u16 length;
-  u8 _padding1[2];
+    u8 permission;
+    u8 copyTimes;
+    u16 startBlock;
+    u16 length;
+    u8 _padding1[2];
 
-  u32 commentAddr; // 0xffffffff if not used
+    u32 commentAddr; // 0xffffffff if not used
 } CARDDir;
 
-typedef struct CARDDirCheck {
-  u8 padding0[64 - 2 * 4];
-  u16 padding1;
-  s16 checkCode;
-  u16 checkSum;
-  u16 checkSumInv;
+typedef struct CARDDirCheck
+{
+    u8 padding0[64 - 2 * 4];
+    u16 padding1;
+    s16 checkCode;
+    u16 checkSum;
+    u16 checkSumInv;
 } CARDDirCheck;
 
-typedef struct CARDControl {
-  BOOL attached;
-  s32 result;
-  u16 size;
-  u16 pageSize;
-  s32 sectorSize;
-  u16 cBlock;
-  u16 vendorID;
-  s32 latency;
-  u8 id[12];
-  int mountStep;
-  int formatStep;
-  u32 scramble;
-  DSPTaskInfo task;
-  void* workArea;
-  CARDDir* currentDir;
-  u16* currentFat;
-  OSThreadQueue threadQueue;
-  u8 cmd[9];
-  s32 cmdlen;
-  vu32 mode;
-  int retry;
-  int repeat;
-  u32 addr;
-  void* buffer;
-  s32 xferred;
-  u16 freeNo;
-  u16 startBlock;
-  CARDFileInfo* fileInfo;
-  CARDCallback extCallback;
-  CARDCallback txCallback;
-  CARDCallback exiCallback;
-  CARDCallback apiCallback;
-  CARDCallback xferCallback;
-  CARDCallback eraseCallback;
-  CARDCallback unlockCallback;
-  OSAlarm alarm;
-  u32 cid;
-  const DVDDiskID* diskID;
+typedef struct CARDControl
+{
+    BOOL attached;
+    s32 result;
+    u16 size;
+    u16 pageSize;
+    s32 sectorSize;
+    u16 cBlock;
+    u16 vendorID;
+    s32 latency;
+    u8 id[12];
+    int mountStep;
+    int formatStep;
+    u32 scramble;
+    DSPTaskInfo task;
+    void* workArea;
+    CARDDir* currentDir;
+    u16* currentFat;
+    OSThreadQueue threadQueue;
+    u8 cmd[9];
+    s32 cmdlen;
+    vu32 mode;
+    int retry;
+    int repeat;
+    u32 addr;
+    void* buffer;
+    s32 xferred;
+    u16 freeNo;
+    u16 startBlock;
+    CARDFileInfo* fileInfo;
+    CARDCallback extCallback;
+    CARDCallback txCallback;
+    CARDCallback exiCallback;
+    CARDCallback apiCallback;
+    CARDCallback xferCallback;
+    CARDCallback eraseCallback;
+    CARDCallback unlockCallback;
+    OSAlarm alarm;
+    u32 cid;
+    const DVDDiskID* diskID;
 } CARDControl;
 
-typedef struct CARDID {
-  u8 serial[32]; // flashID[12] + timebase[8] + counterBias[4] + language[4] + XXX[4]
-  u16 deviceID;
-  u16 size;
-  u16 encode; // character set -- 0: S-JIS, 1: ANSI
+typedef struct CARDID
+{
+    u8 serial[32]; // flashID[12] + timebase[8] + counterBias[4] + language[4] + XXX[4]
+    u16 deviceID;
+    u16 size;
+    u16 encode; // character set -- 0: S-JIS, 1: ANSI
 
-  u8 padding[512 - 32 - 5 * 2];
+    u8 padding[512 - 32 - 5 * 2];
 
-  u16 checkSum;
-  u16 checkSumInv;
+    u16 checkSum;
+    u16 checkSumInv;
 } CARDID;
 
 void __CARDDefaultApiCallback(s32 chan, s32 result);
 void __CARDSyncCallback(s32 channel, s32 result);
 
 #define CARDIsValidBlockNo(card, iBlock)                                                           \
-  (CARD_NUM_SYSTEM_BLOCK <= (iBlock) && (iBlock) < (card)->cBlock)
+    (CARD_NUM_SYSTEM_BLOCK <= (iBlock) && (iBlock) < (card)->cBlock)
 #define __CARDGetDirCheck(dir) ((CARDDirCheck*)&(dir)[CARD_MAX_FILE])
 
 CARDDir* __CARDGetDirBlock(CARDControl* card);
@@ -123,7 +127,7 @@ void __CARDExiHandler(s32 chan, OSContext* context);
 void __CARDExtHandler(s32 chan, OSContext* context);
 void __CARDUnlockedHandler(s32 chan, OSContext* context);
 s32 __CARDAccess(CARDControl* card, CARDDir* ent);
-s32 __CARDIsWritable(CARDControl *card, CARDDir *entry);
+s32 __CARDIsWritable(CARDControl* card, CARDDir* entry);
 
 #define TRUNC(n, a) (((u32)(n)) & ~((a)-1))
 #define OFFSET(n, a) (((u32)(n)) & ((a)-1))

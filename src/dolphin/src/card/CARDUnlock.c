@@ -44,28 +44,25 @@ inline int CARDRand(void)
     return (int)((unsigned int)(next / 65536) % 32768);
 }
 
-// static u32 GetInitVal(void)
-// {
-//     u32 tmp = 0;
-//     u32 tick;
-
-//     tick = OSGetTick();
-//     next = tmp;
-//     tmp = 0x7fec8000;
-//     tmp |= CARDRand();
-//     tmp &= 0xfffff000;
-//     return tmp;
-// }
+inline void CARDSrand(uint seed)
+{
+    next = seed;
+}
 
 inline u32 GetInitVal(void)
 {
-    // OSTick tick = OSGetTick();
-    next = OSGetTick();
-    // CARDRand();
-    return (CARDRand() | 0x7FEC0000) & ~(4096 - 1);
+    u32 tmp;
+    u32 tick;
+
+    tick = OSGetTick();
+    CARDSrand(tick);
+    tmp = 0x7FEC8000;
+    tmp |= CARDRand();
+    tmp &= 0xFFFFF000;
+    return tmp;
 }
 
-static u32 exnor(u32 data, u32 lshift)
+inline u32 exnor(u32 data, u32 lshift)
 {
     u32 wk;
     u32 w;
@@ -165,7 +162,8 @@ static s32 DummyLen(void)
 
     wk = 1;
     max = 0;
-    next = OSGetTick();
+    tick = OSGetTick();
+    CARDSrand(tick);
 
     tmp = CARDRand();
     tmp &= 0x0000001f;
@@ -179,7 +177,7 @@ static s32 DummyLen(void)
         {
             wk = 1;
         }
-        next = tmp;
+        CARDSrand((u32)tmp);
         tmp = CARDRand();
         tmp &= 0x0000001f;
         tmp += 1;
@@ -198,13 +196,14 @@ s32 __CARDUnlock(s32 chan, u8 flashID[12])
     u32 init_val;
     u32 data = 0;
 
-    s32 dummy;
-    s32 rlen;
-    u32 rshift;
+    s32 dummy = 1;
+    s32 rlen = 1;
+    u32 rshift = 1;
 
-    u8 fsts;
-    u32 wk, wk1;
-    u32 w;
+    u8 fsts = 0;
+    u32 wk = 1;
+    u32 wk1 = 1;
+    u32 w; // not this
     u32 i;
     u32 Ans1 = 0;
     u32 Ans2 = 0;
