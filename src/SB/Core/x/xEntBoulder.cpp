@@ -18,7 +18,7 @@
 
 #include <types.h>
 
-U32 sBubbleStreakID = 0xDEAD;
+static U32 sBubbleStreakID = 0xDEAD;
 
 extern xEntBoulder* boulderVehicle;
 static xEntCollis sBoulderCollis;
