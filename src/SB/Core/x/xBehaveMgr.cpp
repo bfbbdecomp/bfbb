@@ -243,21 +243,20 @@ S32 xPsyche::GoalPopToBase(S32 overpend)
     if (this->flg_psyche & 4)
     {
         return 0;
-	}
-	else if (this->staktop < 1)
+    }
+    else if (this->staktop < 1)
     {
         return 0;
     }
-	else
-	{
-		xPsyche::GoalPop(this->goalstak[0]->GetID(), overpend);
+    else
+    {
+        xPsyche::GoalPop(this->goalstak[0]->GetID(), overpend);
         if ((this->pendtype != PEND_TRAN_NONE) && ((this->flg_psyche & 1)))
         {
             this->ForceTran(0.01f, NULL);
-
         }
         return 1;
-	}
+    }
 }
 
 xGoal* xPsyche::GetCurGoal() const
@@ -296,12 +295,12 @@ S32 xPsyche::GIDOfPending() const
     }
 }
 
-xGoal* xPsyche::GetPrevRecovery(S32 gid)
+xGoal* xPsyche::GetPrevRecovery(S32 gid) const
 {
     S32 idx_start = -1;
     S32 i;
     xGoal* recgoal = NULL;
-	xGoal* tmpgoal = NULL;
+    xGoal* tmpgoal = NULL;
 
     if (gid == 0)
     {
@@ -311,7 +310,7 @@ xGoal* xPsyche::GetPrevRecovery(S32 gid)
             if (tmpgoal->GetFlags() & 8)
             {
                 recgoal = tmpgoal;
-				break;
+                break;
             }
         }
     }
@@ -333,7 +332,7 @@ xGoal* xPsyche::GetPrevRecovery(S32 gid)
                 if (tmpgoal->GetFlags() & 8)
                 {
                     recgoal = tmpgoal;
-					break;
+                    break;
                 }
             }
         }
@@ -355,7 +354,7 @@ F32 xPsyche::TimerGet(en_xpsytime tymr)
     {
         return -1.0f;
     }
-	return *(&this->tmr_stack[0][this->staktop] + tymr); // ...what?
+    return *(&this->tmr_stack[0][this->staktop] + tymr); // ...what?
 }
 
 void xPsyche::TimerClear()
@@ -364,8 +363,8 @@ void xPsyche::TimerClear()
     {
         return;
     }
-	// Missing unreachable branch here. Otherwise functionally identical.
-	this->tmr_stack[0][this->staktop] = 0.0f;
+    // Missing unreachable branch here. Otherwise functionally identical.
+    this->tmr_stack[0][this->staktop] = 0.0f;
 }
 
 void xPsyche::TimerUpdate(F32 dt)
@@ -373,9 +372,9 @@ void xPsyche::TimerUpdate(F32 dt)
     F32* p;
     if (this->staktop < 0)
     {
-		return;
+        return;
     }
 
-	p = &this->tmr_stack[0][this->staktop];
-	*p += dt;
+    p = &this->tmr_stack[0][this->staktop];
+    *p += dt;
 }
