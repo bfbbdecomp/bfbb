@@ -78,12 +78,14 @@ def sjiswrap_url(tag: str) -> str:
 
 
 def wibo_url(tag: str) -> str:
-    repo = "https://github.com/decompals/wibo"
-    return f"{repo}/releases/download/{tag}/wibo"
+    uname = platform.uname()
+    arch = uname.machine.lower()
+    system = uname.system.lower()
+    if system == "darwin":
+        arch = "macos"
 
-def ok_url(tag: str) -> str:
-    repo = "https://github.com/bfbbdecomp/OK"
-    return f"{repo}/releases/download/{tag}/OK-linux-x86_64"
+    repo = "https://github.com/decompals/wibo"
+    return f"{repo}/releases/download/{tag}/wibo-{arch}"
 
 
 TOOLS: Dict[str, Callable[[str], str]] = {
@@ -93,8 +95,8 @@ TOOLS: Dict[str, Callable[[str], str]] = {
     "objdiff-cli": objdiff_cli_url,
     "sjiswrap": sjiswrap_url,
     "wibo": wibo_url,
-    "OK": ok_url
 }
+
 
 def download(url, response, output) -> None:
     if url.endswith(".zip"):
@@ -111,6 +113,7 @@ def download(url, response, output) -> None:
             shutil.copyfileobj(response, f)
         st = os.stat(output)
         os.chmod(output, st.st_mode | stat.S_IEXEC)
+
 
 def main() -> None:
     parser = argparse.ArgumentParser()
@@ -133,12 +136,17 @@ def main() -> None:
         try:
             import certifi
             import ssl
-        except:
-            print("\"certifi\" module not found. Please install it using \"python -m pip install certifi\".")
+        except ImportError:
+            print(
+                '"certifi" module not found. Please install it using "python -m pip install certifi".'
+            )
             return
-            
-        with urllib.request.urlopen(req, context=ssl.create_default_context(cafile=certifi.where())) as response:
+
+        with urllib.request.urlopen(
+            req, context=ssl.create_default_context(cafile=certifi.where())
+        ) as response:
             download(url, response, output)
+
 
 if __name__ == "__main__":
     main()
