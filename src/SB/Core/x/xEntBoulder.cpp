@@ -45,14 +45,14 @@ void xEntBoulder_Render(xEnt* ent)
     xVec3 shadVec;
     F32 radius;
 
-    if ((model != NULL) && (xEntIsVisible(ent) != 0))
+    if ((model != NULL) && xEntIsVisible(ent))
     {
         switch (model->Flags & 0x400)
         {
             case 0:
                 if (ent->flags & 0x40)
                 {
-                    if (iModelCull(model->Data, model->Mat) == 0)
+                    if (!iModelCull(model->Data, model->Mat))
                     {
                         xModelRender(model);
                     }
@@ -63,12 +63,12 @@ void xEntBoulder_Render(xEnt* ent)
                     shadVec.y = model->Mat->pos.y - 10.0f;
                     shadVec.z = model->Mat->pos.z;
 
-                    if (iModelCullPlusShadow(model->Data, model->Mat, &shadVec, &shadowResult) == 0)
+                    if (!iModelCullPlusShadow(model->Data, model->Mat, &shadVec, &shadowResult))
                     {
                         xModelRender(model);
                     }
 
-                    if (shadowResult == 0)
+                    if (!shadowResult)
                     {
                         if (ent->flags & 0x10)
                         {
@@ -104,9 +104,9 @@ void xEntBoulder_Init(xEntBoulder* ent, xEntAsset* asset)
     xEntBoulderAsset* basset;
 
     xEntInit(ent, asset);
-    ent->collType = 4;
+    ent->collType = XENT_COLLTYPE_DYN;
     ent->collLev = 4;
-    ent->bound.type = 1;
+    ent->bound.type = XBOUND_TYPE_SPHERE;
     ent->moreFlags |= 0x10;
     zEntParseModelInfo(ent, asset->modelInfoID);
     xEntInitShadow(*ent, ent->entShadow_embedded);
@@ -118,13 +118,13 @@ void xEntBoulder_Init(xEntBoulder* ent, xEntAsset* asset)
     ent->collis = NULL;
     ent->basset = basset;
     ent->eventFunc = xEntBoulderEventCB;
-    ent->update = (void(*)(xEnt*, xScene*, F32))xEntBoulder_Update;
-    ent->bupdate = (void(*)(xEnt*, xVec3*))xEntBoulder_BUpdate;
+    ent->update = (xEntUpdateCallback)xEntBoulder_Update;
+    ent->bupdate = (xEntBoundUpdateCallback)xEntBoulder_BUpdate;
     ent->render = xEntBoulder_Render;
 
     if (ent->linkCount != 0)
     {
-        ent->link = (xLinkAsset *)((int)ent->asset + 0x9C); // TODO: Figure out the actual type.
+        ent->link = (xLinkAsset *)(&ent->asset[1]);
     }
     else
     {
@@ -144,8 +144,8 @@ void xEntBoulder_Init(xEntBoulder* ent, xEntAsset* asset)
     {
         ent->update = NULL;
         xEntHide(ent);
-        ent->chkby = 0;
-        ent->penby = 0;
+        ent->chkby = XENT_COLLTYPE_NONE;
+        ent->penby = XENT_COLLTYPE_NONE;
         ent->collis_chk = 0;
         ent->collis_pen = 0;
         globals.player.bubblebowl = ent;
@@ -333,9 +333,9 @@ void xEntBoulder_Update(xEntBoulder* ent, xScene* sc, F32 dt)
     zGridUpdateEnt(ent);
     zGooCollsBegin();
     xEntBeginUpdate(ent, sc, dt);
-    ent->collType = 0x10;
+    ent->collType = XENT_COLLTYPE_PLYR;
     xEntCollide(ent, sc, dt);
-    ent->collType = 0x04;
+    ent->collType = XENT_COLLTYPE_DYN;
     xEntEndUpdate(ent, sc, dt);
     zGooCollsEnd();
 
@@ -764,8 +764,8 @@ S32 xEntBoulder_KilledBySurface(xEntBoulder* ent, xScene* sc, F32 dt)
 
 void xEntBoulder_Kill(xEntBoulder* ent)
 {
-    ent->chkby = 0;
-    ent->penby = 0;
+    ent->chkby = XENT_COLLTYPE_NONE;
+    ent->penby = XENT_COLLTYPE_NONE;
     ent->collis_chk = 0;
     ent->collis_pen = 0;
     ent->update = NULL;
@@ -789,13 +789,13 @@ void xEntBoulder_BubbleBowl(F32 multiplier)
         return;
     }
 
-    if (ent->update == (void (*)(xEnt *, xScene *, F32))xEntBoulder_Update)
+    if (ent->update == (xEntUpdateCallback)xEntBoulder_Update)
     {
-        zEntEvent(ent, 0x25);
+        zEntEvent(ent, eEventKill);
     }
 
     xEntBoulder_Reset(ent, globals.sceneCur);
-    ent->update = (void (*)(xEnt *, xScene *, F32))xEntBoulder_Update;
+    ent->update = (xEntUpdateCallback)xEntBoulder_Update;
 
     if (sBubbleStreakID != 0xdead)
     {
@@ -873,8 +873,8 @@ void xEntBoulder_Setup(xEntBoulder* ent)
 
 void xEntBoulder_Reset(xEntBoulder* boul, xScene* sc)
 {
-    boul->chkby = 0x1c;
-    boul->penby = 0x10;
+    boul->chkby = XENT_COLLTYPE_PLYR | XENT_COLLTYPE_NPC | XENT_COLLTYPE_DYN;
+    boul->penby = XENT_COLLTYPE_PLYR;
     boul->collis_chk = 0x2e;
     boul->collis_pen = 0;
 
@@ -955,7 +955,7 @@ void xBoulderGenerator_Init(xBoulderGenerator* bg, xBoulderGeneratorAsset* asset
     xVec3Normalize(&bg->bgasset->initaxis, &bg->bgasset->initaxis);
 
     bg->lengthOfInitVel = xVec3Length(&bg->bgasset->initvel);
-    if (bg->lengthOfInitVel > 1e-05f)
+    if (bg->lengthOfInitVel > 1e-5f)
     {
         bg->perp1.x = bg->bgasset->initvel.z - bg->bgasset->initvel.y;
         bg->perp1.y = bg->bgasset->initvel.x - bg->bgasset->initvel.z;
@@ -1064,7 +1064,7 @@ void xBoulderGenerator_Launch(xBoulderGenerator* bg, xVec3* pnt, F32 t)
     {
         xEntBoulder_Reset(b, globals.sceneCur);
         zEntEvent(b, eEventBorn);
-        b->update = (void(*)(xEnt*, xScene*, F32))xEntBoulder_Update;
+        b->update = (xEntUpdateCallback)xEntBoulder_Update;
         if (bg->isMarker)
         {
             xVec3Copy((xVec3 *)(&b->model->Mat->pos), &((xMarkerAsset *)(bg->objectPtr))->pos);
