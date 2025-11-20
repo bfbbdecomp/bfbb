@@ -6,40 +6,23 @@
 
 #include <gx/__gx.h>
 
+// TODO: Fix Magic numbers in the GX_SET_REG calls
+// These are supposed to be enums
 void GXSetFog(GXFogType type, f32 startz, f32 endz, f32 nearz, f32 farz, GXColor color)
 {
-    u32 fogclr;
-    u32 fog0;
-    u32 fog1;
-    u32 fog2;
-    u32 fog3;
-    f32 A;
-    f32 B;
-    f32 B_mant;
-    f32 C;
-    f32 a;
-    f32 c;
-    u32 B_expn;
-    u32 b_m;
-    u32 b_s;
-    u32 a_hex;
-    u32 c_hex;
-    u32 fsel;
-    u32 proj;
-    u32 rgba;
+    f32 a, c;
+    u32 a_bits, c_bits;
 
-    fogclr = 0;
-    fog0 = 0;
-    fog1 = 0;
-    fog2 = 0;
-    fog3 = 0;
+    u32 fogColorReg = 0;
+    u32 fogParamReg0 = 0;
+    u32 fogParamReg1 = 0;
+    u32 fogParamReg2 = 0;
+    u32 fogParamReg3 = 0;
 
-    CHECK_GXBEGIN(138, "GXSetFog");
+    u32 fsel = type & 7;
+    BOOL isOrtho = (type >> 3) & 1;
 
-    fsel = type & 7;
-    proj = (type >> 3) & 1;
-
-    if (proj)
+    if (isOrtho)
     {
         if (farz == nearz || endz == startz)
         {
@@ -48,106 +31,111 @@ void GXSetFog(GXFogType type, f32 startz, f32 endz, f32 nearz, f32 farz, GXColor
         }
         else
         {
-            A = (1.0f / (endz - startz));
-            a = A * (farz - nearz);
-            c = A * (startz - nearz);
+            a = (1.0f / (endz - startz)) * (farz - nearz);
+            c = (1.0f / (endz - startz)) * (startz - nearz);
         }
     }
     else
     {
+        f32 tmpA, tmpB, tmpC;
+        u32 expB, magB, shiftB;
+
         if (farz == nearz || endz == startz)
         {
-            A = 0.0f;
-            B = 0.5f;
-            C = 0.0f;
+            tmpA = 0.0f;
+            tmpB = 0.5f;
+            tmpC = 0.0f;
         }
         else
         {
-            A = (farz * nearz) / ((farz - nearz) * (endz - startz));
-            B = farz / (farz - nearz);
-            C = startz / (endz - startz);
+            tmpA = (farz * nearz) / ((farz - nearz) * (endz - startz));
+            tmpB = farz / (farz - nearz);
+            tmpC = startz / (endz - startz);
         }
 
-        B_mant = B;
-        B_expn = 0;
-        while (B_mant > 1.0)
+        expB = 0;
+        while (tmpB > 1.0)
         {
-            B_mant /= 2.0f;
-            B_expn++;
+            tmpB /= 2.0f;
+            expB++;
         }
-        while (B_mant > 0.0f && B_mant < 0.5)
+        while (tmpB > 0.0f && tmpB < 0.5)
         {
-            B_mant *= 2.0f;
-            B_expn--;
+            tmpB *= 2.0f;
+            expB--;
         }
 
-        a = A / (f32)(1 << (B_expn + 1));
-        b_m = 8.388638e6f * B_mant;
-        b_s = B_expn + 1;
-        c = C;
+        a = tmpA / (1 << expB + 1);
+        magB = 8388638.0f * tmpB;
+        shiftB = expB + 1;
+        c = tmpC;
 
-        SET_REG_FIELD(198, fog1, 24, 0, b_m);
-        SET_REG_FIELD(198, fog1, 8, 24, 0xEF);
+        GX_SET_REG(fogParamReg1, magB, 8, 31);
+        GX_SET_REG(fogParamReg2, shiftB, 27, 31);
 
-        SET_REG_FIELD(201, fog2, 5, 0, b_s);
-        SET_REG_FIELD(201, fog2, 8, 24, 0xF0);
+        GX_SET_REG(fogParamReg1, 0xEF, 0, 7);
+        GX_SET_REG(fogParamReg2, 0xF0, 0, 7);
     }
 
-    a_hex = *(u32*)&a;
-    c_hex = *(u32*)&c;
+    a_bits = *(u32*)&a;
+    c_bits = *(u32*)&c;
 
-    SET_REG_FIELD(209, fog0, 11, 0, (a_hex >> 12) & 0x7FF);
-    SET_REG_FIELD(210, fog0, 8, 11, (a_hex >> 23) & 0xFF);
-    SET_REG_FIELD(211, fog0, 1, 19, (a_hex >> 31));
-    SET_REG_FIELD(211, fog0, 8, 24, 0xEE);
+    GX_SET_REG(fogParamReg0, a_bits >> 12, 21, 31);
+    GX_SET_REG(fogParamReg0, a_bits >> 23, 13, 20);
+    GX_SET_REG(fogParamReg0, a_bits >> 31, 12, 12);
 
-    SET_REG_FIELD(214, fog3, 11, 0, (c_hex >> 12) & 0x7FF);
-    SET_REG_FIELD(215, fog3, 8, 11, (c_hex >> 23) & 0xFF);
-    SET_REG_FIELD(216, fog3, 1, 19, (c_hex >> 31));
+    GX_SET_REG(fogParamReg0, 0xEE, 0, 7);
 
-    SET_REG_FIELD(217, fog3, 1, 20, proj);
-    SET_REG_FIELD(218, fog3, 3, 21, fsel);
-    SET_REG_FIELD(218, fog3, 8, 24, 0xF1);
+    GX_SET_REG(fogParamReg3, c_bits >> 12, 21, 31);
+    GX_SET_REG(fogParamReg3, c_bits >> 23, 13, 20);
+    GX_SET_REG(fogParamReg3, c_bits >> 31, 12, 12);
 
-    rgba = *(u32*)&color;
-    SET_REG_FIELD(222, fogclr, 24, 0, rgba >> 8);
-    SET_REG_FIELD(222, fogclr, 8, 24, 0xF2);
+    GX_SET_REG(fogParamReg3, isOrtho, 11, 11);
+    GX_SET_REG(fogParamReg3, fsel, 8, 10);
 
-    GX_WRITE_RAS_REG(fog0);
-    GX_WRITE_RAS_REG(fog1);
-    GX_WRITE_RAS_REG(fog2);
-    GX_WRITE_RAS_REG(fog3);
-    GX_WRITE_RAS_REG(fogclr);
+    GX_SET_REG(fogParamReg3, 0xF1, 0, 7);
 
-    __GXData->bpSentNot = 0;
+    GX_SET_REG(fogColorReg, color.b, 8 + 16, 31);
+    GX_SET_REG(fogColorReg, color.g, (8 + 8), (31 - 8));
+    GX_SET_REG(fogColorReg, color.r, (8 + 0), (31 - 16));
+    GX_SET_REG(fogColorReg, 0xF2, 0, 7);
+
+    GX_BP_LOAD_REG(fogParamReg0);
+    GX_BP_LOAD_REG(fogParamReg1);
+    GX_BP_LOAD_REG(fogParamReg2);
+    GX_BP_LOAD_REG(fogParamReg3);
+    GX_BP_LOAD_REG(fogColorReg);
+
+    __GXData->bpSentNot = GX_FALSE;
 }
 
+// TODO: Fix Magic numbers in the GX_SET_REG calls
+// These are supposed to be enums
 void GXSetFogRangeAdj(GXBool enable, u16 center, GXFogAdjTable* table)
 {
+    u32 fogRangeReg;
+    u32 fogRangeRegK;
     u32 i;
-    u32 range_adj;
-    u32 range_c;
-
-    CHECK_GXBEGIN(331, "GXSetFogRangeAdj");
 
     if (enable)
     {
-        for (i = 0; i < 10; i += 2)
+        for (i = 0; i < ARRAY_SIZE(table->fogVals); i += 2)
         {
-            range_adj = 0;
-            // complains about r
-            // SET_REG_FIELD(338, range_adj, 12, 0, table->r[i]);
-            // SET_REG_FIELD(339, range_adj, 12, 12, table->r[i + 1]);
-            SET_REG_FIELD(340, range_adj, 8, 24, (i >> 1) + 0xE9);
-            GX_WRITE_RAS_REG(range_adj);
+            fogRangeRegK = 0;
+            GX_SET_REG(fogRangeRegK, table->fogVals[i], 20, 31);
+            GX_SET_REG(fogRangeRegK, table->fogVals[i + 1], 8, 19);
+            GX_SET_REG(fogRangeRegK, 0xE9 + (i / 2), 0, 7);
+            GX_BP_LOAD_REG(fogRangeRegK);
         }
     }
-    range_c = 0;
-    SET_REG_FIELD(346, range_c, 10, 0, center + 342);
-    SET_REG_FIELD(347, range_c, 1, 10, enable);
-    SET_REG_FIELD(348, range_c, 8, 24, 0xE8);
-    GX_WRITE_RAS_REG(range_c);
-    __GXData->bpSentNot = 0;
+
+    fogRangeReg = 0;
+    GX_SET_REG(fogRangeReg, center + 342, 22, 31);
+    GX_SET_REG(fogRangeReg, enable, 21, 21);
+    GX_SET_REG(fogRangeReg, 0xE8, 0, 7);
+    GX_BP_LOAD_REG(fogRangeReg);
+
+    __GXData->bpSentNot = GX_FALSE;
 }
 
 void GXSetBlendMode(GXBlendMode type, GXBlendFactor src_factor, GXBlendFactor dst_factor,

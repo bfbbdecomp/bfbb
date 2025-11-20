@@ -20,8 +20,8 @@ extern void InitMetroTRK();
 u16 Pad3Button : PAD3_BUTTON_ADDR;
 static u8 Debug_BBA = 0;
 
-extern void memset(void *, int, int);
-extern int main(int argc, char *argv[]);
+extern void memset(void*, int, int);
+extern int main(int argc, char* argv[]);
 extern void exit(int);
 extern void __init_user(void);
 extern void OSInit(void);
@@ -37,7 +37,9 @@ __declspec(section ".init") extern void __start(void);
 __declspec(section ".init") extern void __init_registers(void);
 __declspec(section ".init") extern void __init_data(void);
 __declspec(section ".init") extern void __init_hardware(void);
-__declspec(section ".init") extern void __flush_cache(void *address, unsigned int size);
+__declspec(section ".init") extern void __flush_cache(void* address, unsigned int size);
+
+__declspec(weak) void InitMetroTRK_BBA();
 
 __declspec(section ".init") extern char _stack_addr[];
 __declspec(section ".init") extern char _SDA_BASE_[];
