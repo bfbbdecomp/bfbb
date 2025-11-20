@@ -1,22 +1,9 @@
-#include "zNPCTypeDuplotron.h"
-#include "rwplcore.h"
-#include "xEvent.h"
-#include "xFactory.h"
 #include "xGroup.h"
 #include "xMathInlines.h"
-#include "zBase.h"
 #include "zGlobals.h"
-#include "zMovePoint.h"
 #include "zNPCGoalCommon.h"
-#include "zNPCGoals.h"
-#include "zNPCSpawner.h"
 #include "zNPCSupport.h"
-#include "zNPCTypeCommon.h"
-#include "zNPCTypes.h"
-#include "xMath3.h"
-
-#include "xstransvc.h"
-#include "zScene.h"
+#include "zNPCTypeDuplotron.h"
 
 #define ANIM_Unknown 0
 #define ANIM_Idle01 1
@@ -42,7 +29,7 @@ void __deadstripped_zNPCTypeDuplotron()
 
 void ZNPC_Duplotron_Startup()
 {
-    for (int i = 0; i < 5; i++)
+    for (S32 i = 0; i < 5; i++)
     {
         g_hash_dupoanim[i] = xStrHash(g_strz_dupoanim[i]);
     }
@@ -617,8 +604,6 @@ void zNPCDuplotron::VFXCycleLights(F32 dt, S32 fastpace)
 
     return;
 }
-
-// .text (68)
 
 zNPCDuplotron::zNPCDuplotron(S32 myType) : zNPCCommon(myType)
 {
