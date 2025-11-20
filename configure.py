@@ -239,6 +239,17 @@ cflags_dolphin = [
     #"-requireprotos"
 ]
 
+cflags_trk = [
+    *cflags_base,
+    "-O4,p",
+            "-sdata 0",
+            "-sdata2 0",
+            "-inline auto,deferred",
+            "-rostr",
+            "-char signed",
+            "-use_lmw_stmw on"
+]
+
 # Renderware library flags
 cflags_renderware = [
     *cflags_base,
@@ -652,7 +663,7 @@ config.libs = [
         "card",
         [
             Object(Matching, "dolphin/src/card/CARDBios.c"),
-            Object(NonMatching, "dolphin/src/card/CARDUnlock.c"),
+            Object(Matching, "dolphin/src/card/CARDUnlock.c"),
             Object(Matching, "dolphin/src/card/CARDRdwr.c"),
             Object(Matching, "dolphin/src/card/CARDBlock.c"),
             Object(Matching, "dolphin/src/card/CARDDir.c"),
@@ -792,7 +803,7 @@ config.libs = [
         "Runtime.PPCEABI.H",
         [],
         [
-            Object(NonMatching, "Runtime/__mem.c"),
+            Object(NonMatching, "Runtime/__mem.c", extra_cflags=["-inline on, deferred"]),
             Object(Matching, "Runtime/__va_arg.c"),
             Object(NonMatching, "Runtime/global_destructor_chain.c"),
             Object(NonMatching, "Runtime/New.cp"),
@@ -896,9 +907,9 @@ config.libs = [
             Object(NonMatching, "debugger/embedded/MetroTRK/Portable/mem_TRK.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Portable/string_TRK.c"),
             Object(Matching, "debugger/embedded/MetroTRK/Processor/ppc/Generic/flush_cache.c"),
-            #Object(NonMatching, "debugger/embedded/MetroTRK/Processor/ppc/Generic/__exception.s"),
+            Object(NonMatching, "debugger/embedded/MetroTRK/Processor/ppc/Generic/__exception.s"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Processor/ppc/Generic/targimpl.c"),
-            #Object(NonMatching, "debugger/embedded/MetroTRK/Processor/ppc/Export/targsupp.s"),
+            Object(Matching, "debugger/embedded/MetroTRK/Processor/ppc/Export/targsupp.s"),
             Object(Matching, "debugger/embedded/MetroTRK/Processor/ppc/Generic/mpc_7xx_603e.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Os/dolphin/dolphin_trk.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Os/dolphin/usr_put.c"),
