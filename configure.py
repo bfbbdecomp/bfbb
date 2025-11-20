@@ -103,6 +103,12 @@ parser.add_argument(
     help="path to sjiswrap.exe (optional)",
 )
 parser.add_argument(
+    "--ninja",
+    metavar="BINARY",
+    type=Path,
+    help="path to ninja binary (optional)",
+)
+parser.add_argument(
     "--verbose",
     action="store_true",
     help="print verbose output",
@@ -112,6 +118,13 @@ parser.add_argument(
     dest="non_matching",
     action="store_true",
     help="builds equivalent (but non-matching) or modded objects",
+)
+parser.add_argument(
+    "--warn",
+    dest="warn",
+    type=str,
+    choices=["all", "off", "error"],
+    help="how to handle warnings",
 )
 parser.add_argument(
     "--no-progress",
@@ -134,6 +147,7 @@ config.compilers_path = args.compilers
 config.generate_map = args.map
 config.non_matching = args.non_matching
 config.sjiswrap_path = args.sjiswrap
+config.ninja_path = args.ninja
 config.progress = args.progress
 if not is_windows():
     config.wrapper = args.wrapper
@@ -143,14 +157,13 @@ if not config.non_matching:
 
 # Tool versions
 config.binutils_tag = "2.42-1"
-config.compilers_tag = "20240706"
-config.dtk_tag = "v1.4.1"
-config.objdiff_tag = "v3.3.1"
-config.sjiswrap_tag = "v1.2.0"
-config.wibo_tag = "0.6.11"
+config.compilers_tag = "20250812"
+config.dtk_tag = "v1.7.0"
+config.objdiff_tag = "v3.4.1"
+config.sjiswrap_tag = "v1.2.2"
+config.wibo_tag = "1.0.0-beta.5"
 
 # Project
-config.shift_jis = False
 config.config_path = Path("config") / config.version / "config.yml"
 config.check_sha_path = Path("config") / config.version / "build.sha1"
 config.asflags = [
@@ -159,7 +172,6 @@ config.asflags = [
     "-I include",
     f"-I build/{config.version}/include",
     f"--defsym BUILD_VERSION={version_num}",
-    f"--defsym VERSION_={config.version}",
 ]
 config.ldflags = [
     "-fp hardware",
@@ -216,6 +228,14 @@ if args.debug:
 else:
     cflags_base.append("-DNDEBUG=1")
 
+    # Warning flags
+if args.warn == "all":
+    cflags_base.append("-W all")
+elif args.warn == "off":
+    cflags_base.append("-W off")
+elif args.warn == "error":
+    cflags_base.append("-W error")
+
 # Metrowerks library flags
 cflags_runtime = [
     *cflags_base,
@@ -237,6 +257,33 @@ cflags_dolphin = [
     "-common off",
     "-O4,p",
     #"-requireprotos"
+]
+
+cflags_trk = [
+    *cflags_base,
+    "-O4,p",
+            "-sdata 0",
+            "-sdata2 0",
+            "-inline auto,deferred",
+            "-rostr",
+            "-char signed",
+            "-use_lmw_stmw on"
+]
+
+# Bink was compiled with ProDG
+cflags_bink = [
+    "-O3",
+    "-mcpu=750",
+    "-fno-exceptions",
+    "-Wno-inline",
+    "-nostdinc",
+    "-I src/dolphin/src",
+    "-I include",
+    "-I src/dolphin/include",
+    "-D__GEKKO__",
+    "-I src/bink/include",
+    "-I src/PowerPC_EABI_Support/include",
+    "-G0",
 ]
 
 # Renderware library flags
@@ -587,8 +634,8 @@ config.libs = [
     },
     {
         "lib": "binkngc",
-        "mw_version": "GC/1.3.2",
-        "cflags": cflags_runtime,
+        "mw_version": "ProDG/3.5",
+        "cflags": cflags_bink,
         "progress_category": "bink",
         "objects": [
             Object(NonMatching, "bink/src/sdk/decode/ngc/binkngc.c"),
