@@ -10,17 +10,27 @@ struct zNPCDuplotron : zNPCCommon
     F32 tmr_blink;
     S32 idx_blink;
 
+    static RwRaster* rast_blinky;
+
     zNPCDuplotron(S32 myType);
 
+    void Init(xEntAsset* asset);
+    void Setup();
+    void ParseINI();
+    void Reset();
+    void ParseLinks();
+    void BUpdate(xVec3*);
+    void ParseChild(xBase* child);
+    void Process(xScene* xscn, F32 dt);
     void SelfSetup();
+    U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal*);
+    void DuploNotice(en_SM_NOTICES note, void* data);
     S32 IsAlive();
+    S32 NPCMessage(NPCMsg* mail);
+    S32 DupoHandleMail(NPCMsg* mail);
     void VFXSmokeStack(F32 dt);
     void VFXOverheat(F32 dt, F32);
     void VFXCycleLights(F32 dt, S32 fastpace);
-    void ParseINI();
-    void Reset();
-    void BUpdate(xVec3*);
-    void Process(xScene*, float);
 
     // zNPCTypeCommon overrides
     void Move(xScene*, F32 dt, xEntFrame*);
