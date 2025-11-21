@@ -5,6 +5,10 @@
 
 #include <gx/__gx.h>
 
+static __GXFifoObj* CPUFifo;
+static __GXFifoObj* GPFifo;
+void* __GXCurrentBP;
+
 static OSThread* __GXCurrentThread;
 static GXBool CPGPLinked;
 static BOOL GXOverflowSuspendInProgress;
@@ -14,10 +18,6 @@ static u32 __GXOverflowCount;
 #if DEBUG
 static BOOL IsWGPipeRedirected;
 #endif
-
-__GXFifoObj* CPUFifo;
-__GXFifoObj* GPFifo;
-void* __GXCurrentBP;
 
 static void __GXFifoReadEnable(void);
 static void __GXFifoReadDisable(void);

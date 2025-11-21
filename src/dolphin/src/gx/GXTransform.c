@@ -448,9 +448,6 @@ void GXSetClipMode(GXClipMode mode)
 
 void __GXSetMatrixIndex(GXAttr matIdxAttr)
 {
-    // Function should be equivalent, but there seems to be a reg issue.
-    // The "__GXData->matIdxA" shouldn't show up twice in asm
-    // But it is for some reason.
     if (matIdxAttr < GX_VA_TEX4MTXIDX)
     {
         GX_WRITE_SOME_REG4(8, 0x30, __GXData->matIdxA, -12);

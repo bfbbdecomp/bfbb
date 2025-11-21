@@ -68,7 +68,7 @@ void __GXSendFlushPrim(void)
     u32 numD = __GXData->vNum * __GXData->vLim;
 
     GX_WRITE_U8(0x98);
-    // GX_WRITE_U16(__GXData->vNum);
+    GX_WRITE_U16(__GXData->vNum);
     for (i = 0; i < numD; i += 4)
     {
         GX_WRITE_U32(0);
@@ -85,14 +85,6 @@ void GXSetLineWidth(u8 width, GXTexOffset texOffsets)
     __GXData->bpSentNot = 0;
 }
 
-void GXGetLineWidth(u8* width, GXTexOffset* texOffsets)
-{
-    ASSERTMSGLINE(463, width != NULL && texOffsets != NULL, "GXGet*: invalid null pointer");
-
-    *width = GET_REG_FIELD(__GXData->lpSize, 8, 0);
-    *texOffsets = GET_REG_FIELD(__GXData->lpSize, 3, 16);
-}
-
 void GXSetPointSize(u8 pointSize, GXTexOffset texOffsets)
 {
     CHECK_GXBEGIN(484, "GXSetPointSize");
@@ -100,14 +92,6 @@ void GXSetPointSize(u8 pointSize, GXTexOffset texOffsets)
     SET_REG_FIELD(486, __GXData->lpSize, 3, 19, texOffsets);
     GX_WRITE_RAS_REG(__GXData->lpSize);
     __GXData->bpSentNot = 0;
-}
-
-void GXGetPointSize(u8* pointSize, GXTexOffset* texOffsets)
-{
-    ASSERTMSGLINE(507, pointSize != NULL && texOffsets != NULL, "GXGet*: invalid null pointer");
-
-    *pointSize = (int)GET_REG_FIELD(__GXData->lpSize, 8, 8);
-    *texOffsets = GET_REG_FIELD(__GXData->lpSize, 3, 19);
 }
 
 void GXEnableTexOffsets(GXTexCoordID coord, u8 line_enable, u8 point_enable)
