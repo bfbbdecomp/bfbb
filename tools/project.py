@@ -1063,7 +1063,13 @@ def generate_build_ninja(
 
         # Check if all compiler versions exist
         for mw_version in used_compiler_versions:
-            mw_path = compilers / mw_version / "mwcceppc.exe"
+            compiler_version_info = mw_version.split("/")
+            executable_name = {
+                "GC": "mwcceppc.exe",
+                "ProDG": "ngccc.exe",
+            }.get(compiler_version_info[0] if compiler_version_info else "GC")
+            
+            mw_path = compilers / mw_version / executable_name
             if config.compilers_path and not os.path.exists(mw_path):
                 sys.exit(f"Compiler {mw_path} does not exist")
 
