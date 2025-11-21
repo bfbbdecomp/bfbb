@@ -283,7 +283,7 @@ cflags_bink = [
     "-D__GEKKO__",
     "-I src/bink/include",
     "-I src/PowerPC_EABI_Support/include",
-    "-G0",
+    "-G4",
 ]
 
 # Renderware library flags
