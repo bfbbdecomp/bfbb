@@ -15,9 +15,19 @@ template <class T> struct basic_rect
 
     basic_rect& assign(T x, T y, T w, T h);
     basic_rect& contract(T s);
-    basic_rect& contract(T x, T y, T w, T h);
+    basic_rect& contract(T x, T y, T w, T h)
+    {
+        return expand(-x, -y, -w, -h);
+    }
     basic_rect& expand(T s);
-    basic_rect& expand(T x, T y, T w, T h);
+    basic_rect& expand(T x, T y, T w, T h)
+    {
+        this->x -= x;
+        this->w += x + w;
+        this->y -= y;
+        this->h += y + h;
+        return *this;
+    }
     basic_rect& move(T x, T y);
     basic_rect& scale(T s);
     basic_rect& scale(T x, T y);
@@ -40,7 +50,7 @@ struct xVec2
 
     xVec2& assign(F32 xy)
     {
-        return assign(xy,xy);
+        return assign(xy, xy);
     }
     xVec2& assign(F32 x, F32 y);
     F32 length() const;

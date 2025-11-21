@@ -99,7 +99,5 @@ void xDebugAddTweak(const char*, F32*, F32, F32, const tweak_callback*, void*, U
 void xDebugRemoveTweak(const char*);
 void xDebugUpdate();
 
-F32 NSCREENY(F32 scale);
-F32 NSCREENX(F32 scale);
 
 #endif
