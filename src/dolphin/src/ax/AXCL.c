@@ -27,11 +27,11 @@ u32 __AXGetCommandListAddress(void)
     return address;
 }
 
-// void __AXWriteToCommandList(u16 data)
-// {
-//     *__AXClWrite = data;
-//     __AXClWrite++;
-// }
+inline void __AXWriteToCommandList(u16 data)
+{
+    *__AXClWrite = data;
+    __AXClWrite++;
+}
 
 void __AXNextFrame(void* sbuffer, void* buffer)
 {
@@ -41,100 +41,69 @@ void __AXNextFrame(void* sbuffer, void* buffer)
     __AXCommandListCycles = 0x1A9;
     pCommandList = __AXClWrite;
     data = __AXGetStudio();
-    *__AXClWrite = data;
-    __AXClWrite++;
-    *__AXClWrite = data;
-    __AXClWrite++;
-    *__AXClWrite = data;
-    __AXClWrite++;
+    __AXWriteToCommandList(0);
+    __AXWriteToCommandList((u16)(data >> 0x10));
+    __AXWriteToCommandList((u16)(data));
     __AXCommandListCycles += 0x2E44;
 
     switch (__AXClMode)
     {
     case 0:
-        *__AXClWrite = data;
-        __AXClWrite++;
-        *__AXClWrite = data;
-        __AXClWrite++;
-        *__AXClWrite = data;
-        __AXClWrite++;
+        __AXWriteToCommandList(7);
+        __AXWriteToCommandList((u16)((u32)sbuffer >> 0x10));
+        __AXWriteToCommandList((u32)sbuffer);
         __AXCommandListCycles += 0x546;
         break;
     case 1:
-        *__AXClWrite = data;
-        __AXClWrite++;
-        *__AXClWrite = data;
-        __AXClWrite++;
-        *__AXClWrite = data;
-        __AXClWrite++;
+        __AXWriteToCommandList(0x11);
+        __AXWriteToCommandList((u16)((u32)sbuffer >> 0x10));
+        __AXWriteToCommandList((u32)sbuffer);
         __AXCommandListCycles += 0x5E6;
         break;
     case 2:
         break;
     default:
-        return;
+        break;
     }
 
     data = (u32)__AXGetPBs();
-    *__AXClWrite = data;
-    __AXClWrite++;
-    *__AXClWrite = data;
-    __AXClWrite++;
-    *__AXClWrite = data;
-    __AXClWrite++;
-    *__AXClWrite = data;
-    __AXClWrite++;
+    __AXWriteToCommandList(2);
+    __AXWriteToCommandList((u16)(data >> 0x10));
+    __AXWriteToCommandList((u16)data);
+    __AXWriteToCommandList(3);
 
     if (__AXClMode == 2)
     {
         __AXGetAuxAInput(&data);
         if (data != 0)
         {
-            *__AXClWrite = data;
-            __AXClWrite++;
-            *__AXClWrite = data;
-            __AXClWrite++;
-            *__AXClWrite = data;
-            __AXClWrite++;
+            __AXWriteToCommandList(0x13);
+            __AXWriteToCommandList(data >> 0x10);
+            __AXWriteToCommandList((u16)data);
             __AXGetAuxAInputDpl2(&data);
-            *__AXClWrite = data;
-            __AXClWrite++;
-            *__AXClWrite = data;
-            __AXClWrite++;
+            __AXWriteToCommandList(data >> 0x10);
+            __AXWriteToCommandList((u16)data);
             __AXGetAuxAOutput(&data);
-            *__AXClWrite = data;
-            __AXClWrite++;
-            *__AXClWrite = data;
-            __AXClWrite++;
+            __AXWriteToCommandList(data >> 0x10);
+            __AXWriteToCommandList((u16)data);
             __AXGetAuxAOutputDpl2R(&data);
-            *__AXClWrite = data;
-            __AXClWrite++;
-            *__AXClWrite = data;
-            __AXClWrite++;
+            __AXWriteToCommandList(data >> 0x10);
+            __AXWriteToCommandList((u16)data);
             __AXGetAuxAOutputDpl2Ls(&data);
-            *__AXClWrite = data;
-            __AXClWrite++;
-            *__AXClWrite = data;
-            __AXClWrite++;
+            __AXWriteToCommandList(data >> 0x10);
+            __AXWriteToCommandList((u16)data);
             __AXGetAuxAOutputDpl2Rs(&data);
-            *__AXClWrite = data;
-            __AXClWrite++;
-            *__AXClWrite = data;
-            __AXClWrite++;
+            __AXWriteToCommandList(data >> 0x10);
+            __AXWriteToCommandList((u16)data);
             __AXCommandListCycles += 0xDED;
         }
-        *__AXClWrite = data;
-        __AXClWrite++;
+        __AXWriteToCommandList(0x10);
         __AXGetAuxBForDPL2(&data);
-        *__AXClWrite = data;
-        __AXClWrite++;
-        *__AXClWrite = data;
-        __AXClWrite++;
+        __AXWriteToCommandList(data >> 0x10);
+        __AXWriteToCommandList((u16)data);
         __AXGetAuxBOutputDPL2(&data);
-        *__AXClWrite = data;
-        __AXClWrite++;
-        *__AXClWrite = data;
-        __AXClWrite++;
+        __AXWriteToCommandList(data >> 0x10);
+        __AXWriteToCommandList((u16)data);
         __AXCommandListCycles += 0xDED;
     }
     else
@@ -143,66 +112,45 @@ void __AXNextFrame(void* sbuffer, void* buffer)
 
         if (data != 0)
         {
-            *__AXClWrite = data;
-            __AXClWrite++;
-            *__AXClWrite = data;
-            __AXClWrite++;
-            *__AXClWrite = data;
-            __AXClWrite++;
+            __AXWriteToCommandList(4);
+            __AXWriteToCommandList((u16)(data >> 0x10));
+            __AXWriteToCommandList((u16)data);
             __AXGetAuxAOutput(&data);
-            *__AXClWrite = data;
-            __AXClWrite++;
-            *__AXClWrite = data;
-            __AXClWrite++;
+            __AXWriteToCommandList((u16)(data >> 0x10));
+            __AXWriteToCommandList((u16)data);
             __AXCommandListCycles += 0xDED;
         }
 
         __AXGetAuxBInput(&data);
         if (data != 0)
         {
-            *__AXClWrite = data;
-            __AXClWrite++;
+            __AXWriteToCommandList(5);
             __AXCommandListCycles += 0xDED;
-            *__AXClWrite = data;
-            __AXClWrite++;
-            *__AXClWrite = data;
-            __AXClWrite++;
+            __AXWriteToCommandList((u16)(data >> 0x10));
+            __AXWriteToCommandList((u16)data);
             __AXGetAuxBOutput(&data);
-            *__AXClWrite = data;
-            __AXClWrite++;
-            *__AXClWrite = data;
-            __AXClWrite++;
+            __AXWriteToCommandList((u16)(data >> 0x10));
+            __AXWriteToCommandList((u16)data);
         }
     }
 
     if (__AXCompressor)
     {
-        *__AXClWrite = data;
-        __AXClWrite++;
-        *__AXClWrite = data;
-        __AXClWrite++;
-        *__AXClWrite = data;
-        __AXClWrite++;
-        *__AXClWrite = data;
-        __AXClWrite++;
-        *__AXClWrite = data;
-        __AXClWrite++;
+        __AXWriteToCommandList(0x12);
+        __AXWriteToCommandList(0x8000);
+        __AXWriteToCommandList(0xA);
+        __AXWriteToCommandList((u32)__AXCompressorTable >> 0x10);
+        __AXWriteToCommandList((u32)__AXCompressorTable);
         __AXCommandListCycles += 0xBB8;
     }
 
-    *__AXClWrite = data;
-    __AXClWrite++;
-    *__AXClWrite = data;
-    __AXClWrite++;
-    *__AXClWrite = data;
-    __AXClWrite++;
-    *__AXClWrite = data;
-    __AXClWrite++;
-    *__AXClWrite = data;
-    __AXClWrite++;
+    __AXWriteToCommandList(0xE);
+    __AXWriteToCommandList((u16)((u32)sbuffer >> 0x10));
+    __AXWriteToCommandList((u32)sbuffer);
+    __AXWriteToCommandList((u16)((u32)buffer >> 0x10));
+    __AXWriteToCommandList((u32)buffer);
     __AXCommandListCycles += 0x2710;
-    *__AXClWrite = data;
-    __AXClWrite++;
+    __AXWriteToCommandList(0xF);
     __AXCommandListCycles += 2;
     DCFlushRange(pCommandList, 0x300);
 }

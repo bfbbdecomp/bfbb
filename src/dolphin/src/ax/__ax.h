@@ -64,4 +64,6 @@ void __AXSetPBDefault(AXVPB* p);
 void __AXVPBInit(void);
 void __AXVPBQuit(void);
 
+extern u16 __AXCompressorTable[3360];
+
 #endif // _DOLPHIN_AX_INTERNAL_H_

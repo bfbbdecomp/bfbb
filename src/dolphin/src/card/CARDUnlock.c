@@ -44,28 +44,25 @@ inline int CARDRand(void)
     return (int)((unsigned int)(next / 65536) % 32768);
 }
 
-// static u32 GetInitVal(void)
-// {
-//     u32 tmp = 0;
-//     u32 tick;
-
-//     tick = OSGetTick();
-//     next = tmp;
-//     tmp = 0x7fec8000;
-//     tmp |= CARDRand();
-//     tmp &= 0xfffff000;
-//     return tmp;
-// }
+inline void CARDSrand(uint seed)
+{
+    next = seed;
+}
 
 inline u32 GetInitVal(void)
 {
-    // OSTick tick = OSGetTick();
-    next = OSGetTick();
-    // CARDRand();
-    return (CARDRand() | 0x7FEC0000) & ~(4096 - 1);
+    u32 tmp;
+    u32 tick;
+
+    tick = OSGetTick();
+    CARDSrand(tick);
+    tmp = 0x7FEC8000;
+    tmp |= CARDRand();
+    tmp &= 0xFFFFF000;
+    return tmp;
 }
 
-static u32 exnor(u32 data, u32 lshift)
+inline u32 exnor(u32 data, u32 lshift)
 {
     u32 wk;
     u32 w;
@@ -165,7 +162,8 @@ static s32 DummyLen(void)
 
     wk = 1;
     max = 0;
-    next = OSGetTick();
+    tick = OSGetTick();
+    CARDSrand(tick);
 
     tmp = CARDRand();
     tmp &= 0x0000001f;
@@ -179,7 +177,7 @@ static s32 DummyLen(void)
         {
             wk = 1;
         }
-        next = tmp;
+        CARDSrand((u32)tmp);
         tmp = CARDRand();
         tmp &= 0x0000001f;
         tmp += 1;
@@ -193,10 +191,22 @@ static s32 DummyLen(void)
     return tmp;
 }
 
+#define DATA_SCRAMBLE_R(data) (~(data ^ (data >> 7) ^ (data >> 15) ^ (data >> 23)))
+
+static inline u32 exnor_1st(u32 data, u32 rshift)
+{
+    u32 i = 0;
+    for (; i < rshift; ++i)
+    {
+        data = (data >> 1) | (DATA_SCRAMBLE_R(data) << 30) & 0x40000000;
+    }
+    return data;
+}
+
 s32 __CARDUnlock(s32 chan, u8 flashID[12])
 {
     u32 init_val;
-    u32 data = 0;
+    u32 data;
 
     s32 dummy;
     s32 rlen;
@@ -204,12 +214,10 @@ s32 __CARDUnlock(s32 chan, u8 flashID[12])
 
     u8 fsts;
     u32 wk, wk1;
-    u32 w;
-    u32 i;
+    u8 rbuf[72];
     u32 Ans1 = 0;
     u32 Ans2 = 0;
     u32* dp;
-    u8 rbuf[64];
     u32 para1A = 0;
     u32 para1B = 0;
     u32 para2A = 0;
@@ -233,29 +241,22 @@ s32 __CARDUnlock(s32 chan, u8 flashID[12])
 
     dummy = DummyLen();
     rlen = dummy;
+
     if (ReadArrayUnlock(chan, init_val, rbuf, rlen, 0) < 0)
-    {
         return CARD_RESULT_NOCARD;
-    }
 
     rshift = (u32)(dummy * 8 + 1);
-    wk = data;
-    for (i = 0; i < rshift; i++)
-    {
-        wk = ~(w ^ (w >> 7) ^ (w >> 15) ^ (w >> 23));
-        w = (w >> 1) | ((wk << 30) & 0x40000000);
-    }
-
+    wk = exnor_1st(init_val, rshift);
     wk1 = ~(wk ^ (wk >> 7) ^ (wk >> 15) ^ (wk >> 23));
     card->scramble = (wk | ((wk1 << 31) & 0x80000000));
     card->scramble = bitrev(card->scramble);
     dummy = DummyLen();
     rlen = 20 + dummy;
     data = 0;
+
     if (ReadArrayUnlock(chan, data, rbuf, rlen, 1) < 0)
-    {
         return CARD_RESULT_NOCARD;
-    }
+
     dp = (u32*)rbuf;
     para1A = *dp++;
     para1B = *dp++;
@@ -322,7 +323,6 @@ s32 __CARDUnlock(s32 chan, u8 flashID[12])
 
     return CARD_RESULT_READY;
 }
-
 static void InitCallback(void* _task)
 {
     s32 chan;

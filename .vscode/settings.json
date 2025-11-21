@@ -48,7 +48,14 @@
     "vi.h": "c",
     "types.h": "c",
     "ppcarch.h": "c",
-    "string.h": "c"
+    "string.h": "c",
+    "gxmanage.h": "c",
+    "gxtransform.h": "c",
+    "gxdraw.h": "c",
+    "gxget.h": "c",
+    "gxverify.h": "c",
+    "card.h": "c",
+    "__start.h": "c"
   },
   // Disable C/C++ IntelliSense, use clangd instead
   "C_Cpp.intelliSenseEngine": "default",
