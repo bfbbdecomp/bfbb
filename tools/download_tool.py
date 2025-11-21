@@ -87,6 +87,10 @@ def wibo_url(tag: str) -> str:
     repo = "https://github.com/decompals/wibo"
     return f"{repo}/releases/download/{tag}/wibo-{arch}"
 
+def ok_url(tag: str) -> str:
+    repo = "https://github.com/bfbbdecomp/OK"
+    return f"{repo}/releases/download/{tag}/OK-linux-x86_64"
+
 
 TOOLS: Dict[str, Callable[[str], str]] = {
     "binutils": binutils_url,
@@ -95,6 +99,7 @@ TOOLS: Dict[str, Callable[[str], str]] = {
     "objdiff-cli": objdiff_cli_url,
     "sjiswrap": sjiswrap_url,
     "wibo": wibo_url,
+    "OK": ok_url
 }
 
 
