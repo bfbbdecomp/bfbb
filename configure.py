@@ -216,6 +216,7 @@ cflags_base = [
     "-i src/dolphin/include",
     "-i src/dolphin/src",
     "-i src",
+    "-i src/bink/include",
     f"-i build/{config.version}/include",
     f"-DBUILD_VERSION={version_num}",
     f"-DVERSION_{config.version}",
@@ -280,10 +281,10 @@ cflags_bink = [
     "-I src/dolphin/src",
     "-I include",
     "-I src/dolphin/include",
-    "-D__GEKKO__",
     "-I src/bink/include",
+    "-D__GEKKO__",
     "-I src/PowerPC_EABI_Support/include",
-    "-G0",
+    "-G4",
 ]
 
 # Renderware library flags

@@ -55,7 +55,9 @@
     "gxget.h": "c",
     "gxverify.h": "c",
     "card.h": "c",
-    "__start.h": "c"
+    "__start.h": "c",
+    "macros.h": "c",
+    "ngcsnd.h": "c"
   },
   // Disable C/C++ IntelliSense, use clangd instead
   "C_Cpp.intelliSenseEngine": "default",
