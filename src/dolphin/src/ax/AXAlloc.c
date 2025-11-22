@@ -67,18 +67,6 @@ void __AXPushFreeStack(AXVPB* p)
     p->priority = 0;
 }
 
-// AXVPB* __AXPopFreeStack(void)
-// {
-//     AXVPB* p;
-
-//     p = (void*)(u32)&__AXStackHead[0]->next;
-//     if (p)
-//     {
-//         __AXStackHead[0] = p->next;
-//     }
-//     return p;
-// }
-
 void __AXPushCallbackStack(AXVPB* p)
 {
     p->next1 = __AXCallbackStack;
@@ -129,45 +117,6 @@ void __AXRemoveFromStack(AXVPB* p)
     tail->prev = head;
 }
 
-// void __AXPushStackHead(AXVPB* p, u32 priority)
-// {
-//     p->next = __AXStackHead[priority];
-//     p->prev = 0;
-//     if (p->next)
-//     {
-//         __AXStackHead[priority]->prev = p;
-//         __AXStackHead[priority] = p;
-//     }
-//     else
-//     {
-//         __AXStackTail[priority] = p;
-//         __AXStackHead[priority] = p;
-//     }
-//     p->priority = priority;
-// }
-
-// AXVPB* __AXPopStackFromBottom(u32 priority)
-// {
-//     AXVPB* p;
-
-//     p = NULL;
-//     if (__AXStackHead[priority])
-//     {
-//         if (__AXStackHead[priority] == __AXStackTail[priority])
-//         {
-//             p = __AXStackHead[priority];
-//             __AXStackHead[priority] = __AXStackTail[priority] = 0;
-//         }
-//         else if (__AXStackTail[priority])
-//         {
-//             p = __AXStackTail[priority];
-//             __AXStackTail[priority] = p->prev;
-//             __AXStackTail[priority]->next = 0;
-//         }
-//     }
-//     return p;
-// }
-
 void AXFreeVoice(AXVPB* p)
 {
     int old;
@@ -183,41 +132,73 @@ void AXFreeVoice(AXVPB* p)
     OSRestoreInterrupts(old);
 }
 
-AXVPB* AXAcquireVoice(u32 priority, void (*callback)(void*), u32 userContext)
+inline AXVPB* __AXPopFreeStack(void)
 {
-    // priority r25
-    // userContext r 28
-    // AXStackHead r26
-    int old; // r31
-    AXVPB* p; // r30
-    u32 i; // r29
+    AXVPB* p;
 
-    old = OSDisableInterrupts();
     p = (void*)(u32)&__AXStackHead[0]->next;
-    if (p != 0)
+    if (p)
     {
-        __AXStackHead[0] = __AXStackHead[0]->next;
+        __AXStackHead[0] = p->next;
+    }
+    return p;
+}
+
+inline void __AXPushStackHead(AXVPB* p, u32 priority)
+{
+    p->next = __AXStackHead[priority];
+    p->prev = 0;
+
+    if (p->next)
+    {
+        __AXStackHead[priority]->prev = p;
+        __AXStackHead[priority] = p;
+    }
+    else
+    {
+        __AXStackTail[priority] = p;
+        __AXStackHead[priority] = p;
     }
 
-    if (p == NULL)
+    p->priority = priority;
+}
+
+inline AXVPB* __AXPopStackFromBottom(u32 priority)
+{
+    AXVPB* p;
+
+    p = NULL;
+    if (__AXStackHead[priority])
+    {
+        if (__AXStackHead[priority] == __AXStackTail[priority])
+        {
+            p = __AXStackHead[priority];
+            __AXStackHead[priority] = __AXStackTail[priority] = 0;
+        }
+        else if (__AXStackTail[priority])
+        {
+            p = __AXStackTail[priority];
+            __AXStackTail[priority] = p->prev;
+            __AXStackTail[priority]->next = 0;
+        }
+    }
+
+    return p;
+}
+
+AXVPB* AXAcquireVoice(u32 priority, void (*callback)(void*), u32 userContext)
+{
+    BOOL old;
+    AXVPB* p;
+    u32 i;
+
+    old = OSDisableInterrupts();
+    p = __AXPopFreeStack();
+    if (p == 0)
     {
         for (i = 1; i < priority; i++)
         {
-            p = NULL;
-            if (__AXStackHead[i])
-            {
-                if (__AXStackHead[i] == __AXStackTail[i])
-                {
-                    p = __AXStackHead[i];
-                    __AXStackHead[i] = __AXStackTail[i] = 0;
-                }
-                else if (__AXStackTail[i])
-                {
-                    p = __AXStackTail[i];
-                    __AXStackTail[i] = p->prev;
-                    __AXStackTail[i]->next = 0;
-                }
-            }
+            p = __AXPopStackFromBottom(i);
             if (p)
             {
                 if (p->pb.state == 1)
@@ -232,25 +213,15 @@ AXVPB* AXAcquireVoice(u32 priority, void (*callback)(void*), u32 userContext)
             }
         }
     }
+
     if (p)
     {
-        p->next = __AXStackHead[i];
-        p->prev = 0;
-        if (p->next)
-        {
-            __AXStackHead[i]->prev = p;
-            __AXStackHead[i] = p;
-        }
-        else
-        {
-            __AXStackTail[i] = p;
-            __AXStackHead[i] = p;
-        }
-        p->priority = i;
+        __AXPushStackHead(p, priority);
         p->callback = callback;
         p->userContext = userContext;
         __AXSetPBDefault(p);
     }
+
     OSRestoreInterrupts(old);
     return p;
 }

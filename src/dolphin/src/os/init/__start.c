@@ -137,7 +137,7 @@ _goto_skip_init_bba:
     // clang-format on
 }
 
-__declspec(section ".init") static void __copy_rom_section(void* dst, const void* src,
+__declspec(section ".init") inline void __copy_rom_section(void* dst, const void* src,
                                                            unsigned long size)
 {
     if (size && (dst != src))
@@ -147,7 +147,7 @@ __declspec(section ".init") static void __copy_rom_section(void* dst, const void
     }
 }
 
-__declspec(section ".init") static void __init_bss_section(void* dst, unsigned long size)
+__declspec(section ".init") inline void __init_bss_section(void* dst, unsigned long size)
 {
     if (size)
     {
@@ -220,4 +220,9 @@ void __init_data(void)
         __init_bss_section(bii->addr, bii->size);
         bii++;
     }
+}
+
+__declspec(weak) void InitMetroTRK_BBA(void)
+{
+    return;
 }

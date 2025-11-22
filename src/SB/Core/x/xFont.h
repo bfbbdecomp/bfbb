@@ -21,12 +21,21 @@ struct xfont
     static void restore_render_state();
     static xfont create();
     static xfont create(U32 id, F32 width, F32 height, F32 space, iColor_tag color,
-                        const basic_rect<F32>& clip);
+                        const basic_rect<F32>& clip)
+    {
+        xfont r;
+        r.id = id;
+        r.width = width;
+        r.height = height;
+        r.space = space;
+        r.color = color;
+        r.clip = clip;
 
+        return r;
+    }
     basic_rect<F32> bounds(char c) const;
     basic_rect<F32> bounds(const char* text) const;
-    basic_rect<F32> bounds(const char* text, size_t text_size, F32 max_width,
-                               size_t& size) const;
+    basic_rect<F32> bounds(const char* text, size_t text_size, F32 max_width, size_t& size) const;
     void start_render() const;
     void stop_render() const;
     void irender(const char* text, F32 x, F32 y) const;
@@ -158,43 +167,43 @@ struct xtextbox
     static callback text_cb;
 
     xtextbox& operator=(const xtextbox& rhs)
-	{
-		this->font.id = rhs.font.id;
+    {
+        this->font.id = rhs.font.id;
 
-		*(S32*)(&this->font.width)  = *(S32*)(&rhs.font.width);
-		*(S32*)(&this->font.height) = *(S32*)(&rhs.font.height);
-		*(S32*)(&this->font.space)  = *(S32*)(&rhs.font.space);
+        *(S32*)(&this->font.width) = *(S32*)(&rhs.font.width);
+        *(S32*)(&this->font.height) = *(S32*)(&rhs.font.height);
+        *(S32*)(&this->font.space) = *(S32*)(&rhs.font.space);
 
-		*(S32*)(&this->font.color)  = *(S32*)(&rhs.font.color);
+        *(S32*)(&this->font.color) = *(S32*)(&rhs.font.color);
 
-		*(S32*)(&this->font.clip.x) = *(S32*)(&rhs.font.clip.x);
-		*(S32*)(&this->font.clip.y) = *(S32*)(&rhs.font.clip.y);
-		*(S32*)(&this->font.clip.w) = *(S32*)(&rhs.font.clip.w);
-		*(S32*)(&this->font.clip.h) = *(S32*)(&rhs.font.clip.h);
+        *(S32*)(&this->font.clip.x) = *(S32*)(&rhs.font.clip.x);
+        *(S32*)(&this->font.clip.y) = *(S32*)(&rhs.font.clip.y);
+        *(S32*)(&this->font.clip.w) = *(S32*)(&rhs.font.clip.w);
+        *(S32*)(&this->font.clip.h) = *(S32*)(&rhs.font.clip.h);
 
-		*(S32*)(&this->bounds.x) = *(S32*)(&rhs.bounds.x);
-		*(S32*)(&this->bounds.y) = *(S32*)(&rhs.bounds.y);
-		*(S32*)(&this->bounds.w) = *(S32*)(&rhs.bounds.w);
-		*(S32*)(&this->bounds.h) = *(S32*)(&rhs.bounds.h);
+        *(S32*)(&this->bounds.x) = *(S32*)(&rhs.bounds.x);
+        *(S32*)(&this->bounds.y) = *(S32*)(&rhs.bounds.y);
+        *(S32*)(&this->bounds.w) = *(S32*)(&rhs.bounds.w);
+        *(S32*)(&this->bounds.h) = *(S32*)(&rhs.bounds.h);
 
-		this->flags = rhs.flags;
+        this->flags = rhs.flags;
 
-		this->line_space = rhs.line_space;
-		this->tab_stop = rhs.tab_stop;
-		this->left_indent = rhs.left_indent;
-		this->right_indent = rhs.right_indent;
+        this->line_space = rhs.line_space;
+        this->tab_stop = rhs.tab_stop;
+        this->left_indent = rhs.left_indent;
+        this->right_indent = rhs.right_indent;
 
-		this->cb = rhs.cb;
-		this->context = rhs.context;
-		this->texts = rhs.texts;
-		this->text_sizes = rhs.text_sizes;
-		this->texts_size = rhs.texts_size;
-		this->text.text = rhs.text.text;
-		this->text.size = rhs.text.size;
-		this->text_hash = rhs.text_hash;
+        this->cb = rhs.cb;
+        this->context = rhs.context;
+        this->texts = rhs.texts;
+        this->text_sizes = rhs.text_sizes;
+        this->texts_size = rhs.texts_size;
+        this->text.text = rhs.text.text;
+        this->text.size = rhs.text.size;
+        this->text_hash = rhs.text_hash;
 
-		return *this;
-	}
+        return *this;
+    }
 
     static void text_render(const jot& j, const xtextbox& tb, F32 x, F32 y);
     static tag_entry_list read_tag(const substr& s);
@@ -207,20 +216,36 @@ struct xtextbox
     static tag_type* find_format_tag(const substr& s, S32& index);
     static xtextbox create();
     static xtextbox create(const xfont& font, const basic_rect<F32>& bounds, U32 flags,
-                           F32 line_space, F32 tab_stop, F32 left_indent,
-                           F32 right_indent);
+                           F32 line_space, F32 tab_stop, F32 left_indent, F32 right_indent)
+    {
+        xtextbox r;
+        r.font = font;
+        r.bounds = bounds;
+        r.flags = flags;
+        r.line_space = line_space;
+        r.tab_stop = tab_stop;
+        r.left_indent = left_indent;
+        r.right_indent = right_indent;
+        r.texts_size = 0;
+        r.text_hash = 0;
+        r.cb = &text_cb;
+
+        return r;
+    }
 
     void set_text(const char* text);
     void set_text(const char* text, size_t text_size);
     void set_text(const char** texts, size_t size);
     void set_text(const char** texts, const size_t* text_sizes, size_t size);
     layout& temp_layout(bool cache) const;
-    void render(bool cache) const;
+    void render(bool cache) const
+    {
+        render(temp_layout(cache), 0, -1);
+    }
     void render(layout& l, S32 begin_jot, S32 end_jot) const;
     F32 yextent(bool cache) const;
     F32 yextent(F32 max, S32& size, bool cache) const;
-    F32 yextent(F32 max, S32& size, const layout& l, S32 begin_jot,
-                    S32 end_jot) const;
+    F32 yextent(F32 max, S32& size, const layout& l, S32 begin_jot, S32 end_jot) const;
 };
 
 struct xtextbox::layout
@@ -253,7 +278,14 @@ struct xtextbox::layout
 
 void render_fill_rect(const basic_rect<F32>& bounds, iColor_tag color);
 
-F32 NSCREENX(F32);
-F32 NSCREENY(F32);
+inline F32 NSCREENX(F32 scale)
+{
+    return (1.0f / 640) * scale;
+}
+
+inline F32 NSCREENY(F32 scale)
+{
+    return (1.0f / 480) * scale;
+}
 
 #endif

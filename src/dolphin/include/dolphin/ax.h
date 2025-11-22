@@ -7,7 +7,8 @@
 extern "C" {
 #endif
 
-typedef struct _AXPBMIX {
+typedef struct _AXPBMIX
+{
     /* 0x00 */ u16 vL;
     /* 0x02 */ u16 vDeltaL;
     /* 0x04 */ u16 vR;
@@ -28,7 +29,8 @@ typedef struct _AXPBMIX {
     /* 0x22 */ u16 vDeltaAuxAS;
 } AXPBMIX;
 
-typedef struct _AXPBITD {
+typedef struct _AXPBITD
+{
     /* 0x00 */ u16 flag;
     /* 0x02 */ u16 bufferHi;
     /* 0x04 */ u16 bufferLo;
@@ -38,13 +40,15 @@ typedef struct _AXPBITD {
     /* 0x0C */ u16 targetShiftR;
 } AXPBITD;
 
-typedef struct _AXPBUPDATE {
+typedef struct _AXPBUPDATE
+{
     /* 0x00 */ u16 updNum[5];
     /* 0x0A */ u16 dataHi;
     /* 0x0C */ u16 dataLo;
 } AXPBUPDATE;
 
-typedef struct _AXPBDPOP {
+typedef struct _AXPBDPOP
+{
     /* 0x00 */ s16 aL;
     /* 0x02 */ s16 aAuxAL;
     /* 0x04 */ s16 aAuxBL;
@@ -56,18 +60,21 @@ typedef struct _AXPBDPOP {
     /* 0x10 */ s16 aAuxBS;
 } AXPBDPOP;
 
-typedef struct _AXPBVE {
+typedef struct _AXPBVE
+{
     /* 0x00 */ u16 currentVolume;
     /* 0x02 */ s16 currentDelta;
 } AXPBVE;
 
-typedef struct _AXPBFIR {
+typedef struct _AXPBFIR
+{
     /* 0x00 */ u16 numCoefs;
     /* 0x02 */ u16 coefsHi;
     /* 0x04 */ u16 coefsLo;
 } AXPBFIR;
 
-typedef struct _AXPBADDR {
+typedef struct _AXPBADDR
+{
     /* 0x00 */ u16 loopFlag;
     /* 0x02 */ u16 format;
     /* 0x04 */ u16 loopAddressHi;
@@ -78,7 +85,8 @@ typedef struct _AXPBADDR {
     /* 0x0E */ u16 currentAddressLo;
 } AXPBADDR;
 
-typedef struct _AXPBADPCM {
+typedef struct _AXPBADPCM
+{
     /* 0x00 */ u16 a[8][2];
     /* 0x20 */ u16 gain;
     /* 0x22 */ u16 pred_scale;
@@ -86,27 +94,31 @@ typedef struct _AXPBADPCM {
     /* 0x26 */ u16 yn2;
 } AXPBADPCM;
 
-typedef struct _AXPBSRC {
+typedef struct _AXPBSRC
+{
     /* 0x00 */ u16 ratioHi;
     /* 0x02 */ u16 ratioLo;
     /* 0x04 */ u16 currentAddressFrac;
     /* 0x06 */ u16 last_samples[4];
 } AXPBSRC;
 
-typedef struct _AXPBADPCMLOOP {
+typedef struct _AXPBADPCMLOOP
+{
     /* 0x00 */ u16 loop_pred_scale;
     /* 0x02 */ u16 loop_yn1;
     /* 0x04 */ u16 loop_yn2;
 } AXPBADPCMLOOP;
 
-typedef struct _AXPBLPF {
+typedef struct _AXPBLPF
+{
     u16 on;
     u16 yn1;
     u16 a0;
     u16 b0;
 } AXPBLPF;
 
-typedef struct _AXPB {
+typedef struct _AXPB
+{
     /* 0x00 */ u16 nextHi;
     /* 0x02 */ u16 nextLo;
     /* 0x04 */ u16 currHi;
@@ -130,7 +142,8 @@ typedef struct _AXPB {
     /* 0xC2 */ u16 pad[25];
 } AXPB;
 
-typedef struct _AXVPB {
+typedef struct _AXVPB
+{
     /* 0x000 */ void* next;
     /* 0x004 */ void* prev;
     /* 0x008 */ void* next1;
@@ -149,15 +162,18 @@ typedef struct _AXVPB {
     /* 0x138 */ AXPB pb;
 } AXVPB;
 
-typedef struct _AXPBITDBUFFER {
+typedef struct _AXPBITDBUFFER
+{
     /* 0x00 */ s16 data[32];
 } AXPBITDBUFFER;
 
-typedef struct _AXPBU {
+typedef struct _AXPBU
+{
     /* 0x00 */ u16 data[128];
 } AXPBU;
 
-typedef struct _AXSPB {
+typedef struct _AXSPB
+{
     /* 0x00 */ u16 dpopLHi;
     /* 0x02 */ u16 dpopLLo;
     /* 0x04 */ s16 dpopLDelta;
@@ -187,7 +203,8 @@ typedef struct _AXSPB {
     /* 0x34 */ s16 dpopBSDelta;
 } AXSPB;
 
-typedef struct _AXPROFILE {
+typedef struct _AXPROFILE
+{
     /* 0x00 */ u64 axFrameStart;
     /* 0x08 */ u64 auxProcessingStart;
     /* 0x10 */ u64 auxProcessingEnd;
@@ -197,13 +214,15 @@ typedef struct _AXPROFILE {
     /* 0x30 */ u32 axNumVoices;
 } AXPROFILE;
 
-typedef struct AX_AUX_DATA {
+typedef struct AX_AUX_DATA
+{
     /* 0x00 */ s32* l;
     /* 0x00 */ s32* r;
     /* 0x00 */ s32* s;
 } AX_AUX_DATA;
 
-typedef struct AX_AUX_DATA_DPL2 {
+typedef struct AX_AUX_DATA_DPL2
+{
     /* 0x00 */ s32* l;
     /* 0x00 */ s32* r;
     /* 0x00 */ s32* ls;
@@ -212,48 +231,48 @@ typedef struct AX_AUX_DATA_DPL2 {
 
 typedef void (*AXCallback)();
 
-#define AX_DSP_SLAVE_LENGTH 0xF80
+#define AX_DSP_SLAVE_LENGTH 3936
 #define AX_MAX_VOICES 64
 
-#define AX_SRC_TYPE_NONE     0
-#define AX_SRC_TYPE_LINEAR   1
-#define AX_SRC_TYPE_4TAP_8K  2
+#define AX_SRC_TYPE_NONE 0
+#define AX_SRC_TYPE_LINEAR 1
+#define AX_SRC_TYPE_4TAP_8K 2
 #define AX_SRC_TYPE_4TAP_12K 3
 #define AX_SRC_TYPE_4TAP_16K 4
 
 // sync flags
-#define AX_SYNC_FLAG_COPYALL       (1 << 31)
-#define AX_SYNC_FLAG_UNK1          (1 << 30) // reserved, unused?
-#define AX_SYNC_FLAG_UNK2          (1 << 29) // reserved, unused?
-#define AX_SYNC_FLAG_UNK3          (1 << 28) // reserved, unused?
-#define AX_SYNC_FLAG_UNK4          (1 << 27) // reserved, unused?
-#define AX_SYNC_FLAG_UNK5          (1 << 26) // reserved, unused?
-#define AX_SYNC_FLAG_UNK6          (1 << 25) // reserved, unused?
-#define AX_SYNC_FLAG_UNK7          (1 << 24) // reserved, unused?
-#define AX_SYNC_FLAG_UNK8          (1 << 23) // reserved, unused?
-#define AX_SYNC_FLAG_UNK9          (1 << 22) // reserved, unused?
-#define AX_SYNC_FLAG_UNK10         (1 << 21) // reserved, unused?
+#define AX_SYNC_FLAG_COPYALL (1 << 31)
+#define AX_SYNC_FLAG_UNK1 (1 << 30) // reserved, unused?
+#define AX_SYNC_FLAG_UNK2 (1 << 29) // reserved, unused?
+#define AX_SYNC_FLAG_UNK3 (1 << 28) // reserved, unused?
+#define AX_SYNC_FLAG_UNK4 (1 << 27) // reserved, unused?
+#define AX_SYNC_FLAG_UNK5 (1 << 26) // reserved, unused?
+#define AX_SYNC_FLAG_UNK6 (1 << 25) // reserved, unused?
+#define AX_SYNC_FLAG_UNK7 (1 << 24) // reserved, unused?
+#define AX_SYNC_FLAG_UNK8 (1 << 23) // reserved, unused?
+#define AX_SYNC_FLAG_UNK9 (1 << 22) // reserved, unused?
+#define AX_SYNC_FLAG_UNK10 (1 << 21) // reserved, unused?
 #define AX_SYNC_FLAG_COPYADPCMLOOP (1 << 20)
-#define AX_SYNC_FLAG_COPYRATIO     (1 << 19)
-#define AX_SYNC_FLAG_COPYSRC       (1 << 18)
-#define AX_SYNC_FLAG_COPYADPCM     (1 << 17)
-#define AX_SYNC_FLAG_COPYCURADDR   (1 << 16)
-#define AX_SYNC_FLAG_COPYENDADDR   (1 << 15)
-#define AX_SYNC_FLAG_COPYLOOPADDR  (1 << 14)
-#define AX_SYNC_FLAG_COPYLOOP      (1 << 13)
-#define AX_SYNC_FLAG_COPYADDR      (1 << 12)
-#define AX_SYNC_FLAG_COPYFIR       (1 << 11)
-#define AX_SYNC_FLAG_SWAPVOL       (1 << 10)
-#define AX_SYNC_FLAG_COPYVOL       (1 << 9)
-#define AX_SYNC_FLAG_COPYDPOP      (1 << 8)
-#define AX_SYNC_FLAG_COPYUPDATE    (1 << 7)
-#define AX_SYNC_FLAG_COPYTSHIFT    (1 << 6)
-#define AX_SYNC_FLAG_COPYITD       (1 << 5)
-#define AX_SYNC_FLAG_COPYAXPBMIX   (1 << 4)
-#define AX_SYNC_FLAG_COPYTYPE      (1 << 3)
-#define AX_SYNC_FLAG_COPYSTATE     (1 << 2)
-#define AX_SYNC_FLAG_COPYMXRCTRL   (1 << 1)
-#define AX_SYNC_FLAG_COPYSELECT    (1 << 0)
+#define AX_SYNC_FLAG_COPYRATIO (1 << 19)
+#define AX_SYNC_FLAG_COPYSRC (1 << 18)
+#define AX_SYNC_FLAG_COPYADPCM (1 << 17)
+#define AX_SYNC_FLAG_COPYCURADDR (1 << 16)
+#define AX_SYNC_FLAG_COPYENDADDR (1 << 15)
+#define AX_SYNC_FLAG_COPYLOOPADDR (1 << 14)
+#define AX_SYNC_FLAG_COPYLOOP (1 << 13)
+#define AX_SYNC_FLAG_COPYADDR (1 << 12)
+#define AX_SYNC_FLAG_COPYFIR (1 << 11)
+#define AX_SYNC_FLAG_SWAPVOL (1 << 10)
+#define AX_SYNC_FLAG_COPYVOL (1 << 9)
+#define AX_SYNC_FLAG_COPYDPOP (1 << 8)
+#define AX_SYNC_FLAG_COPYUPDATE (1 << 7)
+#define AX_SYNC_FLAG_COPYTSHIFT (1 << 6)
+#define AX_SYNC_FLAG_COPYITD (1 << 5)
+#define AX_SYNC_FLAG_COPYAXPBMIX (1 << 4)
+#define AX_SYNC_FLAG_COPYTYPE (1 << 3)
+#define AX_SYNC_FLAG_COPYSTATE (1 << 2)
+#define AX_SYNC_FLAG_COPYMXRCTRL (1 << 1)
+#define AX_SYNC_FLAG_COPYSELECT (1 << 0)
 
 #define AX_PRIORITY_STACKS 32
 
@@ -264,7 +283,7 @@ void AXQuit(void);
 
 // AXAlloc
 void AXFreeVoice(AXVPB* p);
-AXVPB* AXAcquireVoice(u32 priority, void (*callback)(void *), u32 userContext);
+AXVPB* AXAcquireVoice(u32 priority, void (*callback)(void*), u32 userContext);
 void AXSetVoicePriority(AXVPB* p, u32 priority);
 
 // AXAux
