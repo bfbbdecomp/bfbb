@@ -183,6 +183,7 @@ template <class T, U32 N> struct fixed_queue
     void back();
     void pop_back();
     bool empty() const;
+    U32 size() const;
 };
 
 #endif
