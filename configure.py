@@ -417,7 +417,7 @@ config.libs = [
             Object(Matching, "SB/Core/x/xColor.cpp"),
             Object(Matching, "SB/Core/x/xCounter.cpp"),
             Object(NonMatching, "SB/Core/x/xCutscene.cpp"),
-            Object(NonMatching, "SB/Core/x/xDebug.cpp"),
+            Object(NonMatching, "SB/Core/x/xDebug.cpp", extra_cflags=["-sym on"]),
             Object(Equivalent, "SB/Core/x/xEnt.cpp", extra_cflags=["-sym on"]),
             Object(Equivalent, "SB/Core/x/xEntDrive.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Core/x/xEntMotion.cpp"),

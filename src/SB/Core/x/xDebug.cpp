@@ -1,7 +1,4 @@
 #include "xDebug.h"
-#include "xFont.h"
-
-#include "iColor.h"
 
 #include <types.h>
 
@@ -14,7 +11,7 @@ void xprintf(const char* msg, ...)
     // Redacted. :}
 }
 
-S32 xDebugModeAdd(const char* mode, void(*debugFunc)())
+S32 xDebugModeAdd(const char* mode, void (*debugFunc)())
 {
     // Redacted. :}
     return -1;
@@ -40,17 +37,18 @@ void xDebugTimestampScreen()
     // Redacted. :}
 }
 
-void xtextbox::render(bool cache) const
+void __deadstripped_xDebug(F32 f, iColor_tag col)
 {
-    render(temp_layout(cache), 0, -1);
-}
+    basic_rect<F32> r1;
+    basic_rect<F32> r2;
+    r1 = r2;
+    r1.contract(f, f, f, f);
 
-F32 NSCREENY(F32 scale)
-{
-    return (1.0f / 480) * scale;
-}
-
-F32 NSCREENX(F32 scale)
-{
-    return (1.0f / 640) * scale;
+    F32 x = NSCREENX(f);
+    F32 y = NSCREENY(f);
+    
+    xfont font;
+    font = xfont::create(0, f, f, f, col, r1);
+    xtextbox textbox = xtextbox::create(font, r1, 0, f, f, f, f);
+    textbox.render(true);
 }
