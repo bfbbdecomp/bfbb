@@ -207,6 +207,54 @@ void xLaserBoltEmitter::pre_collide(bolt& b)
     log_collide_statics(coll.flags & 0x1);
 }
 
+void xLaserBoltEmitter::collide_update(bolt& b)
+{
+    xScene& scene = *globals.sceneCur;
+ 
+    // TODO: Investigate float regalloc mismatch
+    xRay3 ray;
+    ray.origin = b.origin;
+    ray.dir = b.dir;
+    ray.min_t = b.prev_check_dist - this->cfg.length;
+    ray.max_t = b.dist;
+    ray.flags = 0xC00;
+    
+    if (ray.max_t < this->cfg.safe_dist)
+    {
+        ray.min_t = ray.max_t;
+    }
+    
+    xCollis player_coll;
+    player_coll.flags = 0x300;
+    xRayHitsBound(&ray, &globals.player.ent.bound, &player_coll);
+
+    if (player_coll.flags & 0x1)
+    {
+        ray.max_t = player_coll.dist;
+    }
+
+    xCollis scene_coll;
+    scene_coll.flags = 0x300;
+    xRayHitsSceneFlags(&scene, &ray, &scene_coll, XENT_COLLTYPE_PLYR, 0xC);
+
+    if (scene_coll.flags & 0x1)
+    {
+        b.hit_dist = scene_coll.dist;
+        b.hit_norm = scene_coll.norm;
+        b.hit_ent = (xEnt*)scene_coll.optr;
+    }
+    else if (player_coll.flags & 0x1)
+    {
+        b.hit_dist = player_coll.dist;
+        b.hit_norm = player_coll.norm;
+        b.hit_ent = &globals.player.ent;
+    }
+
+    b.prev_check_dist = b.dist;
+
+    log_collide_dynamics(scene_coll.flags & 0x1 || player_coll.flags & 0x1);
+}
+
 RxObjSpace3DVertex* xLaserBoltEmitter::render(bolt& b, RxObjSpace3DVertex *vert) 
 {       
     F32 dist0 = b.prev_dist - this->cfg.length; 
