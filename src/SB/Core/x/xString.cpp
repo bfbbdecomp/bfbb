@@ -61,21 +61,42 @@ char* xStrupr(char* string)
     return string;
 }
 
-// @unnamed@xString_cpp@::tolower(char)
-extern "C" {
-U32 tolower__21_esc__2_unnamed_esc__2_xString_cpp_esc__2_Fc(U32 param_1)
+namespace
 {
-    return tolower__21_esc__2_unnamed_esc__2_xString_cpp_esc__2_Fi(param_1 & 0xff);
+    U32 tolower(char param_1);
+    U32 tolower(S32 param_1);
+} // namespace
+
+S32 imemcmp(void const* d1, void const* d2, size_t size)
+{
+    const char* s1 = (char*)d1;
+    const char* s2 = (char*)d2;
+
+    for (size_t i = 0; i < size; i++)
+    {
+        S32 cval1 = tolower(s1[i]);
+        S32 cval2 = tolower(s2[i]);
+        if (cval1 != cval2)
+        {
+            return cval1 - cval2;
 }
 }
 
-// @unnamed@xString_cpp@::tolower(int)
-extern "C" {
-U32 tolower__21_esc__2_unnamed_esc__2_xString_cpp_esc__2_Fi(U32 param_1)
+    return 0;
+}
+
+namespace
+{
+    U32 tolower(char param_1)
+    {
+        return tolower((S32)param_1);
+    }
+
+    U32 tolower(S32 param_1)
 {
     return param_1 | ((param_1 >> 1) & 32);
 }
-}
+} // End anonymous namespace
 
 S32 icompare(const substr& s1, const substr& s2)
 {
