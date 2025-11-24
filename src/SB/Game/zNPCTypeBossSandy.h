@@ -70,7 +70,7 @@ struct zNPCBSandy : zNPCBoss
     zCutsceneMgr* round2Csn;
     zCutsceneMgr* round3Csn;
     F32 csnTimer;
-    _tagLightningAdd sparks[6];
+    _tagLightningAdd sparks[6]; // 0x7F8
     zLightning* wireLight[2]; // 0x978
     xVec3 endPoints[2][4];
     xMat4x3 sparkTransform[2][2];
@@ -86,7 +86,7 @@ struct zNPCBSandy : zNPCBoss
     xVec3 laserPoint[16];
     xFXRibbon laserShow;
     xFXRibbon::curve_node curveNode[2];
-    F32 curveNodeAlpha;
+    F32 curveNodeAlpha; // 0xD24
     F32 curveNodeR;
     F32 curveNodeG;
     F32 curveNodeB;
