@@ -105,6 +105,7 @@ struct zNPCBSandy : zNPCBoss
 
     zNPCBSandy(S32 myType);
     void hiddenByCutscene();
+    void CalcMagnetizeInfo();
     void InitFX();
 
     /*
