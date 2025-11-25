@@ -7,6 +7,7 @@
 #include "zNPCTypeCommon.h"
 #include "zNPCTypes.h"
 #include "zNPCSupplement.h"
+#include "zNPCSupport.h"
 #include "xMath.h"
 #include "zGameExtras.h"
 
@@ -392,10 +393,103 @@ S32 NPCHazard::KickSteamyStinky()
     return ok;
 }
 
+void NPCHazard::TarTarFalumpf()
+{
+    g_parf_default.custom_flags = 0x100;
+    xVec3 pos_emit;
+
+    for (S32 i = 0; i < 16; i++)
+    {
+        pos_emit.x = this->custdata.tartar.rad_cur * (2.0f * (xurand() - 0.5f)) + this->pos_hazard.x;
+        pos_emit.y = this->custdata.tartar.rad_cur * (2.0f * (xurand() - 0.5f)) + this->pos_hazard.y;
+        pos_emit.z = this->custdata.tartar.rad_cur * (2.0f * (xurand() - 0.5f)) + this->pos_hazard.z;
+        NPAR_EmitTarTarNozzle(&pos_emit, &g_Y3);
+    }
+}
+
 void NPCHazard::TarTarGunkTrail()
 {
     xVec3 pos = pos_hazard;
     NPAR_EmitTarTarTrail(&pos, &g_Y3);
+}
+
+void NPCHazard::TarTarSplash(const xVec3* dir_norm)
+{
+    xVec3 up;
+    xVec3 at;
+    xVec3 right;
+    
+    if (dir_norm != NULL)
+    {
+        up = *dir_norm;
+        NPCC_MakeArbPlane(dir_norm, &at, &right);
+    }
+    else
+    {
+        up = *(xVec3*)Up();
+        at = *(xVec3*)At();
+        right = *(xVec3*)Right();
+    }
+    
+    xVec3 pos_emit = pos_hazard;
+    for (S32 i = 0; i < 16; i++)
+    {
+        // Using initialization prevents generation of the operator= for the xVec3,
+        // So it's on the next line to generate the right instructions.
+
+        // Scheduling meme here but matches otherwise.
+        xVec3 vel_emit;
+        vel_emit = up;
+
+        F32 direction;
+        if (xrand() & 0x800000)
+        {
+            direction = 1.0f;
+        }
+        else
+        {
+            direction = -1.0f;
+        }
+
+        vel_emit += at * direction * (0.4f * (2.0f * (xurand() - 0.5f)) + 0.25f);
+
+        if (xrand() & 0x800000)
+        {
+            direction = 1.0f;
+        }
+        else
+        {
+            direction = -1.0f;
+        }
+
+        vel_emit += at * direction * (0.4f * (2.0f * (xurand() - 0.5f)) + 0.25f);
+        vel_emit.normalize();
+        vel_emit *= 15.0f;
+
+        NPAR_EmitTarTarSplash(&pos_emit, &vel_emit);
+    }
+}
+
+void NPCHazard::TarTarLinger()
+{
+    HAZBall* ball = &this->custdata.ball;
+    xVec3 vel_emit = g_Y3;
+    if (--this->cnt_nextemit >= 0)
+    {
+        return;
+    }
+
+
+    this->cnt_nextemit = 10;
+    
+    F32 rad_use = 0.75f * ball->rad_cur;
+    xVec3 pos_emit = this->pos_hazard;
+
+    pos_emit += *(xVec3*)At() * (rad_use * (2.0f * (xurand() - 0.5f)));
+    pos_emit += *(xVec3*)Right() * (rad_use * (2.0f * (xurand() - 0.5f)));
+    pos_emit += *(xVec3*)Up() * 0.1f;
+
+    NPAR_EmitTarTarSpoil(&pos_emit, &vel_emit);
 }
 
 void NPCHazard::ReconArfBone()
@@ -429,30 +523,6 @@ S32 UVAModelInfo::GetUV(RwTexCoords*& coords, S32& numVertices, RpAtomic* model)
     coords = geom->texCoords[0];
 
     return coords != NULL;
-}
-
-RwV3d* NPCHazard::At() const
-{
-    return &this->mdl_hazard->Mat->at;
-}
-
-RwV3d* NPCHazard::Right() const
-{
-    return &this->mdl_hazard->Mat->right;
-}
-
-RwV3d* NPCHazard::Up() const
-{
-    return &this->mdl_hazard->Mat->up;
-}
-
-NPCHazard::NPCHazard()
-{
-}
-
-NPCHazard::NPCHazard(en_npchaz haztype)
-{
-    this->typ_hazard = haztype;
 }
 
 F32 xVec2Length2(const xVec2* v)

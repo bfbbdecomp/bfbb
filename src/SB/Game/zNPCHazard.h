@@ -242,8 +242,6 @@ struct NPCHazard
     NPCHazard* haz_parent;
     xShadowCache* shadowCache;
 
-    NPCHazard();
-    NPCHazard(en_npchaz haztype);
     S32 ConfigHelper(en_npchaz haztype);
     void Reconfigure(en_npchaz haztype);
     void FreeModel();
@@ -260,7 +258,10 @@ struct NPCHazard
     S32 ColTestCyl(const xBound* bnd_tgt, F32 rad, F32 hyt);
     S32 ColPlyrSphere(F32 rad);
     S32 ColPlyrCyl(F32 rad, F32 hyt);
+    void TarTarFalumpf();
     void TarTarGunkTrail();
+    void TarTarSplash(const xVec3* dir_norm);
+    void TarTarLinger();
     S32 KickSteamyStinky();
     void ReconArfBone();
     void HurtThePlayer();
@@ -274,10 +275,31 @@ struct NPCHazard
     void ColResp_Default(xSweptSphere* swdata, F32 tym_inFuture);
     void CollideResponse(xSweptSphere* swdata, F32 tym_inFuture);
     void Upd_Patriot(F32);
-    RwV3d* At() const;
-    RwV3d* Right() const;
-    RwV3d* Up() const;
     void Discard();
+
+    RwV3d* At() const
+    {
+        return &this->mdl_hazard->Mat->at;
+    }
+
+    RwV3d* Right() const
+    {
+        return &this->mdl_hazard->Mat->right;
+    }
+
+    RwV3d* Up() const
+    {
+        return &this->mdl_hazard->Mat->up;
+    }
+
+    NPCHazard()
+    {
+    }
+
+    NPCHazard(en_npchaz haztype)
+    {
+        this->typ_hazard = haztype;
+    }
 };
 
 void zNPCHazard_Startup();

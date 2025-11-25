@@ -624,7 +624,7 @@ config.libs = [
             Object(Equivalent, "SB/Core/gc/iTRC.cpp"),
             Object(NonMatching, "SB/Game/zNPCSupplement.cpp"),
             Object(NonMatching, "SB/Game/zNPCGlyph.cpp", extra_cflags=["-sym on"]),
-            Object(NonMatching, "SB/Game/zNPCHazard.cpp"),
+            Object(NonMatching, "SB/Game/zNPCHazard.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zNPCGoalAmbient.cpp"),
             Object(NonMatching, "SB/Game/zNPCFXCinematic.cpp"),
             Object(Equivalent, "SB/Core/x/xHudText.cpp", extra_cflags=["-sym on"]),
