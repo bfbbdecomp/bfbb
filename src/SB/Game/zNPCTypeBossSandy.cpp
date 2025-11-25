@@ -566,6 +566,18 @@ void zNPCBSandy_BossDamageEffect_Init()
     }
 }
 
+void zNPCBSandy::CalcMagnetizeInfo()
+{
+    xMat4x3 boneMat;
+    xQuatFromMat(&this->qBoulder, (xMat3x3*)this->headBoulder->model->Mat);
+    xVec3Copy(&this->pBoulder, (xVec3*)&this->headBoulder->model->Mat->pos);
+    xMat4x3Mul(&boneMat, (xMat4x3*)&this->model->Mat[sBone[1]], (xMat4x3*)this->model->Mat);
+    xQuatFromMat(&this->qHead, &boneMat);
+    xMat3x3RMulVec(&this->pHead, &boneMat, &sBoneOffset[1]);
+    xVec3AddTo(&this->pHead, &boneMat.pos);
+    magnetizeTime = xVec3Dist(&this->pHead, &this->pBoulder) * 0.1f;
+}
+
 void zNPCBSandy::InitFX()
 {
     this->timeToNextBolt[0] = 0.0f;
@@ -1474,7 +1486,7 @@ S32 zNPCGoalBossSandyNoHead::Process(en_trantype* trantype, F32 dt, void* updCtx
     zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
     U32 numHints;
     xVec3 newAt;
-    float lerpFactor;
+    F32 lerpFactor;
     xMat4x3 boneMat;
     xQuat q;
 
@@ -1577,24 +1589,6 @@ S32 zNPCGoalBossSandyNoHead::Process(en_trantype* trantype, F32 dt, void* updCtx
     return zNPCGoalCommon::Process(trantype, dt, updCtxt, xscn);
 }
 
-S32 zNPCGoalBossSandyElbowDrop::Enter(F32 dt, void* updCtxt)
-{
-    zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
-
-    timeInGoal = 0;
-    sandy->bossFlags &= 0xfffffffd;
-    sNumAttacks++;
-
-    xVec3Init(&sandy->frame->vel, 0.0f, 0.0f, 0.0f);
-
-    xSndPlay3D(xStrHash("B101_SC_drop"), 0.77f, 0.0f, 0x0, 0x0, sandy, 30.0f, SND_CAT_GAME, 0.65f);
-    xSndPlay3D(xStrHash("B101_SC_drop"), 0.77f, 0.0f, 0x0, 0x0, sandy, 30.0f, SND_CAT_GAME, 1.3f);
-    xSndPlay3D(xStrHash("B101_SC_hitring"), 0.77f, 0.0f, 0x0, 0x0, sandy, 30.0f, SND_CAT_GAME,
-               2.25f);
-    elbowFlags = 0;
-    return zNPCGoalCommon::Enter(dt, updCtxt);
-}
-
 // This function is certified not cool
 S32 zNPCGoalBossSandyElbowDrop::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
 {
@@ -1617,6 +1611,50 @@ S32 zNPCGoalBossSandyElbowDrop::Process(en_trantype* trantype, F32 dt, void* upd
     }
 
     return xGoal::Process(trantype, dt, updCtxt, xscn);
+}
+
+S32 zNPCGoalBossSandyElbowDrop::Exit(F32 dt, void* updCtxt)
+{
+    sElbowDropTimer = 0.0f;
+    sElbowDropThreshold = 0.0f;
+    sChaseTimer = 0.0f;
+    return xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSandyLeap::Exit(F32 dt, void* updCtxt)
+{
+    sChaseTimer = 0.0f;
+    return xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSandyGetUp::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene)
+{
+    timeInGoal += dt;
+    return xGoal::Process(trantype, dt, updCtxt, scene);
+}
+
+S32 zNPCGoalBossSandyRunToRope::Exit(F32 dt, void* updCtxt)
+{
+    sChaseTimer = 0.0f;
+    return xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalBossSandyElbowDrop::Enter(F32 dt, void* updCtxt)
+{
+    zNPCBSandy* sandy = (zNPCBSandy*)psyche->clt_owner;
+
+    timeInGoal = 0;
+    sandy->bossFlags &= 0xfffffffd;
+    sNumAttacks++;
+
+    xVec3Init(&sandy->frame->vel, 0.0f, 0.0f, 0.0f);
+
+    xSndPlay3D(xStrHash("B101_SC_drop"), 0.77f, 0.0f, 0x0, 0x0, sandy, 30.0f, SND_CAT_GAME, 0.65f);
+    xSndPlay3D(xStrHash("B101_SC_drop"), 0.77f, 0.0f, 0x0, 0x0, sandy, 30.0f, SND_CAT_GAME, 1.3f);
+    xSndPlay3D(xStrHash("B101_SC_hitring"), 0.77f, 0.0f, 0x0, 0x0, sandy, 30.0f, SND_CAT_GAME,
+               2.25f);
+    elbowFlags = 0;
+    return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
 void xBinaryCamera::add_tweaks(char const*)
