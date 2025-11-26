@@ -575,7 +575,7 @@ config.libs = [
             Object(NonMatching, "SB/Core/x/xClumpColl.cpp"),
             Object(NonMatching, "SB/Core/x/xEntBoulder.cpp"),
             Object(NonMatching, "SB/Core/x/xGrid.cpp"),
-            Object(NonMatching, "SB/Core/x/xJSP.cpp"),
+            Object(Equivalent, "SB/Core/x/xJSP.cpp"),
             Object(Matching, "SB/Core/x/xLightKit.cpp"),
             Object(Matching, "SB/Game/zCamMarker.cpp"),
             Object(NonMatching, "SB/Game/zGoo.cpp"),
