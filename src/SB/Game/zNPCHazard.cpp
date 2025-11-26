@@ -9,6 +9,7 @@
 #include "zNPCSupplement.h"
 #include "zNPCSupport.h"
 #include "xMath.h"
+#include "xMathInlines.h"
 #include "zGameExtras.h"
 
 extern U32 g_hash_hazanim[3];
@@ -490,6 +491,331 @@ void NPCHazard::TarTarLinger()
     pos_emit += *(xVec3*)Up() * 0.1f;
 
     NPAR_EmitTarTarSpoil(&pos_emit, &vel_emit);
+}
+
+void NPCHazard::Upd_ChuckBomb(F32 dt)
+{
+    HAZTarTar* tartar = &this->custdata.tartar;
+    const xParabola* parab = &tartar->parabinfo;
+
+    if (this->tmr_remain < dt)
+    {
+        if (this->flg_hazard & 0x20000)
+        {
+            xParabolaEvalPos(parab, &this->pos_hazard, parab->maxTime);
+            ReconChuck();
+            return;
+        }
+        else
+        {
+            ReconChuck();
+            return;
+        }
+    }
+
+    if (this->flg_hazard & 0x8)
+    {
+        xVec3Sub(&tartar->vel, &tartar->pos_tgt, &this->pos_hazard);
+        xVec3SMulBy(&tartar->vel, 1.0f / this->tmr_remain);
+
+        tartar->vel.y = 5.0f * (0.5f * this->tmr_remain) + tartar->vel.y;
+    }
+
+    if (this->flg_hazard & 0x8)
+    {
+        PreCollide();
+    }
+
+    F32 tym = this->tym_lifespan - this->tmr_remain;
+    xParabolaEvalPos(parab, &this->pos_hazard, tym);
+    xParabolaEvalVel(parab, &tartar->vel, tym);
+
+    F32 vel_mag = xVec3Length(&tartar->vel);
+    if (vel_mag > 0.0001f)
+    {
+        xMat3x3 mat_rot;
+        xVec3 dir;
+        xVec3SMul(&dir, &tartar->vel, -1.0f / vel_mag);
+        xMat3x3LookVec(&mat_rot, &dir);
+        
+        xMat3x3 mat_spiral;
+        xMat3x3Rot(&mat_spiral, &mat_rot.at, 2.0f * PI * (parab->minTime - parab->maxTime));
+        xMat3x3Mul(&mat_rot, &mat_rot, &mat_spiral);
+
+        TypData_RotMatSet(&mat_rot);
+        TypData_RotMatSet(&mat_rot);
+    }
+
+    static S32 moreorless = 0;
+
+    if (--moreorless < 0)
+    {
+        moreorless = 3;
+        DisperseBubWake(tartar->rad_cur, &tartar->vel);
+    }
+
+    if (this->flg_hazard & 0x2000)
+    {
+        if (!(globals.player.DamageTimer > 0.0f) && ColPlyrSphere(tartar->rad_cur))
+        {
+            HurtThePlayer();
+            ReconChuck();
+            return;
+        }
+    }
+    
+    StaggeredCollide();
+}
+
+void NPCHazard::DisperseBubWake(F32 radius, const xVec3* velocity)
+{
+    F32 dst_disperse = 0.5f * radius;
+
+    xVec3 pos_disperse;
+    pos_disperse = *(xVec3*)Up() * (dst_disperse * (2.0f * (xurand() - 0.5f)));
+    pos_disperse += *(xVec3*)Right() * (dst_disperse * (2.0f * (xurand() - 0.5f)));
+    
+    xVec3 vel_disperse;
+    vel_disperse = *(xVec3*)Up() * (8.0f * (2.0f * (xurand() - 0.5f)));
+    vel_disperse += *(xVec3*)Right() * (8.0f * (2.0f * (xurand() - 0.5f)));
+
+    xVec3 dir_backward = *velocity;
+    dir_backward.inverse();
+    dir_backward.normalize();
+
+    xVec3 pos_emit = this->pos_hazard;
+    pos_emit -= dir_backward * (1.5f * radius);
+
+    zFX_SpawnBubbleTrail(&pos_emit, 0x10, &pos_disperse, &vel_disperse);
+}
+
+void NPCHazard::ReconChuck()
+{
+    HAZBall* ball = &this->custdata.ball;
+    
+    xVec3 dir_norm = this->custdata.collide.dir_normal;
+    xVec3 vel_flight = this->custdata.tartar.vel;
+
+    Reconfigure(NPC_HAZ_CHUCKBLAST);
+    
+    if (xVec3Length2(&dir_norm) > 0.0f)
+    {
+        xVec3Copy((xVec3*)&this->mdl_hazard->Mat->up, &dir_norm);
+        NPCC_MakePerp((xVec3*)&this->mdl_hazard->Mat->at, &dir_norm);
+        xVec3Cross((xVec3*)&this->mdl_hazard->Mat->right, (xVec3*)&this->mdl_hazard->Mat->up, (xVec3*)&this->mdl_hazard->Mat->at);
+        
+        xMat3x3 mat;
+        xMat3x3Rot(&mat, &dir_norm, 2 * PI * xurand());
+        xMat3x3Mul(xModelGetFrame(this->mdl_hazard), xModelGetFrame(this->mdl_hazard), &mat);
+
+        F32 dot = xVec3Dot(&dir_norm, &g_Y3);
+
+        if (FABS(dot) < 0.86f) 
+        {
+            ball->rad_max *= 0.5f;
+            ball->rad_min *= 0.5f;
+            ball->rad_cur *= 0.5f;
+        }
+    }
+
+    Start(NULL, -1.0f);
+
+    if (this->flg_hazard & 0x8 && HAZ_AvailablePool() > 5)
+    {
+        for (S32 i = 0; i < 7; i++)
+        {
+            if (KickBlooshBlob(&vel_flight))
+            {
+                this->flg_hazard |= 0x40;
+            }
+        }
+    }
+}
+
+void NPCHazard::Upd_ChuckBlast(F32 dt)
+{
+    HAZBall* ball = &this->custdata.ball;
+
+    ball->rad_cur = LERP(this->pam_interp, ball->rad_min, ball->rad_max);
+
+    if (this->flg_hazard & 0x2000 && !(globals.player.DamageTimer > 0.75f) && this->pam_interp < 0.25f)
+    {
+        if (ColPlyrCyl(ball->rad_cur, 0.5f * ball->rad_cur))
+        {
+            HurtThePlayer();
+        }
+    }
+
+    if (this->flg_hazard & 0x8)
+    {
+        xSndPlay3D(xStrHash("Chu_splash"), 0.77f, 0.0f, 0x80, 0x0, &this->pos_hazard, 5.0f, 15.0f, SND_CAT_GAME, 0.0f);
+    }
+
+    if (this->flg_hazard & 0x8)
+    {
+        WaterSplash(NULL);
+    }
+
+    WavesOfEvil();
+}
+
+void NPCHazard::WaterSplash(const xVec3* dir_norm)
+{
+    xVec3 pos_emit = this->pos_hazard;
+
+    xVec3 up, at, rt;
+    if (dir_norm)
+    {
+        up = *dir_norm;
+        NPCC_MakePerp(&at, dir_norm);
+        xVec3Cross(&rt, &up, &at);
+    }
+    else
+    {
+        up = *(xVec3*)Up();
+        at = *(xVec3*)At();
+        rt = *(xVec3*)Right();
+    }
+
+    for (S32 i = 0; i < 8; i++)
+    {
+        xVec3 vel_emit;
+        vel_emit = up * (0.5f * xurand() + 1.5f);
+
+        F32 direction;
+        if (xrand() & 0x800000)
+        {
+            direction = 1.0f;
+        }
+        else
+        {
+            direction = -1.0f;
+        }
+
+        vel_emit += at * direction * (0.5f * (2.0f * (xurand() - 0.5f)) + 1.0f);
+
+        if (xrand() & 0x800000)
+        {
+            direction = 1.0f;
+        }
+        else
+        {
+            direction = -1.0f;
+        }
+
+        vel_emit += rt * direction * (0.5f * (2.0f * (xurand() - 0.5f)) + 1.0f);
+        vel_emit.normalize();
+        vel_emit *= 10.0f;
+
+        NPAR_EmitH2ODrips(&pos_emit, &vel_emit);
+    }
+
+    for (S32 i = 0; i < 8; i++)
+    {
+        xVec3 vel_emit;
+        xurand();
+        vel_emit = up * 1.0f;
+
+        F32 direction;
+        if (xrand() & 0x800000)
+        {
+            direction = 1.0f;
+        }
+        else
+        {
+            direction = -1.0f;
+        }
+
+        vel_emit += at * direction * (0.75f * (2.0f * (xurand() - 0.5f)) + 0.75f);
+
+        if (xrand() & 0x800000)
+        {
+            direction = 1.0f;
+        }
+        else
+        {
+            direction = -1.0f;
+        }
+
+        vel_emit += rt * direction * (0.75f * (2.0f * (xurand() - 0.5f)) + 0.75f);
+        vel_emit.normalize();
+        vel_emit *= 7.0f;
+
+        NPAR_EmitH2ODrops(&pos_emit, &vel_emit);
+    }
+}
+
+void NPCHazard::WavesOfEvil()
+{
+    F32 rad = this->custdata.collide.rad_cur;
+
+    for (S32 i = 0; i < 8; i++)
+    {
+        xVec3 pos_emit;
+        xVec3 vel_emit;
+
+        pos_emit = *(xVec3*)At() * (2.0f * (xurand() - 0.5f));
+        pos_emit += *(xVec3*)Right() * (2.0f * (xurand() - 0.5f));
+        pos_emit.normalize();
+        pos_emit *= rad;    
+
+        pos_emit += *(xVec3*)Up() * 0.2f;
+        pos_emit += this->pos_hazard;
+
+        vel_emit = *(xVec3*)Up();
+        vel_emit *= 5.5f;
+
+        NPAR_EmitH2OSpray(&pos_emit, &vel_emit);
+    }
+}
+
+S32 NPCHazard::KickBlooshBlob(const xVec3* vel_flight)
+{
+    NPCHazard* haz = HAZ_Acquire();
+    if (!haz)
+    {
+        return 0;
+    }
+
+    if (!haz->ConfigHelper(NPC_HAZ_CHUCKBLOOSH))
+    {
+        haz->Discard();
+        return 1;
+    }
+
+    haz->SetNPCOwner(this->npc_owner);
+
+    HAZTarTar* tartar = &haz->custdata.tartar;
+    tartar->vel = *(xVec3*)this->Up() * (5.0f * xurand() + 5.0f);
+
+    F32 spd_factor = 3.5f * xurand() + 2.5f;
+    tartar->vel += *(xVec3*)this->At() * ((2.0f * (xurand() - 0.5f)) * spd_factor);
+
+    spd_factor = 3.5f * xurand() + 2.5f;
+    tartar->vel += *(xVec3*)this->Right() * ((2.0f * (xurand() - 0.5f)) * spd_factor);
+
+    if (xVec3Dot(&g_Y3, (xVec3*)this->Up()) > 0.86f)
+    {
+        xVec3 vel_drift = { 0.0f, 0.0f, 0.0f };
+        vel_drift.x = vel_flight->x;
+        vel_drift.z = vel_flight->z;
+
+        F32 drift_mag = xVec3Length(&vel_drift);
+        if (drift_mag > 0.5f)
+        {
+            F32 mag_factor = (2.5f < 0.25f * drift_mag ? 2.5f : 0.25f * drift_mag) / drift_mag;
+            xVec3 vel_push = vel_drift * mag_factor;
+            tartar->vel += vel_push;
+        }
+
+    }
+
+    xVec3 pos_emit = this->pos_hazard;
+    pos_emit += *(xVec3*)this->Up() * 0.35f;
+
+    haz->Start(&pos_emit, -1.0f);
+
+    return 2;
 }
 
 void NPCHazard::ReconArfBone()
