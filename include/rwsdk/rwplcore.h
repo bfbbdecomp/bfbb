@@ -531,6 +531,12 @@ enum RwStreamAccessType
     rwSTREAMACCESSTYPEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
 };
 
+struct RwMemory
+{
+    RwUInt8* start;
+    RwUInt32 length;
+};
+
 struct RwStreamMemory
 {
     RwUInt32 position;

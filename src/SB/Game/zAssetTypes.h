@@ -27,12 +27,6 @@
 #include "zNPCTypeTest.h"
 #include "zNPCTypeTiki.h"
 
-struct RwMemory
-{
-    U8* start;
-    U32 length;
-};
-
 class HackModelRadius
 {
 public:
