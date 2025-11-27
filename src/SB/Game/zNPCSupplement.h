@@ -7,6 +7,7 @@
 #include "xPtankPool.h"
 #include "xShadow.h"
 #include "xVec3.h"
+#include "zNPCTypeCommon.h"
 
 #include "zLightning.h"
 #include <types.h>
