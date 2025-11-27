@@ -47,6 +47,12 @@ typedef RpCollisionTriangle* (*RpIntersectionCallBackWorldTriangle)(
     RpIntersection* intersection, RpWorldSector* sector, RpCollisionTriangle* collTriangle,
     RwReal distance, void* data);
 
+typedef RpAtomic* (*RpIntersectionCallBackAtomic)
+    (RpIntersection* intersection, RpWorldSector* sector, RpAtomic* atomic, RwReal distance, void* data);
+
+typedef RpWorldSector* (*RpIntersectionCallBackWorldSector)
+    (RpIntersection* intersection, RpWorldSector* worldSector, void* data);
+
 #ifdef __cplusplus
 extern "C" {
 #endif

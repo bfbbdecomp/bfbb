@@ -5,6 +5,8 @@
 
 #include <rwcore.h>
 #include <rpworld.h>
+#include <rpcollis.h>
+#include <rtintsec.h>
 
 struct xClumpCollBSPBranchNode
 {
@@ -55,6 +57,7 @@ struct nodeInfo
     U32 type;
     U32 index;
 };
+
 struct RwMeshCache
 {
     U32 lengthOfMeshesArray;
@@ -69,20 +72,27 @@ struct TempAtomicList
     RwMeshCache* meshCache;
 };
 
-class RpIntersection;
-class RpCollisionTriangle;
+typedef S32 (*xClumpCollIntersectionCallback)(xClumpCollBSPTriangle*, void*);
 
 typedef RpCollisionTriangle* (*IntersectionCB)(RpIntersection*, RpWorldSector*,
                                                RpCollisionTriangle*, float, void*);
 
+xClumpCollBSPTree* xClumpColl_StaticBufferInit(void* data, U32);
 void xClumpColl_InstancePointers(xClumpCollBSPTree* tree, RpClump* clump);
-xClumpCollBSPTree* xClumpColl_StaticBufferInit(void* data, U32 param_2);
-void xClumpColl_ForAllCapsuleLeafNodeIntersections(xClumpCollBSPTree* tree, RwLine* line, F32 dist,
-                                                   xClumpCollV3dGradient* grad,
-                                                   int (*tri)(xClumpCollBSPTriangle*, void*),
-                                                   void* data);
+xClumpCollBSPTree*
+xClumpColl_ForAllBoxLeafNodeIntersections(xClumpCollBSPTree* tree, RwBBox* box,
+                                          xClumpCollIntersectionCallback callBack, void* data);
+xClumpCollBSPTree*
+xClumpColl_ForAllLineLeafNodeIntersections(xClumpCollBSPTree* tree, RwLine* line,
+                                           xClumpCollV3dGradient* grad,
+                                           xClumpCollIntersectionCallback callBack, void* data);
+xClumpCollBSPTree*
+xClumpColl_ForAllCapsuleLeafNodeIntersections(xClumpCollBSPTree* tree, RwLine* line, F32 radius,
+                                              xClumpCollV3dGradient* grad,
+                                              xClumpCollIntersectionCallback callBack, void* data);
 xClumpCollBSPTree* xClumpColl_ForAllIntersections(xClumpCollBSPTree* tree,
                                                   RpIntersection* intersection,
-                                                  IntersectionCB callBack, void* data);
+                                                  RpIntersectionCallBackWorldTriangle callBack,
+                                                  void* data);
 
 #endif
