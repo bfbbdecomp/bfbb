@@ -852,10 +852,215 @@ void NPCHazard::Upd_ChuckBloosh(F32 dt)
     NPAR_EmitH2OTrail(&pos_emit);
 }
 
+void NPCHazard::Upd_BoneFlight(F32 dt)
+{
+    HAZTarTar* tartar = &this->custdata.tartar;
+    xParabola* parab = &tartar->parabinfo;
+
+    if (this->tmr_remain < dt)
+    {
+        if (this->flg_hazard & 0x20000)
+        {
+            xParabolaEvalPos(parab, &this->pos_hazard, parab->maxTime);
+            if (!(this->flg_hazard & 0x40000))
+            {
+                ReconArfBone();
+                return;
+            }
+            else
+            {
+                MarkForRecycle();
+                return;
+            }
+        }
+        else
+        {
+            MarkForRecycle();
+            return;
+        }
+    }
+
+    if (this->flg_hazard & 0x8)
+    {
+        xVec3Sub(&tartar->vel, &tartar->pos_tgt, &this->pos_hazard);
+        xVec3SMulBy(&tartar->vel, 1.0f / this->tmr_remain);
+
+        tartar->vel.y += 0.5f * this->tmr_remain * 0.5f;
+    }
+
+    if (this->flg_hazard & 0x8)
+    {
+        PreCollide();
+    }
+
+    F32 tym = tym_lifespan - tmr_remain;
+    xParabolaEvalPos(parab, &this->pos_hazard, tym);
+    xParabolaEvalVel(parab, &tartar->vel, tym);
+
+    static S32 moreorless = 0;
+    if (--moreorless < 0)
+    {
+        moreorless = 3;
+        zFX_SpawnBubbleTrail(&this->pos_hazard, 0x1);
+    }
+
+    if (this->flg_hazard & 0x2000)
+    {
+        if (!(globals.player.DamageTimer > 0.0f) && ColPlyrSphere(tartar->rad_cur))
+        {
+            HurtThePlayer();
+            MarkForRecycle();
+            return;
+        }
+    }
+
+    StaggeredCollide();
+}
+
 void NPCHazard::ReconArfBone()
 {
     Reconfigure(NPC_HAZ_ARFBONEBLAST);
     Start(NULL, -1.0f);
+}
+
+void NPCHazard::Upd_BoneBlast(F32 dt)
+{
+    xVec3 pos_emit = { 0.0f, 0.0f, 0.0f };
+    HAZBall* ball = &this->custdata.ball;
+
+    ball->rad_cur = LERP(this->pam_interp, ball->rad_min, ball->rad_max);
+
+    if (this->flg_hazard & 0x2000 && !(globals.player.DamageTimer > 0.0f) &&
+        ColPlyrSphere(ball->rad_cur))
+    {
+        HurtThePlayer();
+    }
+
+    g_parf_default.custom_flags = 0x100;
+    xVec3Copy(&pos_emit, &this->pos_hazard);
+    xVec3Copy(&g_parf_default.pos, &pos_emit);
+
+    xParEmitterEmitCustom(g_pemit_default, dt, &g_parf_default);
+}
+
+void NPCHazard::Upd_OilBubble(F32 dt)
+{
+    HAZTarTar* tartar = &this->custdata.tartar;
+    xParabola* parab = &tartar->parabinfo;
+
+    if (this->tmr_remain < 0.0f)
+    {
+        if (this->flg_hazard & 0x20000)
+        {
+            xParabolaEvalPos(parab, &this->pos_hazard, parab->maxTime);
+            if (xVec3Length2(&tartar->dir_normal) > 0.1f)
+            {
+                OilSplash(&tartar->dir_normal);
+            }
+
+            if (!(flg_hazard & 0x40000))
+            {
+                ReconSlickOil();
+                return;
+            }
+            else
+            {
+                MarkForRecycle();
+                return;
+            }
+        }
+        else
+        {
+            xVec3 whence;
+            xParabolaEvalVel(parab, &whence, parab->maxTime);
+            xVec3Inv(&whence, &whence);
+
+            F32 mag = xVec3Length(&whence);
+            if (mag > 0.00001f)
+            {
+                whence /= mag;
+                OilSplash(&whence);
+            }
+            else
+            {
+                OilSplash((xVec3*)Up());
+            }
+
+            MarkForRecycle();
+            return;
+        }
+    }
+    else
+    {
+        if (this->flg_hazard & 0x8)
+        {
+            xVec3Sub(&tartar->vel, &tartar->pos_tgt, &this->pos_hazard);
+            xVec3SMulBy(&tartar->vel, 1.0f / this->tmr_remain);
+
+            tartar->vel.y += 0.2f * (0.5f * this->tmr_remain);
+        }
+
+        if (this->flg_hazard & 0x8)
+        {
+            PreCollide();
+        }
+
+        F32 tym = this->tym_lifespan - this->tmr_remain;
+        xParabolaEvalPos(parab, &this->pos_hazard, tym);
+        xParabolaEvalVel(parab, &tartar->vel, tym);
+
+        F32 mag = xVec3Length(&tartar->vel);
+        if (mag > 0.00001f)
+        {
+            xMat3x3 mat_rot;
+            xVec3 dir;
+
+            xVec3SMul(&dir, &tartar->vel, -1.0f / mag);
+            xMat3x3LookVec(&mat_rot, &dir);
+            TypData_RotMatSet(&mat_rot);
+        }
+
+        if (this->flg_hazard & 0x8)
+        {
+            tartar->streakID = NPCC_StreakCreate(NPC_STRK_OILBUBBLE);
+        }
+
+        if (tartar->streakID != 0xDEAD)
+        {
+            StreakUpdate(tartar->streakID, 0.35f);
+        }
+
+        static S32 moreorless = 0;
+        if (--moreorless < 0)
+        {
+            moreorless = 3;
+
+            F32 rad = tartar->rad_cur;
+            xVec3 pos = this->pos_hazard;
+
+            xVec3AddScaled(&pos, (xVec3*)Up(), rad * (2.0f * (xurand() - 0.5f)));
+            xVec3AddScaled(&pos, (xVec3*)Right(), rad * (2.0f * (xurand() - 0.5f)));
+
+            NPAR_EmitOilTrailz(&pos);
+        }
+
+        if (this->flg_hazard & 0x2000 && !(globals.player.DamageTimer > 0.0f) &&
+            ColPlyrSphere(0.75f * tartar->rad_cur))
+        {
+            HurtThePlayer();
+            NPCC_Slick_MakePlayerSlip(this->npc_owner);
+
+            xVec3 whence;
+            xParabolaEvalVel(parab, &whence, parab->maxTime);
+            xVec3Inv(&whence, &whence);
+            OilSplash(&whence);
+
+            MarkForRecycle();
+            return;
+        }
+
+        StaggeredCollide();
+    }
 }
 
 void UVAModelInfo::Hemorrage()

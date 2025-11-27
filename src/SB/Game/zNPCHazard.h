@@ -271,8 +271,14 @@ struct NPCHazard
     void WaterSplash(const xVec3* dir_norm);
     S32 KickBlooshBlob(const xVec3* vel_flight);
     void Upd_ChuckBloosh(F32 dt);
+    void Upd_BoneFlight(F32 dt);
     S32 KickSteamyStinky();
     void ReconArfBone();
+    void Upd_BoneBlast(F32 dt);
+    void Upd_OilBubble(F32 dt);
+    void ReconSlickOil();
+    void OilSplash(const xVec3* dir_norm);
+    void StreakUpdate(U32 streakID, F32 rad);
     void HurtThePlayer();
     void TypData_RotMatSet(xMat3x3* mat);
     void TypData_RotMatApply(xMat3x3* mat);
