@@ -423,7 +423,7 @@ config.libs = [
             Object(NonMatching, "SB/Core/x/xEntMotion.cpp"),
             Object(Matching, "SB/Core/x/xEnv.cpp"),
             Object(Matching, "SB/Core/x/xEvent.cpp"),
-            Object(NonMatching, "SB/Core/x/xFFX.cpp"),
+            Object(Equivalent, "SB/Core/x/xFFX.cpp"),
             Object(Matching, "SB/Core/x/xFog.cpp"),
             Object(NonMatching, "SB/Core/x/xFont.cpp"),
             Object(NonMatching, "SB/Core/x/xFX.cpp"),
