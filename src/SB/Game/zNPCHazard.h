@@ -254,6 +254,7 @@ struct NPCHazard
     void PosSet(const xVec3* pos);
     void NotifyCBSet(HAZNotify* noter);
     void SetAlpha(F32 alpha);
+    void OrientToDir(const xVec3* vec_path, S32 doTheTwist);
     S32 ColTestSphere(const xBound* bnd_tgt, F32 rad);
     S32 ColTestCyl(const xBound* bnd_tgt, F32 rad, F32 hyt);
     S32 ColPlyrSphere(F32 rad);
@@ -269,6 +270,7 @@ struct NPCHazard
     void WavesOfEvil();
     void WaterSplash(const xVec3* dir_norm);
     S32 KickBlooshBlob(const xVec3* vel_flight);
+    void Upd_ChuckBloosh(F32 dt);
     S32 KickSteamyStinky();
     void ReconArfBone();
     void HurtThePlayer();

@@ -818,6 +818,40 @@ S32 NPCHazard::KickBlooshBlob(const xVec3* vel_flight)
     return 2;
 }
 
+void NPCHazard::Upd_ChuckBloosh(F32 dt)
+{
+    HAZTarTar* tartar = &this->custdata.tartar;
+    xParabola* parab = &tartar->parabinfo;
+
+    F32 rat_quad = SQ(this->pam_interp) / SQ(0.15f);
+    if (rat_quad <= 0.15f)
+    {
+        tartar->rad_cur = LERP(rat_quad, tartar->rad_min, tartar->rad_max);
+    }
+
+    if (this->flg_hazard & 0x8)
+    {
+        PreCollide();
+    }
+
+    F32 dst_behind = tym_lifespan < tym_lifespan - tmr_remain ? tym_lifespan : tym_lifespan - tmr_remain;
+    xParabolaEvalPos(parab, &this->pos_hazard, dst_behind);
+    xParabolaEvalVel(parab, &tartar->vel, dst_behind);
+
+    OrientToDir(&tartar->vel, 0x0);
+
+    if (--this->cnt_nextemit >= 0)
+    {
+        return;
+    }
+
+    this->cnt_nextemit = 5;
+
+    xVec3 pos_emit = this->pos_hazard;
+    pos_emit -= tartar->vel * (0.5f * tartar->rad_cur);
+    NPAR_EmitH2OTrail(&pos_emit);
+}
+
 void NPCHazard::ReconArfBone()
 {
     Reconfigure(NPC_HAZ_ARFBONEBLAST);
