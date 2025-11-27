@@ -313,6 +313,7 @@ void NPAR_EmitTarTarSmoke(const xVec3* pos, const xVec3* vel);
 void NPAR_EmitH2ODrips(const xVec3* pos, const xVec3 * vel);
 void NPAR_EmitH2ODrops(const xVec3* pos, const xVec3 * vel);
 void NPAR_EmitH2OSpray(const xVec3* pos, const xVec3 * vel);
+void NPAR_EmitH2OTrail(const xVec3* pos);
 NPARMgmt* NPAR_PartySetup(en_nparptyp parType, void** userData, NPARXtraData* xtraData);
 void NPAR_SceneReset();
 static void NPCC_ShadowCacheReset();
