@@ -28,21 +28,16 @@ static xParEmitterCustomSettings g_parf_default;
 static xParEmitterCustomSettings g_parf_zapwarn;
 static xParEmitterCustomSettings g_parf_zapwave;
 static xParEmitterCustomSettings g_parf_zaprain;
-static RwRaster * g_rast_hazshad[30];
+static RwRaster* g_rast_hazshad[30];
 static zParEmitter* g_pemit_default;
 static zParEmitter* g_pemit_zapwarn;
 static zParEmitter* g_pemit_zapwave;
 static zParEmitter* g_pemit_zaprain;
 
 static en_hazmodel g_funfrag_choices[8] = {
-    NPC_HAZMDL_FUNFRAG_WRENCH,
-    NPC_HAZMDL_FUNFRAG_JOYSTICK,
-    NPC_HAZMDL_FUNFRAG_SINK,
-    NPC_HAZMDL_FUNFRAG_DUCK,
-    NPC_HAZMDL_FUNFRAG_BRA,
-    NPC_HAZMDL_FUNFRAG_HEADPHONES,
-    NPC_HAZMDL_FUNFRAG_CELLPHONE,
-    NPC_HAZMDL_FUNFRAG_SHOE,
+    NPC_HAZMDL_FUNFRAG_WRENCH,    NPC_HAZMDL_FUNFRAG_JOYSTICK, NPC_HAZMDL_FUNFRAG_SINK,
+    NPC_HAZMDL_FUNFRAG_DUCK,      NPC_HAZMDL_FUNFRAG_BRA,      NPC_HAZMDL_FUNFRAG_HEADPHONES,
+    NPC_HAZMDL_FUNFRAG_CELLPHONE, NPC_HAZMDL_FUNFRAG_SHOE,
 };
 
 static char* g_strz_hazModel[30];
@@ -237,7 +232,7 @@ void NPCHazard::Discard()
 
         Cleanup();
 
-        g_cnt_activehaz &= ~((g_cnt_activehaz-1) >> 31);
+        g_cnt_activehaz &= ~((g_cnt_activehaz - 1) >> 31);
     }
 }
 
@@ -342,7 +337,6 @@ en_hazmodel NPCHazard::PickFunFrag()
     return (en_hazmodel)xUtil_choose<S32>(choices, cnt_choice, NULL);
 }
 
-
 void NPCHazard::StagColStat()
 {
     this->StagColGeneral(1);
@@ -370,7 +364,7 @@ void NPCHazard::Upd_Patriot(F32)
 S32 NPCHazard::KickSteamyStinky()
 {
     S32 ok;
-    NPCHazard* haz = (NPCHazard *)HAZ_Acquire();
+    NPCHazard* haz = (NPCHazard*)HAZ_Acquire();
 
     F32 tym_lifeOfChild = 0.25f;
 
@@ -401,9 +395,12 @@ void NPCHazard::TarTarFalumpf()
 
     for (S32 i = 0; i < 16; i++)
     {
-        pos_emit.x = this->custdata.tartar.rad_cur * (2.0f * (xurand() - 0.5f)) + this->pos_hazard.x;
-        pos_emit.y = this->custdata.tartar.rad_cur * (2.0f * (xurand() - 0.5f)) + this->pos_hazard.y;
-        pos_emit.z = this->custdata.tartar.rad_cur * (2.0f * (xurand() - 0.5f)) + this->pos_hazard.z;
+        pos_emit.x =
+            this->custdata.tartar.rad_cur * (2.0f * (xurand() - 0.5f)) + this->pos_hazard.x;
+        pos_emit.y =
+            this->custdata.tartar.rad_cur * (2.0f * (xurand() - 0.5f)) + this->pos_hazard.y;
+        pos_emit.z =
+            this->custdata.tartar.rad_cur * (2.0f * (xurand() - 0.5f)) + this->pos_hazard.z;
         NPAR_EmitTarTarNozzle(&pos_emit, &g_Y3);
     }
 }
@@ -419,7 +416,7 @@ void NPCHazard::TarTarSplash(const xVec3* dir_norm)
     xVec3 up;
     xVec3 at;
     xVec3 right;
-    
+
     if (dir_norm != NULL)
     {
         up = *dir_norm;
@@ -431,7 +428,7 @@ void NPCHazard::TarTarSplash(const xVec3* dir_norm)
         at = *(xVec3*)At();
         right = *(xVec3*)Right();
     }
-    
+
     xVec3 pos_emit = pos_hazard;
     for (S32 i = 0; i < 16; i++)
     {
@@ -480,9 +477,8 @@ void NPCHazard::TarTarLinger()
         return;
     }
 
-
     this->cnt_nextemit = 10;
-    
+
     F32 rad_use = 0.75f * ball->rad_cur;
     xVec3 pos_emit = this->pos_hazard;
 
@@ -537,7 +533,7 @@ void NPCHazard::Upd_ChuckBomb(F32 dt)
         xVec3 dir;
         xVec3SMul(&dir, &tartar->vel, -1.0f / vel_mag);
         xMat3x3LookVec(&mat_rot, &dir);
-        
+
         xMat3x3 mat_spiral;
         xMat3x3Rot(&mat_spiral, &mat_rot.at, 2.0f * PI * (parab->minTime - parab->maxTime));
         xMat3x3Mul(&mat_rot, &mat_rot, &mat_spiral);
@@ -563,7 +559,7 @@ void NPCHazard::Upd_ChuckBomb(F32 dt)
             return;
         }
     }
-    
+
     StaggeredCollide();
 }
 
@@ -574,7 +570,7 @@ void NPCHazard::DisperseBubWake(F32 radius, const xVec3* velocity)
     xVec3 pos_disperse;
     pos_disperse = *(xVec3*)Up() * (dst_disperse * (2.0f * (xurand() - 0.5f)));
     pos_disperse += *(xVec3*)Right() * (dst_disperse * (2.0f * (xurand() - 0.5f)));
-    
+
     xVec3 vel_disperse;
     vel_disperse = *(xVec3*)Up() * (8.0f * (2.0f * (xurand() - 0.5f)));
     vel_disperse += *(xVec3*)Right() * (8.0f * (2.0f * (xurand() - 0.5f)));
@@ -592,25 +588,26 @@ void NPCHazard::DisperseBubWake(F32 radius, const xVec3* velocity)
 void NPCHazard::ReconChuck()
 {
     HAZBall* ball = &this->custdata.ball;
-    
+
     xVec3 dir_norm = this->custdata.collide.dir_normal;
     xVec3 vel_flight = this->custdata.tartar.vel;
 
     Reconfigure(NPC_HAZ_CHUCKBLAST);
-    
+
     if (xVec3Length2(&dir_norm) > 0.0f)
     {
         xVec3Copy((xVec3*)&this->mdl_hazard->Mat->up, &dir_norm);
         NPCC_MakePerp((xVec3*)&this->mdl_hazard->Mat->at, &dir_norm);
-        xVec3Cross((xVec3*)&this->mdl_hazard->Mat->right, (xVec3*)&this->mdl_hazard->Mat->up, (xVec3*)&this->mdl_hazard->Mat->at);
-        
+        xVec3Cross((xVec3*)&this->mdl_hazard->Mat->right, (xVec3*)&this->mdl_hazard->Mat->up,
+                   (xVec3*)&this->mdl_hazard->Mat->at);
+
         xMat3x3 mat;
         xMat3x3Rot(&mat, &dir_norm, 2 * PI * xurand());
         xMat3x3Mul(xModelGetFrame(this->mdl_hazard), xModelGetFrame(this->mdl_hazard), &mat);
 
         F32 dot = xVec3Dot(&dir_norm, &g_Y3);
 
-        if (FABS(dot) < 0.86f) 
+        if (FABS(dot) < 0.86f)
         {
             ball->rad_max *= 0.5f;
             ball->rad_min *= 0.5f;
@@ -638,7 +635,8 @@ void NPCHazard::Upd_ChuckBlast(F32 dt)
 
     ball->rad_cur = LERP(this->pam_interp, ball->rad_min, ball->rad_max);
 
-    if (this->flg_hazard & 0x2000 && !(globals.player.DamageTimer > 0.75f) && this->pam_interp < 0.25f)
+    if (this->flg_hazard & 0x2000 && !(globals.player.DamageTimer > 0.75f) &&
+        this->pam_interp < 0.25f)
     {
         if (ColPlyrCyl(ball->rad_cur, 0.5f * ball->rad_cur))
         {
@@ -648,7 +646,8 @@ void NPCHazard::Upd_ChuckBlast(F32 dt)
 
     if (this->flg_hazard & 0x8)
     {
-        xSndPlay3D(xStrHash("Chu_splash"), 0.77f, 0.0f, 0x80, 0x0, &this->pos_hazard, 5.0f, 15.0f, SND_CAT_GAME, 0.0f);
+        xSndPlay3D(xStrHash("Chu_splash"), 0.77f, 0.0f, 0x80, 0x0, &this->pos_hazard, 5.0f, 15.0f,
+                   SND_CAT_GAME, 0.0f);
     }
 
     if (this->flg_hazard & 0x8)
@@ -757,7 +756,7 @@ void NPCHazard::WavesOfEvil()
         pos_emit = *(xVec3*)At() * (2.0f * (xurand() - 0.5f));
         pos_emit += *(xVec3*)Right() * (2.0f * (xurand() - 0.5f));
         pos_emit.normalize();
-        pos_emit *= rad;    
+        pos_emit *= rad;
 
         pos_emit += *(xVec3*)Up() * 0.2f;
         pos_emit += this->pos_hazard;
@@ -807,7 +806,6 @@ S32 NPCHazard::KickBlooshBlob(const xVec3* vel_flight)
             xVec3 vel_push = vel_drift * mag_factor;
             tartar->vel += vel_push;
         }
-
     }
 
     xVec3 pos_emit = this->pos_hazard;
@@ -834,7 +832,8 @@ void NPCHazard::Upd_ChuckBloosh(F32 dt)
         PreCollide();
     }
 
-    F32 dst_behind = tym_lifespan < tym_lifespan - tmr_remain ? tym_lifespan : tym_lifespan - tmr_remain;
+    F32 dst_behind =
+        tym_lifespan < tym_lifespan - tmr_remain ? tym_lifespan : tym_lifespan - tmr_remain;
     xParabolaEvalPos(parab, &this->pos_hazard, dst_behind);
     xParabolaEvalVel(parab, &tartar->vel, dst_behind);
 
