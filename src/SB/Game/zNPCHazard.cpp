@@ -1062,6 +1062,268 @@ void NPCHazard::Upd_OilBubble(F32 dt)
     }
 }
 
+void NPCHazard::ReconSlickOil()
+{
+    HAZBall* ball = &this->custdata.ball;
+    xVec3 dir_norm = this->custdata.collide.dir_normal;
+
+    Reconfigure(NPC_HAZ_OILSLICK);
+
+    if (xVec3Length2(&dir_norm) > 0.0f)
+    {
+        xVec3Copy((xVec3*)&this->mdl_hazard->Mat->up, &dir_norm);
+        NPCC_MakePerp((xVec3*)&this->mdl_hazard->Mat->at, &dir_norm);
+        xVec3Cross((xVec3*)&this->mdl_hazard->Mat->right, (xVec3*)&this->mdl_hazard->Mat->up, (xVec3*)&this->mdl_hazard->Mat->at);
+    }
+
+    xMat3x3 mat;
+    xMat3x3Rot(&mat, &dir_norm, 2 * PI * xurand());
+    xMat3x3Mul(xModelGetFrame(this->mdl_hazard), xModelGetFrame(this->mdl_hazard), &mat);
+    F32 dot = xVec3Dot(&dir_norm, &g_Y3);
+
+    if (FABS(dot) < 0.86f)
+    {
+        ball->rad_max *= 0.5f;
+        ball->rad_min *= 0.5f;
+        ball->rad_cur *= 0.5f;
+    }
+
+    Start(NULL, -1.0f);
+}
+
+void NPCHazard::OilSplash(const xVec3* dir_norm)
+{
+    xVec3 up;
+    xVec3 at;
+    xVec3 rt;
+    
+    if (dir_norm)
+    {
+        up = *dir_norm;
+        NPCC_MakeArbPlane(dir_norm, &at, &rt);
+    }
+    else
+    {
+        up = *(xVec3*)Up();
+        at = *(xVec3*)At();
+        rt = *(xVec3*)Right();
+    }
+
+    xVec3 pos_emit = this->pos_hazard;
+    for (S32 i = 0; i < 16; i++)
+    {
+        xVec3 vel_emit;
+        vel_emit = up;
+
+        F32 direction;
+        if (xrand() & 0x800000)
+        {
+            direction = 1.0f;
+        }
+        else
+        {
+            direction = -1.0f;
+        }
+
+        vel_emit += at * direction * (0.4f * (2.0f * (xurand() - 0.5f)) + 0.25f);
+
+        if (xrand() & 0x800000)
+        {
+            direction = 1.0f;
+        }
+        else
+        {
+            direction = -1.0f;
+        }
+
+        vel_emit += rt * direction * (0.4f * (2.0f * (xurand() - 0.5f)) + 0.25f);
+        vel_emit.normalize();
+        vel_emit *= 15.0f;
+
+        NPAR_EmitOilSplash(&pos_emit, &vel_emit);
+    }
+}
+
+void NPCHazard::Upd_OilOoze(F32 dt)
+{
+    static F32 seg_pam[2] = { 0.15f, 0.75f };
+    HAZBall* ball = &this->custdata.ball;
+    
+    if (this->pam_interp <= seg_pam[0])
+    {
+        ball->rad_cur = (ball->rad_max - ball->rad_min) * EASE(this->pam_interp / seg_pam[0]);
+        ball->rad_cur += ball->rad_min;
+    }
+    else if (this->pam_interp >= seg_pam[1])
+    {
+        ball->rad_cur = (ball->rad_max - ball->rad_min) * EASE(1.0f - ((this->pam_interp - seg_pam[1]) / (1.0f - seg_pam[1])));
+        ball->rad_cur += ball->rad_min;
+    }
+    else
+    {
+        ball->rad_cur = ball->rad_max;
+    }
+
+    if (this->flg_hazard & 0x8 && HAZ_AvailablePool() > 5)
+    {
+        if (KickOilBurst())
+        {
+            this->flg_hazard |= 0x40;
+        }
+    }
+
+    if (this->flg_hazard & 0x8)
+    {
+        this->tmr_nextglob = 1.5f * (0.25f * (xurand() - 0.5f)) + 1.5f;
+    }
+
+    if (this->tmr_nextglob < 0.0f && this->tmr_remain > 1.0f)
+    {
+        if (KickOilGlobby())
+        {
+            this->flg_hazard |= 0x40;
+        }
+
+        this->tmr_nextglob = 1.5f * (0.25f * (xurand() - 0.5f)) + 1.5f;
+    }
+
+    this->tmr_nextglob = -1.0f > this->tmr_nextglob - dt ? -1.0f : this->tmr_nextglob - dt;
+
+    if (this->flg_hazard & 0x2000 && !(globals.player.DamageTimer > 0.0f) && ColPlyrSphere(ball->rad_cur))
+    {
+        NPCC_Slick_MakePlayerSlip(this->npc_owner);
+    }
+
+    if (--this->cnt_nextemit < 0)
+    {
+        this->cnt_nextemit = 10;
+
+        F32 rad_use = 0.75f * ball->rad_cur;
+        xVec3 pos_emit = this->pos_hazard;
+        pos_emit += *(xVec3*)this->At() * (2.0f * (xurand() - 0.5f) * rad_use);
+        pos_emit += *(xVec3*)this->Right() * (2.0f * (xurand() - 0.5f) * rad_use);
+        pos_emit += *(xVec3*)this->Up() * 0.1f;
+
+        NPAR_EmitOilVapors(&pos_emit);
+    }
+}
+
+S32 NPCHazard::KickOilBurst()
+{
+    NPCHazard* haz = HAZ_Acquire();
+    
+    S32 ok;
+    if (haz == NULL)
+    {
+        ok = 0;
+    }
+    else if (haz->ConfigHelper(NPC_HAZ_OILBURST) == 0)
+    {
+        haz->Discard();
+        ok = 1;
+    }
+    else
+    {
+        haz->SetNPCOwner(this->npc_owner);
+
+        xVec3 pos = this->pos_hazard;
+        pos += *(xVec3*)Up() * 0.4f;
+
+        haz->Start(&pos, -1.0f);
+
+        ok = 2;
+    }
+
+    return ok;
+}
+
+S32 NPCHazard::KickOilGlobby()
+{
+    HAZBall* ball = &this->custdata.ball;
+    NPCHazard* haz = HAZ_Acquire();
+    
+    S32 ok;
+    if (haz == NULL)
+    {
+        ok = 0;
+    }
+    else if (haz->ConfigHelper(NPC_HAZ_OILGLOB) == 0)
+    {
+        haz->Discard();
+        ok = 1;
+    }
+    else
+    {
+        haz->SetNPCOwner(this->npc_owner);
+
+        xVec3 pos = this->pos_hazard;
+        F32 rad = 0.5f * ball->rad_cur;
+
+        pos += *(xVec3*)At() * (2.0f * (xurand() - 0.5f) * rad);
+        pos += *(xVec3*)Right() * (2.0f * (xurand() - 0.5f) * rad);
+
+        haz->Start(&pos, 2.0f < this->tmr_remain ? 2.0f : this->tmr_remain);
+
+        ok = 2;
+    }
+
+    return ok;
+}
+
+void NPCHazard::Upd_OilBurst(F32 dt)
+{
+    HAZBall* ball = &this->custdata.ball;
+
+    ball->rad_cur = LERP(this->pam_interp, ball->rad_min, ball->rad_max);
+
+    if (this->flg_hazard & 0x2000 && !(globals.player.DamageTimer > 0.0f))
+    {
+        if (ColPlyrSphere(0.75f * ball->rad_cur))
+        {
+            HurtThePlayer();
+        }
+    }
+
+    if (this->flg_hazard & 0x8)
+    {
+        xSndPlay3D(xStrHash("Tar_saucehit"), 0.77f, 0.0f, 0x80, 0x0, &this->pos_hazard, 3.0f, 15.0f,
+                   SND_CAT_GAME, 0.0f);
+    }
+}
+
+void NPCHazard::Upd_OilGlob(F32 dt)
+{
+    HAZShroom* shroom = &this->custdata.shroom;
+
+    F32 rat_quad = SQ(this->pam_interp) / SQ(0.25f);
+    if (rat_quad <= 0.25f)
+    {
+        shroom->rad_cur = LERP(rat_quad, shroom->rad_min, shroom->rad_max);
+    }
+
+    this->pos_hazard += shroom->vel_rise * dt;
+    shroom->vel_rise += shroom->acc_rise * dt;
+
+    if (this->flg_hazard & 0x2000 && !(globals.player.DamageTimer > 0.0f) &&
+            ColPlyrSphere(shroom->rad_cur))
+    {
+        NPCC_Slick_MakePlayerSlip(this->npc_owner);
+    }
+
+    if (--this->cnt_nextemit < 0)
+    {
+        this->cnt_nextemit = 10;
+
+        F32 rad_use = 0.75f * shroom->rad_cur;
+        xVec3 pos_emit = this->pos_hazard;
+        pos_emit += *(xVec3*)this->At() * (2.0f * (xurand() - 0.5f) * rad_use);
+        pos_emit += *(xVec3*)this->Right() * (2.0f * (xurand() - 0.5f) * rad_use);
+        pos_emit += *(xVec3*)this->Up() * 0.1f;
+
+        NPAR_EmitOilVapors(&pos_emit);
+    }
+}
+
 void UVAModelInfo::Hemorrage()
 {
     model = 0;

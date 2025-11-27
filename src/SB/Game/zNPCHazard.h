@@ -278,6 +278,11 @@ struct NPCHazard
     void Upd_OilBubble(F32 dt);
     void ReconSlickOil();
     void OilSplash(const xVec3* dir_norm);
+    void Upd_OilOoze(F32 dt);
+    S32 KickOilBurst();
+    S32 KickOilGlobby();
+    void Upd_OilBurst(F32 dt);
+    void Upd_OilGlob(F32 dt);
     void StreakUpdate(U32 streakID, F32 rad);
     void HurtThePlayer();
     void TypData_RotMatSet(xMat3x3* mat);
