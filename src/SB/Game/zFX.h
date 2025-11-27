@@ -72,6 +72,7 @@ S32 zFXGooIs(xEnt* obj, F32& depth, U32 playerCheck);
 void zFX_SpawnBubbleHit(const xVec3* pos, U32 num);
 void zFX_SpawnBubbleWall();
 void zFX_SpawnBubbleSlam(const xVec3* pos, U32 num, F32 rang, F32 bvel, F32 rvel);
+void zFX_SpawnBubbleBlast(const xVec3* pos, U32 num, F32 rang, F32 bvel, F32 rvel);
 
 void reset_poppers();
 

@@ -131,6 +131,13 @@ namespace cruise_bubble
         {
             F32 hit_time;
 
+            struct cb_damage_ent
+            {
+                F32 radius;
+
+                cb_damage_ent(F32 radius);
+            };
+
             state_missle_explode();
 
             void start();
@@ -139,17 +146,22 @@ namespace cruise_bubble
 
             F32 get_radius() const;
             void start_effects();
-            void cb_droplet(zFrag* frag, zFragAsset* fa);
+            static void cb_droplet(zFrag* frag, zFragAsset* fa);
             void perturb_direction(const xVec3&, F32, F32, F32, F32);
-            void get_next_quadrant(F32&, F32&, F32&, F32&);
+            static void get_next_quadrant(F32&, F32&, F32&, F32&);
             void reset_quadrants(U32 size, F32 ring);
             void apply_damage(F32 radius);
             void apply_damage_hazards(F32);
-            U8 hazard_check(NPCHazard& haz, void* context);
+            static bool hazard_check(NPCHazard& haz, void* context);
         };
 
         struct state_camera_attach : state_type
         {
+            struct cb_lock_targets
+            {
+                S32 operator()(xEnt&, xGridBound&);
+            };
+
             F32 reticle_delay;
 
             state_camera_attach();
@@ -160,7 +172,7 @@ namespace cruise_bubble
 
             void lock_targets();
             void lock_hazard_targets();
-            static U8 hazard_check(NPCHazard& haz, void* context);
+            static bool hazard_check(NPCHazard& haz, void* context);
             void get_view_bound(xBound& bound) const;
         };
 
@@ -168,6 +180,7 @@ namespace cruise_bubble
         {
             F32 life;
             F32 vel;
+            // Offset: 0x10
             xVec3 rot;
             // Offset: 0x1c
             xVec3 rot_vel;
@@ -291,15 +304,15 @@ namespace cruise_bubble
         {
             F32 aim_delay;
             // Size: 0x10, Offset: 0x4
-            struct _class_2
+            struct
             {
                 F32 halt_time; // 0x4
-                struct _class_4
+                struct
                 {
                     F32 turn_speed; // 0x8
                     F32 anim_delta; // 0xC
                 } aim;
-                struct _class_11
+                struct
                 {
                     F32 delay_wand; // 0x10
                 } fire;
@@ -313,13 +326,13 @@ namespace cruise_bubble
                 F32 crash_angle; // 0x1c
                 F32 collide_twist; // 0x20
                 S32 hit_tests; // 0x24
-                struct _class_27
+                struct
                 {
                     F32 delay_show; // 0x28
                     F32 delay_fly; // 0x2c
                     xVec3 offset; // 0x30
                 } appear;
-                struct _class_32
+                struct
                 {
                     F32 accel; // 0x3c
                     F32 max_vel; // 0x40
@@ -327,7 +340,7 @@ namespace cruise_bubble
                     F32 engine_pitch_sensitivity; // 0x48
                     // Offset: 0x4c
                     F32 flash_interval;
-                    struct _class_38
+                    struct
                     {
                         F32 xdelta; // 0x50
                         F32 ydelta; // 0x54
@@ -337,7 +350,7 @@ namespace cruise_bubble
                         F32 roll_frac; // 0x64
                     } turn;
                 } fly;
-                struct _class_49
+                struct
                 {
                     F32 hit_radius; // 0x68
                     F32 hit_duration; // 0x6c
@@ -345,9 +358,9 @@ namespace cruise_bubble
             } missle;
 
             // Size: 0x5c, Offset: 0x70
-            struct _class_10
+            struct
             {
-                struct _class_15
+                struct
                 {
                     F32 dist;
                     F32 height; // 0x74
@@ -359,7 +372,7 @@ namespace cruise_bubble
                     F32 stick_max_vel; // 0x8c
                     F32 turn_speed; // 0x90
                 } aim;
-                struct _class_24
+                struct
                 {
                     F32 delay; // 0x94
                     F32 blend_time; // 0x98
@@ -367,7 +380,7 @@ namespace cruise_bubble
                     F32 hide_dist; // 0xa0
                     F32 fov; // 0xa4
                 } seize;
-                struct _class_30
+                struct
                 {
                     F32 duration; // 0xa8
                     F32 min_duration; // 0xac
@@ -378,14 +391,14 @@ namespace cruise_bubble
                     F32 jerk_offset; // 0xc0
                     F32 jerk_deflect; // 0xc4
                 } survey;
-                struct _class_39
+                struct
                 {
                     F32 control_delay; // 0xc8
                 } restore;
             } camera;
 
             // Size: 0x18, Offset: 0xcc
-            struct _class_48
+            struct
             {
                 F32 env_alpha;
                 F32 env_coeff; // 0xd0
@@ -396,7 +409,7 @@ namespace cruise_bubble
             } material;
 
             // Size: 0x14, Offset: 0xe4
-            struct _class_9
+            struct
             {
                 // Offset: 0xe4
                 F32 dist_min;
@@ -408,7 +421,7 @@ namespace cruise_bubble
             } reticle;
 
             // Size: 0x10, Offset: 0xf8
-            struct _class_20
+            struct
             {
                 // Offset: 0xf8
                 F32 sample_rate;
@@ -418,7 +431,7 @@ namespace cruise_bubble
             } trail;
 
             // Size: 0x10, Offset: 0x108
-            struct _class_29
+            struct
             {
                 U32 emit; // 0x108
                 F32 radius; // 0x10c
@@ -427,7 +440,7 @@ namespace cruise_bubble
             } blast;
 
             // Size: 0x24, Offset: 0x118
-            struct _class_35
+            struct
             {
                 F32 dist_min;
                 F32 dist_max;
@@ -441,33 +454,33 @@ namespace cruise_bubble
             } droplet;
 
             // Size: 0x44, Offset: 0x13c
-            struct _class_43
+            struct
             {
                 F32 glow_size;
                 // Offset: 0x140
                 F32 time_fade;
                 F32 time_glow;
-                struct _class_46
+                struct
                 {
                     F32 size;
                     F32 du;
                     F32 dv;
                 } swirl;
-                struct _class_5
+                struct
                 {
                     F32 size;
                     F32 du;
                     F32 dv;
                 } wind;
-                struct _class_12
+                struct
                 {
                     F32 size;
                 } reticle;
-                struct _class_18
+                struct
                 {
                     F32 size;
                 } target;
-                struct _class_23
+                struct
                 {
                     // Offset: 0x168
                     S32 font;
@@ -481,7 +494,7 @@ namespace cruise_bubble
             } hud;
 
             // Size: 0xc, Offset: 0x180
-            struct _class_34
+            struct
             {
                 F32 freq;
                 F32 decay;
@@ -555,90 +568,95 @@ namespace cruise_bubble
             xVec3 loc;
             F32 roll;
 
+            missle_record_data();
             missle_record_data(const xVec3& loc, F32 roll);
         };
+
+        RpAtomic* custom_bubble_render(RpAtomic* atomic);
+        void reset_wake_ribbons();
+        xMat4x3* get_missle_mat();
+        void render_model_2d(xModelInstance* m, const basic_rect<F32>& bound, F32 alpha);
+        void render_glow(xModelInstance* m, const basic_rect<F32>& r, F32 glow, F32 alpha);
+        void load_cheat_tweak();
+        void refresh_missle_model();
+        void hide_wand();
+        xMat4x3* get_player_mat();
+        U8 can_damage(xEnt* ent);
+        void kill(bool reset_camera, bool abortive);
+        void render_player();
+        void render_state();
+        void render_missle();
+        void render_debug();
+        void render_hud();
+        void show_hud();
+        void hide_hud();
+        void set_state(thread_enum thread, state_enum state);
+        void start_damaging();
+        void show_missle();
+        void refresh_trail(xMat4x3& mat, xQuat& quat);
+        void add_trail_sample(const xVec3& loc0, const xVec3& dir0, const xVec3& loc1,
+                              const xVec3& dir1, F32 dt);
+        bool check_launch();
+        void refresh_controls();
+        void update_state(xScene* s, F32 dt);
+        void update_player(xScene& s, F32 dt);
+        void update_missle(xScene& s, F32 dt);
+        void update_hud(F32 dt);
+        void lerp(iColor_tag& c, F32 t, iColor_tag a, iColor_tag b);
+        void lerp(U8& x, F32 t, U8 a, U8 b);
+        xVec3 world_to_screen(const xVec3& loc);
+        S32 find_locked_target(const xVec3* target);
+        void lock_target(S32 index, const xVec3* target, F32 opacity);
+        void load_settings();
+        void init_states();
+        void init_missle_model();
+        void init_wake_ribbons();
+        void reset_explode_decal();
+        void init_explode_decal();
+        void init_shrapnel();
+        void init_hud();
+        void show_gizmo(hud_gizmo& gizmo, const basic_rect<F32>& rect, xModelInstance* m);
+        void update_gizmo(hud_gizmo& gizmo, F32 dt);
+        void flash_hud();
+        void init_debug();
+        void init_sound();
+        U32 play_sound(S32 which, F32 volFactor);
+        U32 play_sound(S32 which, F32 volFactor, const xVec3* pos);
+        void distort_screen(F32);
+        xVec3& get_player_loc();
+        void stop_sound(S32 which, U32 handle);
+        void set_pitch(S32 which, F32 pitch, U32 handle);
+        void show_wand();
+        void hide_missle();
+        void capture_camera();
+        void release_camera();
+        bool camera_taken();
+        bool camera_leave();
+        // void damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir, const xVec3& hit_norm,
+        //                    F32 radius, bool explosive);
+        U8 was_damaged(xEnt* ent);
+        void notify_triggers(xScene& s, const xSphere& o, const xVec3& dir);
+        void exit_triggers(xScene& s);
+        void signal_event(U32 toEvent);
+        void start_trail();
+        void stop_trail();
+        void update_trail(F32 dt);
+        xModelInstance* load_model(U32);
+        void render_timer(F32 alpha, F32 glow);
+        void check_lock_target(const xVec3* target);
+        U32 check_anim_aim(xAnimTransition*, xAnimSingle*);
     } // namespace
 
-    void init_sound();
-    void stop_sound(S32 which, U32 handle);
-    U32 play_sound(S32 which, F32 volFactor);
-    U32 play_sound(S32 which, F32 volFactor, const xVec3* pos);
-    void set_pitch(S32 which, F32 pitch, U32 handle);
-    void show_wand();
-    void hide_wand();
-    void show_missle();
-    void hide_missle();
-    void capture_camera();
-    void release_camera();
-    bool camera_taken();
-    bool camera_leave();
-    void start_damaging();
-    // void damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir, const xVec3& hit_norm,
-    //                    F32 radius, bool explosive);
-    U8 can_damage(xEnt* ent);
-    U8 was_damaged(xEnt* ent);
-    void notify_triggers(xScene& s, const xSphere& o, const xVec3& dir);
-    void exit_triggers(xScene& s);
-    void signal_event(U32 toEvent);
-    void refresh_trail(xMat4x3& mat, xQuat& quat);
-    void start_trail();
-    void stop_trail();
-    void set_state(thread_enum thread, state_enum state);
-    bool check_launch();
-    void kill(bool reset_camera, bool abortive);
-    void distort_screen(F32);
-    void update_player(xScene& s, F32 dt);
-    xVec3& get_player_loc();
-    void render_player();
-    void refresh_controls();
-    void update_state(xScene* s, F32 dt);
-    void render_state();
-    RpAtomic* custom_bubble_render(RpAtomic* atomic);
-    void init_states();
-    void init_missle_model();
-    void reset_wake_ribbons();
-    void init_wake_ribbons();
-    void reset_explode_decal();
-    void init_explode_decal();
-    void init_shrapnel();
-    void add_trail_sample(const xVec3& loc0, const xVec3& dir0, const xVec3& loc1,
-                          const xVec3& dir1, F32 dt);
-    void update_trail(F32 dt);
-    void refresh_missle_model();
-    void update_missle(xScene& s, F32 dt);
-    void render_missle();
-    xModelInstance* load_model(U32);
-    void render_model_2d(xModelInstance* m, const basic_rect<F32>& bound, F32 alpha);
-    void render_glow(xModelInstance* m, const basic_rect<F32>& r, F32 glow, F32 alpha);
-    void init_hud();
-    void show_gizmo(hud_gizmo& gizmo, const basic_rect<F32>& rect, xModelInstance* m);
-    void update_gizmo(hud_gizmo& gizmo, F32 dt);
-    void flash_hud();
-    void render_timer(F32 alpha, F32 glow);
-    void lerp(iColor_tag& c, F32 t, iColor_tag a, iColor_tag b);
-    void lerp(U8& x, F32 t, U8 a, U8 b);
-    void update_hud(F32 dt);
-    void render_hud();
-    void show_hud();
-    void hide_hud();
-    xVec3 world_to_screen(const xVec3& loc);
-    S32 find_locked_target(const xVec3* target);
-    void lock_target(S32 index, const xVec3* target, F32 opacity);
-    void check_lock_target(const xVec3* target);
-    U32 check_anim_aim(xAnimTransition*, xAnimSingle*);
-    void load_cheat_tweak();
-    void load_settings();
     void init();
-    void init_debug();
     void reset();
     void launch();
     bool update(xScene* s, F32 dt);
     bool render();
-    void render_debug();
     void render_screen();
     void insert_player_animations(xAnimTable& table);
-    bool active();
+    xAnimTable* anim_table();
     F32 exploding();
+    bool active();
     void get_explode_sphere(xVec3& center, F32& radius);
     xEnt** get_explode_hits(S32& size);
     void add_life(F32, F32);
@@ -646,9 +664,6 @@ namespace cruise_bubble
     void reset_life();
     // xBase* param names are guessed as they go unused and wont appear in dwarf
     bool event_handler(xBase* from, U32 event, const F32* fparam, xBase* to);
-    xMat4x3* get_player_mat();
-    xMat4x3* get_missle_mat();
-    xAnimTable* anim_table();
 
 } // namespace cruise_bubble
 
