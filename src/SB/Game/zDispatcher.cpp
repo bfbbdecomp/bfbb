@@ -20,24 +20,18 @@
 extern st_ZDISPATCH_CONTEXT lbl_80254E00;
 extern char lbl_80254E10[512];
 
-extern S32 g_zdsp_init;
-extern S32 warned_zDispatcher;
-extern signed char init_zDispatcher;
-extern S32 oldVibrationOption;
-extern U32 oldSoundMode;
-extern U32 oldMusicVolume;
-extern U32 oldSFXVolume;
+S32 g_zdsp_init;
+S32 oldVibrationOption;
+U32 oldSoundMode;
+U32 oldMusicVolume;
+U32 oldSFXVolume;
 
 extern st_ZDISPATCH_DEPOT g_zdsp_depot;
 
 extern iColor_tag _1143;
 
 extern iColor_tag _1142;
-extern F32 _1179;
-extern F32 _1180;
-extern F32 _1181;
-extern F32 _1197;
-extern F64 _1199;
+extern F64 _1199; // 4503601774854144.0f // float conversion number
 
 extern U8 menu_fmv_played;
 extern char zEventLogBuf[256][20];
@@ -178,15 +172,17 @@ S32 ZDSP_doCommand(st_ZDISPATCH_DATA* dspdata, st_ZDISPATCH_CONTEXT* cmdCtxt)
     en_DISPATCH_COMMAND cmd = cmdCtxt->cmd;
     void* indata = cmdCtxt->indata;
     void* result = cmdCtxt->result;
+    static S32 warned;
+    static signed char init;
 
-    if (init_zDispatcher == 0)
+    if ((S32)init == 0)
     {
-        warned_zDispatcher = 0;
-        init_zDispatcher = 1;
+        warned = 0;
+        init = 1;
     }
-    if (warned_zDispatcher == 0)
+    if (warned == 0)
     {
-        warned_zDispatcher = 1;
+        warned = 1;
     }
 
     switch (cmd)
@@ -432,11 +428,11 @@ S32 ZDSP_elcb_event(xBase*, xBase* xb, U32 toEvent, const F32* toParam, xBase* t
         break;
 
     case 0xc2:
-        zEntPlayer_SNDPlay(ePlayerSnd_CheckPoint, _1179);
+        zEntPlayer_SNDPlay(ePlayerSnd_CheckPoint, 1.0f);
         F32 fVar2;
-        if (*toParam != _1179)
+        if (*toParam != 1.0f)
         {
-            fVar2 = _1180 * *toParam;
+            fVar2 = 0.017453292f * *toParam;
         }
         else
         {
@@ -457,7 +453,7 @@ S32 ZDSP_elcb_event(xBase*, xBase* xb, U32 toEvent, const F32* toParam, xBase* t
         break;
     case 0x126:
         menu_fmv_played = 1;
-        zFMVPlay(zFMVFileGetName((eFMVFile)(U32)*toParam), 0x10001, _1181, 1, 0);
+        zFMVPlay(zFMVFileGetName((eFMVFile)(U32)*toParam), 0x10001, 0.01f, 1, 0);
         break;
     case 0x130:
         zSceneEnableScreenAdj(1);
@@ -471,7 +467,7 @@ S32 ZDSP_elcb_event(xBase*, xBase* xb, U32 toEvent, const F32* toParam, xBase* t
         break;
 
     case 0x1fd:
-        xCameraFXShake(*toParam, toParam[1], toParam[2], toParam[3], _1179, NULL, NULL);
+        xCameraFXShake(*toParam, toParam[1], toParam[2], toParam[3], 1.0f, NULL, NULL);
         break;
     case 0x210:
         xCMstart((xCreditsData*)toParamWidget, *toParam, xb);
@@ -520,16 +516,16 @@ S32 ZDSP_elcb_event(xBase*, xBase* xb, U32 toEvent, const F32* toParam, xBase* t
 
 void WRAP_xsnd_setMusicVolume(S32 i)
 {
-    float f1 = _1181 * i;
-    float f2 = MIN(f1, _1197);
+    float f1 = 0.01f * i;
+    float f2 = MIN(f1, 1.0f);
 
-    if (f1 < _1179)
+    if (f1 < 1.0f)
     {
         f2 = f1;
     }
     else
     {
-        f2 = _1197;
+        f2 = 1.0f;
     }
     xSndSetCategoryVol(SND_CAT_MUSIC, f2);
     zMusicRefreshVolume();
@@ -537,16 +533,16 @@ void WRAP_xsnd_setMusicVolume(S32 i)
 
 void WRAP_xsnd_setSFXVolume(S32 i)
 {
-    F32 fcmp = _1181 * i; // - _1199;
-    F32 f = MIN(fcmp, _1197); //_1197 < fcmp ? fcmp : _1197;
+    F32 fcmp = 0.01f * i; // - _1199;
+    F32 f = MIN(fcmp, 1.0f); //1.0f < fcmp ? fcmp : 1.0f;
 
-    if (f > _1179)
+    if (f > 1.0f)
     {
-        f = _1197;
+        f = 1.0f;
     }
     else
     {
-        f = fcmp < _1197 ? fcmp : _1197;
+        f = fcmp < 1.0f ? fcmp : 1.0f;
     }
     xSndSetCategoryVol(SND_CAT_GAME, f);
     xSndSetCategoryVol(SND_CAT_DIALOG, f);
