@@ -10,6 +10,8 @@
 #include "zNPCHazard.h"
 
 typedef struct zNPCRobot;
+extern char* g_strz_roboanim[41];
+extern U32 g_hash_roboanim[41];
 
 struct NPCArena
 {
@@ -27,7 +29,7 @@ struct NPCArena
     F32 DstSqFromHome(xVec3* pos, xVec3* delt);
     F32 PctFromHome(xVec3* pos);
     S32 IncludesPos(xVec3* pos, F32 rad_thresh, xVec3* vec);
-    void IncludesNPC(zNPCCommon*, float, xVec3*);
+    S32 IncludesNPC(zNPCCommon*, float, xVec3*);
     F32 Radius(F32 unk);
     xVec3* Pos();
     S32 IncludesPlayer(F32 rad_thresh, xVec3* vec);
@@ -87,6 +89,7 @@ struct zNPCRobot : zNPCCommon
     void InflictPain(S32 numHitPoints, S32 giveCreditToPlayer);
     void LassoNotify(en_LASSO_EVENT event);
     void SyncStunGlyph(F32 tmr_remain, F32 height);
+    void SyncStunGlyph(F32 tmr_remain, F32 height, F32 unk);
     void AddStunThrow(xPsyche* psy, S32 (*eval_evilpat)(xGoal*, void*, en_trantype*, F32, void*),
                       S32 (*eval_stunned)(xGoal*, void*, en_trantype*, F32, void*),
                       S32 (*eval_patcarry)(xGoal*, void*, en_trantype*, F32, void*),
@@ -343,6 +346,7 @@ struct zNPCArfArf : zNPCRobot
     void Reset();
     void Init(xEntAsset* asset);
     void ParseINI();
+    zNPCArfDog* AdoptADoggie();
 };
 
 struct zNPCChuck : zNPCRobot
@@ -496,6 +500,7 @@ struct zNPCTubeSlave : zNPCRobot
     void PartyOn();
     void Process(xScene* xscn, F32 dt);
     void Init(xEntAsset* asset);
+    void PosStacked(xVec3* pos_stacked);
 };
 
 typedef struct zNPCSlick;

@@ -518,6 +518,8 @@ void zNPCCommon_Timestep(xScene*, F32 dt);
 void zNPCSettings_MakeDummy();
 zNPCSettings* zNPCSettings_Find(U32);
 S32 NPCC_NPCIsConversing();
+F32 NPCC_DstSq(const xVec3*, const xVec3*, xVec3*);
+
 void zNPCCommon_WonderReset();
 xAnimTable* ZNPC_AnimTable_Common();
 xAnimTable* ZNPC_AnimTable_LassoGuide();
