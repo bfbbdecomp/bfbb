@@ -15,6 +15,8 @@
                 "${workspaceFolder}/include/inline",
                 "${workspaceFolder}/src/dolphin/include",
                 "${workspaceFolder}/src/dolphin/src",
+                "${workspaceFolder}/src/bink/include",
+                "${workspaceFolder}/src/bink/src",
                 "${workspaceFolder}/include/rwsdk",
                 "${workspaceFolder}/src/SB/Core/gc",
                 "${workspaceFolder}/src/SB/Core/x",

@@ -17,7 +17,11 @@ zFMVFile zFMVFileTable[] = {
     { eFMVFile_Demo1, "FMV\\demo1" }, // Gameplay Demo (Idle)
 };
 
-U32 zFMVPlay(char* filename, U32 buttons, F32 time, bool skippable, bool lockController)
+// TODO: fix this fuckass work around
+
+// casted a unsigned int into a unsigned int to make this match
+
+U32 zFMVPlay(char* filename, unsigned int buttons, F32 time, bool skippable, bool lockController)
 {
     char fullname[64];
     U32 ret;

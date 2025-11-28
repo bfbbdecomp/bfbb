@@ -272,7 +272,7 @@ cflags_trk = [
 
 # Bink was compiled with ProDG
 cflags_bink = [
-    "-O3",
+    "-O2",
     "-mcpu=750",
     "-fno-exceptions",
     "-Wno-inline",
@@ -317,7 +317,6 @@ cflags_bfbb = [
     '-pragma "cpp_extensions on"',
     "-inline off",
     "-gccinc",
-    "-i include/bink",
     "-i include/inline",
     "-i include/rwsdk",
     "-i src/SB/Core/gc",

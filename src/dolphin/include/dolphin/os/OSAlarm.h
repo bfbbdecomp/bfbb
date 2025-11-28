@@ -3,7 +3,7 @@
 
 #include <dolphin/os/OSContext.h>
 #include <dolphin/os/OSTime.h>
-#include <types.h>
+#include <dolphin/types.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -12,14 +12,15 @@ extern "C" {
 typedef struct OSAlarm OSAlarm;
 typedef void (*OSAlarmHandler)(OSAlarm* alarm, OSContext* context);
 
-struct OSAlarm {
-  OSAlarmHandler handler;
-  u32 tag;
-  OSTime fire;
-  OSAlarm* prev;
-  OSAlarm* next;
-  OSTime period;
-  OSTime start;
+struct OSAlarm
+{
+    OSAlarmHandler handler;
+    u32 tag;
+    OSTime fire;
+    OSAlarm* prev;
+    OSAlarm* next;
+    OSTime period;
+    OSTime start;
 };
 
 void OSInitAlarm(void);

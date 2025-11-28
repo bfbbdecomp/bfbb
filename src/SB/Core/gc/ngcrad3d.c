@@ -2,6 +2,7 @@
 
 #include <dolphin/gx.h>
 #include "iFMV.h"
+#include <bink/include/rad3d.h>
 
 static int D3D_surface_type[5];
 static unsigned int Pixel_info[5];
@@ -30,6 +31,22 @@ static void Setup_surface_array()
     Built_tables = 1;
 }
 
+// TODO:
+// Defining this struct locally because i believe this isnt 100% right. Or if it is right why isnt this in the bink.h or other headers?
+// inestigate this
+
+struct RAD3DIMAGE
+{
+    int a;
+    int b;
+    unsigned int c;
+    int d;
+    int e;
+    void* f;
+    int g;
+    int h;
+};
+
 void Close_RAD_3D_image(struct RAD3DIMAGE* image)
 {
     if (image != 0)
@@ -43,8 +60,8 @@ void Close_RAD_3D_image(struct RAD3DIMAGE* image)
     }
 }
 
-int Lock_RAD_3D_image(HRAD3DIMAGE rad_image, void* out_pixel_buffer, unsigned int* out_buffer_pitch,
-                      unsigned int* arg3)
+S32 Lock_RAD_3D_image(HRAD3DIMAGE rad_image, void* out_pixel_buffer, U32* out_buffer_pitch,
+                      U32* arg3)
 {
     if (rad_image == 0)
     {
