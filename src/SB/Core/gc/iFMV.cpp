@@ -54,7 +54,7 @@ void iFMVfree(void* mem)
 }
 
 static void PlayFMV(char* filename, size_t buttons, F32 time);
-U32 iFMVPlay(char* filename, U32 buttons, F32 time, bool skippable, bool lockController)
+U32 iFMVPlay(char* filename, unsigned int buttons, F32 time, bool skippable, bool lockController)
 {
     if (filename == NULL)
     {
