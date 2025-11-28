@@ -64,7 +64,8 @@
     "binkngc.h": "c",
     "radbase.h": "c",
     "oscontext.h": "c",
-    "radcb.h": "c"
+    "radcb.h": "c",
+    "popmal.h": "c"
   },
   // Disable C/C++ IntelliSense, use clangd instead
   "C_Cpp.intelliSenseEngine": "default",
