@@ -36,4 +36,9 @@ void xEnvFree(xEnv* env);
 void xEnvSetup(xEnv* env);
 void xEnvRender(xEnv* env);
 
+inline RwBBox* xEnvGetBBox(xEnv* r3)
+{
+    return iEnvGetBBox(r3->geom);
+}
+
 #endif

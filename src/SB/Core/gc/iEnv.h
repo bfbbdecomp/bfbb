@@ -27,4 +27,9 @@ void iEnvLightingBasics(iEnv*, xEnvAsset*);
 void iEnvRender(iEnv* env);
 void iEnvEndRenderFX(iEnv*);
 
+inline RwBBox* iEnvGetBBox(iEnv* r3)
+{
+    return &r3->world->boundingBox;
+}
+
 #endif
