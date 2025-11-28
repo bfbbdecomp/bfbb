@@ -13,6 +13,8 @@
 #include "radbase.h"
 #endif
 
+#include <types.h>
+
 RADDEFSTART
 
 typedef struct BINK PTR4* HBINK;

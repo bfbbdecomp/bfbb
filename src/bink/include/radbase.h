@@ -344,8 +344,6 @@
 
 #define RAD_ALIGN_ADD_TYPE(var) RAD_ALIGN_TYPE var##align = RAD_ALIGN_DEF
 
-// These cause build issues
-
 // #define S8 signed char
 // #define U8 unsigned char
 // #define U32 unsigned long
@@ -375,20 +373,20 @@
 
 #ifdef __RADNGC__
 
-#include <dolphin/types.h>
+// #include <types.h>
 
 #else
 
-#define u8 U8
-#define s8 S8
-#define u16 U16
-#define s16 S16
-#define u32 U32
-#define s32 S32
-#define u64 U64
-#define s64 S64
-#define f32 F32
-#define f64 F64
+// #define u8 U8
+// #define s8 S8
+// #define u16 U16
+// #define s16 S16
+// #define u32 U32
+// #define s32 S32
+// #define u64 U64
+// #define s64 S64
+// #define f32 F32
+// #define f64 F64
 
 #endif
 
