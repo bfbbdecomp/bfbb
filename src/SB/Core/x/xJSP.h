@@ -6,6 +6,13 @@
 #include <rpworld.h>
 #include "xClumpColl.h"
 
+struct __rwMark
+{
+    U32 type;
+    U32 length;
+    U32 libraryID;
+};
+
 struct xJSPNodeInfo
 {
     S32 originalMatIndex;
@@ -22,7 +29,12 @@ struct xJSPHeader
     xJSPNodeInfo* jspNodeList;
 };
 
-RpMesh* AddMeshCB(RpMesh* mesh, RpMeshHeader* header, RwV3d** param_3);
+struct xJSPHeaderGC : xJSPHeader
+{
+    U32 stripVecCount;
+    RwV3d* stripVecList;
+};
+
 void xJSP_MultiStreamRead(void* data, U32 size, xJSPHeader** jsp);
 void xJSP_Destroy(xJSPHeader* jsp);
 

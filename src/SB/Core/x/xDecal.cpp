@@ -239,7 +239,7 @@ void xDecalEmitter::update(F32 dt)
     this->curve_index = 0;
     
     static_queue<unit_data>::iterator it = this->units.begin();
-    for (; it != this->units.end(); ++it)
+    while (it != this->units.end())
     {
         unit_data& unit = *it;
         unit.age += dage;
@@ -264,6 +264,8 @@ void xDecalEmitter::update(F32 dt)
         }
 
         get_render_data(unit, scale, pool.color[0], pool.mat[0], pool.uv[0], pool.uv[1]);
+
+        ++it;
     }
 
     pool.flush();

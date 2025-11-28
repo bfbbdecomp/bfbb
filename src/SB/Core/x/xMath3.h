@@ -152,6 +152,7 @@ void xQuatConj(xQuat* o, const xQuat* q);
 void xQuatCopy(xQuat*, const xQuat*);
 void xMat3x3LookAt(xMat3x3* m, const xVec3* pos, const xVec3* at);
 F32 xMat3x3LookVec(xMat3x3* m, const xVec3* at);
+F32 xMat3x3LookVec3(xMat3x3& m, const xVec3& at);
 void xBoxInitBoundOBB(xBox* o, const xBox* b, const xMat4x3* m);
 void xBoxUnion(xBox& a, const xBox& b, const xBox& c);
 void xMat3x3Scale(xMat3x3* m, const xVec3* s);

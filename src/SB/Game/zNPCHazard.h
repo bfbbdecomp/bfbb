@@ -242,8 +242,6 @@ struct NPCHazard
     NPCHazard* haz_parent;
     xShadowCache* shadowCache;
 
-    NPCHazard();
-    NPCHazard(en_npchaz haztype);
     S32 ConfigHelper(en_npchaz haztype);
     void Reconfigure(en_npchaz haztype);
     void FreeModel();
@@ -256,17 +254,42 @@ struct NPCHazard
     void PosSet(const xVec3* pos);
     void NotifyCBSet(HAZNotify* noter);
     void SetAlpha(F32 alpha);
+    void OrientToDir(const xVec3* vec_path, S32 doTheTwist);
     S32 ColTestSphere(const xBound* bnd_tgt, F32 rad);
     S32 ColTestCyl(const xBound* bnd_tgt, F32 rad, F32 hyt);
     S32 ColPlyrSphere(F32 rad);
     S32 ColPlyrCyl(F32 rad, F32 hyt);
+    void TarTarFalumpf();
     void TarTarGunkTrail();
+    void TarTarSplash(const xVec3* dir_norm);
+    void TarTarLinger();
+    void Upd_ChuckBomb(F32 dt);
+    void DisperseBubWake(F32 radius, const xVec3* velocity);
+    void ReconChuck();
+    void Upd_ChuckBlast(F32 dt);
+    void WavesOfEvil();
+    void WaterSplash(const xVec3* dir_norm);
+    S32 KickBlooshBlob(const xVec3* vel_flight);
+    void Upd_ChuckBloosh(F32 dt);
+    void Upd_BoneFlight(F32 dt);
     S32 KickSteamyStinky();
     void ReconArfBone();
+    void Upd_BoneBlast(F32 dt);
+    void Upd_OilBubble(F32 dt);
+    void ReconSlickOil();
+    void OilSplash(const xVec3* dir_norm);
+    void Upd_OilOoze(F32 dt);
+    S32 KickOilBurst();
+    S32 KickOilGlobby();
+    void Upd_OilBurst(F32 dt);
+    void Upd_OilGlob(F32 dt);
+    void StreakUpdate(U32 streakID, F32 rad);
     void HurtThePlayer();
     void TypData_RotMatSet(xMat3x3* mat);
     void TypData_RotMatApply(xMat3x3* mat);
     en_hazmodel PickFunFrag();
+    void PreCollide();
+    void StaggeredCollide();
     void StagColGeneral(S32 who);
     void StagColStat();
     void StagColNPC();
@@ -274,10 +297,31 @@ struct NPCHazard
     void ColResp_Default(xSweptSphere* swdata, F32 tym_inFuture);
     void CollideResponse(xSweptSphere* swdata, F32 tym_inFuture);
     void Upd_Patriot(F32);
-    RwV3d* At() const;
-    RwV3d* Right() const;
-    RwV3d* Up() const;
     void Discard();
+
+    RwV3d* At() const
+    {
+        return &this->mdl_hazard->Mat->at;
+    }
+
+    RwV3d* Right() const
+    {
+        return &this->mdl_hazard->Mat->right;
+    }
+
+    RwV3d* Up() const
+    {
+        return &this->mdl_hazard->Mat->up;
+    }
+
+    NPCHazard()
+    {
+    }
+
+    NPCHazard(en_npchaz haztype)
+    {
+        this->typ_hazard = haztype;
+    }
 };
 
 void zNPCHazard_Startup();

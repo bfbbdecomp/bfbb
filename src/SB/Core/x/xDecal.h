@@ -105,6 +105,11 @@ struct xDecalEmitter
     void debug_update(F32 dt)
     {
     }
+
+    bool full() const
+    {
+        return units.full();
+    }
 };
 
 void xDecalInit();
