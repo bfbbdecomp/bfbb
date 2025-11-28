@@ -13,22 +13,22 @@ F32 xpow(F32 x, F32 y);
 
 F32 SQ(F32 x);
 
-U8 LERP(F32 x, U8 y, U8 z)
+inline U8 LERP(F32 x, U8 y, U8 z)
 {
     return (U8)(x * (z - y)) + y;
 }
 
-F32 LERP(F32 x, F32 y, F32 z)
+inline F32 LERP(F32 x, F32 y, F32 z)
 {
     return (x * (z - y)) + y;
 }
 
-F32 EASE(F32 rhs)
+inline F32 EASE(F32 rhs)
 {
     return rhs * ((rhs * 3.0f) - (rhs * 2.0f) * rhs);
 }
 
-F32 SMOOTH(F32 x, F32 y, F32 z)
+inline F32 SMOOTH(F32 x, F32 y, F32 z)
 {
     return (z - y) * EASE(x) + y;
 }
