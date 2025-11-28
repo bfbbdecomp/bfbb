@@ -283,7 +283,12 @@ struct NPCHazard
     S32 KickOilGlobby();
     void Upd_OilBurst(F32 dt);
     void Upd_OilGlob(F32 dt);
+    void Upd_MonCloud(F32 dt);
+    void Upd_FunFrag(F32 dt);
+    void Upd_VisSplash(F32 dt);
+    void VisSplashSparklies();
     void StreakUpdate(U32 streakID, F32 rad);
+    void Upd_RoboBits(F32 dt);
     void HurtThePlayer();
     void TypData_RotMatSet(xMat3x3* mat);
     void TypData_RotMatApply(xMat3x3* mat);

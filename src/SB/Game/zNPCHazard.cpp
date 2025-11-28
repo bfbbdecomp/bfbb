@@ -40,6 +40,8 @@ static en_hazmodel g_funfrag_choices[8] = {
     NPC_HAZMDL_FUNFRAG_CELLPHONE, NPC_HAZMDL_FUNFRAG_SHOE,
 };
 
+static zShrapnelAsset * g_data_hazshrap[5] = { NULL, NULL, NULL, NULL, NULL };
+
 static char* g_strz_hazModel[30];
 static NPCHazard g_hazards[64];
 
@@ -1321,6 +1323,130 @@ void NPCHazard::Upd_OilGlob(F32 dt)
         pos_emit += *(xVec3*)this->Up() * 0.1f;
 
         NPAR_EmitOilVapors(&pos_emit);
+    }
+}
+
+void NPCHazard::Upd_FunFrag(F32 dt)
+{
+    HAZTarTar* tartar = &this->custdata.tartar;
+    xParabola* parab = &tartar->parabinfo;
+
+    if (this->flg_hazard & 0x8)
+    {
+        tartar->vel.x = 2.5f * (2.0f * (xurand() - 0.5f));
+        tartar->vel.y = 5.0f * xurand() + 4.0f;
+        tartar->vel.z = 2.5f * (2.0f * (xurand() - 0.5f));
+    }
+
+    tartar->rad_cur = LERP(this->pam_interp, tartar->rad_min, tartar->rad_max);
+
+    if (this->flg_hazard & 0x8)
+    {
+        PreCollide();
+    }
+
+    F32 tym = this->tym_lifespan < this->tym_lifespan - this->tmr_remain ? this->tym_lifespan : this->tym_lifespan - this->tmr_remain;
+    xParabolaEvalPos(parab, &this->pos_hazard, tym);
+    xParabolaEvalVel(parab, &tartar->vel, tym);
+
+    static S32 moreorless = 0;
+    if (--moreorless < 0)
+    {
+        moreorless = 3;
+        zFX_SpawnBubbleTrail(&this->pos_hazard, 1);
+    }
+}
+
+void NPCHazard::StreakUpdate(U32 streakID, F32 rad)
+{
+    xVec3 pos_left;
+    pos_left = *(xVec3*)At() * 0.5f * rad;
+    
+    xVec3 pos_right;
+    pos_right = *(xVec3*)Up() * rad;
+    pos_right += pos_left;
+
+    // TODO: These names aren't from DWARF - maybe they could be better after impl
+    xVec3 shifted_pos_left;
+    shifted_pos_left = *(xVec3*)&this->mdl_hazard->Mat->pos - pos_right;
+
+    xVec3 shifted_pos_right;
+    shifted_pos_right = *(xVec3*)&this->mdl_hazard->Mat->pos + pos_right;
+
+    xFXStreakUpdate(streakID, &shifted_pos_left, &shifted_pos_right);
+}
+
+void NPCHazard::Upd_RoboBits(F32 dt)
+{
+    HAZTarTar* tartar = &this->custdata.tartar;
+    xParabola* parab = &tartar->parabinfo;
+
+    if (this->pam_interp > 0.25f)
+    {
+        tartar->rad_cur = tartar->rad_max;
+    }
+    else
+    {
+        tartar->rad_cur = LERP(4.0f * this->pam_interp, tartar->rad_min, tartar->rad_max);
+    }
+
+    if (this->flg_hazard & 0x8)
+    {
+        tartar->vel = tartar->pos_tgt - this->pos_hazard;
+        tartar->vel /= this->tmr_remain;
+        tartar->vel.y += 10.0f * (0.5f * this->tmr_remain);
+    }
+
+    if (this->flg_hazard & 0x8)
+    {
+        F32 keepFlightTime = this->tmr_remain;
+        PreCollide();
+        this->tmr_remain = keepFlightTime;
+        this->tym_lifespan = keepFlightTime;
+    }
+
+    F32 tym = this->tym_lifespan < this->tym_lifespan - this->tmr_remain ? this->tym_lifespan : this->tym_lifespan - this->tmr_remain;
+    xParabolaEvalPos(parab, &this->pos_hazard, tym);
+    xParabolaEvalVel(parab, &tartar->vel, tym);
+
+    static S32 moreorless = 0;
+    if (--moreorless < 0)
+    {
+        moreorless = 3;
+        DisperseBubWake(tartar->rad_cur, &tartar->vel);
+    }
+}
+
+void NPCHazard::Upd_VisSplash(F32 dt)
+{
+    this->custdata.collide.rad_cur = LERP(this->pam_interp, this->custdata.collide.rad_min, this->custdata.collide.rad_max);
+
+    if (this->flg_hazard & 0x8)
+    {
+        g_data_hazshrap[4]->initCB(g_data_hazshrap[4], this->mdl_hazard, (xVec3*)Up(), NULL);
+    }
+
+    VisSplashSparklies();
+}
+
+void NPCHazard::VisSplashSparklies()
+{
+    F32 rad = this->custdata.collide.rad_cur;
+    for (S32 i = 0; i < 8; i++)
+    {
+        xVec3 pos_emit;
+        pos_emit = *(xVec3*)At() * (2.0f * (xurand() - 0.5f));
+        pos_emit += *(xVec3*)Right() * (2.0f * (xurand() - 0.5f));
+        pos_emit.normalize();
+        pos_emit *= rad;
+        pos_emit += *(xVec3*)Up() * 0.2f;
+        pos_emit += this->pos_hazard;
+        
+        xVec3 vel_emit;
+        vel_emit = *(xVec3*)Up();
+        vel_emit *= 3.5f;
+
+        NPAR_EmitVSSpray(&pos_emit, &vel_emit);
     }
 }
 

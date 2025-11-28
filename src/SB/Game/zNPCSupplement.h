@@ -318,6 +318,7 @@ void NPAR_EmitH2OTrail(const xVec3* pos);
 void NPAR_EmitOilSplash(const xVec3* pos, const xVec3* vel);
 void NPAR_EmitOilTrailz(const xVec3* pos);
 void NPAR_EmitOilVapors(const xVec3* pos);
+void NPAR_EmitVSSpray(const xVec3* pos, const xVec3* vel);
 NPARMgmt* NPAR_PartySetup(en_nparptyp parType, void** userData, NPARXtraData* xtraData);
 void NPAR_SceneReset();
 static void NPCC_ShadowCacheReset();
