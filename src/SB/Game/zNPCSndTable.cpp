@@ -40,6 +40,7 @@ void NPCS_SndTimersUpdate(F32 dt)
 
 void NPCS_SndTimersReset()
 {
+    // non-matching: missing lfs for -1.0f
     for (S32 i = 0; i < SND_COUNT; i++)
     {
         g_tmrz_sndplay[i] = -1.0f;
@@ -117,6 +118,7 @@ NPCSndProp* NPCS_SndFindProps(en_NPC_SOUND sndtype)
 
 en_NPC_SOUND NPCS_SndTypeFromHash(U32 aid_snd, NPCSndTrax* cust, NPCSndTrax* share)
 {
+    // non-matching
     en_NPC_SOUND da_type = NPC_STYP_BOGUS;
     NPCSndTrax* trax;
 
