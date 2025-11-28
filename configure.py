@@ -572,7 +572,7 @@ config.libs = [
             Object(NonMatching, "SB/Core/x/xParEmitterType.cpp"),
             Object(Matching, "SB/Core/x/xRenderState.cpp"),
             Object(NonMatching, "SB/Game/zEntPlayerOOBState.cpp"),
-            Object(NonMatching, "SB/Core/x/xClumpColl.cpp"),
+            Object(Equivalent, "SB/Core/x/xClumpColl.cpp"),
             Object(NonMatching, "SB/Core/x/xEntBoulder.cpp"),
             Object(NonMatching, "SB/Core/x/xGrid.cpp"),
             Object(Equivalent, "SB/Core/x/xJSP.cpp"),
