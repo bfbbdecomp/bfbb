@@ -36,7 +36,7 @@ U32 zFMVPlay(char* filename, unsigned int buttons, F32 time, bool skippable, boo
     xSndSuspend();
     _GameOstrich old = zGameGetOstrich();
     zGameSetOstrich(eGameOstrich_PlayingMovie);
-    ret = iFMVPlay(fullname, (unsigned int)buttons, time, skippable, lockController);
+    ret = iFMVPlay(fullname, buttons, time, skippable, lockController);
     zGameSetOstrich(old);
     xSndResume();
 
