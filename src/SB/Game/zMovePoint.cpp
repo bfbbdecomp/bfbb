@@ -5,28 +5,15 @@
 
 #include <types.h>
 
-extern zMovePoint* g_mvpt_list;
-extern S32 g_mvpt_cnt;
-extern F32 lbl_803CDD40;
-extern F32 lbl_803CDD44;
+zMovePoint* g_mvpt_list;
+S32 g_mvpt_cnt;
 
 // Random load word at the end of the function for some reason.
 zMovePoint* zMovePoint_GetMemPool(S32 cnt)
 {
-    /*if (cnt != 0)
-	{
-		g_mvpt_list = (zMovePoint*)xMemAllocSize(cnt * sizeof(zMovePoint));
-	}
-	else
-	{
-		g_mvpt_list = NULL;
-	}
-	g_mvpt_cnt = cnt;
-	return g_mvpt_list;*/
-
     g_mvpt_list = cnt ? (zMovePoint*)xMemAllocSize(cnt * sizeof(zMovePoint)) : NULL;
     g_mvpt_cnt = cnt;
-    return g_mvpt_list;
+    return *(__typeof__(g_mvpt_list) volatile*)&g_mvpt_list;
 }
 
 void zMovePointInit(zMovePoint* m, xMovePointAsset* asset)
@@ -104,9 +91,9 @@ S32 zMovePointEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, x
         xVec3* pos = ((zMovePoint*)to)->pos;
         if (pos != NULL)
         {
-            if (*toParam < lbl_803CDD40)
+            if (*toParam < 1e-5f)
             {
-                NPCC_MakeASplash(pos, lbl_803CDD44);
+                NPCC_MakeASplash(pos, -1.0f);
             }
             else
             {
@@ -134,7 +121,7 @@ F32 zMovePointGetDelay(const zMovePoint* m)
     return xMovePointGetDelay((xMovePoint*)m);
 }
 
-F32 xMovePointGetDelay(const xMovePoint* m)
+inline F32 xMovePointGetDelay(const xMovePoint* m)
 {
     return m->delay;
 }
