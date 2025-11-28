@@ -1,9 +1,9 @@
-// #ifndef POPMAL_H
-// #define POPMAL_H
+#ifndef POPMAL_H
+#define POPMAL_H
 
-// #include "bink.h"
+#include "bink.h"
 
-// U32 popmalloctotal();
-// U32 popmalloc(HBINK bnk);
+u32 popmalloctotal();
+u32 popmalloc(HBINK bnk);
 
-// #endif
+#endif

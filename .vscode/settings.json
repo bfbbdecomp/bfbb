@@ -65,7 +65,8 @@
     "radbase.h": "c",
     "oscontext.h": "c",
     "radcb.h": "c",
-    "popmal.h": "c"
+    "popmal.h": "c",
+    "osalloc.h": "c"
   },
   // Disable C/C++ IntelliSense, use clangd instead
   "C_Cpp.intelliSenseEngine": "default",

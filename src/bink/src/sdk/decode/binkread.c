@@ -4,7 +4,7 @@
 
 static char binkerr[256];
 
-static U32 TrackNums = 0;
+static u32 TrackNums = 0;
 u16 LogoData[0x1D00] = {
 
     0x4249, 0x4B69, 0xF839, 0x0000, 0x0100, 0x0000, 0xCC39, 0x0000, 0x0100, 0x0000, 0xE000, 0x0000,
@@ -628,22 +628,22 @@ u16 LogoData[0x1D00] = {
     0x92EF, 0x1272, 0x0A1E, 0x00BD, 0x7E1B, 0x0000, 0x0000, 0x0000
 };
 
-static U32 ForceRateDiv;
+static u32 ForceRateDiv;
 
-static U32 sysopen = 0;
-static U32 sndopen = 0;
-static U32 numopensounds = 0;
-static U32 cb_bink_IO = 0;
-static U32 cb_bink_sound = 0;
-static U32 ForceRate = 0xFFFFFFFF;
-static U32 IOBufferSize = 0xFFFFFFFF;
-static U32 Simulate = 0xFFFFFFFF;
-static U32 TotTracks = 1;
-static U32 UserOpen = 0;
+static u32 sysopen = 0;
+static u32 sndopen = 0;
+static u32 numopensounds = 0;
+static u32 cb_bink_IO = 0;
+static u32 cb_bink_sound = 0;
+static u32 ForceRate = 0xFFFFFFFF;
+static u32 IOBufferSize = 0xFFFFFFFF;
+static u32 Simulate = 0xFFFFFFFF;
+static u32 TotTracks = 1;
+static u32 UserOpen = 0;
 
-void bpopmalloc(HBINK bnk, U32 tmpArg)
+void bpopmalloc(HBINK bnk, u32 tmpArg)
 {
-    U32 tmpReg;
+    u32 tmpReg;
 
     tmpReg = popmalloctotal();
     bnk->totalmem = bnk->totalmem + tmpReg + tmpArg;
@@ -662,10 +662,10 @@ char* BinkGetError(void)
 
 // TODO: Fix Function
 // I hate nested if's
-S32 BinkSetSoundSystem(BINKSNDSYSOPEN open, U32 param)
+s32 BinkSetSoundSystem(BINKSNDSYSOPEN open, u32 param)
 {
     BINKSNDSYSOPEN* pcVar1;
-    S32 iVar2;
+    s32 iVar2;
 
     if (open != NULL)
     {
@@ -697,7 +697,7 @@ void conv16to8()
 {
 }
 
-void checksound(U32 tmp)
+void checksound(u32 tmp)
 {
 }
 
@@ -710,9 +710,9 @@ void inittimer(HBINK bnk)
     }
 }
 
-void GotoFrame(HBINK bnk, U32 tmp)
+void GotoFrame(HBINK bnk, u32 tmp)
 {
-    U32 uVar1;
+    u32 uVar1;
 
     if (tmp != 0)
     {
@@ -752,31 +752,31 @@ void GotoFrame(HBINK bnk, U32 tmp)
     bnk->FrameNum = tmp + 1;
 }
 
-void BinkSetFrameRate(U32 FRate, U32 FRateDiv)
+void BinkSetFrameRate(u32 FRate, u32 FRateDiv)
 {
     ForceRate = FRate;
     ForceRateDiv = FRateDiv;
 }
 
-void BinkSetIOSize(U32 iosize)
+void BinkSetIOSize(u32 iosize)
 {
     IOBufferSize = iosize;
 }
 
 void BinkSetIO(BINKIOOPEN io)
 {
-    UserOpen = (U32)io;
+    UserOpen = (u32)io;
 }
 
-void BinkSetSimulate(U32 sim)
+void BinkSetSimulate(u32 sim)
 {
     Simulate = sim;
 }
 
-void BinkSetSoundTrack(U32 total_tracks, U32* tracks)
+void BinkSetSoundTrack(u32 total_tracks, u32* tracks)
 {
-    U32 i;
-    S32 iVar2;
+    u32 i;
+    s32 iVar2;
 
     if (8 < total_tracks)
     {
@@ -790,7 +790,7 @@ void BinkSetSoundTrack(U32 total_tracks, U32* tracks)
     }
     for (i = 0; i < total_tracks; i++)
     {
-        *(U32*)((S32)&TrackNums + iVar2) = *(U32*)(iVar2 + total_tracks);
+        *(u32*)((s32)&TrackNums + iVar2) = *(u32*)(iVar2 + total_tracks);
         iVar2 = iVar2 + 4;
     }
 }
@@ -815,16 +815,16 @@ void bink_idle_on_io(HBINK bnk)
     RADCB_idle_on_callbacks();
 }
 
-U32 bink_get_priority_sound(S32 tmp, U32 tmp2)
+u32 bink_get_priority_sound(s32 tmp, u32 tmp2)
 {
-    if (*(U32*)(tmp + -4) != tmp2)
+    if (*(u32*)(tmp + -4) != tmp2)
     {
-        return ~*(U32*)(tmp + -4);
+        return ~*(u32*)(tmp + -4);
     }
     return 0;
 }
 
-void bink_sound_callback(HBINK bnk, U32 tmp)
+void bink_sound_callback(HBINK bnk, u32 tmp)
 {
     if (bnk->lastresynctime != NULL)
     {
@@ -833,29 +833,29 @@ void bink_sound_callback(HBINK bnk, U32 tmp)
     bnk->last_time_almost_empty = tmp;
 }
 
-HBINK BinkOpen(const char PTR4* name, U32 flags)
+HBINK BinkOpen(const char PTR4* name, u32 flags)
 {
 }
 
-S32 BinkCopyToBuffer(HBINK bnk, void* dest, S32 destpitch, U32 destheight, U32 destx, U32 desty,
-                     U32 flags)
+s32 BinkCopyToBuffer(HBINK bnk, void* dest, s32 destpitch, u32 destheight, u32 destx, u32 desty,
+                     u32 flags)
 {
     BinkCopyToBufferRect(bnk, dest, destpitch, destheight, destx, desty, 0, 0, bnk->Width,
                          bnk->Height, flags);
 }
 
-S32 BinkCopyToBufferRect(HBINK bnk, void* dest, S32 destpitch, U32 destheight, U32 destx, U32 desty,
-                         U32 srcx, U32 srcy, U32 srcw, U32 srch, U32 flags)
+s32 BinkCopyToBufferRect(HBINK bnk, void* dest, s32 destpitch, u32 destheight, u32 destx, u32 desty,
+                         u32 srcx, u32 srcy, u32 srcw, u32 srch, u32 flags)
 {
 }
 
-S32 BinkDoFrame(HBINK bnk)
+s32 BinkDoFrame(HBINK bnk)
 {
 }
 
-void timeframe(HBINK bnk, U32 tmp)
+void timeframe(HBINK bnk, u32 tmp)
 {
-    U32 tmpReg;
+    u32 tmpReg;
 
     tmpReg = (bnk->startblittime);
     if (tmpReg == 0)
@@ -870,11 +870,11 @@ void BinkNextFrame(HBINK bnk)
 {
 }
 
-U32 BinkGetKeyFrame(HBINK bnk, U32 frame, S32 flags)
+u32 BinkGetKeyFrame(HBINK bnk, u32 frame, s32 flags)
 {
 }
 
-void BinkGoto(HBINK bnk, U32 frame, S32 flags)
+void BinkGoto(HBINK bnk, u32 frame, s32 flags)
 {
 }
 
@@ -883,16 +883,16 @@ void BinkClose(HBINK bnk)
 }
 
 // TODO:
-// Double check that the second are is supposed to be a U32
-void endframe(HBINK bnk, U32 tmp)
+// Double check that the second are is supposed to be a u32
+void endframe(HBINK bnk, u32 tmp)
 {
 }
 
-S32 BinkWait(HBINK bnk)
+s32 BinkWait(HBINK bnk)
 {
 }
 
-S32 BinkPause(HBINK bnk, S32 pause)
+s32 BinkPause(HBINK bnk, s32 pause)
 {
 }
 
@@ -900,7 +900,7 @@ void BinkGetSummary(HBINK bnk, BINKSUMMARY* sum)
 {
 }
 
-void BinkGetRealtime(HBINK bink, BINKREALTIME PTR4* run, U32 frames)
+void BinkGetRealtime(HBINK bink, BINKREALTIME PTR4* run, u32 frames)
 {
 }
 
@@ -914,7 +914,7 @@ void BinkGetRealtime(HBINK bink, BINKREALTIME PTR4* run, U32 frames)
 // {
 // }
 
-S32 BinkGetRects(HBINK bnk, U32 flags)
+s32 BinkGetRects(HBINK bnk, u32 flags)
 {
 }
 
@@ -927,24 +927,24 @@ void BinkService(HBINK bink)
 }
 
 // TODO:
-// Double check that the second are is supposed to be a U32
-S32 idtoindex(HBINK bnk, U32 tmp)
+// Double check that the second are is supposed to be a u32
+s32 idtoindex(HBINK bnk, u32 tmp)
 {
 }
 
-void BinkSetVolume(HBINK bnk, U32 trackid, S32 volume)
+void BinkSetVolume(HBINK bnk, u32 trackid, s32 volume)
 {
 }
 
-void BinkSetMixBins(HBINK bnk, U32 trackid, U32 PTR4* mix_bins, U32 total)
+void BinkSetMixBins(HBINK bnk, u32 trackid, u32 PTR4* mix_bins, u32 total)
 {
 }
 
-void BinkSetMixBinVolumes(HBINK bnk, U32 trackid, U32* vol_mix_bins, S32* volumes, U32 total)
+void BinkSetMixBinVolumes(HBINK bnk, u32 trackid, u32* vol_mix_bins, s32* volumes, u32 total)
 {
 }
 
-void BinkSetPan(HBINK bnk, U32 trackid, S32 pan)
+void BinkSetPan(HBINK bnk, u32 trackid, s32 pan)
 {
 }
 
@@ -953,16 +953,16 @@ void* BinkLogoAddress()
     return LogoData;
 }
 
-U32 BinkGetTrackType(HBINK bnk, U32 trackindex)
+u32 BinkGetTrackType(HBINK bnk, u32 trackindex)
 {
     if (bnk != 0)
     {
-        return *(U32*)(trackindex * 1 + (bnk->tracktypes));
+        return *(u32*)(trackindex * 1 + (bnk->tracktypes));
     }
     return 0;
 }
 
-U32 BinkGetTrackMaxSize(HBINK bnk, U32 trackindex)
+u32 BinkGetTrackMaxSize(HBINK bnk, u32 trackindex)
 {
     if (bnk != 0)
     {
@@ -971,7 +971,7 @@ U32 BinkGetTrackMaxSize(HBINK bnk, U32 trackindex)
     return 0;
 }
 
-U32 BinkGetTrackID(HBINK bnk, U32 trackindex)
+u32 BinkGetTrackID(HBINK bnk, u32 trackindex)
 {
     if (bnk != 0)
     {
@@ -980,7 +980,7 @@ U32 BinkGetTrackID(HBINK bnk, U32 trackindex)
     return 0;
 }
 
-HBINKTRACK BinkOpenTrack(HBINK bnk, U32 trackindex)
+HBINKTRACK BinkOpenTrack(HBINK bnk, u32 trackindex)
 {
 }
 
@@ -997,11 +997,11 @@ void BinkCloseTrack(HBINKTRACK bnkt)
     }
 }
 
-U32 BinkGetTrackData(HBINKTRACK bnkt, void* dest)
+u32 BinkGetTrackData(HBINKTRACK bnkt, void* dest)
 {
 }
 
-S32 BinkSetVideoOnOff(HBINK bnk, S32 onoff)
+s32 BinkSetVideoOnOff(HBINK bnk, s32 onoff)
 {
     if (bnk != 0)
     {
@@ -1010,6 +1010,6 @@ S32 BinkSetVideoOnOff(HBINK bnk, S32 onoff)
     return onoff;
 }
 
-S32 BinkSetSoundOnOff(HBINK bnk, S32 onoff)
+s32 BinkSetSoundOnOff(HBINK bnk, s32 onoff)
 {
 }
