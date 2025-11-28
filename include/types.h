@@ -6,7 +6,7 @@
 // Note: only include this header inside BFBB-related headers/source code files.
 // Don't include this in any RenderWare, system, bink, etc. files
 
-// #ifdef GAMECUBE
+#ifdef GAMECUBE
 typedef signed char S8;
 typedef signed short S16;
 typedef signed int S32;
@@ -19,7 +19,7 @@ typedef unsigned long long U64;
 
 typedef float F32;
 typedef double F64;
-// #endif
+#endif
 
 #ifdef NULL
 #undef NULL

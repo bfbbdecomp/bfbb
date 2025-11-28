@@ -12,8 +12,7 @@
 
 #include "zGlobals.h"
 
-#include <types.h>
-#include <dolphin.h>
+// #include <dolphin.h>
 
 // FIXME: These should be in a RW header somewhere
 extern GXRenderModeObj* _RwDlRenderMode;
@@ -54,7 +53,7 @@ void iFMVfree(void* mem)
 }
 
 static void PlayFMV(char* filename, size_t buttons, F32 time);
-U32 iFMVPlay(char* filename, unsigned int buttons, F32 time, bool skippable, bool lockController)
+U32 iFMVPlay(char* filename, U32 buttons, F32 time, bool skippable, bool lockController)
 {
     if (filename == NULL)
     {
@@ -190,7 +189,7 @@ static void aramfree(void* mem)
     ARFree(&vol);
 }
 
-static void PlayFMV(char* fname, u32 buttons, F32 time)
+static void PlayFMV(char* fname, size_t buttons, F32 time)
 {
     GXCullMode cull_mode;
     GXGetCullMode(&cull_mode);
