@@ -5,12 +5,12 @@ void RADCB_unregister_2_callbacks(BINKIO* io)
 {
 }
 
-U32 RADCB_registered_count(BINKIO io)
+u32 RADCB_registered_count(BINKIO io)
 {
     return io.ThreadTime;
 }
 
-U32 RADCB_try_to_suspend_handler(BINKIO* io)
+u32 RADCB_try_to_suspend_handler(BINKIO* io)
 {
 }
 
@@ -85,7 +85,7 @@ void RADCB_idle_on_callbacks()
 {
 }
 
-U32 RADCB_callback_size()
+u32 RADCB_callback_size()
 {
     return 28;
 }

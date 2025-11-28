@@ -6,8 +6,8 @@ void* userfree = NULL;
 
 void radfree(void* ptr)
 {
-    U8* ptrU8 = (U8*)ptr;
-    U32* ptrU32 = (U32*)ptr;
+    u8* ptrU8 = (u8*)ptr;
+    u32* ptrU32 = (u32*)ptr;
 
     void (*customFree)(void*);
     if (ptr)
