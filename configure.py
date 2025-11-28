@@ -441,7 +441,7 @@ config.libs = [
             Object(NonMatching, "SB/Core/x/xModel.cpp"),
             Object(Matching, "SB/Core/x/xMorph.cpp"),
             Object(Equivalent, "SB/Core/x/xMovePoint.cpp"),
-            Object(NonMatching, "SB/Core/x/xordarray.cpp"),
+            Object(Matching, "SB/Core/x/xordarray.cpp"),
             Object(NonMatching, "SB/Core/x/xPad.cpp"),
             Object(NonMatching, "SB/Core/x/xPar.cpp"),
             Object(NonMatching, "SB/Core/x/xParCmd.cpp"),

@@ -5,7 +5,7 @@
 
 void XOrdInit(st_XORDEREDARRAY* array, S32 size, S32 tempAlloc)
 {
-    U32 cnt = 1;
+    S32 cnt = 1;
     if (size >= 1)
     {
         cnt = size;
@@ -20,11 +20,11 @@ void XOrdInit(st_XORDEREDARRAY* array, S32 size, S32 tempAlloc)
     }
     array->cnt = 0;
     array->max = cnt;
-    array->warnlvl = 0.95f * (cnt ^ 0x80000000);
+    array->warnlvl = 0.95f * (cnt ^ (S32)0.0);
     if (array->warnlvl == array->max)
     {
         cnt = array->max - 1;
-        array->warnlvl = cnt & ~((S32)cnt >> 0x1f);
+        array->warnlvl = cnt & ~(cnt >> 0x1f);
     }
 }
 
