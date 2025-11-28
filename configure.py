@@ -485,7 +485,7 @@ config.libs = [
             Object(Matching, "SB/Game/zEnv.cpp"),
             Object(Matching, "SB/Game/zEvent.cpp"),
             Object(Matching, "SB/Game/zFeet.cpp"),
-            Object(Matching, "SB/Game/zFMV.cpp"),
+            Object(NonMatching, "SB/Game/zFMV.cpp"),
             Object(NonMatching, "SB/Game/zFX.cpp"),
             Object(NonMatching, "SB/Game/zGame.cpp"),
             Object(Equivalent, "SB/Game/zGameExtras.cpp"),
