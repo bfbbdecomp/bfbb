@@ -17,7 +17,7 @@ zFMVFile zFMVFileTable[] = {
     { eFMVFile_Demo1, "FMV\\demo1" }, // Gameplay Demo (Idle)
 };
 
-U32 zFMVPlay(char* filename, U32 buttons, F32 time, bool skippable, bool lockController)
+U32 zFMVPlay(char* filename, unsigned int buttons, F32 time, bool skippable, bool lockController)
 {
     char fullname[64];
     U32 ret;
@@ -36,7 +36,7 @@ U32 zFMVPlay(char* filename, U32 buttons, F32 time, bool skippable, bool lockCon
     xSndSuspend();
     _GameOstrich old = zGameGetOstrich();
     zGameSetOstrich(eGameOstrich_PlayingMovie);
-    ret = iFMVPlay(fullname, buttons, time, skippable, lockController);
+    ret = iFMVPlay(fullname, (unsigned int)buttons, time, skippable, lockController);
     zGameSetOstrich(old);
     xSndResume();
 

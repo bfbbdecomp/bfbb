@@ -344,12 +344,12 @@
 
 #define RAD_ALIGN_ADD_TYPE(var) RAD_ALIGN_TYPE var##align = RAD_ALIGN_DEF
 
-// #define S8 signed char
-// #define U8 unsigned char
-// #define U32 unsigned long
-// #define S32 signed long
-// #define F32 float
-// #define F64 double
+#define S8 signed char
+#define U8 unsigned char
+#define U32 unsigned long
+#define S32 signed long
+#define F32 float
+#define F64 double
 
 #if defined(__MWERKS__) || defined(__MRC__) || defined(GEKKO)
 #define U64 unsigned long long
@@ -373,20 +373,24 @@
 
 #ifdef __RADNGC__
 
-// #include <types.h>
+// Unfortunately dolphin\types.h typedefs the
+// same types that we use.
+// So we use the typedefs for this platform.
+
+#include <dolphin\types.h>
 
 #else
 
-// #define u8 U8
-// #define s8 S8
-// #define u16 U16
-// #define s16 S16
-// #define u32 U32
-// #define s32 S32
-// #define u64 U64
-// #define s64 S64
-// #define f32 F32
-// #define f64 F64
+#define u8 U8
+#define s8 S8
+#define u16 U16
+#define s16 S16
+#define u32 U32
+#define s32 S32
+#define u64 U64
+#define s64 S64
+#define f32 F32
+#define f64 F64
 
 #endif
 
