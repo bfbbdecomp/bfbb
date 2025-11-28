@@ -221,12 +221,12 @@ static enum {
     WallJumpResult_Jump,
 } sWallJumpResult;
 static xVec3 sWallNormal;
-static xModelTag sSandyLFoot; 
-static xModelTag sSandyRFoot; 
-static xModelTag sSandyLHand; 
-static xModelTag sSandyRHand; 
-static xModelTag sSandyLKnee; 
-static xModelTag sSandyRKnee; 
+static xModelTag sSandyLFoot;
+static xModelTag sSandyRFoot;
+static xModelTag sSandyLHand;
+static xModelTag sSandyRHand;
+static xModelTag sSandyLKnee;
+static xModelTag sSandyRKnee;
 static xModelTag sSandyLElbow;
 static xModelTag sSandyRElbow;
 static xModelTag sSpongeBobLKnee;
@@ -2322,13 +2322,12 @@ static U32 StunRadiusCB(xAnimTransition*, xAnimSingle*, void*)
     zEntPlayer_SNDPlay(ePlayerSnd_BellySmash, 0.0f);
     if ((xrand() & 0x3) == 3)
     {
-        zEntPlayer_SNDPlayStreamRandom(ePlayerStreamSnd_BellySmashComment1, ePlayerStreamSnd_BellySmashComment3,
-                                       0.0f);
+        zEntPlayer_SNDPlayStreamRandom(ePlayerStreamSnd_BellySmashComment1,
+                                       ePlayerStreamSnd_BellySmashComment3, 0.0f);
     }
 
     if (tslide_lastrealvel.y > -1.0f)
     {
-        
         zPadAddRumble(eRumble_Medium, 0.1f, 0, 0x0);
     }
     else if (stun_power_tmr < 0.4f)
@@ -3606,31 +3605,32 @@ S32 zEntPlayer_IsSneaking()
 
 S32 load_talk_filter(U8* filter, xModelAssetParam* params, U32 params_size, S32 max_size)
 {
-	// Not sure about these variable names.
+    // Not sure about these variable names.
     F32* non_choice; // Not in DWARF.
     S32 size = 0;
-    F32* non_choices = (F32 *)xMemPushTemp(max_size * sizeof(F32));
-    S32 found = zParamGetFloatList(params, params_size, "NonRandomTalkAnims", max_size, non_choices, non_choices);
+    F32* non_choices = (F32*)xMemPushTemp(max_size * sizeof(F32));
+    S32 found = zParamGetFloatList(params, params_size, "NonRandomTalkAnims", max_size, non_choices,
+                                   non_choices);
 
-	for (S32 i = 0; i < max_size; i++)
-	{
-		bool skip = false;
-		non_choice = non_choices;
+    for (S32 i = 0; i < max_size; i++)
+    {
+        bool skip = false;
+        non_choice = non_choices;
         for (S32 j = 0; j < found; j++)
-		{
+        {
             if ((S32)*non_choice - 1 == i)
             {
                 skip = true;
                 break;
             }
             non_choice++;
-		}
+        }
         if (!skip)
         {
             filter[size] = (U8)i;
             size++;
         }
-	}
+    }
     if (size <= 0)
     {
         *filter = '\0';
@@ -3726,11 +3726,11 @@ void PlayerMountHackTakeAction(xEnt* ent, U32 type)
     {
         zEntEvent(ent, type);
     }
-	else
-	{
+    else
+    {
         mount_object = ent;
         mount_type = type;
-	}
+    }
     mount_tmr = 0.0f;
 }
 
@@ -3865,7 +3865,9 @@ static void zEntPlayer_StreakFX(xEnt* ent, F32)
                 sStreakInfo[1][1].activated = TRUE;
             }
         }
-        else if (cp == 0 && strcmp(ent->model->Anim->Single->State->Name, "TongueJump01") == 0 || strcmp(ent->model->Anim->Single->State->Name, "TongueJumpXtra01") == 0 || strcmp(ent->model->Anim->Single->State->Name, "TongueDJumpApex01") == 0)
+        else if (cp == 0 && strcmp(ent->model->Anim->Single->State->Name, "TongueJump01") == 0 ||
+                 strcmp(ent->model->Anim->Single->State->Name, "TongueJumpXtra01") == 0 ||
+                 strcmp(ent->model->Anim->Single->State->Name, "TongueDJumpApex01") == 0)
         {
             sStreakInfo[0][2].activated = TRUE;
             sStreakInfo[0][3].activated = TRUE;
@@ -3890,15 +3892,15 @@ static void zEntPlayer_StreakFX(xEnt* ent, F32)
 
     if (cp == 1)
     {
-        if (strcmp(ent->model->Anim->Single->State->Name,"Melee01") == 0)
+        if (strcmp(ent->model->Anim->Single->State->Name, "Melee01") == 0)
         {
             sStreakInfo[1][1].activated = TRUE;
         }
-        else if (strcmp(ent->model->Anim->Single->State->Name,"JumpMelee01") == 0)
+        else if (strcmp(ent->model->Anim->Single->State->Name, "JumpMelee01") == 0)
         {
             sStreakInfo[1][2].activated = 1;
         }
-        else if (strcmp(ent->model->Anim->Single->State->Name,"LassoSwing") == 0)
+        else if (strcmp(ent->model->Anim->Single->State->Name, "LassoSwing") == 0)
         {
             sStreakInfo[1][2].activated = TRUE;
             sStreakInfo[1][3].activated = TRUE;
@@ -3910,11 +3912,13 @@ static void zEntPlayer_StreakFX(xEnt* ent, F32)
     }
     else if (cp == 2)
     {
-        if (strcmp(ent->model->Anim->Single->State->Name,"BbowlWindup01") == 0) {
+        if (strcmp(ent->model->Anim->Single->State->Name, "BbowlWindup01") == 0)
+        {
             sStreakInfo[0][1].activated = 1;
         }
     }
-    else if (cp == 0 && strcmp(ent->model->Anim->Single->State->Name, "Stunfall") == 0 || strcmp(ent->model->Anim->Single->State->Name, "Stunjump") == 0)
+    else if (cp == 0 && strcmp(ent->model->Anim->Single->State->Name, "Stunfall") == 0 ||
+             strcmp(ent->model->Anim->Single->State->Name, "Stunjump") == 0)
     {
         sStreakInfo[2][1].activated = TRUE;
         sStreakInfo[2][0].activated = TRUE;
@@ -3928,7 +3932,10 @@ static void zEntPlayer_StreakFX(xEnt* ent, F32)
         {
             if (sStreakInfo[i][p].activated && sStreakInfo[i][p].streakID == 0xdead)
             {
-                sStreakInfo[i][p].streakID = xFXStreakStart(0.0f, 4.0f, sStreakInfo[i][p].alphaStart, 0x0, &sStreakInfo[i][p].colA, &sStreakInfo[i][p].colB, sStreakInfo[i][p].streakTaper);
+                sStreakInfo[i][p].streakID =
+                    xFXStreakStart(0.0f, 4.0f, sStreakInfo[i][p].alphaStart, 0x0,
+                                   &sStreakInfo[i][p].colA, &sStreakInfo[i][p].colB,
+                                   sStreakInfo[i][p].streakTaper);
             }
             else
             {
@@ -3941,13 +3948,17 @@ static void zEntPlayer_StreakFX(xEnt* ent, F32)
 
             if (sStreakInfo[i][p].streakID != 0xdead)
             {
-                iModelTagEval(ent->model->Data, sStreakInfo[i][p].tagA, globals.player.model_spongebob->Mat, &sStreakInfo[i][p].a);
-                iModelTagEval(ent->model->Data, sStreakInfo[i][p].tagB, globals.player.model_spongebob->Mat, &sStreakInfo[i][p].b);
+                iModelTagEval(ent->model->Data, sStreakInfo[i][p].tagA,
+                              globals.player.model_spongebob->Mat, &sStreakInfo[i][p].a);
+                iModelTagEval(ent->model->Data, sStreakInfo[i][p].tagB,
+                              globals.player.model_spongebob->Mat, &sStreakInfo[i][p].b);
             }
             else
             {
-                iModelTagEval(ent->model->Data, sStreakInfo[i][p].tagA, ent->model->Mat, &sStreakInfo[i][p].a);
-                iModelTagEval(ent->model->Data, sStreakInfo[i][p].tagB, ent->model->Mat, &sStreakInfo[i][p].b);
+                iModelTagEval(ent->model->Data, sStreakInfo[i][p].tagA, ent->model->Mat,
+                              &sStreakInfo[i][p].a);
+                iModelTagEval(ent->model->Data, sStreakInfo[i][p].tagB, ent->model->Mat,
+                              &sStreakInfo[i][p].b);
             }
 
             xFXStreakUpdate(sStreakInfo[i][p].streakID, &sStreakInfo[i][p].a, &sStreakInfo[i][p].b);
@@ -3980,7 +3991,7 @@ static void zEntPlayer_SpringboardFX(xEnt* ent, F32 dt)
             {
                 return;
             }
-            
+
             sLastSpringboardBubbleEmit = 0.0f;
 
             info.custom_flags = 0x35E;
@@ -3998,7 +4009,7 @@ static void zEntPlayer_SpringboardFX(xEnt* ent, F32 dt)
 
             size *= 1.2f;
             info.size_death.set(size, size, 1.0f, 0);
-            
+
             xParEmitterEmitCustom(sEmitSpinBubbles, dt, &info);
         }
         else
@@ -4010,7 +4021,6 @@ static void zEntPlayer_SpringboardFX(xEnt* ent, F32 dt)
 
 static void getPadDefl(_tagPadAnalog* stick, class xVec2* v)
 {
-
 }
 
 static void zEntPlayer_BoulderVehicleRender(zEnt* ent)
@@ -4036,22 +4046,22 @@ static void zEntPlayer_BoulderVehicleUpdate(xEnt* ent, xScene* sc, F32 dt)
     xVec3 heading;
     F32 angle;
     F32 mag;
-    
+
     gSpongeBall = TRUE;
     xEntBoulder* shouldDamagePlayer = FALSE;
     zEntPlayer_PredictionUpdate(ent, dt);
-    
+
     xVec3Copy(&ent->frame->oldmat.pos, &ent->frame->mat.pos);
 
     U8 chkBackup = ent->collis->chk;
     U8 penBackup = ent->collis->pen;
     ent->collis->chk = 0x0;
     ent->collis->pen = 0x0;
-    
+
     if (boulderVehicle != NULL && globals.player.ControlOff == FALSE)
     {
         bvTimeToIdle -= dt;
-        
+
         xVec2 inputDefl;
         getPadDefl(&globals.pad0->analog1, &inputDefl);
 
@@ -4059,17 +4069,17 @@ static void zEntPlayer_BoulderVehicleUpdate(xEnt* ent, xScene* sc, F32 dt)
         {
             inputDefl.y = 1.0f;
         }
-        
+
         if (globals.pad0->on & 0x80)
         {
             inputDefl.y = -1.0f;
         }
-        
+
         if (globals.pad0->on & 0x40)
         {
             inputDefl.x = 1.0f;
         }
-        
+
         if (globals.pad0->on & 0x10)
         {
             inputDefl.x = -1.0f;
@@ -4096,7 +4106,6 @@ static void zEntPlayer_BoulderVehicleUpdate(xEnt* ent, xScene* sc, F32 dt)
     // 0x5D0
     if (boulderVehicle != NULL)
     {
-        
     }
 }
 
@@ -4159,28 +4168,29 @@ void zEntPlayerCheckHelmetPop()
     xModelInstance* model = globals.player.sb_models[7];
     if ((globals.player.IsBubbleBashing == 0) || (globals.player.sb_models[7]->Flags & 1))
     {
-		return;
-	}
-    xMat4x3Mul((xMat4x3 *)globals.player.sb_models[7]->Mat, (xMat4x3 *)(&globals.player.ent.model->Mat[5]), (xMat4x3 *)(globals.player.ent.model)->Mat);
-    xVec3Copy(&vec, (xVec3 *)&model->Mat->pos);
+        return;
+    }
+    xMat4x3Mul((xMat4x3*)globals.player.sb_models[7]->Mat,
+               (xMat4x3*)(&globals.player.ent.model->Mat[5]),
+               (xMat4x3*)(globals.player.ent.model)->Mat);
+    xVec3Copy(&vec, (xVec3*)&model->Mat->pos);
     vec.y += 0.35f;
     zFX_SpawnBubbleHit(&vec, 0x32);
     globals.player.IsBubbleBashing = 0;
-
 }
 
 void zEntPlayer_setBoulderMode(U32 mode)
 {
-	if (mode != 0)
-	{
+    if (mode != 0)
+    {
         boulderRollShouldStart = 1;
         boulderRollShouldEnd = 0;
     }
-	else
-	{
+    else
+    {
         boulderRollShouldStart = 0;
         boulderRollShouldEnd = 1;
-	}
+    }
 }
 
 S32 zEntPlayer_Damage(xBase* src, U32 damage, const xVec3* knockback)
@@ -4396,7 +4406,7 @@ void zEntPlayer_StoreCheckPoint(xVec3* pos, F32 rot, U32 initCamID)
 {
     if (pos != NULL)
     {
-		globals.player.cp.pos = *pos;
+        globals.player.cp.pos = *pos;
         globals.player.cp.rot = rot;
         globals.player.cp.initCamID = initCamID;
     }
@@ -4407,10 +4417,10 @@ void zEntPlayer_LoadCheckPoint()
     xEnt& p = globals.player.ent;
     xModelInstance& m = *p.model;
     xEntFrame& f = *p.frame;
-    zCheckPoint& cp =  globals.player.cp;
+    zCheckPoint& cp = globals.player.cp;
 
-	f.mat.pos = cp.pos;
-	f.oldmat.pos = cp.pos;
+    f.mat.pos = cp.pos;
+    f.oldmat.pos = cp.pos;
     f.rot.angle = cp.rot;
     f.rot.axis = xVec3::create(0.0f, 1.0f, 0.0f);
 
@@ -4422,11 +4432,16 @@ void zEntPlayer_LoadCheckPoint()
     if (sPlayerDiedLastTime != 0)
     {
         sPlayerDiedLastTime = 0;
-        zEntPlayer_SNDPlayStreamRandom(0x00, 0x01, ePlayerStreamSnd_EnterScene1, ePlayerStreamSnd_EnterScene3, 0.3f);
-        zEntPlayer_SNDPlayStreamRandom(0x02, 0x04, ePlayerStreamSnd_EnterScene1, ePlayerStreamSnd_EnterScene4, 0.3f);
-        zEntPlayer_SNDPlayStreamRandom(0x05, 0x0A, ePlayerStreamSnd_EnterScene1, ePlayerStreamSnd_EnterScene5, 0.3f);
-        zEntPlayer_SNDPlayStreamRandom(0x0B, 0x19, ePlayerStreamSnd_EnterScene1, ePlayerStreamSnd_EnterScene6, 0.3f);
-        zEntPlayer_SNDPlayStreamRandom(0x1A, 0x64, ePlayerStreamSnd_EnterScene1, ePlayerStreamSnd_EnterScene7, 0.3f);
+        zEntPlayer_SNDPlayStreamRandom(0x00, 0x01, ePlayerStreamSnd_EnterScene1,
+                                       ePlayerStreamSnd_EnterScene3, 0.3f);
+        zEntPlayer_SNDPlayStreamRandom(0x02, 0x04, ePlayerStreamSnd_EnterScene1,
+                                       ePlayerStreamSnd_EnterScene4, 0.3f);
+        zEntPlayer_SNDPlayStreamRandom(0x05, 0x0A, ePlayerStreamSnd_EnterScene1,
+                                       ePlayerStreamSnd_EnterScene5, 0.3f);
+        zEntPlayer_SNDPlayStreamRandom(0x0B, 0x19, ePlayerStreamSnd_EnterScene1,
+                                       ePlayerStreamSnd_EnterScene6, 0.3f);
+        zEntPlayer_SNDPlayStreamRandom(0x1A, 0x64, ePlayerStreamSnd_EnterScene1,
+                                       ePlayerStreamSnd_EnterScene7, 0.3f);
     }
 
     zCameraReset(&globals.camera);
@@ -5836,28 +5851,6 @@ xAnimTable* zSandy_AnimTable()
     return animTable;
 }
 
-xAnimTable* zSpongeBobTongue_AnimTable()
-{
-    xAnimTable* animTable = xAnimTableNew("SBTongue", NULL, 0);
-
-    xAnimTableNewState(animTable, "TongueSlide01", 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
-                       xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(animTable, "TongueStart01", 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
-                       xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(animTable, "TongueJump01", 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
-                       xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(animTable, "TongueJumpXtra01", 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
-                       xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(animTable, "TongueDJumpApex01", 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
-                       xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(animTable, "TongueFall01", 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
-                       xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(animTable, "TongueLand01", 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
-                       xAnimDefaultBeforeEnter, NULL, NULL);
-
-    return animTable;
-}
-
 xAnimTable* zPatrick_AnimTable()
 {
     xAnimTable* animTable = xAnimTableNew("Patrick", NULL, 0);
@@ -7130,184 +7123,26 @@ xAnimTable* zEntPlayer_AnimTable()
     return animTable;
 }
 
-void iCameraSetBlurriness(F32 amount);
-
-// Equivalent; scheduling issues.
-static void zEntPlayer_UpdateVelocityBlur()
+xAnimTable* zSpongeBobTongue_AnimTable()
 {
-    F32 start_vel2;
-    F32 peak_vel2;
-	F32 vel; // not in DWARF
+    xAnimTable* animTable = xAnimTableNew("SBTongue", NULL, 0);
 
-	static F32 start_vel = 10.0f;
-	static F32 peak_vel = 50.0f;
-	static F32 max_blur = 0.5f;
+    xAnimTableNewState(animTable, "TongueSlide01", 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "TongueStart01", 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "TongueJump01", 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "TongueJumpXtra01", 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "TongueDJumpApex01", 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "TongueFall01", 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
+    xAnimTableNewState(animTable, "TongueLand01", 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                       xAnimDefaultBeforeEnter, NULL, NULL);
 
-    if (start_vel >= peak_vel)
-    {
-		return;
-	}
-
-    start_vel2 = start_vel * start_vel;
-    peak_vel2 = peak_vel * peak_vel;
-    vel = globals.player.ent.frame->vel.length2();
-    if (vel < start_vel2)
-    {
-        iCameraSetBlurriness(0);
-    }
-    else
-    {
-        start_vel2 = (vel / (peak_vel2 - start_vel2));
-        if (start_vel2 > 1.0f)
-        {
-            start_vel2 = 1.0f;
-        }
-        iCameraSetBlurriness(start_vel2 * max_blur);
-    }
-}
-
-static void dampen_velocity(xVec3& v1, const xVec3& v2, F32 f)
-{
-	F32 f0 = v1.x * v2.x;
-
-	xVec3 v1_old = v1;
-
-	F32 f3 = v2.y;
-	F32 f4 = -((f * f0) - v1.x);
-
-	v1.x = f4;
-	f4 = v1.y;
-	f3 = f4 * f3;
-	f3 = -((f * f3) - f4);
-
-	v1.y = f3;
-	f3 = v1.z;
-	f0 = f3 * v2.z;
-	v1.z = -((f * f0) - f3);
-
-	S32 oldV1Neg = (v1_old.x < 0.0f) ? 1 : 0;
-	S32 newV1Neg = (v1.x < 0.0f) ? 1 : 0;
-
-	if (newV1Neg != oldV1Neg)
-	{
-		v1.x = 0.0f;
-	}
-
-    oldV1Neg = (v1_old.y < 0.0f) ? 1 : 0;
-	newV1Neg = (v1.y < 0.0f) ? 1 : 0;
-
-	if (newV1Neg != oldV1Neg)
-    {
-        v1.y = 0.0f;
-    }
-
-	oldV1Neg = (v1_old.z < 0.0f) ? 1 : 0;
-	newV1Neg = (v1.z < 0.0f) ? 1 : 0;
-
-	if (newV1Neg != oldV1Neg)
-	{
-		v1.z = 0.0f;
-	}
-}
-
-static void player_sound_hop_load(U32 hopid, S32 hip_or_hop)
-{
-    S64 t;
-
-    xMemPushBase();
-    t = iTimeGet();
-    xUtil_idtag2string(hopid, 0);
-    iTimeDiffSec(t);
-    xSTPreLoadScene(hopid, NULL, hip_or_hop);
-    t = iTimeGet();
-    xUtil_idtag2string(hopid, 0);
-    iTimeDiffSec(t);
-    xSTQueueSceneAssets(hopid, hip_or_hop);
-    t = iTimeGet();
-    xUtil_idtag2string(hopid, 0);
-    iTimeDiffSec(t);
-    while (xSTLoadStep(hopid) < 1.0f)
-    {
-		iTRCDisk::CheckDVDAndResetState();
-    }
-    xSTDisconnect(hopid, hip_or_hop);
-    t = iTimeGet();
-    xUtil_idtag2string(hopid, 0);
-    iTimeDiffSec(t);
-}
-
-static S32 g_flg_loaded;
-
-void zEntPlayer_LoadSounds()
-{
-    U32 bufsize;
-    void* info;
-
-    player_sound_hop_load('SPSB', 2);
-    g_flg_loaded |= 2;
-
-	info = xSTFindAsset(0x791025ac, &bufsize);
-    if (info != NULL)
-    {
-        player_sound_hop_load('SPPA', 2);
-        g_flg_loaded |= 0x08;
-    }
-
-	info = xSTFindAsset(0xc0e34b23, &bufsize);
-    if (info != NULL)
-    {
-        player_sound_hop_load('SPSC', 2);
-        g_flg_loaded |= 0x20;
-    }
-
-    zEntPlayer_SNDInit();
-}
-
-void zEntPlayer_UnloadSounds()
-{
-    if (g_flg_loaded == 0)
-    {
-		return;
-	}
-    if (g_flg_loaded & 0x10)
-    {
-        xSTUnLoadScene('SPSC', 1);
-    }
-    if (g_flg_loaded & 0x20)
-    {
-        xSTUnLoadScene('SPSC', 2);
-        iSndSceneExit();
-    }
-    if (g_flg_loaded & 0x04)
-    {
-        xSTUnLoadScene('SPPA', 1);
-    }
-    if (g_flg_loaded & 0x08)
-    {
-        xSTUnLoadScene('SPPA', 2);
-        iSndSceneExit();
-    }
-    if (g_flg_loaded & 0x01)
-    {
-        xSTUnLoadScene('SPSB', 1);
-    }
-    if (g_flg_loaded & 0x02)
-    {
-        xSTUnLoadScene('SPSB', 2);
-        iSndSceneExit();
-    }
-    g_flg_loaded = 0;
-}
-
-
-void dont_move(xEnt* ent, xScene* scene, F32 dt, xEntFrame* frame)
-{
-    PlayerAbsControl(ent, 0.0, 0.0, dt);
-}
-
-S32 zEntPlayerDyingInGoo()
-{
-    return in_goo != 0;
+    return animTable;
 }
 
 xAnimTable* zEntPlayer_BoulderVehicleAnimTable()
@@ -7513,6 +7348,185 @@ xAnimTable* zEntPlayer_TreeDomeSBAnimTable()
                        xAnimDefaultBeforeEnter, NULL, NULL);
 
     return table;
+}
+
+void iCameraSetBlurriness(F32 amount);
+
+// Equivalent; scheduling issues.
+static void zEntPlayer_UpdateVelocityBlur()
+{
+    F32 start_vel2;
+    F32 peak_vel2;
+    F32 vel; // not in DWARF
+
+    static F32 start_vel = 10.0f;
+    static F32 peak_vel = 50.0f;
+    static F32 max_blur = 0.5f;
+
+    if (start_vel >= peak_vel)
+    {
+        return;
+    }
+
+    start_vel2 = start_vel * start_vel;
+    peak_vel2 = peak_vel * peak_vel;
+    vel = globals.player.ent.frame->vel.length2();
+    if (vel < start_vel2)
+    {
+        iCameraSetBlurriness(0);
+    }
+    else
+    {
+        start_vel2 = (vel / (peak_vel2 - start_vel2));
+        if (start_vel2 > 1.0f)
+        {
+            start_vel2 = 1.0f;
+        }
+        iCameraSetBlurriness(start_vel2 * max_blur);
+    }
+}
+
+static void dampen_velocity(xVec3& v1, const xVec3& v2, F32 f)
+{
+    F32 f0 = v1.x * v2.x;
+
+    xVec3 v1_old = v1;
+
+    F32 f3 = v2.y;
+    F32 f4 = -((f * f0) - v1.x);
+
+    v1.x = f4;
+    f4 = v1.y;
+    f3 = f4 * f3;
+    f3 = -((f * f3) - f4);
+
+    v1.y = f3;
+    f3 = v1.z;
+    f0 = f3 * v2.z;
+    v1.z = -((f * f0) - f3);
+
+    S32 oldV1Neg = (v1_old.x < 0.0f) ? 1 : 0;
+    S32 newV1Neg = (v1.x < 0.0f) ? 1 : 0;
+
+    if (newV1Neg != oldV1Neg)
+    {
+        v1.x = 0.0f;
+    }
+
+    oldV1Neg = (v1_old.y < 0.0f) ? 1 : 0;
+    newV1Neg = (v1.y < 0.0f) ? 1 : 0;
+
+    if (newV1Neg != oldV1Neg)
+    {
+        v1.y = 0.0f;
+    }
+
+    oldV1Neg = (v1_old.z < 0.0f) ? 1 : 0;
+    newV1Neg = (v1.z < 0.0f) ? 1 : 0;
+
+    if (newV1Neg != oldV1Neg)
+    {
+        v1.z = 0.0f;
+    }
+}
+
+static void player_sound_hop_load(U32 hopid, S32 hip_or_hop)
+{
+    S64 t;
+
+    xMemPushBase();
+    t = iTimeGet();
+    xUtil_idtag2string(hopid, 0);
+    iTimeDiffSec(t);
+    xSTPreLoadScene(hopid, NULL, hip_or_hop);
+    t = iTimeGet();
+    xUtil_idtag2string(hopid, 0);
+    iTimeDiffSec(t);
+    xSTQueueSceneAssets(hopid, hip_or_hop);
+    t = iTimeGet();
+    xUtil_idtag2string(hopid, 0);
+    iTimeDiffSec(t);
+    while (xSTLoadStep(hopid) < 1.0f)
+    {
+        iTRCDisk::CheckDVDAndResetState();
+    }
+    xSTDisconnect(hopid, hip_or_hop);
+    t = iTimeGet();
+    xUtil_idtag2string(hopid, 0);
+    iTimeDiffSec(t);
+}
+
+static S32 g_flg_loaded;
+
+void zEntPlayer_LoadSounds()
+{
+    U32 bufsize;
+    void* info;
+
+    player_sound_hop_load('SPSB', 2);
+    g_flg_loaded |= 2;
+
+    info = xSTFindAsset(0x791025ac, &bufsize);
+    if (info != NULL)
+    {
+        player_sound_hop_load('SPPA', 2);
+        g_flg_loaded |= 0x08;
+    }
+
+    info = xSTFindAsset(0xc0e34b23, &bufsize);
+    if (info != NULL)
+    {
+        player_sound_hop_load('SPSC', 2);
+        g_flg_loaded |= 0x20;
+    }
+
+    zEntPlayer_SNDInit();
+}
+
+void zEntPlayer_UnloadSounds()
+{
+    if (g_flg_loaded == 0)
+    {
+        return;
+    }
+    if (g_flg_loaded & 0x10)
+    {
+        xSTUnLoadScene('SPSC', 1);
+    }
+    if (g_flg_loaded & 0x20)
+    {
+        xSTUnLoadScene('SPSC', 2);
+        iSndSceneExit();
+    }
+    if (g_flg_loaded & 0x04)
+    {
+        xSTUnLoadScene('SPPA', 1);
+    }
+    if (g_flg_loaded & 0x08)
+    {
+        xSTUnLoadScene('SPPA', 2);
+        iSndSceneExit();
+    }
+    if (g_flg_loaded & 0x01)
+    {
+        xSTUnLoadScene('SPSB', 1);
+    }
+    if (g_flg_loaded & 0x02)
+    {
+        xSTUnLoadScene('SPSB', 2);
+        iSndSceneExit();
+    }
+    g_flg_loaded = 0;
+}
+
+void dont_move(xEnt* ent, xScene* scene, F32 dt, xEntFrame* frame)
+{
+    PlayerAbsControl(ent, 0.0, 0.0, dt);
+}
+
+S32 zEntPlayerDyingInGoo()
+{
+    return in_goo != 0;
 }
 
 // TODO: Move these to their headers
