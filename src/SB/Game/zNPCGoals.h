@@ -1,6 +1,8 @@
 #ifndef ZNPCGOALS_H
 #define ZNPCGOALS_H
 
+#include "xFactory.h"
+
 // Not present in dwarf, so may be inaccurate
 // Inspired by en_NPCTYPES
 enum en_NPCGOALS
@@ -184,8 +186,6 @@ enum en_NPCGOALS
     NPC_GOAL_TIKIDYING,
     NPC_GOAL_TIKIDEAD
 };
-
-struct xFactory;
 
 void zNPCGoals_RegisterTypes(xFactory* fac);
 
