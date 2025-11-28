@@ -481,7 +481,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zEntDestructObj.cpp"),
             Object(NonMatching, "SB/Game/zEntHangable.cpp"),
             Object(NonMatching, "SB/Game/zEntPickup.cpp"),
-            Object(NonMatching, "SB/Game/zEntPlayer.cpp"),
+            Object(NonMatching, "SB/Game/zEntPlayer.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zEntSimpleObj.cpp"),
             Object(Matching, "SB/Game/zEntTrigger.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zEnv.cpp"),
@@ -729,7 +729,7 @@ config.libs = [
             Object(Matching, "dolphin/src/dsp/dsp.c"),
             Object(Matching, "dolphin/src/dsp/dsp_debug.c"),
             Object(Matching, "dolphin/src/dsp/dsp_task.c")
-        ]        
+        ]
     ),
     DolphinLib(
         "dvd",
