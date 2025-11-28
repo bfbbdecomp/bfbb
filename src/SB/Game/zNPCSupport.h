@@ -145,6 +145,8 @@ void Firework_Timestep(F32 dt);
 void Firework_Release(Firework*);
 RwTexture* NPCC_FindRWTexture(U32 hashid);
 RwTexture* NPCC_FindRWTexture(const char* txtrname);
+void NPCC_MakeArbPlane(const xVec3* dir_norm, xVec3* at, xVec3* rt);
+void NPCC_MakePerp(xVec3* dir_perp, const xVec3* dir_axis);
 RwRaster* NPCC_FindRWRaster(const char* txtrname);
 RwRaster* NPCC_FindRWRaster(RwTexture* txtr);
 void zNPC_SNDInit();

@@ -547,7 +547,7 @@ config.libs = [
             Object(Matching, "SB/Game/zNPCGoals.cpp"),
             Object(NonMatching, "SB/Game/zNPCGoalCommon.cpp"), # wrong function order
             Object(NonMatching, "SB/Game/zNPCGoalStd.cpp", extra_cflags=["-sym on"]),
-            Object(NonMatching, "SB/Game/zNPCGoalRobo.cpp"),
+            Object(NonMatching, "SB/Game/zNPCGoalRobo.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zNPCGoalTiki.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zNPCMessenger.cpp"),
             Object(NonMatching, "SB/Game/zNPCMgr.cpp"),
@@ -624,7 +624,7 @@ config.libs = [
             Object(Equivalent, "SB/Core/gc/iTRC.cpp"),
             Object(NonMatching, "SB/Game/zNPCSupplement.cpp"),
             Object(NonMatching, "SB/Game/zNPCGlyph.cpp", extra_cflags=["-sym on"]),
-            Object(NonMatching, "SB/Game/zNPCHazard.cpp"),
+            Object(NonMatching, "SB/Game/zNPCHazard.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zNPCGoalAmbient.cpp"),
             Object(NonMatching, "SB/Game/zNPCFXCinematic.cpp"),
             Object(Equivalent, "SB/Core/x/xHudText.cpp", extra_cflags=["-sym on"]),

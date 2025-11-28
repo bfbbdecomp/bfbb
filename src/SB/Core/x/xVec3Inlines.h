@@ -35,4 +35,6 @@ inline void xVec3SubFrom(xVec3* o, const xVec3* v)
     o->z -= v->z;
 }
 
+F32 LERP(F32 dt, xVec3*, xVec3*, xVec3*);
+
 #endif

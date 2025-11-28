@@ -2,7 +2,6 @@
 
 #include "zNPCGoals.h"
 #include "zNPCTypeDuplotron.h"
-#include "zNPCHazard.h"
 #include "zGlobals.h"
 
 #include "xMath.h"

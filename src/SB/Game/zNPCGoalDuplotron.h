@@ -1,7 +1,6 @@
 #ifndef ZNPCGOALDUPLOTRON_H
 #define ZNPCGOALDUPLOTRON_H
 
-#include "zNPCGoalCommon.h"
 #include "zNPCGoalStd.h"
 
 enum en_dupolive

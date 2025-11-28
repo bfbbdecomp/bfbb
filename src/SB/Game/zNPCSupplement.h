@@ -7,6 +7,7 @@
 #include "xPtankPool.h"
 #include "xShadow.h"
 #include "xVec3.h"
+#include "zNPCTypeCommon.h"
 
 #include "zLightning.h"
 #include <types.h>
@@ -305,7 +306,18 @@ void NPCSupplement_Timestep(F32 dt);
 void NPCC_MakeLightningInfo(en_npclyt style, _tagLightningAdd* info);
 void NPAR_ScenePrepare();
 void NPAR_SceneFinish();
+void NPAR_EmitTarTarNozzle(const xVec3* pos, const xVec3* vel);
 void NPAR_EmitTarTarTrail(const xVec3*, const xVec3*);
+void NPAR_EmitTarTarSplash(const xVec3* pos, const xVec3* vel);
+void NPAR_EmitTarTarSpoil(const xVec3* pos, const xVec3* vel);
+void NPAR_EmitTarTarSmoke(const xVec3* pos, const xVec3* vel);
+void NPAR_EmitH2ODrips(const xVec3* pos, const xVec3* vel);
+void NPAR_EmitH2ODrops(const xVec3* pos, const xVec3* vel);
+void NPAR_EmitH2OSpray(const xVec3* pos, const xVec3* vel);
+void NPAR_EmitH2OTrail(const xVec3* pos);
+void NPAR_EmitOilSplash(const xVec3* pos, const xVec3* vel);
+void NPAR_EmitOilTrailz(const xVec3* pos);
+void NPAR_EmitOilVapors(const xVec3* pos);
 NPARMgmt* NPAR_PartySetup(en_nparptyp parType, void** userData, NPARXtraData* xtraData);
 void NPAR_SceneReset();
 static void NPCC_ShadowCacheReset();
@@ -314,6 +326,7 @@ void NPAR_EmitDroplets(en_nparmode, const xVec3*, const xVec3*);
 void NPCC_MakeStreakInfo(en_npcstreak styp, StreakInfo* info);
 U32 xFXStreakStart(StreakInfo* styp);
 U32 NPCC_StreakCreate(en_npcstreak styp);
+void NPCC_Slick_MakePlayerSlip(zNPCCommon* npc);
 void NPCC_RenderProjTextureFaceCamera(RwRaster* rast, F32 factor, xVec3* pos, F32 radius,
                                       F32 height, xShadowCache* cache, S32 fillCache, xEnt* ent);
 void UpdateAndRender(NPARMgmt param_1, F32 dt);

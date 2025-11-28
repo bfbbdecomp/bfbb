@@ -59,6 +59,13 @@ struct xVec3
     F32 length() const;
     F32 length2() const;
     xVec3& invert();
+
+    xVec3 inverse() const
+    {
+        xVec3 inverse = *this;
+        return inverse.invert();
+    }
+
     F32 dot(const xVec3& c) const;
 
     xVec3 cross(const xVec3& c) const
