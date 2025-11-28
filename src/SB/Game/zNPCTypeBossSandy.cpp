@@ -17,7 +17,6 @@
 #include "xMarkerAsset.h"
 #include "zCamera.h"
 #include "zGrid.h"
-#include "zAssetTypes.h"
 
 extern const char bossSandyStrings[];
 
@@ -146,30 +145,30 @@ xAnimTable* ZNPC_AnimTable_BossSandy()
 {
     // clang-format off
     S32 ourAnims[25] = {
-        Idle01, 
-        Idle02, 
-        Taunt01, 
-        Run01, 
-        Walk01, 
-        Melee01, 
-        Hit01, 
-        Hit02, 
+        Idle01,
+        Idle02,
+        Taunt01,
+        Run01,
+        Walk01,
+        Melee01,
+        Hit01,
+        Hit02,
         GetUp01,
-        Dizzy01, 
-        ElbowDrop01, 
-        Leap01, 
-        Leap02, 
+        Dizzy01,
+        ElbowDrop01,
+        Leap01,
+        Leap02,
         Leap03 ,
-        Leap04, 
-        Sit01, 
+        Leap04,
+        Sit01,
         SitShock01,
-        CLBegin01, 
-        CLLoop01, 
+        CLBegin01,
+        CLLoop01,
         CLEnd01,
         NoHeadIdle01,
-        NoHeadWaving01, 
+        NoHeadWaving01,
         NoHeadGetUp01,
-        NoHeadShotUp01, 
+        NoHeadShotUp01,
         NoHeadShock01,
     };
     // clang-format on
