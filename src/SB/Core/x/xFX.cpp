@@ -686,9 +686,10 @@ void xFXStreakUpdate(U32 id, const xVec3* a, const xVec3* b)
     xFXStreak* s;
 }
 
-U32 xFXStreakStart(F32 frequency, F32 alphaFadeRate, F32 alphaStart, U32 textureID, const iColor_tag* edge_a, const iColor_tag* edge_b, S32 taper)
+U32 xFXStreakStart(F32 frequency, F32 alphaFadeRate, F32 alphaStart, U32 textureID,
+                   const iColor_tag* edge_a, const iColor_tag* edge_b, S32 taper)
 {
-    for (U32 i = 0; i < 10; i++) 
+    for (U32 i = 0; i < 10; i++)
     {
         if (sStreakList[i].flags == 0x0)
         {
@@ -742,7 +743,7 @@ U32 xFXStreakStart(F32 frequency, F32 alphaFadeRate, F32 alphaStart, U32 texture
                 textureID = xStrHash("fx_streak1");
             }
 
-            sStreakList[i].texturePtr = (RwTexture*) xSTFindAsset(textureID, NULL);
+            sStreakList[i].texturePtr = (RwTexture*)xSTFindAsset(textureID, NULL);
             if (sStreakList[i].texturePtr != NULL)
             {
                 sStreakList[i].textureRasterPtr = RwTextureGetRaster(sStreakList[i].texturePtr);
@@ -751,7 +752,6 @@ U32 xFXStreakStart(F32 frequency, F32 alphaFadeRate, F32 alphaStart, U32 texture
             {
                 return 0;
             }
-
         }
     }
 

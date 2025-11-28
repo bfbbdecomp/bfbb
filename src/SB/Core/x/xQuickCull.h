@@ -46,13 +46,12 @@ struct xBox;
 void xQuickCullInit(const xBox* box);
 void xQuickCullInit(xQCControl* ctrl, const xBox* box);
 
-void xQuickCullInit(xQCControl* ctrl, F32 xmin, F32 ymin, F32 zmin, F32 xmax,
-                    F32 ymax, F32 zmax);
+void xQuickCullInit(xQCControl* ctrl, F32 xmin, F32 ymin, F32 zmin, F32 xmax, F32 ymax, F32 zmax);
 void xQuickCullInit(xQCControl* ctrl, const xBox* box);
 S32 xQuickCullIsects(const xQCData* a, const xQCData* b);
 void xQuickCullForBound(xQCControl* ctrl, xQCData* q, const xBound* b);
-void xQuickCullCellForVec(xQCControl* ctrl, xQCData* c, const xVec3* v);
-void xQuickCullCellMerge(xQCData* dest, const xQCData* a, const xQCData* b);
+static void xQuickCullCellForVec(xQCControl* ctrl, xQCData* c, const xVec3* v);
+static void xQuickCullCellMerge(xQCData* dest, const xQCData* a, const xQCData* b);
 void xQuickCullForLine(xQCControl* ctrl, xQCData* q, const xLine3* ln);
 void xQuickCullForRay(xQCControl* ctrl, xQCData* q, const xRay3* r);
 void xQuickCullForSphere(xQCControl* ctrl, xQCData* q, const xSphere* s);

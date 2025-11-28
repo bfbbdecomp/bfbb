@@ -12,8 +12,7 @@
 
 #include "zGlobals.h"
 
-#include <types.h>
-#include <dolphin.h>
+// #include <dolphin.h>
 
 // FIXME: These should be in a RW header somewhere
 extern GXRenderModeObj* _RwDlRenderMode;
@@ -97,7 +96,7 @@ void Decompress_frame(HBINK bnk, HRAD3DIMAGE rad_image, long flags)
         mask = mask >> 0x1f;
         mask = mask & 0x80000000;
         mask |= Bink_surface_type[result.unk_8];
-        result.unk_0 = BinkCopyToBuffer(bnk, pixels, result.unk_c, bnk->unk_4, NULL, NULL, mask);
+        result.unk_0 = BinkCopyToBuffer(bnk, pixels, result.unk_c, bnk->Height, NULL, NULL, mask);
         Unlock_RAD_3D_image(rad_image);
     }
 }
@@ -168,8 +167,8 @@ static void Show_frame()
     RwCameraClear(cam, &color, rwCAMERACLEARIMAGE);
 
     RwCameraBeginUpdate(cam);
-    Width_scale = 640 / Bink->unk_0;
-    Height_scale = 480 / Bink->unk_4;
+    Width_scale = 640 / Bink->Width;
+    Height_scale = 480 / Bink->Height;
     xDrawLine2D_LocaliFMVVersion(0.0f, 0.0f, 0.0f, 0.0f);
     DrawFrame(0.0f, 0.0f, Width_scale, Height_scale);
     RwCameraEndUpdate(cam);
@@ -190,7 +189,7 @@ static void aramfree(void* mem)
     ARFree(&vol);
 }
 
-static void PlayFMV(char* fname, u32 buttons, F32 time)
+static void PlayFMV(char* fname, size_t buttons, F32 time)
 {
     GXCullMode cull_mode;
     GXGetCullMode(&cull_mode);
@@ -242,9 +241,9 @@ static void PlayFMV(char* fname, u32 buttons, F32 time)
 
     if (Bink != NULL)
     {
-        if (Bink->unk_f0 != 0)
+        if (Bink->Width != 0)
         {
-            for (ip = 0; ip <= Bink->unk_f0; ++ip)
+            for (ip = 0; ip <= Bink->Width; ++ip)
             {
                 vol = gSnd.categoryVolFader[SND_CAT_CUTSCENE];
                 vol = vol * vol;
@@ -253,7 +252,7 @@ static void PlayFMV(char* fname, u32 buttons, F32 time)
             }
         }
 
-        Image = Open_RAD_3D_image(NULL, Bink->unk_0, Bink->unk_4, fuckingSurfaceType);
+        Image = Open_RAD_3D_image(NULL, Bink->Width, Bink->Height, fuckingSurfaceType);
         if (Image != NULL)
         {
             if (frame_num != 0)
@@ -280,19 +279,19 @@ static void PlayFMV(char* fname, u32 buttons, F32 time)
                 }
                 xPadUpdate(globals.currentActivePad, 0.0f);
 
-                F32 t = (float)Bink->unk_c / (Bink->unk_14 / Bink->unk_18);
+                F32 t = (float)Bink->FrameNum / (Bink->FrameRate / Bink->FrameRateDiv);
                 if (buttons && t >= time && globals.pad0->pressed & buttons)
                 {
                     frame_num = -1;
                     goto superbreak;
                 }
-            } while (Bink->unk_c < Bink->unk_8 - 1);
+            } while (Bink->FrameNum < Bink->Frames - 1);
             frame_num = -1;
         }
     superbreak:
         if (frame_num != -1)
         {
-            frame_num = Bink->unk_c;
+            frame_num = Bink->FrameNum;
         }
         Close_RAD_3D_image(Image);
         Image = NULL;

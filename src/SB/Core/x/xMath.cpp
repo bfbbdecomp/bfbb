@@ -237,7 +237,7 @@ F32 xDangleClamp(F32 a)
 
 void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
 {
-	// Todo: These variable names aren't all right.
+    // Todo: These variable names aren't all right.
     F32 var_f31;
     F32 offset;
     F32 t1;
@@ -526,16 +526,80 @@ void xAccelStop(F32& x, F32& v, F32 a, F32 dt)
     }
 }
 
+F32 xFuncPiece_Eval(xFuncPiece* func, F32 param, xFuncPiece** iterator)
+{
+    while (func && func->end < param - 1e-5f)
+    {
+        func = func->next;
+    }
+
+    F32 result;
+    if (func)
+    {
+        result = func->coef[func->order];
+        for (S32 i = func->order - 1; i >= 0; i--)
+        {
+            result = result * param + func->coef[i];
+        }
+        if (iterator)
+        {
+            *iterator = func;
+        }
+    }
+    else
+    {
+        result = 0.0f;
+        if (iterator)
+        {
+            *iterator = NULL;
+        }
+    }
+
+    return result;
+}
+
 void xFuncPiece_EndPoints(xFuncPiece* func, F32 pi, F32 pf, F32 fi, F32 ff)
 {
-	F32 xfinv; // from DWARF data
-	F32 df; // not from DWARF data
+    F32 xfinv; // from DWARF data
+    F32 df; // not from DWARF data
 
     func->end = pf - pi;
     xfinv = (1.0f / func->end);
-	df = ff - fi;
+    df = ff - fi;
     func->order = 1;
     func->coef[0] = fi;
     func->coef[1] = df * xfinv;
     xFuncPiece_ShiftPiece(func, func, -pi);
+}
+
+void xFuncPiece_ShiftPiece(xFuncPiece* shift, xFuncPiece* func, F32 newZero)
+
+{
+    S32 i, j;
+    xFuncPiece temp;
+
+    for (i = 0; i < func->order; i++)
+    {
+        temp.coef[i] = 0.0f;
+    }
+
+    temp.coef[func->order] = func->coef[func->order];
+
+    for (i = func->order - 1; i >= 0; i--)
+    {
+        for (j = i; j < func->order; j++)
+        {
+            temp.coef[j] += newZero * temp.coef[j + 1];
+        }
+        temp.coef[i] += func->coef[i];
+    }
+
+    shift->order = func->order;
+
+    for (i = 0; i <= shift->order; i++)
+    {
+        shift->coef[i] = temp.coef[i];
+    }
+
+    shift->end = func->end - newZero;
 }

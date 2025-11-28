@@ -55,7 +55,18 @@
     "gxget.h": "c",
     "gxverify.h": "c",
     "card.h": "c",
-    "__start.h": "c"
+    "__start.h": "c",
+    "binkread.h": "c",
+    "ngcrad3d.h": "c",
+    "osalarm.h": "c",
+    "ostime.h": "c",
+    "bink.h": "c",
+    "binkngc.h": "c",
+    "radbase.h": "c",
+    "oscontext.h": "c",
+    "radcb.h": "c",
+    "popmal.h": "c",
+    "osalloc.h": "c"
   },
   // Disable C/C++ IntelliSense, use clangd instead
   "C_Cpp.intelliSenseEngine": "default",

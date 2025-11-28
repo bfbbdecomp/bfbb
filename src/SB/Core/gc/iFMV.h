@@ -3,6 +3,7 @@
 
 #include <types.h>
 #include <bink.h>
+#include <rad3d.h>
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\size_t.h>
 
 #ifdef __cplusplus

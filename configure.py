@@ -215,6 +215,8 @@ cflags_base = [
     "-i src/PowerPC_EABI_Support/include",
     "-i src/dolphin/include",
     "-i src/dolphin/src",
+    "-i src/bink/include",
+    "-i src/bink/src",
     "-i src",
     f"-i build/{config.version}/include",
     f"-DBUILD_VERSION={version_num}",
@@ -272,7 +274,7 @@ cflags_trk = [
 
 # Bink was compiled with ProDG
 cflags_bink = [
-    "-O3",
+    "-O2",
     "-mcpu=750",
     "-fno-exceptions",
     "-Wno-inline",
@@ -317,7 +319,6 @@ cflags_bfbb = [
     '-pragma "cpp_extensions on"',
     "-inline off",
     "-gccinc",
-    "-i include/bink",
     "-i include/inline",
     "-i include/rwsdk",
     "-i src/SB/Core/gc",
@@ -440,9 +441,9 @@ config.libs = [
             Object(NonMatching, "SB/Core/x/xMath3.cpp"),
             Object(NonMatching, "SB/Core/x/xMemMgr.cpp"),
             Object(NonMatching, "SB/Core/x/xModel.cpp"),
-            Object(NonMatching, "SB/Core/x/xMorph.cpp"),
+            Object(Matching, "SB/Core/x/xMorph.cpp"),
             Object(Equivalent, "SB/Core/x/xMovePoint.cpp"),
-            Object(NonMatching, "SB/Core/x/xordarray.cpp"),
+            Object(Matching, "SB/Core/x/xordarray.cpp"),
             Object(NonMatching, "SB/Core/x/xPad.cpp"),
             Object(NonMatching, "SB/Core/x/xPar.cpp"),
             Object(NonMatching, "SB/Core/x/xParCmd.cpp"),
