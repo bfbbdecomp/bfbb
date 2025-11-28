@@ -375,7 +375,7 @@
 
 #ifdef __RADNGC__
 
-#include <types.h>
+#include <dolphin/types.h>
 
 #else
 
