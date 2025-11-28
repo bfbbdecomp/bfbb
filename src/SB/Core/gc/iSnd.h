@@ -21,6 +21,30 @@ struct iSndInfo
     S32 lastStreamBuffer;
 };
 
+struct iSndFileInfo
+{
+    U32 ID; // offset 0x0
+    U32 assetID; // offset 0x4
+    U16 sample_rate; // offset 0x8
+    U8 is_streamed; // offset 0xA
+    union
+    {
+        struct
+        {
+            U32 address; // offset 0x0
+            U32 size; // offset 0x4
+        } nonstream; // offset 0xC
+        struct
+        {
+            S32 file_index; // offset 0x0
+            U32 lsn; // offset 0x4
+            U32 data_size; // offset 0x8
+            U16 stream_interleave_size; // offset 0xC
+            U16 stream_interleave_count; // offset 0xE
+        } stream; // offset 0xC
+    };
+};
+
 // Size: 0x20
 // This was not in dwarf data
 struct vinfo
@@ -62,6 +86,7 @@ U32 SampleToNybbleAddress(U32 sample);
 void iSndInitSceneLoaded();
 S32 iSndIsPlaying(U32 assetID);
 S32 iSndIsPlaying(U32 assetID, U32 parid);
+iSndFileInfo* iSndLookup(U32 id);
 void iSndWaitForDeadSounds();
 void iSndSceneExit();
 void sndloadcb(tag_xFile* tag);
