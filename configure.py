@@ -448,7 +448,7 @@ config.libs = [
             Object(NonMatching, "SB/Core/x/xParCmd.cpp"),
             Object(Matching, "SB/Core/x/xParGroup.cpp"),
             Object(Matching, "SB/Core/x/xParMgr.cpp"),
-            Object(NonMatching, "SB/Core/x/xPartition.cpp"),
+            Object(Matching, "SB/Core/x/xPartition.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Core/x/xpkrsvc.cpp"),
             Object(NonMatching, "SB/Core/x/xQuickCull.cpp"),
             Object(Matching, "SB/Core/x/xsavegame.cpp"),
