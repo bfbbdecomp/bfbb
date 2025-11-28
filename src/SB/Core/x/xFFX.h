@@ -48,7 +48,6 @@ void xFFXTurnOff(xFFX* f);
 S16 xFFXAddEffect(xEnt* ent, xFFX* f);
 S16 xFFXAddEffect(xEnt* ent, void (*dof)(xEnt*, xScene*, F32, void*), void* fd);
 U32 xFFXRemoveEffectByFData(xEnt* ent, void* fdata);
-void xFFXApplyOne(xFFX* ffx, xEnt* ent, xScene* sc, F32 dt);
 void xFFXApply(xEnt* ent, xScene* sc, F32 dt);
 void xFFXShakeUpdateEnt(xEnt* ent, xScene* sc, F32 dt, void* fdata);
 void xFFXShakePoolInit(U32 num);

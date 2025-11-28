@@ -1,21 +1,31 @@
 #include "xFFX.h"
 #include "xEnt.h"
 #include "xMemMgr.h"
+#include "xMathInlines.h"
 
 #include <types.h>
 
-U32 psize;
-xFFX* pool;
-xFFX* alist;
-U32 shake_psize;
-void* shake_pool;
-xFFXShakeState* shake_alist;
-U32 rot_match_psize;
-xFFXRotMatchState* rot_match_pool;
-xFFXRotMatchState* rot_match_alist;
+static U32 psize;
+static xFFX* pool;
+static xFFX* alist;
+static U32 shake_psize;
+static xFFXShakeState* shake_pool;
+static xFFXShakeState* shake_alist;
+static U32 rot_match_psize;
+static xFFXRotMatchState* rot_match_pool;
+static xFFXRotMatchState* rot_match_alist;
 
-// Structure same as the bottom function, get that one, you get this one.
-//void xFFXPoolInit(U32 num_ffx);
+void xFFXPoolInit(U32 num_ffx)
+{
+    psize = num_ffx;
+    pool = (xFFX*)xMemAlloc(gActiveHeap, num_ffx * sizeof(xFFX), 0);
+    pool[0].next = NULL;
+    for (U32 i = 1; i < psize; i++)
+    {
+        pool[i].next = &pool[i - 1];
+    }
+    alist = &pool[psize - 1];
+}
 
 xFFX* xFFXAlloc()
 {
@@ -73,32 +83,30 @@ S16 xFFXAddEffect(xEnt* ent, void (*dof)(xEnt*, xScene*, F32, void*), void* fd)
     return effectID;
 }
 
-// WIP.
 U32 xFFXRemoveEffectByFData(xEnt* ent, void* fdata)
 {
-    xFFX* ffx;
-    xFFX** found;
+    xFFX** ffxh = &ent->ffx;
 
-    found = (xFFX**)&ent->ffx;
-    while (true)
+    while (*ffxh != NULL)
     {
-        ffx = *found;
-        if (ffx == NULL)
+        xFFX* next = *ffxh;
+        if (fdata == next->fdata)
         {
-            return 0;
+            next = next->next;
+            ent->num_ffx--;
+            xFFXFree(*ffxh);
+            *ffxh = next;
+
+            return 1;
         }
-        if (fdata == ffx->fdata)
-            break;
-        found = &ffx->next;
+
+        ffxh = &(*ffxh)->next;
     }
-    ffx = ffx->next;
-    ent->num_ffx--;
-    xFFXFree(*found);
-    *found = ffx;
-    return 1;
+
+    return 0;
 }
 
-void xFFXApplyOne(xFFX* ffx, xEnt* ent, xScene* sc, F32 dt)
+static void xFFXApplyOne(xFFX* ffx, xEnt* ent, xScene* sc, F32 dt)
 {
     if (ffx->next != NULL)
     {
@@ -118,17 +126,49 @@ void xFFXApply(xEnt* ent, xScene* sc, F32 dt)
     }
 }
 
-void xFFXShakeUpdateEnt(xEnt* ent, xScene* scene, float value, void*)
+// regswap
+void xFFXShakeUpdateEnt(xEnt* ent, xScene* sc, F32 dt, void* fdata)
 {
+    xFFXShakeState* ss = (xFFXShakeState*)fdata;
+    F32 tnext = ss->tmr + dt;
+    F32 mag = xexp(ss->alpha * tnext);
+
+    mag *= isin(ss->freq * tnext);
+
+    if (ss->tmr == 0.0f)
+    {
+        ss->lval = 0.0f;
+    }
+    else
+    {
+        if (ss->tmr >= ss->dur)
+        {
+            if (ss->lval * mag < 0.0f)
+            {
+                xFFXRemoveEffectByFData(ent, fdata);
+                xFFXShakeFree(ss);
+                return;
+            }
+        }
+    }
+
+    xVec3 dv;
+    xVec3SMul(&dv, (xVec3*)fdata, mag - ss->lval);
+    xVec3AddTo((xVec3*)(&ent->frame->mat.pos), &dv);
+    ss->lval = mag;
+    ss->tmr = tnext;
 }
 
-void xFFXPoolInit(U32 num)
-{
-}
-
-// The structure of this is identical to the pool init below. Figure out that one, you get this one as well.
 void xFFXShakePoolInit(U32 num)
 {
+    shake_psize = num;
+    shake_pool = (xFFXShakeState*)xMemAlloc(gActiveHeap, num * sizeof(xFFXShakeState), 0);
+    shake_pool->next = NULL;
+    for (S32 i = 1; i < shake_psize; i++)
+    {
+        shake_pool[i].next = &shake_pool[i - 1];
+    }
+    shake_alist = &shake_pool[shake_psize - 1];
 }
 
 xFFXShakeState* xFFXShakeAlloc()
@@ -149,22 +189,19 @@ void xFFXShakeFree(xFFXShakeState* s)
     shake_alist = s;
 }
 
-// Some instructions are in the wrong order.
 void xFFXRotMatchPoolInit(U32 num)
 {
     rot_match_psize = num;
-    rot_match_pool = (xFFXRotMatchState*)xMemAllocSize(num * sizeof(xFFXRotMatchState));
-    U32 i = 1;
+
+    rot_match_pool = (xFFXRotMatchState*)xMemAlloc(gActiveHeap, num * sizeof(xFFXRotMatchState), 0);
+
     rot_match_pool->next = NULL;
-    S32 ind = sizeof(xFFXRotMatchState);
-    while (i < rot_match_psize)
+    for (U32 i = 1; i < rot_match_psize; ++i)
     {
-        S32 nextAddr = ind - 1;
-        i++;
-        *(xFFXRotMatchState**)((S32)&rot_match_pool->next + ind) = rot_match_pool + nextAddr;
-        ind += sizeof(xFFXRotMatchState);
+        rot_match_pool[i].next = &rot_match_pool[i - 1];
     }
-    rot_match_alist = rot_match_pool + (rot_match_psize - 1);
+
+    rot_match_alist = &rot_match_pool[rot_match_psize - 1];
 }
 
 xFFXRotMatchState* xFFXRotMatchAlloc()
