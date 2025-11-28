@@ -18,7 +18,6 @@ zFMVFile zFMVFileTable[] = {
 };
 
 // TODO: fix this fuckass work around
-
 // casted a unsigned int into a unsigned int to make this match
 
 U32 zFMVPlay(char* filename, unsigned int buttons, F32 time, bool skippable, bool lockController)
@@ -40,7 +39,7 @@ U32 zFMVPlay(char* filename, unsigned int buttons, F32 time, bool skippable, boo
     xSndSuspend();
     _GameOstrich old = zGameGetOstrich();
     zGameSetOstrich(eGameOstrich_PlayingMovie);
-    ret = iFMVPlay(fullname, buttons, time, skippable, lockController);
+    ret = iFMVPlay(fullname, (unsigned int)buttons, time, skippable, lockController);
     zGameSetOstrich(old);
     xSndResume();
 

@@ -5,6 +5,7 @@
 
 #include "xVec3.h"
 #include "xVec3Inlines.h"
+#include "xIsect.h"
 
 // Size: 0x30
 struct xMat3x3
@@ -73,6 +74,13 @@ struct xCylinder
     F32 h;
 };
 
+struct xCapsule
+{
+    xVec3 start;
+    xVec3 end;
+    F32 r;
+};
+
 struct xQuat
 {
     xVec3 v;
@@ -122,6 +130,11 @@ extern const xVec3 g_NZ3;
 extern const xVec3 g_Onez;
 extern xMat4x3 g_I3;
 
+void xMath3Init();
+void xLine3VecDist2(const xVec3* p1, const xVec3* p2, const xVec3* v, xIsect* isx);
+void xBoxInitBoundOBB(xBox* o, const xBox* b, const xMat4x3* m);
+void xBoxInitBoundCapsule(xBox* b, const xCapsule* c);
+void xBoxFromCone(xBox& box, const xVec3& center, const xVec3& dir, F32 dist, F32 r1, F32 r2);
 void xMat3x3Copy(xMat3x3* o, const xMat3x3* m); // TODO: These functions should be inline
 void xMat4x3Copy(xMat4x3* o, const xMat4x3* m);
 void xMat4x3Mul(xMat4x3* o, const xMat4x3* a, const xMat4x3* b);
@@ -163,12 +176,14 @@ void xMat3x3SMul(xMat3x3*, const xMat3x3*, F32);
 void xBoxFromLine(xBox& box, const xLine3& line);
 void xBoxFromRay(xBox& box, const xRay3& ray);
 void xMat3x3Identity(xMat3x3* matrix); // TODO: These functions should be inline
+void xBoxFromCircle(xBox& box, const xVec3& center, const xVec3& dir, F32 r);
 S32 xPointInBox(const xBox* b, const xVec3* p);
 void xMat3x3LMulVec(xVec3* o, const xMat3x3* m, const xVec3* v);
 
 void xQuatMul(xQuat* o, const xQuat* a, const xQuat* b);
 void xQuatFlip(xQuat* o1, xQuat* o2);
 void xQuatNormalize(xQuat* arg01, xQuat* arg02);
+F32 xQuatLength2(const xQuat* q);
 
 void xQuatSMul(xQuat* q, const xQuat* a, F32 t);
 void xQuatAdd(xQuat* q, const xQuat* a, const xQuat* b);
