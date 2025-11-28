@@ -19,9 +19,7 @@ void xQuickCullInit(xQCControl* ctrl, F32 xmin, F32 ymin, F32 zmin, F32 xmax, F3
     ctrl->world_zsz = zmax - zmin;
     if (((ctrl->world_xsz <= 0.0f) || (ctrl->world_ysz <= 0.0f)) || (ctrl->world_zsz <= 0.0f))
     {
-        ctrl->world_zsz = 1.0f;
-        ctrl->world_ysz = 1.0f;
-        ctrl->world_xsz = 1.0f;
+        ctrl->world_xsz = ctrl->world_ysz = ctrl->world_zsz = 1.0f;
     }
     ctrl->scale_x = 127.0f / ctrl->world_xsz;
     ctrl->scale_y = 127.0f / ctrl->world_ysz;
@@ -37,7 +35,6 @@ void xQuickCullInit(xQCControl* ctrl, const xBox* box)
                    box->upper.z);
 }
 
-// WIP.
 S32 xQuickCullIsects(const xQCData* a, const xQCData* b)
 {
     return a->xmin <= b->xmax && a->ymin <= b->ymax && a->zmin <= b->zmax && b->xmin <= a->xmax &&
