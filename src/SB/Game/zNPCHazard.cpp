@@ -359,6 +359,80 @@ void NPCHazard::CollideResponse(xSweptSphere* swdata, F32 tym_inFuture)
     this->ColResp_Default(swdata, tym_inFuture);
 }
 
+void NPCHazard::Upd_PuppyNuke(F32 dt)
+{
+    xVec3 pos_emit;
+    HAZBall* ball = &this->custdata.ball;
+
+    ball->rad_cur = SMOOTH(this->pam_interp, ball->rad_min, ball->rad_max);
+
+    if (this->flg_hazard & 0x2000 && !(globals.player.DamageTimer > 0.0f))
+    {
+        if (ColPlyrSphere(ball->rad_cur))
+        {
+            HurtThePlayer();
+        }
+    }
+
+    if (this->flg_casthurt == 0 && this->npc_owner != NULL && this->flg_hazard & 0x2000 && this->pam_interp > 0.7f)
+    {
+        zNPCMsg_AreaNPCExplodeNoRobo(npc_owner, ball->rad_max, &this->pos_hazard);
+        this->flg_casthurt = 1;
+        this->flg_hazard |= 0x40;
+    }
+
+    FodBombBubbles(dt);
+}
+
+void NPCHazard::Upd_FodBomb(F32 dt)
+{
+    xVec3 pos_emit;
+    HAZBall* ball = &this->custdata.ball;
+
+    ball->rad_cur = LERP(isin(PI * this->pam_interp), ball->rad_min, ball->rad_max);
+
+    if (this->flg_hazard & 0x2000 && !(globals.player.DamageTimer > 0.0f))
+    {
+        if (ColPlyrSphere(ball->rad_cur))
+        {
+            HurtThePlayer();
+        }
+    }
+
+    if (this->flg_casthurt == 0 && this->npc_owner != NULL && this->flg_hazard & 0x2000 && this->pam_interp > 0.7f)
+    {
+        zNPCMsg_AreaNPCExplodeNoRobo(npc_owner, ball->rad_max, &this->pos_hazard);
+        this->flg_casthurt = 1;
+        this->flg_hazard |= 0x40;
+    }
+
+    FodBombBubbles(dt);
+}
+
+void NPCHazard::FodBombBubbles(F32 dt)
+{
+    static const xVec3 vel_spread = { 2.0f, 12.0f, 2.0 };
+    static const xVec3 pos_spread = { 0.1f, 2.0f, 0.1f };
+    static const xVec3 pos_offsetFirst = { 0.0f, -0.5f, 0.0f };
+    static const xVec3 pos_offsetLater = { 0.0f, -1.0f, 0.0f };
+    
+    if (this->flg_hazard & 0x8)
+    {
+        xVec3 pos_emit = this->pos_hazard;
+        pos_emit += pos_offsetFirst;
+
+        zFX_SpawnBubbleTrail(&pos_emit, 0x100, &pos_spread, &vel_spread);
+    }
+    else if (this->tmr_remain < 0.2f)
+    {
+        F32 tym = LERP(1.0f - this->tmr_remain / 0.2f, 0.75f, 1.0f);
+        xVec3 pos_emit = this->pos_hazard;
+        pos_emit += pos_offsetLater;
+
+        zFX_SpawnBubbleSlam(&pos_emit, 0x18, PI, 4.0f * tym, tym);  
+    }
+}
+
 void NPCHazard::Upd_CattleProd(F32 dt)
 {
     HAZCatProd* catprod = &this->custdata.catprod;

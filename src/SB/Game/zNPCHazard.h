@@ -259,6 +259,9 @@ struct NPCHazard
     S32 ColTestCyl(const xBound* bnd_tgt, F32 rad, F32 hyt);
     S32 ColPlyrSphere(F32 rad);
     S32 ColPlyrCyl(F32 rad, F32 hyt);
+    void Upd_PuppyNuke(F32 dt);
+    void Upd_FodBomb(F32 dt);
+    void FodBombBubbles(F32 dt);
     void Upd_CattleProd(F32 dt);
     void Upd_TubeletBlast(F32 dt);
     void Upd_DuploBoom(F32 dt);
