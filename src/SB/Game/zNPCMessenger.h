@@ -5,6 +5,7 @@
 #include "zNPCTypes.h"
 
 struct NPCMsg;
+struct zNPCCommon;
 
 struct NPCPSClt
 {
@@ -30,6 +31,7 @@ void zNPCMsg_SceneReset();
 void zNPCMsg_ScenePrepare();
 void zNPCMsg_Startup();
 void zNPCMsg_Shutdown();
+void zNPCMsg_AreaNPCExplodeNoRobo(zNPCCommon* wh, F32 radius, const xVec3* pos_fromHere);
 
 void zNPCMsg_Timestep(xScene* xscn, F32 dt);
 void NPCPS_MsgPoolReset(NPCPSData* npc);
