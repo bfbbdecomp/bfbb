@@ -13,8 +13,7 @@ struct zNPCMgr : RyzMemData
     xFactory* npcFactory;
     xBehaveMgr* bmgr;
     xBase selfbase;
-
-    zNPCMgr();
+    
     enum en_NPCTYPES NPCTypeForModel(U32 brainID, U32 mdl_hash);
     void BackdoorUpdateAllNPCsOnce(xScene*, F32);
     void PrepTypeTable();
@@ -29,10 +28,23 @@ struct zNPCMgr : RyzMemData
     void ScenePostRender();
     void ScenePostParticleRender();
     xEnt* CreateNPC(xEntAsset* assdat);
-    void DBG_Reset();
-    void DBG_PerfTrack();
-    ~zNPCMgr();
-
+    
+    zNPCMgr()
+    {
+    }
+    
+    ~zNPCMgr()
+    {
+    }
+    
+    void DBG_Reset()
+    {
+    }
+    
+    void DBG_PerfTrack()
+    {
+    }
+    
     /* Use as needed.
 	en_NPCTYPES NPCTypeForModel(U32 brainID, U32 mdl_hash);
 	xEnt* CreateNPC(xEntAsset* asset);
