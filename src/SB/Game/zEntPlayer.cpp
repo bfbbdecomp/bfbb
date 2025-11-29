@@ -2311,63 +2311,7 @@ static U32 BounceCheck(xAnimTransition*, xAnimSingle*, void*)
     return globals.player.Bounced == 1;
 }
 
-static U32 StunStartFallCB(xAnimTransition*, xAnimSingle*, void*)
-{
-    stun_power_tmr = 0;
-    return 0;
-}
 
-static U32 StunRadiusCB(xAnimTransition*, xAnimSingle*, void*)
-{
-    zEntPlayer_SNDPlay(ePlayerSnd_BellySmash, 0.0f);
-    if ((xrand() & 0x3) == 3)
-    {
-        zEntPlayer_SNDPlayStreamRandom(ePlayerStreamSnd_BellySmashComment1,
-                                       ePlayerStreamSnd_BellySmashComment3, 0.0f);
-    }
-
-    if (tslide_lastrealvel.y > -1.0f)
-    {
-        zPadAddRumble(eRumble_Medium, 0.1f, 0, 0x0);
-    }
-    else if (stun_power_tmr < 0.4f)
-    {
-        zPadAddRumble(eRumble_Heavy, 0.15f, 0, 0x0);
-    }
-    else if (stun_power_tmr < 1.0f)
-    {
-        zPadAddRumble(eRumble_VeryHeavy, 0.3f, 0, 0x0);
-    }
-    else
-    {
-        zPadAddRumble(eRumble_VeryHeavyHi, 0.6f, 0, 0x0);
-    }
-
-    return 0;
-}
-
-static S32 MeleeAttackBoundCollide(xEnt* ent, zScene* zscn, xBound* meleeB)
-{
-    Melee_cbData cbdata;
-    xVec3 pos;
-
-    cbdata.ent = ent;
-    cbdata.zsc = zscn;
-    cbdata.meleeB = meleeB;
-    cbdata.hitsomething = 0;
-    xVec3Copy(&pos, xBoundCenter(meleeB));
-
-    xGridCheckPosition(&colls_grid, &pos, &meleeB->qcd, CheckObjectAgainstMeleeBound, &cbdata);
-    xGridCheckPosition(&colls_oso_grid, &pos, &meleeB->qcd, CheckObjectAgainstMeleeBound, &cbdata);
-    xGridCheckPosition(&npcs_grid, &pos, &meleeB->qcd, CheckObjectAgainstMeleeBound, &cbdata);
-
-    return cbdata.hitsomething;
-}
-
-static S32 CheckObjectAgainstMeleeBound(xEnt* ent, void* data)
-{
-    return 0;
-}
 
 // Equivalent: sda relocation scheduling + regswap
 static U32 BounceCB(xAnimTransition*, xAnimSingle*, void*)
@@ -3585,6 +3529,107 @@ static U32 LassoSwingReleaseCB(xAnimTransition* tran, xAnimSingle* anim, void* o
     return 0;
 }
 
+
+static U8 StunBubbleTrail(xAnimSingle* anim)
+{
+    S32 ret = 0;
+    xAnimState* state = anim->State;
+    if ((strcmp(state->Name, "StunFall") == 0) ||
+        ((strcmp(state->Name, "StunJump") == 0) && (anim->Time >= 0.6f) && (anim->Time <= 1.0f)))
+    {
+        ret = 1;
+    }
+    return ret;
+}
+
+static U8 BubbleBashContrails(xAnimSingle* anim)
+{
+    S32 ret = 0;
+    xAnimState* state = anim->State;
+    if (((strcmp(state->Name, "BbashStart01") == 0) && (anim->Time >= 0.6f)) ||
+        (strcmp(state->Name, "BbashAttack01") == 0) ||
+        (strcmp(state->Name, "BbashMiss01") == 0) && (anim->Time <= 0.125f))
+    {
+        ret = 1;
+    }
+    return ret;
+}
+
+static U8 BubbleBounceContrails(xAnimSingle* anim)
+{
+    S32 ret = 0;
+    xAnimState* state = anim->State;
+    if (
+
+        ((strcmp(state->Name, "BbounceStart01") == 0) && (anim->Time >= 0.9f)) ||
+        (strcmp(state->Name, "BbounceAttack01") == 0))
+    {
+        ret = 1;
+    }
+    return ret;
+}
+
+
+static U32 StunStartFallCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    stun_power_tmr = 0;
+    return 0;
+}
+
+static U32 StunRadiusCB(xAnimTransition*, xAnimSingle*, void*)
+{
+    zEntPlayer_SNDPlay(ePlayerSnd_BellySmash, 0.0f);
+    if ((xrand() & 0x3) == 3)
+    {
+        zEntPlayer_SNDPlayStreamRandom(ePlayerStreamSnd_BellySmashComment1,
+                                       ePlayerStreamSnd_BellySmashComment3, 0.0f);
+    }
+
+    if (tslide_lastrealvel.y > -1.0f)
+    {
+        zPadAddRumble(eRumble_Medium, 0.1f, 0, 0x0);
+    }
+    else if (stun_power_tmr < 0.4f)
+    {
+        zPadAddRumble(eRumble_Heavy, 0.15f, 0, 0x0);
+    }
+    else if (stun_power_tmr < 1.0f)
+    {
+        zPadAddRumble(eRumble_VeryHeavy, 0.3f, 0, 0x0);
+    }
+    else
+    {
+        zPadAddRumble(eRumble_VeryHeavyHi, 0.6f, 0, 0x0);
+    }
+
+    return 0;
+}
+
+static S32 MeleeAttackBoundCollide(xEnt* ent, zScene* zscn, xBound* meleeB)
+{
+    Melee_cbData cbdata;
+    xVec3 pos;
+
+    cbdata.ent = ent;
+    cbdata.zsc = zscn;
+    cbdata.meleeB = meleeB;
+    cbdata.hitsomething = 0;
+    xVec3Copy(&pos, xBoundCenter(meleeB));
+
+    xGridCheckPosition(&colls_grid, &pos, &meleeB->qcd, CheckObjectAgainstMeleeBound, &cbdata);
+    xGridCheckPosition(&colls_oso_grid, &pos, &meleeB->qcd, CheckObjectAgainstMeleeBound, &cbdata);
+    xGridCheckPosition(&npcs_grid, &pos, &meleeB->qcd, CheckObjectAgainstMeleeBound, &cbdata);
+
+    return cbdata.hitsomething;
+}
+
+
+
+static S32 CheckObjectAgainstMeleeBound(xEnt* ent, void* data)
+{
+    return 0;
+}
+
 S32 zEntPlayer_IsSneaking()
 {
     if (gCurrentPlayer != eCurrentPlayerSpongeBob)
@@ -3663,124 +3708,9 @@ static U32 count_talk_anims(xAnimTable* anims)
     return talkAnimCount;
 }
 
-U8 BubbleBounceContrails(xAnimSingle* anim)
-{
-    S32 ret = 0;
-    xAnimState* state = anim->State;
-    if (
 
-        ((strcmp(state->Name, "BbounceStart01") == 0) && (anim->Time >= 0.9f)) ||
-        (strcmp(state->Name, "BbounceAttack01") == 0))
-    {
-        ret = 1;
-    }
-    return ret;
-}
 
-U8 BubbleBashContrails(xAnimSingle* anim)
-{
-    S32 ret = 0;
-    xAnimState* state = anim->State;
-    if (((strcmp(state->Name, "BbashStart01") == 0) && (anim->Time >= 0.6f)) ||
-        (strcmp(state->Name, "BbashAttack01") == 0) ||
-        (strcmp(state->Name, "BbashMiss01") == 0) && (anim->Time <= 0.125f))
-    {
-        ret = 1;
-    }
-    return ret;
-}
 
-U8 StunBubbleTrail(xAnimSingle* anim)
-{
-    S32 ret = 0;
-    xAnimState* state = anim->State;
-    if ((strcmp(state->Name, "StunFall") == 0) ||
-        ((strcmp(state->Name, "StunJump") == 0) && (anim->Time >= 0.6f) && (anim->Time <= 1.0f)))
-    {
-        ret = 1;
-    }
-    return ret;
-}
-
-F32 det3x3top1(float a, float b, float c, float d, float e, float f)
-{
-    F32 ret = -((a * f) - ((b * f) - (e * c)));
-    return -((d * b) - ((a * e) + ((d * c) + ret)));
-}
-
-// Equivalent; scheduling.
-void PlayerMountHackUpdate(F32 delta)
-{
-    mount_tmr = delta + mount_tmr;
-    if ((mount_tmr > 0.1f) && (mount_object != NULL))
-    {
-        zEntEvent(mount_object, mount_type);
-        mount_object = NULL;
-        mount_type = 0;
-    }
-}
-
-void PlayerMountHackTakeAction(xEnt* ent, U32 type)
-{
-    if (mount_tmr > 0.1f)
-    {
-        zEntEvent(ent, type);
-    }
-    else
-    {
-        mount_object = ent;
-        mount_type = type;
-    }
-    mount_tmr = 0.0f;
-}
-
-void zEntPlayerExit(xEnt* ent)
-{
-    bungee_state::destroy();
-}
-
-void PlayerHitAnimInit(xModelInstance* model, xAnimTransition* tran, U32* index)
-{
-    *index = 0;
-    xAnimState* state = model->Anim->Table->StateList;
-    while ((state != NULL) && (*index < 8))
-    {
-        if (strncmp(state->Name, "Hit0", 4) == 0)
-        {
-            tran[*index].Dest = state;
-            tran[*index].Callback = NULL;
-            tran[*index].SrcTime = 0.0;
-            tran[*index].DestTime = 0.0;
-            tran[*index].BlendRecip = 5.0f;
-            tran[*index].BlendOffset = NULL;
-            (*index)++;
-        }
-        state = state->Next;
-    }
-}
-
-void zEntPlayerPreReset()
-{
-    globals.player.ControlOff = 0;
-    if (!oob_state::IsPlayerInControl())
-    {
-        zEntPlayerControlOff(CONTROL_OWNER_OOB);
-        globals.player.ControlOffTimer = 1e38;
-    }
-}
-
-F32 ComputeFudge(F32 a, F32 b)
-{
-    F32 min = MIN(a, b);
-    a = (min - -0.175f) / 0.074999996f; // Will not match with 0.075f.
-
-    if (0.0f > MIN(a, 1.0f))
-    {
-        return 0.0f;
-    }
-
-    return MIN(a, 1.0f);
-}
 
 static void load_player_ini(zPlayerSettings& ps, xModelInstance& model, xModelAssetParam* modelass,
                             U32 params_size)
@@ -4373,6 +4303,86 @@ void zEntPlayerJumpAddDriver(xEnt* ent)
     {
         ent->frame->vel.y += sDriveVel.y;
     }
+}
+
+F32 det3x3top1(float a, float b, float c, float d, float e, float f)
+{
+    F32 ret = -((a * f) - ((b * f) - (e * c)));
+    return -((d * b) - ((a * e) + ((d * c) + ret)));
+}
+
+// Equivalent; scheduling.
+void PlayerMountHackUpdate(F32 delta)
+{
+    mount_tmr = delta + mount_tmr;
+    if ((mount_tmr > 0.1f) && (mount_object != NULL))
+    {
+        zEntEvent(mount_object, mount_type);
+        mount_object = NULL;
+        mount_type = 0;
+    }
+}
+
+void PlayerMountHackTakeAction(xEnt* ent, U32 type)
+{
+    if (mount_tmr > 0.1f)
+    {
+        zEntEvent(ent, type);
+    }
+    else
+    {
+        mount_object = ent;
+        mount_type = type;
+    }
+    mount_tmr = 0.0f;
+}
+
+void zEntPlayerExit(xEnt* ent)
+{
+    bungee_state::destroy();
+}
+
+void PlayerHitAnimInit(xModelInstance* model, xAnimTransition* tran, U32* index)
+{
+    *index = 0;
+    xAnimState* state = model->Anim->Table->StateList;
+    while ((state != NULL) && (*index < 8))
+    {
+        if (strncmp(state->Name, "Hit0", 4) == 0)
+        {
+            tran[*index].Dest = state;
+            tran[*index].Callback = NULL;
+            tran[*index].SrcTime = 0.0;
+            tran[*index].DestTime = 0.0;
+            tran[*index].BlendRecip = 5.0f;
+            tran[*index].BlendOffset = NULL;
+            (*index)++;
+        }
+        state = state->Next;
+    }
+}
+
+void zEntPlayerPreReset()
+{
+    globals.player.ControlOff = 0;
+    if (!oob_state::IsPlayerInControl())
+    {
+        zEntPlayerControlOff(CONTROL_OWNER_OOB);
+        globals.player.ControlOffTimer = 1e38;
+    }
+}
+
+F32 ComputeFudge(F32 a, F32 b)
+{
+    F32 min = MIN(a, b);
+    a = (min - -0.175f) / 0.074999996f; // Will not match with 0.075f.
+
+    if (0.0f > MIN(a, 1.0f))
+    {
+        return 0.0f;
+    }
+
+    return MIN(a, 1.0f);
 }
 
 xVec3* GetPosVec(xBase* base)
