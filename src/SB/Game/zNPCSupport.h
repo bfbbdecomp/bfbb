@@ -165,6 +165,7 @@ F32 NPCC_ds2_toCam(const xVec3* pos_from, xVec3* delta);
 void zNPC_SNDStop(_tageNPCSnd snd);
 void zNPC_SNDPlay3D(_tageNPCSnd snd, xEnt*);
 RwRaster* NPCC_FindRWRaster(char*);
+void NPCC_Bounce(xVec3* vec_input, xVec3* vec_anti, F32 elastic);
 void NPCC_xBoundAway(xBound* bnd);
 void NPCC_xBoundBack(xBound* bnd);
 
