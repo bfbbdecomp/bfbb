@@ -128,6 +128,7 @@ extern xModelPipeInfo* xModelPipeData[16];
 extern S32 xModelLookupCount;
 extern xModelPipeLookup* xModelLookupList;
 extern S32 xModelInstStaticAlloc;
+extern S32 xModelBucketEnabled;
 
 U32 xModelGetPipeFlags(RpAtomic* model);
 void xModelInit();
