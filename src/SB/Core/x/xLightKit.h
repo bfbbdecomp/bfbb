@@ -23,6 +23,9 @@ struct xLightKit
     xLightKitLight* lightList;
 };
 
+extern S32 iModelHack_DisablePrelight;
+extern xLightKit* gLastLightKit;
+
 xLightKit* xLightKit_Prepare(void* data);
 void xLightKit_Enable(xLightKit* lkit, RpWorld* world);
 xLightKit* xLightKit_GetCurrent(RpWorld* world);

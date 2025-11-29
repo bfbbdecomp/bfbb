@@ -85,7 +85,11 @@ struct xNPCBasic : xEnt, xFactoryInst
     virtual void Init(xEntAsset* asset);
     virtual void PostInit();
     virtual void Setup();
-    virtual void PostSetup();
+    
+    virtual void PostSetup()
+    {
+    }
+    
     virtual void Reset();
     virtual void Process(xScene* xscn, F32 dt);
     virtual void BUpdate(xVec3*);

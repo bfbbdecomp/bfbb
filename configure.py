@@ -481,7 +481,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zEntDestructObj.cpp"),
             Object(NonMatching, "SB/Game/zEntHangable.cpp"),
             Object(NonMatching, "SB/Game/zEntPickup.cpp"),
-            Object(NonMatching, "SB/Game/zEntPlayer.cpp"),
+            Object(NonMatching, "SB/Game/zEntPlayer.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zEntSimpleObj.cpp"),
             Object(Matching, "SB/Game/zEntTrigger.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zEnv.cpp"),
@@ -551,7 +551,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zNPCGoalRobo.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zNPCGoalTiki.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zNPCMessenger.cpp"),
-            Object(NonMatching, "SB/Game/zNPCMgr.cpp"),
+            Object(NonMatching, "SB/Game/zNPCMgr.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zNPCTypes.cpp"),
             Object(NonMatching, "SB/Game/zNPCTypeCommon.cpp"),
             Object(NonMatching, "SB/Game/zNPCTypeRobot.cpp"),
@@ -585,7 +585,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zNPCSndTable.cpp"),
             Object(Matching, "SB/Game/zNPCSndLists.cpp"),
             Object(NonMatching, "SB/Game/zNPCTypeDuplotron.cpp"),
-            Object(NonMatching, "SB/Core/x/xModelBucket.cpp"),
+            Object(Equivalent, "SB/Core/x/xModelBucket.cpp"),
             Object(NonMatching, "SB/Game/zShrapnel.cpp"),
             Object(Matching, "SB/Game/zNPCGoalDuplotron.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zNPCSpawner.cpp"),
@@ -729,7 +729,7 @@ config.libs = [
             Object(Matching, "dolphin/src/dsp/dsp.c"),
             Object(Matching, "dolphin/src/dsp/dsp_debug.c"),
             Object(Matching, "dolphin/src/dsp/dsp_task.c")
-        ]        
+        ]
     ),
     DolphinLib(
         "dvd",

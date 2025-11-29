@@ -534,8 +534,17 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
 
     // vTable (zNPCCommon)
     virtual S32 NPCMessage(NPCMsg* mail);
-    virtual void RenderExtra();
-    virtual void RenderExtraPostParticles();
+    
+    virtual void RenderExtra()
+    {
+
+    }
+    
+    virtual void RenderExtraPostParticles()
+    {
+
+    }
+    
     virtual void ParseINI();
     virtual void ParseLinks();
     virtual void ParseProps();

@@ -269,7 +269,11 @@ jobs:
         id: comment_file_check
         run: |
           FILE_PATH="pr.txt"
-          if [ -s "$FILE_PATH" ]; then
+          echo "===== pr.txt contents (debug) ====="
+          sed -n '1,200p' "$FILE_PATH" || true
+          echo "===== end debug ====="
+          # Consider the file empty if it has zero bytes OR only whitespace/newlines.
+          if [ -s "$FILE_PATH" ] && grep -q '[^[:space:]]' "$FILE_PATH"; then
             echo "file_empty=false" >> $GITHUB_OUTPUT
           else
             echo "file_empty=true" >> $GITHUB_OUTPUT
