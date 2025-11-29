@@ -47,6 +47,7 @@ struct var_type
 };
 
 extern S32 bad_card_needed;
+extern S32 bad_card_available;
 
 void var_init();
 void zVarNewGame();

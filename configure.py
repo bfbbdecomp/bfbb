@@ -464,7 +464,7 @@ config.libs = [
             Object(NonMatching, "SB/Core/x/xString.cpp"),
             Object(Matching, "SB/Core/x/xSurface.cpp"),
             Object(Matching, "SB/Core/x/xTimer.cpp"),
-            Object(NonMatching, "SB/Core/x/xTRC.cpp"),
+            Object(NonMatching, "SB/Core/x/xTRC.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/x/xutil.cpp"),
             Object(Matching, "SB/Core/x/xVec3.cpp"),
             Object(NonMatching, "SB/Game/zActionLine.cpp"),
