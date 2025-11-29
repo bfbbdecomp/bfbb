@@ -485,6 +485,7 @@ struct RwStringFunctions
 };
 
 #define RwMalloc(_s) ((RWSRCGLOBAL(memoryFuncs).rwmalloc)((_s)))
+#define RwMallocL(_s, _h, _l) ((RWSRCGLOBAL(memoryFuncs).rwmalloc)((_s), (_h)))
 #define RwFree(_p) ((RWSRCGLOBAL(memoryFuncs).rwfree)((_p)))
 #define RwCalloc(_n, _s) ((RWSRCGLOBAL(memoryFuncs).rwcalloc)((_n), (_s)))
 #define RwRealloc(_p, _s) ((RWSRCGLOBAL(memoryFuncs).rwrealloc)((_p), (_s)))
@@ -796,22 +797,22 @@ struct rwGameCube2DVertex
     RwReal u;
     RwReal v;
 
-	rwGameCube2DVertex& operator=(const rwGameCube2DVertex& rhs)
-	{
-		this->x = rhs.x;
-		this->y = rhs.y;
-		this->z = rhs.z;
+    rwGameCube2DVertex& operator=(const rwGameCube2DVertex& rhs)
+    {
+        this->x = rhs.x;
+        this->y = rhs.y;
+        this->z = rhs.z;
 
-		this->emissiveColor.red = rhs.emissiveColor.red;
-		this->emissiveColor.green = rhs.emissiveColor.green;
-		this->emissiveColor.blue = rhs.emissiveColor.blue;
-		this->emissiveColor.alpha = rhs.emissiveColor.alpha;
+        this->emissiveColor.red = rhs.emissiveColor.red;
+        this->emissiveColor.green = rhs.emissiveColor.green;
+        this->emissiveColor.blue = rhs.emissiveColor.blue;
+        this->emissiveColor.alpha = rhs.emissiveColor.alpha;
 
-		this->u = rhs.u;
-		this->v = rhs.v;
+        this->u = rhs.u;
+        this->v = rhs.v;
 
-		return *this;
-	}
+        return *this;
+    }
 };
 
 typedef rwGameCube2DVertex RwIm2DVertex;

@@ -36,5 +36,6 @@ void xTRCRender();
 void xTRCReset();
 void xTRCDisk(_tagTRCState state);
 void render_mem_card_no_space(S32 needed, S32 available, S32 neededFiles, bool enabled);
+void RenderText(const char* text, bool enabled);
 
 #endif
