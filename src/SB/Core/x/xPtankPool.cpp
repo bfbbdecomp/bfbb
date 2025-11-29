@@ -235,7 +235,7 @@ namespace
         return 0;
     }
 
-    U32 create_ptanks(group_data& group, unsigned long count);
+    U32 create_ptanks(group_data& group, u32 count);
 } // namespace
 
 void xPTankPoolSceneEnter()
@@ -247,9 +247,9 @@ void xPTankPoolSceneEnter()
     group_data* end = groups + MAX_PGT;
     while (it != end)
     {
-        double f = it->max_size - 0.f;
-        float scaled = float(f) * 0.25f + 0.5f;
-        create_ptanks(*it, (unsigned long)scaled);
+        F64 f = it->max_size - 0.f;
+        F32 scaled = F32(f) * 0.25f + 0.5f;
+        create_ptanks(*it, (U32)scaled);
 
         it++;
     }
@@ -257,7 +257,7 @@ void xPTankPoolSceneEnter()
 
 namespace
 {
-    U32 create_ptanks(group_data& group, unsigned long count)
+    U32 create_ptanks(group_data& group, u32 count)
     {
         U32 initial_size = group.size;
         if (initial_size + count > group.max_size)

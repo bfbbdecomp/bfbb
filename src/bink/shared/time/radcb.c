@@ -135,7 +135,7 @@ void RADCB_suspend_2_callbacks(BINKIO* io, BINKIO* io2, BINKIO* io3, BINKIO* io4
 
 // TODO:
 // Make sure that this function is correct.
-// To get this match I had to mark LastFrameNum as volatile in the header
+// To get this match I had to mark FramesTime as volatile in the header
 void RADCB_resume_callback(HBINK bnk, BINKREALTIME* bnk1)
 {
     if ((((bnk != 0) && (bnk1 != 0)) && (bnk1->FramesAudioDecompTime != 0)) &&

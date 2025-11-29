@@ -153,7 +153,7 @@ typedef struct BINK
     u32 Height; // Height (1 based, 480 for example)
     u32 Frames; // Number of frames (1 based, 100 = 100 frames)
     u32 FrameNum; // Frame to *be* displayed (1 based)
-    volatile u32 LastFrameNum; // Last frame decompressed or skipped (1 based)
+    u32 LastFrameNum; // Last frame decompressed or skipped (1 based)
 
     u32 FrameRate; // Frame Rate Numerator
     u32 FrameRateDiv; // Frame Rate Divisor (frame rate=numerator/divisor)
