@@ -104,6 +104,12 @@ struct xSweptSphere
     xVec3 worldPolynorm;
 };
 
+struct SweptSphereCollParam
+{
+    RpGeometry* geometry;
+    xSweptSphere* sws;
+};
+
 enum _xCollsIdx
 {
     k_XCOLLS_IDX_FLOOR,
@@ -150,9 +156,57 @@ void xModelAnimCollApply(const xModelInstance& cm);
 
 _xCollsIdx xCollideGetCollsIdx(const xCollis* coll, const xVec3* tohit, const xMat3x3* mat);
 
-inline bool xSphereHitsVCircle(const xSphere& s, const xVec3& c, F32 r)
+inline void xParabolaEvalPos(const xParabola* p, xVec3* pos, F32 time)
 {
-    return xSphereHitsVCircle(s.center, s.r, c, r);
+    xVec3Copy(pos, &p->initPos);
+    xVec3AddScaled(pos, &p->initVel, time);
+    pos->y -= 0.5f * p->gravity * time * time;
+}
+
+inline void xParabolaEvalVel(const xParabola* p, xVec3* vel, F32 time)
+{
+    xVec3Copy(vel, &p->initVel);
+    vel->y -= p->gravity * time;
+}
+
+inline bool xSphereHitsSphere(const xVec3& loc1, F32 r1, const xVec3& loc2, F32 r2)
+{
+    F32 dist2 = (loc2 - loc1).length2();
+    F32 max_dist = r1 + r2;
+    return dist2 <= SQR(max_dist);
+}
+
+inline bool xSphereHitsSphere(const xSphere& o1, const xSphere& o2)
+{
+    return xSphereHitsSphere(o1.center, o1.r, o2.center, o2.r);
+}
+
+inline bool xSphereHitsBox(const xVec3& c, F32 r, const xBox& b)
+{
+    return c.x + r >= b.lower.x && c.y + r >= b.lower.y && c.z + r >= b.lower.z &&
+           c.x - r <= b.upper.x && c.y - r <= b.upper.y && c.z - r <= b.upper.z;
+}
+
+inline bool xSphereHitsBox(const xSphere& o, const xBox& b)
+{
+    return xSphereHitsBox(o.center, o.r, b);
+}
+
+inline bool xSphereHitsOBB(const xVec3& c, F32 r, const xBox& b, const xMat4x3& mat)
+{
+    xVec3 lc;
+    xMat4x3Tolocal(&lc, &mat, &c);
+    return xSphereHitsBox(lc, r, b);
+}
+
+inline bool xSphereHitsOBB(const xSphere& o, const xBox& b, const xMat4x3& mat)
+{
+    return xSphereHitsOBB(o.center, o.r, b, mat);
+}
+
+inline bool xSphereHitsVCircle(const xSphere& o, const xVec3& cc, F32 cr)
+{
+    return xSphereHitsVCircle(o.center, o.r, cc, cr);
 }
 
 #endif
