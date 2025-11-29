@@ -453,7 +453,7 @@ config.libs = [
             Object(NonMatching, "SB/Core/x/xpkrsvc.cpp"),
             Object(Matching, "SB/Core/x/xQuickCull.cpp"),
             Object(Matching, "SB/Core/x/xsavegame.cpp"),
-            Object(NonMatching, "SB/Core/x/xScene.cpp"),
+            Object(NonMatching, "SB/Core/x/xScene.cpp",  extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Core/x/xScrFx.cpp"),
             Object(NonMatching, "SB/Core/x/xserializer.cpp"),
             Object(NonMatching, "SB/Core/x/xSFX.cpp"),
