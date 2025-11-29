@@ -43,9 +43,8 @@ void xTRCReset()
     if (isStall)
     {
         zGameModeSwitch(eGameMode_Game);
+        xSndResume();
     }
-
-    xSndResume();
 }
 
 // SDA relocation shenanigans
