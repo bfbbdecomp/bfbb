@@ -153,7 +153,7 @@ typedef struct BINK
     u32 Height; // Height (1 based, 480 for example)
     u32 Frames; // Number of frames (1 based, 100 = 100 frames)
     u32 FrameNum; // Frame to *be* displayed (1 based)
-    u32 LastFrameNum; // Last frame decompressed or skipped (1 based)
+    volatile u32 LastFrameNum; // Last frame decompressed or skipped (1 based)
 
     u32 FrameRate; // Frame Rate Numerator
     u32 FrameRateDiv; // Frame Rate Divisor (frame rate=numerator/divisor)
@@ -308,11 +308,13 @@ typedef struct BINKSUMMARY
 
 typedef struct BINKREALTIME
 {
+    // TODO: marked these as volatile to get matches in radcb
+
     u32 FrameNum; // Current frame number
-    u32 FrameRate; // frame rate
+    volatile u32 FrameRate; // frame rate
     u32 FrameRateDiv; // frame rate divisor
     u32 Frames; // frames in this sample period
-    u32 FramesTime; // time is ms for these frames
+    volatile u32 FramesTime; // time is ms for these frames
     u32 FramesVideoDecompTime; // time decompressing these frames
     u32 FramesAudioDecompTime; // time decompressing these frames
     u32 FramesReadTime; // time reading these frames
@@ -322,6 +324,7 @@ typedef struct BINKREALTIME
     u32 ReadBufferSize; // size of read buffer
     u32 ReadBufferUsed; // amount of read buffer currently used
     u32 FramesDataRate; // data rate for these frames
+    // last offset it 0x34
 } BINKREALTIME;
 
 #define BINKMARKER1 'fKIB'
