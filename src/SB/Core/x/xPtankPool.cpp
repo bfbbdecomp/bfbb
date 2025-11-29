@@ -152,22 +152,14 @@ namespace
         }
 
         const F32 f1 = 1.0f;
-        frame->modelling.at.z = f1;
-        frame->modelling.up.y = f1;
-        frame->modelling.right.x = f1;
+        frame->modelling.right.x = frame->modelling.up.y = frame->modelling.at.z = f1;
 
         const F32 f0 = 0.0f;
-        frame->modelling.up.x = f0;
-        frame->modelling.right.z = f0;
-        frame->modelling.right.y = f0;
+        frame->modelling.right.y = frame->modelling.right.z = frame->modelling.up.x = f0;
 
-        frame->modelling.at.y = f0;
-        frame->modelling.at.x = f0;
-        frame->modelling.up.z = f0;
+        frame->modelling.up.z = frame->modelling.at.x = frame->modelling.at.y = f0;
 
-        frame->modelling.pos.z = f0;
-        frame->modelling.pos.y = f0;
-        frame->modelling.pos.x = f0;
+        frame->modelling.pos.x = frame->modelling.pos.y = frame->modelling.pos.z = f0;
 
         frame->modelling.flags = frame->modelling.flags | rpPTANKDFLAGCNS2DROTATE |
                                  rpPTANKDFLAGCOLOR | rpPTANKDFLAGPOSITION;
@@ -243,7 +235,29 @@ namespace
         return 0;
     }
 
-    U32 create_ptanks(group_data& group, unsigned long count)
+    U32 create_ptanks(group_data& group, u32 count);
+} // namespace
+
+void xPTankPoolSceneEnter()
+{
+    inited = 1;
+    init_groups();
+
+    group_data* it = groups;
+    group_data* end = groups + MAX_PGT;
+    while (it != end)
+    {
+        F64 f = it->max_size - 0.f;
+        F32 scaled = F32(f) * 0.25f + 0.5f;
+        create_ptanks(*it, (U32)scaled);
+
+        it++;
+    }
+}
+
+namespace
+{
+    U32 create_ptanks(group_data& group, u32 count)
     {
         U32 initial_size = group.size;
         if (initial_size + count > group.max_size)
@@ -274,23 +288,6 @@ namespace
     }
 
 } // namespace
-
-void xPTankPoolSceneEnter()
-{
-    inited = 1;
-    init_groups();
-
-    group_data* it = groups;
-    group_data* end = groups + MAX_PGT;
-    while (it != end)
-    {
-        double f = it->max_size - 0.f;
-        float scaled = float(f) * 0.25f + 0.5f;
-        create_ptanks(*it, (unsigned long)scaled);
-
-        it++;
-    }
-}
 
 void xPTankPoolSceneExit()
 {
