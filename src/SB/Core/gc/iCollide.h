@@ -8,6 +8,8 @@
 
 void iBoxForModelLocal(xBox* o, const xModelInstance* m);
 void iBoxForModel(xBox* o, const xModelInstance* m);
+RpCollisionTriangle* sphereHitsEnvCB(RpIntersection* isx, RpWorldSector* sector,
+                                     RpCollisionTriangle* tri, F32 dist, void* data);
 S32 iSphereHitsEnv3(const xSphere* b, const xEnv* env, xCollis* colls, U8 ncolls, F32 sth);
 S32 iSphereHitsModel3(const xSphere* b, const xModelInstance* m, xCollis* colls, U8 ncolls,
                       F32 sth);

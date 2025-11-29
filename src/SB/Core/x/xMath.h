@@ -10,6 +10,7 @@
 #define xabs(x) iabs(x)
 
 #define xeq(a, b, e) (xabs((a) - (b)) <= (e))
+#define xfeq0(x) (((x) >= -1e-5f) && ((x) <= 1e-5f))
 
 #define CLAMP(x, a, b) (MAX((a), MIN((x), (b))))
 
@@ -31,6 +32,9 @@
 
 #define FLOAT_MAX 1e38f
 #define FLOAT_MIN -1e38f
+
+#define XRAY3_USE_MIN (1 << 10)
+#define XRAY3_USE_MAX (1 << 11)
 
 struct xFuncPiece
 {

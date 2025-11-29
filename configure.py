@@ -413,7 +413,7 @@ config.libs = [
             Object(NonMatching, "SB/Core/x/xBound.cpp"),
             Object(NonMatching, "SB/Core/x/xCamera.cpp"),
             Object(NonMatching, "SB/Core/x/xClimate.cpp"),
-            Object(NonMatching, "SB/Core/x/xCollide.cpp"),
+            Object(NonMatching, "SB/Core/x/xCollide.cpp",  extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/x/xCollideFast.cpp"),
             Object(Matching, "SB/Core/x/xColor.cpp"),
             Object(Matching, "SB/Core/x/xCounter.cpp"),
