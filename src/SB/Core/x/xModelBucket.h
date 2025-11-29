@@ -21,11 +21,7 @@ struct xModelAlphaBucket
     U32 Layer;
 };
 
-extern S32 xModelBucketEnabled;
-
 void xModelBucket_RenderAlpha();
-
-S32 CmpAlphaBucket(const void* _a, const void* _b);
 void xModelBucket_PreCountReset();
 void xModelBucket_PreCountBucket(RpAtomic* data, U32 pipeFlags, U32 subObjects);
 void xModelBucket_PreCountAlloc(S32 maxAlphaModels);
