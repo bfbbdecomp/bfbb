@@ -40,6 +40,8 @@ static en_hazmodel g_funfrag_choices[8] = {
     NPC_HAZMDL_FUNFRAG_CELLPHONE, NPC_HAZMDL_FUNFRAG_SHOE,
 };
 
+static zShrapnelAsset * g_data_hazshrap[5] = { NULL, NULL, NULL, NULL, NULL };
+
 static char* g_strz_hazModel[30];
 static NPCHazard g_hazards[64];
 
@@ -357,8 +359,467 @@ void NPCHazard::CollideResponse(xSweptSphere* swdata, F32 tym_inFuture)
     this->ColResp_Default(swdata, tym_inFuture);
 }
 
+void NPCHazard::Upd_PuppyNuke(F32 dt)
+{
+    xVec3 pos_emit;
+    HAZBall* ball = &this->custdata.ball;
+
+    ball->rad_cur = SMOOTH(this->pam_interp, ball->rad_min, ball->rad_max);
+
+    if (this->flg_hazard & 0x2000 && !(globals.player.DamageTimer > 0.0f))
+    {
+        if (ColPlyrSphere(ball->rad_cur))
+        {
+            HurtThePlayer();
+        }
+    }
+
+    if (this->flg_casthurt == 0 && this->npc_owner != NULL && this->flg_hazard & 0x2000 && this->pam_interp > 0.7f)
+    {
+        zNPCMsg_AreaNPCExplodeNoRobo(npc_owner, ball->rad_max, &this->pos_hazard);
+        this->flg_casthurt = 1;
+        this->flg_hazard |= 0x40;
+    }
+
+    FodBombBubbles(dt);
+}
+
+void NPCHazard::Upd_FodBomb(F32 dt)
+{
+    xVec3 pos_emit;
+    HAZBall* ball = &this->custdata.ball;
+
+    ball->rad_cur = LERP(isin(PI * this->pam_interp), ball->rad_min, ball->rad_max);
+
+    if (this->flg_hazard & 0x2000 && !(globals.player.DamageTimer > 0.0f))
+    {
+        if (ColPlyrSphere(ball->rad_cur))
+        {
+            HurtThePlayer();
+        }
+    }
+
+    if (this->flg_casthurt == 0 && this->npc_owner != NULL && this->flg_hazard & 0x2000 && this->pam_interp > 0.7f)
+    {
+        zNPCMsg_AreaNPCExplodeNoRobo(npc_owner, ball->rad_max, &this->pos_hazard);
+        this->flg_casthurt = 1;
+        this->flg_hazard |= 0x40;
+    }
+
+    FodBombBubbles(dt);
+}
+
+void NPCHazard::FodBombBubbles(F32 dt)
+{
+    static const xVec3 vel_spread = { 2.0f, 12.0f, 2.0 };
+    static const xVec3 pos_spread = { 0.1f, 2.0f, 0.1f };
+    static const xVec3 pos_offsetFirst = { 0.0f, -0.5f, 0.0f };
+    static const xVec3 pos_offsetLater = { 0.0f, -1.0f, 0.0f };
+    
+    if (this->flg_hazard & 0x8)
+    {
+        xVec3 pos_emit = this->pos_hazard;
+        pos_emit += pos_offsetFirst;
+
+        zFX_SpawnBubbleTrail(&pos_emit, 0x100, &pos_spread, &vel_spread);
+    }
+    else if (this->tmr_remain < 0.2f)
+    {
+        F32 tym = LERP(1.0f - this->tmr_remain / 0.2f, 0.75f, 1.0f);
+        xVec3 pos_emit = this->pos_hazard;
+        pos_emit += pos_offsetLater;
+
+        zFX_SpawnBubbleSlam(&pos_emit, 0x18, PI, 4.0f * tym, tym);  
+    }
+}
+
+void NPCHazard::Upd_CattleProd(F32 dt)
+{
+    HAZCatProd* catprod = &this->custdata.catprod;
+    catprod->rad_cur = LERP(isin(PI * this->pam_interp), catprod->rad_min, catprod->rad_max);
+
+    if (this->flg_hazard & 0x2000 && !(globals.player.DamageTimer > 0.0f) && this->tym_lifespan - this->tmr_remain > 0.25f)
+    {
+        if (ColPlyrSphere(catprod->rad_cur))
+        {
+            HurtThePlayer();
+        }
+    }
+
+    if (this->flg_hazard & 0x8)
+    {
+        _tagLightningAdd info;
+        NPCC_MakeLightningInfo(NPC_LYT_CATTLEPROD, &info);
+
+        xVec3 pos_lytend = { 0.0f, 0.0f, 0.0f };
+        pos_lytend.x = catprod->rad_cur;
+        pos_lytend.y = catprod->rad_cur;
+        pos_lytend.z = catprod->rad_cur;
+        
+        info.time = this->tmr_remain;
+        info.start = &this->pos_hazard;
+
+        pos_lytend.x *= xurand();
+        pos_lytend.y *= xurand();
+        pos_lytend.z *= xurand();
+
+        pos_lytend.x += 0.05f;
+        pos_lytend.y += 0.05f;
+        pos_lytend.z += 0.05f;
+
+        xVec3AddTo(&pos_lytend, &this->pos_hazard);
+        info.end = &pos_lytend;
+        catprod->zap_lyta = zLightningAdd(&info);
+        
+        xVec3SubFrom(&pos_lytend, &this->pos_hazard);
+        pos_lytend.y *= -1.0f;
+        xVec3AddTo(&pos_lytend, &this->pos_hazard);
+        info.end = &pos_lytend;
+        catprod->zap_lytb = zLightningAdd(&info);
+    }
+    else
+    {
+        xVec3 pos_lytend = { 0.0f, 0.0f, 0.0f };
+        pos_lytend.x = catprod->rad_cur;
+        pos_lytend.y = catprod->rad_cur;
+        pos_lytend.z = catprod->rad_cur;
+
+        if (this->npc_owner != NULL)
+        {
+            F32 tym = this->npc_owner->AnimTimeCurrent();
+            if (tym > 0.8f && tym < 1.0f)
+            {
+                xVec3SMul(&pos_lytend, NPCC_faceDir(this->npc_owner), catprod->rad_cur);
+                xVec3AddScaled(&pos_lytend, NPCC_rightDir(this->npc_owner), (xrand() & 0x800000 ? 0.2f : 0.2f) * xurand());
+            }
+            else
+            {
+                pos_lytend.x *= xurand();
+                pos_lytend.y *= xurand();
+                pos_lytend.z *= xurand(); 
+            }
+        }
+        else
+        {
+            pos_lytend.x *= xurand();
+            pos_lytend.y *= xurand();
+            pos_lytend.z *= xurand();   
+        }
+
+        xVec3AddTo(&pos_lytend, &this->pos_hazard);
+        if (catprod->zap_lyta != NULL)
+        {
+            zLightningModifyEndpoints(catprod->zap_lyta, &this->pos_hazard, &pos_lytend);
+        }
+
+        if (catprod->zap_lytb != NULL)
+        {
+            xVec3SubFrom(&pos_lytend, &this->pos_hazard);
+            pos_lytend.y *= -1.0f;
+            xVec3AddTo(&pos_lytend, &this->pos_hazard);
+
+            zLightningModifyEndpoints(catprod->zap_lytb, &this->pos_hazard, &pos_lytend);
+        }
+    }
+}
+
+void NPCHazard::Upd_TubeletBlast(F32 dt)
+{
+    HAZBall* ball = &this->custdata.ball;
+    ball->rad_cur = LERP(this->pam_interp, ball->rad_min, ball->rad_max);
+
+    if (this->flg_hazard & 0x2000 && !(globals.player.DamageTimer > 0.0f))
+    {
+        if (ColPlyrSphere(ball->rad_cur))
+        {
+            HurtThePlayer();
+        }
+    }
+
+    if (this->flg_hazard & 0x8)
+    {
+        xSndPlay3D(xStrHash(""), 0.77f, 0.0f, 0x80, 0x0, &this->pos_hazard, 1.0f, 20.0f,
+                   SND_CAT_GAME, 0.0f);
+    }
+
+    static S32 moreorless = 0;
+    
+    if (--moreorless < 0)
+    {
+        moreorless = 3;
+
+        xVec3 vel_emit = { 0.0f, 0.0f, 0.0f };
+        vel_emit.x = 2.0f * (xurand() - 5.0f);
+        vel_emit.y = xurand();
+        vel_emit.z = 2.0f * (xurand() - 5.0f);
+        vel_emit *= 8.0f;
+
+        xVec3 pos_emit = this->pos_hazard;
+        pos_emit.x += 2.0f * (xurand() - 0.5f) * ball->rad_cur;
+        pos_emit.y += 2.0f * (xurand() - 0.5f) * ball->rad_cur;
+        pos_emit.z += 2.0f * (xurand() - 0.5f) * ball->rad_cur;
+
+        NPAR_EmitTubeSparklies(&pos_emit, &vel_emit);
+    }
+}
+
+void NPCHazard::Upd_DuploBoom(F32 dt)
+{
+    xVec3 pos_emit = { 0.0f, 0.0f, 0.0f };
+    HAZBall* ball = &this->custdata.ball;
+
+    ball->rad_cur = LERP(this->pam_interp, ball->rad_min, ball->rad_max);
+
+    if (this->flg_hazard & 0x2000 && !(globals.player.DamageTimer > 0.0f))
+    {
+        if (ColPlyrSphere(ball->rad_cur))
+        {
+            HurtThePlayer();
+        }
+    }
+
+    if (this->flg_casthurt == 0 && this->npc_owner != NULL && this->flg_hazard & 0x2000 && this->pam_interp > 0.7f)
+    {
+        zNPCMsg_AreaNPCExplodeNoRobo(npc_owner, ball->rad_max, &this->pos_hazard);
+        this->flg_casthurt = 1;
+        this->flg_hazard |= 0x40;
+    }
+}
+
+void NPCHazard::Upd_TikiThunder(F32 dt)
+{
+    xVec3 pos_emit = { 0.0f, 0.0f, 0.0f };
+    HAZBall* ball = &this->custdata.ball;
+
+    ball->rad_cur = LERP(this->pam_interp, ball->rad_min, ball->rad_max);
+
+    if (this->flg_hazard & 0x2000 && !(globals.player.DamageTimer > 0.0f))
+    {
+        if (ColPlyrSphere(ball->rad_cur))
+        {
+            HurtThePlayer();
+        }
+    }
+
+    g_parf_default.custom_flags = 0x100;
+    xVec3Copy(&pos_emit, &this->pos_hazard);
+    xVec3Copy(&g_parf_default.pos, &pos_emit);
+}
+
+void NPCHazard::Upd_Mushroom(F32 dt)
+{
+    xVec3 pos_emit = { 0.0f, 0.0f, 0.0f };
+    HAZShroom* shroom = &this->custdata.shroom;
+
+    xVec3AddScaled(&this->pos_hazard, &shroom->vel_rise, dt);
+    xVec3AddScaled(&shroom->vel_rise, &shroom->acc_rise, dt);
+
+    shroom->rad_cur = LERP(this->pam_interp, shroom->rad_min, shroom->rad_max);
+
+    if (this->flg_hazard & 0x2000 && !(globals.player.DamageTimer > 0.0f))
+    {
+        if (ColPlyrSphere(shroom->rad_cur))
+        {
+            HurtThePlayer();
+        }
+    }
+
+    g_parf_default.custom_flags = 0x100;
+    xVec3Copy(&pos_emit, &this->pos_hazard);
+    xVec3Copy(&g_parf_default.pos, &pos_emit);
+
+    xParEmitterEmitCustom(g_pemit_default, dt, &g_parf_default);
+}
+
 void NPCHazard::Upd_Patriot(F32)
 {
+}
+
+void NPCHazard::Upd_TTFlight(F32 dt)
+{
+    HAZTarTar* tartar = &this->custdata.tartar;
+    xParabola* parab = &tartar->parabinfo;
+
+    if (this->mdl_hazard == NULL)
+    {
+        MarkForRecycle();
+        return;
+    }
+
+    if (this->pam_interp < 0.2f)
+    {
+        tartar->rad_cur = LERP(this->pam_interp / 0.2f, tartar->rad_min, tartar->rad_max);
+    }
+    else
+    {
+        tartar->rad_cur = tartar->rad_max;
+    }
+
+    if (this->tmr_remain < 0.0f)
+    {
+        if (this->flg_hazard & 0x20000)
+        {
+            xParabolaEvalPos(parab, &this->pos_hazard, parab->maxTime);
+
+            zShrapnelAsset* shrp = g_data_hazshrap[2];
+
+            xVec3 vel_push;
+            xParabolaEvalVel(parab, &vel_push, parab->maxTime);
+
+            if (xVec3Length2(&tartar->dir_normal) > 0.0f)
+            {
+                xVec3 vec_tmp = {};
+
+                vec_tmp.y = vel_push.y;
+                NPCC_Bounce(&vec_tmp, &tartar->dir_normal, 0.1f);
+                vel_push.y = vec_tmp.y;
+            }
+
+            shrp->initCB(shrp, this->mdl_hazard, &vel_push, NULL);
+
+            if (xVec3Length2(&tartar->dir_normal) > 0.1f)
+            {
+                TarTarSplash(&tartar->dir_normal);
+            }
+
+            if (!(this->flg_hazard & 0x40000))
+            {
+                ReconTarTar();
+                return;
+            }
+            
+            MarkForRecycle();
+            return;
+        }
+        else
+        {
+            xVec3 whence;
+
+            xParabolaEvalVel(parab, &whence, parab->maxTime);
+            xVec3Inv(&whence, &whence);
+
+            F32 mag = xVec3Length(&whence);
+            if (mag > 0.00001f)
+            {
+                whence /= mag;
+                TarTarSplash(&whence);
+            }
+            else
+            {
+                TarTarSplash((xVec3*)Up());
+            }
+
+            MarkForRecycle();
+            return;
+        }
+    }
+    else
+    {
+        if (this->flg_hazard & 0x8)
+        {
+            xVec3Sub(&tartar->vel, &tartar->pos_tgt, &this->pos_hazard);
+            xVec3SMulBy(&tartar->vel, 1.0f / this->tym_lifespan);
+
+            tartar->vel.y = 7.5f * (0.5f * this->tym_lifespan) + tartar->vel.y;
+        }
+
+        if (this->flg_hazard & 0x8)
+        {
+            PreCollide();
+        }
+
+        F32 tym = this->tym_lifespan < this->tym_lifespan - this->tmr_remain ? this->tym_lifespan : this->tym_lifespan - this->tmr_remain;
+        xParabolaEvalPos(parab, &this->pos_hazard, tym);
+        xParabolaEvalVel(parab, &tartar->vel, tym);
+
+        F32 mag = xVec3Length(&tartar->vel);
+        if (mag > 0.00001f)
+        {
+            xMat3x3 mat_rot;
+            xVec3 dir;
+
+            xVec3SMul(&dir, &tartar->vel, -1.0f / mag);
+            xMat3x3LookVec(&mat_rot, &dir);
+            TypData_RotMatSet(&mat_rot);
+        }
+
+        if (this->flg_hazard & 0x2000 && !(globals.player.DamageTimer > 0.0f))
+        {
+            if (ColPlyrSphere(tartar->rad_cur))
+            {
+                HurtThePlayer();
+                g_data_hazshrap[2]->initCB(g_data_hazshrap[2], globals.player.ent.model, &tartar->vel, NULL);
+                
+                xVec3 whence;
+                xParabolaEvalVel(parab, &whence, parab->maxTime);
+                xVec3Inv(&whence, &whence);
+    
+                TarTarSplash(&whence);
+                MarkForRecycle();
+                return;
+            }
+
+        }
+            StaggeredCollide();
+
+            if (this->flg_hazard & 0x8)
+            {
+                TarTarFalumpf();
+            }
+            else
+            {
+                TarTarGunkTrail();
+            }
+
+            static S32 moreorless = 0;
+
+            if (--moreorless < 0)
+            {
+                moreorless = 4;
+                zFX_SpawnBubbleTrail(&this->pos_hazard, 0x6);
+            }
+    }
+}
+
+void NPCHazard::ReconTarTar()
+{
+    xVec3 dir_norm = this->custdata.collide.dir_normal;
+    Reconfigure(NPC_HAZ_TARTARSPILL);
+
+    if (xVec3Length2(&dir_norm) > 0.0f)
+    {
+        xVec3Copy((xVec3*)&this->mdl_hazard->Mat->up, &dir_norm);
+        NPCC_MakePerp((xVec3*)&this->mdl_hazard->Mat->at, &dir_norm);
+        xVec3Cross((xVec3*)&this->mdl_hazard->Mat->right, (xVec3*)&this->mdl_hazard->Mat->up,
+                   (xVec3*)&this->mdl_hazard->Mat->at);
+    }
+
+    Start(NULL, -1.0f);
+}
+
+void NPCHazard::Upd_TTSpill(F32 dt)
+{
+    HAZBall* ball = &this->custdata.ball;
+    if (this->flg_hazard & 0x8 && HAZ_AvailablePool() > 5)
+    {
+        if (KickSteamyStinky())
+        {
+            this->flg_hazard |= 0x40;
+        }
+    }
+
+    ball->rad_cur = LERP(this->pam_interp, ball->rad_max, ball->rad_min);
+
+    if (this->flg_hazard & 0x2000 && !(globals.player.DamageTimer > 0.0f))
+    {
+        if (ColPlyrSphere(ball->rad_cur))
+        {
+            HurtThePlayer();
+            g_data_hazshrap[2]->initCB(g_data_hazshrap[2], globals.player.ent.model, NULL, NULL);
+        }
+    }
+
+    TarTarLinger();
 }
 
 S32 NPCHazard::KickSteamyStinky()
@@ -386,6 +847,23 @@ S32 NPCHazard::KickSteamyStinky()
         }
     }
     return ok;
+}
+
+void NPCHazard::Upd_TTStink(F32 dt)
+{
+    HAZBall* ball = &this->custdata.ball;
+    ball->rad_cur = LERP(1.0f - this->pam_interp, ball->rad_min, ball->rad_max);
+
+    if (this->flg_hazard & 0x2000 && !(globals.player.DamageTimer > 0.0f))
+    {
+        if (ColPlyrSphere(ball->rad_cur))
+        {
+            HurtThePlayer();
+            g_data_hazshrap[2]->initCB(g_data_hazshrap[2], globals.player.ent.model, NULL, NULL);
+        }
+    }
+
+    TarTarLinger();
 }
 
 void NPCHazard::TarTarFalumpf()
@@ -1321,6 +1799,130 @@ void NPCHazard::Upd_OilGlob(F32 dt)
         pos_emit += *(xVec3*)this->Up() * 0.1f;
 
         NPAR_EmitOilVapors(&pos_emit);
+    }
+}
+
+void NPCHazard::Upd_FunFrag(F32 dt)
+{
+    HAZTarTar* tartar = &this->custdata.tartar;
+    xParabola* parab = &tartar->parabinfo;
+
+    if (this->flg_hazard & 0x8)
+    {
+        tartar->vel.x = 2.5f * (2.0f * (xurand() - 0.5f));
+        tartar->vel.y = 5.0f * xurand() + 4.0f;
+        tartar->vel.z = 2.5f * (2.0f * (xurand() - 0.5f));
+    }
+
+    tartar->rad_cur = LERP(this->pam_interp, tartar->rad_min, tartar->rad_max);
+
+    if (this->flg_hazard & 0x8)
+    {
+        PreCollide();
+    }
+
+    F32 tym = this->tym_lifespan < this->tym_lifespan - this->tmr_remain ? this->tym_lifespan : this->tym_lifespan - this->tmr_remain;
+    xParabolaEvalPos(parab, &this->pos_hazard, tym);
+    xParabolaEvalVel(parab, &tartar->vel, tym);
+
+    static S32 moreorless = 0;
+    if (--moreorless < 0)
+    {
+        moreorless = 3;
+        zFX_SpawnBubbleTrail(&this->pos_hazard, 1);
+    }
+}
+
+void NPCHazard::StreakUpdate(U32 streakID, F32 rad)
+{
+    xVec3 pos_left;
+    pos_left = *(xVec3*)At() * 0.5f * rad;
+    
+    xVec3 pos_right;
+    pos_right = *(xVec3*)Up() * rad;
+    pos_right += pos_left;
+
+    // TODO: These names aren't from DWARF - maybe they could be better after impl
+    xVec3 shifted_pos_left;
+    shifted_pos_left = *(xVec3*)&this->mdl_hazard->Mat->pos - pos_right;
+
+    xVec3 shifted_pos_right;
+    shifted_pos_right = *(xVec3*)&this->mdl_hazard->Mat->pos + pos_right;
+
+    xFXStreakUpdate(streakID, &shifted_pos_left, &shifted_pos_right);
+}
+
+void NPCHazard::Upd_RoboBits(F32 dt)
+{
+    HAZTarTar* tartar = &this->custdata.tartar;
+    xParabola* parab = &tartar->parabinfo;
+
+    if (this->pam_interp > 0.25f)
+    {
+        tartar->rad_cur = tartar->rad_max;
+    }
+    else
+    {
+        tartar->rad_cur = LERP(4.0f * this->pam_interp, tartar->rad_min, tartar->rad_max);
+    }
+
+    if (this->flg_hazard & 0x8)
+    {
+        tartar->vel = tartar->pos_tgt - this->pos_hazard;
+        tartar->vel /= this->tmr_remain;
+        tartar->vel.y += 10.0f * (0.5f * this->tmr_remain);
+    }
+
+    if (this->flg_hazard & 0x8)
+    {
+        F32 keepFlightTime = this->tmr_remain;
+        PreCollide();
+        this->tmr_remain = keepFlightTime;
+        this->tym_lifespan = keepFlightTime;
+    }
+
+    F32 tym = this->tym_lifespan < this->tym_lifespan - this->tmr_remain ? this->tym_lifespan : this->tym_lifespan - this->tmr_remain;
+    xParabolaEvalPos(parab, &this->pos_hazard, tym);
+    xParabolaEvalVel(parab, &tartar->vel, tym);
+
+    static S32 moreorless = 0;
+    if (--moreorless < 0)
+    {
+        moreorless = 3;
+        DisperseBubWake(tartar->rad_cur, &tartar->vel);
+    }
+}
+
+void NPCHazard::Upd_VisSplash(F32 dt)
+{
+    this->custdata.collide.rad_cur = LERP(this->pam_interp, this->custdata.collide.rad_min, this->custdata.collide.rad_max);
+
+    if (this->flg_hazard & 0x8)
+    {
+        g_data_hazshrap[4]->initCB(g_data_hazshrap[4], this->mdl_hazard, (xVec3*)Up(), NULL);
+    }
+
+    VisSplashSparklies();
+}
+
+void NPCHazard::VisSplashSparklies()
+{
+    F32 rad = this->custdata.collide.rad_cur;
+    for (S32 i = 0; i < 8; i++)
+    {
+        xVec3 pos_emit;
+        pos_emit = *(xVec3*)At() * (2.0f * (xurand() - 0.5f));
+        pos_emit += *(xVec3*)Right() * (2.0f * (xurand() - 0.5f));
+        pos_emit.normalize();
+        pos_emit *= rad;
+        pos_emit += *(xVec3*)Up() * 0.2f;
+        pos_emit += this->pos_hazard;
+        
+        xVec3 vel_emit;
+        vel_emit = *(xVec3*)Up();
+        vel_emit *= 3.5f;
+
+        NPAR_EmitVSSpray(&pos_emit, &vel_emit);
     }
 }
 
