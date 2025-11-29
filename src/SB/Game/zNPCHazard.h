@@ -259,6 +259,17 @@ struct NPCHazard
     S32 ColTestCyl(const xBound* bnd_tgt, F32 rad, F32 hyt);
     S32 ColPlyrSphere(F32 rad);
     S32 ColPlyrCyl(F32 rad, F32 hyt);
+    void Upd_CattleProd(F32 dt);
+    void Upd_TubeletBlast(F32 dt);
+    void Upd_DuploBoom(F32 dt);
+    void Upd_TikiThunder(F32 dt);
+    void Upd_Mushroom(F32 dt);
+    void Upd_Patriot(F32);
+    void Upd_TTFlight(F32 dt);
+    void ReconTarTar();
+    void Upd_TTSpill(F32 dt);
+    S32 KickSteamyStinky();
+    void Upd_TTStink(F32 dt);
     void TarTarFalumpf();
     void TarTarGunkTrail();
     void TarTarSplash(const xVec3* dir_norm);
@@ -272,7 +283,6 @@ struct NPCHazard
     S32 KickBlooshBlob(const xVec3* vel_flight);
     void Upd_ChuckBloosh(F32 dt);
     void Upd_BoneFlight(F32 dt);
-    S32 KickSteamyStinky();
     void ReconArfBone();
     void Upd_BoneBlast(F32 dt);
     void Upd_OilBubble(F32 dt);
@@ -301,7 +311,6 @@ struct NPCHazard
     void StagColDyn();
     void ColResp_Default(xSweptSphere* swdata, F32 tym_inFuture);
     void CollideResponse(xSweptSphere* swdata, F32 tym_inFuture);
-    void Upd_Patriot(F32);
     void Discard();
 
     RwV3d* At() const
