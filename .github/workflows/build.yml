@@ -264,7 +264,19 @@ jobs:
           ./objdiff report changes artifacts/previous.json artifacts/progress.json -o artifacts/changes.json
           ./ok --changes artifacts/changes.json pr > pr.txt
           cat pr.txt
+
+      - name: Verify OK Bot Comment is Not Empty
+        id: comment_file_check
+        run: |
+          FILE_PATH="pr.txt"
+          if [ -s "$FILE_PATH" ]; then
+            echo "file_empty=false" >> $GITHUB_OUTPUT
+          else
+            echo "file_empty=true" >> $GITHUB_OUTPUT
+          fi
+
       - name: PR comment with file
+        if: ${{ steps.comment_file_check.outputs.file_empty == 'false' }}
         uses: thollander/actions-comment-pull-request@v3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
