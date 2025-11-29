@@ -5,6 +5,7 @@
 #include "zNPCTypes.h"
 
 struct NPCMsg;
+struct zNPCCommon;
 
 struct NPCPSClt
 {
