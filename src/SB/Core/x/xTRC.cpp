@@ -50,9 +50,8 @@ static void render_message(const char* s)
     tb.bounds = screen_bounds;
     tb.bounds.contract(0.1f);
 
-    F32 yextent = (F64)tb.yextent(true);
-    tb.bounds.h = yextent;
-    tb.bounds.y = -(0.5f * yextent + 0.5f);
+    tb.bounds.h = tb.yextent(true);
+    tb.bounds.y = -(0.5f * tb.bounds.h + 0.5f);
 
     render_fill_rect(tb.font.clip, xColorFromRGBA(0, 0, 0, 0xC8));
 
@@ -133,10 +132,8 @@ void RenderText(const char* text, bool enabled)
     tb.set_text(enabled ? text : "");
     tb.bounds = screen_bounds;
     tb.bounds.contract(0.1f);
-
-    F32 yextent = (F64)tb.yextent(true);
-    tb.bounds.h = yextent;
-    tb.bounds.y = -(0.5f * yextent - 0.5f);        
+    tb.bounds.h = tb.yextent(true);
+    tb.bounds.y = -(0.5f * tb.bounds.h - 0.5f);        
     tb.render(true);
 
     if (!enabled)
