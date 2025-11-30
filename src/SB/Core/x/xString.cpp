@@ -55,38 +55,10 @@ char* xStrTok(char* string, const char* control, char** nextoken)
     U8 map[32];
     S32 count;
 
-    map[0] = 0;
-    map[1] = 0;
-    map[2] = 0;
-    map[3] = 0;
-    map[4] = 0;
-    map[5] = 0;
-    map[6] = 0;
-    map[7] = 0;
-    map[8] = 0;
-    map[9] = 0;
-    map[10] = 0;
-    map[11] = 0;
-    map[12] = 0;
-    map[13] = 0;
-    map[14] = 0;
-    map[15] = 0;
-    map[16] = 0;
-    map[17] = 0;
-    map[18] = 0;
-    map[19] = 0;
-    map[20] = 0;
-    map[21] = 0;
-    map[22] = 0;
-    map[23] = 0;
-    map[24] = 0;
-    map[25] = 0;
-    map[26] = 0;
-    map[27] = 0;
-    map[28] = 0;
-    map[29] = 0;
-    map[30] = 0;
-    map[31] = 0;
+    for (S32 i = 0; i < 32; i++)
+    {
+        map[i] = 0;
+    }
 
     ctrl = (U8*)control;
 
