@@ -547,7 +547,7 @@ config.libs = [
             Object(Matching, "SB/Core/gc/iTime.cpp"),
             Object(NonMatching, "SB/Core/gc/ngcrad3d.c"),
             Object(Matching, "SB/Game/zNPCGoals.cpp"),
-            Object(NonMatching, "SB/Game/zNPCGoalCommon.cpp"), # wrong function order
+            Object(Matching, "SB/Game/zNPCGoalCommon.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zNPCGoalStd.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zNPCGoalRobo.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zNPCGoalTiki.cpp", extra_cflags=["-sym on"]),

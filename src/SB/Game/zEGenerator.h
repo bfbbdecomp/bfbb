@@ -36,6 +36,7 @@ void zEGenerator_Save(zEGenerator* ent, xSerial* s);
 void zEGenerator_Load(zEGenerator* ent, xSerial* s);
 void zEGenerator_Reset(zEGenerator* egen, xScene* sc);
 void zEGenerator_Move(zEGenerator* egen, xScene* sc, F32 dt);
+void zEGenerator_Update(zEGenerator* egen, xScene* sc, F32 dt);
 void zEGenerator_Render(zEGenerator* egen);
 void zEGenerator_TurnOn(zEGenerator* egen);
 void zEGenerator_TurnOff(zEGenerator* egen);
