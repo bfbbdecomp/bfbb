@@ -54,6 +54,7 @@ static void xQuickCullCellForVec(xQCControl* ctrl, xQCData* c, const xVec3* v);
 static void xQuickCullCellMerge(xQCData* dest, const xQCData* a, const xQCData* b);
 void xQuickCullForLine(xQCControl* ctrl, xQCData* q, const xLine3* ln);
 void xQuickCullForRay(xQCControl* ctrl, xQCData* q, const xRay3* r);
+void xQuickCullForRay(xQCData* q, const xRay3* r);
 void xQuickCullForSphere(xQCControl* ctrl, xQCData* q, const xSphere* s);
 void xQuickCullForBox(xQCControl* ctrl, xQCData* q, const xBox* box);
 void xQuickCullForBox(xQCData* q, const xBox* box);

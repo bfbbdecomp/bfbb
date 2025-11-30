@@ -6,10 +6,6 @@
 #include "xMemMgr.h"
 #include "xEnt.h"
 
-extern float xGrid_float_0p001;
-extern float xGrid_float_one;
-extern float xGrid_float_one_quarter;
-
 volatile S32 gGridIterActive = 0;
 
 void xGridBoundInit(xGridBound* bound, void* data)
@@ -43,25 +39,25 @@ void xGridInit(xGrid* grid, const xBox* bounds, U16 nx, U16 nz, U8 ingrid_id)
     grid->csizex = gsizex / nx;
     grid->csizez = gsizex / nz;
 
-    if (__fabs(gsizex) <= xGrid_float_0p001)
+    if (__fabs(gsizex) <= 0.001f)
     {
-        grid->inv_csizex = xGrid_float_one;
+        grid->inv_csizex = 1.0f;
     }
     else
     {
         grid->inv_csizex = nx / gsizex;
     }
 
-    if (__fabs(gsizez) <= xGrid_float_0p001)
+    if (__fabs(gsizez) <= 0.001f)
     {
-        grid->inv_csizez = xGrid_float_one;
+        grid->inv_csizez = 1.0f;
     }
     else
     {
         grid->inv_csizez = nz / gsizez;
     }
 
-    grid->maxr = xGrid_float_one_quarter * MAX(grid->csizex, grid->csizez);
+    grid->maxr = 0.25f * MAX(grid->csizex, grid->csizez);
     grid->cells = (xGridBound**)xMemAllocSize(nx * nz * sizeof(xGridBound*));
     memset(grid->cells, 0, sizeof(xGridBound*) * (nz * nx));
 }
@@ -126,6 +122,94 @@ bool xGridAddToCell(xGridBound** boundList, xGridBound* bound)
 void xGridAdd(xGrid* grid, xGridBound* bound, S32 x, S32 z)
 {
     xGridAddToCell(&grid->cells[z * grid->nx] + x, bound);
+}
+
+S32 xGridAdd(xGrid* grid, xEnt* ent)
+//NONMATCH("https://decomp.me/scratch/5R7FZ")
+{
+    xBound* bound;
+    xVec3* center;
+    F32 maxr;
+
+    bound = &ent->bound;
+    maxr = grid->maxr;
+
+    if (bound->type == XBOUND_TYPE_SPHERE)
+    {
+        xSphere* sph = &bound->sph;
+        center = &sph->center;
+        if (bound->sph.r >= maxr)
+        {
+            S32 r = xGridAddToCell(&grid->other, &ent->gridb);
+            if (r)
+            {
+                ent->gridb.ingrid = grid->ingrid_id;
+            }
+            return r;
+        }
+    }
+    else if (bound->type == XBOUND_TYPE_OBB)
+    {
+        xBBox* bbox = &bound->box;
+        center = &bbox->center;
+        F32 rx = bbox->box.upper.x - bbox->box.lower.x;
+        F32 ry = bbox->box.upper.y - bbox->box.lower.y;
+        F32 rz = bbox->box.upper.z - bbox->box.lower.z;
+        F32 len2 =
+            SQR(rx) *
+                (SQR(bound->mat->right.x) + SQR(bound->mat->right.y) + SQR(bound->mat->right.z)) +
+            SQR(ry) * (SQR(bound->mat->up.x) + SQR(bound->mat->up.y) + SQR(bound->mat->up.z)) +
+            SQR(rz) * (SQR(bound->mat->at.x) + SQR(bound->mat->at.y) + SQR(bound->mat->at.z));
+        if (len2 >= 4.0f * maxr * maxr)
+        {
+            S32 r = xGridAddToCell(&grid->other, &ent->gridb);
+            if (r)
+            {
+                ent->gridb.ingrid = grid->ingrid_id;
+            }
+            return r;
+        }
+    }
+    else if (bound->type == XBOUND_TYPE_BOX)
+    {
+        xBBox* bbox = &bound->box;
+        center = &bbox->center;
+        F32 rx = bound->box.box.upper.x - bound->box.box.lower.x;
+        F32 rz = bound->box.box.upper.z - bound->box.box.lower.z;
+        F32 len2 = SQR(rx) + SQR(rz);
+        if (len2 >= 4.0f * maxr * maxr)
+        {
+            S32 r = xGridAddToCell(&grid->other, &ent->gridb);
+            if (r)
+            {
+                ent->gridb.ingrid = grid->ingrid_id;
+            }
+            return r;
+        }
+    }
+    else
+    {
+        return 0;
+    }
+
+    F32 cgridx = center->x - grid->minx;
+    cgridx *= grid->inv_csizex;
+
+    F32 cgridz = center->z - grid->minz;
+    cgridz *= grid->inv_csizez;
+
+    S32 x = (S32)MIN(grid->nx - 1, MAX(0.0f, cgridx));
+    S32 z = (S32)MIN(grid->nz - 1, MAX(0.0f, cgridz));
+
+    if (1)
+    {
+        ent->gridb.gx = x;
+        ent->gridb.gz = z;
+        ent->gridb.ingrid = grid->ingrid_id;
+        return 1;
+    }
+
+    return 0;
 }
 
 S32 xGridRemove(xGridBound* bound)
@@ -213,4 +297,143 @@ xGridBound* xGridIterFirstCell(xGrid* grid, F32 posx, F32 posy, F32 posz, S32& g
 {
     xGridGetCell(grid, posx, posy, posz, grx, grz);
     return xGridIterFirstCell(grid, grx, grz, iter);
+}
+
+S32 xGridEntIsTooBig(xGrid* grid, const xEnt* ent)
+{
+    const xBound* bound = &ent->bound;
+    F32 maxr = grid->maxr;
+
+    if (bound->type == XBOUND_TYPE_SPHERE)
+    {
+        const xSphere* sph = &bound->sph;
+        if (sph->r >= maxr)
+        {
+            return 1;
+        }
+    }
+    else if (bound->type == XBOUND_TYPE_OBB)
+    {
+        const xBBox* bbox = &bound->box;
+        F32 rx = bbox->box.upper.x - bbox->box.lower.x;
+        F32 ry = bbox->box.upper.y - bbox->box.lower.y;
+        F32 rz = bbox->box.upper.z - bbox->box.lower.z;
+        F32 len2 =
+            SQR(rx) *
+                (SQR(bound->mat->right.x) + SQR(bound->mat->right.y) + SQR(bound->mat->right.z)) +
+            SQR(ry) * (SQR(bound->mat->up.x) + SQR(bound->mat->up.y) + SQR(bound->mat->up.z)) +
+            SQR(rz) * (SQR(bound->mat->at.x) + SQR(bound->mat->at.y) + SQR(bound->mat->at.z));
+        if (len2 >= 4.0f * maxr * maxr)
+        {
+            return 1;
+        }
+    }
+    else if (bound->type == XBOUND_TYPE_BOX)
+    {
+        const xBBox* bbox = &bound->box;
+        F32 rx = bbox->box.upper.x - bbox->box.lower.x;
+        F32 rz = bbox->box.upper.z - bbox->box.lower.z;
+        F32 len2 = SQR(rx) + SQR(rz);
+        if (len2 >= 4.0f * maxr * maxr)
+        {
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+void xGridCheckPosition(xGrid* grid, xVec3* pos, xQCData* qcd, xGridCheckPositionCallback hitCB,
+                        void* cbdata)
+{
+    xGridIterator it;
+    S32 px, pz;
+    xGridBound* cell;
+
+    cell = xGridIterFirstCell(grid, pos->x, pos->y, pos->z, px, pz, it);
+    while (cell)
+    {
+        xBound* cellbound = (xBound*)(cell + 1);
+        if (xQuickCullIsects(qcd, &cellbound->qcd) && !hitCB((xEnt*)cell->data, cbdata))
+        {
+            xGridIterClose(it);
+            return;
+        }
+        cell = xGridIterNextCell(it);
+    }
+
+    xBox clbox;
+    clbox.lower.x = grid->csizex * px;
+    clbox.lower.z = grid->csizez * pz;
+    clbox.lower.x += grid->minx;
+    clbox.lower.z += grid->minz;
+
+    F32 clcenterx = 0.5f * grid->csizex;
+    clcenterx += clbox.lower.x;
+
+    F32 clcenterz = 0.5f * grid->csizez;
+    clcenterz += clbox.lower.z;
+
+    static S32 offs[4][3][2] = { -1, 0, -1, -1, 0, -1, 0, -1, 1,  -1, 1,  0,
+                                 1,  0, 1,  1,  0, 1,  0, 1,  -1, 1,  -1, 0 };
+
+    static S32 k;
+
+    if (pos->x < clcenterx)
+    {
+        if (pos->z < clcenterz)
+        {
+            k = 0;
+        }
+        else
+        {
+            k = 1;
+        }
+    }
+    else
+    {
+        if (pos->z < clcenterz)
+        {
+            k = 3;
+        }
+        else
+        {
+            k = 2;
+        }
+    }
+
+    for (S32 i = 0; i < 3; i++)
+    {
+        S32 _x = px + offs[k][i][1];
+        if (_x >= 0 && _x < grid->nx)
+        {
+            S32 _z = pz + offs[k][i][0];
+            if (_z >= 0 && _z < grid->nz)
+            {
+                cell = xGridIterFirstCell(grid, _x, _z, it);
+                while (cell)
+                {
+                    xBound* cellbound = (xBound*)(cell + 1);
+                    if (xQuickCullIsects(qcd, &cellbound->qcd) && !hitCB((xEnt*)cell->data, cbdata))
+                    {
+                        xGridIterClose(it);
+                        return;
+                    }
+                    cell = xGridIterNextCell(it);
+                }
+            }
+        }
+    }
+
+    cell = xGridIterFirstCell(&grid->other, it);
+    while (cell)
+    {
+        xBound* cellbound = (xBound*)(cell + 1);
+        if (xQuickCullIsects(qcd, &cellbound->qcd) && !hitCB((xEnt*)cell->data, cbdata))
+        {
+            xGridIterClose(it);
+            return;
+        }
+        cell = xGridIterNextCell(it);
+    }
 }

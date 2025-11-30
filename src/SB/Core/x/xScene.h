@@ -45,6 +45,23 @@ struct xScene
     xSceneID2NameCallback id2Name;
 };
 
+struct xNearFloorPoly
+{
+    xBox box;
+    xVec3 center;
+    xVec3 facingVec;
+    F32 facingDot;
+    F32 floorDot;
+    xVec3 vert[3];
+    F32 neardist;
+    xVec3 nearpt;
+    S32 nearvert;
+    S32 nearedge;
+    U32 oid;
+    void* optr;
+    xModelInstance* mptr;
+};
+
 extern xScene* g_xSceneCur;
 
 void xSceneInit(xScene* sc, U16 num_trigs, U16 num_stats, U16 num_dyns, U16 num_npcs);

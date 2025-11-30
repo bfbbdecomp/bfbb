@@ -33,16 +33,13 @@
 #include "xString.h"
 #include "xVec3.h"
 
-basic_rect<F32> screen_bounds  = { 0.0f, 0.0f, 1.0f, 1.0f };
+basic_rect<F32> screen_bounds = { 0.0f, 0.0f, 1.0f, 1.0f };
 basic_rect<F32> default_adjust = { 0.0f, 0.0f, 1.0f, 1.0f };
 
 extern iColor_tag zEntCruiseBubble_color_80_00_00_FF; // 128, 0, 0, 255
 extern iColor_tag zEntCruiseBubble_color_FF_14_14_FF; // 255, 20, 20, 255
 
-extern RpAtomic *(*gAtomicRenderCallBack)(RpAtomic*);
-
-template <typename T>
-void xGridCheckBound(xGrid& grid, const xBound& bound, const xQCData& qcd, T param);
+extern RpAtomic* (*gAtomicRenderCallBack)(RpAtomic*);
 
 namespace cruise_bubble
 {
@@ -52,15 +49,13 @@ namespace cruise_bubble
         tweak_group cheat_tweak;
         xMat4x3 start_cam_mat;
 
-        const xDecalEmitter::curve_node explode_curve[3] =
-        {
+        const xDecalEmitter::curve_node explode_curve[3] = {
             { 0.0f, { 0xFF, 0xFF, 0xFF, 0xFF }, 0.1f },
             { 0.5f, { 0xFF, 0xFF, 0xFF, 0xFF }, 2.55f },
             { 1.0f, { 0xFF, 0xFF, 0xFF, 0x00 }, 5.0f },
         };
 
-        const xDecalEmitter::curve_node cheat_explode_curve[3] =
-        {
+        const xDecalEmitter::curve_node cheat_explode_curve[3] = {
             { 0.0f, { 0xFF, 0xFF, 0xFF, 0xFF }, 0.1f },
             { 0.5f, { 0xFF, 0xFF, 0xFF, 0xFF }, 3.55f },
             { 1.0f, { 0xFF, 0xFF, 0xFF, 0x00 }, 7.0f },
@@ -71,58 +66,25 @@ namespace cruise_bubble
 
         xBase base = { 0, eBaseTypeCruiseBubble };
 
-        const char* start_anim_states[37] =
-        {
-            "Idle01",
-            "Idle02",
-            "Idle03",
-            "Idle04",
-            "Idle05",
-            "Idle06",
-            "Idle07",
-            "Idle08",
-            "Idle09",
-            "Idle10",
-            "Idle11",
-            "Idle12",
-            "Idle13",
-            "SlipIdle01",
-            "Inactive01",
-            "Inactive02",
-            "Inactive03",
-            "Inactive04",
-            "Inactive05",
-            "Inactive06",
-            "Inactive07",
-            "Inactive08",
-            "Inactive09",
-            "Inactive10",
-            "Walk01",
-            "Run01",
-            "Run02",
-            "Run03",
-            "Land01",
-            "LandRun01",
-            "LandHigh01",
-            "WallLand01",
-            "Hit01",
-            "Hit02",
-            "Hit03",
-            "Hit04",
+        const char* start_anim_states[37] = {
+            "Idle01",     "Idle02",     "Idle03",     "Idle04",     "Idle05",     "Idle06",
+            "Idle07",     "Idle08",     "Idle09",     "Idle10",     "Idle11",     "Idle12",
+            "Idle13",     "SlipIdle01", "Inactive01", "Inactive02", "Inactive03", "Inactive04",
+            "Inactive05", "Inactive06", "Inactive07", "Inactive08", "Inactive09", "Inactive10",
+            "Walk01",     "Run01",      "Run02",      "Run03",      "Land01",     "LandRun01",
+            "LandHigh01", "WallLand01", "Hit01",      "Hit02",      "Hit03",      "Hit04",
             "Hit05"
         };
 
         xFXRibbon wake_ribbon[2];
         xDecalEmitter explode_decal;
 
-        const xFXRibbon::curve_node wake_ribbon_curve[2] =
-        {
+        const xFXRibbon::curve_node wake_ribbon_curve[2] = {
             { 0.0f, { 0xFF, 0xFF, 0xFF, 0x64 }, 0.3f },
             { 1.0f, { 0x00, 0x00, 0x00, 0x00 }, 1.0f },
         };
 
-        const xFXRibbon::curve_node cheat_wake_ribbon_curve[2] =
-        {
+        const xFXRibbon::curve_node cheat_wake_ribbon_curve[2] = {
             { 0.0f, { 0xFF, 0x9B, 0x9B, 0x64 }, 0.5f },
             { 1.0f, { 0x00, 0x00, 0x00, 0x00 }, 2.0f },
         };
@@ -215,17 +177,15 @@ namespace cruise_bubble
                     xAnimTransition* fly;
                 } missle;
             } atran;
-        } shared =
-        {
+        } shared = {
             1 // flags
         };
 
-        sound_config sounds[4] =
-        {
-            { "SB_cruise_start",    1.0f, 5.0f,  20.0f, 0, 0, SDR_CruiseBubbleLaunch, 0, 0, 0, 0 },
-            { "SB_cruise_hit",      1.0f, 15.0f, 60.0f, 0, 0, SDR_CruiseBubbleExplode, 0, 0, 0, 0 },
-            { "SB_cruise_nav_loop", 1.0f, 0.0f,  10.0f, 0, 1, SDR_None, 0, 0, 0, 0 },
-            { NULL,                 1.0f, 0.0f,  0.0f,  1, 0, SDR_None, 23, 25, 0, 0 },
+        sound_config sounds[4] = {
+            { "SB_cruise_start", 1.0f, 5.0f, 20.0f, 0, 0, SDR_CruiseBubbleLaunch, 0, 0, 0, 0 },
+            { "SB_cruise_hit", 1.0f, 15.0f, 60.0f, 0, 0, SDR_CruiseBubbleExplode, 0, 0, 0, 0 },
+            { "SB_cruise_nav_loop", 1.0f, 0.0f, 10.0f, 0, 1, SDR_None, 0, 0, 0, 0 },
+            { NULL, 1.0f, 0.0f, 0.0f, 1, 0, SDR_None, 23, 25, 0, 0 },
         };
 
         void init_sound()
@@ -393,9 +353,8 @@ namespace cruise_bubble
             shared.hits_size = 0;
         }
 
-
-        static void damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir, const xVec3& hit_norm,
-                           F32 radius, bool explosive)
+        static void damage_entity(xEnt& ent, const xVec3& loc, const xVec3& dir,
+                                  const xVec3& hit_norm, F32 radius, bool explosive)
         {
             if (shared.hits_size >= 32)
             {
@@ -554,7 +513,7 @@ namespace cruise_bubble
                         }
                     }
                     want_enter = want_enter && !(trig.entered & 0x2);
-                    want_exit  = want_exit  &&  (trig.entered & 0x2);
+                    want_exit = want_exit && (trig.entered & 0x2);
 
                     if (want_enter || want_exit)
                     {
@@ -769,7 +728,8 @@ namespace cruise_bubble
 
             if (!stop)
             {
-                shared.player_motion += cruise_bubble::get_player_loc() - pre_update_loc - drive_motion;
+                shared.player_motion +=
+                    cruise_bubble::get_player_loc() - pre_update_loc - drive_motion;
 
                 if (shared.player_motion.length2() > 0.25f)
                 {
@@ -863,16 +823,20 @@ namespace cruise_bubble
             if (current_tweak->material.fresnel_texture != 0)
             {
                 fresnel_coeff = current_tweak->material.fresnel_coeff * fade;
-                iModelSetMaterialAlpha(atomic, (S32)(current_tweak->material.fresnel_alpha * 255.0f * fade + 0.5f) & 0xFF);
+                iModelSetMaterialAlpha(
+                    atomic,
+                    (S32)(current_tweak->material.fresnel_alpha * 255.0f * fade + 0.5f) & 0xFF);
                 gFXSurfaceFlags = 0x10;
-                xFXAtomicEnvMapSetup(atomic, current_tweak->material.fresnel_texture, fresnel_coeff);
+                xFXAtomicEnvMapSetup(atomic, current_tweak->material.fresnel_texture,
+                                     fresnel_coeff);
                 gFXSurfaceFlags = 0;
                 (*gAtomicRenderCallBack)(atomic);
             }
             if (current_tweak->material.env_texture != 0)
             {
                 env_coeff = current_tweak->material.env_coeff * fade;
-                iModelSetMaterialAlpha(atomic, (S32)(current_tweak->material.env_alpha * 255.0f * fade + 0.5f) & 0xFF);
+                iModelSetMaterialAlpha(
+                    atomic, (S32)(current_tweak->material.env_alpha * 255.0f * fade + 0.5f) & 0xFF);
                 AtomicDisableMatFX(atomic);
                 gFXSurfaceFlags = 0x10;
                 xFXAtomicEnvMapSetup(atomic, current_tweak->material.env_texture, env_coeff);
@@ -923,7 +887,8 @@ namespace cruise_bubble
             shared.states[STATE_CAMERA_RESTORE] = &camera_return;
         }
 
-        cruise_bubble::state_camera_restore::state_camera_restore() : state_type(STATE_CAMERA_RESTORE)
+        cruise_bubble::state_camera_restore::state_camera_restore()
+            : state_type(STATE_CAMERA_RESTORE)
         {
         }
 
@@ -948,7 +913,8 @@ namespace cruise_bubble
         {
         }
 
-        cruise_bubble::state_missle_explode::state_missle_explode() : state_type(STATE_MISSLE_EXPLODE)
+        cruise_bubble::state_missle_explode::state_missle_explode()
+            : state_type(STATE_MISSLE_EXPLODE)
         {
         }
 
@@ -1292,10 +1258,8 @@ namespace cruise_bubble
 
         void update_gizmo(cruise_bubble::hud_gizmo& gizmo, F32 dt)
         {
-            gizmo.alpha = range_limit<F32>(gizmo.alpha_vel * dt + gizmo.alpha, 0.0f,
-                                           1.0f);
-            gizmo.glow = range_limit<F32>(gizmo.glow_vel * dt + gizmo.glow, 0.0f,
-                                          1.0f);
+            gizmo.alpha = range_limit<F32>(gizmo.alpha_vel * dt + gizmo.alpha, 0.0f, 1.0f);
+            gizmo.glow = range_limit<F32>(gizmo.glow_vel * dt + gizmo.glow, 0.0f, 1.0f);
         }
 
         void flash_hud()
@@ -1315,15 +1279,14 @@ namespace cruise_bubble
 
             F32 life = state->life;
             char buffer[16];
-            sprintf(buffer, "%02d:%02d", (S32)life,
-                    ((S32)(100.0f * life)) - (100 * (S32)life));
+            sprintf(buffer, "%02d:%02d", (S32)life, ((S32)(100.0f * life)) - (100 * (S32)life));
 
             F32 dsize = glow * current_tweak->hud.timer.glow_size;
             // zEntCruiseBubble_f_0_0 is loaded too early, should be just before the call
-            xfont font =
-                xfont::create(current_tweak->hud.timer.font, current_tweak->hud.timer.font_width + dsize,
-                              current_tweak->hud.timer.font_height + dsize, 0.0f, g_WHITE,
-                              screen_bounds);
+            xfont font = xfont::create(current_tweak->hud.timer.font,
+                                       current_tweak->hud.timer.font_width + dsize,
+                                       current_tweak->hud.timer.font_height + dsize, 0.0f, g_WHITE,
+                                       screen_bounds);
             // register use for copying fields into font off, also causes a larger stack frame
             // also the color tags are loaded too early, should be just before the call
             cruise_bubble::lerp(font.color, glow, zEntCruiseBubble_color_80_00_00_FF,
@@ -1385,10 +1348,8 @@ namespace cruise_bubble
                 return;
             }
 
-            hud.alpha = range_limit<F32>(hud.alpha_vel * dt + hud.alpha, 0.0f,
-                                         1.0f);
-            hud.glow = range_limit<F32>(hud.glow_vel * dt + hud.glow, 0.0f,
-                                        1.0f);
+            hud.alpha = range_limit<F32>(hud.alpha_vel * dt + hud.alpha, 0.0f, 1.0f);
+            hud.glow = range_limit<F32>(hud.glow_vel * dt + hud.glow, 0.0f, 1.0f);
 
             // scheduling off
             F32 vel_frac = ((state_missle_fly*)shared.states[STATE_MISSLE_FLY])->vel /
@@ -1431,8 +1392,7 @@ namespace cruise_bubble
 
         void uv_animated_model::update(F32 dt)
         {
-            if (0.0f == this->offset_vel.x &&
-                0.0f == this->offset_vel.y)
+            if (0.0f == this->offset_vel.x && 0.0f == this->offset_vel.y)
             {
                 return;
             }
@@ -1503,7 +1463,6 @@ namespace cruise_bubble
 
             render_timer(hud.alpha, hud.glow);
         }
-
 
         void show_hud()
         {
@@ -1647,7 +1606,7 @@ namespace cruise_bubble
             *(volatile F32*)(&cheat_tweak.missle.fly.turn.xdelta) = 7.0f;
             *(volatile F32*)(&cheat_tweak.missle.fly.turn.ydelta) = 5.0f;
             *(volatile F32*)(&cheat_tweak.missle.fly.turn.ydecay) =
-            *(volatile F32*)(&cheat_tweak.missle.fly.turn.xdecay) = 0.985f;
+                *(volatile F32*)(&cheat_tweak.missle.fly.turn.xdecay) = 0.985f;
             *(volatile F32*)(&cheat_tweak.missle.fly.turn.ybound) = 1.24248f;
 
             F32 one_tenth = 0.1f;
@@ -1662,7 +1621,8 @@ namespace cruise_bubble
             *(volatile U32*)(&cheat_tweak.material.env_texture) = xStrHash("aura2");
             *(volatile F32*)(&cheat_tweak.material.fresnel_alpha) = 0.1f;
             *(volatile F32*)(&cheat_tweak.material.fresnel_coeff) = 1.0f;
-            *(volatile U32*)(&cheat_tweak.material.fresnel_texture) = xStrHash("par_cruise_explode");
+            *(volatile U32*)(&cheat_tweak.material.fresnel_texture) =
+                xStrHash("par_cruise_explode");
             *(volatile F32*)(&cheat_tweak.trail.bubble_rate) = 90.0f;
             *(volatile F32*)(&cheat_tweak.trail.bubble_emit_radius) = 0.75f;
             *(volatile F32*)(&cheat_tweak.trail.wake_emit_radius) = 0.3f;
@@ -1695,78 +1655,71 @@ namespace cruise_bubble
             this->register_tweaks(true, params, size, NULL);
         }
 
-        void tweak_group::register_tweaks(bool init, xModelAssetParam* ap, U32 apsize,
-                                                         const char*)
+        void tweak_group::register_tweaks(bool init, xModelAssetParam* ap, U32 apsize, const char*)
         {
             if (init)
             {
                 this->aim_delay = 0.2f;
-                auto_tweak::load_param<F32, F32>(this->aim_delay, 1.0f, 0.0f, 1.0f, ap,
-                                                 apsize, "aim_delay");
+                auto_tweak::load_param<F32, F32>(this->aim_delay, 1.0f, 0.0f, 1.0f, ap, apsize,
+                                                 "aim_delay");
             }
 
             if (init)
             {
                 this->player.halt_time = 0.5f;
-                auto_tweak::load_param<F32, F32>(this->player.halt_time, 1.0f,
-                                                 0.0f, 1.0f, ap, apsize,
-                                                 "player.halt_time");
+                auto_tweak::load_param<F32, F32>(this->player.halt_time, 1.0f, 0.0f, 1.0f, ap,
+                                                 apsize, "player.halt_time");
             }
 
             if (init)
             {
                 this->player.aim.turn_speed = 0.05f;
-                auto_tweak::load_param<F32, F32>(this->player.aim.turn_speed, 1.0f,
-                                                 0.01f, 1000000000.0f,
-                                                 ap, apsize, "player.aim.turn_speed");
+                auto_tweak::load_param<F32, F32>(this->player.aim.turn_speed, 1.0f, 0.01f,
+                                                 1000000000.0f, ap, apsize,
+                                                 "player.aim.turn_speed");
             }
 
             if (init)
             {
                 this->player.aim.anim_delta = 0.5f;
-                auto_tweak::load_param<F32, F32>(this->player.aim.anim_delta, 1.0f,
-                                                 0.0f, 1000000000.0f,
-                                                 ap, apsize, "player.aim.anim_delta");
+                auto_tweak::load_param<F32, F32>(this->player.aim.anim_delta, 1.0f, 0.0f,
+                                                 1000000000.0f, ap, apsize,
+                                                 "player.aim.anim_delta");
             }
 
             if (init)
             {
                 this->player.fire.delay_wand = 0.06666667f;
-                auto_tweak::load_param<F32, F32>(this->player.fire.delay_wand, 1.0f,
-                                                 0.0f, 100.0f, ap,
-                                                 apsize, "player.fire.delay_wand");
+                auto_tweak::load_param<F32, F32>(this->player.fire.delay_wand, 1.0f, 0.0f, 100.0f,
+                                                 ap, apsize, "player.fire.delay_wand");
             }
 
             if (init)
             {
                 this->missle.life = 6.0f;
-                auto_tweak::load_param<F32, F32>(this->missle.life, 1.0f,
-                                                 0.01f, 1000000000.0f,
-                                                 ap, apsize, "missle.life");
+                auto_tweak::load_param<F32, F32>(this->missle.life, 1.0f, 0.01f, 1000000000.0f, ap,
+                                                 apsize, "missle.life");
             }
 
             if (init)
             {
                 this->missle.hit_dist = 0.3f;
-                auto_tweak::load_param<F32, F32>(this->missle.hit_dist, 1.0f,
-                                                 0.0f, 1.0f, ap, apsize,
-                                                 "missle.hit_dist");
+                auto_tweak::load_param<F32, F32>(this->missle.hit_dist, 1.0f, 0.0f, 1.0f, ap,
+                                                 apsize, "missle.hit_dist");
             }
 
             if (init)
             {
                 this->missle.crash_angle = 30.0f;
-                auto_tweak::load_param<F32, F32>(this->missle.crash_angle, DEG2RAD(1),
-                                                 0.0f, 60.0f, ap,
-                                                 apsize, "missle.crash_angle");
+                auto_tweak::load_param<F32, F32>(this->missle.crash_angle, DEG2RAD(1), 0.0f, 60.0f,
+                                                 ap, apsize, "missle.crash_angle");
             }
 
             if (init)
             {
                 this->missle.collide_twist = 0.025f;
-                auto_tweak::load_param<F32, F32>(this->missle.collide_twist, 1.0f,
-                                                 0.0f, 1.0f, ap, apsize,
-                                                 "missle.collide_twist");
+                auto_tweak::load_param<F32, F32>(this->missle.collide_twist, 1.0f, 0.0f, 1.0f, ap,
+                                                 apsize, "missle.collide_twist");
             }
 
             if (init)
@@ -1779,17 +1732,15 @@ namespace cruise_bubble
             if (init)
             {
                 this->missle.appear.delay_show = 0.13333334f;
-                auto_tweak::load_param<F32, F32>(this->missle.appear.delay_show, 1.0f,
-                                                 0.0f, 100.0f, ap,
-                                                 apsize, "missle.appear.delay_show");
+                auto_tweak::load_param<F32, F32>(this->missle.appear.delay_show, 1.0f, 0.0f, 100.0f,
+                                                 ap, apsize, "missle.appear.delay_show");
             }
 
             if (init)
             {
                 this->missle.appear.delay_fly = 0.6666667f;
-                auto_tweak::load_param<F32, F32>(this->missle.appear.delay_fly, 1.0f,
-                                                 0.0f, 100.0f, ap,
-                                                 apsize, "missle.appear.delay_fly");
+                auto_tweak::load_param<F32, F32>(this->missle.appear.delay_fly, 1.0f, 0.0f, 100.0f,
+                                                 ap, apsize, "missle.appear.delay_fly");
             }
 
             if (init)
@@ -1802,439 +1753,395 @@ namespace cruise_bubble
             if (init)
             {
                 this->missle.fly.accel = 6.0f;
-                auto_tweak::load_param<F32, F32>(this->missle.fly.accel, 1.0f,
-                                                 0.01f, 1000000000.0f,
+                auto_tweak::load_param<F32, F32>(this->missle.fly.accel, 1.0f, 0.01f, 1000000000.0f,
                                                  ap, apsize, "missle.fly.accel");
             }
 
             if (init)
             {
                 this->missle.fly.max_vel = 12.0f;
-                auto_tweak::load_param<F32, F32>(this->missle.fly.max_vel, 1.0f,
-                                                 0.01f, 1000000000.0f,
-                                                 ap, apsize, "missle.fly.max_vel");
+                auto_tweak::load_param<F32, F32>(this->missle.fly.max_vel, 1.0f, 0.01f,
+                                                 1000000000.0f, ap, apsize, "missle.fly.max_vel");
             }
 
             if (init)
             {
                 this->missle.fly.engine_pitch_max = 10.0f;
-                auto_tweak::load_param<F32, F32>(this->missle.fly.engine_pitch_max, 1.0f,
-                                                 0.01f, 1000000000.0f,
-                                                 ap, apsize, "missle.fly.engine_pitch_max");
+                auto_tweak::load_param<F32, F32>(this->missle.fly.engine_pitch_max, 1.0f, 0.01f,
+                                                 1000000000.0f, ap, apsize,
+                                                 "missle.fly.engine_pitch_max");
             }
 
             if (init)
             {
                 this->missle.fly.engine_pitch_sensitivity = 0.005f;
-                auto_tweak::load_param<F32, F32>(this->missle.fly.engine_pitch_sensitivity,
-                                                 1.0f, 0.0f,
-                                                 1.0f, ap, apsize,
+                auto_tweak::load_param<F32, F32>(this->missle.fly.engine_pitch_sensitivity, 1.0f,
+                                                 0.0f, 1.0f, ap, apsize,
                                                  "missle.fly.engine_pitch_sensitivity");
             }
 
             if (init)
             {
                 this->missle.fly.flash_interval = 2.0f;
-                auto_tweak::load_param<F32, F32>(this->missle.fly.flash_interval, 1.0f,
-                                                 0.0f, 1000000000.0f,
-                                                 ap, apsize, "missle.fly.flash_interval");
+                auto_tweak::load_param<F32, F32>(this->missle.fly.flash_interval, 1.0f, 0.0f,
+                                                 1000000000.0f, ap, apsize,
+                                                 "missle.fly.flash_interval");
             }
 
             if (init)
             {
                 this->missle.fly.turn.xdelta = 5.0f;
-                auto_tweak::load_param<F32, F32>(this->missle.fly.turn.xdelta, 1.0f,
-                                                 0.01f, 1000000000.0f,
-                                                 ap, apsize, "missle.fly.turn.xdelta");
+                auto_tweak::load_param<F32, F32>(this->missle.fly.turn.xdelta, 1.0f, 0.01f,
+                                                 1000000000.0f, ap, apsize,
+                                                 "missle.fly.turn.xdelta");
             }
 
             if (init)
             {
                 this->missle.fly.turn.ydelta = 4.0f;
-                auto_tweak::load_param<F32, F32>(this->missle.fly.turn.ydelta, 1.0f,
-                                                 0.01f, 1000000000.0f,
-                                                 ap, apsize, "missle.fly.turn.ydelta");
+                auto_tweak::load_param<F32, F32>(this->missle.fly.turn.ydelta, 1.0f, 0.01f,
+                                                 1000000000.0f, ap, apsize,
+                                                 "missle.fly.turn.ydelta");
             }
 
             if (init)
             {
                 this->missle.fly.turn.xdecay = 0.99f;
-                auto_tweak::load_param<F32, F32>(this->missle.fly.turn.xdecay, 1.0f,
-                                                 0.0f, 1.0f, ap, apsize,
-                                                 "missle.fly.turn.xdecay");
+                auto_tweak::load_param<F32, F32>(this->missle.fly.turn.xdecay, 1.0f, 0.0f, 1.0f, ap,
+                                                 apsize, "missle.fly.turn.xdecay");
             }
 
             if (init)
             {
                 this->missle.fly.turn.ydecay = 0.99f;
-                auto_tweak::load_param<F32, F32>(this->missle.fly.turn.ydecay, 1.0f,
-                                                 0.0f, 1.0f, ap, apsize,
-                                                 "missle.fly.turn.ydecay");
+                auto_tweak::load_param<F32, F32>(this->missle.fly.turn.ydecay, 1.0f, 0.0f, 1.0f, ap,
+                                                 apsize, "missle.fly.turn.ydecay");
             }
 
             if (init)
             {
                 this->missle.fly.turn.ybound = 0.6f;
-                auto_tweak::load_param<F32, F32>(this->missle.fly.turn.ybound, PI / 2,
-                                                 0.0f, 1.0f, ap, apsize,
-                                                 "missle.fly.turn.ybound");
+                auto_tweak::load_param<F32, F32>(this->missle.fly.turn.ybound, PI / 2, 0.0f, 1.0f,
+                                                 ap, apsize, "missle.fly.turn.ybound");
             }
 
             if (init)
             {
                 this->missle.fly.turn.roll_frac = 0.2f;
-                auto_tweak::load_param<F32, F32>(this->missle.fly.turn.roll_frac, 1.0f,
-                                                 -1.0f, 1.0f, ap,
-                                                 apsize, "missle.fly.turn.roll_frac");
+                auto_tweak::load_param<F32, F32>(this->missle.fly.turn.roll_frac, 1.0f, -1.0f, 1.0f,
+                                                 ap, apsize, "missle.fly.turn.roll_frac");
             }
 
             if (init)
             {
                 this->missle.explode.hit_radius = 1.0f;
-                auto_tweak::load_param<F32, F32>(this->missle.explode.hit_radius, 1.0f,
-                                                 0.0f, 10.0f, ap,
-                                                 apsize, "missle.explode.hit_radius");
+                auto_tweak::load_param<F32, F32>(this->missle.explode.hit_radius, 1.0f, 0.0f, 10.0f,
+                                                 ap, apsize, "missle.explode.hit_radius");
             }
 
             if (init)
             {
                 this->missle.explode.hit_duration = 0.25f;
-                auto_tweak::load_param<F32, F32>(this->missle.explode.hit_duration, 1.0f,
-                                                 0.0f, 10.0f, ap,
-                                                 apsize, "missle.explode.hit_duration");
+                auto_tweak::load_param<F32, F32>(this->missle.explode.hit_duration, 1.0f, 0.0f,
+                                                 10.0f, ap, apsize, "missle.explode.hit_duration");
             }
 
             if (init)
             {
                 this->camera.aim.dist = 2.0f;
-                auto_tweak::load_param<F32, F32>(this->camera.aim.dist, 1.0f,
-                                                 0.0f, 100.0f, ap,
+                auto_tweak::load_param<F32, F32>(this->camera.aim.dist, 1.0f, 0.0f, 100.0f, ap,
                                                  apsize, "camera.aim.dist");
             }
 
             if (init)
             {
                 this->camera.aim.height = 1.5f;
-                auto_tweak::load_param<F32, F32>(this->camera.aim.height, 1.0f,
-                                                 -10.0f, 10.0f, ap,
+                auto_tweak::load_param<F32, F32>(this->camera.aim.height, 1.0f, -10.0f, 10.0f, ap,
                                                  apsize, "camera.aim.height");
             }
 
             if (init)
             {
                 this->camera.aim.pitch = 0.0f;
-                auto_tweak::load_param<F32, F32>(this->camera.aim.pitch, DEG2RAD(1),
-                                                 -90.0f, 90.0f, ap,
-                                                 apsize, "camera.aim.pitch");
+                auto_tweak::load_param<F32, F32>(this->camera.aim.pitch, DEG2RAD(1), -90.0f, 90.0f,
+                                                 ap, apsize, "camera.aim.pitch");
             }
 
             if (init)
             {
                 this->camera.aim.accel = 10.0f;
-                auto_tweak::load_param<F32, F32>(this->camera.aim.accel, 1.0f,
-                                                 0.01f, 1000000000.0f,
+                auto_tweak::load_param<F32, F32>(this->camera.aim.accel, 1.0f, 0.01f, 1000000000.0f,
                                                  ap, apsize, "camera.aim.accel");
             }
 
             if (init)
             {
                 this->camera.aim.max_vel = 5.0f;
-                auto_tweak::load_param<F32, F32>(this->camera.aim.max_vel, 1.0f,
-                                                 0.01f, 1000000000.0f,
-                                                 ap, apsize, "camera.aim.max_vel");
+                auto_tweak::load_param<F32, F32>(this->camera.aim.max_vel, 1.0f, 0.01f,
+                                                 1000000000.0f, ap, apsize, "camera.aim.max_vel");
             }
 
             if (init)
             {
                 this->camera.aim.stick_decel = 720.0f;
-                auto_tweak::load_param<F32, F32>(this->camera.aim.stick_decel, DEG2RAD(1),
-                                                 0.01f, 1000000000.0f,
-                                                 ap, apsize, "camera.aim.stick_decel");
+                auto_tweak::load_param<F32, F32>(this->camera.aim.stick_decel, DEG2RAD(1), 0.01f,
+                                                 1000000000.0f, ap, apsize,
+                                                 "camera.aim.stick_decel");
             }
 
             if (init)
             {
                 this->camera.aim.stick_accel = 360.0f;
-                auto_tweak::load_param<F32, F32>(this->camera.aim.stick_accel, DEG2RAD(1),
-                                                 0.01f, 1000000000.0f,
-                                                 ap, apsize, "camera.aim.stick_accel");
+                auto_tweak::load_param<F32, F32>(this->camera.aim.stick_accel, DEG2RAD(1), 0.01f,
+                                                 1000000000.0f, ap, apsize,
+                                                 "camera.aim.stick_accel");
             }
 
             if (init)
             {
                 this->camera.aim.stick_max_vel = 135.0f;
-                auto_tweak::load_param<F32, F32>(this->camera.aim.stick_max_vel, DEG2RAD(1),
-                                                 0.01f, 1000000000.0f,
-                                                 ap, apsize, "camera.aim.stick_max_vel");
+                auto_tweak::load_param<F32, F32>(this->camera.aim.stick_max_vel, DEG2RAD(1), 0.01f,
+                                                 1000000000.0f, ap, apsize,
+                                                 "camera.aim.stick_max_vel");
             }
 
             if (init)
             {
                 this->camera.aim.turn_speed = 0.2f;
-                auto_tweak::load_param<F32, F32>(this->camera.aim.turn_speed, 1.0f,
-                                                 0.001f, 1000000000.0f,
-                                                 ap, apsize, "camera.aim.turn_speed");
+                auto_tweak::load_param<F32, F32>(this->camera.aim.turn_speed, 1.0f, 0.001f,
+                                                 1000000000.0f, ap, apsize,
+                                                 "camera.aim.turn_speed");
             }
 
             if (init)
             {
                 this->camera.seize.delay = 0.0f;
-                auto_tweak::load_param<F32, F32>(this->camera.seize.delay, 1.0f,
-                                                 0.0f, 1000000000.0f,
-                                                 ap, apsize, "camera.seize.delay");
+                auto_tweak::load_param<F32, F32>(this->camera.seize.delay, 1.0f, 0.0f,
+                                                 1000000000.0f, ap, apsize, "camera.seize.delay");
             }
 
             if (init)
             {
                 this->camera.seize.blend_time = 1.5f;
-                auto_tweak::load_param<F32, F32>(this->camera.seize.blend_time, 1.0f,
-                                                 0.0f, 1000000000.0f,
-                                                 ap, apsize, "camera.seize.blend_time");
+                auto_tweak::load_param<F32, F32>(this->camera.seize.blend_time, 1.0f, 0.0f,
+                                                 1000000000.0f, ap, apsize,
+                                                 "camera.seize.blend_time");
             }
 
             if (init)
             {
                 this->camera.seize.fade_dist = 2.0f;
-                auto_tweak::load_param<F32, F32>(this->camera.seize.fade_dist, 1.0f,
-                                                 0.0f, 10.0f, ap,
-                                                 apsize, "camera.seize.fade_dist");
+                auto_tweak::load_param<F32, F32>(this->camera.seize.fade_dist, 1.0f, 0.0f, 10.0f,
+                                                 ap, apsize, "camera.seize.fade_dist");
             }
 
             if (init)
             {
                 this->camera.seize.hide_dist = 1.0f;
-                auto_tweak::load_param<F32, F32>(this->camera.seize.hide_dist, 1.0f,
-                                                 0.0f, 10.0f, ap,
-                                                 apsize, "camera.seize.hide_dist");
+                auto_tweak::load_param<F32, F32>(this->camera.seize.hide_dist, 1.0f, 0.0f, 10.0f,
+                                                 ap, apsize, "camera.seize.hide_dist");
             }
 
             if (init)
             {
                 this->camera.seize.fov = 95.0f;
-                auto_tweak::load_param<F32, F32>(this->camera.seize.fov, 1.0f,
-                                                 10.0f, 180.0f, ap,
+                auto_tweak::load_param<F32, F32>(this->camera.seize.fov, 1.0f, 10.0f, 180.0f, ap,
                                                  apsize, "camera.seize.fov");
             }
 
             if (init)
             {
                 this->camera.survey.duration = 2.0f;
-                auto_tweak::load_param<F32, F32>(this->camera.survey.duration, 1.0f,
-                                                 0.0f, 10.0f, ap,
-                                                 apsize, "camera.survey.duration");
+                auto_tweak::load_param<F32, F32>(this->camera.survey.duration, 1.0f, 0.0f, 10.0f,
+                                                 ap, apsize, "camera.survey.duration");
             }
 
             if (init)
             {
                 this->camera.survey.min_duration = 0.25f;
-                auto_tweak::load_param<F32, F32>(this->camera.survey.min_duration, 1.0f,
-                                                 0.0f, 10.0f, ap,
-                                                 apsize, "camera.survey.min_duration");
+                auto_tweak::load_param<F32, F32>(this->camera.survey.min_duration, 1.0f, 0.0f,
+                                                 10.0f, ap, apsize, "camera.survey.min_duration");
             }
 
             if (init)
             {
                 this->camera.survey.min_dist = 10.0f;
-                auto_tweak::load_param<F32, F32>(this->camera.survey.min_dist, 1.0f,
-                                                 0.0f, 100.0f, ap,
-                                                 apsize, "camera.survey.min_dist");
+                auto_tweak::load_param<F32, F32>(this->camera.survey.min_dist, 1.0f, 0.0f, 100.0f,
+                                                 ap, apsize, "camera.survey.min_dist");
             }
 
             if (init)
             {
                 this->camera.survey.cut_dist = 6.0f;
-                auto_tweak::load_param<F32, F32>(this->camera.survey.cut_dist, 1.0f,
-                                                 0.0f, 100.0f, ap,
-                                                 apsize, "camera.survey.cut_dist");
+                auto_tweak::load_param<F32, F32>(this->camera.survey.cut_dist, 1.0f, 0.0f, 100.0f,
+                                                 ap, apsize, "camera.survey.cut_dist");
             }
 
             if (init)
             {
                 this->camera.survey.drift_dist = 8.0f;
-                auto_tweak::load_param<F32, F32>(this->camera.survey.drift_dist, 1.0f,
-                                                 0.0f, 100.0f, ap,
-                                                 apsize, "camera.survey.drift_dist");
+                auto_tweak::load_param<F32, F32>(this->camera.survey.drift_dist, 1.0f, 0.0f, 100.0f,
+                                                 ap, apsize, "camera.survey.drift_dist");
             }
 
             if (init)
             {
                 this->camera.survey.drift_softness = 0.1f;
-                auto_tweak::load_param<F32, F32>(this->camera.survey.drift_softness, 1.0f,
-                                                 0.0f, 0.5f, ap, apsize,
-                                                 "camera.survey.drift_softness");
+                auto_tweak::load_param<F32, F32>(this->camera.survey.drift_softness, 1.0f, 0.0f,
+                                                 0.5f, ap, apsize, "camera.survey.drift_softness");
             }
 
             if (init)
             {
                 this->camera.survey.jerk_offset = 0.8f;
-                auto_tweak::load_param<F32, F32>(this->camera.survey.jerk_offset, 1.0f,
-                                                 0.0f, 2.0f, ap, apsize,
-                                                 "camera.survey.jerk_offset");
+                auto_tweak::load_param<F32, F32>(this->camera.survey.jerk_offset, 1.0f, 0.0f, 2.0f,
+                                                 ap, apsize, "camera.survey.jerk_offset");
             }
 
             if (init)
             {
                 this->camera.survey.jerk_deflect = 0.6f;
-                auto_tweak::load_param<F32, F32>(this->camera.survey.jerk_deflect, 1.0f,
-                                                 0.0f, 1.0f, ap, apsize,
-                                                 "camera.survey.jerk_deflect");
+                auto_tweak::load_param<F32, F32>(this->camera.survey.jerk_deflect, 1.0f, 0.0f, 1.0f,
+                                                 ap, apsize, "camera.survey.jerk_deflect");
             }
 
             if (init)
             {
                 this->camera.restore.control_delay = 0.25f;
-                auto_tweak::load_param<F32, F32>(this->camera.restore.control_delay, 1.0f,
-                                                 0.0f, 1.0f, ap, apsize,
-                                                 "camera.restore.control_delay");
+                auto_tweak::load_param<F32, F32>(this->camera.restore.control_delay, 1.0f, 0.0f,
+                                                 1.0f, ap, apsize, "camera.restore.control_delay");
             }
 
             if (init)
             {
                 this->material.env_alpha = 0.5f;
-                auto_tweak::load_param<F32, F32>(this->material.env_alpha, 1.0f,
-                                                 0.0f, 1.0f, ap, apsize,
-                                                 "material.env_alpha");
+                auto_tweak::load_param<F32, F32>(this->material.env_alpha, 1.0f, 0.0f, 1.0f, ap,
+                                                 apsize, "material.env_alpha");
             }
 
             if (init)
             {
                 this->material.env_coeff = 0.5f;
-                auto_tweak::load_param<F32, F32>(this->material.env_coeff, 1.0f,
-                                                 0.0f, 1.0f, ap, apsize,
-                                                 "material.env_coeff");
+                auto_tweak::load_param<F32, F32>(this->material.env_coeff, 1.0f, 0.0f, 1.0f, ap,
+                                                 apsize, "material.env_coeff");
             }
 
             if (init)
             {
                 this->material.fresnel_alpha = 0.0f;
-                auto_tweak::load_param<F32, F32>(this->material.fresnel_alpha, 1.0f,
-                                                 0.0f, 1.0f, ap, apsize,
-                                                 "material.fresnel_alpha");
+                auto_tweak::load_param<F32, F32>(this->material.fresnel_alpha, 1.0f, 0.0f, 1.0f, ap,
+                                                 apsize, "material.fresnel_alpha");
             }
 
             if (init)
             {
                 this->material.fresnel_coeff = 0.75f;
-                auto_tweak::load_param<F32, F32>(this->material.fresnel_coeff, 1.0f,
-                                                 0.0f, 1.0f, ap, apsize,
-                                                 "material.fresnel_coeff");
+                auto_tweak::load_param<F32, F32>(this->material.fresnel_coeff, 1.0f, 0.0f, 1.0f, ap,
+                                                 apsize, "material.fresnel_coeff");
             }
 
             if (init)
             {
                 this->reticle.dist_min = 3.0f;
-                auto_tweak::load_param<F32, F32>(this->reticle.dist_min, 1.0f,
-                                                 1.0f, 10.0f, ap,
+                auto_tweak::load_param<F32, F32>(this->reticle.dist_min, 1.0f, 1.0f, 10.0f, ap,
                                                  apsize, "reticle.dist_min");
             }
 
             if (init)
             {
                 this->reticle.dist_max = 30.0f;
-                auto_tweak::load_param<F32, F32>(this->reticle.dist_max, 1.0f,
-                                                 1.0f, 10000.0f, ap,
+                auto_tweak::load_param<F32, F32>(this->reticle.dist_max, 1.0f, 1.0f, 10000.0f, ap,
                                                  apsize, "reticle.dist_max");
             }
 
             if (init)
             {
                 this->reticle.ang_show = 4.0f;
-                auto_tweak::load_param<F32, F32>(this->reticle.ang_show, DEG2RAD(1),
-                                                 0.0f, 90.0f, ap,
-                                                 apsize, "reticle.ang_show");
+                auto_tweak::load_param<F32, F32>(this->reticle.ang_show, DEG2RAD(1), 0.0f, 90.0f,
+                                                 ap, apsize, "reticle.ang_show");
             }
 
             if (init)
             {
                 this->reticle.ang_hide = 22.5f;
-                auto_tweak::load_param<F32, F32>(this->reticle.ang_hide, DEG2RAD(1),
-                                                 0.0f, 90.0f, ap,
-                                                 apsize, "reticle.ang_hide");
+                auto_tweak::load_param<F32, F32>(this->reticle.ang_hide, DEG2RAD(1), 0.0f, 90.0f,
+                                                 ap, apsize, "reticle.ang_hide");
             }
 
             if (init)
             {
                 this->reticle.delay_retarget = 0.25f;
-                auto_tweak::load_param<F32, F32>(this->reticle.delay_retarget, 1.0f,
-                                                 0.0f, 5.0f, ap, apsize,
-                                                 "reticle.delay_retarget");
+                auto_tweak::load_param<F32, F32>(this->reticle.delay_retarget, 1.0f, 0.0f, 5.0f, ap,
+                                                 apsize, "reticle.delay_retarget");
             }
 
             if (init)
             {
                 this->trail.sample_rate = 60.0f;
-                auto_tweak::load_param<F32, F32>(this->trail.sample_rate, 1.0f,
-                                                 0.0f, 10000.0f, ap,
+                auto_tweak::load_param<F32, F32>(this->trail.sample_rate, 1.0f, 0.0f, 10000.0f, ap,
                                                  apsize, "trail.sample_rate");
             }
 
             if (init)
             {
                 this->trail.bubble_rate = 60.0f;
-                auto_tweak::load_param<F32, F32>(this->trail.bubble_rate, 1.0f,
-                                                 0.0f, 10000.0f, ap,
+                auto_tweak::load_param<F32, F32>(this->trail.bubble_rate, 1.0f, 0.0f, 10000.0f, ap,
                                                  apsize, "trail.bubble_rate");
             }
 
             if (init)
             {
                 this->trail.bubble_emit_radius = 0.5f;
-                auto_tweak::load_param<F32, F32>(this->trail.bubble_emit_radius, 1.0f,
-                                                 0.0f, 10.0f, ap,
-                                                 apsize, "trail.bubble_emit_radius");
+                auto_tweak::load_param<F32, F32>(this->trail.bubble_emit_radius, 1.0f, 0.0f, 10.0f,
+                                                 ap, apsize, "trail.bubble_emit_radius");
             }
 
             if (init)
             {
                 this->trail.wake_emit_radius = 0.1f;
-                auto_tweak::load_param<F32, F32>(this->trail.wake_emit_radius, 1.0f,
-                                                 0.0f, 10.0f, ap,
-                                                 apsize, "trail.wake_emit_radius");
+                auto_tweak::load_param<F32, F32>(this->trail.wake_emit_radius, 1.0f, 0.0f, 10.0f,
+                                                 ap, apsize, "trail.wake_emit_radius");
             }
 
             if (init)
             {
                 this->blast.emit = 300;
-                auto_tweak::load_param<U32, S32>(this->blast.emit, 1, 0, 0x3e8, ap, apsize, "blast.emit");
+                auto_tweak::load_param<U32, S32>(this->blast.emit, 1, 0, 0x3e8, ap, apsize,
+                                                 "blast.emit");
             }
 
             if (init)
             {
                 this->blast.radius = 0.0f;
-                auto_tweak::load_param<F32, F32>(this->blast.radius, 1.0f,
-                                                 0.0f, 10.0f, ap,
-                                                 apsize, "blast.radius");
+                auto_tweak::load_param<F32, F32>(this->blast.radius, 1.0f, 0.0f, 10.0f, ap, apsize,
+                                                 "blast.radius");
             }
 
             if (init)
             {
                 this->blast.vel = 5.0f;
-                auto_tweak::load_param<F32, F32>(this->blast.vel, 1.0f,
-                                                 -100000.0f, 100000.0f,
-                                                 ap, apsize, "blast.vel");
+                auto_tweak::load_param<F32, F32>(this->blast.vel, 1.0f, -100000.0f, 100000.0f, ap,
+                                                 apsize, "blast.vel");
             }
 
             if (init)
             {
                 this->blast.rand_vel = 0.5f;
-                auto_tweak::load_param<F32, F32>(this->blast.rand_vel, 1.0f,
-                                                 -100000.0f, 100000.0f,
+                auto_tweak::load_param<F32, F32>(this->blast.rand_vel, 1.0f, -100000.0f, 100000.0f,
                                                  ap, apsize, "blast.rand_vel");
             }
 
             if (init)
             {
                 this->droplet.dist_min = 1.0f;
-                auto_tweak::load_param<F32, F32>(this->droplet.dist_min, 1.0f,
-                                                 0.0f, 10.0f, ap,
+                auto_tweak::load_param<F32, F32>(this->droplet.dist_min, 1.0f, 0.0f, 10.0f, ap,
                                                  apsize, "droplet.dist_min");
             }
 
             if (init)
             {
                 this->droplet.dist_max = 2.0f;
-                auto_tweak::load_param<F32, F32>(this->droplet.dist_max, 1.0f,
-                                                 0.0f, 10.0f, ap,
+                auto_tweak::load_param<F32, F32>(this->droplet.dist_max, 1.0f, 0.0f, 10.0f, ap,
                                                  apsize, "droplet.dist_max");
             }
 
@@ -2255,106 +2162,91 @@ namespace cruise_bubble
             if (init)
             {
                 this->droplet.vel_min = 2.0f;
-                auto_tweak::load_param<F32, F32>(this->droplet.vel_min, 1.0f,
-                                                 0.0f, 100000.0f, ap,
+                auto_tweak::load_param<F32, F32>(this->droplet.vel_min, 1.0f, 0.0f, 100000.0f, ap,
                                                  apsize, "droplet.vel_min");
             }
 
             if (init)
             {
                 this->droplet.vel_max = 6.0f;
-                auto_tweak::load_param<F32, F32>(this->droplet.vel_max, 1.0f,
-                                                 0.0f, 100000.0f, ap,
+                auto_tweak::load_param<F32, F32>(this->droplet.vel_max, 1.0f, 0.0f, 100000.0f, ap,
                                                  apsize, "droplet.vel_max");
             }
 
             if (init)
             {
                 this->droplet.vel_perturb = 0.25f;
-                auto_tweak::load_param<F32, F32>(this->droplet.vel_perturb, 1.0f,
-                                                 0.0f, 100000.0f, ap,
-                                                 apsize, "droplet.vel_perturb");
+                auto_tweak::load_param<F32, F32>(this->droplet.vel_perturb, 1.0f, 0.0f, 100000.0f,
+                                                 ap, apsize, "droplet.vel_perturb");
             }
 
             if (init)
             {
                 this->droplet.vel_angle = 60.0f;
-                auto_tweak::load_param<F32, F32>(this->droplet.vel_angle, DEG2RAD(1),
-                                                 0.0f, 100000.0f, ap,
-                                                 apsize, "droplet.vel_angle");
+                auto_tweak::load_param<F32, F32>(this->droplet.vel_angle, DEG2RAD(1), 0.0f,
+                                                 100000.0f, ap, apsize, "droplet.vel_angle");
             }
 
             if (init)
             {
                 this->droplet.rot_vel_max = 360.0f;
-                auto_tweak::load_param<F32, F32>(this->droplet.rot_vel_max, DEG2RAD(1),
-                                                 0.0f, 100000.0f, ap,
-                                                 apsize, "droplet.rot_vel_max");
+                auto_tweak::load_param<F32, F32>(this->droplet.rot_vel_max, DEG2RAD(1), 0.0f,
+                                                 100000.0f, ap, apsize, "droplet.rot_vel_max");
             }
 
             if (init)
             {
                 this->hud.glow_size = 0.05f;
-                auto_tweak::load_param<F32, F32>(this->hud.glow_size, 1.0f,
-                                                 0.001f, 10.0f, ap,
+                auto_tweak::load_param<F32, F32>(this->hud.glow_size, 1.0f, 0.001f, 10.0f, ap,
                                                  apsize, "hud.glow_size");
             }
 
             if (init)
             {
                 this->hud.time_fade = 0.25f;
-                auto_tweak::load_param<F32, F32>(this->hud.time_fade, 1.0f,
-                                                 0.001f, 10.0f, ap,
+                auto_tweak::load_param<F32, F32>(this->hud.time_fade, 1.0f, 0.001f, 10.0f, ap,
                                                  apsize, "hud.time_fade");
             }
 
             if (init)
             {
                 this->hud.time_glow = 0.5f;
-                auto_tweak::load_param<F32, F32>(this->hud.time_glow, 1.0f,
-                                                 0.001f, 10.0f, ap,
+                auto_tweak::load_param<F32, F32>(this->hud.time_glow, 1.0f, 0.001f, 10.0f, ap,
                                                  apsize, "hud.time_glow");
             }
 
             if (init)
             {
                 this->hud.wind.size = 0.75f;
-                auto_tweak::load_param<F32, F32>(this->hud.wind.size, 1.0f,
-                                                 0.0f, 100.0f, ap,
+                auto_tweak::load_param<F32, F32>(this->hud.wind.size, 1.0f, 0.0f, 100.0f, ap,
                                                  apsize, "hud.wind.size");
             }
 
             if (init)
             {
                 this->hud.wind.du = 0.0f;
-                auto_tweak::load_param<F32, F32>(this->hud.wind.du, 1.0f,
-                                                 -1000000000.0f,
-                                                 1000000000.0f, ap, apsize,
-                                                 "hud.wind.du");
+                auto_tweak::load_param<F32, F32>(this->hud.wind.du, 1.0f, -1000000000.0f,
+                                                 1000000000.0f, ap, apsize, "hud.wind.du");
             }
 
             if (init)
             {
                 this->hud.wind.dv = 4.0f;
-                auto_tweak::load_param<F32, F32>(this->hud.wind.dv, 1.0f,
-                                                 -1000000000.0f,
-                                                 1000000000.0f, ap, apsize,
-                                                 "hud.wind.dv");
+                auto_tweak::load_param<F32, F32>(this->hud.wind.dv, 1.0f, -1000000000.0f,
+                                                 1000000000.0f, ap, apsize, "hud.wind.dv");
             }
 
             if (init)
             {
                 this->hud.reticle.size = 0.1f;
-                auto_tweak::load_param<F32, F32>(this->hud.reticle.size, 1.0f,
-                                                 0.0f, 100.0f, ap,
+                auto_tweak::load_param<F32, F32>(this->hud.reticle.size, 1.0f, 0.0f, 100.0f, ap,
                                                  apsize, "hud.reticle.size");
             }
 
             if (init)
             {
                 this->hud.target.size = 0.1f;
-                auto_tweak::load_param<F32, F32>(this->hud.target.size, 1.0f,
-                                                 0.0f, 100.0f, ap,
+                auto_tweak::load_param<F32, F32>(this->hud.target.size, 1.0f, 0.0f, 100.0f, ap,
                                                  apsize, "hud.target.size");
             }
 
@@ -2368,65 +2260,57 @@ namespace cruise_bubble
             if (init)
             {
                 this->hud.timer.font_width = 0.0275f;
-                auto_tweak::load_param<F32, F32>(this->hud.timer.font_width, 1.0f,
-                                                 0.001f, 1.0f, ap,
+                auto_tweak::load_param<F32, F32>(this->hud.timer.font_width, 1.0f, 0.001f, 1.0f, ap,
                                                  apsize, "hud.timer.font_width");
             }
 
             if (init)
             {
                 this->hud.timer.font_height = 0.047f;
-                auto_tweak::load_param<F32, F32>(this->hud.timer.font_height, 1.0f,
-                                                 0.001f, 1.0f, ap,
-                                                 apsize, "hud.timer.font_height");
+                auto_tweak::load_param<F32, F32>(this->hud.timer.font_height, 1.0f, 0.001f, 1.0f,
+                                                 ap, apsize, "hud.timer.font_height");
             }
 
             if (init)
             {
                 this->hud.timer.x = 0.78f;
-                auto_tweak::load_param<F32, F32>(this->hud.timer.x, 1.0f,
-                                                 0.0f, 1.0f, ap, apsize,
+                auto_tweak::load_param<F32, F32>(this->hud.timer.x, 1.0f, 0.0f, 1.0f, ap, apsize,
                                                  "hud.timer.x");
             }
 
             if (init)
             {
                 this->hud.timer.y = 0.86f;
-                auto_tweak::load_param<F32, F32>(this->hud.timer.y, 1.0f,
-                                                 0.0f, 1.0f, ap, apsize,
+                auto_tweak::load_param<F32, F32>(this->hud.timer.y, 1.0f, 0.0f, 1.0f, ap, apsize,
                                                  "hud.timer.y");
             }
 
             if (init)
             {
                 this->hud.timer.glow_size = 0.01f;
-                auto_tweak::load_param<F32, F32>(this->hud.timer.glow_size, 1.0f,
-                                                 0.0f, 10.0f, ap,
+                auto_tweak::load_param<F32, F32>(this->hud.timer.glow_size, 1.0f, 0.0f, 10.0f, ap,
                                                  apsize, "hud.timer.glow_size");
             }
 
             if (init)
             {
                 this->dialog.freq = 1.0f;
-                auto_tweak::load_param<F32, F32>(this->dialog.freq, 1.0f,
-                                                 0.0f, 1.0f, ap, apsize,
+                auto_tweak::load_param<F32, F32>(this->dialog.freq, 1.0f, 0.0f, 1.0f, ap, apsize,
                                                  "dialog.freq");
             }
 
             if (init)
             {
                 this->dialog.decay = 0.75f;
-                auto_tweak::load_param<F32, F32>(this->dialog.decay, 1.0f,
-                                                 0.0f, 1.0f, ap, apsize,
+                auto_tweak::load_param<F32, F32>(this->dialog.decay, 1.0f, 0.0f, 1.0f, ap, apsize,
                                                  "dialog.decay");
             }
 
             if (init)
             {
                 this->dialog.min_freq = 0.1f;
-                auto_tweak::load_param<F32, F32>(this->dialog.min_freq, 1.0f,
-                                                 0.0f, 1.0f, ap, apsize,
-                                                 "dialog.min_freq");
+                auto_tweak::load_param<F32, F32>(this->dialog.min_freq, 1.0f, 0.0f, 1.0f, ap,
+                                                 apsize, "dialog.min_freq");
             }
 
             if (init)
@@ -2581,18 +2465,16 @@ namespace cruise_bubble
             }
 
             shared.astate.player.aim =
-                xAnimTableNewState(&table, "cruise_bubble_aim", 0x10, 0, 1.0f, NULL, NULL,
-                                   0.0f, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
+                xAnimTableNewState(&table, "cruise_bubble_aim", 0x10, 0, 1.0f, NULL, NULL, 0.0f,
+                                   NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
 
             shared.astate.player.fire =
-                xAnimTableNewState(&table, "cruise_bubble_fire", 0x20, 0, 1.0f, NULL,
-                                   NULL, 0.0f, NULL, NULL, xAnimDefaultBeforeEnter, NULL,
-                                   NULL);
+                xAnimTableNewState(&table, "cruise_bubble_fire", 0x20, 0, 1.0f, NULL, NULL, 0.0f,
+                                   NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
 
             shared.astate.player.idle =
-                xAnimTableNewState(&table, "cruise_bubble_idle", 0x10, 0, 1.0f, NULL,
-                                   NULL, 0.0f, NULL, NULL, xAnimDefaultBeforeEnter, NULL,
-                                   NULL);
+                xAnimTableNewState(&table, "cruise_bubble_idle", 0x10, 0, 1.0f, NULL, NULL, 0.0f,
+                                   NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
 
             char* start_from = (char*)xMemPushTemp(0x250);
             memset(start_from, 0, 0x250);
@@ -2608,24 +2490,21 @@ namespace cruise_bubble
 
             shared.atran.player.aim =
                 xAnimTableNewTransition(&table, start_from, "cruise_bubble_aim",
-                                        (xAnimTransitionConditionalCallback)&check_anim_aim, NULL, 0, 0,
-                                        0.0f, 0.0f, 0, 0,
-                                        0.15f, NULL);
+                                        (xAnimTransitionConditionalCallback)&check_anim_aim, NULL,
+                                        0, 0, 0.0f, 0.0f, 0, 0, 0.15f, NULL);
 
             shared.atran.player.fire =
-                xAnimTableNewTransition(&table, "cruise_bubble_aim", "cruise_bubble_fire", NULL, NULL, 0, 0,
-                                        0.0f, 0.0f, 0, 0,
-                                        0.15f, NULL);
+                xAnimTableNewTransition(&table, "cruise_bubble_aim", "cruise_bubble_fire", NULL,
+                                        NULL, 0, 0, 0.0f, 0.0f, 0, 0, 0.15f, NULL);
 
             shared.atran.player.idle =
-                xAnimTableNewTransition(&table, "cruise_bubble_fire", "cruise_bubble_idle", NULL, NULL,
-                                        0x10, 0, 0.0f, 0.0f, 0, 0,
-                                        0.15f, NULL);
+                xAnimTableNewTransition(&table, "cruise_bubble_fire", "cruise_bubble_idle", NULL,
+                                        NULL, 0x10, 0, 0.0f, 0.0f, 0, 0, 0.15f, NULL);
 
             shared.atran.player.end =
-                xAnimTableNewTransition(&table, "cruise_bubble_aim cruise_bubble_fire cruise_bubble_idle",
-                                        "Idle01", NULL, NULL, 0, 0, 0.0f,
-                                        0.0f, 0, 0, 0.15f, NULL);
+                xAnimTableNewTransition(&table,
+                                        "cruise_bubble_aim cruise_bubble_fire cruise_bubble_idle",
+                                        "Idle01", NULL, NULL, 0, 0, 0.0f, 0.0f, 0, 0, 0.15f, NULL);
 
             xMemPopTemp(start_from);
         }
@@ -2633,9 +2512,14 @@ namespace cruise_bubble
         xAnimTable* cruise_bubble::anim_table()
         {
             xAnimTable* table = xAnimTableNew("Cruise Bubble", 0, 0);
-            shared.astate.missle.fire = xAnimTableNewState(table, "fire", 0x20, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-            shared.astate.missle.fly  = xAnimTableNewState(table, "fly",  0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-            shared.atran.missle.fly = xAnimTableNewTransition(table, "fire", "fly", NULL, NULL, 0x10, 0, 0.0f, 0.0f, 0, 0, 0.15f, NULL);
+            shared.astate.missle.fire =
+                xAnimTableNewState(table, "fire", 0x20, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                                   xAnimDefaultBeforeEnter, NULL, NULL);
+            shared.astate.missle.fly =
+                xAnimTableNewState(table, "fly", 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                                   xAnimDefaultBeforeEnter, NULL, NULL);
+            shared.atran.missle.fly = xAnimTableNewTransition(
+                table, "fire", "fly", NULL, NULL, 0x10, 0, 0.0f, 0.0f, 0, 0, 0.15f, NULL);
             return table;
         }
 
@@ -2847,8 +2731,8 @@ namespace cruise_bubble
 
         void cruise_bubble::state_player_aim::update_animation(F32 dt)
         {
-            F32 r = range_limit<F32>(this->yaw_vel * current_tweak->player.aim.anim_delta,
-                                     -1.0f, 1.0f);
+            F32 r =
+                range_limit<F32>(this->yaw_vel * current_tweak->player.aim.anim_delta, -1.0f, 1.0f);
             xAnimSingle* s = globals.player.ent.model->Anim->Single;
             s->BilinearLerp[0] = 0.5f * ((1.0f + s->BilinearLerp[0]) + r);
         }
@@ -2866,8 +2750,8 @@ namespace cruise_bubble
             xMat4x3* mat = &globals.camera.mat;
 
             F32 new_yaw;
-            if (mat->at.x >= -0.00001f && mat->at.x <= 0.00001f &&
-                mat->at.z >= -0.00001f && mat->at.z <= 0.00001f)
+            if (mat->at.x >= -0.00001f && mat->at.x <= 0.00001f && mat->at.z >= -0.00001f &&
+                mat->at.z <= 0.00001f)
             {
                 new_yaw = this->yaw;
             }
@@ -2974,8 +2858,7 @@ namespace cruise_bubble
             cruise_bubble::show_missle();
             shared.missle_model->Flags = shared.missle_model->Flags & 0xfffe;
             shared.missle_model->Alpha = 1.0f;
-            xAnimPlaySetState(shared.missle_model->Anim->Single, shared.astate.missle.fire,
-                              0.0f);
+            xAnimPlaySetState(shared.missle_model->Anim->Single, shared.astate.missle.fire, 0.0f);
             this->move();
         }
 
@@ -3041,7 +2924,8 @@ namespace cruise_bubble
 
             missle_record.reset();
             missle_record.push_front(missle_record_data(this->last_loc, this->rot.z));
-            missle_record.push_front(missle_record_data(cruise_bubble::get_missle_mat()->pos, this->rot.z));
+            missle_record.push_front(
+                missle_record_data(cruise_bubble::get_missle_mat()->pos, this->rot.z));
 
             play_sound(2, 1.0f, &cruise_bubble::get_missle_mat()->pos);
             signal_event(eEventCruiseFired);
@@ -3120,8 +3004,8 @@ namespace cruise_bubble
         {
             this->flash_time += dt;
 
-            F32 tflash =
-                current_tweak->missle.fly.flash_interval * (this->life / current_tweak->missle.life);
+            F32 tflash = current_tweak->missle.fly.flash_interval *
+                         (this->life / current_tweak->missle.life);
             if (this->flash_time > tflash)
             {
                 flash_hud();
@@ -3194,8 +3078,8 @@ namespace cruise_bubble
 
                 if (cruise_bubble::can_damage(hit_ent))
                 {
-                    damage_entity(*hit_ent, *hit_loc, cruise_bubble::get_missle_mat()->at, *hit_norm,
-                                  0.0f, false);
+                    damage_entity(*hit_ent, *hit_loc, cruise_bubble::get_missle_mat()->at,
+                                  *hit_norm, 0.0f, false);
                     return true;
                 }
 
@@ -3223,8 +3107,7 @@ namespace cruise_bubble
                 }
 
                 F32 tan = xatan2(diff_normalized.x, diff_normalized.z);
-                F32 mod =
-                    xrmod(PI + (tan - this->rot.x)) - PI;
+                F32 mod = xrmod(PI + (tan - this->rot.x)) - PI;
                 this->rot.x += mod * current_tweak->missle.collide_twist;
                 this->rot.y += (sin - this->rot.y) * current_tweak->missle.collide_twist;
                 xMat3x3Euler(mat, &this->rot);
@@ -3244,8 +3127,8 @@ namespace cruise_bubble
             return this->hit_test(*hit_loc, *hit_norm, hit_depen, hit_ent);
         }
 
-        U8 cruise_bubble::state_missle_fly::hit_test(xVec3& hit_loc, xVec3& hit_norm, xVec3& hit_depen,
-                                                     xEnt*& hit_ent) const
+        U8 cruise_bubble::state_missle_fly::hit_test(xVec3& hit_loc, xVec3& hit_norm,
+                                                     xVec3& hit_depen, xEnt*& hit_ent) const
         {
             xScene* s = globals.sceneCur;
             xVec3* loc = &get_missle_mat()->pos;
@@ -3310,7 +3193,9 @@ namespace cruise_bubble
             zShrapnelAsset* shrap;
 
             // current_tweak loaded into r30 instead of r29.
-            zFX_SpawnBubbleBlast(&get_missle_mat()->pos, current_tweak->blast.emit, current_tweak->blast.radius, current_tweak->blast.vel, current_tweak->blast.rand_vel);
+            zFX_SpawnBubbleBlast(&get_missle_mat()->pos, current_tweak->blast.emit,
+                                 current_tweak->blast.radius, current_tweak->blast.vel,
+                                 current_tweak->blast.rand_vel);
 
             xVec3 scale = { 1.0f, 1.0f, 1.0f };
 
@@ -3329,14 +3214,16 @@ namespace cruise_bubble
                 else
                 {
                     rand = xrand();
-                    emit_max += (rand / 0x2000) - ((rand / 0x2000) / (emit_min - emit_max)) * (emit_min - emit_max);
+                    emit_max += (rand / 0x2000) -
+                                ((rand / 0x2000) / (emit_min - emit_max)) * (emit_min - emit_max);
                 }
 
-                ((state_missle_explode*)(emit_max))->reset_quadrants((S32)current_tweak, current_tweak->droplet.vel_angle);
+                ((state_missle_explode*)(emit_max))
+                    ->reset_quadrants((S32)current_tweak, current_tweak->droplet.vel_angle);
 
                 for (U32 i = 0; i < emit_max; i++)
                 {
-                   // shrap->initCB(shrap, shared.missle_model, NULL, cb_droplet);
+                    // shrap->initCB(shrap, shared.missle_model, NULL, cb_droplet);
                 }
             }
         }
@@ -3363,11 +3250,23 @@ namespace cruise_bubble
 
             rand = xpow(xurand(), 1.0f / 3.0f);
 
-            frag->info.projectile.path.initPos = get_missle_mat()->pos + (vx * ((rand * (current_tweak->droplet.dist_max - current_tweak->droplet.dist_min) + current_tweak->droplet.dist_min)));
-            frag->info.projectile.path.initVel = vx * (((current_tweak->droplet.vel_max - current_tweak->droplet.vel_min) * xurand() + current_tweak->droplet.vel_min));
-            frag->info.projectile.path.initVel.x = current_tweak->droplet.vel_perturb * (xurand() - 0.5f) + frag->info.projectile.path.initVel.x;
-            frag->info.projectile.path.initVel.y = current_tweak->droplet.vel_perturb * (xurand() - 0.5f) + frag->info.projectile.path.initVel.y;
-            frag->info.projectile.path.initVel.z = current_tweak->droplet.vel_perturb * (xurand() - 0.5f) + frag->info.projectile.path.initVel.z;
+            frag->info.projectile.path.initPos =
+                get_missle_mat()->pos +
+                (vx * ((rand * (current_tweak->droplet.dist_max - current_tweak->droplet.dist_min) +
+                        current_tweak->droplet.dist_min)));
+            frag->info.projectile.path.initVel =
+                vx *
+                (((current_tweak->droplet.vel_max - current_tweak->droplet.vel_min) * xurand() +
+                  current_tweak->droplet.vel_min));
+            frag->info.projectile.path.initVel.x =
+                current_tweak->droplet.vel_perturb * (xurand() - 0.5f) +
+                frag->info.projectile.path.initVel.x;
+            frag->info.projectile.path.initVel.y =
+                current_tweak->droplet.vel_perturb * (xurand() - 0.5f) +
+                frag->info.projectile.path.initVel.y;
+            frag->info.projectile.path.initVel.z =
+                current_tweak->droplet.vel_perturb * (xurand() - 0.5f) +
+                frag->info.projectile.path.initVel.z;
             frag->info.projectile.angVel = current_tweak->droplet.rot_vel_max * xurand();
             frag->info.projectile.alpha = 0.25f;
         }
@@ -3475,8 +3374,8 @@ namespace cruise_bubble
         void cruise_bubble::state_camera_aim::stop(F32 dt)
         {
             xAccelStop(this->height, this->height_vel, current_tweak->camera.aim.accel, dt);
-            xAccelStop(this->dist,   this->dist_vel,   current_tweak->camera.aim.accel, dt);
-            xAccelStop(this->phi,    this->phi_vel,    current_tweak->camera.aim.stick_decel, dt);
+            xAccelStop(this->dist, this->dist_vel, current_tweak->camera.aim.accel, dt);
+            xAccelStop(this->phi, this->phi_vel, current_tweak->camera.aim.stick_decel, dt);
 
             this->phi = xrmod(this->phi);
         }
@@ -3551,8 +3450,7 @@ namespace cruise_bubble
             capture_camera();
             xMat4x3* mat = get_missle_mat();
             xCameraMove(&globals.camera, mat->pos);
-            xCameraRotate(&globals.camera, *mat, 0.0f, 0.0f,
-                          0.0f);
+            xCameraRotate(&globals.camera, *mat, 0.0f, 0.0f, 0.0f);
             xCameraSetFOV(&globals.camera, current_tweak->camera.seize.fov);
             distort_screen(1.0f);
         }
@@ -3581,9 +3479,9 @@ namespace cruise_bubble
             xBound bound;
 
             get_view_bound(bound);
-            xGridCheckBound<cb_lock_targets>(colls_grid,     bound, bound.qcd, targets);
+            xGridCheckBound<cb_lock_targets>(colls_grid, bound, bound.qcd, targets);
             xGridCheckBound<cb_lock_targets>(colls_oso_grid, bound, bound.qcd, targets);
-            xGridCheckBound<cb_lock_targets>(npcs_grid,      bound, bound.qcd, targets);
+            xGridCheckBound<cb_lock_targets>(npcs_grid, bound, bound.qcd, targets);
             lock_hazard_targets();
         }
 
@@ -3619,7 +3517,8 @@ namespace cruise_bubble
             a = (b * (d - c)) + c;
         }
 
-        void cruise_bubble::state_camera_survey::lerp(xVec3& a, F32 b, const xVec3& c, const xVec3& d) const
+        void cruise_bubble::state_camera_survey::lerp(xVec3& a, F32 b, const xVec3& c,
+                                                      const xVec3& d) const
         {
             lerp(a.x, b, c.x, d.x);
             lerp(a.y, b, c.y, d.y);
@@ -3664,8 +3563,7 @@ namespace cruise_bubble
             {
                 xVec3 loc = get_player_loc() + start_cam_mat.pos;
                 xCameraMove(&globals.camera, loc);
-                xCameraRotate(&globals.camera, start_cam_mat, 0.0f,
-                              0.0f, 0.0f);
+                xCameraRotate(&globals.camera, start_cam_mat, 0.0f, 0.0f, 0.0f);
             }
 
             if (camera_taken())
@@ -3697,7 +3595,8 @@ namespace cruise_bubble
             return STATE_CAMERA_RESTORE;
         }
 
-        S32 cruise_bubble::state_camera_attach::cb_lock_targets::operator()(xEnt& ent, xGridBound& bound)
+        S32 cruise_bubble::state_camera_attach::cb_lock_targets::operator()(xEnt& ent,
+                                                                            xGridBound& bound)
         {
             if (!(ent.chkby & 0x10))
             {
