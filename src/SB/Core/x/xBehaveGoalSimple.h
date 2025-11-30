@@ -48,11 +48,11 @@ struct xGoalGeneric : xGoal
     virtual S32 Suspend(F32 dt, void* updCtxt);
     virtual S32 Resume(F32 dt, void* updCtxt);
     virtual S32 SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
-                           xBase* toParamWidget, S32* handled);
+                         xBase* toParamWidget, S32* handled);
 };
 
 void xGoalSimple_RegisterTypes(xFactory* fac);
-xFactoryInst* GOALCreate_Generic(S32 who, RyzMemGrow* growCtxt, void* dat);
-void GOALDestroy_Generic(xFactoryInst* item);
+static xFactoryInst* GOALCreate_Generic(S32 who, RyzMemGrow* growCtxt, void* dat);
+static void GOALDestroy_Generic(xFactoryInst* item);
 
 #endif

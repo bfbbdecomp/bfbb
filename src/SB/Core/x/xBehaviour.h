@@ -194,10 +194,22 @@ struct xGoal : xListItem<xGoal>, xFactoryInst
         return flg_able;
     }
 
-    void SetPsyche(xPsyche* psyche);
-    const char* Name();
-    void SetState(en_GOALSTATE state);
-    en_GOALSTATE GetState() const;
+    void SetPsyche(xPsyche* psyche)
+    {
+        this->psyche = psyche;
+    }
+    const char* Name()
+    {
+        return NULL;
+    }
+    void SetState(en_GOALSTATE state)
+    {
+        this->stat = state;
+    }
+    en_GOALSTATE GetState() const
+    {
+        return this->stat;
+    }
     xBase* GetOwner() const;
 
     // vtable
@@ -236,5 +248,66 @@ struct xGoal : xListItem<xGoal>, xFactoryInst
 protected:
     ~xGoal(); // prevents implicit destructors from being generated in subclasses of xGoal
 };
+
+/* TODO: get these to weakly link into other files without causing redefinitions in xBehaviour
+xGoal* xListItem<xGoal>::Next()
+{
+    return this->next;
+}
+
+void xListItem<xGoal>::Insert(xGoal* list)
+{
+    xGoal* node = (xGoal*)this;
+
+    node->prev = list;
+    node->next = list->next;
+
+    if (list->next)
+    {
+        list->next->prev = node;
+    }
+
+    list->next = node;
+}
+
+xGoal* xListItem<xGoal>::RemHead(xGoal** listhead)
+{
+    if (*listhead == NULL)
+    {
+        return NULL;
+    }
+
+    xGoal* oldhead = (*listhead)->Head();
+
+    if (!oldhead)
+    {
+        *listhead = NULL;
+    }
+    else
+    {
+        *listhead = oldhead->Next();
+        oldhead->Remove();
+    }
+
+    return oldhead;
+}
+
+xGoal* xListItem<xGoal>::Head()
+{
+    xGoal* node = (xGoal*)this;
+
+    if (!node)
+    {
+        return node;
+    }
+
+    while (node->prev)
+    {
+        node = node->prev;
+    }
+
+    return node;
+}
+ */
 
 #endif
