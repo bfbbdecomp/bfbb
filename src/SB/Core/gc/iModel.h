@@ -11,7 +11,7 @@
 void iModelInit();
 static RpAtomic* FindAndInstanceAtomicCallback(RpAtomic* model, void* data);
 static RpAtomic* iModelCacheAtomic(RpAtomic*);
-RpMaterial* iModelResetMaterialCB(RpMaterial*, void*);
+static RpMaterial* iModelResetMaterialCB(RpMaterial*, void*);
 static void* GetHierarchy(RpAtomic* frame);
 static RwFrame* GetChildFrameHierarchy(RwFrame* frame, void* data);
 U32 iModelNumBones(RpAtomic* model);
@@ -29,7 +29,8 @@ void iModelTagEval(RpAtomic* model, const xModelTag* tag, RwMatrixTag* mat, xVec
 U32 iModelTagSetup(xModelTag* tag, RpAtomic* model, F32 x, F32 y, F32 z);
 void iModelSetMaterialAlpha(RpAtomic* model, U8 alpha);
 U32 iModelVertCount(RpAtomic* model);
-U32 iModelVertEval(RpAtomic* model, U32 index, U32 count, RwMatrixTag* mat, xVec3* vert, xVec3* dest);
+U32 iModelVertEval(RpAtomic* model, U32 index, U32 count, RwMatrixTag* mat, xVec3* vert,
+                   xVec3* dest);
 void iModelMaterialMul(RpAtomic* model, F32 rm, F32 gm, F32 bm);
 RpAtomic* iModelFileNew(void* buffer, U32 size);
 void iModelRender(RpAtomic* model, RwMatrix* mat);
