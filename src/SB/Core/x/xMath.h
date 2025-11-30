@@ -13,6 +13,7 @@
 #define xfeq0(x) (((x) >= -1e-5f) && ((x) <= 1e-5f))
 
 #define CLAMP(x, a, b) (MAX((a), MIN((x), (b))))
+#define xlerp(a, b, t) ((a) + (t) * ((b) - (a)))
 
 #define SQR(x) ((x) * (x))
 

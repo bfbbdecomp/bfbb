@@ -21,6 +21,34 @@ F32 xVec3LengthFast(F32 x, F32 y, F32 z);
 F32 xVec3LengthFast(const xVec3* vec);
 void xVec3AddScaled(xVec3* o, const xVec3* v, F32 s);
 
+#define xVec3NormalizeDistXZMacro(o, a, b, dist)                                                   \
+    MACRO_START                                                                                    \
+    {                                                                                              \
+        F32 dx__ = (b)->x - (a)->x;                                                                \
+        F32 dz__ = (b)->z - (a)->z;                                                                \
+        F32 dist2 = SQR(dx__) + SQR(dz__);                                                         \
+        if (xeq(dist2, 1.0f, 1e-5f))                                                               \
+        {                                                                                          \
+            (o)->x = dx__;                                                                         \
+            (o)->z = dz__;                                                                         \
+            *(dist) = 1.0f;                                                                        \
+        }                                                                                          \
+        else if (xeq(dist2, 0.0f, 1e-5f))                                                          \
+        {                                                                                          \
+            (o)->x = 0.0f;                                                                         \
+            (o)->z = 0.0f;                                                                         \
+            *(dist) = 0.0f;                                                                        \
+        }                                                                                          \
+        else                                                                                       \
+        {                                                                                          \
+            *(dist) = xsqrt(dist2);                                                                \
+            F32 dist_inv = 1.0f / *(dist);                                                         \
+            (o)->x = dx__ * dist_inv;                                                              \
+            (o)->z = dz__ * dist_inv;                                                              \
+        }                                                                                          \
+    }                                                                                              \
+    MACRO_STOP
+
 inline void xVec3SMulBy(xVec3* v, F32 s)
 {
     v->x *= s;
@@ -34,7 +62,5 @@ inline void xVec3SubFrom(xVec3* o, const xVec3* v)
     o->y -= v->y;
     o->z -= v->z;
 }
-
-F32 LERP(F32 dt, xVec3*, xVec3*, xVec3*);
 
 #endif

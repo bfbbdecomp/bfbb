@@ -120,8 +120,3 @@ F32 zMovePointGetDelay(const zMovePoint* m)
 {
     return xMovePointGetDelay((xMovePoint*)m);
 }
-
-inline F32 xMovePointGetDelay(const xMovePoint* m)
-{
-    return m->delay;
-}

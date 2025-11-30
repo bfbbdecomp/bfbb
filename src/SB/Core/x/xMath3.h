@@ -160,6 +160,7 @@ void xQuatToMat(const xQuat* q, xMat3x3* m);
 void xQuatDiff(xQuat* o, const xQuat* a, const xQuat* b);
 F32 xQuatGetAngle(const xQuat* q);
 void xQuatFromMat(xQuat* q, const xMat3x3* m);
+void xQuatToAxisAngle(const xQuat* q, xVec3* a, F32* t);
 void xQuatSlerp(xQuat* q, const xQuat* a, const xQuat* b, F32 t);
 void xQuatConj(xQuat* o, const xQuat* q);
 void xQuatCopy(xQuat*, const xQuat*);
