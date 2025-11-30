@@ -179,7 +179,6 @@ void xSceneForAllNPCs(xScene* sc, xSceneEntCallback func, void* data)
 
 void xRayHitsGrid(xGrid* grid, xScene* sc, xRay3* r, xRayEntCallback rentcb, xQCData* qcr,
                   void* data)
-//NONMATCH("https://decomp.me/scratch/2kH6a")
 {
     xLine3 ln;
     xGridIterator it;
@@ -658,7 +657,6 @@ cb_ray_hits_ent::cb_ray_hits_ent(const xRay3& ray, xCollis& coll, U8 chkby, U8 c
 }
 
 void xRayHitsSceneFlags(xScene* sc, xRay3* r, xCollis* coll, U8 collType, U8 chk)
-//NONMATCH("https://decomp.me/scratch/ZJEEb")
 {
     coll->dist = HUGE;
     coll->flags = (coll->flags & ~k_HIT_IT) | k_HIT_0x100;
@@ -745,7 +743,6 @@ void ProjectBox(xVec3* param_1, xBox* param_2, float* param_3, float* param_4)
 }
 
 static U32 Mgc_TriBoxTest(xVec3* apkTri, xBox* rkBox)
-// NONMATCH("https://decomp.me/scratch/xYaVl")
 {
     F32 fMin0, fMax0, fMin1, fMax1;
     xVec3 kD, akE[3], baxis;
@@ -840,7 +837,6 @@ static U32 Mgc_TriBoxTest(xVec3* apkTri, xBox* rkBox)
 
 static RpCollisionTriangle* nearestFloorCB(RpIntersection*, RpCollisionTriangle* collTriangle,
                                            RwReal, void* data)
-//NONMATCH("https://decomp.me/scratch/0VY4M")
 {
     xNearFloorPoly* nfpoly = (xNearFloorPoly*)data;
     F32 currnear = nfpoly->neardist;
@@ -1064,7 +1060,6 @@ static S32 gridNearestFloorCB(xEnt* ent, void* cbdata)
 }
 
 U32 xSceneNearestFloorPoly(xScene* sc, xNearFloorPoly* nfpoly, U8 collType, U8 chk)
-//NONMATCH("https://decomp.me/scratch/yCzQV")
 {
     sNearestBound.type = XBOUND_TYPE_BOX;
     sNearestBound.box.box = nfpoly->box;

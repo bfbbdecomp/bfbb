@@ -185,8 +185,6 @@ struct grid_index
 };
 
 inline grid_index get_grid_index(const xGrid& grid, F32 x, F32 z)
-
-//NONMATCH("https://decomp.me/scratch/pMa66")
 {
     grid_index index = { range_limit<U16>((U16)((x - grid.minx) * grid.inv_csizex), 0, grid.nx - 1),
                          range_limit<U16>((U16)((z - grid.minz) * grid.inv_csizez), 0,

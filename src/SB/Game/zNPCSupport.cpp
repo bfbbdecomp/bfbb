@@ -253,7 +253,6 @@ void NPCTarget::TargetClear()
 }
 
 S32 NPCTarget::FindNearest(S32 flg_consider, xBase* skipme, xVec3* from, F32 dst_max)
-//NONMATCH("https://decomp.me/scratch/wWBRW")
 {
     S32 found = 0;
     st_XORDEREDARRAY* npclist;
@@ -378,7 +377,6 @@ S32 NPCTarget::IsDead()
 }
 
 // void NPCLaser::Render(xVec3* pos_src, xVec3* pos_tgt)
-// //NONMATCH("https://decomp.me/scratch/lNgTd")
 // {
 //     xVec3 var_70;
 //     xVec3Copy(&var_70, pos_src);
@@ -494,7 +492,6 @@ S32 NPCTarget::IsDead()
 // }
 
 // void NPCCone::RenderCone(xVec3* pos_tiptop, xVec3* pos_botcenter)
-// //NONMATCH("https://decomp.me/scratch/G9pbs")
 // {
 //     RwRGBA rgba_top = this->rgba_top;
 //     RwRGBA rgba_bot = this->rgba_bot;
@@ -645,7 +642,7 @@ void Firework::Update(F32 dt)
     this->tmr_remain = MAX(-1.0f, this->tmr_remain - dt);
 }
 
-void Firework::FlyFlyFly(F32 dt) //NONMATCH("https://decomp.me/scratch/6hPC3")
+void Firework::FlyFlyFly(F32 dt)
 {
     F32 pam_life = 1.0f - CLAMP(this->tmr_remain / this->tym_lifespan, 0.0f, 1.0f);
     if (pam_life < 0.75f)
@@ -684,7 +681,7 @@ void NPCC_aimMiss(xVec3* dir_aim, xVec3* pos_src, xVec3* pos_tgt, F32 dst_miss, 
 }
 
 F32 NPCC_aimVary(xVec3* dir_aim, xVec3* pos_src, xVec3* pos_tgt, F32 dst_vary, S32 flg_vary,
-                 xVec3* pos_aimPoint) //NONMATCH("https://decomp.me/scratch/D1gIj")
+                 xVec3* pos_aimPoint)
 {
     F32 dst_toFake = 0.0f;
     xVec3 dir_left = {};
@@ -769,8 +766,7 @@ F32 NPCC_aimVary(xVec3* dir_aim, xVec3* pos_src, xVec3* pos_tgt, F32 dst_vary, S
     return (flg_vary & 0x4) ? f31 : mag_vary;
 }
 
-S32 NPCC_chk_hitEnt(xEnt* tgt, xBound* bnd,
-                    xCollis* collide) //NONMATCH("https://decomp.me/scratch/Bf1rk")
+S32 NPCC_chk_hitEnt(xEnt* tgt, xBound* bnd, xCollis* collide)
 {
     S32 hittgt = 0;
     xCollis* colrec;
@@ -881,8 +877,7 @@ RwRaster* NPCC_FindRWRaster(RwTexture* txtr)
     return NULL;
 }
 
-void NPCC_GenSmooth(xVec3** pos_base,
-                    xVec3** pos_mid) //WIP NONMATCH("https://decomp.me/scratch/1MplX")
+void NPCC_GenSmooth(xVec3** pos_base, xVec3** pos_mid)
 {
     static F32 prepute[4][4];
     static const F32 yews[4] = { 0.25f, 0.5f, 0.75f, 1.0f };
@@ -916,7 +911,7 @@ void NPCC_GenSmooth(xVec3** pos_base,
     }
 }
 
-void zNPC_SNDInit() //NONMATCH("https://decomp.me/scratch/VlDh8")
+void zNPC_SNDInit()
 {
     sNPCSndID[eNPCSnd_GloveAttack] = 0;
     sNPCSndID[eNPCSnd_SleepyAttack] = 0;
@@ -1111,7 +1106,6 @@ void NPCC_xBoundBack(xBound* bnd)
 void NPCC_DstSq(const xVec3*, const xVec3*, xVec3*);
 
 S32 NPCC_HaveLOSToPos(xVec3* pos_src, xVec3* pos_tgt, F32 dst_max, xBase* tgt, xCollis* colCallers)
-//NONMATCH("https://decomp.me/scratch/LyDtk")
 {
     S32 result;
     xRay3 ray = {};
