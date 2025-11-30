@@ -43,6 +43,20 @@ F32 zMovePointGetNext(const zMovePoint* current, const zMovePoint* prev, zMovePo
                       xVec3* hdng);
 xVec3* zMovePointGetPos(const zMovePoint* m);
 F32 zMovePointGetDelay(const zMovePoint* m);
-F32 xMovePointGetDelay(const xMovePoint* m);
+
+inline U16 xMovePointGetNumPoints(const xMovePoint* m)
+{
+    return m->asset->numPoints;
+}
+
+inline xMovePoint* xMovePointGetPoint(const xMovePoint* m, U16 n)
+{
+    return m->nodes[n];
+}
+
+inline F32 xMovePointGetDelay(const xMovePoint* m)
+{
+    return m->delay;
+}
 
 #endif

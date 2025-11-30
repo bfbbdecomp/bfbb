@@ -286,6 +286,7 @@ void xCameraMove(xCamera* cam, const xVec3& loc);
 void xCameraMove(xCamera* cam, const xVec3& loc, F32 maxSpeed);
 void xCameraFOV(xCamera* cam, F32 fov, F32 maxSpeed, F32 dt);
 void xCameraRotate(xCamera* cam, const xMat3x3& m, F32 time, F32 accel, F32 decl);
+void xCameraLook(xCamera* cam, U32 flags, const xQuat* orn_goal, F32 tm, F32 tm_acc, F32 tm_dec);
 void xCameraLookYPR(xCamera* cam, U32 flags, F32 yaw, F32 pitch, F32 roll, F32 tm, F32 tm_acc,
                     F32 tm_dec);
 F32 xCameraGetFOV(const xCamera* cam);

@@ -716,7 +716,7 @@ S32 PKR_LoadLayer(st_PACKER_READ_DATA* pr, en_LAYER_TYPE layer)
     return 0;
 }
 
-void* PKR_LoadAsset(st_PACKER_READ_DATA* pr, U32 aid, char*, void*)
+void* PKR_LoadAsset(st_PACKER_READ_DATA* pr, U32 aid, const char*, void*)
 {
     return PKR_FindAsset(pr, aid);
 }

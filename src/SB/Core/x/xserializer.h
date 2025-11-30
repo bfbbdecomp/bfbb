@@ -70,7 +70,8 @@ S32 xSerialStartup(S32, st_SERIAL_PERCID_SIZE*);
 S32 xSerialShutdown();
 void xSerialTraverse(S32 (*func)(U32 clientID, xSerial* xser));
 void xSerialWipeMainBuffer();
-void xSER_init_buffers(S32 count, st_SERIAL_PERCID_SIZE* sizeinfo);
+static void xSER_init_buffers(S32 count, st_SERIAL_PERCID_SIZE* sizeinfo);
 S32 xSerial_svgame_register(st_XSAVEGAME_DATA* sgctxt, en_SAVEGAME_MODE mode);
+static S32 xSER_ord_compare(void* e1, void* e2);
 
 #endif

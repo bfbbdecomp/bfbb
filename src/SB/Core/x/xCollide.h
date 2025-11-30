@@ -126,6 +126,7 @@ struct xScene;
 void xCollideInit(xScene* sc);
 void xCollideCalcTri(xCollis::tri_data&, const xModelInstance&, const xVec3&, const xVec3&);
 S32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat);
+S32 xSweptSphereToEnv(xSweptSphere* sws, xEnv* env);
 S32 xSweptSphereToModel(xSweptSphere* sws, RpAtomic* model, RwMatrix* mat);
 S32 xSweptSphereToScene(xSweptSphere* sws, xScene* sc, xEnt* mover, U8 collType);
 void xSweptSpherePrepare(xSweptSphere* sws, xVec3* start, xVec3* end, F32 radius);

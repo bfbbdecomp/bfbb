@@ -70,4 +70,6 @@ void zSceneSetOldScreenAdj();
 U32 zScene_ScreenAdjustMode();
 void zSceneSpawnRandomBubbles();
 
+U32 zScene_ScreenAdjustMode();
+
 #endif
