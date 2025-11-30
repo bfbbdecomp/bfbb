@@ -6,7 +6,7 @@ void xGoalSimple_RegisterTypes(xFactory* fac)
     fac->RegItemType('GSM\x01', GOALCreate_Generic, GOALDestroy_Generic);
 }
 
-xFactoryInst* GOALCreate_Generic(S32 who, RyzMemGrow* growCtxt, void*)
+static xFactoryInst* GOALCreate_Generic(S32 who, RyzMemGrow* growCtxt, void*)
 {
     xGoal* goal = NULL;
 
@@ -27,7 +27,7 @@ xFactoryInst* GOALCreate_Generic(S32 who, RyzMemGrow* growCtxt, void*)
     return goal;
 }
 
-void GOALDestroy_Generic(xFactoryInst* item)
+static void GOALDestroy_Generic(xFactoryInst* item)
 {
     delete item;
 }
@@ -73,7 +73,7 @@ S32 xGoalGeneric::Resume(F32 dt, void* updCtxt)
 }
 
 S32 xGoalGeneric::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
-                             xBase* toParamWidget, S32* handled)
+                           xBase* toParamWidget, S32* handled)
 {
     if (this->fun_sysevent)
     {

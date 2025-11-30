@@ -560,8 +560,8 @@ config.libs = [
             Object(NonMatching, "SB/Game/zNPCTypeAmbient.cpp"),
             Object(NonMatching, "SB/Game/zNPCTypeTiki.cpp"),
             Object(NonMatching, "SB/Core/x/xBehaveMgr.cpp"),
-            Object(NonMatching, "SB/Core/x/xBehaviour.cpp"), # breaks build (weak functions)
-            Object(NonMatching, "SB/Core/x/xBehaveGoalSimple.cpp"), # breaks build (weak functions)
+            Object(Matching, "SB/Core/x/xBehaviour.cpp", extra_cflags=["-sym on"]),
+            Object(Matching, "SB/Core/x/xBehaveGoalSimple.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Core/x/xSkyDome.cpp"),
             Object(Matching, "SB/Core/x/xRMemData.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/x/xFactory.cpp"),
