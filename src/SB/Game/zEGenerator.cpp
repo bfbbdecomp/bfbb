@@ -1,52 +1,52 @@
 #include "zEGenerator.h"
+
+#include "xDraw.h"
+#include "xEntBoulder.h"
+#include "xMovePoint.h"
 #include "zCollGeom.h"
 #include "zGlobals.h"
-
-#include "xEvent.h"
+#include "zThrown.h"
 
 #include <types.h>
-
-extern F32 lbl_803CD290; // 1.0f
-extern F32 lbl_803CD294; // 0.0f
-extern const char zEGeneratorStringBase[];
 
 void zEGenerator_Init(void* egen, void* asset)
 {
     zEGenerator_Init((zEGenerator*)egen, (xEntAsset*)asset);
 }
 
-// I can't figure out the 2nd parameter for the find asset function call.
-// FIXME: struct access offsets and callback definitions with suspect parameter typing
 void zEGenerator_Init(zEGenerator* egen, xEntAsset* asset)
 {
+    U32 size;
     zEntInit((zEnt*)egen, (xEntAsset*)asset, 'EGEN');
-    // egen->zasset = asset;
+    zEGenAsset* zasset = (zEGenAsset*)asset;
+    egen->zasset = zasset;
     if (egen->linkCount != 0)
     {
-        // egen->link = asset + 1;
+        egen->link = (xLinkAsset*)((U8*)asset + sizeof(zEGenAsset));
     }
     else
     {
         egen->link = NULL;
     }
-    // egen->update = zEGenerator_Update;
-    // egen->move = zEGenerator_Move;
-    // egen->eventFunc = zEGenerator_EventCB;
-    // egen->render = zEGenerator_Render;
+    egen->update = (xEntUpdateCallback)zEGenerator_Update;
+    egen->move = (xEntMoveCallback)zEGenerator_Move;
+    egen->eventFunc = (xBaseEventCB)zEGeneratorEventCB;
+    egen->render = (xEntRenderCallback)zEGenerator_Render;
     egen->afile = NULL;
-    // if (asset->onAnimID)
-    // {
-    //     void* buf = xSTFindAsset(asset->onAnimID, FREFREFRF);
-    //     if (buf != NULL)
-    //     {
-    //         egen->afile = xAnimFileNew(buf, &zEGeneratorStringBase[0], 0, NULL);
-    //         egen->atbl = xAnimTableNew(&zEGeneratorStringBase[0], NULL, 0);
-    //         xAnimTableNewState(egen->atbl, &zEGeneratorStringBase[1], 0x10, 0, lbl_803CD290, NULL,
-    //                            NULL, lbl_803CD294, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    //         xAnimTableAddFile(egen->atbl, egen->afile, &zEGeneratorStringBase[1]);
-    //         xAnimPoolAlloc(globals.scenePreload->mempool, egen, egen->atbl, egen->model);
-    //     }
-    // }
+
+    if (zasset->onAnimID)
+    {
+        void* buf = xSTFindAsset(zasset->onAnimID, &size);
+        if (buf != NULL)
+        {
+            egen->afile = xAnimFileNew(buf, "", 0, NULL);
+            egen->atbl = xAnimTableNew("", NULL, 0);
+            xAnimTableNewState(egen->atbl, "On", 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                               xAnimDefaultBeforeEnter, NULL, NULL);
+            xAnimTableAddFile(egen->atbl, egen->afile, "On");
+            xAnimPoolAlloc(&globals.sceneCur->mempool, egen, egen->atbl, egen->model);
+        }
+    }
 }
 
 void zEGenerator_Setup(zEGenerator* egen, xScene* sc)
@@ -109,12 +109,53 @@ void zEGenerator_Move(zEGenerator* egen, xScene* sc, F32 dt)
 {
 }
 
+void zEGenerator_Update(zEGenerator* egen, xScene* sc, F32 dt)
+{
+    xEntUpdate(egen, sc, dt);
+    xMat4x3Toworld(&egen->src_pos, (xMat4x3*)egen->model->Mat, &egen->zasset->src_dpos);
+
+    zEnt* ent = (zEnt*)egen->dst;
+
+    if (ent != NULL && ent->baseFlags & 0x20)
+    {
+        if (ent->baseType == eBaseTypeBoulder)
+        {
+            xVec3Copy(&egen->dst_pos, xEntGetCenter(ent));
+        }
+        else
+        {
+            xMat4x3Toworld(&egen->dst_pos, (xMat4x3*)ent->model->Mat, &egen->dst_off);
+        }
+    }
+
+    if (egen->lfx[0] != NULL)
+    {
+        zLightningModifyEndpoints(egen->lfx[0], &egen->src_pos, &egen->dst_pos);
+    }
+
+    if (egen->lfx[1] != NULL)
+    {
+        zLightningModifyEndpoints(egen->lfx[1], &egen->src_pos, &egen->dst_pos);
+    }
+
+    if (egen->tmr > 0.0f)
+    {
+        egen->tmr -= dt;
+
+        if (egen->tmr <= 0.0f)
+        {
+            zEGenerator_TurnOff(egen);
+            zEntEvent((xBase*)egen, eEventOff);
+        }
+    }
+}
+
 void zEGenerator_Render(zEGenerator* egen)
 {
     xEntRender((xEnt*)egen);
 }
 
-// WIP.
+// scheduling
 void zEGenerator_TurnOn(zEGenerator* egen)
 {
     egen->flags |= 1;
@@ -124,16 +165,57 @@ void zEGenerator_TurnOn(zEGenerator* egen)
         egen->model->Anim->Single->CurrentSpeed = 1.0f;
     }
     egen->tmr = zasset->ontime;
-    xMat4x3Toworld(&egen->src_pos, (const xMat4x3*)&egen->model->Mat, &egen->zasset->src_dpos);
+    xMat4x3Toworld(&egen->src_pos, (xMat4x3*)egen->model->Mat, &zasset->src_dpos);
+
     if (egen->num_dsts)
     {
-        // TODO!!!
+        U16 itgt = xrand() % egen->num_dsts;
+        U16 imp = 0;
+
+        for (S32 i = 0; i < egen->linkCount; i++)
+        {
+            const xLinkAsset* link = &egen->link[i];
+            xBase* b = zSceneFindObject(link->dstAssetID);
+
+            xVec3 destOffset;
+            destOffset.x = link->param[0];
+            destOffset.y = link->param[1];
+            destOffset.z = link->param[2];
+            xVec3Copy(&egen->dst_off, &destOffset);
+
+            if (!b || link->dstEvent != eEventArcto)
+                continue;
+
+            if (imp == itgt)
+            {
+                if (b->baseType == eBaseTypeMovePoint)
+                {
+                    xVec3Copy(&egen->dst_pos, xMovePointGetPos((xMovePoint*)b));
+                    xVec3AddTo(&egen->dst_pos, &egen->dst_off);
+                    egen->dst = b;
+                    break;
+                }
+                if (b->baseType == eBaseTypeBoulder)
+                {
+                    xVec3Copy(&egen->dst_pos, xEntGetCenter((xEntBoulder*)b));
+                    egen->dst = b;
+                    break;
+                }
+                if ((b->baseFlags & 0x20) != 0)
+                {
+                    xMat4x3Toworld(&egen->dst_pos, (xMat4x3*)((xEnt*)b)->model->Mat, &egen->dst_off);
+                    egen->dst = b;
+                    break;
+                }
+            }
+            else
+            {
+                imp++;
+            }
+        }
     }
-    else
-    {
-        // FIXME: Find correct definition
-        // xDrawSphere(&egen->dst_pos, @856, 0xc006);
-    }
+    xDrawSphere(&egen->dst_pos, 2.0f, 0xC0006);
+
     for (S32 i = 0; i < 2; i++)
     {
         if (egen->lfx[i] != NULL)
@@ -142,7 +224,39 @@ void zEGenerator_TurnOn(zEGenerator* egen)
             egen->lfx[i] = NULL;
         }
     }
-    // TODO!!!
+
+    _tagLightningAdd add;
+    memset(&add, 0, sizeof(_tagLightningAdd));
+    add.type = 3;
+    add.total_points = ((xrand() << 1) & 6) + 8;
+    add.start = &egen->src_pos;
+    add.end = &egen->dst_pos;
+    add.color = xColorFromRGBA(200, 200, 255, 200);
+    add.thickness = 0.3f;
+    add.arc_height = -0.2f;
+    add.zeus_normal_offset = 0.2f;
+    add.zeus_back_offset = 0.1f;
+    add.zeus_side_offset = 0.1f;
+    add.rand_radius = 15.0f;
+    add.flags = 0x1C30;
+    egen->lfx[0] = zLightningAdd(&add);
+
+    add.total_points = 0x10;
+    add.type = 3;
+    add.move_degrees = 360.0f * xurand() + 180.0f;
+
+    if (xrand() & 1)
+    {
+        add.move_degrees = -add.move_degrees;
+    }
+
+    add.setup_degrees = 90.0f * xurand() + 20.0f;
+    add.color = xColorFromRGBA(80, 100, 255, 200);
+    add.rot_radius = 0.25f;
+    add.thickness = 0.3f;
+    add.rand_radius = 10.0f;
+    add.flags = 0xC18;
+    egen->lfx[1] = zLightningAdd(&add);
 }
 
 void zEGenerator_TurnOff(zEGenerator* egen)
@@ -150,7 +264,7 @@ void zEGenerator_TurnOff(zEGenerator* egen)
     egen->flags &= 0xfffe;
     if (egen->afile != NULL)
     {
-        egen->model->Anim->Single->CurrentSpeed = lbl_803CD294;
+        egen->model->Anim->Single->CurrentSpeed = 0.0f;
     }
     for (S32 i = 0; i < 2; i++)
     {
@@ -174,7 +288,6 @@ void zEGenerator_ToggleOn(zEGenerator* egen)
     }
 }
 
-// Need to figure out how to call the link function. Everything else should be in order as long as the case labels are correct.
 S32 zEGeneratorEventCB(xBase* to, xBase* from, U32 toEvent, const F32* toParam,
                        xBase* toParamWidget)
 {
@@ -191,37 +304,39 @@ S32 zEGeneratorEventCB(xBase* to, xBase* from, U32 toEvent, const F32* toParam,
         zEGenerator_ToggleOn(egen);
         break;
     case eEventReset:
-        zEGenerator_Reset(egen, (xScene*)globals.scenePreload);
+        zEGenerator_Reset(egen, (xScene*)globals.sceneCur);
         break;
+    case eEventVisible:
     case eEventFastVisible:
-        xEntShow((xEnt*)egen);
+        xEntShow(egen);
         break;
+    case eEventInvisible:
     case eEventFastInvisible:
-        xEntHide((xEnt*)egen);
+        xEntHide(egen);
         break;
     case eEventCollision_Visible_On:
-        xEntShow((xEnt*)egen);
+        xEntShow(egen);
+    case eEventCollisionOn:
         egen->chkby = XENT_COLLTYPE_PLYR | XENT_COLLTYPE_NPC;
-        egen->bupdate((xEnt*)egen, (xVec3*)&egen->model->Mat->pos);
+        egen->bupdate(egen, (xVec3*)&egen->model->Mat->pos);
         break;
     case eEventCollision_Visible_Off:
-        xEntHide((xEnt*)egen);
+        xEntHide(egen);
+    case eEventCollisionOff:
         egen->chkby = XENT_COLLTYPE_NONE;
         break;
     case eEventCameraCollideOn:
-        zCollGeom_CamEnable((xEnt*)egen);
+        zCollGeom_CamEnable(egen);
         break;
     case eEventCameraCollideOff:
-        zCollGeom_CamDisable((xEnt*)egen);
+        zCollGeom_CamDisable(egen);
         break;
     case eEventLaunchShrapnel:
-        if (toParamWidget == NULL)
-            break;
-        if (toParamWidget->link == NULL)
+        zShrapnelAsset* shrap = (zShrapnelAsset*)toParamWidget;
+        if (shrap == NULL || shrap->initCB == NULL)
             break;
 
-        // FIXME: xLinkAsset isn't a function call :(
-        // toParamWidget->link(toParamWidget, egen->model, 0, 0);
+        shrap->initCB(shrap, egen->model, 0, 0);
         break;
     }
     return eEventEnable;
