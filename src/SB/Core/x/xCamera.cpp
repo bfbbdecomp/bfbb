@@ -470,7 +470,6 @@ void SweptSphereHitsCameraEnt(xScene*, xRay3* ray, xQCData* qcd, xEnt* ent, void
 }
 
 static void _xCameraUpdate(xCamera* cam, F32 dt)
-// NONMATCH("https://decomp.me/scratch/2q6zO")
 {
     if (!cam->tgt_mat)
         return;
@@ -1511,7 +1510,6 @@ void xBinaryCamera::stop()
 }
 
 void xBinaryCamera::update(F32 dt)
-// NONMATCH("https://decomp.me/scratch/c9iST")
 {
     xVec3& A = camera->mat.pos;
     const xVec3& B = *s1;

@@ -125,7 +125,6 @@ void xGridAdd(xGrid* grid, xGridBound* bound, S32 x, S32 z)
 }
 
 S32 xGridAdd(xGrid* grid, xEnt* ent)
-//NONMATCH("https://decomp.me/scratch/5R7FZ")
 {
     xBound* bound;
     xVec3* center;

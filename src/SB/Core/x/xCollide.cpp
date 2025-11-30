@@ -263,7 +263,6 @@ U32 xSphereHitsBox(const xSphere* a, const xBox* b, xCollis* coll)
 }
 
 U32 xSphereHitsOBB_nu(const xSphere* s, const xBox* b, const xMat4x3* m, xCollis* coll)
-//NONMATCH("https://decomp.me/scratch/YoEeE")
 {
     xSphere xfs;
     xVec3 scale;
@@ -325,7 +324,6 @@ static RpCollisionTriangle* sphereHitsModelCB(RpIntersection* isx, RpCollisionTr
 }
 
 U32 xSphereHitsModel(const xSphere* b, const xModelInstance* m, xCollis* coll)
-// NONMATCH("https://decomp.me/scratch/XU6BL")
 {
     RpIntersection isx;
 
@@ -556,7 +554,6 @@ static S32 xParabolaEnvCB(xClumpCollBSPTriangle* triangles, void* data)
 }
 
 S32 xParabolaHitsEnv(xParabola* p, const xEnv* env, xCollis* colls)
-//NONMATCH("https://decomp.me/scratch/Hli1c")
 {
     RwBBox xb;
     F32 tmp;
@@ -1286,7 +1283,6 @@ RpCollBSPTree* _rpCollBSPTreeForAllCapsuleLeafNodeIntersections(
 }
 
 void xSweptSpherePrepare(xSweptSphere* sws, xVec3* start, xVec3* end, F32 radius)
-//NONMATCH("https://decomp.me/scratch/5VJcM")
 {
     sws->start = *start;
     sws->end = *end;
@@ -1393,7 +1389,6 @@ void xSweptSphereGetResults(xSweptSphere* sws)
 }
 
 S32 xSweptSphereToTriangle(xSweptSphere* sws, xVec3* v0, xVec3* v1, xVec3* v2)
-//NONMATCH("https://decomp.me/scratch/MJ9KD")
 {
     S32 i;
 
@@ -1652,7 +1647,6 @@ S32 xSweptSphereToSphere(xSweptSphere* sws, xSphere* sph)
 }
 
 S32 xSweptSphereToBox(xSweptSphere* sws, xBox* box, xMat4x3* mat)
-//NONMATCH("https://decomp.me/scratch/97pAl")
 {
     S32 i;
     xMat4x3 tmpmat;
@@ -2036,7 +2030,6 @@ S32 xSweptSphereToEnv(xSweptSphere* sws, xEnv* env)
 }
 
 static S32 SweptSphereModelCB(S32 numTriangles, S32 triOffset, void* data)
-// NONMATCH("https://decomp.me/scratch/XMJhx")
 {
     SweptSphereCollParam* isData = (SweptSphereCollParam*)data;
     RpGeometry* geometry = isData->geometry;
@@ -2066,7 +2059,6 @@ static S32 SweptSphereModelCB(S32 numTriangles, S32 triOffset, void* data)
 }
 
 S32 xSweptSphereToModel(xSweptSphere* sws, RpAtomic* model, RwMatrix* mat)
-//NONMATCH("https://decomp.me/scratch/3R1PB")
 {
     if (!sws->dist)
         return 0;

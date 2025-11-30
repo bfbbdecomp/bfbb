@@ -323,7 +323,6 @@ static void xSER_init_tables()
 }
 
 static void xSER_init_buffers(S32 count, st_SERIAL_PERCID_SIZE* sizeinfo)
-//NONMATCH("https://decomp.me/scratch/uex0C")
 {
     st_XSERIAL_DATA_PRIV* xsd = &g_xserdata;
     S32 i = 0;

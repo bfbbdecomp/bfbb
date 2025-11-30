@@ -232,7 +232,7 @@ void zNPCCommon::Init(xEntAsset* entass)
     this->InitBounds();
 }
 
-void zNPCCommon::InitBounds() //NONMATCH("https://decomp.me/scratch/JPhdS")
+void zNPCCommon::InitBounds()
 {
     NPCConfig* cfg = this->cfg_npc;
     xVec3 half = {};
@@ -422,7 +422,7 @@ void zNPCCommon::Setup()
     }
 }
 
-void zNPCCommon::Reset() //NONMATCH("https://decomp.me/scratch/cl84A")
+void zNPCCommon::Reset()
 {
     xSceneID2Name(globals.sceneCur, this->id);
 
@@ -748,7 +748,7 @@ S32 zNPCCommon::NPCMessage(NPCMsg* mail)
 void zNPCCommon::Move(xScene* xscn, F32 dt, xEntFrame* frm)
 {
     bool retval = false;
-    if ((npcset.useNavSplines) && ((flg_move) & 8))
+    if ((npcset.useNavSplines) && ((flg_move)&8))
         if (this->drv_data && (this->drv_data->driver || this->drv_data->odriver))
         {
             retval = true;
@@ -783,7 +783,7 @@ void zNPCCommon::Process(xScene* xscn, F32 dt)
     xNPCBasic::Process(xscn, dt);
 }
 
-void zNPCCommon::BUpdate(xVec3* pos) //NONMATCH("https://decomp.me/scratch/zpv2r")
+void zNPCCommon::BUpdate(xVec3* pos)
 {
     NPCConfig* cfg = this->cfg_npc;
 
@@ -816,7 +816,7 @@ void zNPCCommon::BUpdate(xVec3* pos) //NONMATCH("https://decomp.me/scratch/zpv2r
     zGridUpdateEnt(this);
 }
 
-F32 zNPCCommon::BoundAsRadius(S32 useCfg) const //NONMATCH("https://decomp.me/scratch/rCFqE")
+F32 zNPCCommon::BoundAsRadius(S32 useCfg) const
 {
     F32 rad = 1.0f;
 
@@ -1329,7 +1329,7 @@ void zNPCCommon::ConvertHitEvent(xBase* from, xBase* to, U32 toEvent, const F32*
     this->Damage(what, from, vec_hit);
 }
 
-void zNPCCommon::VelStop() //NONMATCH("https://decomp.me/scratch/YizcX")
+void zNPCCommon::VelStop()
 {
     this->spd_throttle = 0.0f;
     this->frame->dvel.x = 0.0f;
@@ -1434,7 +1434,6 @@ F32 zNPCCommon::ThrottleApply(F32 dt, const xVec3* dir, S32 force3D)
 }
 
 F32 zNPCCommon::TurnToFace(F32 dt, const xVec3* dir_want, F32 useTurnRate)
-//NONMATCH("https://decomp.me/scratch/KRonE")
 {
     F32 f29 = (useTurnRate < 0.0f) ? (dt * this->cfg_npc->spd_turnMax) : (dt * useTurnRate);
     F32 f30 = NPCC_dir_toXZAng(dir_want);
@@ -1951,7 +1950,7 @@ void zNPCCommon::PlayerKiltMe()
     }
 }
 
-void zNPCCommon::ISeePlayer() //NONMATCH("https://decomp.me/scratch/M08oY")
+void zNPCCommon::ISeePlayer()
 {
     en_xEventTags ven = eEventUnknown;
 
@@ -2153,7 +2152,7 @@ void zNPCCommon::GetParm(en_npcparm pid, zMovePoint** val)
     this->GetParm(pid, (void*)val);
 }
 
-void zNPCCommon::GetParm(en_npcparm pid, void* val) //NONMATCH("https://decomp.me/scratch/dg7eV")
+void zNPCCommon::GetParm(en_npcparm pid, void* val)
 {
     char** names = g_strz_params;
     xModelAssetParam* pmdata = this->parmdata;
@@ -2266,7 +2265,6 @@ void zNPCCommon::GetParm(en_npcparm pid, void* val) //NONMATCH("https://decomp.m
 }
 
 void zNPCCommon::GetParmDefault(en_npcparm pid, void* val)
-//NONMATCH("https://decomp.me/scratch/mNHLS")
 {
     // Should be a S32?
     S32 result = 1;
@@ -2429,7 +2427,7 @@ void zNPCCommon_WonderReset()
 U32 zNPCCommon::CanDoSplines()
 {
     bool retval = false;
-    if ((npcset.useNavSplines) && ((flg_move) & 8))
+    if ((npcset.useNavSplines) && ((flg_move)&8))
     {
         retval = true;
     }
@@ -2443,7 +2441,7 @@ zMovePoint* zNPCCommon::FirstAssigned()
     return nav_first;
 }
 
-void zNPCCommon::MvptReset(zMovePoint* nav_goto) //NONMATCH("https://decomp.me/scratch/lhUW9")
+void zNPCCommon::MvptReset(zMovePoint* nav_goto)
 {
     if (nav_goto)
     {
@@ -2462,7 +2460,7 @@ void zNPCCommon::MvptReset(zMovePoint* nav_goto) //NONMATCH("https://decomp.me/s
     this->dst_curspline = 0.0f;
 }
 
-S32 zNPCCommon::MvptCycle() //NONMATCH("https://decomp.me/scratch/CGooj")
+S32 zNPCCommon::MvptCycle()
 {
     zMovePoint* nav_tmp = NULL;
 
@@ -2517,7 +2515,6 @@ S32 zNPCCommon::MvptCycle() //NONMATCH("https://decomp.me/scratch/CGooj")
 }
 
 S32 zNPCCommon::HaveLOSToPos(xVec3* pos, F32 dist, xScene* xscn, xBase* tgt, xCollis* colCallers)
-//NONMATCH("https://decomp.me/scratch/wxm2S")
 {
     S32 result;
     xRay3 ray = {};
@@ -2762,7 +2759,7 @@ zNPCSettings* zNPCSettings_Find(U32 id)
     return set;
 }
 
-void zNPCCommon::Vibrate(F32 ds2_cur, F32 ds2_max) //NONMATCH("https://decomp.me/scratch/A5HIP")
+void zNPCCommon::Vibrate(F32 ds2_cur, F32 ds2_max)
 {
     F32 rat = ds2_cur / MAX(ds2_max, 1.0f);
 
@@ -2857,7 +2854,7 @@ F32 zNPCCommon::AnimTimeCurrent()
     return model->Anim->Single->Time;
 }
 
-void zNPCSettings_MakeDummy() //NONMATCH("https://decomp.me/scratch/amPtL")
+void zNPCSettings_MakeDummy()
 {
     static zNPCSettings dum;
     dum.id = 0xFEEDCAFE;

@@ -1242,7 +1242,6 @@ static void xEntMotionDebugWrite(const xEntMotion* xem)
 }
 
 static void xEntMotionDebugDraw(const xEntMotion* xem)
-//NONMATCH("https://decomp.me/scratch/j2sCX")
 {
     if (xem->owner && xem->target)
     {

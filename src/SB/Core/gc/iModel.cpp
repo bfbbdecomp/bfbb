@@ -226,7 +226,6 @@ S32 iModelSphereCull(xSphere* sphere)
 
 // Very nonmatching
 S32 iModelCullPlusShadow(RpAtomic* model, RwMatrix* mat, xVec3* shadowVec, S32* shadowOutside)
-//NONMATCH("https://decomp.me/scratch/nx6io")
 {
     F32 xScale2, yScale2, zScale2;
     RwV3d *right, *up, *at;
@@ -437,7 +436,6 @@ U32 iModelVertCount(RpAtomic* model)
 
 static inline void SkinXform(xVec3* dest, const xVec3* vert, RwMatrix* mat, const RwMatrix* skinmat,
                              const F32* wt, const U32* idx, U32 count)
-// NONMATCH("https://decomp.me/scratch/8dnNK")
 {
     U32 catMatFlags[2] = { 0, 0 };
     RwMatrix* catmat = (RwMatrix*)giAnimScratch;
@@ -534,7 +532,6 @@ U32 iModelVertEval(RpAtomic* model, U32 index, U32 count, RwMatrix* mat, xVec3* 
 
 static inline void SkinNormals(xVec3* dest, const xVec3* normal, const RwMatrix* mat,
                                const RwMatrix* skinmat, const F32* wt, const U32* idx, U32 count)
-//NONMATCH("https://decomp.me/scratch/WTMKS")
 {
     U32 catMatFlags[2] = { 0, 0 };
     RwMatrix* catmat = (RwMatrix*)giAnimScratch;
@@ -715,7 +712,6 @@ static U32 iModelTagUserData(xModelTag* tag, RpAtomic* model, F32 x, F32 y, F32 
 
 static U32 iModelTagInternal(xModelTag* tag, RpAtomic* model, F32 x, F32 y, F32 z, S32 closeV)
 
-//NONMATCH("https://decomp.me/scratch/NgdD8")
 {
     // RpGeometry* geom;
     // RwV3d* vert;
@@ -804,7 +800,6 @@ U32 iModelTagSetup(xModelTagWithNormal* tag, RpAtomic* model, F32 x, F32 y, F32 
 }
 
 void iModelTagEval(RpAtomic* model, const xModelTag* tag, RwMatrix* mat, xVec3* dest)
-//NONMATCH("https://decomp.me/scratch/L7pKU")
 {
     if (tag->wt[0])
     {
@@ -851,7 +846,6 @@ static RpMaterial* iModelSetMaterialAlphaCB(RpMaterial* material, void* data)
 
 //  TODO: another thing that needs fixed after RW gets implemented
 void iModelSetMaterialAlpha(RpAtomic* model, U8 alpha)
-// NONMATCH("https://decomp.me/scratch/Oyo8b")
 {
     // RpGeometry* geom = RpAtomicGetGeometry(model);
 
@@ -871,7 +865,6 @@ void iModelSetMaterialAlpha(RpAtomic* model, U8 alpha)
 }
 
 static RpMaterial* iModelResetMaterialCB(RpMaterial* material, void* data)
-// NONMATCH("https://decomp.me/scratch/eBpxV")
 {
     if ((sMaterialFlags & 0x3) == 0x3)
     {
@@ -948,7 +941,6 @@ void iModelSetMaterialTexture(RpAtomic* model, void* texture)
 namespace
 {
     inline void U8_COLOR_CLAMP(U8& destu8, F32 srcf32)
-    //NONMATCH("https://decomp.me/scratch/dl7BD")
     {
         if (srcf32 < 0.0f)
             srcf32 = 0.0f;
@@ -959,7 +951,6 @@ namespace
 } // namespace
 
 static RpMaterial* iModelMaterialMulCB(RpMaterial* material, void* data)
-// NONMATCH("https://decomp.me/scratch/ig80z")
 {
     const RwRGBA* rw_col = RpMaterialGetColor(material);
     RwRGBA col = sMaterialColor[sMaterialIdx++] = *rw_col;
@@ -982,7 +973,6 @@ static RpMaterial* iModelMaterialMulCB(RpMaterial* material, void* data)
 
 // TODO: once again, fix after RW implementation
 void iModelMaterialMul(RpAtomic* model, F32 rm, F32 gm, F32 bm)
-// NONMATCH("https://decomp.me/scratch/zDCk9")
 {
     // RpGeometry* geom = RpAtomicGetGeometry(model);
 
