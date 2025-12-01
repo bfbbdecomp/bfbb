@@ -21,6 +21,35 @@ F32 xVec3LengthFast(F32 x, F32 y, F32 z);
 F32 xVec3LengthFast(const xVec3* vec);
 void xVec3AddScaled(xVec3* o, const xVec3* v, F32 s);
 
+#define xVec3NormalizeMacro(o, v, len)                                                             \
+    MACRO_START                                                                                    \
+    {                                                                                              \
+        F32 len2 = SQR((v)->x) + SQR((v)->y) + SQR((v)->z);                                        \
+        if (xeq(len2, 1.0f, 1e-5f))                                                                \
+        {                                                                                          \
+            (o)->x = (v)->x;                                                                       \
+            (o)->y = (v)->y;                                                                       \
+            (o)->z = (v)->z;                                                                       \
+            *(len) = 1.0f;                                                                         \
+        }                                                                                          \
+        else if (xeq(len2, 0.0f, 1e-5f))                                                           \
+        {                                                                                          \
+            (o)->x = 0.0f;                                                                         \
+            (o)->y = 1.0f;                                                                         \
+            (o)->z = 0.0f;                                                                         \
+            *(len) = 0.0f;                                                                         \
+        }                                                                                          \
+        else                                                                                       \
+        {                                                                                          \
+            *(len) = xsqrt(len2);                                                                  \
+            F32 len_inv = 1.0f / *(len);                                                           \
+            (o)->x = (v)->x * len_inv;                                                             \
+            (o)->y = (v)->y * len_inv;                                                             \
+            (o)->z = (v)->z * len_inv;                                                             \
+        }                                                                                          \
+    }                                                                                              \
+    MACRO_STOP
+
 #define xVec3NormalizeDistXZMacro(o, a, b, dist)                                                   \
     MACRO_START                                                                                    \
     {                                                                                              \

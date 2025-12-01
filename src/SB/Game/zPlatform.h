@@ -5,6 +5,24 @@
 #include "xEntMotion.h"
 #include "xEntDrive.h"
 
+enum en_ZPLATFORMTYPE
+{
+    ePlatformTypeER,
+    ePlatformTypeOrbit,
+    ePlatformTypeSpline,
+    ePlatformTypeMP,
+    ePlatformTypeMech,
+    ePlatformTypePen,
+    ePlatformTypeConvBelt,
+    ePlatformTypeFalling,
+    ePlatformTypeFR,
+    ePlatformTypeBreakaway,
+    ePlatformTypeSpringboard,
+    ePlatformTypeTeeter,
+    ePlatformTypePaddle,
+    ePlatformTypeFM
+};
+
 struct xPlatformERData
 {
     S32 nodata;

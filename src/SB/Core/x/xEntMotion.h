@@ -2,6 +2,7 @@
 #define XENTMOTION_H
 
 #include "xEnt.h"
+#include "xEntMotionAsset.h"
 #include "xMovePoint.h"
 #include "xColor.h"
 
@@ -186,5 +187,53 @@ void xEntMotionDebugExit();
 void xEntMotionStop(xEntMotion* motion);
 void xEntMotionRun(xEntMotion* motion);
 U32 xEntMotionIsStopped(const xEntMotion* motion);
+void xEntMechForward(xEntMotion* motion);
+void xEntMechReverse(xEntMotion* motion);
+void xEntMPSetSpeed(xEntMotion* motion, F32 speed);
+
+inline U32 xEntMotionIsStopped(const xEntMotion* motion)
+{
+    return motion->flags & k_XENTMOTION_STOPPED;
+}
+
+inline void xEntMotionStop(xEntMotion* motion)
+{
+    motion->flags |= k_XENTMOTION_STOPPED;
+}
+
+inline void xEntMotionRun(xEntMotion* motion)
+{
+    motion->flags &= (U16)~k_XENTMOTION_STOPPED;
+}
+
+inline U32 xEntERIsExtending(const xEntMotion* motion)
+{
+    return motion->t < motion->er.et;
+}
+
+inline U32 xEntERIsExtended(const xEntMotion* motion)
+{
+    return motion->t >= motion->er.et && motion->t < motion->er.brt;
+}
+
+inline U32 xEntERIsRetracting(const xEntMotion* motion)
+{
+    return motion->t >= motion->er.brt && motion->t < motion->er.ert;
+}
+
+inline U32 xEntERIsRetracted(const xEntMotion* motion)
+{
+    return motion->t >= motion->er.ert;
+}
+
+inline void xEntMPSetSpeed(xEntMotion* motion, F32 speed)
+{
+    motion->mp.speed = MAX(0.0f, speed);
+}
+
+inline void xEntMPAccelerate(xEntMotion* motion, F32 new_speed)
+{
+    motion->mp.speed = MAX(0.0f, motion->mp.speed + new_speed);
+}
 
 #endif

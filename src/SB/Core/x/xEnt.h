@@ -184,13 +184,33 @@ struct xEnt : xBase
     void* user_data; // 0xCC
 };
 
-// collision types
-#define XENT_COLLTYPE_NONE 0x0
-#define XENT_COLLTYPE_TRIG 0x1 // trigger (TRIG)
-#define XENT_COLLTYPE_STAT 0x2 // static (SIMP)
-#define XENT_COLLTYPE_DYN 0x4 // dynamic (PLAT)
-#define XENT_COLLTYPE_NPC 0x8 // npc/enemy (VIL)
-#define XENT_COLLTYPE_PLYR 0x10 // player (PLYR)
+// Ent flags (xEnt::flags)
+#define XENT_IS_VISIBLE ((U8)(1 << 0))
+#define XENT_IS_STACKED ((U8)(1 << 1))
+#define XENT_0x10 ((U8)(1 << 4))
+#define XENT_0x40 ((U8)(1 << 6))
+#define XENT_0x80 ((U8)(1 << 7))
+
+// Physics flags (xEnt::pflags)
+#define XENT_PFLAGS_IS_MOVING ((U8)(1 << 0))
+#define XENT_PFLAGS_HAS_VELOCITY ((U8)(1 << 1))
+#define XENT_PFLAGS_HAS_GRAVITY ((U8)(1 << 2))
+#define XENT_PFLAGS_HAS_DRAG ((U8)(1 << 3))
+#define XENT_PFLAGS_HAS_FRICTION ((U8)(1 << 4))
+
+// More ent flags (xEnt::moreFlags)
+#define XENT_MORE_FLAGS_0x8 ((U8)1<<3)
+#define XENT_MORE_FLAGS_HITTABLE ((U8)1<<4)
+#define XENT_MORE_FLAGS_ANIM_COLL ((U8)1<<5)
+
+// Collision types (xEnt::collType)
+#define XENT_COLLTYPE_NONE (U8)0
+#define XENT_COLLTYPE_TRIG ((U8)(1 << (0)))
+#define XENT_COLLTYPE_STAT ((U8)(1 << (1)))
+#define XENT_COLLTYPE_DYN ((U8)(1 << (2)))
+#define XENT_COLLTYPE_NPC ((U8)(1 << (3)))
+#define XENT_COLLTYPE_PLYR ((U8)(1 << (4)))
+#define XENT_COLLTYPE_ENV ((U8)(1 << (5)))
 
 // Size: 0x40
 struct xEntShadow

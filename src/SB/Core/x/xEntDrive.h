@@ -36,6 +36,6 @@ struct xEntDrive
 void xEntDriveInit(xEntDrive* drv, xEnt* driven);
 void xEntDriveMount(xEntDrive* drv, xEnt* driver, F32 mt, const xCollis* coll);
 void xEntDriveDismount(xEntDrive* drv, F32 dmt);
-void xEntDriveUpdate(xEntDrive* drv, xScene* s, F32 dt, xCollis* coll);
+void xEntDriveUpdate(xEntDrive* drv, xScene* s, F32 dt, const xCollis* coll);
 
 #endif

@@ -6,6 +6,13 @@
 #include "xMath3.h"
 #include "xSurface.h"
 
+
+#define SURF_TEXANIM_ON (1<<0)
+#define SURF_TEXANIM_ON2 (1<<1)
+
+#define UVANIM_FLAG_ON (1<<0)
+#define UVANIM_FLAG_ON2 (1<<1)
+
 struct zSurfMatFX
 {
     U32 flags;
