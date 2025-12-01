@@ -318,11 +318,3 @@ xCutscene* xCutscene_CurrentCutscene()
 {
     return &sActiveCutscene;
 }
-
-void XCSNNosey::CanRenderNow()
-{
-}
-
-void XCSNNosey::UpdatedAnimated(RpAtomic*, RwMatrixTag*, U32, U32)
-{
-}
