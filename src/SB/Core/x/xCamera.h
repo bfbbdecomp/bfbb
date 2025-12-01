@@ -66,6 +66,7 @@ extern RpAtomic* sInvisWallHack;
 extern xMat4x3 sCameraFXMatOld;
 extern cameraFX sCameraFX[10];
 extern cameraFXTableEntry sCameraFXTable[3];
+extern F32 gCameraLastFov;
 
 struct xScene;
 
