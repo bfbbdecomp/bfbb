@@ -231,7 +231,7 @@ void xCutscene_SetSpeed(xCutscene* csn, F32 speed)
     csn->PlaybackSpeed = speed;
 
     F32 semitones;
-    if (speed != 0.0f)
+    if (speed)
     {
         semitones = xlog(speed) / 0.057762269f;
     }
