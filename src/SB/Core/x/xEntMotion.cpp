@@ -1307,46 +1307,6 @@ void xEntMotionDebugDraw(const xEntMotion*);
 
 _tagxPad* gDebugPad;
 
-void xEntMotionRun(xEntMotion* motion)
-{
-    motion->flags &= 0xFFFB;
-}
-
-void xEntMotionStop(xEntMotion* motion)
-{
-    motion->flags |= 0x4;
-}
-
-U32 xEntMotionIsStopped(const xEntMotion* motion)
-{
-    return motion->flags & 0x4;
-}
-
-U32 xEntERIsExtending(const xEntMotion* motion)
-{
-    return motion->t < motion->er.et;
-}
-
-U32 xEntERIsExtended(const xEntMotion* motion)
-{
-    return motion->t >= motion->er.et && motion->t < motion->er.brt;
-}
-
-U32 xEntERIsRetracted(const xEntMotion* motion)
-{
-    return motion->t >= motion->er.ert;
-}
-
-U32 xEntERIsRetracting(const xEntMotion* motion)
-{
-    return motion->t >= motion->er.brt && motion->t < motion->er.ert;
-}
-
-void xEntMPSetSpeed(xEntMotion* motion, F32 speed)
-{
-    motion->mp.speed = MAX(0.0f, speed);
-}
-
 void xQuatCopy(xQuat* a, const xQuat* b)
 {
     a->s = b->s;
