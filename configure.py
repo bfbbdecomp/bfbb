@@ -508,7 +508,7 @@ config.libs = [
             Object(Matching, "SB/Game/zParEmitter.cpp"),
             Object(Matching, "SB/Game/zPendulum.cpp"),
             Object(Matching, "SB/Game/zPickupTable.cpp"),
-            Object(NonMatching, "SB/Game/zPlatform.cpp"),
+            Object(NonMatching, "SB/Game/zPlatform.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zPortal.cpp"),
             Object(Matching, "SB/Game/zRenderState.cpp"),
             Object(Equivalent, "SB/Game/zRumble.cpp"),

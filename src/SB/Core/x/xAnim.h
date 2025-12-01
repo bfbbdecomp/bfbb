@@ -231,4 +231,7 @@ inline F32 xAnimFileRawTime(xAnimFile* data, float time)
     return data->TimeOffset + time;
 }
 
+#define xAnimTableNewStateDefault(table, name, flags, userFlags) xAnimTableNewState((table), (name), (flags), (userFlags), 1.0f, NULL, NULL, 0.0f, NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL)
+#define xAnimTableNewTransitionDefault(table, source, dest, priority, blendRecip) xAnimTableNewTransition((table), (source), (dest), NULL, NULL, 0x10, 0, 0.0f, 0.0f, (priority), 0, (blendRecip), NULL)
+
 #endif
