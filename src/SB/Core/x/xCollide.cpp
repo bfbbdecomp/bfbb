@@ -48,34 +48,6 @@ extern U8 xClumpColl_FilterFlags;
 #define RpGeometryGetMorphTargetMacro(_geometry, _index)                                           \
     (&((_geometry)->morphTarget[(_index)])) // bageomet.h
 
-#define xVec3NormalizeMacro(o, v, len)                                                             \
-    MACRO_START                                                                                    \
-    {                                                                                              \
-        F32 len2 = SQR((v)->x) + SQR((v)->y) + SQR((v)->z);                                        \
-        if (xeq(len2, 1.0f, 1e-5f))                                                                \
-        {                                                                                          \
-            (o)->x = (v)->x;                                                                       \
-            (o)->y = (v)->y;                                                                       \
-            (o)->z = (v)->z;                                                                       \
-            *(len) = 1.0f;                                                                         \
-        }                                                                                          \
-        else if (xeq(len2, 0.0f, 1e-5f))                                                           \
-        {                                                                                          \
-            (o)->x = 0.0f;                                                                         \
-            (o)->y = 1.0f;                                                                         \
-            (o)->z = 0.0f;                                                                         \
-            *(len) = 0.0f;                                                                         \
-        }                                                                                          \
-        else                                                                                       \
-        {                                                                                          \
-            *(len) = xsqrt(len2);                                                                  \
-            F32 len_inv = 1.0f / *(len);                                                           \
-            (o)->x = (v)->x * len_inv;                                                             \
-            (o)->y = (v)->y * len_inv;                                                             \
-            (o)->z = (v)->z * len_inv;                                                             \
-        }                                                                                          \
-    }                                                                                              \
-    MACRO_STOP
 
 _xCollsIdx xCollideGetCollsIdx(const xCollis* coll, const xVec3* tohit, const xMat3x3* mat)
 {
