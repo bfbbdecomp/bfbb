@@ -144,6 +144,37 @@ S32 xCutscene_LoadStart(xCutscene* csn)
     return 1;
 }
 
+F32 xCutsceneConvertBreak(float param_1, xCutsceneBreak* param_2, U32 param_3, int param_4)
+{
+    int i = 0;
+    if (param_3 == 0)
+    {
+        return param_1;
+    }
+    while (true)
+    {
+        if (param_4 != param_2[i].Index)
+        {
+            break;
+        }
+        if (param_2[i].Time - param_1 <= 0.0f)
+        {
+            break;
+        }
+        if (0.03333333f <= param_2[i].Time - param_1)
+        {
+            break;
+        }
+        i++;
+        param_3--;
+        if (param_3 == 0)
+        {
+            return param_1;
+        }
+    }
+    return param_2[i].Time - 0.03333333f;
+}
+
 S32 xCutscene_Update(xCutscene* csn, F32 dt)
 {
     if ((csn->SndStarted == FALSE) && (csn->SndNumChannel != 0))
@@ -261,37 +292,6 @@ void xVec3Lerp(xVec3* out, const xVec3* a, const xVec3* b, float alpha)
     out->x = a->x + (b->x - a->x) * alpha;
     out->y = a->y + (b->y - a->y) * alpha;
     out->z = a->z + (b->z - a->z) * alpha;
-}
-
-F32 xCutsceneConvertBreak(float param_1, xCutsceneBreak* param_2, U32 param_3, int param_4)
-{
-    int i = 0;
-    if (param_3 == 0)
-    {
-        return param_1;
-    }
-    while (true)
-    {
-        if (param_4 != param_2[i].Index)
-        {
-            break;
-        }
-        if (param_2[i].Time - param_1 <= 0.0f)
-        {
-            break;
-        }
-        if (0.03333333f <= param_2[i].Time - param_1)
-        {
-            break;
-        }
-        i++;
-        param_3--;
-        if (param_3 == 0)
-        {
-            return param_1;
-        }
-    }
-    return param_2[i].Time - 0.03333333f;
 }
 
 void CutsceneShadowRender(CutsceneShadowModel* smod)
