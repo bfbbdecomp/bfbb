@@ -50,7 +50,9 @@ struct iSndFileInfo
 struct vinfo
 {
     _AXVPB* voice;
-    S32 buffer[4];
+    U32 x4;
+    U32 x8;
+    S32 buffer[2];
     U32 _0x14;
     S32 buffer2[2];
 };
@@ -69,35 +71,47 @@ enum isound_effect
     iSND_EFFECT_CAVE
 };
 
-void arq_callback(long);
+typedef void (*iSndExternalCallback)(U32);
+
+void iSndInit();
 void iSndExit();
 
-void iSndPause(U32 snd, U32 pause);
 void iSndSetEnvironmentalEffect(isound_effect);
-void iSndInit();
-void iSndCalcVol(xSndVoiceInfo* xSndVoiceInfo, vinfo* vinfo);
-void iSndCalcVol3d(xSndVoiceInfo* xSndVoiceInfo, vinfo* vinfo);
-void iSndVolUpdate(xSndVoiceInfo* info, vinfo* vinfo);
-void iSndUpdateSounds();
-void iSndUpdate();
-void iSndSuspendCD(U32);
-void iSndMessWithEA(sDSPADPCM* param1);
-U32 SampleToNybbleAddress(U32 sample);
 void iSndInitSceneLoaded();
+
 S32 iSndIsPlaying(U32 assetID);
 S32 iSndIsPlaying(U32 assetID, U32 parid);
+S32 iSndIsPlayingByHandle(U32 handle);
 iSndFileInfo* iSndLookup(U32 id);
-void iSndWaitForDeadSounds();
-void iSndSceneExit();
-void sndloadcb(tag_xFile* tag);
-S32 iSndLoadSounds(void*);
-void iSndSetExternalCallback(void (*func_ptr)(U32));
-void iSndAXFree(_AXVPB** param1);
-void iSndStartStereo(U32 id1, U32 id2, F32 pitch);
+
+void iSndPause(U32 snd, U32 pause);
 void iSndStop(U32 snd);
+void iSndUpdate();
+
+void iSndFindFreeVoice(U32 priority, U32 flags, U32 owner);
+
+void iSndPlay(xSndVoiceInfo* vp);
 void iSndSetVol(U32 snd, F32 vol);
 void iSndSetPitch(U32 snd, F32 pitch);
-F32 iSndGetVol(U32 snd);
+void iSndStartStereo(U32 id1, U32 id2, F32 pitch);
 void iSndStereo(U32 stereo);
 
+void iSndWaitForDeadSounds();
+void iSndSuspendCD(U32);
+
+void iSndSceneExit();
+
+S32 iSndLoadSounds(void*);
+void iSndDIEDIEDIE();
+void iSndSetExternalCallback(iSndExternalCallback callback);
+
+void iSndSuspend();
+void iSndResume();
+
+F32 iSndGetVol(U32 snd);
+
+// FIXME: delete these
+U32 SampleToNybbleAddress(U32 sample);
+void iSndCalcVol(xSndVoiceInfo* xSndVoiceInfo, vinfo* vinfo);
+void iSndCalcVol3d(xSndVoiceInfo* xSndVoiceInfo, vinfo* vinfo);
 #endif
