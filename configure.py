@@ -479,7 +479,7 @@ config.libs = [
             Object(Equivalent, "SB/Game/zEnt.cpp"),
             Object(Equivalent, "SB/Game/zEntButton.cpp"),
             Object(NonMatching, "SB/Game/zEntCruiseBubble.cpp"),
-            Object(NonMatching, "SB/Game/zEntDestructObj.cpp"),
+            Object(Matching, "SB/Game/zEntDestructObj.cpp"),
             Object(NonMatching, "SB/Game/zEntHangable.cpp"),
             Object(NonMatching, "SB/Game/zEntPickup.cpp"),
             Object(NonMatching, "SB/Game/zEntPlayer.cpp", extra_cflags=["-sym on"]),
