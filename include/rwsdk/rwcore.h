@@ -3,30 +3,72 @@
 
 #include <rwsdk/rwplcore.h>
 
-typedef struct _RxObjSpace3DVertex RxObjSpace3DVertex;
-
-union RxColorUnion
+typedef struct RxObjSpace3DVertex RxObjSpace3DVertex;
+struct RxObjSpace3DVertex
 {
-    RwRGBA preLitColor;
-    RwRGBA color;
-};
-
-// TODO: Determine whether c should go before or after objNormal
-// Context: These headers came from an official header source (unsure of release platform)
-//          However, currently decomped functions seem to pack the struct
-//          in this particular way so it's like this for now.
-//          See: zActionLIne.cpp
-struct _RxObjSpace3DVertex
-{
-    RwV3d objVertex;
-    RwV3d objNormal;
-    RxColorUnion c;
+    RwReal x;
+    RwReal y;
+    RwReal z;
+    RwReal nx;
+    RwReal ny;
+    RwReal nz;
+    RwUInt8 r;
+    RwUInt8 g;
+    RwUInt8 b;
+    RwUInt8 a;
     RwReal u;
     RwReal v;
 };
 
 typedef RxObjSpace3DVertex RxObjSpace3DLitVertex;
 typedef RxObjSpace3DLitVertex RwIm3DVertex;
+
+#define RwIm3DVertexSetPos(_vert, _imx, _imy, _imz)                                               \
+MACRO_START                                                                                       \
+{                                                                                                 \
+    (_vert)->x = _imx;                                                                            \
+    (_vert)->y = _imy;                                                                            \
+    (_vert)->z = _imz;                                                                            \
+}                                                                                                 \
+MACRO_STOP
+
+#define RwIm3DVertexSetNormal(_vert, _imx, _imy, _imz)                                            \
+MACRO_START                                                                                       \
+{                                                                                                 \
+    (_vert)->nx = _imx;                                                                           \
+    (_vert)->ny = _imy;                                                                           \
+    (_vert)->nz = _imz;                                                                           \
+}                                                                                                 \
+MACRO_STOP
+
+#define RwIm3DVertexSetRGBA(_vert, _r, _g, _b, _a)                                                \
+MACRO_START                                                                                       \
+{                                                                                                 \
+    (_vert)->r = _r;                                                                              \
+    (_vert)->g = _g;                                                                              \
+    (_vert)->b = _b;                                                                              \
+    (_vert)->a = _a;                                                                              \
+}                                                                                                 \
+MACRO_STOP
+
+#define RwIm3DVertexSetUV(_vert, _u, _v)                                                          \
+MACRO_START                                                                                       \
+{                                                                                                 \
+    (_vert)->u = _u;                                                                              \
+    (_vert)->v = _v;                                                                              \
+}                                                                                                 \
+MACRO_STOP
+
+enum RwIm3DTransformFlags
+{
+    rwIM3D_VERTEXUV = 1,
+    rwIM3D_ALLOPAQUE = 2,
+    rwIM3D_NOCLIP = 4,
+    rwIM3D_VERTEXXYZ = 8,
+    rwIM3D_VERTEXRGBA = 16,
+    rwIM3DTRANSFORMFLAGSFORCEENUMSIZEINT = RWFORCEENUMSIZEINT
+};
+typedef enum RwIm3DTransformFlags RwIm3DTransformFlags;
 
 typedef struct rxHeapFreeBlock;
 typedef struct rxHeapSuperBlockDescriptor;

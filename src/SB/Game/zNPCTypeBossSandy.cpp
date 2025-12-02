@@ -337,42 +337,21 @@ void zNPCBSandy::Init(xEntAsset* asset)
         sNFSoundValue[i] = xStrHash(sNFSoundLabel[i]);
     }
 
-    this->iconVert[0].objVertex.x = 1.0f;
-    this->iconVert[0].objVertex.y = 0.0f;
-    this->iconVert[0].objVertex.z = 1.0f;
-    this->iconVert[1].objVertex.x = -1.0f;
-    this->iconVert[1].objVertex.y = 1.0f;
-    this->iconVert[1].objVertex.z = 1.0f;
-    this->iconVert[2].objVertex.x = 0.0f;
-    this->iconVert[2].objVertex.y = -1.0f;
-    this->iconVert[2].objVertex.z = -1.0f;
-    this->iconVert[3].objVertex.x = -1.0f;
-    this->iconVert[3].objVertex.y = 0.0f;
-    this->iconVert[3].objVertex.z = -1.0f;
-    this->iconVert[0].c.preLitColor.red = 0xff;
-    this->iconVert[0].c.preLitColor.green = 0xff;
-    this->iconVert[0].c.preLitColor.blue = 0xff;
-    this->iconVert[0].c.preLitColor.alpha = 0xff;
-    this->iconVert[1].c.preLitColor.red = 0xff;
-    this->iconVert[1].c.preLitColor.green = 0xff;
-    this->iconVert[1].c.preLitColor.blue = 0xff;
-    this->iconVert[1].c.preLitColor.alpha = 0xff;
-    this->iconVert[2].c.preLitColor.red = 0xff;
-    this->iconVert[2].c.preLitColor.green = 0xff;
-    this->iconVert[2].c.preLitColor.blue = 0xff;
-    this->iconVert[2].c.preLitColor.alpha = 0xff;
-    this->iconVert[3].c.preLitColor.red = 0xff;
-    this->iconVert[3].c.preLitColor.green = 0xff;
-    this->iconVert[3].c.preLitColor.blue = 0xff;
-    this->iconVert[3].c.preLitColor.alpha = 0xff;
-    this->iconVert[0].u = 0.0f;
-    this->iconVert[1].u = 1.0f;
-    this->iconVert[2].u = 0.0f;
-    this->iconVert[3].u = 1.0f;
-    this->iconVert[0].v = 0.0f;
-    this->iconVert[1].v = 0.0f;
-    this->iconVert[2].v = 1.0f;
-    this->iconVert[3].v = 1.0f;
+    RwIm3DVertexSetPos(&this->iconVert[0], 1.0f, 0.0f, 1.0f);
+    RwIm3DVertexSetPos(&this->iconVert[1], -1.0f, 1.0f, 1.0f);
+    RwIm3DVertexSetPos(&this->iconVert[2], 0.0f, -1.0f, -1.0f);
+    RwIm3DVertexSetPos(&this->iconVert[3], -1.0f, 0.0f, -1.0f);
+
+    RwIm3DVertexSetRGBA(&this->iconVert[0], 0xff, 0xff, 0xff, 0xff);
+    RwIm3DVertexSetRGBA(&this->iconVert[1], 0xff, 0xff, 0xff, 0xff);
+    RwIm3DVertexSetRGBA(&this->iconVert[2], 0xff, 0xff, 0xff, 0xff);
+    RwIm3DVertexSetRGBA(&this->iconVert[3], 0xff, 0xff, 0xff, 0xff);
+
+    RwIm3DVertexSetUV(&this->iconVert[0], 0.0f, 0.0f);
+    RwIm3DVertexSetUV(&this->iconVert[1], 1.0f, 0.0f);
+    RwIm3DVertexSetUV(&this->iconVert[2], 0.0f, 1.0f);
+    RwIm3DVertexSetUV(&this->iconVert[3], 1.0f, 1.0f);
+
     this->wireLight[0] = 0;
     this->wireLight[1] = 0;
 

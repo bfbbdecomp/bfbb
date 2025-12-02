@@ -57,7 +57,7 @@ void iRenderFlush()
 
 void iRenderTrianglesImmediate(S32 vertType, S32 vertTypeSize, void* data, S32 dataSize, U16* index, S32 indexSize)
 {
-    if (RwIm3DTransform((_RxObjSpace3DVertex *)data, dataSize, NULL, 1) != NULL)
+    if (RwIm3DTransform((RwIm3DVertex *)data, dataSize, NULL, 1) != NULL)
     {
         if (indexSize != 0)
         {

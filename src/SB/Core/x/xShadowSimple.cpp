@@ -92,21 +92,32 @@ void xShadowSimple_Init()
 
     memset(sShadVert, 0, sizeof(sShadVert));
 
-    // Not sure what's going on in this loop
-    for (u32 i = 0; i < 384; i++)
+    for (u32 i = 0; i < 64; i++)
     {
-        sShadVert[i].c = RxColorUnion();
-
-        sShadVert[i].u = 1.0f;
-        sShadVert[i].v = 1.0f;
-
-        sShadVert[i].objVertex.x = 0.0f;
-        sShadVert[i].objVertex.y = 0.0f;
-        sShadVert[i].objVertex.z = 0.0f;
-
-        sShadVert[i].objNormal.x = 0.0f;
-        sShadVert[i].objNormal.y = 0.0f;
-        sShadVert[i].objNormal.z = 0.0f;
+        sShadVert[i*6+1].u = 1.0f;
+        sShadVert[i*6+2].v = 1.0f;
+        sShadVert[i*6+3].u = 1.0f;
+        sShadVert[i*6+4].v = 1.0f;
+        sShadVert[i*6+5].u = 1.0f;
+        sShadVert[i*6+5].v = 1.0f;
+        sShadVert[i*6+0].nx = 0.0f;
+        sShadVert[i*6+0].ny = 1.0f;
+        sShadVert[i*6+0].nz = 0.0f;
+        sShadVert[i*6+1].nx = 0.0f;
+        sShadVert[i*6+1].ny = 1.0f;
+        sShadVert[i*6+1].nz = 0.0f;
+        sShadVert[i*6+2].nx = 0.0f;
+        sShadVert[i*6+2].ny = 1.0f;
+        sShadVert[i*6+2].nz = 0.0f;
+        sShadVert[i*6+3].nx = 0.0f;
+        sShadVert[i*6+3].ny = 1.0f;
+        sShadVert[i*6+3].nz = 0.0f;
+        sShadVert[i*6+4].nx = 0.0f;
+        sShadVert[i*6+4].ny = 1.0f;
+        sShadVert[i*6+4].nz = 0.0f;
+        sShadVert[i*6+5].nx = 0.0f;
+        sShadVert[i*6+5].ny = 1.0f;
+        sShadVert[i*6+5].nz = 0.0f;
     }
 }
 
