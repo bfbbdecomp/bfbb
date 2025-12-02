@@ -8,26 +8,14 @@
 #include "xBehaveMgr.h"
 #include "xEnt.h"
 #include "xSFX.h"
-#include "xstransvc.h"
-#include "xDraw.h"
-#include "xstransvc.h"
-#include "xDraw.h"
 
 #include "zNPCSndTable.h"
 #include "zMovePoint.h"
 #include "zShrapnel.h"
 #include "zNPCMessenger.h"
-#include "zNPCGoals.h"
-#include "zGrid.h"
-#include "iCollide.h"
-#include "zEntButton.h"
-#include "zCombo.h"
-#include "zNPCTypes.h"
 
 #define XRAY3_USE_MIN (1 << 10)
 #define XRAY3_USE_MAX (1 << 11)
-
-typedef struct NPCMsg;
 
 class zAnimFxSound;
 
@@ -117,37 +105,7 @@ enum en_NPC_GOAL_SPOT
     NPC_GSPOT_FORCEINT = 0x7fffffff
 };
 
-enum en_NPC_CARRY_STATE
-{
-    zNPCCARRY_NONE,
-    zNPCCARRY_PICKUP,
-    zNPCCARRY_THROW,
-    zNPCCARRY_ATTEMPTPICKUP,
-    zNPCCARRY_FORCEINT = 0x7fffffff
-};
 
-enum en_NPC_DAMAGE_TYPE
-{
-    DMGTYP_UNDECIDED,
-    DMGTYP_ABOVE,
-    DMGTYP_BELOW,
-    DMGTYP_SIDE,
-    DMGTYP_INSTAKILL,
-    DMGTYP_KILLEVENT,
-    DMGTYP_HITBYTOSS,
-    DMGTYP_NPCATTACK,
-    DMGTYP_ROPE,
-    DMGTYP_CRUISEBUBBLE,
-    DMGTYP_PROJECTILE,
-    DMGTYP_BOULDER,
-    DMGTYP_BUBBOWL,
-    DMGTYP_THUNDER_TIKI_EXPLOSION,
-    DMGTYP_DAMAGE_SURFACE,
-    DMGTYP_BUNGEED,
-    DMGTYP_SURFACE,
-    DMGTYP_NOMORE,
-    DMGTYP_FORCEINT = 0x7fffffff
-};
 
 enum en_npcvibe
 {
@@ -297,62 +255,6 @@ enum en_LASSO_EVENT
     LASS_EVNT_ABORT,
     LASS_EVNT_NOMORE,
     LASS_EVNT_FORCEINT = 0x7fffffff
-};
-
-enum en_NPC_MSG_ID
-{
-    NPC_MID_NONE,
-    NPC_MID_SYSEVENT,
-    NPC_MID_RESPAWN,
-    NPC_MID_DAMAGE,
-    NPC_MID_EXPLOSION,
-    NPC_MID_BUNNYHOP,
-    NPC_MID_DTRON_NPCEMIT,
-    NPC_MID_DTRON_NPCAVAIL,
-    NPC_MID_DTRON_ISDEAD,
-    NPC_MID_CHAT_REQUEST,
-    NPC_MID_CHAT_DECLINE,
-    NPC_MID_CHAT_ACCEPT,
-    NPC_MID_CHAT_DONE,
-    NPC_MID_CHAT_ABORT,
-    NPC_MID_TALKSTART,
-    NPC_MID_TALKON,
-    NPC_MID_TALKOFF,
-    NPC_MID_SAWPLYR,
-    NPC_MID_NEEDMEDIC,
-    NPC_MID_UNDERATTACK,
-    NPC_MID_NPCDIED,
-    NPC_MID_PLYRSPATULA,
-    NPC_MID_BECOMESCARED,
-    NPC_MID_NOLONGERSCARED,
-    NPC_MID_CELEBRATE,
-    NPC_MID_STUN,
-    NPC_MID_SCRIPTBEGIN,
-    NPC_MID_SCRIPTEND,
-    NPC_MID_SCRIPTHALT,
-    NPC_MID_DEV_ANIMSPIN,
-    NPC_MID_DEV_ANIMCYCLE,
-    NPC_MID_DEV_HEROMODE,
-    NPC_MID_DEV_DONE,
-    NPC_MID_NOMORE,
-    NPC_MID_FORCE = 0x7fffffff
-};
-
-enum en_NPC_MSG_DATA
-{
-    NPC_MDAT_BLANK,
-    NPC_MDAT_SYSEVENT,
-    NPC_MDAT_BLAST,
-    NPC_MDAT_CHAT,
-    NPC_MDAT_SPAWN,
-    NPC_MDAT_TARGET,
-    NPC_MDAT_DAMAGE,
-    NPC_MDAT_STUN,
-    NPC_MDAT_SCRIPT,
-    NPC_MDAT_MOUNT,
-    NPC_MDAT_AREANOTIFY,
-    NPC_MDAT_NOMORE,
-    NPC_MDAT_FORCE = 0x7fffffff
 };
 
 enum en_SM_NOTICES
@@ -534,24 +436,25 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
 
     // vTable (zNPCCommon)
     virtual S32 NPCMessage(NPCMsg* mail);
-    
+
     virtual void RenderExtra()
     {
-
     }
-    
+
     virtual void RenderExtraPostParticles()
     {
-
     }
-    
+
     virtual void ParseINI();
     virtual void ParseLinks();
     virtual void ParseProps();
     virtual void SelfSetup();
     virtual void SelfDestroy();
     virtual S32 IsHealthy();
-    virtual S32 IsAlive();
+    virtual S32 IsAlive()
+    {
+        return TRUE;
+    }
     virtual void Damage(en_NPC_DAMAGE_TYPE damtype, xBase* who, const xVec3* vec_hit);
     virtual S32 Respawn(const xVec3* pos, zMovePoint* mvptFirst, zMovePoint* mvptSpawnRef);
     virtual void DuploOwner(zNPCCommon* duper);
@@ -559,7 +462,9 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
     virtual S32 CanRope();
     virtual void LassoNotify(en_LASSO_EVENT event);
     virtual S32 SetCarryState(en_NPC_CARRY_STATE);
-    virtual void Stun(F32 stuntime);
+    virtual void Stun(F32 stuntime)
+    {
+    }
     virtual void SpeakBegin();
     virtual void SpeakEnd();
     virtual void SpeakStart(U32 sound, U32 param_2, S32 param_3);
@@ -582,98 +487,7 @@ protected:
     ~zNPCCommon();
 };
 
-struct NPCSysEvent
-{
-    S32 doLinkEvents;
-    S32 handled;
-    xBase* from;
-    xBase* to;
-    U32 toEvent;
-    F32 toParam[4];
-    xBase* toParamWidget;
-};
 
-struct NPCBlastInfo
-{
-    xVec3 pos_blast;
-    F32 rad_blast;
-    F32 spd_expand;
-};
-
-struct NPCChatInfo
-{
-    xVec3 pos_chat;
-    F32 tym_chat;
-};
-
-struct NPCSpawnInfo
-{
-    xVec3 pos_spawn;
-    zMovePoint* nav_firstMovepoint;
-    zMovePoint* nav_spawnReference;
-    S32 spawnSuccess;
-};
-
-struct NPCTargetInfo
-{
-    xBase* bas_tgt;
-    xVec3 pos_tgt;
-};
-
-struct NPCDamageInfo
-{
-    en_NPC_DAMAGE_TYPE dmg_type;
-    xBase* dmg_from;
-    xVec3 vec_dmghit;
-};
-
-struct NPCStunInfo
-{
-    F32 tym_stuntime;
-    en_NPC_CARRY_STATE carrystate;
-    S32 allowStun;
-};
-
-struct NPCScriptInfo
-{
-    U32 aid_playanim;
-};
-
-struct NPCMountInfo
-{
-    xEnt* ent_toMount;
-    xCollis* col_forMount;
-};
-
-struct NPCAreaInfo
-{
-    zNPCCommon* npc_origin;
-    xVec3 pos_origin;
-};
-
-struct NPCMsg
-{
-    en_NPC_MSG_ID msgid;
-    U32 sendto;
-    U32 from;
-    en_NPC_MSG_DATA infotype; // 0xC
-    union
-    {
-        NPCSysEvent sysevent;
-        NPCBlastInfo blastarea;
-        NPCChatInfo chatter;
-        NPCSpawnInfo spawning;
-        NPCTargetInfo target;
-        NPCDamageInfo dmgdata; // 0x10
-        NPCStunInfo stundata;
-        NPCScriptInfo scriptdata;
-        NPCMountInfo mountdata;
-        NPCAreaInfo areadata;
-    };
-    void* attached; // 0x38
-    NPCMsg* next;
-    F32 tmr_delay; // 0x40
-};
 
 xFactoryInst* ZNPC_Create_Common(S32 who, RyzMemGrow* grow, void*);
 void ZNPC_Destroy_Common(xFactoryInst* inst);
@@ -711,17 +525,5 @@ void NPCC_BuildStandardAnimTran(xAnimTable* table, char** namelist, S32* ourAnim
                                 F32 blend);
 void zNPCCommon_EjectPhlemOnPawz();
 U32 xSndIsPlaying(U32 assetID, U32 parid);
-
-// move to messenger?
-
-void zNPCMsg_AreaNotify(zNPCCommon* sender, en_NPC_MSG_ID msgid, F32 rad, S32 filter,
-                        en_NPCTYPES toNPCType);
-void zNPCMsg_AreaNotify(zNPCCommon*, en_NPC_MSG_ID, F32, S32, en_NPCTYPES*);
-void zNPCMsg_AreaNotify(zNPCCommon*, NPCMsg*, F32, S32, en_NPCTYPES*);
-
-void zNPCMsg_SendMsg(NPCMsg, F32, zNPCCommon*);
-void zNPCMsg_SendMsg(en_NPC_MSG_ID msgevent, zNPCCommon* npc_sendto);
-void zNPCMsg_SendMsg(NPCMsg* inmsg, zNPCCommon* npc_sendto);
-void zNPCMsg_SendMsg(NPCMsg* inmsg, F32 delay, zNPCCommon* npc_sendto);
 
 #endif

@@ -12,6 +12,7 @@
 #include "zEntTrigger.h"
 #include "zGameExtras.h"
 #include "zGlobals.h"
+#include "zGrid.h"
 #include "zNPCHazard.h"
 #include "zNPCTypeCommon.h"
 #include "zPlatform.h"

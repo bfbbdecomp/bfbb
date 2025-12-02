@@ -10,6 +10,7 @@
 #include "xMath3.h"
 #include "xMathInlines.h"
 #include "zNPCGoalRobo.h"
+#include "zNPCGoals.h"
 #include "zNPCGoalStd.h"
 #include "zNPCHazard.h"
 #include "zNPCSndLists.h"

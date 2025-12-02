@@ -3,20 +3,26 @@
 #include <types.h>
 #include <string.h>
 
+#include "zCombo.h"
+#include "zEntButton.h"
 #include "zEntCruiseBubble.h"
 #include "zEntTeleportBox.h"
 #include "zGlobals.h"
+#include "zGrid.h"
+#include "zNPCGoals.h"
 #include "zNPCTypes.h"
 #include "zNPCSndTable.h"
 #include "zNPCSndLists.h"
 #include "zNPCSupport.h"
 #include "zNPCFXCinematic.h"
 
+#include "iCollide.h"
 #include "iModel.h"
 #include "iSnd.h"
 
-#include "xString.h"
 #include "xDebug.h"
+#include "xDraw.h"
+#include "xString.h"
 
 // Finish porting code from bfbbpc repo
 
