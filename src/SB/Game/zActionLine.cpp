@@ -52,15 +52,9 @@ static void RenderActionLine(_tagActionLine* l)
 
     for (S32 i = 0; i < 4; i++)
     {
-        sStripVert[i].objVertex.y = l->pos[i].y;
-        sStripVert[i].objVertex.z = l->pos[i].z;
-        sStripVert[i].objVertex.x = l->pos[i].x;
-        sStripVert[i].u = 0.0f;
-        sStripVert[i].v = 0.0f;
-        sStripVert[i].c.color.red = 0xFF;
-        sStripVert[i].c.color.green = 0xFF;
-        sStripVert[i].c.color.blue = 0xFF;
-        sStripVert[i].c.color.alpha = 0x80;
+        RwIm3DVertexSetPos(&sStripVert[i], l->pos[i].x, l->pos[i].y, l->pos[i].z);
+        RwIm3DVertexSetUV(&sStripVert[i], 0.0f, 0.0f);
+        RwIm3DVertexSetRGBA(&sStripVert[i], 0xFF, 0xFF, 0xFF, 0x80);
     }
 
     if (RwIm3DTransform(sStripVert, 4, NULL, 0x19) != NULL)
