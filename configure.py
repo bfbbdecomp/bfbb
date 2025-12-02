@@ -511,7 +511,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zPlatform.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zPortal.cpp"),
             Object(Matching, "SB/Game/zRenderState.cpp"),
-            Object(Equivalent, "SB/Game/zRumble.cpp"),
+            Object(Matching, "SB/Game/zRumble.cpp"),
             Object(Equivalent, "SB/Game/zSaveLoad.cpp"),
             Object(NonMatching, "SB/Game/zScene.cpp"),
             Object(Matching, "SB/Game/zScript.cpp"),
