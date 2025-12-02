@@ -534,24 +534,25 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
 
     // vTable (zNPCCommon)
     virtual S32 NPCMessage(NPCMsg* mail);
-    
+
     virtual void RenderExtra()
     {
-
     }
-    
+
     virtual void RenderExtraPostParticles()
     {
-
     }
-    
+
     virtual void ParseINI();
     virtual void ParseLinks();
     virtual void ParseProps();
     virtual void SelfSetup();
     virtual void SelfDestroy();
     virtual S32 IsHealthy();
-    virtual S32 IsAlive();
+    virtual S32 IsAlive()
+    {
+        return TRUE;
+    }
     virtual void Damage(en_NPC_DAMAGE_TYPE damtype, xBase* who, const xVec3* vec_hit);
     virtual S32 Respawn(const xVec3* pos, zMovePoint* mvptFirst, zMovePoint* mvptSpawnRef);
     virtual void DuploOwner(zNPCCommon* duper);
@@ -559,7 +560,9 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
     virtual S32 CanRope();
     virtual void LassoNotify(en_LASSO_EVENT event);
     virtual S32 SetCarryState(en_NPC_CARRY_STATE);
-    virtual void Stun(F32 stuntime);
+    virtual void Stun(F32 stuntime)
+    {
+    }
     virtual void SpeakBegin();
     virtual void SpeakEnd();
     virtual void SpeakStart(U32 sound, U32 param_2, S32 param_3);
