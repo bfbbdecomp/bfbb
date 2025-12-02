@@ -337,42 +337,21 @@ void zNPCBSandy::Init(xEntAsset* asset)
         sNFSoundValue[i] = xStrHash(sNFSoundLabel[i]);
     }
 
-    this->iconVert[0].x = 1.0f;
-    this->iconVert[0].y = 0.0f;
-    this->iconVert[0].z = 1.0f;
-    this->iconVert[1].x = -1.0f;
-    this->iconVert[1].y = 1.0f;
-    this->iconVert[1].z = 1.0f;
-    this->iconVert[2].x = 0.0f;
-    this->iconVert[2].y = -1.0f;
-    this->iconVert[2].z = -1.0f;
-    this->iconVert[3].x = -1.0f;
-    this->iconVert[3].y = 0.0f;
-    this->iconVert[3].z = -1.0f;
-    this->iconVert[0].r = 0xff;
-    this->iconVert[0].g = 0xff;
-    this->iconVert[0].b = 0xff;
-    this->iconVert[0].a = 0xff;
-    this->iconVert[1].r = 0xff;
-    this->iconVert[1].g = 0xff;
-    this->iconVert[1].b = 0xff;
-    this->iconVert[1].a = 0xff;
-    this->iconVert[2].r = 0xff;
-    this->iconVert[2].g = 0xff;
-    this->iconVert[2].b = 0xff;
-    this->iconVert[2].a = 0xff;
-    this->iconVert[3].r = 0xff;
-    this->iconVert[3].g = 0xff;
-    this->iconVert[3].b = 0xff;
-    this->iconVert[3].a = 0xff;
-    this->iconVert[0].u = 0.0f;
-    this->iconVert[1].u = 1.0f;
-    this->iconVert[2].u = 0.0f;
-    this->iconVert[3].u = 1.0f;
-    this->iconVert[0].v = 0.0f;
-    this->iconVert[1].v = 0.0f;
-    this->iconVert[2].v = 1.0f;
-    this->iconVert[3].v = 1.0f;
+    RwIm3DVertexSetPos(&this->iconVert[0], 1.0f, 0.0f, 1.0f);
+    RwIm3DVertexSetPos(&this->iconVert[1], -1.0f, 1.0f, 1.0f);
+    RwIm3DVertexSetPos(&this->iconVert[2], 0.0f, -1.0f, -1.0f);
+    RwIm3DVertexSetPos(&this->iconVert[3], -1.0f, 0.0f, -1.0f);
+
+    RwIm3DVertexSetRGBA(&this->iconVert[0], 0xff, 0xff, 0xff, 0xff);
+    RwIm3DVertexSetRGBA(&this->iconVert[1], 0xff, 0xff, 0xff, 0xff);
+    RwIm3DVertexSetRGBA(&this->iconVert[2], 0xff, 0xff, 0xff, 0xff);
+    RwIm3DVertexSetRGBA(&this->iconVert[3], 0xff, 0xff, 0xff, 0xff);
+
+    RwIm3DVertexSetUV(&this->iconVert[0], 0.0f, 0.0f);
+    RwIm3DVertexSetUV(&this->iconVert[1], 1.0f, 0.0f);
+    RwIm3DVertexSetUV(&this->iconVert[2], 0.0f, 1.0f);
+    RwIm3DVertexSetUV(&this->iconVert[3], 1.0f, 1.0f);
+
     this->wireLight[0] = 0;
     this->wireLight[1] = 0;
 
