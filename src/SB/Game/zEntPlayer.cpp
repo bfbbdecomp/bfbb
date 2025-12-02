@@ -36,6 +36,7 @@
 #include "zEntPlayerOOBState.h"
 #include "zEntTeleportBox.h"
 #include "zGame.h"
+#include "zGrid.h"
 #include "zGameExtras.h"
 #include "zGlobals.h"
 #include "zGoo.h"

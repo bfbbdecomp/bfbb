@@ -5,13 +5,17 @@
 #include "xScrFx.h"
 #include "xutil.h"
 
+#include "zEntButton.h"
 #include "zGlobals.h"
 #include "zGoo.h"
+#include "zNPCGoals.h"
 #include "zNPCGoalTiki.h"
 #include "zNPCHazard.h"
 #include "zNPCSupplement.h"
 #include "zNPCTypeTiki.h"
 #include "zSurface.h"
+
+#include "iCollide.h"
 
 #define ANIM_COUNT 2
 #define NUM_PARENTS 4
