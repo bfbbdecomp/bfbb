@@ -157,7 +157,7 @@ void xBoxFromCone(xBox& box, const xVec3& center, const xVec3& dir, F32 dist, F3
 
 void xMat3x3Normalize(xMat3x3* o, const xMat3x3* m)
 {
-    xVec3Normalize((xVec3*)o, (xVec3*)m);
+    xVec3Normalize(&o->right, &m->right);
     xVec3Normalize(&o->up, &m->up);
     xVec3Normalize(&o->at, &m->at);
 }
@@ -249,7 +249,7 @@ F32 xMat3x3LookVec(xMat3x3* m, const xVec3* at)
         m->at.z = 0.0f;
         return temp_f31;
     }
-    if (((F32)__fabs(at->z) < 0.00001f) && ((F32)__fabs(at->x) < 0.00001f))
+    if ((FABS(at->z) < 0.00001f) && (FABS(at->x) < 0.00001f))
     {
         m->right.x = 1.0f;
         m->right.y = 0.0f;
