@@ -14,8 +14,16 @@
 static NPCPSData g_postoffice = {};
 static S32 g_lockarea;
 
-// see comment in header for why this is declared here
+static void NPCPS_copyMsgInfo(NPCMsg*, NPCMsg*, F32);
+static void NPCPS_queMessage(NPCMsg* msg);
 static S32 NPCPS_flagForMID(en_NPC_MSG_ID);
+static void NPCPS_MsgPoolInit(NPCPSData* npc, S32 unk);
+static void NPCPS_MsgPoolReset(NPCPSData* npc);
+static void NPCPS_CltPoolInit(NPCPSData* npc, S32 unk);
+static void NPCPS_CltPoolReset(NPCPSData* npc);
+static NPCPSData* NPCPS_postOffice();
+static S32 NPCPS_grabMsg();
+static void NPCPS_freeMsg(NPCMsg* inmsg);
 
 void zNPCMsg_Startup()
 {
