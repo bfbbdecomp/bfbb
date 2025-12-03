@@ -108,13 +108,10 @@ void zRumbleStartDistance(S32 pad_id, F32 real_dist, F32 max_dist, _tagRumbleTyp
     }
 }
 
-// Equivalent: regalloc
 void zRumbleStartEntDistance(xEnt* ent, F32 dist, _tagRumbleType type, F32 maxTime)
 {
-    xVec3* ent_pos = xEntGetPos(ent);
-    xVec3* player_pos = xEntGetPos(&globals.player.ent);
     xVec3 ent_player_dist;
-    xVec3Sub(&ent_player_dist, player_pos, ent_pos);
+    xVec3Sub(&ent_player_dist, xEntGetPos(&globals.player.ent), xEntGetPos(ent));
 
     zRumbleStartDistance(globals.currentActivePad, SQR(ent_player_dist.x) + SQR(ent_player_dist.z),
                          SQR(dist), type, maxTime);

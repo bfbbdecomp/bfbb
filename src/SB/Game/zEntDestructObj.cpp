@@ -3,10 +3,10 @@
 #include <types.h>
 
 static zParEmitter* sEmitDust;
+static zParEmitter* sEmitXplo;
+static zParEmitter* sEmitWeb;
 static zParEmitter* sEmitFire;
 static zParEmitter* sEmitSmoke;
-static zParEmitter* sEmitWeb;
-static zParEmitter* sEmitXplo;
 static zParEmitter* sShrapDefault;
 
 namespace
@@ -408,168 +408,129 @@ void zEntDestructObj_DestroyFX(zEntDestructObj* ent)
     }
 }
 
-S32 zEntDestructObjEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* baseUnk3)
+S32 zEntDestructObjEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* toParamWidget)
 {
-    zEntDestructObj* toDobj = (zEntDestructObj*)to;
-    F32 sp8;
+    zEntDestructObj* s = (zEntDestructObj*)to;
 
-    // Shrapnel Asset callbacks
-    //void (*temp_r12) (zShrapnelAsset*, xModelInstance*, xVec3*, void*);
-    void (*temp_r12_2)(zEntDestructObj&, void*);
-    void (*temp_r12_3)(zShrapnelAsset*, xModelInstance*, xVec3*, void (*)(zFrag*, zFragAsset*));
-
-    F32 temp_f1;
-    U32 temp_r3_2;
-    zShrapnelAsset* shrapnelDestroyAsset;
-    xEnt* temp_r4_2;
-    xModelInstance* temp_r4;
-    xModelInstance* temp_r4_3;
-
-    switch ((en_xEventTags)toEvent)
-    {
-    case eEventFastVisible:
+    switch (toEvent) {
     case eEventVisible:
-        xEntShow((xEnt*)to);
-        if ((toParam != NULL) && ((s32)(0.5f + toParam[0]) == 0x4D))
-        {
-            zFXPopOn(*toDobj, toParam[1], toParam[2]);
+    case eEventFastVisible:
+        xEntShow(s);
+        if (toParam && (S32)(0.5f + toParam[0]) == 77) {
+            zFXPopOn(*s, toParam[1], toParam[2]);
         }
         break;
-    case eEventFastInvisible:
     case eEventInvisible:
-        xEntHide((xEnt*)to);
-        if ((toParam != NULL) && ((s32)(0.5f + toParam[0]) == 0x4D))
-        {
-            zFXPopOff(*toDobj, toParam[1], toParam[2]);
+    case eEventFastInvisible:
+        xEntHide(s);
+        if (toParam && (S32)(0.5f + toParam[0]) == 77) {
+            zFXPopOff(*s, toParam[1], toParam[2]);
         }
         break;
     case eEventCollisionOn:
-        toDobj->chkby |= 0x18;
-        toDobj->bupdate((xEnt*)to, (xVec3*)&toDobj->model->Mat->pos);
+        s->chkby |= (XENT_COLLTYPE_PLYR | XENT_COLLTYPE_NPC);
+        s->bupdate(s, (xVec3*)&s->model->Mat->pos);
         break;
     case eEventCollisionOff:
-        toDobj->chkby &= 0xE7;
+        s->chkby &= (U8)~(XENT_COLLTYPE_PLYR | XENT_COLLTYPE_NPC);
         break;
     case eEventCollision_Visible_On:
-        toDobj->chkby |= 0x18;
-        xEntShow((xEnt*)to);
-        toDobj->bupdate((xEnt*)to, (xVec3*)&toDobj->model->Mat->pos);
-        if ((toParam != NULL) && ((s32)(0.5f + toParam[0]) == 0x4D))
-        {
-            zFXPopOn(*toDobj, toParam[1], toParam[2]);
+        s->chkby |= (XENT_COLLTYPE_PLYR | XENT_COLLTYPE_NPC);
+        xEntShow(s);
+        s->bupdate(s, (xVec3*)&s->model->Mat->pos);
+        if (toParam && (S32)(0.5f + toParam[0]) == 77) {
+            zFXPopOn(*s, toParam[1], toParam[2]);
         }
         break;
     case eEventCollision_Visible_Off:
-        toDobj->chkby &= 0xE7;
-        xEntHide((xEnt*)to);
-        if ((toParam != NULL) && ((s32)(0.5f + toParam[0]) == 0x4D))
-        {
-            zFXPopOff(*toDobj, toParam[1], toParam[2]);
+        s->chkby &= (U8)~(XENT_COLLTYPE_PLYR | XENT_COLLTYPE_NPC);
+        xEntHide(s);
+        if (toParam && (S32)(0.5f + toParam[0]) == 77) {
+            zFXPopOff(*s, toParam[1], toParam[2]);
         }
         break;
     case eEventCameraCollideOn:
-        zCollGeom_CamEnable((xEnt*)to);
+        zCollGeom_CamEnable(s);
         break;
     case eEventCameraCollideOff:
-        zCollGeom_CamDisable((xEnt*)to);
+        zCollGeom_CamDisable(s);
         break;
-    case eEventTeleportPlayer:
-        temp_r4 = toDobj->destroy_model;
-        if (temp_r4 != NULL)
-        {
-            SwapModel(toDobj, temp_r4);
+    case eEventDestroy:
+        if (s->destroy_model) {
+            SwapModel(s, s->destroy_model);
+        } else {
+            s->chkby &= (U8)~(XENT_COLLTYPE_PLYR | XENT_COLLTYPE_NPC);
+            xEntHide(s);
         }
-        else
-        {
-            toDobj->chkby &= 0xE7;
-            xEntHide((xEnt*)to);
+        zEntDestructObj_DestroyFX(s);
+        s->state = 2;
+        if (s->shrapnel_destroy && s->shrapnel_destroy->initCB) {
+            s->shrapnel_destroy->initCB(s->shrapnel_destroy, s->model, NULL, NULL);
         }
-        zEntDestructObj_DestroyFX((zEntDestructObj*)to);
-        toDobj->state = DOBJ_STATE_DESTROYED;
-        shrapnelDestroyAsset = toDobj->shrapnel_destroy;
-        if (shrapnelDestroyAsset != NULL)
-        {
-            //temp_r12 = shrapnelDestroyAsset->initCB;
-            if (shrapnelDestroyAsset->initCB != NULL)
-            {
-                shrapnelDestroyAsset->initCB(shrapnelDestroyAsset, toDobj->model, NULL, NULL);
-            }
+        if (s->destroy_notify) {
+            s->destroy_notify(*s, s->notify_context);
         }
-        temp_r12_2 = toDobj->destroy_notify;
-        if (temp_r12_2 != NULL)
-        {
-            temp_r12_2(*toDobj, toDobj->notify_context);
-        }
-        temp_r4_2 = toDobj->driver;
-        if (temp_r4_2 != NULL)
-        {
-            temp_r4_2->driving_count = (u8)(temp_r4_2->driving_count - 1);
-            toDobj->driver = NULL;
+        if (s->driver) {
+            s->driver->driving_count--;
+            s->driver = NULL;
         }
         break;
     case eEventReset:
-        zEntDestructObj_Reset((zEntDestructObj*)to, globals.sceneCur);
+        zEntDestructObj_Reset(s, globals.sceneCur);
         break;
-    default:
-        zEntAnimEvent((zEnt*)to, toEvent, toParam);
+    case eEventAnimPlay:
+    case eEventAnimPlayLoop:
+    case eEventAnimStop:
+    case eEventAnimPause:
+    case eEventAnimResume:
+    case eEventAnimTogglePause:
+    case eEventAnimPlayRandom:
+    case eEventAnimPlayMaybe:
+        zEntAnimEvent(s, toEvent, toParam);
         break;
     case eEventHit:
-        temp_r3_2 = toDobj->healthCnt;
-        if (temp_r3_2 != 0U)
-        {
-            toDobj->healthCnt = temp_r3_2 - 1;
-            if (toDobj->healthCnt != 0U)
-            {
-                temp_r4_3 = toDobj->hit_model;
-                if (temp_r4_3 != NULL)
-                {
-                    SwapModel(toDobj, temp_r4_3);
-                }
+        if (s->healthCnt) {
+            s->healthCnt--;
+            if (s->healthCnt && s->hit_model) {
+                SwapModel(s, s->hit_model);
             }
-            if (toDobj->healthCnt == 0U)
-            {
-                zEntEvent(to, to, eEventDestroy);
+            if (s->healthCnt == 0) {
+                zEntEvent(s, s, eEventDestroy);
             }
         }
         break;
     case eEventSetUpdateDistance:
-        if ((xUpdateCullMgr*)globals.updateMgr != NULL)
-        {
-            temp_f1 = toParam[0];
-            if (temp_f1 <= 0.0f)
-            {
-                xUpdateCull_SetCB(globals.updateMgr, to, xUpdateCull_AlwaysTrueCB, NULL);
-            }
-            else
-            {
-                sp8 = temp_f1 * temp_f1;
-                xUpdateCull_SetCB(globals.updateMgr, to, xUpdateCull_DistanceSquaredCB, &sp8);
+        if (globals.updateMgr) {
+            if (toParam[0] <= 0.0f) {
+                xUpdateCull_SetCB(globals.updateMgr, s, xUpdateCull_AlwaysTrueCB, NULL);
+            } else {
+                FloatAndVoid dist;
+                dist.f = SQR(toParam[0]);
+                xUpdateCull_SetCB(globals.updateMgr, s, xUpdateCull_DistanceSquaredCB, dist.v);
             }
         }
         break;
     case eEventHit_BubbleBounce:
-        zEntDestructObj_Hit((zEntDestructObj*)to, 0x2000U);
+        zEntDestructObj_Hit(s, 0x2000);
         break;
     case eEventHit_BubbleBash:
-        zEntDestructObj_Hit((zEntDestructObj*)to, 0x4000U);
+        zEntDestructObj_Hit(s, 0x4000);
         break;
     case eEventHit_PatrickSlam:
-        zEntDestructObj_Hit((zEntDestructObj*)to, 0x400U);
+        zEntDestructObj_Hit(s, 0x400);
         break;
     case eEventHit_Throw:
-        zEntDestructObj_Hit((zEntDestructObj*)to, 0x800U);
+        zEntDestructObj_Hit(s, 0x800);
         break;
     case eEventLaunchShrapnel:
-        zShrapnelAsset* shrapnelAsset = (zShrapnelAsset*)baseUnk3;
-        if (baseUnk3 != NULL)
-        {
-            temp_r12_3 = shrapnelAsset->initCB;
-            if (temp_r12_3 != NULL)
-            {
-                temp_r12_3(shrapnelAsset, toDobj->model, NULL, NULL);
+        if (toParamWidget) {
+            zShrapnelAsset* shrap = (zShrapnelAsset*)toParamWidget;
+            if (shrap->initCB) {
+                shrap->initCB(shrap, s->model, NULL, NULL);
             }
         }
         break;
     }
-    return eEventEnable;
+
+    return 1;
 }
