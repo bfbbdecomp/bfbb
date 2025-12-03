@@ -45,18 +45,6 @@ struct iSndFileInfo
     };
 };
 
-// Size: 0x20
-// This was not in dwarf data
-struct vinfo
-{
-    _AXVPB* voice;
-    U32 x4;
-    U32 x8;
-    S32 buffer[2];
-    U32 _0x14;
-    S32 buffer2[2];
-};
-
 // Size: ???
 // Not in dwarf data
 struct sDSPADPCM
@@ -111,6 +99,7 @@ void iSndResume();
 F32 iSndGetVol(U32 snd);
 
 // FIXME: delete these
+struct vinfo;
 U32 SampleToNybbleAddress(U32 sample);
 void iSndCalcVol(xSndVoiceInfo* xSndVoiceInfo, vinfo* vinfo);
 void iSndCalcVol3d(xSndVoiceInfo* xSndVoiceInfo, vinfo* vinfo);
