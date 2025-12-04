@@ -9,6 +9,7 @@ namespace std
 
 #ifndef INLINE
     float atan2f(float y, float x);
+    float atan(float x);
     float sinf(float x);
     float cosf(float x);
     float tanf(float x);
@@ -23,6 +24,11 @@ namespace std
     inline float atan2f(float y, float x)
     {
         return (float)atan2((double)y, (double)x);
+    }
+
+    inline float atan(float x)
+    {
+        return (float)atan((double)x);
     }
 
     inline float sinf(float x)

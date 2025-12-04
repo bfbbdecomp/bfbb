@@ -3,6 +3,16 @@
 
 #include "xFile.h"
 #include "rpworld.h"
+#include "xCamera.h"
+
+#define XCUTSCENEDATA_TYPE_CAMERA 3
+#define XCUTSCENEDATA_TYPE_SOUND 5
+#define XCUTSCENEDATA_TYPE_6 6
+
+struct xCutsceneAnimHdr {
+    U32 RootIndex;
+    F32 Translate[3];
+};
 
 struct xCutsceneInfo
 {
@@ -34,9 +44,6 @@ struct xCutsceneData
     };
 };
 
-#define XCUTSCENEDATA_TYPE_SOUND 5
-#define XCUTSCENEDATA_TYPE_6 6
-
 struct xCutsceneBreak
 {
     F32 Time;
@@ -56,8 +63,13 @@ struct XCSNNosey
     void* userdata;
     S32 flg_nosey;
 
-    void CanRenderNow();
-    void UpdatedAnimated(RpAtomic*, RwMatrixTag*, U32, U32);
+    void CanRenderNow()
+    {
+    }
+
+    void UpdatedAnimated(RpAtomic*, RwMatrixTag*, U32, U32)
+    {
+    }
 };
 
 struct xCutscene
@@ -115,6 +127,7 @@ xCutscene* xCutscene_Create(U32 id);
 S32 xCutscene_Destroy(xCutscene* csn);
 S32 xCutscene_LoadStart(xCutscene* csn);
 void xCutscene_SetSpeed(xCutscene* csn, F32 speed);
+void xCutscene_SetCamera(xCutscene* csn, xCamera* cam);
 F32 xCutsceneConvertBreak(float time, xCutsceneBreak* breaklist, U32 breakcount, int idx);
 S32 xCutscene_Update(xCutscene* csn, F32 dt);
 void CutsceneShadowRender(CutsceneShadowModel* smod);
