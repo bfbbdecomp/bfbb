@@ -166,8 +166,6 @@ struct NPCAreaInfo
     xVec3 pos_origin;
 };
 
-
-
 struct NPCMsg
 {
     en_NPC_MSG_ID msgid;
@@ -215,13 +213,10 @@ void zNPCMsg_Shutdown();
 void zNPCMsg_ScenePrepare();
 void zNPCMsg_SceneReset();
 void zNPCMsg_Timestep(xScene* xscn, F32 dt);
-/* TODO: en_NPC_MSG_ID definition in zNPCTypeCommon.h is causing issues here */
 void zNPCMsg_AreaNotify(zNPCCommon* sender, en_NPC_MSG_ID msgid, F32 rad, S32 filter,
                         en_NPCTYPES toNPCType);
 void zNPCMsg_AreaNotify(zNPCCommon* sender, en_NPC_MSG_ID msgid, F32 rad, S32 filter,
                         en_NPCTYPES* toNPCType);
-
-
 void zNPCMsg_AreaNotify(zNPCCommon* sender, NPCMsg* msg, F32 radius, S32 filter,
                         en_NPCTYPES* npcTypeList);
 void zNPCMsg_AreaPlayerStun(F32 stuntime, F32 radius, xVec3* pos);
@@ -230,14 +225,5 @@ void zNPCMsg_SendMsg(en_NPC_MSG_ID msgevent, U32 npc_id);
 void zNPCMsg_SendMsg(en_NPC_MSG_ID msgevent, zNPCCommon* npc_sendto);
 void zNPCMsg_SendMsg(NPCMsg* inmsg, zNPCCommon* npc_sendto);
 void zNPCMsg_SendMsg(NPCMsg* inmsg, F32 delay, zNPCCommon* npc_sendto);
-static void NPCPS_copyMsgInfo(NPCMsg*, NPCMsg*, F32);
-static void NPCPS_queMessage(NPCMsg* msg);
-static void NPCPS_MsgPoolInit(NPCPSData* npc, S32 unk);
-static void NPCPS_MsgPoolReset(NPCPSData* npc);
-static void NPCPS_CltPoolInit(NPCPSData* npc, S32 unk);
-static void NPCPS_CltPoolReset(NPCPSData* npc);
-static NPCPSData* NPCPS_postOffice();
-static S32 NPCPS_grabMsg();
-static void NPCPS_freeMsg(NPCMsg* inmsg);
 
 #endif
