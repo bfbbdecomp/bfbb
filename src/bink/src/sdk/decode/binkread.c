@@ -695,6 +695,7 @@ s32 BinkSetSoundSystem(BINKSNDSYSOPEN open, u32 param)
 // (undefined *param_1,undefined2 *param_2,uint param_3)
 void conv16to8()
 {
+
 }
 
 void checksound(u32 tmp)
@@ -986,9 +987,9 @@ HBINKTRACK BinkOpenTrack(HBINK bnk, u32 trackindex)
 
 void BinkCloseTrack(HBINKTRACK bnkt)
 {
-    if (bnkt != 0)
+    if (bnkt)
     {
-        if (bnkt->sndcomp != 0)
+        if (bnkt->sndcomp)
         {
             BinkAudioDecompressClose(bnkt->sndcomp);
             bnkt->sndcomp = 0;
