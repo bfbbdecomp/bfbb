@@ -1605,6 +1605,42 @@ S32 zNPCGoalAlertMonsoon::Resume(F32 dt, void* updCtxt)
     return zNPCGoalCommon::Resume(dt, updCtxt);
 }
 
+void zNPCGoalAlertMonsoon::MoveCorner(F32 dt)
+{
+    zNPCRobot* npc = (zNPCRobot*)(psyche->clt_owner);
+    F32 ds2_corn;
+    xVec3 dir_corn;
+    if (*(U8*)(&npc->npcset.allowChase) && npc->arena.IsReady() && (npc->arena.Radius(1.0f) > 2.0f))
+    {
+        ds2_corn = npc->XYZDstSqToPos(&pos_corner, 0);
+        if (ds2_corn < SQ(0.5f))
+        {
+            npc->CornerOfArena(&pos_corner, -1.0f);
+            ds2_corn = npc->XYZDstSqToPos(&pos_corner, NULL);
+        }
+        if (npc->DBG_IsNormLog(eNPCDCAT_Ten, 2))
+        {
+            xDrawSetColor(g_BLUE);
+            xDrawSphere2(&pos_corner, 0.1f, 12);
+        }
+        if ((tmr_reload >= 0.0f) && (tmr_reload < 1.0f))
+        {
+            npc->ThrottleAdjust(dt, 1.5, -1.0);
+        }
+        else if (ds2_corn < 2.0f)
+        {
+            npc->ThrottleAdjust(dt, 1.5f, -1.0f);
+        }
+        else
+        {
+            npc->ThrottleAdjust(dt, 3.5f, -1.0f);
+        }
+        npc->XYZVecToPos(&dir_corn, &pos_corner);
+        xVec3Normalize(&dir_corn, &dir_corn);
+        npc->ThrottleApply(dt, &dir_corn, 0);
+    }
+}
+
 S32 zNPCGoalAlertSleepy::Enter(F32 dt, void* updCtxt)
 {
     zNPCRobot* npc = (zNPCRobot*)(psyche->clt_owner);
@@ -2081,6 +2117,42 @@ void zNPCGoalAlertSlick::GetInArena(F32 dt)
     rot = npc->TurnToFace(dt, &dir_want, -1.0f);
     NPCC_ang_toXZDir(npc->frame->rot.angle + rot, &dir);
     npc->ThrottleApply(dt, &dir, 0);
+}
+
+void zNPCGoalAlertSlick::MoveCorner(F32 dt)
+{
+    zNPCRobot* npc = (zNPCRobot*)(psyche->clt_owner);
+    F32 ds2_corn;
+    xVec3 dir_corn;
+    if (*(U8*)(&npc->npcset.allowChase) && npc->arena.IsReady() && (npc->arena.Radius(1.0f) > 2.0f))
+    {
+        ds2_corn = npc->XYZDstSqToPos(&pos_corner, 0);
+        if (ds2_corn < SQ(0.5f))
+        {
+            npc->CornerOfArena(&pos_corner, -1.0f);
+            ds2_corn = npc->XYZDstSqToPos(&pos_corner, NULL);
+        }
+        if (npc->DBG_IsNormLog(eNPCDCAT_Ten, 2))
+        {
+            xDrawSetColor(g_BLUE);
+            xDrawSphere2(&pos_corner, 0.1f, 12);
+        }
+        if ((tmr_reload >= 0.0f) && (tmr_reload < 1.0f))
+        {
+            npc->ThrottleAdjust(dt, 1.5, -1.0);
+        }
+        else if (ds2_corn < 2.0f)
+        {
+            npc->ThrottleAdjust(dt, 1.5f, -1.0f);
+        }
+        else
+        {
+            npc->ThrottleAdjust(dt, 3.5f, -1.0f);
+        }
+        npc->XYZVecToPos(&dir_corn, &pos_corner);
+        xVec3Normalize(&dir_corn, &dir_corn);
+        npc->ThrottleApply(dt, &dir_corn, 0);
+    }
 }
 
 S32 zNPCGoalAttackCQC::Enter(F32 dt, void* updCtxt)
