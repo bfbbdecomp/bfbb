@@ -700,8 +700,10 @@ public:
     S32 Resume(F32 dt, void* updCtxt);
     S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
     void PeteAttackBegin();
-    void PeteAttackParSys(F32 dt, void* updCtxt);
+    void PeteAttackParSys(F32 dt, S32 param_2);
     void EmitSteam(F32 dt);
+    void ChkPrelimTran(en_trantype* trantype, S32* nextgoal);
+    S32 MoveToHome(F32 dt);
     S32 flg_attack; // offset 0x4C, size 0x4
     S32 cnt_nextlos; // offset 0x50, size 0x4
     F32 len_laser; // offset 0x54, size 0x4
@@ -811,8 +813,8 @@ struct zNPCGoalAlertChomper : zNPCGoalCommon
         xGoal::SetFlags(6);
     }
 
-    S32 CheckSpot();
-    S32 MoveEvadePos(xVec3* pos, F32 dt);
+    S32 CheckSpot(F32);
+    S32 MoveEvadePos(const xVec3* pos, F32 dt);
     S32 CalcEvadePos(xVec3* pos);
     void GetInArena(F32 dt);
     void CirclePlayer(F32 dt);
@@ -900,6 +902,7 @@ public:
     S32 NPCMessage(NPCMsg* mail);
     void CacheAimPoint();
     S32 ShootBlob(S32 zapidx);
+    S32 ShootBlob(F32, S32 zapidx);
     S32 flg_attack; // offset 0x54, size 0x4
     S32 idx_launch; // offset 0x58, size 0x4
     xVec3 pos_aimbase; // offset 0x5C, size 0xC
@@ -921,6 +924,8 @@ public:
     void ModifyAnimSpeed();
     void FXStreakPrep();
     void FXStreakDone();
+    S32 PlayerTests(xVec3* pos_vert, F32 dt);
+    void ChkPrelimTran(en_trantype* trantype, S32* nextgoal);
     S32 flg_attack; // offset 0x54, size 0x4
     xVec3 pos_lastVert; // offset 0x58, size 0xC
     xVec3 pos_oldVert; // offset 0x64, size 0xC
@@ -938,6 +943,7 @@ public:
 
     S32 Enter(F32 dt, void* updCtxt);
     S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
+    void BreathAttack();
 };
 
 struct zNPCGoalAttackFodder : zNPCGoalPushAnim
@@ -1044,7 +1050,7 @@ struct zNPCGoalDogLaunch : zNPCGoalCommon
     void ViciousAttack(xVec3* unk1, xVec3* unk2, zMovePoint* unk3, S32 unk4);
     void PreCollide();
     S32 BallisticUpdate(F32 dt);
-    void BubTrailCone(xVec3* pos, S32 num, xVec3* pos_rand, xVec3* vel_rand, xMat3x3* mat);
+    void BubTrailCone(const xVec3* pos, S32 num, const xVec3* pos_rand, const xVec3* vel_rand, const xMat3x3* mat);
     void FurryFlurry();
 
     void SilentSwimout(xVec3* unk1, xVec3* unk2, zMovePoint* unk3);
