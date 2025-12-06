@@ -3444,6 +3444,39 @@ S32 zNPCGoalRespawn::Exit(F32 dt, void* updCtxt)
     return xGoal::Exit(dt, updCtxt);
 }
 
+S32 zNPCGoalRespawn::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    S32 nextgoal = 0;
+    zNPCRobot* npc = (zNPCRobot*)(psyche->clt_owner);
+    if (tmr_respawn < 0.0f)
+    {
+        *trantype = GOAL_TRAN_SET;
+        nextgoal = NPC_GOAL_ALERT;
+    }
+    if (*trantype != GOAL_TRAN_NONE)
+    {
+        return nextgoal;
+    }
+    if ((tmr_robobits < 0.0f) ? 1 : 0)
+    {
+        if (!xEntIsVisible(npc))
+        {
+            npc->SndPlayRandom(NPC_STYP_RESPAWN);
+            xEntShow(npc);
+            npc->model->Flags |= 4;
+            npc->model->Flags |= 2;
+        }
+        DoAppearFX(dt);
+        tmr_respawn = MAX(-1.0f, (tmr_respawn - dt));
+    }
+    else
+    {
+        tmr_robobits = MAX(-1.0f, (tmr_robobits - dt));
+    }
+    npc->VelStop();
+    return xGoal::Process(trantype, dt, updCtxt, xscn);
+}
+
 S32 zNPCGoalRespawn::InputInfo(NPCSpawnInfo* info)
 {
     zNPCRobot* npc = ((zNPCRobot*)(psyche->clt_owner));
