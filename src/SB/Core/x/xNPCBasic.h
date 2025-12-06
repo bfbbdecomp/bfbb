@@ -22,6 +22,7 @@ enum en_npcdcat
     eNPCDCAT_Zero,
     eNPCDCAT_Seven = 7,
     eNPCDCAT_Eight = 8,
+    eNPCDCAT_Ten = 10,
     eNPCDCAT_Eleven = 11,
     eNPCDCAT_Thirteen = 13,
 };
