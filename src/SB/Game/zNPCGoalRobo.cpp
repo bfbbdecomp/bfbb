@@ -414,6 +414,62 @@ S32 zNPCGoalAlert::Exit(F32 dt, void* updCtxt)
     return xGoal::Exit(dt, updCtxt);
 }
 
+S32 zNPCGoalAlert::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    S32 nextgoal = 0;
+    zNPCRobot* npc = (zNPCRobot*)(psyche->clt_owner);
+    xVec3 dir_dest;
+    if (globals.player.Health < 1)
+    {
+        zNPCGoalLoopAnim* taunt = (zNPCGoalLoopAnim*)psyche->FindGoal(NPC_GOAL_TAUNT);
+        if (taunt != NULL)
+        {
+            taunt->LoopCountSet(1000);
+            *trantype = GOAL_TRAN_PUSH;
+            nextgoal = NPC_GOAL_TAUNT;
+        }
+    }
+    else if (globals.player.DamageTimer > 0.5f)
+    {
+        zNPCGoalLoopAnim* taunt = (zNPCGoalLoopAnim*)psyche->FindGoal(NPC_GOAL_TAUNT);
+        if (taunt != NULL)
+        {
+            taunt->LoopCountSet(1);
+            *trantype = GOAL_TRAN_PUSH;
+            nextgoal = NPC_GOAL_TAUNT;
+        }
+    }
+    else if (npc->SomethingWonderful() != 0)
+    {
+        *trantype = GOAL_TRAN_SET;
+        nextgoal = NPC_GOAL_IDLE;
+    }
+    else if (!npc->arena.IsReady())
+    {
+        *trantype = GOAL_TRAN_SET;
+        nextgoal = NPC_GOAL_IDLE;
+    }
+    if (*trantype != GOAL_TRAN_NONE)
+    {
+        return nextgoal;
+    }
+    if (flg_user != 0)
+    {
+        DoAutoAnim(NPC_GSPOT_START, 0);
+        flg_user = 0;
+    }
+    xVec3Sub(&dir_dest, xEntGetPos(&globals.player.ent), npc->Pos());
+    dir_dest.y = 0.0f;
+    if (xVec3Length2(&dir_dest) > 1.0f)
+    {
+        xVec3Normalize(&dir_dest, &dir_dest);
+        npc->TurnToFace(dt, &dir_dest, -1.0f);
+    }
+    npc->ThrottleAdjust(dt, 0.0f, -1.0f);
+    npc->ThrottleApply(dt, NPCC_faceDir(npc), 0);
+    return xGoal::Process(trantype, dt, updCtxt, xscn);
+}
+
 S32 zNPCGoalAlertFodder::Enter(F32 dt, void* updCtxt)
 {
     this->flg_attack = 0;
@@ -771,6 +827,125 @@ S32 zNPCGoalAlertFodBomb::Resume(F32 dt, void* updCtxt)
     return zNPCGoalCommon::Resume(dt, updCtxt);
 }
 
+S32 zNPCGoalAlertFodBomb::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    S32 nextgoal = 0;
+    zNPCFodBomb* npc = (zNPCFodBomb *)(psyche->clt_owner);
+    zNPCGoalTaunt* taunt;
+    en_alertbomb old_alertbomb;
+    S32 subenter;
+    F32 tym_countdown;
+    F32 pct_remain;
+    zNPCGoalAfterlife* wanna;
+
+    if (globals.player.Health < 1)
+    {
+        taunt = (zNPCGoalTaunt*)(psyche->FindGoal(NPC_GOAL_TAUNT));
+        taunt->LoopCountSet(1000);
+        *trantype = GOAL_TRAN_PUSH;
+        nextgoal = NPC_GOAL_TAUNT;
+    }
+    else if (globals.player.DamageTimer > 0.5f)
+    {
+        *trantype = GOAL_TRAN_PUSH;
+        nextgoal = NPC_GOAL_TAUNT;
+    }
+    else if (npc->SomethingWonderful() != 0)
+    {
+        *trantype = GOAL_TRAN_SET;
+        nextgoal = NPC_GOAL_IDLE;
+    }
+    else if (!npc->arena.IncludesPlayer(0, 0))
+    {
+        *trantype = GOAL_TRAN_SET;
+        nextgoal = NPC_GOAL_IDLE;
+    }
+    if (*trantype != GOAL_TRAN_NONE)
+    {
+        return nextgoal;
+    }
+    else
+    {
+        old_alertbomb = alertbomb;
+        subenter = flg_info & 2;
+        flg_info &= 0xFFFFFFF9;
+        tym_countdown = 6.0f;
+        if (zGameExtras_CheatFlags() & 0x800)
+        {
+            tym_countdown = 4.0f;
+        }
+        switch (alertbomb)
+        {
+            case FODBOMB_ALERT_NOTICE:
+                alertbomb = FODBOMB_ALERT_SONAR;
+                *trantype = GOAL_TRAN_PUSH;
+                nextgoal = NPC_GOAL_NOTICE;
+                break;
+            case FODBOMB_ALERT_SONAR:
+                if (subenter)
+                {
+                    DoAutoAnim(NPC_GSPOT_STARTALT, 0);
+                    tmr_countdown = tym_countdown;
+                    tmr_nextping = 2.0f;
+                    npc->BlinkerReset();
+                }
+                tym_countdown = (tmr_countdown / tym_countdown);
+                pct_remain = CLAMP(tym_countdown, 0.0f, 1.0f);
+                npc->BlinkerUpdate(dt, pct_remain);
+                if (npc->arena.IncludesNPC(npc, 0, 0) == 0)
+                {
+                    alertbomb = FODBOMB_ALERT_TERMINAL;
+                }
+                else
+                {
+                    SonarHoming(dt);
+                    if ((tmr_nextping < 0.0f) ? 1 : 0)
+                    {
+                        npc->SndPlayRandom(NPC_STYP_WARNBANG);
+                        if (tmr_countdown > 2.0f)
+                        {
+                            tmr_nextping = 2.0f;
+                        }
+                        else
+                        {
+                            tmr_nextping = 1.0f;
+                        }
+                    }
+                    else
+                    {
+                        tmr_nextping = MAX(-1.0f, (tmr_nextping - dt));
+                    }
+                    if (tmr_countdown < 0.0f)
+                    {
+                        alertbomb = FODBOMB_ALERT_TERMINAL;
+                    }
+                    tmr_countdown = MAX(-1.0f, (tmr_countdown - dt));
+                }
+                break;
+            case FODBOMB_ALERT_TERMINAL:
+                Detonate();
+                wanna = (zNPCGoalAfterlife*)(psyche->FindGoal(NPC_GOAL_AFTERLIFE));
+                wanna->DieWithAWhimper();
+                *trantype = GOAL_TRAN_SET;
+                nextgoal = NPC_GOAL_AFTERLIFE;
+                break;
+        }
+        if (alertbomb != old_alertbomb)
+        {
+            flg_info |= 2;
+        }
+        if (*trantype != GOAL_TRAN_NONE)
+        {
+            return nextgoal;
+        }
+        else
+        {
+            return xGoal::Process(trantype, dt, updCtxt, NULL);
+        }
+    }
+    return nextgoal;
+}
+
 void zNPCGoalAlertFodBomb::Detonate()
 {
     zNPCFodBomb* npc = *(zNPCFodBomb**)(&psyche->clt_owner);
@@ -866,6 +1041,98 @@ void zNPCGoalAlertFodBomb::SonarHoming(F32 dt)
     fVar4 = (npc->TurnToFace(dt, &xStack_9c, spd_turnrate));
     NPCC_ang_toXZDir(npc->frame->rot.angle + fVar4, &dir);
     npc->ThrottleApply(dt, &dir, 0);
+}
+
+S32 zNPCGoalAlertFodBzzt::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    en_alertbzzt old_alertbzzt;
+    S32 nextgoal = 0;
+    zNPCFodBzzt* npc = (zNPCFodBzzt *)(psyche->clt_owner);
+    zNPCGoalTaunt* taunt;
+    S32 subenter;
+    zNPCGoalAfterlife* wanna;
+    if (globals.player.Health < 1)
+    {
+        taunt = (zNPCGoalTaunt*)(psyche->FindGoal(NPC_GOAL_TAUNT));
+        taunt->LoopCountSet(1000);
+        *trantype = GOAL_TRAN_PUSH;
+        nextgoal = NPC_GOAL_TAUNT;
+    }
+    else if (globals.player.DamageTimer > 0.5f)
+    {
+        *trantype = GOAL_TRAN_PUSH;
+        nextgoal = NPC_GOAL_TAUNT;
+        zNPC_SNDStop(eNPCSnd_FodBzztAttack);
+    }
+    else if (npc->SomethingWonderful() != 0)
+    {
+        *trantype = GOAL_TRAN_SET;
+        nextgoal = NPC_GOAL_IDLE;
+    }
+    else if (!(npc->tmr_hokeypokey < 0))
+    {
+        *trantype = GOAL_TRAN_PUSH;
+        nextgoal = NPC_GOAL_HOKEYPOKEY;
+    }
+    else if (!npc->arena.IncludesPlayer(0, 0))
+    {
+        *trantype = GOAL_TRAN_SET;
+        nextgoal = NPC_GOAL_IDLE;
+    }
+    if (*trantype != GOAL_TRAN_NONE)
+    {
+        return nextgoal;
+    }
+    old_alertbzzt = alertbzzt;
+    subenter = flg_info & 2;
+    flg_info &= 0xFFFFFFF9;
+    if (alertbzzt == FODBZZT_ALERT_ARENA)
+    {
+        alertbzzt = FODBZZT_ALERT_CHASE;
+        old_alertbzzt = FODBZZT_ALERT_ARENA;
+        subenter = 1;
+    }
+    switch (alertbzzt)
+    {
+        case FODBZZT_ALERT_NOTICE:
+            alertbzzt = FODBZZT_ALERT_CHASE;
+            *trantype = GOAL_TRAN_PUSH;
+            nextgoal = NPC_GOAL_NOTICE;
+            zNPC_SNDPlay3D(eNPCSnd_FodBzztAttack, npc);
+            break;
+        case FODBZZT_ALERT_ARENA:
+            if (subenter)
+            {
+                DoAutoAnim(NPC_GSPOT_STARTALT, 0);
+                ToggleOrbit();
+            }
+            npc->FacePlayer(dt, 3 * PI);
+            GetInArena(dt);
+            DeathRayUpdate(dt);
+            break;
+        case FODBZZT_ALERT_CHASE:
+            if (subenter)
+            {
+                alertbzzt = FODBZZT_ALERT_CHASE;
+                DoAutoAnim(NPC_GSPOT_STARTALT, 0);
+            }
+            OrbitPlayer(dt);
+            DeathRayUpdate(dt);
+            break;
+    }
+    if (alertbzzt != old_alertbzzt)
+    {
+        flg_info |= 2;
+    }
+    if (*trantype != GOAL_TRAN_NONE)
+    {
+        return nextgoal;
+    }
+    else
+    {
+        return xGoal::Process(trantype, dt, updCtxt, NULL);
+    }
+    return nextgoal;
 }
 
 S32 zNPCGoalAlertFodBzzt::Enter(F32 dt, void* updCtxt)
@@ -1035,6 +1302,45 @@ void zNPCGoalAlertChomper::GetInArena(F32 dt)
     rot = npc->TurnToFace(dt, &dir_want, -1.0f);
     NPCC_ang_toXZDir(npc->frame->rot.angle + rot, &dir);
     npc->ThrottleApply(dt, &dir, 0);
+}
+
+S32 zNPCGoalAlertChomper::CheckSpot(F32 dt)
+{
+    S32 plyrInSpot;
+    zNPCRobot* npc = (zNPCRobot*)(this->psyche->clt_owner);
+    xVec3 pos_plyr;
+    xVec3 dir_plyr;
+    F32 dy;
+    F32 dst_plyr;
+    F32 dot_plyr;
+
+    zEntPlayer_PredictPos(&pos_plyr, 1.3f, 1.0f, 1);
+    dst_plyr = npc->XZDstSqToPos(&pos_plyr, NULL, NULL);
+    if (npc->XZDstSqToPlayer(NULL, NULL) < dst_plyr)
+    {
+        pos_plyr = *xEntGetPos(&globals.player.ent);
+    }
+    dst_plyr = npc->XZDstSqToPos(&pos_plyr, &dir_plyr, &dy);
+    dst_plyr = xsqrt(dst_plyr);
+    if (xabs(dy) > 3.0f)
+    {
+        plyrInSpot = 0;
+    }
+    else if (dst_plyr < 0.3f)
+    {
+        plyrInSpot = 1;
+    }
+    else if (dst_plyr > 2.5f)
+    {
+        plyrInSpot = 0;
+    }
+    else
+    {
+        dir_plyr *= 1.0f / dst_plyr;
+        dot_plyr = xVec3Dot(&dir_plyr, NPCC_faceDir(npc));
+        plyrInSpot = (dot_plyr < 0.86f) ? 0 : 1;
+    }
+    return plyrInSpot;
 }
 
 S32 zNPCGoalAlertHammer::Enter(F32 dt, void* updCtxt)
@@ -1456,6 +1762,57 @@ S32 zNPCGoalAlertPuppy::Resume(F32 dt, void* updCtxt)
     zNPCChomper* npc = ((zNPCChomper*)(psyche->clt_owner));
     flg_info |= 2;
     return zNPCGoalCommon::Resume(dt, updCtxt);
+}
+
+S32 zNPCGoalAlertPuppy::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    S32 nextgoal = 0;
+    en_alertpuppy old_alertpup;
+    zNPCRobot* npc = (zNPCRobot*)(psyche->clt_owner);
+    if (npc->SomethingWonderful() != 0)
+    {
+        *trantype = GOAL_TRAN_SET;
+        nextgoal = NPC_GOAL_IDLE;
+    }
+    if (*trantype != GOAL_TRAN_NONE)
+    {
+        return nextgoal;
+    }
+    old_alertpup = alertpup;
+    flg_info &= 0xFFFFFFF9;
+    switch (alertpup)
+    {
+        case PUPPY_ALERT_YAPPY:
+            alertpup = PUPPY_ALERT_CHASE;
+            nextgoal = NPC_GOAL_DOGBARK;
+            *trantype = GOAL_TRAN_PUSH;
+            break;
+        case PUPPY_ALERT_CHASE:
+            alertpup = PUPPY_ALERT_ATTAAAAACK;
+            nextgoal = NPC_GOAL_DOGDASH;
+            *trantype = GOAL_TRAN_PUSH;
+            break;
+        case PUPPY_ALERT_ATTAAAAACK:
+            alertpup = PUPPY_ALERT_DISAPPEAR;
+            nextgoal = NPC_GOAL_DOGPOUNCE;
+            *trantype = GOAL_TRAN_PUSH;
+            break;
+        case PUPPY_ALERT_DISAPPEAR:
+            zNPCGoalAfterlife* wanna = (zNPCGoalAfterlife*)(psyche->FindGoal(NPC_GOAL_AFTERLIFE));
+            wanna->DieWithAWhimper();
+            *trantype = GOAL_TRAN_SET;
+            nextgoal = NPC_GOAL_AFTERLIFE;
+            break;
+    }
+    if (alertpup != old_alertpup)
+    {
+        flg_info |= 2;
+    }
+    if (*trantype != GOAL_TRAN_NONE)
+    {
+        return nextgoal;
+    }
+    return xGoal::Process(trantype, dt, updCtxt, xscn);
 }
 
 S32 zNPCGoalAlertChuck::Enter(F32 dt, void* updCtxt)
@@ -2796,6 +3153,41 @@ S32 zNPCGoalKnock::InputInfo(NPCDamageInfo* info)
     return flg_info;
 }
 
+S32 zNPCGoalWound::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    S32 nextgoal = 0;
+    zNPCRobot* npc = (zNPCRobot*)(psyche->clt_owner);
+    npc->ThrottleApply(dt, &dir_fling, 0);
+    npc->ThrottleAdjust(dt, 0.0f, 7.0f);
+    if (flg_knock & 8)
+    {
+        *trantype = GOAL_TRAN_SET;
+        nextgoal = 0x4e475264;
+    }
+    if (*trantype != GOAL_TRAN_NONE)
+    {
+        return nextgoal;
+    }
+    if (flg_pushanim & 0x10000)
+    {
+        if
+        (
+        (anid_played != npc->AnimCurStateID()) ||
+        (npc->AnimTimeRemain(0) <= (dt + 0.001f)) ||
+        (flg_pushanim & 1)
+        )
+        {
+            *trantype = GOAL_TRAN_SET;
+            nextgoal = 0x4e475234;
+        }
+    }
+    else
+    {
+        nextgoal = zNPCGoalPushAnim::Process(trantype, dt, updCtxt, xscn);
+    }
+    return nextgoal;
+}
+
 S32 zNPCGoalWound::NPCMessage(NPCMsg* msg)
 {
     switch (msg->msgid)
@@ -3094,6 +3486,42 @@ S32 zNPCGoalTubeDuckling::Resume(F32 dt, void* updCtxt)
     dst_preOrbit = xsqrt(dst_preOrbit);
     npc->VelStop();
     return zNPCGoalCommon::Resume(dt, updCtxt);
+}
+
+S32 zNPCGoalTubeDuckling::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    S32 nextgoal = 0;
+    zNPCTubelet* npc = (zNPCTubelet*)(psyche->clt_owner);
+    ChkPrelimTran(trantype, &nextgoal);
+    if (*trantype != GOAL_TRAN_NONE)
+    {
+        return nextgoal;
+    }
+    else
+    {
+        if (npc->tub_paul->tubespot == ROBO_TUBE_MARY)
+        {
+            if (flg_duckling & 1)
+            {
+                DuckStackInterpInit();
+                flg_duckling &= 0xFFFFFFFE;
+            }
+            if (DuckStackInterp(dt) == 0)
+            {
+                flg_duckling &= 0xFFFFFFFD;
+            }
+            tmr_outward = 1.0f;
+            xVec3 vec = *npc->tub_paul->Pos() - npc->frame->mat.pos;
+            vec.y = 0.0f;
+            dst_preOrbit = xVec3Length(&vec);
+        }
+        else
+        {
+            flg_duckling |= 3;
+            MoveFrolic(dt);
+        }
+        return xGoal::Process(trantype, dt, updCtxt, NULL);
+    }
 }
 
 void zNPCGoalTubeDuckling::ChkPrelimTran(en_trantype* trantype, int* nextgoal)
