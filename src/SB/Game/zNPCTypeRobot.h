@@ -191,11 +191,14 @@ struct zNPCFodBomb : zNPCRobot
     void ParseINI();
     void Setup();
     void BlinkerReset();
+    void BlinkerUpdate(F32 dt, F32 pct_timeRemain);
+
 };
 
 struct zNPCFodBzzt : zNPCRobot
 {
     volatile static S32 cnt_alerthokey;
+    static F32 tmr_hokeypokey;
     static NPCLaser laser;
 
     RwRGBA rgba_discoLight;
