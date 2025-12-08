@@ -290,7 +290,73 @@ float std::logf(float x)
     return (float)log((double)x);
 }
 
-static void xcsCalcAnimMatrices(RwMatrixTag* animMat, RpAtomic* model, xCutsceneAnimHdr* ahdr, F32 time, U32 tworoot)
+// TODO: general pointer/index mismatching in here
+//       instructions and control flow should be close match though
+void xCutscene_SetCamera(xCutscene* csn, xCamera* cam)
+{
+    xCutsceneData* data = (xCutsceneData*)&csn->Play[1];
+    for (U32 i = 0; i < csn->Play->NumData; i++)
+    {
+        if (data[i].DataType == XCUTSCENEDATA_TYPE_CAMERA)
+        {
+            U32 dataIndex = data[i + 1].DataType;
+            S32 frame = std::floorf(30.0f * csn->CamTime);
+            zFlyKey* keys = (zFlyKey*)((char*)&data[i] + 0x14);
+
+            F32 lerp;
+            if (keys[i + 1].frame < frame)
+            {
+                lerp = 0.0f;
+            }
+            else if (keys[i].frame >= frame)
+            {
+                lerp = 1.0f;
+                keys += keys[i].frame - 2;
+            }
+            else
+            {
+                lerp = 30.0f * csn->CamTime - std::floorf(30.0f * csn->CamTime);
+                keys += keys[i].frame - frame;
+            }
+
+            F32 invlerp = 1.0f - lerp;
+
+            xMat4x3 camMat;
+            xMat3x3 tmpMat;
+            xQuat quats[2];
+            for (U32 j = 0; j < 2; j++)
+            {
+                tmpMat.right.x = -keys[j].matrix[0];
+                tmpMat.right.y = -keys[j].matrix[1];
+                tmpMat.right.z = -keys[j].matrix[2];
+                tmpMat.up.x = keys[j].matrix[3];
+                tmpMat.up.y = keys[j].matrix[4];
+                tmpMat.up.z = keys[j].matrix[5];
+                tmpMat.at.x = -keys[j].matrix[6];
+                tmpMat.at.y = -keys[j].matrix[7];
+                tmpMat.at.z = -keys[j].matrix[8];
+                xQuatFromMat(&quats[j], &tmpMat);
+            }
+
+            xQuat qresult;
+            xQuatSlerp(&qresult, &quats[0], &quats[1], lerp);
+            xQuatToMat(&qresult, &camMat);
+            xVec3Lerp(&camMat.pos, (xVec3*)&keys[0].matrix[9], (xVec3*)&keys[1].matrix[9], lerp);
+
+            U32 count;
+
+            F32 camFOV = 114.59155f *
+                         std::atan((12.7f * (keys[0].aperture[0] * lerp + keys[1].aperture[0] * invlerp)) /
+                                   (keys[0].focal * lerp + keys[1].focal * invlerp));
+            cam->mat = camMat;
+            gCameraLastFov = 0.0f;
+            xCameraSetFOV(&xglobals->camera, camFOV);
+        }
+    }
+}
+
+static void xcsCalcAnimMatrices(RwMatrixTag* animMat, RpAtomic* model, xCutsceneAnimHdr* ahdr,
+                                F32 time, U32 tworoot)
 {
     xQuat quatresult[65];
     xVec3 tranresult[65];
@@ -305,7 +371,6 @@ static void xcsCalcAnimMatrices(RwMatrixTag* animMat, RpAtomic* model, xCutscene
         animMat->pos.y = ahdr->Translate[1];
         animMat->pos.z = ahdr->Translate[2];
 
-        
         if (tworoot)
         {
             xMat4x3 m1;
@@ -344,11 +409,11 @@ static void xcsCalcAnimMatrices(RwMatrixTag* animMat, RpAtomic* model, xCutscene
             animMat->pos.x += tranresult[boneidx].x;
             animMat->pos.y += tranresult[boneidx].y;
             animMat->pos.z += tranresult[boneidx].z;
-            
+
             tranresult[boneidx].x = 0.0f;
             tranresult[boneidx].y = 0.0f;
             tranresult[boneidx].z = 0.0f;
-            
+
             if (FABS(quatresult[boneidx].s) < 0.9999f)
             {
                 break;
@@ -391,7 +456,7 @@ void CutsceneShadowRender(CutsceneShadowModel* smod)
     }
 }
 
-void xCutscene_Render(xCutscene*, xEnt**, S32*, F32*)
+void xCutscene_Render(xCutscene* csn, xEnt**, S32*, F32*)
 {
 }
 
