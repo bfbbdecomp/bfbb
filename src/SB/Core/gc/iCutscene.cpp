@@ -232,7 +232,7 @@ S32 iCSLoadStep(xCutscene* csn)
 
         while (csn->DataLoading < (S32)csn->Info->NumData)
         {
-            if (csn->Data[csn->DataLoading].DataType == XCUTSCENEDATA_TYPE_6)
+            if (csn->Data[csn->DataLoading].DataType == XCUTSCENEDATA_TYPE_JDELTAMODEL)
             {
                 foundModel = NULL;
             }
@@ -260,7 +260,7 @@ S32 iCSLoadStep(xCutscene* csn)
 
                 if (csn->GotData)
                 {
-                    if (csn->Data[csn->DataLoading].DataType == XCUTSCENEDATA_TYPE_6)
+                    if (csn->Data[csn->DataLoading].DataType == XCUTSCENEDATA_TYPE_JDELTAMODEL)
                     {
                         csn->Data[csn->DataLoading].DataPtr =
                             RwMalloc(csn->Data[csn->DataLoading].ChunkSize);
