@@ -7,6 +7,9 @@
 
 #include "iCutscene.h"
 #include "iModel.h"
+#include "zCamera.h"
+#include "zGlobals.h"
+#include "iAnim.h"
 
 #include <types.h>
 #include <string.h>
@@ -144,6 +147,37 @@ S32 xCutscene_LoadStart(xCutscene* csn)
     return 1;
 }
 
+F32 xCutsceneConvertBreak(float param_1, xCutsceneBreak* param_2, U32 param_3, int param_4)
+{
+    int i = 0;
+    if (param_3 == 0)
+    {
+        return param_1;
+    }
+    while (true)
+    {
+        if (param_4 != param_2[i].Index)
+        {
+            break;
+        }
+        if (param_2[i].Time - param_1 <= 0.0f)
+        {
+            break;
+        }
+        if (0.03333333f <= param_2[i].Time - param_1)
+        {
+            break;
+        }
+        i++;
+        param_3--;
+        if (param_3 == 0)
+        {
+            return param_1;
+        }
+    }
+    return param_2[i].Time - 0.03333333f;
+}
+
 S32 xCutscene_Update(xCutscene* csn, F32 dt)
 {
     if ((csn->SndStarted == FALSE) && (csn->SndNumChannel != 0))
@@ -231,7 +265,7 @@ void xCutscene_SetSpeed(xCutscene* csn, F32 speed)
     csn->PlaybackSpeed = speed;
 
     F32 semitones;
-    if (speed != 0.0f)
+    if (speed)
     {
         semitones = xlog(speed) / 0.057762269f;
     }
@@ -256,42 +290,154 @@ float std::logf(float x)
     return (float)log((double)x);
 }
 
+// TODO: general pointer/index mismatching in here
+//       instructions and control flow should be close match though
+void xCutscene_SetCamera(xCutscene* csn, xCamera* cam)
+{
+    xCutsceneData* data = (xCutsceneData*)&csn->Play[1];
+    for (U32 i = 0; i < csn->Play->NumData; i++)
+    {
+        if (data[i].DataType == XCUTSCENEDATA_TYPE_CAMERA)
+        {
+            U32 dataIndex = data[i + 1].DataType;
+            S32 frame = std::floorf(30.0f * csn->CamTime);
+            zFlyKey* keys = (zFlyKey*)((char*)&data[i] + 0x14);
+
+            F32 lerp;
+            if (keys[i + 1].frame < frame)
+            {
+                lerp = 0.0f;
+            }
+            else if (keys[i].frame >= frame)
+            {
+                lerp = 1.0f;
+                keys += keys[i].frame - 2;
+            }
+            else
+            {
+                lerp = 30.0f * csn->CamTime - std::floorf(30.0f * csn->CamTime);
+                keys += keys[i].frame - frame;
+            }
+
+            F32 invlerp = 1.0f - lerp;
+
+            xMat4x3 camMat;
+            xMat3x3 tmpMat;
+            xQuat quats[2];
+            for (U32 j = 0; j < 2; j++)
+            {
+                tmpMat.right.x = -keys[j].matrix[0];
+                tmpMat.right.y = -keys[j].matrix[1];
+                tmpMat.right.z = -keys[j].matrix[2];
+                tmpMat.up.x = keys[j].matrix[3];
+                tmpMat.up.y = keys[j].matrix[4];
+                tmpMat.up.z = keys[j].matrix[5];
+                tmpMat.at.x = -keys[j].matrix[6];
+                tmpMat.at.y = -keys[j].matrix[7];
+                tmpMat.at.z = -keys[j].matrix[8];
+                xQuatFromMat(&quats[j], &tmpMat);
+            }
+
+            xQuat qresult;
+            xQuatSlerp(&qresult, &quats[0], &quats[1], lerp);
+            xQuatToMat(&qresult, &camMat);
+            xVec3Lerp(&camMat.pos, (xVec3*)&keys[0].matrix[9], (xVec3*)&keys[1].matrix[9], lerp);
+
+            U32 count;
+
+            F32 camFOV = 114.59155f *
+                         std::atan((12.7f * (keys[0].aperture[0] * lerp + keys[1].aperture[0] * invlerp)) /
+                                   (keys[0].focal * lerp + keys[1].focal * invlerp));
+            cam->mat = camMat;
+            gCameraLastFov = 0.0f;
+            xCameraSetFOV(&xglobals->camera, camFOV);
+        }
+    }
+}
+
+static void xcsCalcAnimMatrices(RwMatrixTag* animMat, RpAtomic* model, xCutsceneAnimHdr* ahdr,
+                                F32 time, U32 tworoot)
+{
+    xQuat quatresult[65];
+    xVec3 tranresult[65];
+
+    void* afile = &ahdr[1];
+    iAnimEval(afile, time, 0x0, tranresult, quatresult);
+
+    if (iModelNumBones(model) != 0)
+    {
+        xMat4x3Identity((xMat4x3*)animMat);
+        animMat->pos.x = ahdr->Translate[0];
+        animMat->pos.y = ahdr->Translate[1];
+        animMat->pos.z = ahdr->Translate[2];
+
+        if (tworoot)
+        {
+            xMat4x3 m1;
+            xMat4x3 m2;
+
+            quatresult[1].s = -quatresult[1].s;
+            quatresult[2].s = -quatresult[2].s;
+            xQuatToMat(&quatresult[1], &m1);
+            xQuatToMat(&quatresult[2], &m2);
+
+            m1.pos = tranresult[1];
+            m2.pos = tranresult[2];
+
+            xMat4x3Mul(&m1, &m2, &m1);
+
+            tranresult[2].x = 0.0f;
+            tranresult[2].y = 0.0f;
+            tranresult[2].z = 0.0f;
+            quatresult[2].v.x = 0.0f;
+            quatresult[2].v.y = 0.0f;
+            quatresult[2].v.z = 0.0f;
+            quatresult[2].s = 1.0f;
+
+            xQuatFromMat(&quatresult[1], &m1);
+
+            quatresult[1].s = -quatresult[1].s;
+            m1.pos = tranresult[1];
+        }
+
+        U32 numbone = iModelNumBones(model);
+        U32 boneidx = 0;
+        xQuat* qqq = quatresult;
+        xVec3* ttt = tranresult;
+        while (boneidx < numbone && boneidx <= ahdr->RootIndex)
+        {
+            animMat->pos.x += tranresult[boneidx].x;
+            animMat->pos.y += tranresult[boneidx].y;
+            animMat->pos.z += tranresult[boneidx].z;
+
+            tranresult[boneidx].x = 0.0f;
+            tranresult[boneidx].y = 0.0f;
+            tranresult[boneidx].z = 0.0f;
+
+            if (FABS(quatresult[boneidx].s) < 0.9999f)
+            {
+                break;
+            }
+
+            boneidx++;
+        }
+
+        iModelAnimMatrices(model, quatresult, tranresult, &animMat[1]);
+    }
+    else
+    {
+        xQuatToMat(quatresult, (xMat4x3*)animMat);
+        animMat->pos.x = tranresult[0].x + ahdr->Translate[0];
+        animMat->pos.y = tranresult[0].y + ahdr->Translate[1];
+        animMat->pos.z = tranresult[0].z + ahdr->Translate[2];
+    }
+}
+
 void xVec3Lerp(xVec3* out, const xVec3* a, const xVec3* b, float alpha)
 {
     out->x = a->x + (b->x - a->x) * alpha;
     out->y = a->y + (b->y - a->y) * alpha;
     out->z = a->z + (b->z - a->z) * alpha;
-}
-
-F32 xCutsceneConvertBreak(float param_1, xCutsceneBreak* param_2, U32 param_3, int param_4)
-{
-    int i = 0;
-    if (param_3 == 0)
-    {
-        return param_1;
-    }
-    while (true)
-    {
-        if (param_4 != param_2[i].Index)
-        {
-            break;
-        }
-        if (param_2[i].Time - param_1 <= 0.0f)
-        {
-            break;
-        }
-        if (0.03333333f <= param_2[i].Time - param_1)
-        {
-            break;
-        }
-        i++;
-        param_3--;
-        if (param_3 == 0)
-        {
-            return param_1;
-        }
-    }
-    return param_2[i].Time - 0.03333333f;
 }
 
 void CutsceneShadowRender(CutsceneShadowModel* smod)
@@ -310,19 +456,11 @@ void CutsceneShadowRender(CutsceneShadowModel* smod)
     }
 }
 
-void xCutscene_Render(xCutscene*, xEnt**, S32*, F32*)
+void xCutscene_Render(xCutscene* csn, xEnt**, S32*, F32*)
 {
 }
 
 xCutscene* xCutscene_CurrentCutscene()
 {
     return &sActiveCutscene;
-}
-
-void XCSNNosey::CanRenderNow()
-{
-}
-
-void XCSNNosey::UpdatedAnimated(RpAtomic*, RwMatrixTag*, U32, U32)
-{
 }
