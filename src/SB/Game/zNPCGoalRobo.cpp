@@ -1343,6 +1343,104 @@ S32 zNPCGoalAlertChomper::CheckSpot(F32 dt)
     return plyrInSpot;
 }
 
+S32 zNPCGoalAlertHammer::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    zNPCRobot* npc = (zNPCRobot*)(psyche->clt_owner);
+    S32 nextgoal = 0;
+    S32 subenter;
+    en_alertham old_alertham;
+    if (globals.player.Health < 1)
+    {
+        zNPCGoalLoopAnim* taunt = (zNPCGoalLoopAnim*)psyche->FindGoal(NPC_GOAL_TAUNT);
+        taunt->LoopCountSet(1000);
+        *trantype = GOAL_TRAN_PUSH;
+        nextgoal = NPC_GOAL_TAUNT;
+    }
+    else if (globals.player.DamageTimer > 0.0f)
+    {
+        *trantype = GOAL_TRAN_PUSH;
+        nextgoal = NPC_GOAL_TAUNT;
+    }
+    else if (npc->SomethingWonderful() != 0)
+    {
+        *trantype = GOAL_TRAN_SET;
+        nextgoal = NPC_GOAL_IDLE;
+    }
+    else if (!npc->arena.IncludesPlayer(0, 0))
+    {
+        *trantype = GOAL_TRAN_SET;
+        nextgoal = NPC_GOAL_IDLE;
+    }
+    if (*trantype != GOAL_TRAN_NONE)
+    {
+        return nextgoal;
+    }
+    old_alertham = alertham;
+    subenter = flg_info & 2;
+    flg_info &= 0xFFFFFFF9;
+    switch (alertham)
+    {
+        case HAMMER_ALERT_NOTICE:
+            if (subenter)
+            {
+                DoAutoAnim(NPC_GSPOT_RESUME, 0);
+            }
+            alertham = HAMMER_ALERT_CHASE;
+            break;
+        case HAMMER_ALERT_BEGIN:
+            alertham = HAMMER_ALERT_CHASE;
+            break;
+        case HAMMER_ALERT_CHASE:
+            if ((PlayerInSpot(dt) != 0) && !(globals.player.DamageTimer > 0.0f))
+            {
+                alertham = HAMMER_ALERT_WHAM;
+                break;
+            }
+            if (subenter)
+            {
+                DoAutoAnim(NPC_GSPOT_STARTALT, 0);
+                tmr_alertham = 0.0f;
+            }
+            MoveChase(dt);
+            NPCC_TmrCycle(&tmr_alertham, dt, 1.0);
+            break;
+        case HAMMER_ALERT_WHAM:
+            alertham = HAMMER_ALERT_EVADE;
+            nextgoal = NPC_GOAL_ATTACKHAMMER;
+            *trantype = GOAL_TRAN_PUSH;
+            break;
+        case HAMMER_ALERT_EVADE:
+            if (subenter)
+            {
+                tmr_alertham = 0.25f;
+            }
+            if (tmr_alertham < 0.0f)
+            {
+                alertham = HAMMER_ALERT_CHASE;
+            }
+            else
+            {
+                MoveEvade(dt);
+                npc->FacePlayer(dt, 3 * PI);
+                tmr_alertham = MAX(-1.0f, (tmr_alertham - dt));
+                if (subenter)
+                {
+                    DoAutoAnim(NPC_GSPOT_STARTALT, 0);
+                }
+            }
+            break;
+    }
+    if (alertham != old_alertham)
+    {
+        flg_info |= 2;
+    }
+    if (*trantype != GOAL_TRAN_NONE)
+    {
+        return nextgoal;
+    }
+    return nextgoal = xGoal::Process(trantype, dt, updCtxt, NULL);
+}
+
 S32 zNPCGoalAlertHammer::Enter(F32 dt, void* updCtxt)
 {
     flg_attack = 0;
@@ -2041,6 +2139,128 @@ S32 zNPCGoalAlertSlick::Resume(F32 dt, void* updCtxt)
     npc->VelStop();
     flg_info |= 2;
     return zNPCGoalCommon::Resume(dt, updCtxt);
+}
+
+S32 zNPCGoalAlertSlick::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    S32 nextgoal;
+    zNPCSlick* npc;
+    en_alertslik old_alertslik;
+    F32 tym_reload;
+    xVec3 dir_HtoP;
+    F32 dsq;
+    S32 subenter;
+    zNPCGoalTaunt* taunt;
+    F32 rad;
+    npc = (zNPCSlick*)(psyche->clt_owner);
+    subenter = flg_info & 2;
+    old_alertslik = alertslik;
+    flg_info &= ~6;
+    nextgoal = 0;
+    tym_reload = 5.0f;
+    if (zGameExtras_CheatFlags() & 0x800)
+    {
+        tym_reload = 3.0f;
+    }
+    dsq = npc->arena.DstSqFromHome(xEntGetPos(&globals.player.ent), &dir_HtoP);
+    if ((npc->arena.Radius(1.0f) * 1.5f) > npc->cfg_npc->rad_attack)
+    {
+        rad = npc->arena.Radius(1.0f) * 1.5f;
+    }
+    else
+    {
+        rad = npc->cfg_npc->rad_attack;
+    }
+    if (globals.player.Health < 1)
+    {
+        taunt = (zNPCGoalTaunt*)(psyche->FindGoal(NPC_GOAL_TAUNT));
+        taunt->LoopCountSet(1000);
+        *trantype = GOAL_TRAN_PUSH;
+        nextgoal = NPC_GOAL_TAUNT;
+    }
+    else if (globals.player.DamageTimer > 0.5f)
+    {
+        *trantype = GOAL_TRAN_PUSH;
+        nextgoal = NPC_GOAL_TAUNT;
+    }
+    else if (npc->SomethingWonderful() != 0)
+    {
+        *trantype = GOAL_TRAN_SET;
+        nextgoal = NPC_GOAL_IDLE;
+    }
+    else if (!*(U8 *)(&npc->npcset.allowDetect))
+    {
+        *trantype = GOAL_TRAN_SET;
+        nextgoal = NPC_GOAL_IDLE;
+    }
+    else if (dsq > SQ(rad))
+    {
+        *trantype = GOAL_TRAN_SET;
+        nextgoal = NPC_GOAL_IDLE;
+    }
+    if (*trantype != GOAL_TRAN_NONE)
+    {
+        return nextgoal;
+    }
+    if (alertslik != SLICK_ALERT_ARENA && (npc->arena.PctFromHome(npc->Pos()) > 1.0f))
+    {
+        alertslik = SLICK_ALERT_ARENA;
+        DoAutoAnim(NPC_GSPOT_STARTALT, 0);
+    }
+    switch (alertslik)
+    {
+        case SLICK_ALERT_NOTICE:
+            alertslik = SLICK_ALERT_BEGIN;
+            nextgoal = NPC_GOAL_NOTICE;
+            *trantype = GOAL_TRAN_PUSH;
+            break;
+        case SLICK_ALERT_ARENA:
+            GetInArena(dt);
+            if (npc->arena.PctFromHome(npc->Pos()) < 0.5f)
+            {
+                alertslik = SLICK_ALERT_BEGIN;
+            }
+            break;
+        case SLICK_ALERT_BEGIN:
+            alertslik = SLICK_ALERT_READY;
+            DoAutoAnim(NPC_GSPOT_RESUME, 0);
+            npc->FacePlayer(dt, 3 * PI);
+            npc->VelStop();
+            break;
+        case SLICK_ALERT_READY:
+            if (((tmr_reload < 0.0f) ? 1 : 0) && !(globals.player.DamageTimer > 0.0f))
+            {
+                F32 rand = xurand();
+                nextgoal = NPC_GOAL_ATTACKSLICK;
+                tmr_reload = tym_reload + (tym_reload * (0.25f * (rand - 0.5f))); // Regalloc
+                *trantype = GOAL_TRAN_PUSH;
+            }
+            else
+            {
+                tmr_reload = MAX(-1.0f, (tmr_reload - dt));
+                if (subenter)
+                {
+                    DoAutoAnim(NPC_GSPOT_RESUME, 0);
+                    npc->VelStop();
+                    if (!npc->arena.IncludesPos(&pos_corner, 0, 0))
+                    {
+                        xVec3Copy(&pos_corner, npc->Pos());
+                    }
+                }
+                npc->FacePlayer(dt, 3 * PI);
+                MoveCorner(dt);
+            }
+            break;
+    }
+    if (alertslik != old_alertslik)
+    {
+        flg_info |= 2;
+    }
+    if (*trantype != GOAL_TRAN_NONE)
+    {
+        return nextgoal;
+    }
+    return xGoal::Process(trantype, dt, updCtxt, NULL);
 }
 
 S32 zNPCGoalAlertSlick::NPCMessage(NPCMsg* mail)
