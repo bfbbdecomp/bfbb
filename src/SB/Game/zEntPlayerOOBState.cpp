@@ -387,22 +387,6 @@ bool oob_state::IsPlayerInControl()
     return oob_state::shared.control == 0;
 }
 
-WEAK ztalkbox::callback::callback()
-{
-}
-WEAK void ztalkbox::callback::on_signal(U32)
-{
-}
-WEAK void ztalkbox::callback::on_start()
-{
-}
-WEAK void ztalkbox::callback::on_stop()
-{
-}
-WEAK void ztalkbox::callback::on_answer(ztalkbox::answer_enum)
-{
-}
-
 WEAK F32 xVec2::dot(const xVec2& b) const
 {
     return (x * b.x) + (y * b.y);
