@@ -106,9 +106,39 @@ namespace oob_state
             zCameraTweakGlobal_Init();
         }
 
-        static void move_up(xVec3& vec, F32 arg1)
+        static void render_model(xModelInstance& model, const xVec3& unk_r4, const xVec3& unk_r5, const xVec3& unk_r6)
         {
-            xMat4x3Tolocal(&vec, &globals.camera.mat, &vec);
+            basic_rect<F32> screen_rect = { 0.0f, 0.0f, 1.0f, 1.0f };
+            screen_rect.x = unk_r4.x;
+            screen_rect.y = unk_r4.y;
+
+            xVec3 from = { 0.0f, 0.0f, 1.0f };
+
+            xVec3 to = { 0.0f, 0.0f, 0.0f };
+            to.z = -unk_r4.z;
+
+            xMat3x3 scaledMat;
+            xMat3x3 eulerMat;
+            xMat4x3 outMat;
+            xMat3x3ScaleC(&scaledMat, unk_r5.x * (1.0f + unk_r4.z), unk_r5.y * (1.0f + unk_r4.z), 1.0f + unk_r4.z);
+            xMat3x3Euler(&eulerMat, &unk_r6);
+            xMat3x3Mul(&outMat, &eulerMat, &scaledMat);
+
+            outMat.pos = 0.0f;
+            outMat.flags = 0x0;
+            xModelSetFrame(&model, &outMat);
+
+            xModelRender2D(model, screen_rect, from, to);
+        }
+
+        static void move_up(xVec3& vec, F32 scale)
+        {
+            xMat4x3& camMat = globals.camera.mat;
+
+            xVec3 localCoords;
+            xMat4x3Tolocal(&localCoords, &camMat, &vec);
+
+            vec += camMat.up * scale * localCoords.z;
         }
 
         static bool assume_player_is_stupid()
