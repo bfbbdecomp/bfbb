@@ -33,9 +33,10 @@ void xSFXInit(void* t, void* asset);
 void xSFXInit(xSFX* t, xSFXAsset* asset);
 void xSFXSave(xSFX* ent, xSerial* s);
 void xSFXLoad(xSFX* ent, xSerial* s);
+void xSFXReset(xSFX* sfx);
 void xSFXEnvironmentalStreamSceneExit();
 void xSFXUpdateEnvironmentalStreamSounds(xSFX* pSFXList, U32 numSounds);
-S32 xSFXEventCB(xBase* to, xBase* from, U32 toEvent, const F32* toParam, xBase*);
-S32 xSFXWillSendDone(xSFX*);
+S32 xSFXEventCB(xBase* to, xBase* from, U32 toEvent, const F32* toParam, xBase* toParamWidget);
+U32 xSFXConvertFlags(U32 flagsSFX);
 
 #endif
