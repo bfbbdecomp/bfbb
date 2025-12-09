@@ -90,19 +90,19 @@ namespace oob_state
             substate_enum move_substate;
             substate_enum fade_substate;
             xVec3 player_start;
-            float reorient_time;
-            float angle_delta;
-            float delay;
-            float fade_start_time;
-            float fade_time;
-            unsigned int scene_reset;
+            F32 reorient_time;
+            F32 angle_delta;
+            F32 delay;
+            F32 fade_start_time;
+            F32 fade_time;
+            U32 scene_reset;
 
             // Todo: this is not in the DWARF, but is required for
             //       tutorial_callback::on_stop to match. Probably
             //       not correct.
             char pad[4];
 
-            unsigned char finished_tutorial;
+            U8 finished_tutorial;
 
             substate_enum (*updatess)(grab_state_type&, xScene&, float&)[10];
             bool update_reorient(xScene&, F32&);
@@ -144,30 +144,30 @@ namespace oob_state
 
         struct _class_9
         {
-            int flags;
+            S32 flags;
             state_type* state;
-            unsigned char control;
+            U8 control;
             state_type* states[4];
-            float out_time;
-            float max_out_time;
-            float reset_time;
+            F32 out_time;
+            F32 max_out_time;
+            F32 reset_time;
             xModelInstance* model;
             xVec2 loc;
             xVec2 dir;
-            float fade_alpha;
-            unsigned char render_hand;
-            unsigned char vertical;
-            float vel;
-            float accel;
+            F32 fade_alpha;
+            U8 render_hand;
+            U8 vertical;
+            F32 vel;
+            F32 accel;
             ztalkbox* tutorial;
             struct
             {
-                float near_d;
-                float near_h;
-                float near_pitch;
-                float far_d;
-                float far_h;
-                float far_pitch;
+                F32 near_d;
+                F32 near_h;
+                F32 near_pitch;
+                F32 far_d;
+                F32 far_h;
+                F32 far_pitch;
                 xMat4x3* tgt_mat;
                 xMat4x3* tgt_omat;
             } cam_data;
@@ -175,41 +175,41 @@ namespace oob_state
 
         struct tagFixed
         {
-            float out_time;
-            float reset_time;
-            float cam_dist;
-            float cam_height;
-            float cam_pitch;
-            float reorient_time;
+            F32 out_time;
+            F32 reset_time;
+            F32 cam_dist;
+            F32 cam_height;
+            F32 cam_pitch;
+            F32 reorient_time;
             char* hand_model;
             xVec2 in_loc;
             xVec2 out_loc;
             struct
             {
-                float in_wait_time;
-                float in_vel;
-                float in_stop_dist;
-                float out_wait_time;
-                float out_vel;
-                float out_start_dist;
-                float fade_start_time;
-                float fade_time;
+                F32 in_wait_time;
+                F32 in_vel;
+                F32 in_stop_dist;
+                F32 out_wait_time;
+                F32 out_vel;
+                F32 out_start_dist;
+                F32 fade_start_time;
+                F32 fade_time;
             } grab;
             struct
             {
-                float in_vel;
-                float in_stop_dist;
-                float out_wait_time;
-                float out_vel;
-                float out_start_dist;
-                float fade_start_time;
-                float fade_time;
+                F32 in_vel;
+                F32 in_stop_dist;
+                F32 out_wait_time;
+                F32 out_vel;
+                F32 out_start_dist;
+                F32 fade_start_time;
+                F32 fade_time;
             } drop;
-            float hand_size_x;
-            float hand_size_y;
-            float hand_yaw;
-            float hand_pitch;
-            float hand_roll;
+            F32 hand_size_x;
+            F32 hand_size_y;
+            F32 hand_yaw;
+            F32 hand_pitch;
+            F32 hand_roll;
         };
     } // namespace
 
