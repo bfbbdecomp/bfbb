@@ -450,6 +450,7 @@ void zEntPlayer_SNDPlayStreamRandom(_tagePlayerStreamSnd player_snd_start,
 void zEntPlayer_SNDSetVol(_tagePlayerSnd player_snd, F32 new_vol);
 void zEntPlayer_SNDSetPitch(_tagePlayerSnd player_snd, F32 new_pitch);
 void zEntPlayer_SNDStop(_tagePlayerSnd player_snd);
+void zEntPlayer_SNDNotifyPlaying(U32 id);
 
 void zEntPlayerSpeakStop();
 
