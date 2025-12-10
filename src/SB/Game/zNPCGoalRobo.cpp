@@ -1908,6 +1908,132 @@ S32 zNPCGoalAlertMonsoon::Resume(F32 dt, void* updCtxt)
     return zNPCGoalCommon::Resume(dt, updCtxt);
 }
 
+S32 zNPCGoalAlertMonsoon::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    S32 nextgoal;
+    zNPCRobot* npc;
+    en_alertmony old_alertmony;
+    F32 tym_reload;
+    xVec3 dir_HtoP;
+    F32 dsq;
+    S32 subenter;
+    zNPCGoalTaunt* taunt;
+    F32 rad;
+    npc = (zNPCRobot*)(psyche->clt_owner);
+    nextgoal = 0;
+    tym_reload = 2.5f;
+    dsq = npc->arena.DstSqFromHome(xEntGetPos(&globals.player.ent), &dir_HtoP);
+    if ((npc->arena.Radius(1.0f) * 1.5f) > npc->cfg_npc->rad_attack)
+    {
+        rad = npc->arena.Radius(1.0f) * 1.5f;
+    }
+    else
+    {
+        rad = npc->cfg_npc->rad_attack;
+    }
+    if (globals.player.Health < 1)
+    {
+        taunt = (zNPCGoalTaunt*)(psyche->FindGoal(NPC_GOAL_TAUNT));
+        taunt->LoopCountSet(1000);
+        *trantype = GOAL_TRAN_PUSH;
+        nextgoal = NPC_GOAL_TAUNT;
+    }
+    else if (globals.player.DamageTimer > 0.5f)
+    {
+        *trantype = GOAL_TRAN_PUSH;
+        nextgoal = NPC_GOAL_TAUNT;
+    }
+    else if (npc->SomethingWonderful() != 0)
+    {
+        *trantype = GOAL_TRAN_SET;
+        nextgoal = NPC_GOAL_IDLE;
+    }
+    else if (!*(U8*)(&npc->npcset.allowDetect))
+    {
+        *trantype = GOAL_TRAN_SET;
+        nextgoal = NPC_GOAL_IDLE;
+    }
+    else if (!npc->arena.IsReady() || dsq > SQ(rad))
+    {
+        *trantype = GOAL_TRAN_SET;
+        nextgoal = NPC_GOAL_IDLE;
+    }
+    if (*trantype != GOAL_TRAN_NONE)
+    {
+        return nextgoal;
+    }
+    subenter = flg_info & 2;
+    old_alertmony = alertmony;
+    flg_info &= ~6;
+    if (alertmony != (en_alertmony)SLICK_ALERT_ARENA && (npc->arena.PctFromHome(npc->Pos()) > 1.1f))
+    {
+        alertmony = (en_alertmony)SLICK_ALERT_ARENA;
+        subenter = 1;
+    }
+    switch (alertmony)
+    {
+        case MONSOON_ALERT_NOTICE:
+            alertmony = MONSOON_ALERT_BEGIN;
+            npc->FacePlayer(dt, 3 * PI);
+            *trantype = GOAL_TRAN_PUSH;
+            nextgoal = NPC_GOAL_NOTICE;
+            break;
+        case MONSOON_ALERT_ARENA:
+            npc->FacePlayer(dt, 3 * PI);
+            npc->MoveTowardsArena(dt, 4.0f);
+            if (npc->arena.PctFromHome(npc->Pos()) < 0.5f)
+            {
+                alertmony = MONSOON_ALERT_READY;
+            }
+            if (subenter)
+            {
+                DoAutoAnim(NPC_GSPOT_STARTALT, 0);
+            }
+            break;
+        case MONSOON_ALERT_BEGIN:
+            alertmony = MONSOON_ALERT_READY;
+            break;
+        case MONSOON_ALERT_READY:
+            if (((tmr_reload < 0.0f) ? 1 : 0) && !(globals.player.DamageTimer > 0.0f))
+            {
+                alertmony = MONSOON_ALERT_SPITCLOUD;
+                break;
+            }
+            else
+            {
+                tmr_reload = MAX(-1.0f, (tmr_reload - dt));
+                if (subenter != 0)
+                {
+                    DoAutoAnim(NPC_GSPOT_RESUME, 0);
+                    npc->VelStop();
+                    if (!npc->arena.IncludesPos(&pos_corner, NULL, NULL))
+                    {
+                        xVec3Copy(&pos_corner, npc->Pos());
+                    }
+                }
+                npc->FacePlayer(dt, 3 * PI);
+                MoveCorner(dt);
+            }
+            break;
+        case MONSOON_ALERT_SPITCLOUD:
+            F32 rand = xurand();
+            nextgoal = NPC_GOAL_ATTACKMONSOON;
+            tmr_reload = tym_reload + (tym_reload * (0.25f * (rand - 0.5f)));
+            alertmony = MONSOON_ALERT_READY;
+            *trantype = GOAL_TRAN_PUSH;
+            break;
+    }
+    if (alertmony != old_alertmony)
+    {
+        flg_info |= 2;
+    }
+    if (*trantype != GOAL_TRAN_NONE)
+    {
+        return nextgoal;
+    }
+    return xGoal::Process(trantype, dt, updCtxt, NULL);
+}
+
 void zNPCGoalAlertMonsoon::MoveCorner(F32 dt)
 {
     zNPCRobot* npc = (zNPCRobot*)(psyche->clt_owner);
