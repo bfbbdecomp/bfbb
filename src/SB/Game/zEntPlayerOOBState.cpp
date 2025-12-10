@@ -3,8 +3,11 @@
 
 #include "xMath.h"
 #include "xMathInlines.h"
+#include "zSurface.h"
+#include "zRenderState.h"
 
 #include <types.h>
+#include <rwplcore.h>
 
 bool oob_player_teleported;
 
@@ -106,22 +109,24 @@ namespace oob_state
             zCameraTweakGlobal_Init();
         }
 
-        static void render_model(xModelInstance& model, const xVec3& unk_r4, const xVec3& unk_r5, const xVec3& unk_r6)
+        static void render_model(xModelInstance& model, const xVec3& loc, const xVec3& size,
+                                 const xVec3& ypr /*Yaw Pitch Roll*/)
         {
             basic_rect<F32> screen_rect = { 0.0f, 0.0f, 1.0f, 1.0f };
-            screen_rect.x = unk_r4.x;
-            screen_rect.y = unk_r4.y;
+            screen_rect.x = loc.x;
+            screen_rect.y = loc.y;
 
             xVec3 from = { 0.0f, 0.0f, 1.0f };
 
             xVec3 to = { 0.0f, 0.0f, 0.0f };
-            to.z = -unk_r4.z;
+            to.z = -loc.z;
 
             xMat3x3 scaledMat;
             xMat3x3 eulerMat;
             xMat4x3 outMat;
-            xMat3x3ScaleC(&scaledMat, unk_r5.x * (1.0f + unk_r4.z), unk_r5.y * (1.0f + unk_r4.z), 1.0f + unk_r4.z);
-            xMat3x3Euler(&eulerMat, &unk_r6);
+            xMat3x3ScaleC(&scaledMat, size.x * (1.0f + loc.z), size.y * (1.0f + loc.z),
+                          1.0f + loc.z);
+            xMat3x3Euler(&eulerMat, &ypr);
             xMat3x3Mul(&outMat, &eulerMat, &scaledMat);
 
             outMat.pos = 0.0f;
@@ -139,6 +144,29 @@ namespace oob_state
             xMat4x3Tolocal(&localCoords, &camMat, &vec);
 
             vec += camMat.up * scale * localCoords.z;
+        }
+
+        static void move_right(xVec3& vec, F32 scale)
+        {
+            xMat4x3& camMat = globals.camera.mat;
+
+            xVec3 localCoords;
+            xMat4x3Tolocal(&localCoords, &camMat, &vec);
+
+            vec += camMat.right * scale * localCoords.z * (4.0f / 3.0f);
+        }
+
+        static void update_max_out_time(const xSurface& surface)
+        {
+            F32 delay = zSurfaceGetOutOfBoundsDelay(surface);
+            if (delay < 0.0f)
+            {
+                delay = fixed.out_time;
+            }
+
+            F32 old_max_out_time = shared.max_out_time;
+            shared.max_out_time = delay;
+            shared.out_time -= old_max_out_time - delay;
         }
 
         static bool assume_player_is_stupid()
@@ -167,29 +195,118 @@ namespace oob_state
             return stupid;
         }
 
-        static void move_hand(float dt /* r29+0x10 */)
+        static void move_hand(F32 dt)
         {
+            F32 old_vel = shared.vel;
+
+            shared.vel = shared.accel * dt + old_vel;
+            shared.loc += shared.dir * (0.5f * shared.accel * dt * dt + old_vel * dt);
         }
 
+        static void set_rect_verts(rwGameCube2DVertex*, F32, F32, F32, F32, iColor_tag c, F32 nsz,
+                                   F32 rcz);
+        static void set_rect_vert(rwGameCube2DVertex&, F32 x, F32 y, F32 z, iColor_tag c, F32 rcz);
         static void render_fade()
         {
+            iColor_tag color = {};
+            color.a = 255.0f * (1.0f - shared.fade_alpha) + 0.5f;
+
+            zRenderState(SDRS_OOBFade);
+            RwRenderStateSet(rwRENDERSTATETEXTURERASTER, NULL);
+            F32 nsz = 1.0f / ((RwCamera*)RWSRCGLOBAL(curCamera))->farPlane;
+            F32 rcz = RwIm2DGetFarScreenZ();
+
+            RwIm2DVertex vert[4];
+            set_rect_verts((rwGameCube2DVertex*)vert, 0.0f, 0.0f, 640.0f, 480.0f, color, rcz, nsz);
+            RwIm2DRenderPrimitive(rwPRIMTYPETRISTRIP, (RwIm2DVertex*)vert, 4);
         }
 
-        static void set_rect_vert(rwGameCube2DVertex&, F32, F32, F32, iColor_tag, F32)
+        static void set_rect_verts(rwGameCube2DVertex* verts, F32 x, F32 y, F32 w, F32 h,
+                                   iColor_tag c, F32 rcz, F32 nsz)
         {
+            set_rect_vert(verts[0], x, y, rcz, c, nsz);
+            set_rect_vert(verts[1], x, y + h, rcz, c, nsz);
+            set_rect_vert(verts[2], x + w, y, rcz, c, nsz);
+            set_rect_vert(verts[3], x + w, y + h, rcz, c, nsz);
         }
 
-        drop_state_type::substate_enum drop_state_type::supdate_fade_in(drop_state_type&,
-                                                                        xScene& scn, F32& unk0)
+        static void set_rect_vert(rwGameCube2DVertex& vert, F32 x, F32 y, F32 z, iColor_tag c,
+                                  F32 rcz)
         {
-            return drop_state_type::update_fade_in();
+            vert.x = x;
+            vert.y = y;
+            vert.z = z;
+            vert.emissiveColor.red = c.r;
+            vert.emissiveColor.green = c.g;
+            vert.emissiveColor.blue = c.b;
+            vert.emissiveColor.alpha = c.a;
         }
 
-        drop_state_type::substate_enum drop_state_type::update_fade_in(xScene&, float&)
+        static void render_ghost()
         {
-            return SS_MOVING_IN;
+            xEnt& ent = globals.player.ent;
+
+            iDrawSetFBMSK(-1);
+            zRenderState(SDRS_OOBPlayerZ);
+
+            xModelInstance* xm = ent.model;
+            while (xm != NULL)
+            {
+                RpAtomic& model = *xm->Data;
+
+                if (xm->Flags & 0x1)
+                {
+                    iModelRender(&model, xm->Mat);
+                }
+
+                xm = xm->Next;
+            }
+
+            iDrawSetFBMSK(0);
+            zRenderState(SDRS_OOBPlayerAlpha);
+            xLightKit_Enable(ent.lightKit, globals.currWorld);
+
+            U8 alpha = 255.0f * (1.0f - shared.fade_alpha) + 0.5f;
+            alpha &= 0xFF;
+
+            xm = ent.model;
+            while (xm != NULL)
+            {
+                RpAtomic& model = *xm->Data;
+
+                if (xm->Flags & 0x1)
+                {
+                    iModelSetMaterialAlpha(&model, alpha);
+                    iModelRender(&model, xm->Mat);
+                    iModelResetMaterial(&model);
+                }
+
+                xm = xm->Next;
+            }
+
+            xLightKit_Enable(NULL, globals.currWorld);
         }
 
+        static void render_hand()
+        {
+            zRenderState(SDRS_OOBHand);
+
+            xVec3 modelLoc = { 0.0f, 0.0f, 0.0f };
+            xVec3 modelSize = { 0.0f, 0.0f, 1.0f };
+            xVec3 modelYpr = { 0.0f, 0.0f, 0.0f };
+
+            modelLoc.x = shared.loc.x;
+            modelLoc.y = shared.loc.y;
+
+            modelSize.x = fixed.hand_size_x;
+            modelSize.y = fixed.hand_size_y;
+
+            modelYpr.x = fixed.hand_yaw;
+            modelYpr.y = fixed.hand_pitch;
+            modelYpr.z = fixed.hand_roll;
+
+            render_model(*shared.model, modelLoc, modelSize, modelYpr);
+        }
     } // namespace
 } // namespace oob_state
 
@@ -327,31 +444,125 @@ void oob_state::init()
 {
 }
 
-#define TODO_FIX_FLOAT 0.000000000000
+namespace oob_state
+{
+    namespace
+    {
+        drop_state_type::drop_state_type()
+        {
+            this->fade_substate;
+        }
+
+        drop_state_type::substate_enum drop_state_type::supdate_fade_in(drop_state_type& gst,
+                                                                        xScene& scn, F32& dt)
+        {
+            return gst.update_fade_in(scn, dt);
+        }
+
+        drop_state_type::substate_enum drop_state_type::update_fade_in(xScene& scn, F32& dt)
+        {
+            return SS_FADE_IN;
+        }
+
+        drop_state_type::substate_enum drop_state_type::supdate_start_fade_in(drop_state_type& gst,
+                                                                              xScene& scn, F32& dt)
+        {
+            return gst.update_start_fade_in(scn, dt);
+        }
+
+        drop_state_type::substate_enum drop_state_type::update_start_fade_in(xScene& scn, F32& dt)
+        {
+            this->fade_time -= dt;
+
+            if (this->fade_time > 0.0f)
+            {
+                return SS_START_FADE_IN;
+            }
+
+            dt += this->fade_time;
+            return SS_FADE_IN;
+        }
+
+        drop_state_type::substate_enum drop_state_type::supdate_moving_out(drop_state_type& gst,
+                                                                           xScene& scn, F32& dt)
+        {
+            return gst.update_moving_out(scn, dt);
+        }
+
+        drop_state_type::substate_enum drop_state_type::supdate_starting(drop_state_type& gst,
+                                                                         xScene& scn, F32& dt)
+        {
+            return gst.update_starting(scn, dt);
+        }
+
+        drop_state_type::substate_enum drop_state_type::update_starting(xScene& scn, F32& dt)
+        {
+            move_hand(dt);
+
+            if (shared.vel > -fixed.drop.out_vel)
+            {
+                return SS_STARTING;
+            }
+
+            shared.vel = -fixed.drop.out_vel;
+            shared.accel = 0.0f;
+            return SS_MOVING_OUT;
+        }
+
+        drop_state_type::substate_enum drop_state_type::supdate_stopped(drop_state_type& gst,
+                                                                        xScene& scn, F32& dt)
+        {
+            return gst.update_stopped(scn, dt);
+        }
+
+        drop_state_type::substate_enum drop_state_type::update_stopped(xScene& scn, F32& dt)
+        {
+            this->fade_start_time -= dt;
+
+            if (this->fade_start_time > 0.0f)
+            {
+                return SS_STOPPED;
+            }
+
+            dt += this->fade_start_time;
+            shared.accel =
+                (-fixed.drop.out_vel * fixed.drop.out_vel) / (2.0f * fixed.drop.out_start_dist);
+            return SS_STARTING;
+        }
+
+        drop_state_type::substate_enum drop_state_type::supdate_stopping(drop_state_type& gst,
+                                                                         xScene& scn, F32& dt)
+        {
+            return gst.update_stopping(scn, dt);
+        }
+
+        drop_state_type::substate_enum drop_state_type::supdate_moving_in(drop_state_type& gst,
+                                                                          xScene& scn, F32& dt)
+        {
+            return gst.update_moving_in(scn, dt);
+        }
+    } // namespace
+} // namespace oob_state
 
 oob_state::grab_state_type::substate_enum oob_state::grab_state_type::update_stopping(xScene& scene,
                                                                                       F32& dt)
 {
     move_hand(dt);
 
-    if (shared.vel > TODO_FIX_FLOAT)
+    if (shared.vel > 0.0f)
     {
         return SS_STOPPING;
     }
 
     shared.loc = fixed.in_loc;
 
-    shared.vel = TODO_FIX_FLOAT;
-    shared.accel = TODO_FIX_FLOAT;
+    shared.vel = 0.0f;
+    shared.accel = 0.0f;
 
-    // fade_start_time is probably incorrect, due to commented issue down below with cb.
-    // It's probably supposed to be the variable above this, 'delay'
-    fade_start_time = fixed.grab.out_wait_time;
+    this->fade_start_time = fixed.grab.out_wait_time;
 
     if (assume_player_is_stupid())
     {
-        // callback 'cb' should be the correct paramater at 0x8 offset.
-        // right now it's at 0x4 offset, so this will need to be fixed
         shared.tutorial->start_talk(xStrHash("TODO"), (ztalkbox::callback*)&cb, NULL);
         return SS_TUTORIAL;
     }
@@ -376,7 +587,7 @@ void oob_state::in_state_type::start()
     shared.control = 0;
 };
 
-void oob_state::in_state_type::stop(){
+void oob_state::in_state_type::stop() {
 
 };
 
@@ -386,15 +597,15 @@ void oob_state::out_state_type::start()
     shared.reset_time = fixed.reset_time;
 };
 
-void oob_state::out_state_type::stop(){
+void oob_state::out_state_type::stop() {
 
 };
 
-void oob_state::state_type::start(){
+void oob_state::state_type::start() {
 
 };
 
-void oob_state::state_type::stop(){
+void oob_state::state_type::stop() {
 
 };
 
@@ -403,7 +614,7 @@ bool oob_state::grab_state_type::update_reorient(xScene&, F32&)
     return true;
 };
 
-void oob_state::grab_state_type::stop(){
+void oob_state::grab_state_type::stop() {
 
 };
 
