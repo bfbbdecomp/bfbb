@@ -135,11 +135,24 @@ namespace oob_state
             F32 fade_time;
             substate_enum (*updatess)(drop_state_type&, xScene&, F32&)[7];
 
+            drop_state_type();
             void start();
             state_enum update(xScene& s, F32& dt);
-            substate_enum supdate_fade_in(drop_state_type&, xScene&, F32&);
-            substate_enum update_fade_in();
+
+            static substate_enum supdate_fade_in(drop_state_type&, xScene&, F32&);
             substate_enum update_fade_in(xScene&, F32&);
+            static substate_enum supdate_start_fade_in(drop_state_type&, xScene&, F32&);
+            substate_enum update_start_fade_in(xScene&, F32&);
+            static substate_enum supdate_moving_out(drop_state_type&, xScene&, F32&);
+            substate_enum update_moving_out(xScene&, F32&);
+            static substate_enum supdate_starting(drop_state_type&, xScene&, F32&);
+            substate_enum update_starting(xScene&, F32&);
+            static substate_enum supdate_stopped(drop_state_type&, xScene&, F32&);
+            substate_enum update_stopped(xScene&, F32&);
+            static substate_enum supdate_stopping(drop_state_type&, xScene&, F32&);
+            substate_enum update_stopping(xScene&, F32&);
+            static substate_enum supdate_moving_in(drop_state_type&, xScene&, F32&);
+            substate_enum update_moving_in(xScene&, F32&);
         };
 
         struct _class_9
