@@ -379,7 +379,7 @@ public:
     S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
     void SetAttackMode(S32 a, S32 b);
     S32 LaunchBone(F32 dt, S32 param_2);
-    S32 LaunchDoggie();
+    S32 LaunchDoggie(F32 dt);
     S32 flg_attack; // offset 0x54, size 0x4
 };
 

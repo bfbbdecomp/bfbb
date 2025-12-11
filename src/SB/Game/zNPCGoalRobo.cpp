@@ -1229,7 +1229,7 @@ void zNPCGoalAlertFodBzzt::DeathRayRender()
 
 S32 zNPCGoalAlertChomper::Enter(F32 dt, void* updCtxt)
 {
-    zNPCCommon* npc = ((zNPCCommon*)(psyche->clt_owner));
+    zNPCCommon* npc = (zNPCCommon*)(psyche->clt_owner);
     alertchomp = CHOMPER_ALERT_NOTICE;
     npc->VelStop();
     pos_evade = g_O3;
@@ -1538,7 +1538,7 @@ S32 zNPCGoalAlertHammer::Process(en_trantype* trantype, F32 dt, void* updCtxt, x
     {
         return nextgoal;
     }
-    return nextgoal = xGoal::Process(trantype, dt, updCtxt, NULL);
+    return xGoal::Process(trantype, dt, updCtxt, NULL);
 }
 
 S32 zNPCGoalAlertHammer::Enter(F32 dt, void* updCtxt)
@@ -1674,7 +1674,7 @@ S32 zNPCGoalAlertTarTar::Resume(F32 dt, void* updCtxt)
 S32 zNPCGoalAlertTarTar::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
 {
     S32 nextgoal;
-    zNPCRobot* npc;
+    zNPCTarTar* npc;
     en_alerttart old_alerttart;
     F32 tym_reload;
     xVec3 dir_HtoP;
@@ -1683,7 +1683,7 @@ S32 zNPCGoalAlertTarTar::Process(en_trantype* trantype, F32 dt, void* updCtxt, x
     zNPCGoalTaunt* taunt;
     F32 rad;
 
-    npc = (zNPCSlick*)(psyche->clt_owner);
+    npc = (zNPCTarTar*)(psyche->clt_owner);
     subenter = flg_info & 2;
     old_alerttart = alerttart;
     flg_info &= ~6;
@@ -3095,6 +3095,51 @@ S32 zNPCGoalAttackArf::Exit(F32 dt, void* updCtxt)
     return zNPCGoalPushAnim::Exit(dt, updCtxt);
 }
 
+S32 zNPCGoalAttackArf::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    zNPCRobot* npc = (zNPCRobot*)(psyche->clt_owner);
+    S32 nextgoal = 0;
+    npc->VelStop();
+    npc->FacePlayer(dt, 3 * PI);
+    if (globals.player.Health < 1)
+    {
+        zNPCGoalTaunt* taunt = (zNPCGoalTaunt*)(psyche->FindGoal(NPC_GOAL_TAUNT));
+        taunt->LoopCountSet(1000);
+        *trantype = GOAL_TRAN_SWAP;
+        nextgoal = NPC_GOAL_TAUNT;
+    }
+    else if (globals.player.DamageTimer > 0.5f)
+    {
+        *trantype = GOAL_TRAN_SWAP;
+        nextgoal = NPC_GOAL_TAUNT;
+    }
+    else if (npc->SomethingWonderful() != 0)
+    {
+        *trantype = GOAL_TRAN_SET;
+        nextgoal = NPC_GOAL_IDLE;
+    }
+    if (*trantype != 0)
+    {
+        return nextgoal;
+    }
+    if (npc->DBG_IsNormLog(eNPCDCAT_Thirteen, -1))
+    {
+        NPCC_DrawPlayerPredict(5, 1.0f, 4.0f);
+    }
+    if (flg_attack & 1)
+    {
+        if (npc->IsAttackFrame(-1.0f, 1) && (LaunchBone(dt, 1) != 0))
+        {
+            flg_attack &= 0xFFFFFFFC;
+        }
+    }
+    else if ((flg_attack & 2) && npc->IsAttackFrame(-1.0f, 2) && (LaunchDoggie(dt) != 0))
+    {
+        flg_attack &= 0xFFFFFFFC;
+    }
+    return zNPCGoalPushAnim::Process(trantype, dt, updCtxt, xscn);
+}
+
 void zNPCGoalAttackArf::SetAttackMode(S32 a, S32 b)
 {
     flg_attack &= 0xfffffff8;
@@ -3135,6 +3180,36 @@ S32 zNPCGoalAttackChuck::Exit(F32 dt, void* updCtxt)
     return zNPCGoalPushAnim::Exit(dt, updCtxt);
 }
 
+S32 zNPCGoalAttackChuck::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    zNPCRobot* npc = (zNPCRobot*)(psyche->clt_owner);
+    S32 nextgoal = 0;
+    HAZ_AvailablePool();
+    if (*trantype != 0)
+    {
+        return nextgoal;
+    }
+    npc->VelStop();
+    npc->FacePlayer(dt, 3 * PI);
+    if (npc->DBG_IsNormLog(eNPCDCAT_Thirteen, -1))
+    {
+        NPCC_DrawPlayerPredict(5, 1.0f, 4.0f);
+    }
+    if ((npc->AnimTimeCurrent() > 0.2f) && (idx_launch == 1))
+    {
+        npc->ModelAtomicShow(1, 0);
+    }
+    if (idx_launch == npc->IsAttackFrame(-1.0f, 0))
+    {
+        if (BombzAway(dt))
+        {
+            idx_launch++;
+            npc->ModelAtomicHide(1, NULL);
+        }
+    }
+    return zNPCGoalPushAnim::Process(trantype, dt, updCtxt, xscn);
+}
+
 S32 zNPCGoalAttackChuck::BombzAway(F32 param_1)
 {
     zNPCRobot* npc = ((zNPCRobot*)(psyche->clt_owner));
@@ -3149,6 +3224,38 @@ S32 zNPCGoalAttackSlick::Enter(F32 dt, void* updCtxt)
     zNPCGoalLoopAnim::LoopCountSet(1);
     npc->SndPlayRandom(NPC_STYP_ATTACK);
     return zNPCGoalLoopAnim::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalAttackSlick::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    zNPCSlick* npc = (zNPCSlick*)(psyche->clt_owner);
+    S32 zapidx;
+
+    npc->FacePlayer(dt, 3 * PI);
+    npc->ThrottleAdjust(dt, 0.0f, -1.0f);
+    npc->ThrottleApply(dt, NPCC_faceDir(npc), 0);
+    if (npc->DBG_IsNormLog(eNPCDCAT_Thirteen, -1) != 0)
+    {
+        NPCC_DrawPlayerPredict(5, 1.0, 4.0);
+    }
+    zapidx = 0;
+    if (anid_played == anid_stage[1])
+    {
+        zapidx = npc->IsAttackFrame(-1.0f, 0);
+    }
+    if (cnt_loop < idx_launch)
+    {
+        idx_launch = cnt_loop;
+    }
+    if ((zapidx != 0) && (idx_launch != 0) && (cnt_loop == idx_launch))
+    {
+        HAZ_AvailablePool();
+        if (FireOne(idx_launch) != 0)
+        {
+            idx_launch--;
+        }
+    }
+    return zNPCGoalLoopAnim::Process(trantype, dt, updCtxt, xscn);
 }
 
 S32 zNPCGoalAttackSlick::FireOne(S32)
