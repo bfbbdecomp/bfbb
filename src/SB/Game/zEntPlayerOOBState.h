@@ -45,8 +45,9 @@ namespace oob_state
         {
             state_enum type;
 
-            void start();
-            void stop();
+            virtual void start();
+            virtual void stop();
+            virtual state_enum update(xScene& scene, F32& dt);
         };
 
         struct in_state_type : state_type
@@ -116,6 +117,7 @@ namespace oob_state
         {
             enum substate_enum
             {
+                SS_INVALID = -1,
                 SS_MOVING_IN,
                 SS_STOPPING,
                 SS_STOPPED,
@@ -124,7 +126,6 @@ namespace oob_state
                 SS_START_FADE_IN,
                 SS_FADE_IN,
                 MAX_SS,
-                SS_INVALID = 0xffffffff,
             };
 
             substate_enum move_substate;
@@ -136,8 +137,9 @@ namespace oob_state
             substate_enum (*updatess)(drop_state_type&, xScene&, F32&)[7];
 
             drop_state_type();
-            void start();
-            state_enum update(xScene& s, F32& dt);
+            virtual void start();
+            virtual void stop();
+            virtual state_enum update(xScene& scene, F32& dt);
 
             static substate_enum supdate_fade_in(drop_state_type&, xScene&, F32&);
             substate_enum update_fade_in(xScene&, F32&);
