@@ -448,9 +448,15 @@ namespace oob_state
 {
     namespace
     {
-        drop_state_type::drop_state_type()
+        drop_state_type::drop_state_type() : state_type(STATE_DROP)
         {
-            this->fade_substate;
+            this->updatess[0] = &supdate_moving_in;
+            this->updatess[1] = &supdate_stopping;
+            this->updatess[2] = &supdate_stopped;
+            this->updatess[3] = &supdate_starting;
+            this->updatess[4] = &supdate_moving_out;
+            this->updatess[5] = &supdate_start_fade_in;
+            this->updatess[6] = &supdate_fade_in;
         }
 
         drop_state_type::substate_enum drop_state_type::supdate_fade_in(drop_state_type& gst,
@@ -611,34 +617,64 @@ namespace oob_state
 
             return SS_STOPPING;
         }
+
+        state_type::state_type(state_enum state)
+        {
+            this->type = state;
+        }
+
+        grab_state_type::grab_state_type() : state_type(STATE_GRAB), cb(*this)
+        {
+            this->updatess[0] = &supdate_reorient;
+            this->updatess[1] = &supdate_begin_wait;
+            this->updatess[2] = &supdate_moving_in;
+            this->updatess[3] = &supdate_stopping;
+            this->updatess[4] = &supdate_stopped;
+            this->updatess[5] = &supdate_tutorial;
+            this->updatess[6] = &supdate_starting;
+            this->updatess[7] = &supdate_moving_out;
+            this->updatess[8] = &supdate_start_fade_out;
+            this->updatess[9] = &supdate_fade_out;
+        }
+
+        oob_state::grab_state_type::substate_enum oob_state::grab_state_type::update_stopping(xScene& scene,
+                                                                                      F32& dt)
+        {
+            move_hand(dt);
+
+            if (shared.vel > 0.0f)
+            {
+                return SS_STOPPING;
+            }
+
+            shared.loc = fixed.in_loc;
+
+            shared.vel = 0.0f;
+            shared.accel = 0.0f;
+
+            this->fade_start_time = fixed.grab.out_wait_time;
+
+            if (assume_player_is_stupid())
+            {
+                shared.tutorial->start_talk(xStrHash("TODO"), (ztalkbox::callback*)&cb, NULL);
+                return SS_TUTORIAL;
+            }
+
+            return SS_STOPPED;
+        }
+
+        grab_state_type::substate_enum oob_state::grab_state_type::update_reorient(xScene&, F32&)
+        {
+            return SS_REORIENT;
+        };
+
+        grab_state_type::tutorial_callback::tutorial_callback(grab_state_type& owner) : owner(owner)
+        {
+        }
     } // namespace
 } // namespace oob_state
 
-oob_state::grab_state_type::substate_enum oob_state::grab_state_type::update_stopping(xScene& scene,
-                                                                                      F32& dt)
-{
-    move_hand(dt);
 
-    if (shared.vel > 0.0f)
-    {
-        return SS_STOPPING;
-    }
-
-    shared.loc = fixed.in_loc;
-
-    shared.vel = 0.0f;
-    shared.accel = 0.0f;
-
-    this->fade_start_time = fixed.grab.out_wait_time;
-
-    if (assume_player_is_stupid())
-    {
-        shared.tutorial->start_talk(xStrHash("TODO"), (ztalkbox::callback*)&cb, NULL);
-        return SS_TUTORIAL;
-    }
-
-    return SS_STOPPED;
-}
 
 float oob_state::oob_timer()
 {
@@ -679,18 +715,8 @@ void oob_state::state_type::stop() {
 
 };
 
-bool oob_state::grab_state_type::update_reorient(xScene&, F32&)
-{
-    return true;
-};
-
 void oob_state::grab_state_type::stop() {
 
-};
-
-void oob_state::grab_state_type::tutorial_callback::on_stop()
-{
-    owner.finished_tutorial = true;
 };
 
 bool oob_state::IsPlayerInControl()
