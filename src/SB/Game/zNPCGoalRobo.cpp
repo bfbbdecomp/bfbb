@@ -2315,6 +2315,47 @@ void zNPCGoalAlertChuck::GetInArena(F32 dt)
     npc->ThrottleApply(dt, &dir, 0);
 }
 
+S32 zNPCGoalAlertChuck::ZoomMove(F32 dt)
+{
+    S32 donemoving = 0;
+    zNPCRobot* npc = (zNPCRobot*)(psyche->clt_owner);
+    F32 dist;
+    xVec3 dir;
+    if (dst_zoom < 0.5f)
+    {
+        npc->ThrottleAdjust(dt, 0.5f, -1.0f);
+    }
+    else
+    {
+        npc->ThrottleAdjust(dt, 6.0f, -1.0f);
+    }
+    npc->XYZVecToPos(&dir, npc->arena.Pos() );
+    dir.x = dir_zoom.x;
+    dir.z = dir_zoom.z;
+    dist = xVec3Length(&dir);
+    if (dist > dst_zoom)
+    {
+        dst_zoom = -1.0f;
+    }
+    else if (dist < 1e-5f)
+    {
+        dst_zoom = -1.0f;
+    }
+    else
+    {
+        xVec3SMulBy(&dir, (1.0f / dist));
+        npc->ThrottleApply(dt, &dir, 0);
+        dst_zoom = -((dt * npc->spd_throttle) *
+                    ((F32)__fabs(dir.x) + (F32)__fabs(dir.z)) -
+                    dst_zoom);
+    }
+    if (dst_zoom < 0.0f)
+    {
+        donemoving = 1;
+    }
+    return donemoving;
+}
+
 S32 zNPCGoalAlertTubelet::Enter(F32 dt, void* updCtxt)
 {
     zNPCTubeSlave* npc = ((zNPCTubeSlave*)(psyche->clt_owner));
