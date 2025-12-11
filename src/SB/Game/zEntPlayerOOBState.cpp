@@ -461,7 +461,21 @@ namespace oob_state
 
         drop_state_type::substate_enum drop_state_type::update_fade_in(xScene& scn, F32& dt)
         {
-            return SS_FADE_IN;
+            this->fade_time -= dt;
+            shared.fade_alpha = 1.0f - this->fade_time / fixed.drop.fade_time;
+
+            if (shared.fade_alpha > 1.0f)
+            {
+                shared.fade_alpha = 1.0f;
+            }
+            
+            if (this->fade_time > 0.0f)
+            {
+                return SS_FADE_IN;
+            }
+
+            dt += this->fade_time;
+            return SS_INVALID;
         }
 
         drop_state_type::substate_enum drop_state_type::supdate_start_fade_in(drop_state_type& gst,
@@ -472,14 +486,14 @@ namespace oob_state
 
         drop_state_type::substate_enum drop_state_type::update_start_fade_in(xScene& scn, F32& dt)
         {
-            this->fade_time -= dt;
+            this->fade_start_time -= dt;
 
-            if (this->fade_time > 0.0f)
+            if (this->fade_start_time > 0.0f)
             {
                 return SS_START_FADE_IN;
             }
 
-            dt += this->fade_time;
+            dt += this->fade_start_time;
             return SS_FADE_IN;
         }
 
@@ -487,6 +501,20 @@ namespace oob_state
                                                                            xScene& scn, F32& dt)
         {
             return gst.update_moving_out(scn, dt);
+        }
+
+        drop_state_type::substate_enum drop_state_type::update_moving_out(xScene& scn, F32& dt)
+        {
+            move_hand(dt);
+
+            F32 projection = (shared.loc - fixed.out_loc).dot(shared.dir);
+            if (projection >= 0.0f)
+            {
+                return SS_MOVING_OUT;
+            }
+
+            dt = 0.0f;
+            return SS_INVALID;
         }
 
         drop_state_type::substate_enum drop_state_type::supdate_starting(drop_state_type& gst,
@@ -517,14 +545,14 @@ namespace oob_state
 
         drop_state_type::substate_enum drop_state_type::update_stopped(xScene& scn, F32& dt)
         {
-            this->fade_start_time -= dt;
+            this->stop_time -= dt;
 
-            if (this->fade_start_time > 0.0f)
+            if (this->stop_time > 0.0f)
             {
                 return SS_STOPPED;
             }
 
-            dt += this->fade_start_time;
+            dt += this->stop_time;
             shared.accel =
                 (-fixed.drop.out_vel * fixed.drop.out_vel) / (2.0f * fixed.drop.out_start_dist);
             return SS_STARTING;
@@ -536,10 +564,52 @@ namespace oob_state
             return gst.update_stopping(scn, dt);
         }
 
+        drop_state_type::substate_enum drop_state_type::update_stopping(xScene& scn, F32& dt)
+        {
+            move_hand(dt);
+            if (shared.vel > 0.0f)
+            {
+                return SS_STOPPING;
+            }
+
+            shared.loc = fixed.in_loc;
+            shared.vel = 0.0f;
+            shared.accel = 0.0f;
+            this->stop_time = fixed.drop.out_wait_time;
+
+            return SS_STOPPED;
+        }
+
         drop_state_type::substate_enum drop_state_type::supdate_moving_in(drop_state_type& gst,
                                                                           xScene& scn, F32& dt)
         {
             return gst.update_moving_in(scn, dt);
+        }
+
+        drop_state_type::substate_enum drop_state_type::update_moving_in(xScene& scn, F32& dt)
+        {
+            move_hand(dt);
+
+            xVec2 in_out_path = fixed.in_loc - fixed.out_loc;
+            xVec2 norm = in_out_path.normal();
+
+            F32 projection = norm.dot(fixed.in_loc - shared.loc);
+            if (projection > fixed.grab.in_stop_dist)
+            {
+                return SS_MOVING_IN;
+            }
+            else if (projection <= 0.0f)
+            {
+                shared.vel = 0.0f;
+                shared.loc = fixed.in_loc;
+                shared.accel     = 0.0f;
+            }
+            else
+            {
+                shared.accel = (-shared.vel * shared.vel) / (2.0f * projection);
+            }
+
+            return SS_STOPPING;
         }
     } // namespace
 } // namespace oob_state
@@ -626,6 +696,27 @@ void oob_state::grab_state_type::tutorial_callback::on_stop()
 bool oob_state::IsPlayerInControl()
 {
     return oob_state::shared.control == 0;
+}
+
+namespace oob_state
+{
+    namespace
+    {
+        void drop_state_type::start()
+        {
+
+        }
+
+        void drop_state_type::stop()
+        {
+
+        }
+
+        state_enum drop_state_type::update(xScene& scene, F32& dt)
+        {
+            return STATE_DROP;
+        }
+    }
 }
 
 WEAK F32 xVec2::dot(const xVec2& b) const
