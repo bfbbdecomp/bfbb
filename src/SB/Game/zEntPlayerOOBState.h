@@ -22,29 +22,25 @@ namespace oob_state
 
     bool IsPlayerInControl();
 
-    struct callback
-    {
-        virtual void on_stop();
-    };
-
-    enum state_enum
-    {
-        STATE_INVALID = -1,
-        BEGIN_STATE,
-        STATE_IN = 0,
-        STATE_OUT,
-        STATE_GRAB,
-        STATE_DROP,
-        END_STATE,
-        MAX_STATE = 0x4
-    };
-
     namespace
     {
+        enum state_enum
+        {
+            STATE_INVALID = -1,
+            BEGIN_STATE,
+            STATE_IN = 0,
+            STATE_OUT,
+            STATE_GRAB,
+            STATE_DROP,
+            END_STATE,
+            MAX_STATE = 0x4
+        };
+
         struct state_type
         {
             state_enum type;
 
+            state_type(state_enum state);
             virtual void start();
             virtual void stop();
             virtual state_enum update(xScene& scene, F32& dt);
@@ -80,11 +76,21 @@ namespace oob_state
                 MAX_SS
             };
 
-            struct tutorial_callback : callback
+            struct tutorial_callback : ztalkbox::callback
             {
                 grab_state_type& owner;
 
-                void on_stop();
+                tutorial_callback(grab_state_type& owner);
+
+                virtual void on_signal(U32)
+                {
+
+                }
+
+                virtual void on_stop()
+                {
+                    owner.finished_tutorial = true;
+                }
             };
 
             tutorial_callback cb;
@@ -97,20 +103,32 @@ namespace oob_state
             F32 fade_start_time;
             F32 fade_time;
             U32 scene_reset;
-
-            // Todo: this is not in the DWARF, but is required for
-            //       tutorial_callback::on_stop to match. Probably
-            //       not correct.
-            char pad[4];
-
             U8 finished_tutorial;
 
-            substate_enum (*updatess)(grab_state_type&, xScene&, float&)[10];
-            bool update_reorient(xScene&, F32&);
-            substate_enum update_stopping(xScene&, float&);
-
+            substate_enum (*updatess[10])(grab_state_type&, xScene&, float&);
+            
+            grab_state_type();
             void start();
             void stop();
+
+            static substate_enum supdate_reorient(grab_state_type& gst, xScene& scene, F32& dt);
+            substate_enum update_reorient(xScene&, F32&);
+            static substate_enum supdate_begin_wait(grab_state_type& gst, xScene& scene, F32& dt);
+            static substate_enum supdate_moving_in(grab_state_type& gst, xScene& scene, F32& dt);
+            substate_enum update_moving_in(xScene& scene, F32& dt);
+            static substate_enum supdate_stopping(grab_state_type& gst, xScene& scene, F32& dt);
+            substate_enum update_stopping(xScene& scene, F32& dt);
+            static substate_enum supdate_stopped(grab_state_type& gst, xScene& scene, F32& dt);
+            substate_enum update_stopped(xScene& scene, F32& dt);
+            static substate_enum supdate_tutorial(grab_state_type& gst, xScene& scene, F32& dt);
+            static substate_enum supdate_starting(grab_state_type& gst, xScene& scene, F32& dt);
+            substate_enum update_starting(xScene& scene, F32& dt);
+            static substate_enum supdate_moving_out(grab_state_type& gst, xScene& scene, F32& dt);
+            substate_enum update_moving_out(xScene& scene, F32& dt);
+            static substate_enum supdate_start_fade_out(grab_state_type& gst, xScene& scene, F32& dt);
+            substate_enum update_start_fade_out(xScene& scene, F32& dt);
+            static substate_enum supdate_fade_out(grab_state_type& gst, xScene& scene, F32& dt);
+            substate_enum update_fade_out(xScene& scene, F32& dt);
         };
 
         struct drop_state_type : state_type
@@ -134,7 +152,7 @@ namespace oob_state
             F32 stop_time;
             F32 fade_start_time;
             F32 fade_time;
-            substate_enum (*updatess)(drop_state_type&, xScene&, F32&)[7];
+            substate_enum (*updatess[7])(drop_state_type&, xScene&, F32&);
 
             drop_state_type();
             virtual void start();
