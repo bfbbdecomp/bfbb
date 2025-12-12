@@ -61,6 +61,7 @@ void zThrown_PatrickLauncher(xEnt* ent, xEnt* launcher);
 S32 zThrownCollide_CauseDamage(zThrownStruct* thrown, xEntCollis* collis);
 void zThrownCollide_ThrowFruit(zThrownStruct* thrown, xEntCollis* collis, F32* bounce,
                                F32* friction);
+S32 zThrown_KillFruit(xEnt* ent);
 void zThrownCollide_ThrowFreeze(zThrownStruct* thrown, xEntCollis* collis, F32* bounce,
                                 F32* friction);
 void zThrownCollide_DestructObj(zThrownStruct* thrown, xEntCollis* collis, F32* bounce,
@@ -70,6 +71,7 @@ void zThrownCollide_BSandyHead(zThrownStruct* thrown, xEntCollis* collis, F32* b
 void zThrownCollide_Tiki(zThrownStruct* thrown, xEntCollis* collis, F32* bounce, F32* friction);
 void zThrown_AddFruit(xEnt* ent);
 S32 zThrown_IsFruit(xEnt* ent, F32* stackHeight);
+S32 zThrown_IsStacked(xEnt* ent);
 void checkAgainstButtons(xEnt* ent);
 xBase* zThrown_ButtonIteratorCB(xBase* b, zScene* scn, void* user);
 void xDrawSphere(const xSphere* s, U32 unk);
