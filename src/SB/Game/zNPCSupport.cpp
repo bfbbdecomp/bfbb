@@ -1103,8 +1103,6 @@ void NPCC_xBoundBack(xBound* bnd)
     }
 }
 
-void NPCC_DstSq(const xVec3*, const xVec3*, xVec3*);
-
 S32 NPCC_HaveLOSToPos(xVec3* pos_src, xVec3* pos_tgt, F32 dst_max, xBase* tgt, xCollis* colCallers)
 {
     S32 result;
