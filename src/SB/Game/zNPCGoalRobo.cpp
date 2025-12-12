@@ -1972,56 +1972,56 @@ S32 zNPCGoalAlertMonsoon::Process(en_trantype* trantype, F32 dt, void* updCtxt, 
     }
     switch (alertmony)
     {
-        case MONSOON_ALERT_NOTICE:
-            alertmony = MONSOON_ALERT_BEGIN;
-            npc->FacePlayer(dt, 3 * PI);
-            *trantype = GOAL_TRAN_PUSH;
-            nextgoal = NPC_GOAL_NOTICE;
-            break;
-        case MONSOON_ALERT_ARENA:
-            npc->FacePlayer(dt, 3 * PI);
-            npc->MoveTowardsArena(dt, 4.0f);
-            if (npc->arena.PctFromHome(npc->Pos()) < 0.5f)
-            {
-                alertmony = MONSOON_ALERT_READY;
-            }
-            if (subenter)
-            {
-                DoAutoAnim(NPC_GSPOT_STARTALT, 0);
-            }
-            break;
-        case MONSOON_ALERT_BEGIN:
+    case MONSOON_ALERT_NOTICE:
+        alertmony = MONSOON_ALERT_BEGIN;
+        npc->FacePlayer(dt, 3 * PI);
+        *trantype = GOAL_TRAN_PUSH;
+        nextgoal = NPC_GOAL_NOTICE;
+        break;
+    case MONSOON_ALERT_ARENA:
+        npc->FacePlayer(dt, 3 * PI);
+        npc->MoveTowardsArena(dt, 4.0f);
+        if (npc->arena.PctFromHome(npc->Pos()) < 0.5f)
+        {
             alertmony = MONSOON_ALERT_READY;
+        }
+        if (subenter)
+        {
+            DoAutoAnim(NPC_GSPOT_STARTALT, 0);
+        }
+        break;
+    case MONSOON_ALERT_BEGIN:
+        alertmony = MONSOON_ALERT_READY;
+        break;
+    case MONSOON_ALERT_READY:
+        if (((tmr_reload < 0.0f) ? 1 : 0) && !(globals.player.DamageTimer > 0.0f))
+        {
+            alertmony = MONSOON_ALERT_SPITCLOUD;
             break;
-        case MONSOON_ALERT_READY:
-            if (((tmr_reload < 0.0f) ? 1 : 0) && !(globals.player.DamageTimer > 0.0f))
+        }
+        else
+        {
+            tmr_reload = MAX(-1.0f, (tmr_reload - dt));
+            if (subenter != 0)
             {
-                alertmony = MONSOON_ALERT_SPITCLOUD;
-                break;
-            }
-            else
-            {
-                tmr_reload = MAX(-1.0f, (tmr_reload - dt));
-                if (subenter != 0)
+                DoAutoAnim(NPC_GSPOT_RESUME, 0);
+                npc->VelStop();
+                if (!npc->arena.IncludesPos(&pos_corner, NULL, NULL))
                 {
-                    DoAutoAnim(NPC_GSPOT_RESUME, 0);
-                    npc->VelStop();
-                    if (!npc->arena.IncludesPos(&pos_corner, NULL, NULL))
-                    {
-                        xVec3Copy(&pos_corner, npc->Pos());
-                    }
+                    xVec3Copy(&pos_corner, npc->Pos());
                 }
-                npc->FacePlayer(dt, 3 * PI);
-                MoveCorner(dt);
             }
-            break;
-        case MONSOON_ALERT_SPITCLOUD:
-            F32 rand = xurand();
-            nextgoal = NPC_GOAL_ATTACKMONSOON;
-            tmr_reload = tym_reload + (tym_reload * (0.25f * (rand - 0.5f)));
-            alertmony = MONSOON_ALERT_READY;
-            *trantype = GOAL_TRAN_PUSH;
-            break;
+            npc->FacePlayer(dt, 3 * PI);
+            MoveCorner(dt);
+        }
+        break;
+    case MONSOON_ALERT_SPITCLOUD:
+        F32 rand = xurand();
+        nextgoal = NPC_GOAL_ATTACKMONSOON;
+        tmr_reload = tym_reload + (tym_reload * (0.25f * (rand - 0.5f)));
+        alertmony = MONSOON_ALERT_READY;
+        *trantype = GOAL_TRAN_PUSH;
+        break;
     }
     if (alertmony != old_alertmony)
     {
@@ -2329,7 +2329,7 @@ S32 zNPCGoalAlertChuck::ZoomMove(F32 dt)
     {
         npc->ThrottleAdjust(dt, 6.0f, -1.0f);
     }
-    npc->XYZVecToPos(&dir, npc->arena.Pos() );
+    npc->XYZVecToPos(&dir, npc->arena.Pos());
     dir.x = dir_zoom.x;
     dir.z = dir_zoom.z;
     dist = xVec3Length(&dir);
@@ -2345,9 +2345,8 @@ S32 zNPCGoalAlertChuck::ZoomMove(F32 dt)
     {
         xVec3SMulBy(&dir, (1.0f / dist));
         npc->ThrottleApply(dt, &dir, 0);
-        dst_zoom = -((dt * npc->spd_throttle) *
-                    ((F32)__fabs(dir.x) + (F32)__fabs(dir.z)) -
-                    dst_zoom);
+        dst_zoom =
+            -((dt * npc->spd_throttle) * ((F32)__fabs(dir.x) + (F32)__fabs(dir.z)) - dst_zoom);
     }
     if (dst_zoom < 0.0f)
     {
