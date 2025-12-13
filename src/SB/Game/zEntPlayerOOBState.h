@@ -28,13 +28,13 @@ namespace oob_state
         enum state_enum
         {
             STATE_INVALID = -1,
-            BEGIN_STATE,
+            BEGIN_STATE = 0,
             STATE_IN = 0,
-            STATE_OUT,
-            STATE_GRAB,
-            STATE_DROP,
-            END_STATE,
-            MAX_STATE = 0x4
+            STATE_OUT = 1,
+            STATE_GRAB = 2,
+            STATE_DROP = 3,
+            END_STATE = 4,
+            MAX_STATE = 4,
         };
 
         struct state_type

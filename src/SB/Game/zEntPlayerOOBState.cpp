@@ -969,31 +969,99 @@ void oob_state::write_persistent(xSerial& s)
     }
 }
 
-void oob_state::in_state_type::start()
+namespace oob_state
 {
-    shared.reset_time = FLOAT_MAX;
-    shared.out_time = FLOAT_MAX;
+    namespace
+    {
+        void in_state_type::start()
+{
+            shared.reset_time = 0.0f;
+            shared.out_time = 0.0f;
     shared.control = 0;
 };
 
-void oob_state::in_state_type::stop() {
+        void in_state_type::stop()
+        {
 
-};
+        };
 
-void oob_state::out_state_type::start()
+        state_enum in_state_type::update(xScene& scene, F32& dt)
+        {
+            xSurface* floor_surf = globals.player.floor_surf;
+            U8 oob = FALSE;
+
+            if (floor_surf != NULL && !(globals.player.ControlOff & 0x8000))
+            {
+                oob = zSurfaceOutOfBounds(*floor_surf);
+                if (oob)
+                {
+                    update_max_out_time(*floor_surf);
+                }
+            }
+
+            if (!oob)
+            {
+                shared.reset_time = 0.0f;
+                shared.out_time = 0.0f;
+                shared.control = FALSE;
+
+                return STATE_IN;
+            }
+
+            return STATE_OUT;
+        };
+
+        void out_state_type::start()
 {
     shared.out_time = shared.max_out_time;
     shared.reset_time = fixed.reset_time;
 };
 
-void oob_state::out_state_type::stop() {
+        void out_state_type::stop() {
 
-};
+        };
 
-namespace oob_state
-{
-    namespace
-    {
+        state_enum out_state_type::update(xScene& scene, F32& dt)
+        {
+            xSurface* floor_surf = globals.player.floor_surf;
+            U8 oob = FALSE;
+
+            if (floor_surf != NULL && !(globals.player.ControlOff & 0x8000))
+            {
+                oob = zSurfaceOutOfBounds(*floor_surf);
+                if (oob)
+                {
+                    update_max_out_time(*floor_surf);
+                }
+            }
+
+            shared.out_time -= dt;
+
+            if (oob)
+            {
+                shared.reset_time = fixed.reset_time;
+                if (shared.reset_time <= 0.0f)
+                {
+                    return STATE_GRAB;
+                }
+            }
+            else 
+            {
+                if (!globals.player.JumpState)
+                {
+                    shared.reset_time = 0.0f;
+                }
+                
+                shared.reset_time -= dt;
+                if (shared.reset_time <= 0.0f)
+                {
+                    return STATE_IN;
+                }
+            }
+
+            return STATE_OUT;
+        };
+
         void grab_state_type::start()
         {
         }
