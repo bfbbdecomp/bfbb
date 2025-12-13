@@ -474,7 +474,7 @@ namespace oob_state
             {
                 shared.fade_alpha = 1.0f;
             }
-            
+
             if (this->fade_time > 0.0f)
             {
                 return SS_FADE_IN;
@@ -608,7 +608,7 @@ namespace oob_state
             {
                 shared.vel = 0.0f;
                 shared.loc = fixed.in_loc;
-                shared.accel     = 0.0f;
+                shared.accel = 0.0f;
             }
             else
             {
@@ -637,8 +637,142 @@ namespace oob_state
             this->updatess[9] = &supdate_fade_out;
         }
 
-        oob_state::grab_state_type::substate_enum oob_state::grab_state_type::update_stopping(xScene& scene,
-                                                                                      F32& dt)
+        grab_state_type::tutorial_callback::tutorial_callback(grab_state_type& owner) : owner(owner)
+        {
+        }
+
+        grab_state_type::substate_enum grab_state_type::supdate_fade_out(grab_state_type& gst,
+                                                                         xScene& scene, F32& dt)
+        {
+            return gst.update_fade_out(scene, dt);
+        }
+
+        grab_state_type::substate_enum grab_state_type::update_fade_out(xScene& scene, F32& dt)
+        {
+            this->fade_time -= dt;
+            shared.fade_alpha = this->fade_time / fixed.grab.fade_time;
+
+            if (shared.fade_alpha < 0.0f)
+            {
+                shared.fade_alpha = 0.0f;
+            }
+
+            if (this->fade_time > 0.0f)
+            {
+                return SS_FADE_OUT;
+            }
+
+            dt += this->fade_time;
+            return SS_INVALID;
+        }
+
+        grab_state_type::substate_enum
+        grab_state_type::supdate_start_fade_out(grab_state_type& gst, xScene& scene, F32& dt)
+        {
+            return gst.update_start_fade_out(scene, dt);
+        }
+
+        grab_state_type::substate_enum grab_state_type::update_start_fade_out(xScene& scene,
+                                                                              F32& dt)
+        {
+            this->fade_start_time -= dt;
+
+            if (this->fade_start_time > 0.0f)
+            {
+                return SS_START_FADE_OUT;
+            }
+
+            dt += this->fade_start_time;
+            return SS_FADE_OUT;
+        }
+
+        grab_state_type::substate_enum grab_state_type::supdate_moving_out(grab_state_type& gst,
+                                                                           xScene& scene, F32& dt)
+        {
+            return gst.update_moving_out(scene, dt);
+        }
+
+        grab_state_type::substate_enum grab_state_type::update_moving_out(xScene& scene, F32& dt)
+        {
+            move_hand(dt);
+
+            if ((shared.loc - fixed.out_loc).dot(shared.dir) >= 0.0f)
+            {
+                return SS_MOVING_OUT;
+            }
+
+            dt = 0.0f;
+            return SS_INVALID;
+        }
+
+        grab_state_type::substate_enum grab_state_type::supdate_starting(grab_state_type& gst,
+                                                                         xScene& scene, F32& dt)
+        {
+            return gst.update_starting(scene, dt);
+        }
+
+        grab_state_type::substate_enum grab_state_type::update_starting(xScene& scene, F32& dt)
+        {
+            move_hand(dt);
+
+            if (shared.vel > -fixed.grab.out_vel)
+            {
+                return SS_STARTING;
+            }
+
+            shared.vel = -fixed.grab.out_vel;
+            shared.accel = 0.0f;
+            return SS_MOVING_OUT;
+        }
+
+        grab_state_type::substate_enum grab_state_type::supdate_tutorial(grab_state_type& gst,
+                                                                         xScene& scene, F32& dt)
+        {
+            return gst.update_tutorial(scene, dt);
+        }
+
+        grab_state_type::substate_enum grab_state_type::update_tutorial(xScene& scene, F32& dt)
+        {
+            this->delay -= dt;
+            if (!this->finished_tutorial || this->delay > 0.0f)
+            {
+                return SS_TUTORIAL;
+            }
+
+            dt = 0.0f;
+            shared.accel =
+                (-fixed.grab.out_vel * fixed.grab.out_vel) / (2.0f * fixed.grab.out_start_dist);
+            return SS_STARTING;
+        }
+
+        grab_state_type::substate_enum grab_state_type::supdate_stopped(grab_state_type& gst,
+                                                                        xScene& scene, F32& dt)
+        {
+            return gst.update_stopped(scene, dt);
+        }
+
+        grab_state_type::substate_enum grab_state_type::update_stopped(xScene& scene, F32& dt)
+        {
+            this->delay -= dt;
+
+            if (this->delay > 0.0f)
+            {
+                return SS_STOPPED;
+            }
+
+            dt += this->delay;
+            shared.accel =
+                (-fixed.grab.out_vel * fixed.grab.out_vel) / (2.0f * fixed.grab.out_start_dist);
+            return SS_STARTING;
+        }
+
+        grab_state_type::substate_enum grab_state_type::supdate_stopping(grab_state_type& gst,
+                                                                         xScene& scene, F32& dt)
+        {
+            return gst.update_stopping(scene, dt);
+        }
+
+        grab_state_type::substate_enum grab_state_type::update_stopping(xScene& scene, F32& dt)
         {
             move_hand(dt);
 
@@ -652,7 +786,7 @@ namespace oob_state
             shared.vel = 0.0f;
             shared.accel = 0.0f;
 
-            this->fade_start_time = fixed.grab.out_wait_time;
+            this->delay = fixed.grab.out_wait_time;
 
             if (assume_player_is_stupid())
             {
@@ -663,18 +797,69 @@ namespace oob_state
             return SS_STOPPED;
         }
 
-        grab_state_type::substate_enum oob_state::grab_state_type::update_reorient(xScene&, F32&)
+        grab_state_type::substate_enum grab_state_type::supdate_moving_in(grab_state_type& gst,
+                                                                          xScene& scene, F32& dt)
         {
-            return SS_REORIENT;
-        };
-
-        grab_state_type::tutorial_callback::tutorial_callback(grab_state_type& owner) : owner(owner)
-        {
+            return gst.update_moving_in(scene, dt);
         }
+
+        grab_state_type::substate_enum grab_state_type::update_moving_in(xScene& scene, F32& dt)
+        {
+            move_hand(dt);
+
+            xVec2 in_out_path = fixed.in_loc - fixed.out_loc;
+            xVec2 norm = in_out_path.normal();
+
+            F32 projection = norm.dot(fixed.in_loc - shared.loc);
+            if (projection > fixed.grab.in_stop_dist)
+            {
+                return SS_MOVING_IN;
+            }
+            else if (projection <= 0.0f)
+            {
+                shared.vel = 0.0f;
+                shared.loc = fixed.in_loc;
+                shared.accel = 0.0f;
+            }
+            else
+            {
+                shared.accel = (-shared.vel * shared.vel) / (2.0f * projection);
+            }
+
+            return SS_STOPPING;
+        }
+
+        grab_state_type::substate_enum grab_state_type::supdate_begin_wait(grab_state_type& gst,
+                                                                           xScene& scene, F32& dt)
+        {
+            return gst.update_begin_wait(scene, dt);
+        }
+
+        grab_state_type::substate_enum grab_state_type::update_begin_wait(xScene& scene, F32& dt)
+        {
+            this->delay -= dt;
+            if (this->delay > 0.0f)
+            {
+                return SS_BEGIN_WAIT;
+            }
+
+            shared.render_hand = true;
+            return SS_MOVING_IN;
+        }
+
+        grab_state_type::substate_enum grab_state_type::supdate_reorient(grab_state_type& gst,
+                                                                         xScene& scene, F32& dt)
+        {
+            return gst.update_reorient(scene, dt);
+        }
+
+        grab_state_type::substate_enum oob_state::grab_state_type::update_reorient(xScene& scene,
+                                                                                   F32& dt)
+        {
+            return SS_BEGIN_WAIT;
+        };
     } // namespace
 } // namespace oob_state
-
-
 
 float oob_state::oob_timer()
 {
@@ -715,10 +900,6 @@ void oob_state::state_type::stop() {
 
 };
 
-void oob_state::grab_state_type::stop() {
-
-};
-
 bool oob_state::IsPlayerInControl()
 {
     return oob_state::shared.control == 0;
@@ -728,22 +909,33 @@ namespace oob_state
 {
     namespace
     {
+        void grab_state_type::start()
+        {
+        }
+
+        void grab_state_type::stop()
+        {
+        }
+
+        state_enum grab_state_type::update(xScene& scene, F32& dt)
+        {
+            return STATE_DROP;
+        }
+
         void drop_state_type::start()
         {
-
         }
 
         void drop_state_type::stop()
         {
-
         }
 
         state_enum drop_state_type::update(xScene& scene, F32& dt)
         {
             return STATE_DROP;
         }
-    }
-}
+    } // namespace
+} // namespace oob_state
 
 WEAK F32 xVec2::dot(const xVec2& b) const
 {
