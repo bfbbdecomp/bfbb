@@ -5,6 +5,7 @@
 #include "xMathInlines.h"
 #include "zSurface.h"
 #include "zRenderState.h"
+#include "zEntPlayerBungeeState.h"
 
 #include <types.h>
 #include <rwplcore.h>
@@ -637,10 +638,6 @@ namespace oob_state
             this->updatess[9] = &supdate_fade_out;
         }
 
-        grab_state_type::tutorial_callback::tutorial_callback(grab_state_type& owner) : owner(owner)
-        {
-        }
-
         grab_state_type::substate_enum grab_state_type::supdate_fade_out(grab_state_type& gst,
                                                                          xScene& scene, F32& dt)
         {
@@ -858,10 +855,35 @@ namespace oob_state
         {
             return SS_BEGIN_WAIT;
         };
+
+        grab_state_type::tutorial_callback::tutorial_callback(grab_state_type& owner) : owner(owner)
+        {
+        }
+        
+        out_state_type::out_state_type() : state_type(STATE_OUT)
+        {
+        }
+
+        in_state_type::in_state_type() : state_type(STATE_IN)
+        {
+        }
+
+        void state_type::start()
+        {
+        };
+
+        void state_type::stop()
+        {
+        };
     } // namespace
 } // namespace oob_state
 
-float oob_state::oob_timer()
+bool oob_state::IsPlayerInControl()
+{
+    return oob_state::shared.control == 0;
+}
+
+F32 oob_state::oob_timer()
 {
     if (shared.reset_time == fixed.reset_time)
     {
@@ -869,6 +891,82 @@ float oob_state::oob_timer()
     }
 
     return -1.0f;
+}
+
+bool oob_state::render()
+{
+    if ((shared.flags & 0x3) != 3)
+    {
+        return false;
+    }
+
+    if (!shared.control)
+    {
+        return false;
+    }
+
+    xLightKit_Enable(globals.player.ent.lightKit, globals.currWorld);
+    xEntRender(&globals.player.ent);
+    xLightKit_Enable(NULL, globals.currWorld);
+
+    return true;
+}
+
+void oob_state::fx_render()
+{
+    if ((shared.flags & 0x3) != 3)
+    {
+        return;
+    }
+
+    if (shared.control && shared.fade_alpha < 1.0f)
+    {
+        render_fade();
+        render_ghost();
+    }
+    
+    if (shared.render_hand && shared.model != NULL)
+    {
+        render_hand();
+    }
+}
+
+void oob_state::force_start()
+{
+    if ((shared.flags & 0x7) == 0x3 && !bungee_state::active())
+    {
+        if (globals.player.ControlOff & 0x8000)
+        {
+            shared.flags |= 0x8;
+            oob_player_teleported = false;
+        }
+        else
+        {
+            shared.flags &= ~0x8;
+            shared.state->stop();
+            shared.state = shared.states[2];
+            shared.state->start();
+        }
+    }
+}
+
+void oob_state::read_persistent(xSerial& s)
+{
+    for (U32 i = 0; i < 6; i++)
+    {
+        S32 val;
+        s.Read_b1(&val);
+
+        idiot_levels[i].triggered = (bool)val;
+    }
+}
+
+void oob_state::write_persistent(xSerial& s)
+{
+    for (U32 i = 0; i < 6; i++)
+    {
+        s.Write_b1((bool)idiot_levels[i].triggered);
+    }
 }
 
 void oob_state::in_state_type::start()
@@ -891,19 +989,6 @@ void oob_state::out_state_type::start()
 void oob_state::out_state_type::stop() {
 
 };
-
-void oob_state::state_type::start() {
-
-};
-
-void oob_state::state_type::stop() {
-
-};
-
-bool oob_state::IsPlayerInControl()
-{
-    return oob_state::shared.control == 0;
-}
 
 namespace oob_state
 {

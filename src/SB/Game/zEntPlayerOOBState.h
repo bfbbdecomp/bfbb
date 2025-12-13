@@ -13,6 +13,7 @@ namespace oob_state
 {
     bool render();
     void fx_render();
+    void force_start();
     void read_persistent(xSerial& s);
     void write_persistent(xSerial& s);
     void load_settings(xIniFile& ini);
@@ -43,19 +44,23 @@ namespace oob_state
             state_type(state_enum state);
             virtual void start();
             virtual void stop();
-            virtual state_enum update(xScene& scene, F32& dt);
+            virtual state_enum update(xScene& scene, F32& dt) = 0;
         };
 
         struct in_state_type : state_type
         {
-            void start();
-            void stop();
+            in_state_type();
+            virtual void start();
+            virtual void stop();
+            virtual state_enum update(xScene& scene, F32& dt);
         };
 
         struct out_state_type : state_type
         {
-            void start();
-            void stop();
+            out_state_type();
+            virtual void start();
+            virtual void stop();
+            virtual state_enum update(xScene& scene, F32& dt);
         };
 
         struct grab_state_type : state_type
@@ -251,7 +256,7 @@ namespace oob_state
 
     struct idiot_level_data
     {
-        bool triggered; // offset 0x0, size 0x1
+        U8 triggered; // offset 0x0, size 0x1
         U32 scene; // offset 0x4, size 0x4
     };
 
