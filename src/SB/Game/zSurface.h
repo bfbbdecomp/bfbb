@@ -137,6 +137,7 @@ void zSurfaceSetup(xSurface* s);
 void zSurfaceUpdate(xBase* to, xScene*, F32 dt);
 void zSurfaceGetName(S32 type, char* buffer);
 xSurface& zSurfaceGetDefault();
+U8 zSurfaceOutOfBounds(const xSurface& s);
 F32 zSurfaceGetOutOfBoundsDelay(const xSurface& surface);
 
 #endif
