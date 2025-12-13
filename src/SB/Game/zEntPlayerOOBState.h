@@ -108,12 +108,14 @@ namespace oob_state
             substate_enum (*updatess[10])(grab_state_type&, xScene&, float&);
             
             grab_state_type();
-            void start();
-            void stop();
+            virtual void start();
+            virtual void stop();
+            virtual state_enum update(xScene& scene, F32& dt);
 
             static substate_enum supdate_reorient(grab_state_type& gst, xScene& scene, F32& dt);
             substate_enum update_reorient(xScene&, F32&);
             static substate_enum supdate_begin_wait(grab_state_type& gst, xScene& scene, F32& dt);
+            substate_enum update_begin_wait(xScene&, F32&);
             static substate_enum supdate_moving_in(grab_state_type& gst, xScene& scene, F32& dt);
             substate_enum update_moving_in(xScene& scene, F32& dt);
             static substate_enum supdate_stopping(grab_state_type& gst, xScene& scene, F32& dt);
@@ -121,6 +123,7 @@ namespace oob_state
             static substate_enum supdate_stopped(grab_state_type& gst, xScene& scene, F32& dt);
             substate_enum update_stopped(xScene& scene, F32& dt);
             static substate_enum supdate_tutorial(grab_state_type& gst, xScene& scene, F32& dt);
+            substate_enum update_tutorial(xScene& scene, F32& dt);
             static substate_enum supdate_starting(grab_state_type& gst, xScene& scene, F32& dt);
             substate_enum update_starting(xScene& scene, F32& dt);
             static substate_enum supdate_moving_out(grab_state_type& gst, xScene& scene, F32& dt);
