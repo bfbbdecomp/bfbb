@@ -216,14 +216,10 @@ void xMat4x3MoveLocalAt(xMat4x3* m, F32 mag)
 
 F32 xMat3x3LookVec(xMat3x3* m, const xVec3* at)
 {
-    F32 temp_f2;
-    F32 temp_f31;
-    xVec3* temp_r3;
+    F32 vec_len = xVec3Normalize(&m->at, at);
+    xVec3Inv(&m->at, &m->at);
 
-    temp_f31 = xVec3Normalize(&m->at, at);
-    temp_r3 = &m->at;
-    xVec3Inv(temp_r3, temp_r3);
-    if ((F32)__fabs(1.0f - m->at.y) < 0.00001f)
+    if (FABS(1.0f - m->at.y) < 0.00001f)
     {
         m->right.x = 1.0f;
         m->right.y = 0.0f;
@@ -234,9 +230,9 @@ F32 xMat3x3LookVec(xMat3x3* m, const xVec3* at)
         m->at.x = 0.0f;
         m->at.y = -1.0f;
         m->at.z = 0.0f;
-        return temp_f31;
+        return vec_len;
     }
-    if ((F32)__fabs(1.0f + m->at.y) < 0.00001f)
+    if (FABS(1.0f + m->at.y) < 0.00001f)
     {
         m->right.x = -1.0f;
         m->right.y = 0.0f;
@@ -247,7 +243,7 @@ F32 xMat3x3LookVec(xMat3x3* m, const xVec3* at)
         m->at.x = 0.0f;
         m->at.y = 1.0f;
         m->at.z = 0.0f;
-        return temp_f31;
+        return vec_len;
     }
     if ((FABS(at->z) < 0.00001f) && (FABS(at->x) < 0.00001f))
     {
@@ -269,7 +265,7 @@ F32 xMat3x3LookVec(xMat3x3* m, const xVec3* at)
     xVec3Cross(&m->up, &m->at, (xVec3*)m);
     xVec3Cross((xVec3*)m, &m->up, &m->at);
     m->flags = 0;
-    return temp_f31;
+    return vec_len;
 }
 
 void xMat3x3Euler(xMat3x3* m, const xVec3* ypr)
@@ -279,32 +275,24 @@ void xMat3x3Euler(xMat3x3* m, const xVec3* ypr)
 
 void xMat3x3Euler(xMat3x3* m, F32 yaw, F32 pitch, F32 roll)
 {
-    F32 temp_f0;
-    F32 temp_f1;
-    F32 temp_f27;
-    F32 temp_f28;
-    F32 temp_f29;
-    F32 temp_f30;
-    F32 temp_f31;
-    F32 temp_f7;
+    F32 isy = isin(yaw);
+    F32 icy = icos(yaw);
+    F32 isp = isin(pitch);
+    F32 icp = icos(pitch);
+    F32 isr = isin(roll);
+    F32 icr = icos(roll);
+    F32 is_prod = icy * isp;
+    F32 ic_prod = isy * isp;
 
-    temp_f27 = isin(yaw);
-    temp_f28 = icos(yaw);
-    temp_f29 = isin(pitch);
-    temp_f30 = icos(pitch);
-    temp_f31 = isin(roll);
-    temp_f1 = icos(roll);
-    temp_f7 = temp_f27 * temp_f29;
-    temp_f0 = temp_f28 * temp_f29;
-    m->right.x = (temp_f28 * temp_f1) + (temp_f31 * temp_f7);
-    m->right.y = temp_f30 * temp_f31;
-    m->right.z = (-temp_f27 * temp_f1) + (temp_f31 * temp_f0);
-    m->up.x = (-temp_f28 * temp_f31) + (temp_f1 * temp_f7);
-    m->up.y = temp_f30 * temp_f1;
-    m->up.z = (temp_f27 * temp_f31) + (temp_f1 * temp_f0);
-    m->at.x = temp_f27 * temp_f30;
-    m->at.y = -temp_f29;
-    m->at.z = temp_f28 * temp_f30;
+    m->right.x = (icy * icr) + (isr * ic_prod);
+    m->right.y = icp * isr;
+    m->right.z = (-isy * icr) + (isr * is_prod);
+    m->up.x = (-icy * isr) + (icr * ic_prod);
+    m->up.y = icp * icr;
+    m->up.z = (isy * isr) + (icr * is_prod);
+    m->at.x = isy * icp;
+    m->at.y = -isp;
+    m->at.z = icy * icp;
     m->flags = 0;
 }
 
@@ -353,14 +341,12 @@ void xMat3x3RotX(xMat3x3* m, F32 t)
 
 void xMat3x3RotY(xMat3x3* m, F32 t)
 {
-    F32 temp_f31;
-    F32 temp_f1;
+    F32 cos = icos(t);
+    F32 sin = isin(t);
 
-    temp_f31 = icos(t);
-    temp_f1 = isin(t);
-    xVec3Init((xVec3*)m, temp_f31, 0.0f, -temp_f1);
+    xVec3Init((xVec3*)m, cos, 0.0f, -sin);
     xVec3Copy(&m->up, &g_Y3);
-    xVec3Init(&m->at, temp_f1, 0.0f, temp_f31);
+    xVec3Init(&m->at, sin, 0.0f, cos);
     m->flags = 0;
 }
 
@@ -389,17 +375,20 @@ void xMat3x3RMulRotY(xMat3x3* o, const xMat3x3* m, F32 t)
     F32 sin = isin(t);
     if (o == m)
     {
-        F32 temp = o->right.z;
-        o->right.z = ((cos * o->right.z) - (sin * o->right.x));
-        o->right.x = ((cos * o->right.x) + (sin * temp));
+        F32 temp1 = o->right.x;
+        F32 temp2 = o->right.z;
+        o->right.z = ((cos * temp2) - (sin * temp1));
+        o->right.x = ((cos * temp1) + (sin * temp2));
 
-        temp = o->up.z;
-        o->up.z = ((cos * temp) - (sin * o->up.x));
-        o->up.x = ((cos * o->up.x) + (sin * temp));
+        temp1 = o->up.x;
+        temp2 = o->up.z;
+        o->up.z = ((cos * temp2) - (sin * temp1));
+        o->up.x = ((cos * temp1) + (sin * temp2));
 
-        temp = o->at.z;
-        o->at.z = ((cos * temp) - (sin * o->at.x));
-        o->at.x = ((cos * o->at.x) + (sin * temp));
+        temp1 = o->at.x;
+        temp2 = o->at.z;
+        o->at.z = ((cos * temp2) - (sin * temp1));
+        o->at.x = ((cos * temp1) + (sin * temp2));
     }
     else
     {
@@ -456,73 +445,63 @@ void xMat3x3Transpose(xMat3x3* o, const xMat3x3* m)
 }
 
 void xMat3x3Mul(xMat3x3* o, const xMat3x3* a, const xMat3x3* b)
-{
-    xMat3x3 sp8;
-    F32 temp_f0;
-    F32 temp_f0_2;
-    F32 temp_f10;
-    F32 temp_f10_2;
-    F32 temp_f12;
-    F32 temp_f13;
-    F32 temp_f1;
-    F32 temp_f25;
-    F32 temp_f26;
-    F32 temp_f27;
-    F32 temp_f29;
-    F32 temp_f2;
-    F32 temp_f30;
-    F32 temp_f3;
-    F32 temp_f4;
-    F32 temp_f4_2;
-    F32 temp_f5;
-    F32 temp_f9;
-    U8 var_r0;
-    xMat3x3* var_r6;
 
-    var_r0 = 0;
-    if ((o == a) || (o == b))
-    {
-        var_r0 = 1;
-    }
-    if (var_r0 != 0)
-    {
-        var_r6 = &sp8;
-    }
-    else
-    {
-        var_r6 = o;
-    }
-    temp_f4 = a->right.y;
-    temp_f3 = b->up.x;
-    temp_f2 = b->up.y;
-    temp_f1 = a->up.y;
-    temp_f10 = b->up.z;
-    temp_f0 = a->at.y;
-    temp_f26 = a->right.x;
-    temp_f27 = b->right.x;
-    temp_f30 = b->right.y;
-    temp_f9 = a->up.x;
-    temp_f12 = b->right.z;
-    temp_f4_2 = a->at.x;
-    temp_f25 = a->right.z;
-    temp_f0_2 = b->at.x;
-    temp_f29 = b->at.y;
-    temp_f13 = b->at.z;
-    temp_f10_2 = a->up.z;
-    temp_f5 = a->at.z;
-    var_r6->right.x = (temp_f25 * temp_f0_2) + ((temp_f26 * temp_f27) + (temp_f4 * temp_f3));
-    var_r6->flags = 0;
-    var_r6->right.y = (temp_f25 * temp_f29) + ((temp_f26 * temp_f30) + (temp_f4 * temp_f2));
-    var_r6->right.z = (temp_f25 * temp_f13) + ((temp_f26 * temp_f12) + (temp_f4 * temp_f10));
-    var_r6->up.x = (temp_f10_2 * temp_f0_2) + ((temp_f9 * temp_f27) + (temp_f1 * temp_f3));
-    var_r6->up.y = (temp_f10_2 * temp_f29) + ((temp_f9 * temp_f30) + (temp_f1 * temp_f2));
-    var_r6->up.z = (temp_f10_2 * temp_f13) + ((temp_f9 * temp_f12) + (temp_f1 * temp_f10));
-    var_r6->at.x = (temp_f5 * temp_f0_2) + ((temp_f4_2 * temp_f27) + (temp_f0 * temp_f3));
-    var_r6->at.y = (temp_f5 * temp_f29) + ((temp_f4_2 * temp_f30) + (temp_f0 * temp_f2));
-    var_r6->at.z = (temp_f5 * temp_f13) + ((temp_f4_2 * temp_f12) + (temp_f0 * temp_f10));
-    // if (var_r0 != 0) {
-    //     xMat3x3Copy__FP7xMat3x3PC7xMat3x3(o, var_r6);
-    // }
+{
+  xMat3x3 temp;
+  xMat3x3* tp;
+  U32 usetemp;
+
+  if (o == a || o == b) {
+    usetemp = 1;
+  }
+
+  if (usetemp != 0 ){
+    tp = &temp;
+  }
+  else {
+    tp = o;
+  }
+
+  F32 arx = a->right.x;
+  F32 ary = a->right.y;
+  F32 arz = a->right.z;
+  F32 aux = a->up.x;
+  F32 auy = a->up.y;
+  F32 auz = a->up.z;
+  F32 aax = a->at.x;
+  F32 aay = a->at.y;
+  F32 aaz = a->at.z;
+
+  F32 brx = b->right.x;
+  F32 bry = b->right.y;
+  F32 brz = b->right.z;
+  F32 bux = b->up.x;
+  F32 buy = b->up.y;
+  F32 buz = b->up.z;
+  F32 bax = b->at.x;
+  //F32 bay = b->at.y;
+  F32 baz = b->at.z;
+
+  // Right
+  tp->right.x = arx * brx + ary * bux + arz * bax;
+  tp->right.y = arx * bry + ary * buy + arz * b->at.y;
+  tp->right.z = arx * brz + ary * buz + arz * baz;
+
+  // Up
+  tp->up.x = aux * brx + auy * bux + auz * bax;
+  tp->up.y = aux * bry + auy * buy + auz * b->at.y;
+  tp->up.z = aux * brz + auy * buz + auz * baz;
+
+  // At
+  tp->at.x = aax * brx + aay * bux + aaz * bax;
+  tp->at.y = aax * bry + aay * buy + aaz * b->at.y;
+  tp->at.z = aax * brz + aay * buz + aaz * baz;
+  
+  tp->flags = 0;
+  if (usetemp != 0) {
+    xMat3x3Copy(o,tp);
+  }
+  return;
 }
 
 void xMat3x3LMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
@@ -559,11 +538,11 @@ void xMat4x3Rot(xMat4x3* m, const xVec3* a, F32 t, const xVec3* p)
 
 void xMat4x3Mul(xMat4x3* o, const xMat4x3* a, const xMat4x3* b)
 {
-    xVec3 sp8;
+    xVec3 v;
 
-    xMat4x3Toworld(&sp8, b, &a->pos);
+    xMat4x3Toworld(&v, b, &a->pos);
     xMat3x3Mul((xMat3x3*)o, (xMat3x3*)a, (xMat3x3*)b);
-    xVec3Copy(&o->pos, &sp8);
+    xVec3Copy(&o->pos, &v);
 }
 
 // Matching in Ratatouille, minus debug stuff: https://decomp.me/scratch/VthMZ
@@ -698,85 +677,51 @@ F32 xQuatNormalize(xQuat* o, const xQuat* q)
 
 void xQuatSlerp(xQuat* q, const xQuat* a, const xQuat* b, F32 t)
 {
-    xQuat sp28;
-    xQuat sp18;
-    F32 sp14;
-    F32 sp10;
-    F32 spC;
-    F32 sp8;
-    F32 temp_f0;
-    F32 temp_f1;
-    F32 temp_f28;
-    F32 temp_f2;
-    F32 temp_f3;
-    F32 temp_f4;
-    F32 var_f1;
-    F32 var_f29;
-    F32 var_f30;
-    const xQuat* var_r31;
+  F32 one_sintheta;
+  F32 temp_t;
+  F32 abdot;
+  xQuat b2;
 
-    var_r31 = b;
-    var_f1 = xQuatDot(a, var_r31);
-    if (var_f1 < 0.0f)
-    {
-        var_f1 = -var_f1;
-        temp_f4 = -var_r31->v.x;
-        temp_f0 = var_r31->s;
-        temp_f3 = -var_r31->v.y;
-        temp_f2 = -var_r31->v.z;
-        var_r31 = (xQuat*)&sp8;
-        sp8 = temp_f4;
-        spC = temp_f3;
-        sp10 = temp_f2;
-        sp14 = -temp_f0;
-    }
-    //M2C_ERROR(/* unknown instruction: cror eq, gt, eq */);
-    if (var_f1 == 0.999f)
-    {
-        var_f30 = t;
-        var_f29 = 1.0f - t;
-    }
-    else
-    {
-        temp_f1 = xacos(var_f1);
-        temp_f28 = 1.0f / isin(temp_f1);
-        var_f29 = temp_f28 * isin((1.0f - t) * temp_f1);
-        var_f30 = temp_f28 * isin(t * temp_f1);
-    }
-    xQuatSMul(&sp28, a, var_f29);
-    xQuatSMul(&sp18, var_r31, var_f30);
-    xQuatAdd(q, &sp28, &sp18);
-    xQuatNormalize(q, q);
+  xQuat* qp1 = 0;
+  xQuat* qp2 = 0;
+  
+  abdot = xQuatDot(a,b);
+  if (abdot < 0.0) {
+    abdot = -abdot;
+    b2.v.x = -b->v.x;
+    b2.v.y = -b->v.y;
+    b2.v.z = -b->v.z;
+    b2.s = -b->s;
+    b = &b2;
+  }
+  if (0.999 <= abdot) {
+    temp_t = 1.0 - t;
+  }
+  else {
+    abdot = xacos(abdot);
+    one_sintheta = 1.0 / isin(abdot);
+    temp_t = isin(t);
+    temp_t = one_sintheta * temp_t;
+    abdot = isin(t * abdot);
+    t = one_sintheta * abdot;
+  }
+
+  xQuatSMul(qp1, a, temp_t);
+  xQuatSMul(qp2, b, t);
+  xQuatAdd(q, qp1, qp2);
+  xQuatNormalize(q,q);
+  return;
 }
 
 void xQuatMul(xQuat* o, const xQuat* a, const xQuat* b)
-{
-    F32 temp_f10;
-    F32 temp_f11;
-    F32 temp_f4;
-    F32 temp_f5;
-    F32 temp_f6;
-    F32 temp_f7;
-    F32 temp_f8;
-    F32 temp_f9;
 
-    temp_f4 = b->s;
-    temp_f11 = a->v.x;
-    temp_f5 = a->v.y;
-    temp_f8 = b->v.x;
-    temp_f7 = a->s;
-    temp_f9 = a->v.z;
-    temp_f6 = b->v.y;
-    temp_f10 = b->v.z;
-    o->v.x = -((temp_f9 * temp_f6) -
-               ((temp_f5 * temp_f10) + ((temp_f7 * temp_f8) + (temp_f11 * temp_f4))));
-    o->v.y = -((temp_f11 * temp_f10) -
-               ((temp_f9 * temp_f8) + ((temp_f7 * temp_f6) + (temp_f5 * temp_f4))));
-    o->v.z = -((temp_f5 * temp_f8) -
-               ((temp_f11 * temp_f6) + ((temp_f7 * temp_f10) + (temp_f9 * temp_f4))));
-    o->s = -((temp_f9 * temp_f10) -
-             -((temp_f5 * temp_f6) - ((temp_f7 * temp_f4) - (temp_f11 * temp_f8))));
-    xQuatNormalize(o, o);
+{
+  o->v.z = (a->v.x * b->v.y + a->v.z * b->s + a->s * b->v.z) - a->v.y * b->v.x;
+  o->v.y = (a->v.z * b->v.x + a->v.y * b->s + a->s * b->v.y) - a->v.x * b->v.z;
+  o->v.x = (a->v.y * b->v.z + a->v.x * b->s + a->s * b->v.x) - a->v.z * b->v.y;
+  o->s = ((a->s * b->s - a->v.x * b->v.x) - a->v.y * b->v.y) - a->v.z * b->v.z;
+  xQuatNormalize(o,o);
+  return;
 }
 
 void xQuatDiff(xQuat* o, const xQuat* a, const xQuat* b)
@@ -800,21 +745,21 @@ void xBoxUnion(xBox& a, const xBox& b, const xBox& c)
     a.lower.z = MIN(b.lower.z, c.lower.z);
 }
 
-void xBoxFromCircle(xBox& o, const xVec3& a, const xVec3& b, F32 r)
+void xBoxFromCircle(xBox& box, const xVec3& center, const xVec3& dir, F32 r)
 {
-    F32 temp1;
-    F32 temp2;
-    F32 temp3;
     xVec3 temp_vec1;
     xVec3 temp_vec2;
 
-    temp1 = r * xsqrt(1.0f - (b.x * b.x));
-    temp2 = r * xsqrt(1.0f - (b.y * b.y));
-    temp3 = r * xsqrt(1.0f - (b.z * b.z));
-    temp_vec1 += a;
-    o.upper = temp_vec1;
-    temp_vec2 -= a;
-    o.lower = temp_vec2;
+    static xVec3 stat_vec;
+    static F32 stat_f;
+
+    stat_vec.x = r * xsqrt(stat_f - (dir.x * dir.x));
+    stat_vec.y = r * xsqrt(stat_f - (dir.y * dir.y));
+    stat_vec.z = r * xsqrt(stat_f - (dir.z * dir.z));
+    temp_vec1 += center;
+    box.upper = temp_vec1;
+    temp_vec2 -= center;
+    box.lower = temp_vec2;
 }
 
 void xQuatSMul(xQuat* q, const xQuat* a, F32 t)
@@ -832,8 +777,4 @@ void xQuatAdd(xQuat* q, const xQuat* a, const xQuat* b)
 {
     q->s = a->s + b->s;
     xVec3Add((xVec3*)q, (xVec3*)a, (xVec3*)b);
-}
-
-void xMat3x3SMul(xMat3x3*, const xMat3x3*, F32)
-{
 }
