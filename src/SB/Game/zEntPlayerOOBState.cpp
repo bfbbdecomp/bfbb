@@ -6,6 +6,7 @@
 #include "zSurface.h"
 #include "zRenderState.h"
 #include "zEntPlayerBungeeState.h"
+#include "zEntCruiseBubble.h"
 
 #include <types.h>
 #include <rwplcore.h>
@@ -974,11 +975,11 @@ namespace oob_state
     namespace
     {
         void in_state_type::start()
-{
+        {
             shared.reset_time = 0.0f;
             shared.out_time = 0.0f;
-    shared.control = 0;
-};
+            shared.control = 0;
+        };
 
         void in_state_type::stop()
         {
@@ -1012,10 +1013,10 @@ namespace oob_state
         };
 
         void out_state_type::start()
-{
-    shared.out_time = shared.max_out_time;
-    shared.reset_time = fixed.reset_time;
-};
+        {
+            shared.out_time = shared.max_out_time;
+            shared.reset_time = fixed.reset_time;
+        };
 
         void out_state_type::stop() {
 
@@ -1064,6 +1065,42 @@ namespace oob_state
 
         void grab_state_type::start()
         {
+            this->finished_tutorial = FALSE;
+            zEntPlayerControlOff(CONTROL_OWNER_OOB);
+
+            globals.player.ControlOffTimer = FLOAT_MAX;
+            cruise_bubble::reset();
+
+            shared.flags |= 0x4;
+            shared.vertical = FABS(fixed.in_loc.y - fixed.out_loc.y) > 0.01f;
+            shared.control = TRUE;
+            
+            this->move_substate = shared.model != NULL ? SS_REORIENT : SS_INVALID;
+            this->reorient_time = fixed.reorient_time;
+
+            set_camera(false);
+
+            shared.loc = fixed.out_loc;
+            shared.dir = (fixed.in_loc - fixed.out_loc).normal();
+            shared.vel = fixed.grab.in_vel;
+            shared.accel = 0.0f;
+
+            this->fade_substate = SS_START_FADE_OUT;
+            this->fade_start_time = fixed.grab.fade_start_time;
+            this->fade_time = fixed.grab.fade_time;
+
+            shared.fade_alpha = 1.0f;
+            this->player_start = globals.player.ent.frame->mat.pos;
+
+            xVec3 eulerOut;
+            xMat3x3GetEuler(&globals.player.ent.frame->mat, &eulerOut);
+            globals.player.ent.frame->rot.angle = xrmod(eulerOut.x);
+
+            this->angle_delta = xrmod(PI + (globals.camera.pcur - eulerOut.x)) - PI;
+            this->angle_delta /= fixed.reorient_time;
+
+            xModelUpdate(globals.player.ent.model, 1.0f / 1000.0f);
+            this->scene_reset = FALSE;
         }
 
         void grab_state_type::stop()
@@ -1081,6 +1118,14 @@ namespace oob_state
 
         void drop_state_type::stop()
         {
+            zEntPlayerControlOn(CONTROL_OWNER_OOB);
+            globals.player.ControlOffTimer = 1.0f;
+
+            reset_camera();
+            
+            shared.render_hand = FALSE;
+            shared.fade_alpha = 1.0f;
+            shared.flags &= ~0x4;
         }
 
         state_enum drop_state_type::update(xScene& scene, F32& dt)
