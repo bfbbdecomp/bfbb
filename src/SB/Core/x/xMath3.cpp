@@ -447,61 +447,65 @@ void xMat3x3Transpose(xMat3x3* o, const xMat3x3* m)
 void xMat3x3Mul(xMat3x3* o, const xMat3x3* a, const xMat3x3* b)
 
 {
-  xMat3x3 temp;
-  xMat3x3* tp;
-  U32 usetemp;
+    xMat3x3 temp;
+    xMat3x3* tp;
+    U32 usetemp;
 
-  if (o == a || o == b) {
-    usetemp = 1;
-  }
+    if (o == a || o == b)
+    {
+        usetemp = 1;
+    }
 
-  if (usetemp != 0 ){
-    tp = &temp;
-  }
-  else {
-    tp = o;
-  }
+    if (usetemp != 0)
+    {
+        tp = &temp;
+    }
+    else
+    {
+        tp = o;
+    }
 
-  F32 arx = a->right.x;
-  F32 ary = a->right.y;
-  F32 arz = a->right.z;
-  F32 aux = a->up.x;
-  F32 auy = a->up.y;
-  F32 auz = a->up.z;
-  F32 aax = a->at.x;
-  F32 aay = a->at.y;
-  F32 aaz = a->at.z;
+    F32 arx = a->right.x;
+    F32 ary = a->right.y;
+    F32 arz = a->right.z;
+    F32 aux = a->up.x;
+    F32 auy = a->up.y;
+    F32 auz = a->up.z;
+    F32 aax = a->at.x;
+    F32 aay = a->at.y;
+    F32 aaz = a->at.z;
 
-  F32 brx = b->right.x;
-  F32 bry = b->right.y;
-  F32 brz = b->right.z;
-  F32 bux = b->up.x;
-  F32 buy = b->up.y;
-  F32 buz = b->up.z;
-  F32 bax = b->at.x;
-  //F32 bay = b->at.y;
-  F32 baz = b->at.z;
+    F32 brx = b->right.x;
+    F32 bry = b->right.y;
+    F32 brz = b->right.z;
+    F32 bux = b->up.x;
+    F32 buy = b->up.y;
+    F32 buz = b->up.z;
+    F32 bax = b->at.x;
+    //F32 bay = b->at.y;
+    F32 baz = b->at.z;
 
-  // Right
-  tp->right.x = arx * brx + ary * bux + arz * bax;
-  tp->right.y = arx * bry + ary * buy + arz * b->at.y;
-  tp->right.z = arx * brz + ary * buz + arz * baz;
+    // Right
+    tp->right.x = arx * brx + ary * bux + arz * bax;
+    tp->right.y = arx * bry + ary * buy + arz * b->at.y;
+    tp->right.z = arx * brz + ary * buz + arz * baz;
 
-  // Up
-  tp->up.x = aux * brx + auy * bux + auz * bax;
-  tp->up.y = aux * bry + auy * buy + auz * b->at.y;
-  tp->up.z = aux * brz + auy * buz + auz * baz;
+    // Up
+    tp->up.x = aux * brx + auy * bux + auz * bax;
+    tp->up.y = aux * bry + auy * buy + auz * b->at.y;
+    tp->up.z = aux * brz + auy * buz + auz * baz;
 
-  // At
-  tp->at.x = aax * brx + aay * bux + aaz * bax;
-  tp->at.y = aax * bry + aay * buy + aaz * b->at.y;
-  tp->at.z = aax * brz + aay * buz + aaz * baz;
-  
-  tp->flags = 0;
-  if (usetemp != 0) {
-    xMat3x3Copy(o,tp);
-  }
-  return;
+    // At
+    tp->at.x = aax * brx + aay * bux + aaz * bax;
+    tp->at.y = aax * bry + aay * buy + aaz * b->at.y;
+    tp->at.z = aax * brz + aay * buz + aaz * baz;
+
+    tp->flags = 0;
+    if (usetemp != 0)
+    {
+        xMat3x3Copy(o, tp);
+    }
+    return;
 }
 
 void xMat3x3LMulVec(xVec3* o, const xMat3x3* m, const xVec3* v)
@@ -677,51 +681,54 @@ F32 xQuatNormalize(xQuat* o, const xQuat* q)
 
 void xQuatSlerp(xQuat* q, const xQuat* a, const xQuat* b, F32 t)
 {
-  F32 one_sintheta;
-  F32 temp_t;
-  F32 abdot;
-  xQuat b2;
+    F32 one_sintheta;
+    F32 temp_t;
+    F32 abdot;
+    xQuat b2;
 
-  xQuat* qp1 = 0;
-  xQuat* qp2 = 0;
-  
-  abdot = xQuatDot(a,b);
-  if (abdot < 0.0) {
-    abdot = -abdot;
-    b2.v.x = -b->v.x;
-    b2.v.y = -b->v.y;
-    b2.v.z = -b->v.z;
-    b2.s = -b->s;
-    b = &b2;
-  }
-  if (0.999 <= abdot) {
-    temp_t = 1.0 - t;
-  }
-  else {
-    abdot = xacos(abdot);
-    one_sintheta = 1.0 / isin(abdot);
-    temp_t = isin(t);
-    temp_t = one_sintheta * temp_t;
-    abdot = isin(t * abdot);
-    t = one_sintheta * abdot;
-  }
+    xQuat* qp1 = 0;
+    xQuat* qp2 = 0;
 
-  xQuatSMul(qp1, a, temp_t);
-  xQuatSMul(qp2, b, t);
-  xQuatAdd(q, qp1, qp2);
-  xQuatNormalize(q,q);
-  return;
+    abdot = xQuatDot(a, b);
+    if (abdot < 0.0)
+    {
+        abdot = -abdot;
+        b2.v.x = -b->v.x;
+        b2.v.y = -b->v.y;
+        b2.v.z = -b->v.z;
+        b2.s = -b->s;
+        b = &b2;
+    }
+    if (0.999 <= abdot)
+    {
+        temp_t = 1.0 - t;
+    }
+    else
+    {
+        abdot = xacos(abdot);
+        one_sintheta = 1.0 / isin(abdot);
+        temp_t = isin(t);
+        temp_t = one_sintheta * temp_t;
+        abdot = isin(t * abdot);
+        t = one_sintheta * abdot;
+    }
+
+    xQuatSMul(qp1, a, temp_t);
+    xQuatSMul(qp2, b, t);
+    xQuatAdd(q, qp1, qp2);
+    xQuatNormalize(q, q);
+    return;
 }
 
 void xQuatMul(xQuat* o, const xQuat* a, const xQuat* b)
 
 {
-  o->v.z = (a->v.x * b->v.y + a->v.z * b->s + a->s * b->v.z) - a->v.y * b->v.x;
-  o->v.y = (a->v.z * b->v.x + a->v.y * b->s + a->s * b->v.y) - a->v.x * b->v.z;
-  o->v.x = (a->v.y * b->v.z + a->v.x * b->s + a->s * b->v.x) - a->v.z * b->v.y;
-  o->s = ((a->s * b->s - a->v.x * b->v.x) - a->v.y * b->v.y) - a->v.z * b->v.z;
-  xQuatNormalize(o,o);
-  return;
+    o->v.z = (a->v.x * b->v.y + a->v.z * b->s + a->s * b->v.z) - a->v.y * b->v.x;
+    o->v.y = (a->v.z * b->v.x + a->v.y * b->s + a->s * b->v.y) - a->v.x * b->v.z;
+    o->v.x = (a->v.y * b->v.z + a->v.x * b->s + a->s * b->v.x) - a->v.z * b->v.y;
+    o->s = ((a->s * b->s - a->v.x * b->v.x) - a->v.y * b->v.y) - a->v.z * b->v.z;
+    xQuatNormalize(o, o);
+    return;
 }
 
 void xQuatDiff(xQuat* o, const xQuat* a, const xQuat* b)

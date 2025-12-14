@@ -190,7 +190,7 @@ void xMat3x3Scale(xMat3x3* m, const xVec3* s);
 void xBoxFromLine(xBox& box, const xLine3& line);
 void xBoxFromRay(xBox& box, const xRay3& ray);
 void xMat3x3Identity(xMat3x3* matrix); // TODO: These functions should be inline
-
+void xMat3x3SMul(xMat3x3*, const xMat3x3*, F32);
 
 inline void xRotCopy(xRot* o, const xRot* r)
 {
