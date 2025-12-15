@@ -1269,14 +1269,3 @@ namespace oob_state
         }
     } // namespace
 } // namespace oob_state
-
-WEAK F32 xVec2::dot(const xVec2& b) const
-{
-    return (x * b.x) + (y * b.y);
-}
-
-WEAK xVec2& xVec2::normalize()
-{
-    *this /= length();
-    return *this;
-}
