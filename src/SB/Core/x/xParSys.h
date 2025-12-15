@@ -47,6 +47,7 @@ void xParCmdTexInit(xParCmdTex* tex);
 void xParSysInit(void* b, void* tasset);
 void xParSysInit(xBase* b, xParSysAsset* tasset);
 void xParSysSetup(xParSys* t);
+void xParSysReset(xParSys* t);
 void xParSysExit(xParSys* t);
 void xParSysRender(xBase* b);
 S32 xParSysEventCB(xBase*, xBase*, U32, F32*, xBase*);

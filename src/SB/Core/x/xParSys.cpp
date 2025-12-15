@@ -51,6 +51,31 @@ void xParSysSetup(xParSys* t)
     t->parent = t->parent;
 }
 
+void xParSysReset(xParSys* t)
+{
+    xBaseReset(t, t->tasset);
+
+    if (t->group != NULL)
+    {
+        xParGroupKillAllParticles(t->group);
+
+        t->visible = t->tasset->parFlags & 0x1;
+
+        xParGroupSetAging(t->group, (((t->tasset->parFlags >> 1) & 0x1) ^ 0x1) & 0xFF);
+        xParGroupSetVisibility(t->group, t->visible);
+        xParGroupSetBack2Life(t->group,(((t->tasset->parFlags >> 2) & 0x1) ^ 0x1) & 0xFF);
+    }
+}
+
+void xParSysExit(xParSys* t)
+{
+    if (t->group != NULL)
+    {
+        xParGroupKillAllParticles(t->group);
+        xParGroupUnregister(t->group);
+    }
+}
+
 static void xParGroupUpdateR(xParSys* s, xParGroup* g, F32 dt)
 {
     if (s->parent != NULL)
