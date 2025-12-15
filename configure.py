@@ -573,7 +573,7 @@ config.libs = [
             Object(Matching, "SB/Core/x/xVolume.cpp"),
             Object(NonMatching, "SB/Core/x/xParEmitterType.cpp"),
             Object(Matching, "SB/Core/x/xRenderState.cpp"),
-            Object(NonMatching, "SB/Game/zEntPlayerOOBState.cpp"),
+            Object(NonMatching, "SB/Game/zEntPlayerOOBState.cpp", extra_cflags=["-sym on"]),
             Object(Equivalent, "SB/Core/x/xClumpColl.cpp"),
             Object(NonMatching, "SB/Core/x/xEntBoulder.cpp"),
             Object(NonMatching, "SB/Core/x/xGrid.cpp"),
