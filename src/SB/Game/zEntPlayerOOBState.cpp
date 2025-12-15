@@ -7,6 +7,8 @@
 #include "zRenderState.h"
 #include "zEntPlayerBungeeState.h"
 #include "zEntCruiseBubble.h"
+#include "zGameState.h"
+#include "xScrFx.h"
 
 #include <types.h>
 #include <rwplcore.h>
@@ -1109,11 +1111,100 @@ namespace oob_state
 
         state_enum grab_state_type::update(xScene& scene, F32& dt)
         {
-            return STATE_DROP;
+            if (shared.model == NULL)
+            {
+                return STATE_DROP;
+            }
+
+            F32 movedt = dt;
+            while (this->move_substate != SS_INVALID)
+            {
+                substate_enum newstate = this->updatess[this->move_substate](*this, scene, movedt);
+                if (newstate == this->move_substate)
+                {
+                    break;
+                }
+
+                this->move_substate = newstate;
+            }
+
+            F32 fadedt = dt;
+            while (this->fade_substate != SS_INVALID)
+            {
+                substate_enum newstate = this->updatess[this->fade_substate](*this, scene, fadedt);
+                if (newstate == this->fade_substate)
+                {
+                    break;
+                }
+
+                this->fade_substate = newstate;
+            }
+
+            if (this->move_substate == SS_INVALID && this->fade_substate == SS_INVALID)
+            {
+                if (this->scene_reset)
+                {
+                    return STATE_DROP;
+                }
+
+                this->scene_reset = TRUE;
+                zGameStateSwitch(0x2);
+            }
+
+            if (this->move_substate == SS_STARTING || this->move_substate == SS_MOVING_OUT)
+            {
+                xMat4x3& pm = *(xMat4x3*)globals.player.ent.model->Mat;
+                pm.pos = this->player_start;
+
+                move_up(pm.pos, fixed.in_loc.y - shared.loc.y);
+                move_right(pm.pos, fixed.in_loc.x - shared.loc.x);
+            }
+
+            xModelEval(globals.player.ent.model);
+            zEntPlayerUpdateModel();
+            return STATE_GRAB;
         }
 
         void drop_state_type::start()
         {
+            this->player_start = globals.player.cp.pos;
+            this->move_substate = shared.model != NULL ? SS_MOVING_IN : SS_INVALID;
+            
+            shared.vel = fixed.drop.in_vel;
+            shared.accel = 0.0f;
+            shared.loc.x = fixed.in_loc.x;
+            shared.loc.y = fixed.in_loc.y;
+            
+            this->fade_substate = SS_START_FADE_IN;
+            this->fade_start_time = fixed.drop.fade_start_time;
+            this->fade_time = fixed.drop.fade_time;
+
+            xEnt& p = globals.player.ent;
+            zEntPlayerReset(&p);
+            zEntPlayerUpdateModel();
+            zEntPlayerControlOff(CONTROL_OWNER_OOB);
+            globals.player.ControlOffTimer = FLOAT_MAX;
+            xScrFxStopFade();
+            zCameraDisableInput();
+            
+            xModelInstance& m = *p.model;
+            xEntFrame& f = *p.frame;
+
+            f.rot.axis = g_Y3;
+            f.rot.angle = globals.player.cp.rot;
+            f.vel = g_O3;
+
+            xMat3x3Euler(&f.mat, f.rot.angle, 0.0f, 0.0f);
+            f.mat.pos = globals.player.cp.pos;
+            *(xMat4x3*)m.Mat = f.mat;
+
+            shared_target.pos = *(xVec3*)&m.Mat->pos;
+            
+            set_camera(true);
+            globals.camera.tgt_mat = &shared_target;
+            globals.camera.tgt_omat = &shared_target;
+            xCameraMove(&globals.camera, 0x20, fixed.cam_dist, fixed.cam_height, PI + globals.player.cp.rot, 0.0f, 0.0f, 0.0f);
+            xCameraLookYPR(&globals.camera, 0x0, globals.player.cp.rot, fixed.cam_pitch, 0.0f, 0.0f, 0.0f, 0.0f);
         }
 
         void drop_state_type::stop()
@@ -1130,6 +1221,54 @@ namespace oob_state
 
         state_enum drop_state_type::update(xScene& scene, F32& dt)
         {
+            if (shared.model == NULL)
+            {
+                return STATE_IN;
+            }
+
+            F32 movedt = dt;
+            while (this->move_substate != SS_INVALID)
+            {
+                substate_enum newstate = this->updatess[this->move_substate](*this, scene, movedt);
+                if (newstate == this->move_substate)
+                {
+                    break;
+                }
+
+                this->move_substate = newstate;
+            }
+
+            F32 fadedt = dt;
+            while (this->fade_substate != SS_INVALID)
+            {
+                substate_enum newstate = this->updatess[this->fade_substate](*this, scene, fadedt);
+                if (newstate == this->fade_substate)
+                {
+                    break;
+                }
+
+                this->fade_substate = newstate;
+            }
+
+            if (this->move_substate == SS_INVALID && this->fade_substate == SS_INVALID)
+            {
+                return STATE_IN;
+            }
+
+            if (this->move_substate == SS_MOVING_IN || this->move_substate == SS_STOPPING)
+            {
+                xMat4x3& pm = *(xMat4x3*)globals.player.ent.model->Mat;
+                pm.pos = this->player_start;
+
+                move_up(pm.pos, fixed.in_loc.y - shared.loc.y);
+                move_right(pm.pos, fixed.in_loc.x - shared.loc.x);
+            }
+
+            if (shared.control)
+            {
+                xModelEval(globals.player.ent.model);
+            }
+
             return STATE_DROP;
         }
     } // namespace
