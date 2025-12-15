@@ -73,3 +73,19 @@ static void xParGroupUpdateR(xParSys* s, xParGroup* g, F32 dt)
         }
     }
 }
+
+static void xParGroupUpdate(xParSys* s, xParGroup* g, F32 dt)
+{
+    for (U32 i = 0; i < s->cmdCount; i++)
+    {
+        xParCmd* cmd = &s->cmd[i];
+        if (cmd != NULL && cmd->tasset != NULL)
+        {
+            void (*func)(xParCmd*, xParGroup*, F32) = xParCmdGetUpdateFunc(cmd->tasset->type);
+            if (func != NULL)
+            {
+                func(cmd, g, dt);
+            }
+        }
+    }
+}
