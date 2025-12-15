@@ -9,6 +9,7 @@
 #include "zEntCruiseBubble.h"
 #include "zGameState.h"
 #include "xScrFx.h"
+#include "zSaveLoad.h"
 
 #include <types.h>
 #include <rwplcore.h>
@@ -880,6 +881,45 @@ namespace oob_state
         };
     } // namespace
 } // namespace oob_state
+
+U8 oob_state::update(xScene& scene, F32 dt)
+{
+    if ((shared.flags & 0x3) != 0x3)
+    {
+        return FALSE;
+    }
+
+    if (zSaveLoadGetPreAutoSave())
+    {
+        return FALSE;
+    }
+
+    if (oob_player_teleported)
+    {
+        shared.flags &= ~0x8;
+    }
+
+    if ((shared.flags & 0x8) && !(globals.player.ControlOff & 0x8000))
+    {
+        force_start();
+    }
+
+    while (true)
+    {
+        state_enum newtype = shared.state->update(scene, dt);
+        if (newtype == shared.state->type)
+        {
+            break;
+        }
+
+        shared.state->stop();
+        shared.state = shared.states[newtype];
+        shared.state->start();
+    }
+
+
+    return shared.control;
+}
 
 bool oob_state::IsPlayerInControl()
 {

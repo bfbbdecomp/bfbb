@@ -11,6 +11,7 @@ extern bool oob_player_teleported;
 
 namespace oob_state
 {
+    U8 update(xScene& scene, F32 dt);
     bool render();
     void fx_render();
     void force_start();
