@@ -47,3 +47,29 @@ void xParSysSetup(xParSys* t)
     t->parent = (xParSys*)xSTFindAsset(t->cmd->flag, 0);
     t->parent = t->parent;
 }
+
+static void xParGroupUpdateR(xParSys* s, xParGroup* g, F32 dt)
+{
+    if (s->parent != NULL)
+    {
+        xParGroupUpdateR(s->parent, g, dt);
+    }
+
+    if (!s->group->m_active)
+    {
+        return;
+    }
+
+    for (U32 i = 0; i < s->cmdCount; i++)
+    {
+        xParCmd* cmd = &s->cmd[i];
+        if (cmd != NULL && cmd->tasset != NULL)
+        {
+            void (*func)(xParCmd*, xParGroup*, F32) = xParCmdGetUpdateFunc(cmd->tasset->type);
+            if (func != NULL)
+            {
+                func(cmd, g, dt);
+            }
+        }
+    }
+}
