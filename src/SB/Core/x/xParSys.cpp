@@ -1,7 +1,10 @@
 #include "xParSys.h"
 
-#include <types.h>
 #include "zScene.h"
+#include "xRenderState.h"
+#include "zRenderState.h"
+
+#include <types.h>
 
 static xVec3 par_offset_right;
 static xVec3 par_offset_up;
@@ -87,5 +90,25 @@ static void xParGroupUpdate(xParSys* s, xParGroup* g, F32 dt)
                 func(cmd, g, dt);
             }
         }
+    }
+}
+
+void xParSysRender(xBase* b)
+{
+    xParSys* s = (xParSys*)b;
+    zRenderState(SDRS_Particles);
+    
+    xParGroup* g = s->group;
+    while (g != NULL)
+    {
+        if (g->m_active && g->m_visible && g->m_alive && !g->m_culled && g->draw != NULL)
+        {
+            xRenderStateSetTexture(s->txtr_particle);
+            xRenderStateSetSrcBlendMode(s->tasset->renderSrcBlendMode);
+            xRenderStateSetDstBlendMode(s->tasset->renderDstBlendMode);
+            g->draw(b, g);
+        }
+
+        g = g->m_next;
     }
 }
