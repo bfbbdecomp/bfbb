@@ -411,6 +411,7 @@ void zEntPlayer_Init(xEnt* ent, xEntAsset* asset);
 void zEntPlayerExit(xEnt*);
 void zEntPlayerPreReset();
 void zEntPlayerReset(xEnt* ent);
+void zEntPlayerUpdateModel();
 void zEntPlayer_LoadSounds();
 void zEntPlayer_UnloadSounds();
 void zEntPlayer_ShadowModelEnable();
