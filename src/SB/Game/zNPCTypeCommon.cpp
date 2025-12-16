@@ -3221,5 +3221,5 @@ S32 xPsyche::HasGoal(S32 goal)
 
 U32 xSndIsPlaying(U32 assetID, U32 parid)
 {
-    return iSndIsPlaying(assetID, parid) & 0xff;
+    return iSndIsPlaying(assetID, parid);
 }
