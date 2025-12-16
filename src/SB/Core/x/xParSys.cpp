@@ -39,6 +39,63 @@ void xParSysInit(void* b, void* tasset)
 
 void xParSysInit(xBase* b, xParSysAsset* tasset)
 {
+    xParSys* t = (xParSys*)b;
+
+    xBaseInit(b, tasset);
+    t->eventFunc = &xParSysEventCB;
+    t->tasset = tasset;
+
+    if (t->linkCount > 0)
+    {
+        // TODO: is this a compiler scheduling issue or a true mismatch?
+        t->link = (xLinkAsset*)((char*)t->tasset + tasset->cmdSize + sizeof(xParSysAsset));
+    }
+    else
+    {
+        t->link = NULL;
+    }
+
+    t->visible = tasset->parFlags & 0x1;
+    t->cmdCount = tasset->cmdCount;
+    if (t->cmdCount)
+    {
+        t->cmd = (xParCmd*)xMemAlloc(gActiveHeap, t->cmdCount * sizeof(xParCmd), FALSE);
+    }
+    else
+    {
+        t->cmd = NULL;
+    }
+
+    // Some arcane magic required due to how the asset command data is packed
+    U32 i;
+    U8* cmdPtr = (U8*)&tasset[1];
+    for (i = 0; i < t->cmdCount; i++)
+    {
+        *(U32*)(&t->cmd[i]) = TRUE;
+        *(U32*)(&t->cmd[i].tasset) = (U32)cmdPtr;
+        cmdPtr += xParCmdGetSize(*(U32*)cmdPtr);
+    }
+
+    t->group = (xParGroup*)xMemAlloc(gActiveHeap, sizeof(xParGroup), FALSE);
+    xParGroupInit(t->group);
+    xParGroupSetPriority(t->group, tasset->priority);
+    xParGroupRegister(t->group);
+    xParGroupSetAging(t->group, (((tasset->parFlags >> 1) & 0x1) ^ 0x1) & 0xFF);
+    xParGroupSetVisibility(t->group, t->visible);
+    xParGroupSetBack2Life(t->group,(((tasset->parFlags >> 2) & 0x1) ^ 0x1) & 0xFF);
+    t->parent = NULL;
+
+    for (i = 0; i < t->cmdCount; i++)
+    {
+        if (t->cmd[i].tasset->type == XPARCMD_TYPE_TEX)
+        {
+            t->group->m_cmdTex = (xParCmdTex*)t->cmd[i].tasset;
+            xParCmdTexInit(t->group->m_cmdTex);
+            break;
+        }
+    }
+
+    t->group->draw = sParSysInfo[t->tasset->renderFunc].func;
 }
 
 void xParSysSetup(xParSys* t)

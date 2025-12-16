@@ -50,7 +50,7 @@ void xParSysSetup(xParSys* t);
 void xParSysReset(xParSys* t);
 void xParSysExit(xParSys* t);
 void xParSysRender(xBase* b);
-S32 xParSysEventCB(xBase*, xBase*, U32, F32*, xBase*);
+S32 xParSysEventCB(xBase*, xBase*, U32, const F32*, xBase*);
 void xParSysUpdate(xBase* to, xScene*, F32 dt);
 
 U8 using_ptank_render(const xParSysAsset&);
