@@ -239,6 +239,83 @@ void xParSysExit(xParSys* t)
     }
 }
 
+S32 xParSysEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* toParamWidget)
+{
+    xParSys* t = (xParSys*)to;
+
+    switch (toEvent)
+    {
+    case eEventReset:
+        xParSysReset(t);
+        break;
+    case eEventVisible:
+        t->visible = TRUE;
+        if (t->group != NULL)
+        {
+            xParGroupSetVisibility(t->group, t->visible);
+        }
+        break;
+    case eEventInvisible:
+        t->visible = FALSE;
+        if (t->group != NULL)
+        {
+            xParGroupSetVisibility(t->group, t->visible);
+        }
+        break;
+    case eEventOn:
+        if (t->group != NULL)
+        {
+            xParGroupSetActive(t->group, TRUE);
+        }
+        break;
+    case eEventOff:
+        if (t->group != NULL)
+        {
+            xParGroupSetActive(t->group, FALSE);
+        }
+        break;
+    }
+
+    return TRUE;
+}
+
+static void xParGroupUpdateR(xParSys* s, xParGroup* g, F32 dt);
+static void xParGroupUpdate(xParSys* s, xParGroup* g, F32 dt);
+void xParSysUpdate(xBase* to, xScene* scn, F32 dt)
+{
+    xParSys* s = (xParSys*)to;
+    xParSys* parent = s->parent;
+    if (s->tasset->renderFunc == NULL)
+    {
+        par_sprite_begin();
+    }
+
+    xParGroup* g = s->group;
+    while (g != NULL)
+    {
+        if (g->m_active)
+        {
+            if (parent)
+            {
+                xParGroupUpdateR(parent, g, dt);
+            }
+
+            if (g->m_alive)
+            {
+                xParGroupUpdate(s, g, dt);
+            }
+        }
+
+        xParGroupAnimate(g, dt);
+        if (g->m_num_of_particles > 0 && !s->tasset->renderFunc)
+        {
+            par_sprite_update(*s, *g);
+        }
+
+        g = g->m_next;
+    }
+}
+
 static void xParGroupUpdateR(xParSys* s, xParGroup* g, F32 dt)
 {
     if (s->parent != NULL)
