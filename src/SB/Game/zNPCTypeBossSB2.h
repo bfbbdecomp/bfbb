@@ -23,8 +23,11 @@ struct response_curve
     U32 nodes; // offset 0x8,
     U32 active_node; // offset 0xC,
 
+    static void init(U32, const void*, U32, const char*, const char**, const tweak_callback*,
+                     void*);
     void end_t() const;
 };
+
 struct node
 {
     F32 t;
@@ -49,6 +52,15 @@ struct zNPCB_SB2 : zNPCBoss
     {
         LEFT_HAND,
         RIGHT_HAND
+    };
+
+    enum slug_enum
+    {
+        BEGIN_SLUG = 0,
+        SLUG_KAH = 0,
+        SLUG_RAH = 1,
+        SLUG_TAY = 2,
+        MAX_SLUG = 3,
     };
 
     struct node_data
@@ -97,7 +109,7 @@ struct zNPCB_SB2 : zNPCBoss
         xMat3x3 mat;
         struct
         {
-            xVec3 axis;
+            xVec3 axis; // 0x968
             F32 ang;
             F32 end_ang;
             F32 vel;
@@ -161,7 +173,7 @@ struct zNPCB_SB2 : zNPCBoss
         bool face_follow;
         bool dizzy; //0x2b6
         move_enum move;
-        bool vulnerable;
+        bool vulnerable; //0x2bc
         bool cruise_exploding; //0x2bd
         bool cruise_hit_body;
         bool cruise_hit_target; //0x2bf
@@ -180,7 +192,7 @@ struct zNPCB_SB2 : zNPCBoss
     zNPCNewsFish* newsfish;
     U8 said_intro;
     xModelInstance* models[4];
-    node_data nodes[9];
+    node_data nodes[9]; // 0x300
     hand_data hands[2];
     platform_data platforms[16];
     bound_data bounds[5];
@@ -202,7 +214,7 @@ struct zNPCB_SB2 : zNPCBoss
     } ymove;
     struct
     {
-        xVec3 body;
+        xVec3 body; // 0x17d4
         xVec3 mouth; //0x17e0
         xVec3 hand[2];
     } sound_loc;
@@ -214,9 +226,14 @@ struct zNPCB_SB2 : zNPCBoss
     } glow_light;
 
     zNPCB_SB2(S32 myType);
+    void Init(xEntAsset* asset);
+    void Setup();
     void SelfSetup();
+    void Reset();
     void Destroy();
+    void Process(xScene* xscn, F32 dt);
     void NewTime(xScene*, F32);
+    void init_nodes();
     void move_nodes();
     void move_hand(zNPCB_SB2::hand_data&, F32);
     void update_bounds();
@@ -224,8 +241,21 @@ struct zNPCB_SB2 : zNPCBoss
     void update_slugs(F32);
     void render_debug();
     void decompose();
+    void update_turn(F32 dt);
+    void update_move(F32 dt);
+    void update_camera(F32 dt);
+    void update_nodes(F32 dt);
     void show_nodes();
+    void check_life();
     void ouchie();
+    xSurface& create_surface();
+    void init_hands();
+    void init_bounds();
+    void reset_bounds();
+    void init_slugs();
+    void scan_cronies();
+    void check_hit_fail();
+    void create_glow_light();
     void destroy_glow_light();
     void say(U32);
     void Render();
@@ -237,8 +267,10 @@ struct zNPCB_SB2 : zNPCBoss
     void activate_hand(zNPCB_SB2::hand_enum, bool);
     void deactivate_hand(zNPCB_SB2::hand_enum);
     S32 player_on_ground() const;
+    void emit_slug(zNPCB_SB2::slug_enum which);
     S32 slugs_ready() const;
     void reset_stage();
+    void fire_slug(zNPCB_SB2::slug_enum which, zNPCB_SB2::platform_data& target);
     void abandon_slugs();
     void set_vulnerable(bool);
     void say(int);
@@ -251,7 +283,8 @@ struct zNPCB_SB2 : zNPCBoss
 
 struct zNPCGoalBossSB2Intro : zNPCGoalCommon
 {
-    zNPCGoalBossSB2Intro::zNPCGoalBossSB2Intro(S32 goalID, zNPCB_SB2& npc) : zNPCGoalCommon(goalID), owner(npc)
+    zNPCGoalBossSB2Intro::zNPCGoalBossSB2Intro(S32 goalID, zNPCB_SB2& npc)
+        : zNPCGoalCommon(goalID), owner(npc)
     {
     }
 
@@ -264,7 +297,8 @@ struct zNPCGoalBossSB2Intro : zNPCGoalCommon
 
 struct zNPCGoalBossSB2Idle : zNPCGoalCommon
 {
-    zNPCGoalBossSB2Idle::zNPCGoalBossSB2Idle(S32 goalID, zNPCB_SB2& npc) : zNPCGoalCommon(goalID), owner(npc)
+    zNPCGoalBossSB2Idle::zNPCGoalBossSB2Idle(S32 goalID, zNPCB_SB2& npc)
+        : zNPCGoalCommon(goalID), owner(npc)
     {
     }
 
@@ -278,7 +312,8 @@ struct zNPCGoalBossSB2Idle : zNPCGoalCommon
 
 struct zNPCGoalBossSB2Taunt : zNPCGoalCommon
 {
-    zNPCGoalBossSB2Taunt::zNPCGoalBossSB2Taunt(S32 goalID, zNPCB_SB2& npc) : zNPCGoalCommon(goalID), owner(npc)
+    zNPCGoalBossSB2Taunt::zNPCGoalBossSB2Taunt(S32 goalID, zNPCB_SB2& npc)
+        : zNPCGoalCommon(goalID), owner(npc)
     {
     }
 
@@ -291,7 +326,8 @@ struct zNPCGoalBossSB2Taunt : zNPCGoalCommon
 
 struct zNPCGoalBossSB2Dizzy : zNPCGoalCommon
 {
-    zNPCGoalBossSB2Dizzy::zNPCGoalBossSB2Dizzy(S32 goalID, zNPCB_SB2& npc) : zNPCGoalCommon(goalID), owner(npc)
+    zNPCGoalBossSB2Dizzy::zNPCGoalBossSB2Dizzy(S32 goalID, zNPCB_SB2& npc)
+        : zNPCGoalCommon(goalID), owner(npc)
     {
     }
 
@@ -305,7 +341,8 @@ struct zNPCGoalBossSB2Dizzy : zNPCGoalCommon
 
 struct zNPCGoalBossSB2Hit : zNPCGoalCommon
 {
-    zNPCGoalBossSB2Hit::zNPCGoalBossSB2Hit(S32 goalID, zNPCB_SB2& npc) : zNPCGoalCommon(goalID), owner(npc)
+    zNPCGoalBossSB2Hit::zNPCGoalBossSB2Hit(S32 goalID, zNPCB_SB2& npc)
+        : zNPCGoalCommon(goalID), owner(npc)
     {
     }
 
@@ -318,7 +355,8 @@ struct zNPCGoalBossSB2Hit : zNPCGoalCommon
 
 struct zNPCGoalBossSB2Hunt : zNPCGoalCommon
 {
-    zNPCGoalBossSB2Hunt::zNPCGoalBossSB2Hunt(S32 goalID, zNPCB_SB2& npc) : zNPCGoalCommon(goalID), owner(npc)
+    zNPCGoalBossSB2Hunt::zNPCGoalBossSB2Hunt(S32 goalID, zNPCB_SB2& npc)
+        : zNPCGoalCommon(goalID), owner(npc)
     {
     }
 
@@ -330,7 +368,8 @@ struct zNPCGoalBossSB2Hunt : zNPCGoalCommon
 
 struct zNPCGoalBossSB2Swipe : zNPCGoalCommon
 {
-    zNPCGoalBossSB2Swipe::zNPCGoalBossSB2Swipe(S32 goalID, zNPCB_SB2& npc) : zNPCGoalCommon(goalID), owner(npc)
+    zNPCGoalBossSB2Swipe::zNPCGoalBossSB2Swipe(S32 goalID, zNPCB_SB2& npc)
+        : zNPCGoalCommon(goalID), owner(npc)
     {
     }
 
@@ -350,7 +389,8 @@ struct zNPCGoalBossSB2Swipe : zNPCGoalCommon
 
 struct zNPCGoalBossSB2Chop : zNPCGoalCommon
 {
-    zNPCGoalBossSB2Chop::zNPCGoalBossSB2Chop(S32 goalID, zNPCB_SB2& npc) : zNPCGoalCommon(goalID), owner(npc)
+    zNPCGoalBossSB2Chop::zNPCGoalBossSB2Chop(S32 goalID, zNPCB_SB2& npc)
+        : zNPCGoalCommon(goalID), owner(npc)
     {
     }
 
@@ -368,10 +408,11 @@ struct zNPCGoalBossSB2Chop : zNPCGoalCommon
 
 struct zNPCGoalBossSB2Karate : zNPCGoalCommon
 {
-    zNPCGoalBossSB2Karate::zNPCGoalBossSB2Karate(S32 goalID, zNPCB_SB2& npc) : zNPCGoalCommon(goalID), owner(npc)
+    zNPCGoalBossSB2Karate::zNPCGoalBossSB2Karate(S32 goalID, zNPCB_SB2& npc)
+        : zNPCGoalCommon(goalID), owner(npc)
     {
     }
-    
+
     U8 emitted[3];
     U8 started;
     zNPCB_SB2& owner;
@@ -384,7 +425,8 @@ struct zNPCGoalBossSB2Karate : zNPCGoalCommon
 
 struct zNPCGoalBossSB2Death : zNPCGoalCommon
 {
-    zNPCGoalBossSB2Death::zNPCGoalBossSB2Death(S32 goalID, zNPCB_SB2& npc) : zNPCGoalCommon(goalID), owner(npc)
+    zNPCGoalBossSB2Death::zNPCGoalBossSB2Death(S32 goalID, zNPCB_SB2& npc)
+        : zNPCGoalCommon(goalID), owner(npc)
     {
     }
 

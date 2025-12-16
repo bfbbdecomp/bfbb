@@ -1,20 +1,35 @@
 #include "zThrown.h"
 
+#include "zGlobals.h"
 #include <types.h>
 #include <string.h>
 
 #include "zEvent.h"
 #include "zScene.h"
 
-extern zThrownStruct zThrownList[0x20];
-extern ThrowableStats zThrowableModels[23];
-extern U32 zThrownCount;
-extern U32 sFruitIsFreezy;
-extern U32 sDebugDepth;
-extern CarryableStats c_fruit;
-extern U32 sThrowButtonMask;
-extern F32 _842; // 0.5f
-extern F32 _844; // 0.0f
+#include "xMathInlines.h"
+
+zThrownStruct zThrownList[32];
+LaunchStats l_normal;
+ThrowableStats zThrowableModels[23];
+U32 zThrownCount;
+U32 sFruitIsFreezy;
+U32 sDebugDepth;
+CarryableStats c_fruit;
+U32 sThrowButtonMask;
+
+void zThrown_Setup(zScene* sc)
+{
+    ThrowableStats* stats;
+    char tmpstr[256];
+
+    F32 airTime;
+
+    c_fruit.killTimer = globals.player.carry.fruitLifetime;
+    airTime = xsqrt((2.0f * globals.player.carry.throwHeight) / globals.player.carry.throwGravity);
+    globals.player.carry.throwDistance = globals.player.carry.throwGravity * airTime;
+    l_normal.throwSpeedXZ = globals.player.carry.throwDistance / (2.0f * airTime);
+}
 
 void zThrown_AddTempFrame(zThrownStruct* thrown)
 {
@@ -60,6 +75,33 @@ void zThrown_PatrickLauncher(xEnt* ent, xEnt* launcher)
     }
 }
 
+void zThrown_Remove(class xEnt* ent)
+{
+    U32 i;
+    xModelInstance* mod;
+
+    for (i = 0; i < zThrownCount; i++)
+    {
+    }
+}
+
+S32 zThrown_KillFruit(xEnt* ent)
+{
+    for (S32 i = 0; i < zThrownCount; i++)
+    {
+        if (zThrownList[i].ent == ent)
+        {
+            if (zThrownList[i].stats->carry == &c_fruit)
+            {
+                zThrownList[i].killTimer = 1e-6f;
+                return 1;
+            }
+            return 0;
+        }
+    }
+    return 0;
+}
+
 void zThrownCollide_ThrowFreeze(zThrownStruct* thrown, xEntCollis* collis, float* bounce,
                                 float* friction)
 {
@@ -73,8 +115,8 @@ void zThrownCollide_DestructObj(zThrownStruct* thrown, xEntCollis* collis, F32* 
 {
     sThrowButtonMask = 0x40;
     zThrownCollide_CauseDamage(thrown, collis);
-    *bounce = _844;
-    *friction = _844;
+    *bounce = 0.0f;
+    *friction = 0.0f;
     zEntEvent(thrown->ent, eEventDestroy);
 }
 
@@ -83,16 +125,16 @@ void zThrownCollide_BSandyHead(zThrownStruct* thrown, xEntCollis* collis, F32* b
 {
     sThrowButtonMask = 0x40;
     zThrownCollide_CauseDamage(thrown, collis);
-    *bounce = _844;
-    *friction = _844;
+    *bounce = 0.0f;
+    *friction = 0.0f;
 }
 
 void zThrownCollide_Tiki(zThrownStruct* thrown, xEntCollis* collis, F32* bounce, F32* friction)
 {
     sThrowButtonMask = 0x40;
     zThrownCollide_CauseDamage(thrown, collis);
-    *bounce = _844;
-    *friction = _844;
+    *bounce = 0.0f;
+    *friction = 0.0f;
     zEntEvent(thrown->ent, eEventDestroy);
 }
 
@@ -113,6 +155,20 @@ S32 zThrown_IsFruit(xEnt* ent, F32* stackHeight)
         }
         return 1;
     }
+    return 0;
+}
+
+S32 zThrown_IsStacked(xEnt* ent)
+{
+    for (S32 i = 0; i < zThrownCount; i++)
+    {
+        if ((zThrownList[i].stackEnt == ent) ||
+            (zThrownList[i].stackEnt != 0 && (zThrownList[i].ent == ent)))
+        {
+            return 1;
+        }
+    }
+
     return 0;
 }
 
