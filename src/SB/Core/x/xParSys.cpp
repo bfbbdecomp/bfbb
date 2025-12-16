@@ -126,7 +126,7 @@ static void par_sprite_update(xParSys& sys, xParGroup& group)
 
 static void render_par_sprite(void* data, xParGroup* ps)
 {
-    if (using_ptank_render((*(xParSysAsset*)&ps->m_culled)) == 0)
+    if (!using_ptank_render(*((xParSys*)data)->tasset))
     {
         iParMgrRenderParSys_Sprite(data, ps);
     }
@@ -206,12 +206,11 @@ void xParSysInit(xBase* b, xParSysAsset* tasset)
 
 void xParSysSetup(xParSys* t)
 {
-    if (t != 0 && t->link != 0 && t->link->param[1])
+    if (t != NULL && t->tasset != NULL && t->tasset->parentParSysID != 0x0)
     {
-        t->parent = (xParSys*)zSceneFindObject(t->cmd->flag);
+        t->parent = (xParSys*)zSceneFindObject(t->tasset->parentParSysID);
     }
-    t->parent = (xParSys*)xSTFindAsset(t->cmd->flag, 0);
-    t->parent = t->parent;
+    t->txtr_particle = (RwTexture*)xSTFindAsset(t->tasset->textureID, 0);
 }
 
 void xParSysReset(xParSys* t)
