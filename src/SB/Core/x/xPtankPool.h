@@ -117,7 +117,7 @@ struct ptank_pool__color_mat_uv2 : ptank_pool {
 };
 
 // total size: 0x38
-struct ptank_pool__pos_color_size_uv2 : public ptank_pool
+struct ptank_pool__pos_color_size_uv2 : ptank_pool
 {
     xVec3* pos;
     iColor_tag* color;

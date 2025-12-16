@@ -4,6 +4,7 @@
 #include "xRenderState.h"
 #include "zRenderState.h"
 #include "zGlobals.h"
+#include "xPtankPool.h"
 
 #include <types.h>
 
@@ -28,6 +29,99 @@ static void par_sprite_begin()
 {
     par_offset_right = globals.camera.mat.right * 0.5f;
     par_offset_up = globals.camera.mat.up * 0.5f;
+}
+
+static void par_sprite_update(xParSys& sys, xParGroup& group)
+{
+    if (!using_ptank_render(*sys.tasset))
+    {
+        return;
+    }
+
+    U32 pivot = sys.tasset->parFlags;
+    xVec3 offset_right;
+    if (pivot & 0x8)
+    {
+        offset_right = par_offset_right;
+    }
+    else if (pivot & 0x20)
+    {   
+        offset_right = -par_offset_right;
+    }
+    else
+    {
+        offset_right = 0.0f;
+    }
+    
+    xVec3 offset_up;
+    if (pivot & 0x10)
+    {
+        offset_up = -par_offset_up;
+    }
+    else if (pivot & 0x40)
+    {   
+        offset_up = par_offset_up;
+    }
+    else
+    {
+        offset_up = 0.0f;
+    }
+    
+    ptank_pool__pos_color_size_uv2 pool;
+    pool.rs.texture = sys.txtr_particle;
+    pool.rs.src_blend = sBlendTable[sys.tasset->renderSrcBlendMode];
+    pool.rs.dst_blend = sBlendTable[sys.tasset->renderDstBlendMode];
+    pool.rs.flags = 0x0;
+    pool.reset();
+    
+    xParCmdTex* tex = group.m_cmdTex;
+    xPar* p = group.m_root;
+    while (p != NULL)
+    {
+        RwSphere testSphere;
+        testSphere.center = *(RwV3d*)&p->m_pos;
+        testSphere.radius = p->m_size;
+        
+        if (RwCameraFrustumTestSphere(globals.camera.lo_cam, &testSphere))
+        {
+            pool.next();
+            
+            if (!pool.valid())
+            {
+                break;
+            }
+            
+            xVec3& loc = *pool.pos;
+            loc = p->m_pos;
+            loc += offset_right * p->m_size;
+            loc += offset_up * p->m_size;
+    
+            pool.color->r = p->m_c[0];
+            pool.color->g = p->m_c[1];
+            pool.color->b = p->m_c[2];
+            pool.color->a = p->m_c[3];
+    
+            pool.size->assign(p->m_size, p->m_size);
+    
+            if (tex)
+            {
+                pool.uv[0].x = p->m_texIdx[0] * tex->unit_width + tex->x1;
+                pool.uv[0].y = p->m_texIdx[1] * tex->unit_height + tex->y1;
+                
+                pool.uv[1].x = (p->m_texIdx[0] + 1) * tex->unit_width + tex->x1;
+                pool.uv[1].y = (p->m_texIdx[1] + 1) * tex->unit_height + tex->y1;
+            }
+            else
+            {
+                pool.uv[0].assign(0.0f, 0.0f);
+                pool.uv[1].assign(1.0f, 1.0f);
+            }
+        }
+        
+        p = p->m_next;
+    }
+
+    pool.flush();
 }
 
 static void render_par_sprite(void* data, xParGroup* ps)
