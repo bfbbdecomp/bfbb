@@ -191,7 +191,7 @@ struct zNPCB_SB2 : zNPCBoss
     zNPCBPlankton* plankton;
     zNPCNewsFish* newsfish;
     U8 said_intro;
-    xModelInstance* models[4]; // 0x2f0??? also 0x300???
+    xModelInstance* models[4];
     node_data nodes[9]; // 0x300
     hand_data hands[2];
     platform_data platforms[16];

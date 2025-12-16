@@ -129,11 +129,6 @@ namespace
         return f1;
     }
 
-    // S32 tweak()
-    // {
-    //     return 0; // to-do
-    // }
-
     static void init_sound()
     {
     }
@@ -1147,36 +1142,36 @@ void zNPCB_SB2::Init(xEntAsset* asset)
     boss_cam.init();
     init_sound();
     zNPCCommon::Init(asset);
-    cfg_npc->dst_castShadow = 30.0f;
-    memset((void*)flag.face_player, 0, 0x10);
-    said_intro = 0;
+    this->cfg_npc->dst_castShadow = 30.0f;
+    memset((void*)this->flag.face_player, 0, 0x10);
+    this->said_intro = 0;
 
-    m = model;
-    models[0] = model;
+    m = this->model;
+    this->models[0] = this->model;
     
-    models[1] = m->Next;
-    models[2] = m->Next;
-    models[3] = m->Next;
+    this->models[1] = m->Next;
+    this->models[2] = m->Next;
+    this->models[3] = m->Next;
 
-    models[0]->Data->boundingSphere.radius = 100.0f;
-    models[1]->Data->boundingSphere.radius = 100.0f;
-    models[2]->Data->boundingSphere.radius = 100.0f;
-    models[3]->Data->boundingSphere.radius = 100.0f;
+    this->models[0]->Data->boundingSphere.radius = 100.0f;
+    this->models[1]->Data->boundingSphere.radius = 100.0f;
+    this->models[2]->Data->boundingSphere.radius = 100.0f;
+    this->models[3]->Data->boundingSphere.radius = 100.0f;
 
-    set_alpha_blend(models[0]);
-    init_hands();
-    init_bounds();
-    reset_bounds();
+    set_alpha_blend(this->models[0]);
+    this->init_hands();
+    this->init_bounds();
+    this->reset_bounds();
 
-    penby = FALSE;
-    bupdate = 0;
-    bound.type = TRUE;
-    bound.sph.center.y = 1e38f;
-    bound.sph.r = 0.0f;
+    this->penby = FALSE;
+    this->bupdate = 0;
+    this->bound.type = TRUE;
+    this->bound.sph.center.y = 1e38f;
+    this->bound.sph.r = 0.0f;
 
     response_curve::init((U32)&rc_scale, 0, 0, 0, 0, 0, 0);
 
-    init_slugs();
+    this->init_slugs();
 }
 
 void zNPCB_SB2::Setup()
@@ -1184,35 +1179,35 @@ void zNPCB_SB2::Setup()
     xEnt* ent; 
     xSphere o;
 
-    create_glow_light();
-    init_nodes();
+    this->create_glow_light();
+    this->init_nodes();
     zNPCBoss::Setup();
 
     for (S32 i = 0; i < 16; i++)
     {
-        platforms[i].ent = 0;
+        this->platforms[i].ent = 0;
         zSceneFindObject(xStrHash(platform_hooks[i].name));
     }
 
-    if (models[3]->Surf == NULL)
+    if (this->models[3]->Surf == NULL)
     {
-        models[3]->Surf = &create_surface();
+        this->models[3]->Surf = &create_surface();
     }
 
-    if (models[0]->Surf == NULL)
+    if (this->models[0]->Surf == NULL)
     {
-        models[0]->Surf = &create_surface();
+        this->models[0]->Surf = &create_surface();
     }
 
     // models[3]->Surf->moprops = 0;
     // models[0]->Surf->moprops = 7;
 
     this->scan_cronies();
-    (xBase*)&newsfish->id = zSceneFindObject(xStrHash("NPC_NEWSCASTER"));
+    (xBase*)&this->newsfish->id = zSceneFindObject(xStrHash("NPC_NEWSCASTER"));
     
-    if (newsfish->id != NULL)
+    if (this->newsfish->id != NULL)
     {
-        newsfish->TalkOnScreen(1);
+        this->newsfish->TalkOnScreen(1);
     }
 }
 
@@ -1290,36 +1285,36 @@ void zNPCB_SB2::Destroy()
 
 void zNPCB_SB2::Process(xScene* xscn, F32 dt)
 {
-    if (flag.updated == FALSE)
+    if (this->flag.updated == FALSE)
     {
         boss_cam.set_targets((xVec3&)globals.player.ent.model->Mat->pos, location(),
                              5.0f);
-        flag.updated = TRUE;
+        this->flag.updated = TRUE;
     }
 
-    check_life();
-    player_damage_timer = player_damage_timer - dt;
+    this->check_life();
+    this->player_damage_timer = this->player_damage_timer - dt;
 
-    if ((globals.player.Health < old_player_health) && old_player_health != 0)
+    if ((globals.player.Health < this->old_player_health) && this->old_player_health != 0)
     {
-        player_damage_timer = tweak.player_damage_time;
+        this->player_damage_timer = tweak.player_damage_time;
         say(1);
     }
 
-    old_player_health = globals.player.Health;
+    this->old_player_health = globals.player.Health;
 
     if ((SomethingWonderful() & 0x23) == 0)
     {
         delay = delay + dt;
-        psy_instinct->Timestep(dt, 0);
+        this->psy_instinct->Timestep(dt, 0);
     }
 
-    update_nodes(dt);
-    update_slugs(dt);
-    update_move(dt);
-    update_turn(dt);
-    update_camera(dt);
-    check_hit_fail();
+    this->update_nodes(dt);
+    this->update_slugs(dt);
+    this->update_move(dt);
+    this->update_turn(dt);
+    this->update_camera(dt);
+    this->check_hit_fail();
     zNPCCommon::Process(xscn, dt);
 }
 
@@ -1327,27 +1322,27 @@ void zNPCB_SB2::NewTime(xScene* xscn, F32 dt)
 {
     xVec3 tmp;
 
-    if (flag.nodes_taken == NULL)
+    if (this->flag.nodes_taken == NULL)
     {
-        move_nodes();
+        this->move_nodes();
     }
 
     for (S32 i = 0; i < 2; i++)
     {
-        move_hand(hands[i], dt);
+        this->move_hand(this->hands[i], dt);
     }
 
-    update_bounds();
-    update_platforms(dt);
-    update_slugs(dt);
+    this->update_bounds();
+    this->update_platforms(dt);
+    this->update_slugs(dt);
 
-    models[1]->Flags = models[1]->Flags & 0xefff;
-    models[2]->Flags = models[2]->Flags & 0xefff;
+    this->models[1]->Flags = this->models[1]->Flags & 0xefff;
+    this->models[2]->Flags = this->models[2]->Flags & 0xefff;
 
-    sound_loc.mouth = xModelGetBoneLocation(*model, 4);
-    sound_loc.body = sound_loc.mouth;
-    sound_loc.hand[0] = xModelGetBoneLocation(*model, 16);
-    sound_loc.hand[1] = xModelGetBoneLocation(*model, 21);
+    this->sound_loc.mouth = xModelGetBoneLocation(*model, 4);
+    this->sound_loc.body = this->sound_loc.mouth;
+    this->sound_loc.hand[0] = xModelGetBoneLocation(*model, 16);
+    this->sound_loc.hand[1] = xModelGetBoneLocation(*model, 21);
 
     zNPCCommon::NewTime(xscn, dt);
 }
@@ -1382,8 +1377,6 @@ void zNPCB_SB2::ouchie()
     
 }
 
-
-
 void zNPCB_SB2::Render()
 {
     xNPCBasic::Render();
@@ -1414,7 +1407,6 @@ void zNPCB_SB2::reset_speed()
     turn.max_vel = tweak.turn_max_vel;
 }
 
-// I realized that i dont feel like dealing with this right now
 S32 zNPCB_SB2::player_platform()
 {
     if (((globals.player.ent.collis->colls->flags & 1) != 0))
@@ -1445,10 +1437,9 @@ S32 zNPCB_SB2::player_on_ground() const
     // TODO
 }
 
-// Gonna have to come back to this. been using a lot of brain power on it
 void zNPCB_SB2::emit_slug(zNPCB_SB2::slug_enum which)
 {
-    slug_data& slug = slugs[which]; // has to be correct????
+    slug_data& slug = slugs[which];
     F32 launch_ang; 
     F32 accel_time;
     

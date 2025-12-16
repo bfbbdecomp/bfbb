@@ -9,7 +9,7 @@
 
 #include "xMathInlines.h"
 
-zThrownStruct zThrownList[0x20];
+zThrownStruct zThrownList[32];
 LaunchStats l_normal;
 ThrowableStats zThrowableModels[23];
 U32 zThrownCount;
@@ -23,12 +23,12 @@ void zThrown_Setup(zScene* sc)
     ThrowableStats* stats;
     char tmpstr[256];
 
-    F32 dVar6;
+    F32 airTime;
 
     c_fruit.killTimer = globals.player.carry.fruitLifetime;
-    dVar6 = xsqrt((2.0f * globals.player.carry.throwHeight) / globals.player.carry.throwGravity);
-    globals.player.carry.throwDistance = globals.player.carry.throwGravity * dVar6;
-    l_normal.throwSpeedXZ = globals.player.carry.throwDistance / (2.0f * dVar6);
+    airTime = xsqrt((2.0f * globals.player.carry.throwHeight) / globals.player.carry.throwGravity);
+    globals.player.carry.throwDistance = globals.player.carry.throwGravity * airTime;
+    l_normal.throwSpeedXZ = globals.player.carry.throwDistance / (2.0f * airTime);
 }
 
 void zThrown_AddTempFrame(zThrownStruct* thrown)
