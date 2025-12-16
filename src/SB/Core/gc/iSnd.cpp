@@ -1,5 +1,10 @@
 #include "iSnd.h"
 
+#include "dolphin/ai.h"
+#include "dolphin/os.h"
+#include "dolphin/os/OSAlloc.h"
+#include "dolphin/os/OSCache.h"
+#include "iMemMgr.h"
 #include "iTRC.h"
 #include "xSnd.h"
 #include "xstransvc.h"
@@ -10,7 +15,10 @@
 #include <dolphin/dvd/dvd.h>
 #include <dolphin/mix.h>
 
+#include <stdio.h>
 #include <types.h>
+
+u32 aram_array[40];
 
 // Size: 0x20
 // This was not in dwarf data
@@ -19,7 +27,7 @@ struct vinfo
     _AXVPB* voice;
     U32 flags;
     U32 aid;
-    U8 buf[4];
+    U32 xc;
     S32 x10;
     S32 x14;
     S32 x18;
@@ -52,9 +60,12 @@ UNK_STREAM streams[6];
 
 vinfo voices[58];
 
-u32 zero_point = 0;
-u32 zero_end = 0;
-S32 SoundFlags = 0;
+U32* ua_stream_buffer = NULL; //unaligned stream buffer
+U32* stream_buffer = 0;
+u32 silence_buffer = 0;
+volatile u32 zero_point = 0;
+volatile u32 zero_end = 0;
+volatile U32 SoundFlags = 0;
 volatile S32 fc = 0;
 static char soundInited = 0;
 U32 houston_we_have_a_problem = 0;
@@ -453,14 +464,16 @@ static void fcb()
             }
         }
 
-        if (streams[i].vinf.x10 == streams[i].vinf.x14 && streams[i].vinf.x18 == streams[i].vinf.x1c)
+        if (streams[i].vinf.x10 == streams[i].vinf.x14 &&
+            streams[i].vinf.x18 == streams[i].vinf.x1c)
         {
             continue;
         }
 
         streams[i].vinf.x14 = streams[i].vinf.x10;
         streams[i].vinf.x1c = streams[i].vinf.x18;
-        MIXAdjustInput(streams[i].vinf.voice, streams[i].vinf.x14 - MIXGetInput(streams[i].vinf.voice));
+        MIXAdjustInput(streams[i].vinf.voice,
+                       streams[i].vinf.x14 - MIXGetInput(streams[i].vinf.voice));
         MIXAdjustPan(streams[i].vinf.voice, streams[i].vinf.x1c - MIXGetPan(streams[i].vinf.voice));
         need_update = TRUE;
     }
@@ -501,6 +514,78 @@ static void fcb()
     }
 }
 
+void iSndInit()
+{
+    soundInited = 1;
+    AIInit(NULL);
+    ARInit(aram_array, 40);
+    ARQInit();
+    AXInit();
+    MIXInit();
+
+    for (S32 i = 0; i < 58; i++)
+    {
+        voices[i].voice = NULL;
+        voices[i].flags = 0;
+    }
+
+    for (S32 i = 0; i < 6; i++)
+    {
+        streams[i].vinf.voice = 0;
+        streams[i].vinf.flags = 0;
+        streams[i].source_a = 0;
+        streams[i].dest_a = 0;
+        streams[i].dest_b = 0;
+        streams[i].source_b = 0;
+        streams[i].xe4 = 0;
+    }
+
+    // FIXME: No idea what type this is, appears to only be used in this fuction.
+    ua_stream_buffer = (U32*)OSAllocFromHeap(the_heap, 0x18100);
+    stream_buffer = (U32*)(((U32)ua_stream_buffer + 0x1f) & ~0x1f);
+    U32* local_buffer = stream_buffer;
+    for (S32 i = 0; i < 0x100; i++)
+    {
+        local_buffer[i] = NULL;
+    }
+
+    silence_buffer = ARAlloc(0x400);
+    zero_point = silence_buffer;
+    zero_point *= 2;
+    zero_point += 2;
+    zero_end = zero_point + 0x800;
+
+    SoundFlags |= 0x1;
+
+    BOOL enabled = OSDisableInterrupts();
+    DCInvalidateRange((void*)silence_buffer, 0x400);
+    ARQRequest request;
+    ARQPostRequest(&request, 0, 0, 1, (u32)stream_buffer, silence_buffer, 0x400, arq_callback);
+    OSRestoreInterrupts(enabled);
+
+    while (SoundFlags != 0)
+        ;
+
+    char str_buf[0x20];
+    U32 r27 = 0;
+
+    struct Junk
+    {
+        U8 foo[0x4000];
+    };
+
+    for (S32 i = 0; i < 6; i++)
+    {
+        u32 buf = ARAlloc(0x8000);
+        sprintf(str_buf, "streaming channel %d", i);
+        streams[i].dest_a = buf;
+        streams[i].dest_b = buf + 0x4000;
+        streams[i].source_a = (u32)stream_buffer + r27 + 0x4000;
+        r27 += 0x4000;
+    }
+    AXRegisterCallback(fcb);
+}
+
 void iSndExit()
 {
     soundInited = 0;
@@ -515,6 +600,73 @@ void iSndSetEnvironmentalEffect(isound_effect)
 
 void iSndInitSceneLoaded()
 {
+}
+
+bool iSndIsPlaying(U32 assetID)
+{
+    if (assetID == 0)
+    {
+        return false;
+    }
+
+    for (S32 i = 0; i < 6; i++)
+    {
+        if (gSnd.voice[i].assetID == assetID)
+        {
+            if(streams[i].vinf.flags & 0xC000 && (streams[i].vinf.flags & 0x82) == 0) {
+                return true;
+            }
+            return false;
+        }
+    }
+
+    for(S32 i = 0; i < 0x3a; i++) {
+        if(gSnd.voice[i+6].assetID == assetID) {
+            if(voices[i].flags & 0x4 && (voices[i].flags & 0x8) == 0) {
+                return true;
+            }
+            return false;
+        }
+    }
+    return true;
+}
+
+bool iSndIsPlaying(U32 assetID, U32 parid)
+{
+    for(U32 i = 0; i < 0x40; i++) {
+        if((assetID == 0 || gSnd.voice[i].assetID == assetID) && gSnd.voice[i].parentID == parid)
+        {
+            if(iSndIsPlaying(gSnd.voice[i].assetID)) {
+                return true;
+            };
+        }
+    }
+    return false;
+}
+
+bool iSndIsPlayingByHandle(U32 handle)
+{
+
+    if (handle == 0)
+    {
+        return false;
+    }
+
+    for (S32 i = 0; i < 6; i++)
+    {
+        if (gSnd.voice[i].sndID == handle)
+        {
+            return (streams[i].vinf.flags & 0xC000  && (streams[i].vinf.flags & 0x82) == 0);
+        }
+    }
+
+    for(S32 i = 0; i < 0x3a; i++) {
+        if(gSnd.voice[i+6].sndID == handle) {
+            return (voices[i].flags & 0x4 && (voices[i].flags & 0x8) == 0);
+        }
+    }
+    return false;
+    
 }
 
 U32 iVolFromX(F32 param1)

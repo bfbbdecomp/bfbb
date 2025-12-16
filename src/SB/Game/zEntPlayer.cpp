@@ -7544,7 +7544,7 @@ S32 zEntPlayerDyingInGoo()
 
 WEAK U32 xSndIsPlaying(U32 assetID)
 {
-    return (U8)iSndIsPlaying(assetID);
+    return iSndIsPlaying(assetID);
 }
 
 WEAK S32 zNPCTiki::IsHealthy()
