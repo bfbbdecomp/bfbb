@@ -3,18 +3,31 @@
 #include "zScene.h"
 #include "xRenderState.h"
 #include "zRenderState.h"
+#include "zGlobals.h"
 
 #include <types.h>
 
 static xVec3 par_offset_right;
 static xVec3 par_offset_up;
 
-static xParSysInfo sParSysInfo[7];
+static void render_par_sprite(void* data, xParGroup* ps);
 
-static S32 sBlendTable[11] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
+static xParSysInfo sParSysInfo[7] = {
+    { XPARSYSINFO_TYPE_SPRITE, render_par_sprite },
+    { XPARSYSINFO_TYPE_STREAK, iParMgrRenderParSys_Streak },
+    { XPARSYSINFO_TYPE_FLAT, iParMgrRenderParSys_Flat },
+    { XPARSYSINFO_TYPE_STATIC, iParMgrRenderParSys_Static },
+    { XPARSYSINFO_TYPE_GROUND, iParMgrRenderParSys_Ground },
+    { XPARSYSINFO_TYPE_QUADSTREAK, iParMgrRenderParSys_QuadStreak },
+    { XPARSYSINFO_TYPE_INVSTREAK, iParMgrRenderParSys_InvStreak }
+};
+
+static const S32 sBlendTable[11] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
 
 static void par_sprite_begin()
 {
+    par_offset_right = globals.camera.mat.right * 0.5f;
+    par_offset_up = globals.camera.mat.up * 0.5f;
 }
 
 static void render_par_sprite(void* data, xParGroup* ps)

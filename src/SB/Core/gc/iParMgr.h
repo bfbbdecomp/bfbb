@@ -42,8 +42,12 @@ void iRenderSetCameraViewMatrix(xMat4x3* m);
 void iRenderFlush();
 void iRenderTrianglesImmediate(S32 vertType, S32 vertTypeSize, void* data, S32 dataSize, U16* index,
                                S32 indexSize);
+void iParMgrRenderParSys_Streak(void* data, xParGroup* ps);
 void iParMgrRenderParSys_QuadStreak(void* data, xParGroup* ps);
+void iParMgrRenderParSys_InvStreak(void* data, xParGroup* ps);
 void iParMgrRenderParSys_Flat(void* data, xParGroup* ps);
+void iParMgrRenderParSys_Static(void* data, xParGroup* ps);
+void iParMgrRenderParSys_Ground(void* data, xParGroup* ps);
 void iParMgrRenderParSys_Sprite(void* data, xParGroup* ps);
 
 #endif

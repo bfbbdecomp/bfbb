@@ -6,10 +6,17 @@
 #include "xParGroup.h"
 #include "iParMgr.h"
 #include "xstransvc.h"
+#include "xScene.h"
 
 #include <rwcore.h>
 
-struct xScene;
+#define XPARSYSINFO_TYPE_SPRITE 0
+#define XPARSYSINFO_TYPE_STREAK 1
+#define XPARSYSINFO_TYPE_FLAT 2
+#define XPARSYSINFO_TYPE_STATIC 3
+#define XPARSYSINFO_TYPE_GROUND 4
+#define XPARSYSINFO_TYPE_QUADSTREAK 5
+#define XPARSYSINFO_TYPE_INVSTREAK 6
 
 struct xParSysAsset : xBaseAsset
 {
