@@ -60,8 +60,7 @@ void xParSysInit(xBase* b, xParSysAsset* tasset)
 
     if (t->linkCount > 0)
     {
-        // TODO: is this a compiler scheduling issue or a true mismatch?
-        t->link = (xLinkAsset*)((char*)t->tasset + tasset->cmdSize + sizeof(xParSysAsset));
+        t->link = (xLinkAsset*)((char*)&t->tasset[1] + tasset->cmdSize);
     }
     else
     {
