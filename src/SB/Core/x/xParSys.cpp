@@ -359,10 +359,11 @@ static void xParGroupUpdate(xParSys* s, xParGroup* g, F32 dt)
 
 void xParSysRender(xBase* b)
 {
+    xParGroup* g;
     xParSys* s = (xParSys*)b;
     zRenderState(SDRS_Particles);
     
-    xParGroup* g = s->group;
+    g = s->group;
     while (g != NULL)
     {
         if (g->m_active && g->m_visible && g->m_alive && !g->m_culled && g->draw != NULL)
@@ -370,7 +371,7 @@ void xParSysRender(xBase* b)
             xRenderStateSetTexture(s->txtr_particle);
             xRenderStateSetSrcBlendMode(s->tasset->renderSrcBlendMode);
             xRenderStateSetDstBlendMode(s->tasset->renderDstBlendMode);
-            g->draw(b, g);
+            g->draw(s, g);
         }
 
         g = g->m_next;
