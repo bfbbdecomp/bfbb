@@ -60,6 +60,9 @@ void xParSysRender(xBase* b);
 S32 xParSysEventCB(xBase*, xBase*, U32, const F32*, xBase*);
 void xParSysUpdate(xBase* to, xScene*, F32 dt);
 
-U8 using_ptank_render(const xParSysAsset&);
+bool using_ptank_render(const xParSysAsset& tasset)
+{
+    return (tasset.parFlags >> 7) & 0x1;
+}
 
 #endif
