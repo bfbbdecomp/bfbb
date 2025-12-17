@@ -167,6 +167,7 @@ extern xFXStreak sStreakList[10];
 extern xFXShine sShineList[2];
 extern xFXRing ringlist[RING_COUNT];
 
+void xFXInit();
 void xFXStartup();
 void xFXShutdown();
 void xFXInit();

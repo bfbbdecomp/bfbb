@@ -1,5 +1,25 @@
 #include "iSystem.h"
 
+#include "dolphin/dvd/dvd.h"
+#include "dolphin/gx/GXFrameBuffer.h"
+#include "dolphin/gx/GXManage.h"
+#include "dolphin/gx/GXStruct.h"
+#include "dolphin/hio.h"
+#include "dolphin/os/OSError.h"
+#include "dolphin/vi.h"
+#include "rpcollis.h"
+#include "rphanim.h"
+#include "rpmatfx.h"
+#include "rpptank.h"
+#include "rpskin.h"
+#include "rpusrdat.h"
+#include "rpworld.h"
+#include "rwplcore.h"
+#include "xBase.h"
+#include "xFX.h"
+#include "xShadow.h"
+#include "xstransvc.h"
+#include <stdio.h>
 #include <types.h>
 
 #include <rwcore.h>
@@ -10,46 +30,40 @@
 #include "xPad.h"
 #include "xMemMgr.h"
 
+#include "iMemMgr.h"
 #include "iSystem.h"
 #include "iFile.h"
+#include "iFMV.h"
 #include "iTime.h"
 #include "iTRC.h"
 
-extern U32 mem_base_alloc;
-extern U32 add;
-extern U32 size;
-extern S32 gEmergencyMemLevel;
-extern OSHeapHandle the_heap;
-extern void* bad_val;
-extern void* MemoryFunctions[4];
-extern U16 last_error;
-extern OSContext* last_context;
-
-// Taken from iSystem.s
-// Defining these here makes the stringBase0 offsets match in the later functions.
-static char* str1 = "Level %d, Warning $03d: %s\n";
-static char* str2 = "FPE: Invalid operation: ";
-static char* str3 = "SNaN\n";
-static char* str4 = "Infinity - Infinity\n";
-static char* str5 = "Infinity / Infinity\n";
-static char* str6 = "0 / 0\n";
-static char* str7 = "Infinity * 0\n";
-static char* str8 = "Invalid compare\n";
-static char* str9 = "Software request\n";
-static char* str10 = "Invalid square root\n";
-static char* str11 = "Invalid integer convert\n";
-static char* str12 = "FPE: Overflow\n";
-static char* str13 = "FPE: Underflow\n";
-static char* str14 = "FPE: Zero division\n";
-static char* str15 = "FPE: Inexact result\n";
-static char* str16 = "iSystem.cpp";
-static char* str17 = "Unable to initialize memory system.\n";
-static char* str18 = "(With apologies to Jim Morrison) This the end, my only friend, The End.";
-static char* str19 = "%s.rw3";
-
-void** psGetMemoryFunctions()
+struct
 {
-    return MemoryFunctions;
+    GXRenderModeObj* renderMode;
+    U32 unk_4;
+    U32 unk_8;
+} deviceConfig;
+RwVideoMode sVideoMode;
+
+GXDrawSyncCallback old_dsc;
+U16 last_error;
+OSContext* last_context;
+U32 size;
+U32 add;
+S32 gEmergencyMemLevel;
+void* bad_val = (void*)0x81abcaa0;
+U32 test_alloc_val = 0x210A;
+
+static RwMemoryFunctions MemoryFunctions;
+
+static const char* __deadstripped()
+{
+    return "Level %d, Warning $03d: %s\n";
+}
+
+RwMemoryFunctions* psGetMemoryFunctions()
+{
+    return &MemoryFunctions;
 }
 
 void iVSync()
@@ -57,15 +71,14 @@ void iVSync()
     VIWaitForRetrace();
 }
 
-U16 my_dsc(U16 dsc)
+void my_dsc(u16 dsc)
 {
-    return dsc;
 }
 
-void FloatingPointErrorHandler(U16 last, OSContext* ctxt, U64 unk1, U64 unk2)
+static void FloatingPointErrorHandler(U16 last, OSContext* ctxt, u32 unk1, u32 unk2)
 {
-    U32 uVar2;
-    uVar2 = (ctxt->fpscr) & 0xf8 << 0x16 | 0x1f80700;
+    U32 uVar2 = ctxt->fpscr;
+    uVar2 &= ((uVar2 & 0xf8) << 0x16 | 0x1f80700);
     if ((uVar2 & 0x20000000) != 0)
     {
         OSReport("FPE: Invalid operation: ");
@@ -126,7 +139,7 @@ void FloatingPointErrorHandler(U16 last, OSContext* ctxt, U64 unk1, U64 unk2)
     ctxt->srr0 = ctxt->srr0 + 4;
 }
 
-void MemoryProtectionErrorHandler(U16 last, OSContext* ctx, U64 unk1, U64 unk2)
+static void MemoryProtectionErrorHandler(u16 last, OSContext* ctx, u32 unk1, u32 unk2)
 {
     last_error = last;
     last_context = ctx;
@@ -136,24 +149,54 @@ void MemoryProtectionErrorHandler(U16 last, OSContext* ctx, U64 unk1, U64 unk2)
     }
 }
 
-// FIXME: Define a bunch of functions :)
-void TRCInit()
+static void TRCInit()
 {
     iTRCDisk::Init();
-    // iTRCDisk::SetPadStopRumblingFunction(iPadStopRumble);
-    // iTRCDisk::SetSndSuspendFunction(iSndSuspend);
-    // iTRCDisk::SetSndResumeFunction(iSndResume);
-    // iTRCDisk::SetSndKillFunction(iSndDIEDIEDIE);
-    // iTRCDisk::SetMovieSuspendFunction(iFMV::Suspend);
-    // iTRCDisk::SetMovieResumeFunction(iFMV::Resume);
-    // ResetButton::SetSndKillFunction(iSndDIEDIEDIE);
+    iTRCDisk::SetPadStopRumblingFunction(iPadStopRumble);
+    iTRCDisk::SetSndSuspendFunction(iSndSuspend);
+    iTRCDisk::SetSndResumeFunction(iSndResume);
+    iTRCDisk::SetSndKillFunction(iSndDIEDIEDIE);
+    iTRCDisk::SetMovieSuspendFunction(iFMV::Suspend);
+    iTRCDisk::SetMovieResumeFunction(iFMV::Resume);
+    ResetButton::SetSndKillFunction(iSndDIEDIEDIE);
 }
 
-S32 RenderWareExit()
+static S32 RenderWareExit();
+S32 DolphinInitMemorySystem(RwMemoryFunctions*);
+static S32 RenderWareInit();
+
+//FIXME: This should be a dolphin header somewhere
+extern "C" GXDrawSyncCallback GXSetDrawSyncCallback(GXDrawSyncCallback cb);
+void iSystemInit(U32 options)
 {
-    RwEngineStop();
-    RwEngineClose();
-    return RwEngineTerm();
+    deviceConfig.renderMode = &GXNtsc480IntDf;
+    deviceConfig.unk_4 = 0;
+    deviceConfig.unk_8 = 0x40000;
+
+    GXSetMisc(GX_MT_XF_FLUSH, 8);
+    OSInit();
+    DVDInit();
+    VIInit();
+
+    __OSFpscrEnableBits = FPSCR_ZE;
+    OSSetErrorHandler(0x10, (OSErrorHandler)FloatingPointErrorHandler);
+    OSSetErrorHandler(0xf, (OSErrorHandler)MemoryProtectionErrorHandler);
+
+    if (!DolphinInitMemorySystem(&MemoryFunctions))
+    {
+        OSPanic(__FILE__, 0x1cc, "Unable to initialize memory system.\n");
+    }
+    xDebugInit();
+    xMemInit();
+    iFileInit();
+    iTimeInit();
+    xPadInit();
+    xSndInit();
+    TRCInit();
+    RenderWareInit();
+    xMathInit();
+    xMath3Init();
+    old_dsc = GXSetDrawSyncCallback(my_dsc);
 }
 
 void iSystemExit()
@@ -166,8 +209,125 @@ void iSystemExit()
     iFileExit();
     iTimeExit();
     xMemExit();
-    OSPanic("iSystem.cpp", 0x21d,
+    OSPanic(__FILE__, 0x21d,
             "(With apologies to Jim Morrison) This the end, my only friend, The End.");
+}
+
+static U32 RWAttachPlugins()
+{
+    if (!RpWorldPluginAttach())
+    {
+        return true;
+    }
+    if (!RpCollisionPluginAttach())
+    {
+        return true;
+    }
+    if (!RpSkinPluginAttach())
+    {
+        return true;
+    }
+    if (!RpHAnimPluginAttach())
+    {
+        return true;
+    }
+    if (!RpMatFXPluginAttach())
+    {
+        return true;
+    }
+    if (!RpUserDataPluginAttach())
+    {
+        return true;
+    }
+    if (!RpPTankPluginAttach())
+    {
+        return true;
+    }
+    return false;
+}
+
+static S32 DolphinInstallFileSystem();
+static RwTexture* TextureRead(const RwChar* name, const RwChar* maskName);
+
+static S32 RenderWareInit()
+{
+    RwMemoryFunctions* memoryFns = psGetMemoryFunctions();
+    if (!RwEngineInit(memoryFns, 0, 0x60000))
+    {
+        return TRUE;
+    }
+    RwResourcesSetArenaSize(0x60000);
+    if (!DolphinInstallFileSystem())
+    {
+        return TRUE;
+    }
+    if (RWAttachPlugins())
+    {
+        return TRUE;
+    }
+    RwEngineOpenParams params;
+    params.displayID = &deviceConfig;
+    if (!RwEngineOpen(&params))
+    {
+        RwEngineTerm();
+        return TRUE;
+    }
+    RwEngineGetVideoModeInfo(&sVideoMode, RwEngineGetCurrentVideoMode());
+    if (!RwEngineStart())
+    {
+        RwEngineClose();
+        RwEngineTerm();
+        return TRUE;
+    }
+    RwTextureSetReadCallBack(TextureRead);
+    RwRenderStateSet((RwRenderState)0x14, (void*)0x2); // RwRenderState 0x14 isn't defined??
+    xShadowInit();
+    xFXInit();
+    RwTextureSetMipmapping(TRUE);
+    RwTextureSetAutoMipmapping(TRUE);
+    return FALSE;
+}
+
+static S32 RenderWareExit()
+{
+    RwEngineStop();
+    RwEngineClose();
+    return RwEngineTerm();
+}
+
+extern U32 _RwGameCubeRasterExtOffset;
+struct RwGameCubeRasterExt
+{
+    U8 pad[0xc];
+    U32 unk_c;
+};
+
+static RwTexture* TextureRead(const RwChar* name, const RwChar* maskName)
+{
+    char buf[0x100];
+    sprintf(buf, "%s.rw3", name);
+
+    U32 assetSize;
+    RwTexture* asset = (RwTexture*)xSTFindAsset(xStrHash(buf), &assetSize);
+    if (asset != NULL)
+    {
+        if (asset->raster != NULL && asset->raster->depth < 8)
+        {
+            RwGameCubeRasterExt* ext =
+                (RwGameCubeRasterExt*)((U32)asset->raster + _RwGameCubeRasterExtOffset);
+            if (ext == NULL || ext->unk_c != 14)
+            {
+                asset = NULL;
+            }
+        }
+    }
+
+    if (asset != NULL)
+    {
+        strcpy(asset->name, name);
+        strcpy(asset->mask, maskName);
+    }
+    return asset;
 }
 
 void null_func()
@@ -230,6 +390,39 @@ void _rwDolphinHeapFree(void* __ptr)
             }
         }
     }
+}
+
+void* _rwDolphinHeapAlloc(u32 size)
+{
+    static u32 alloc_num = 0;
+    U32 alloc = (U32)malloc(size + 0x20);
+    if (alloc != NULL)
+    {
+        *(U32*)((U8*)alloc + 0x0) = size;
+        *(U32*)((U8*)alloc + 0x4) = alloc_num;
+        u32 this_alloc = alloc_num;
+        alloc_num++;
+        if (this_alloc >= test_alloc_val - 0xa)
+        {
+            null_func();
+            *(U32*)((U8*)alloc + 0x8) = 0x1EE7D00D;
+            alloc = alloc + 0xc;
+        }
+        else
+        {
+            *(U32*)((U8*)alloc + 0x8) = 0xDEADBEEF;
+            alloc = alloc + 0xc;
+        }
+
+        *(U32*)((U8*)alloc + 0x0) = 0xDEADBEEF;
+        *(U32*)((U8*)alloc + 0x4) = 0xDEADBEEF;
+        *(U32*)((U8*)alloc + 0x8) = 0xDEADBEEF;
+        *(U32*)((U8*)alloc + 0xc) = 0xDEADBEEF;
+        *(U32*)((U8*)alloc + 0x10) = 0xDEADBEEF;
+        alloc = alloc + 0x14;
+    }
+
+    return (void*)alloc;
 }
 
 S32 iGetMinute()
