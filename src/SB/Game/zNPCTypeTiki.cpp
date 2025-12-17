@@ -1,11 +1,11 @@
 #include "iAnim.h"
+#include "iCollide.h"
 
 #include "xDebug.h"
-#include "xModel.h"
 #include "xScrFx.h"
+#include "xVec3.h"
 #include "xutil.h"
 
-#include "zEntButton.h"
 #include "zGlobals.h"
 #include "zGoo.h"
 #include "zNPCGoals.h"
@@ -14,8 +14,6 @@
 #include "zNPCSupplement.h"
 #include "zNPCTypeTiki.h"
 #include "zSurface.h"
-
-#include "iCollide.h"
 
 #define ANIM_COUNT 2
 #define NUM_PARENTS 4
@@ -97,11 +95,9 @@ void zNPCTiki_InitStacking(zScene* zsc)
     orphanList = NULL;
 }
 
-// a couple assignments are in the wrong order
+// float scheduling issue
 void zNPCTiki_InitFX(zScene* scene)
 {
-    RwTexture* tex;
-
     cloudEmitter = zParEmitterFind("PAREMIT_THUNDER_CLOUD");
     if (cloudEmitter == NULL)
     {
@@ -109,10 +105,10 @@ void zNPCTiki_InitFX(zScene* scene)
     }
 
     // clang-format off
+    thunderEmitterInfo.custom_flags = 0xf5e;
     thunderEmitterInfo.vel.x = 0.0f;
     thunderEmitterInfo.vel.y = -0.3f;
     thunderEmitterInfo.vel.z = 0.0f;
-    thunderEmitterInfo.custom_flags = 0xf5e;
     thunderEmitterInfo.vel_angle_variation = DEG2RAD(270);
     thunderEmitterInfo.rate.set(100.0f, 100.0f, 1.0f, 0);
     thunderEmitterInfo.life.set(2.0f, 2.0f, 1.0f, 0);
@@ -126,10 +122,10 @@ void zNPCTiki_InitFX(zScene* scene)
     thunderEmitterInfo.color_death[1].set(0.0f, 0.0f, 1.0f, 0);
     thunderEmitterInfo.color_death[2].set(0.0f, 0.0f, 1.0f, 0);
     thunderEmitterInfo.color_death[3].set(255.0f, 255.0f, 1.0f, 0);
+    loveyEmitterInfo.custom_flags = 0xf5e;
     loveyEmitterInfo.vel.x = 0.0f;
     loveyEmitterInfo.vel.y = -0.5f;
     loveyEmitterInfo.vel.z = 0.0f;
-    loveyEmitterInfo.custom_flags = 0xf5e;
     loveyEmitterInfo.vel_angle_variation = DEG2RAD(90);
     loveyEmitterInfo.rate.set(100.0f, 100.0f, 1.0f, 0);
     loveyEmitterInfo.life.set(2.0f, 2.0f, 1.0f, 0);
@@ -144,15 +140,9 @@ void zNPCTiki_InitFX(zScene* scene)
     loveyEmitterInfo.color_death[2].set(175.0f, 175.0f, 1.0f, 0);
     loveyEmitterInfo.color_death[3].set(0.0f, 0.0f, 1.0f, 0);
     // clang-format on
-    tex = (RwTexture*)xSTFindAsset(xStrHash("target"), 0x0);
-    if (tex != NULL)
-    {
-        sHelmetRast = tex->raster;
-    }
-    else
-    {
-        sHelmetRast = 0;
-    }
+
+    RwTexture* tex = (RwTexture*)xSTFindAsset(xStrHash("target"), 0);
+    sHelmetRast = (tex) ? tex->raster : NULL;
 
     NPCC_MakeLightningInfo(NPC_LYT_TIKITHUNDER, &sThunderLightningInfo);
     sThunderLightningInfo.time = 0.3f;
@@ -179,9 +169,9 @@ void zNPCTiki_ExplodeFX(zNPCTiki* tiki)
 
         zScene* scene = globals.sceneCur;
 
-        for (U32 idx = 0, i = 0; idx < scene->num_npcs; idx++, i += 4)
+        for (U32 idx = 0; idx < scene->num_npcs; idx++)
         {
-            zNPCTiki* other = *((zNPCTiki**)scene->npcs + i);
+            zNPCTiki* other = (zNPCTiki*)scene->npcs[idx];
             if (other == tiki || !other->flg_vuln)
                 continue;
 
@@ -198,9 +188,9 @@ void zNPCTiki_ExplodeFX(zNPCTiki* tiki)
             }
         }
 
-        for (U32 idx = 0, i = 0; idx < scene->num_dyns; idx++, i += 4)
+        for (U32 idx = 0; idx < scene->num_dyns; idx++)
         {
-            xBase* dyn = *((xBase**)scene->dyns + i);
+            xBase* dyn = (xBase*)scene->dyns[idx];
             if (dyn->baseType != 0x1B)
                 continue;
 
@@ -228,64 +218,50 @@ void zNPCTiki_ExplodeFX(zNPCTiki* tiki)
     tiki->SndPlayRandom(NPC_STYP_TIKIEXPLODE);
 }
 
-// WIP
 static void zNPCTiki_PickTikisToAnimate()
 {
-    xCollis* coll;
-    xCollis* cend;
-    xNPCBasic* npc;
-    zNPCTiki* currOrphan;
-
-    coll = globals.player.ent.collis->colls;
-    cend = coll + globals.player.ent.collis->idx;
-
-    for (; coll < cend; ++coll)
+    xCollis* coll = globals.player.ent.collis->colls;
+    xCollis* cend = coll + globals.player.ent.collis->idx;
+    zNPCTiki* npc;
+    for (; coll < cend; coll++)
     {
         if ((coll->flags & 1) != 0 && coll->optr != NULL)
         {
-            zNPCTiki* pv = (zNPCTiki*)coll->optr;
+            npc = (zNPCTiki*)coll->optr;
 
-            if (pv->baseType == '+' && (((*(U32*)(pv->myNPCType)) & ~0xFF) == (U32)('NTT\0')))
+            if (npc->baseType == '+' && (npc->SelfType() & ~0xFF) == 'NTT\0')
             {
-                U32* pf = &(pv->tikiFlag);
-                *pf &= ~0xC0;
+                npc->tikiFlag &= ~0xC0;
             }
         }
     }
-
-    for (currOrphan = orphanList; currOrphan != NULL; currOrphan = currOrphan->nextOrphan)
+    for (zNPCTiki* currOrphan = orphanList; currOrphan != NULL;)
     {
         if (currOrphan->isCulled == 0)
         {
             currOrphan->tikiFlag &= ~0xC0;
         }
-
-        if (currOrphan->nextOrphan == currOrphan)
+        zNPCTiki* next = currOrphan->nextOrphan;
+        if (next != NULL && next == next->nextOrphan)
         {
-            break;
+            currOrphan = NULL;
+        }
+        else
+        {
+            currOrphan = next;
         }
     }
 
-    npc = (xNPCBasic*)globals.player.carry.grabbed;
+    npc = (zNPCTiki*)globals.player.carry.grabbed;
     if (npc != NULL)
     {
-        zNPCTiki* pv = (zNPCTiki*)npc;
-        if (pv->baseType == '+' && (((*(U32*)(pv->myNPCType)) & ~0xFF) == (U32)('NTT\0')))
+        if (npc->baseType == '+' && (npc->SelfType() & ~0xFF) == 'NTT\0')
         {
-            U32* pf = &(pv->tikiFlag);
-            *pf &= ~0xC0;
+            npc->tikiFlag &= ~0xC0;
         }
     }
 
-    if ((xrand() & 0x3F) == 0)
-    {
-        whichTikiToAnimate = (S32)(numTikisOnScreen * xurand()) + 1;
-    }
-    else
-    {
-        whichTikiToAnimate = -1;
-    }
-
+    whichTikiToAnimate = (xrand() & 0x3F) ? -1 : (S32)(numTikisOnScreen * xurand()) + 1;
     numTikisOnScreen = 0;
 }
 
@@ -541,87 +517,73 @@ S32 zNPCTiki::SetCarryState(en_NPC_CARRY_STATE cs)
         return 0;
     }
 
-    if (cs == zNPCCARRY_THROW)
+    if (cs != zNPCCARRY_THROW)
     {
-        return 0;
-    }
-
-    if (cs >= zNPCCARRY_THROW)
-    {
-        if (cs < 4)
+        if (cs >= zNPCCARRY_THROW)
         {
-            if (this->numChildren == 0)
+            if (cs < 4)
             {
+                if (this->numChildren == 0)
+                {
+                    return 1;
+                }
+
+                for (S32 i = 0; i < 4; i++)
+                {
+                    if (this->children[i] != NULL && this->children[i]->bound.box.box.lower.y <
+                                                         0.2f + this->bound.box.box.upper.y)
+                    {
+                        return 0;
+                    }
+                }
+
                 return 1;
-            }
-
-            if (this->children[0] != NULL &&
-                this->children[0]->bound.box.box.lower.y < 0.2f + this->bound.box.box.upper.y)
-            {
-                return 0;
-            }
-
-            if (this->children[1] != NULL &&
-                this->children[1]->bound.box.box.lower.y < 0.2f + this->bound.box.box.upper.y)
-            {
-                return 0;
-            }
-
-            if (this->children[2] != NULL &&
-                this->children[2]->bound.box.box.lower.y < 0.2f + this->bound.box.box.upper.y)
-            {
-                return 0;
-            }
-
-            if (this->children[3] != NULL &&
-                this->children[3]->bound.box.box.lower.y < 0.2f + this->bound.box.box.upper.y)
-            {
-                return 0;
             }
 
             return 1;
         }
 
-        return 0;
+        if (cs != zNPCCARRY_NONE)
+        {
+            this->tikiFlag |= 0x10;
+            this->landHt = FLOAT_MIN;
+            RemoveFromFamily();
+            return 1;
+        }
     }
 
-    if (cs != zNPCCARRY_NONE)
+    if ((this->tikiFlag & 0x10))
     {
-        this->tikiFlag |= 0x10;
-        this->landHt = FLOAT_MIN;
-        RemoveFromFamily();
+        this->tikiFlag &= ~0x10;
+
+        if (this->frame != NULL)
+        {
+            this->frame->mat.up.x = 0.0f;
+            this->frame->mat.up.y = 1.0f;
+            this->frame->mat.up.z = 0.0f;
+        }
+
+        this->model->Mat->up.x = 0.0f;
+        this->model->Mat->up.y = 1.0f;
+        this->model->Mat->up.z = 0.0f;
+
+        if (this->SelfType() == NPC_TYPE_TIKI_STONE)
+        {
+            this->tikiFlag |= 0x25;
+            this->bound.type = XBOUND_TYPE_BOX;
+        }
+        else
+        {
+            this->Damage(DMGTYP_SIDE, 0, NULL);
+        }
         return 1;
-    }
-
-    if ((this->tikiFlag & 0x10) == 0)
-    {
-        return 0;
-    }
-
-    this->tikiFlag &= ~0x10;
-
-    if (this->frame != NULL)
-    {
-        this->frame->mat.up.x = 0.0f;
-        this->frame->mat.up.y = 1.0f;
-        this->frame->mat.up.z = 0.0f;
-    }
-
-    this->model->Mat->up.x = 0.0f;
-    this->model->Mat->up.y = 1.0f;
-    this->model->Mat->up.z = 0.0f;
-
-    if (this->SelfType() == NPC_TYPE_TIKI_STONE)
-    {
-        this->tikiFlag |= 0x25;
-        this->bound.type = XBOUND_TYPE_BOX;
     }
     else
     {
-        this->Damage(DMGTYP_SIDE, 0, NULL);
+        return 0;
     }
 
-    return 1;
+    return 0;
 }
 
 void zNPCTiki::SelfSetup()
@@ -738,7 +700,7 @@ void zNPCTiki::Process(xScene* xscn, F32 dt)
         }
 
         q0 = (xQuat*)giAnimScratch;
-        t0 = (xVec3*)(giAnimScratch + 0x410);
+        t0 = (xVec3*)(q0 + 0x41);
         iAnimEval(this->tikiAnim, this->tikiAnimTime, (U32)0, (xVec3*)t0, (xQuat*)q0);
         iModelAnimMatrices(this->model->Data, q0, t0, this->model->Mat + 1);
     }
@@ -884,18 +846,14 @@ void zNPCTiki::Process(xScene* xscn, F32 dt)
             {
                 RwMatrix& matP = *this->nonTikiParent->model->Mat;
                 xVec3 delta;
-                delta.x = (matP.pos.x + matP.right.x * this->nonTikiParentDisp.x +
-                           matP.up.x * this->nonTikiParentDisp.y +
-                           matP.at.x * this->nonTikiParentDisp.z) -
-                          this->model->Mat->pos.x;
-                delta.y = (matP.pos.y + matP.right.y * this->nonTikiParentDisp.x +
-                           matP.up.y * this->nonTikiParentDisp.y +
-                           matP.at.y * this->nonTikiParentDisp.z) -
-                          this->model->Mat->pos.y;
-                delta.z = (matP.pos.z + matP.right.z * this->nonTikiParentDisp.x +
-                           matP.up.z * this->nonTikiParentDisp.y +
-                           matP.at.z * this->nonTikiParentDisp.z) -
-                          this->model->Mat->pos.z;
+                xVec3Copy(&delta, (xVec3*)&this->nonTikiParent->model->Mat->pos);
+                xVec3AddScaled(&delta, (xVec3*)&this->nonTikiParent->model->Mat->right,
+                               (this->nonTikiParentDisp).x);
+                xVec3AddScaled(&delta, (xVec3*)&this->nonTikiParent->model->Mat->up,
+                               (this->nonTikiParentDisp).y);
+                xVec3AddScaled(&delta, (xVec3*)&this->nonTikiParent->model->Mat->at,
+                               (this->nonTikiParentDisp).z);
+                xVec3SubFrom(&delta, (xVec3*)&(this->model->Mat->pos));
 
                 if (this->tikiFlag & 1)
                 {
@@ -909,7 +867,7 @@ void zNPCTiki::Process(xScene* xscn, F32 dt)
 
                 if (!(this->tikiFlag & 1) && this->nonTikiParent->baseType == eBaseTypeButton)
                 {
-                    zEntButton_Hold((_zEntButton*)this->nonTikiParent, 0x2000);
+                    //zEntButton_Hold((_zEntButton*)this->nonTikiParent, 0x2000);
                 }
             }
         }
@@ -1191,8 +1149,7 @@ void zNPCTiki::FindParents(zScene* zsc)
     xRay3 ray;
 
     zSurfaceProps* prop;
-    F32 oldLower;
-    F32 oldUpper;
+
     S32 i;
     xNPCBasic* npc;
     zNPCTiki* tiki;
@@ -1223,7 +1180,7 @@ void zNPCTiki::FindParents(zScene* zsc)
             xVec3Sub(&ray.origin, &ray.origin, (xVec3*)&((xEnt*)c.optr)->model->Mat->pos);
             F32 dist = ray.max_t - c.dist;
 
-            if (zGooIs(this->nonTikiParent, oldLower, 0))
+            if (zGooIs(this->nonTikiParent))
                 this->tikiFlag |= 2;
 
             xSurface* surf = zSurfaceGetSurface(&c);
@@ -1255,6 +1212,8 @@ void zNPCTiki::FindParents(zScene* zsc)
         this->landHt = ray.origin.y - c.dist;
     }
 
+    F32 oldLower;
+    F32 oldUpper;
     if ((this->tikiFlag & 0x20) != 0)
     {
         oldUpper = this->bound.box.box.lower.y;
@@ -1265,12 +1224,11 @@ void zNPCTiki::FindParents(zScene* zsc)
         this->bound.box.box.upper.y = (temp + oldLower) - oldUpper;
     }
 
-    i = 0;
     if (zsc->num_npcs != 0)
     {
-        for (S32 idx = 0; i < zsc->num_npcs; i++, idx += 4)
+        for (S32 i = 0; i < zsc->num_npcs; i++)
         {
-            tiki = (zNPCTiki*)&(*zsc->npcs[idx]);
+            tiki = (zNPCTiki*)zsc->npcs[i];
 
             bool validParent = true;
             if (tiki == this || (tiki->SelfType() & ~0xFF) != 'NTT\0' ||
@@ -1285,7 +1243,7 @@ void zNPCTiki::FindParents(zScene* zsc)
             zNPCTiki* cur = this;
             for (S32 couldBe = 0; couldBe < 4; ++couldBe)
             {
-                zNPCTiki* p = cur->parents[0];
+                zNPCTiki* p = cur->parents[couldBe];
                 if (p == tiki)
                 {
                     validParent = false;
@@ -1304,7 +1262,7 @@ void zNPCTiki::FindParents(zScene* zsc)
                     }
                 }
 
-                cur = (zNPCTiki*)&(cur->nextprod);
+                cur = (zNPCTiki*)cur->nextprod;
             }
 
             if (validParent && tiki->numChildren < 4 && this->numParents < 4)
@@ -1471,33 +1429,34 @@ static S32 quietIdleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, voi
     xVec3Sub(&tmp, (xVec3*)&tiki->model->Mat->pos, (xVec3*)&globals.player.ent.model->Mat->pos);
     F32 scale = xVec3Length2(&tmp);
 
-    // non-matching:
-    bool notSneaking =
-        !(globals.player.Speed > 1 || globals.player.ent.model == globals.player.model_sandy ||
-          globals.player.ent.model != globals.player.model_patrick);
+    U8 notSneaking =
+        (globals.player.Speed > 1 || globals.player.ent.model == globals.player.model_sandy ||
+         globals.player.ent.model == globals.player.model_patrick);
 
     if (scale < 25.0f && notSneaking)
     {
         nextgoal = NPC_GOAL_TIKIHIDE;
         *trantype = GOAL_TRAN_SET;
     }
-    else if (scale < 50.0f && notSneaking)
+    else
     {
-        tiki->tikiFlag &= ~0xC0;
-    }
-    scale = tiki->model->Scale.x;
-    if (scale != 0.0f)
-    {
-        scale = 0.75f * dt + scale;
-        xEntShow(tiki);
-        tiki->RestoreColFlags();
-        if (scale > 1.0f)
+        if (scale < 50.0f && notSneaking)
         {
-            tiki->model->Scale.x = tiki->model->Scale.y = tiki->model->Scale.z = 0.0f;
+            tiki->tikiFlag &= ~0xC0;
         }
-        else
+        if (tiki->model->Scale.x)
         {
-            tiki->model->Scale.x = tiki->model->Scale.y = tiki->model->Scale.z = scale;
+            scale = 0.75f * dt + tiki->model->Scale.x;
+            xEntShow(tiki);
+            tiki->RestoreColFlags();
+            if (scale > 1.0f)
+            {
+                tiki->model->Scale.x = tiki->model->Scale.y = tiki->model->Scale.z = 0.0f;
+            }
+            else
+            {
+                tiki->model->Scale.x = tiki->model->Scale.y = tiki->model->Scale.z = scale;
+            }
         }
     }
 
@@ -1540,7 +1499,6 @@ static S32 quietHideCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, voi
     return nextgoal;
 }
 
-// WIP
 static S32 thunderIdleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 {
     zNPCTiki* tiki = (zNPCTiki*)rawgoal->GetOwner();
@@ -1557,8 +1515,8 @@ static S32 thunderIdleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, v
     f = tiki->t1;
     f = (f * f + 1.0f) - f;
     tiki->model->RedMultiplier = f;
-    tiki->model->GreenMultiplier = f;
     tiki->model->BlueMultiplier = f;
+    tiki->model->GreenMultiplier = f;
 
     goal->tmr_wait -= dt;
     if (goal->tmr_wait < 0.0f)
@@ -1568,19 +1526,20 @@ static S32 thunderIdleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, v
 
         F32 dist2 = xVec3Length2(&vec);
 
+        // 457.0f / 500 = 0.914f, but missing the float precision error
         F32 max_dist = globals.player.ent.bound.box.box.upper.x + 0.91400003f;
 
         if (dist2 < max_dist * max_dist)
         {
-            if ((globals.player.RootUpTarget.x) == 0)
+            if (globals.player.SlideTrackSliding & 1)
+            {
+                tiki->Damage(DMGTYP_SIDE, 0, 0);
+            }
+            else
             {
                 tiki->t1 = 0.0f;
                 nextgoal = NPC_GOAL_TIKICOUNT;
                 *trantype = GOAL_TRAN_SET;
-            }
-            else
-            {
-                tiki->Damage(DMGTYP_SIDE, 0, 0);
             }
         }
     }
@@ -1595,13 +1554,18 @@ static S32 thunderCountCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, 
     zNPCGoalTikiCount* goal = (zNPCGoalTikiCount*)rawgoal;
 
     F32 gfactor = -1.0f;
+
     F32 factor = goal->tmr_count - dt;
     S32 nextgoal = 0;
-    if (factor >= -1.0f)
+
+    if (!(factor < -1.0f))
     {
         gfactor = factor;
     }
-    goal->tmr_count = gfactor;
+    else
+    {
+        goal->tmr_count = gfactor;
+    }
 
     if (gfactor < 0.0f)
     {
@@ -1609,14 +1573,37 @@ static S32 thunderCountCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, 
         nextgoal = NPC_GOAL_TIKIDYING;
     }
 
-    if (goal->beingCarried == FALSE && globals.player.carry.grabbed == tiki)
+    if (!goal->beingCarried && globals.player.carry.grabbed == tiki)
     {
         goal->beingCarried = TRUE;
-        goal->tmr_count += 3.0f;
+        goal->tmr_count = goal->tmr_count + 3.0f;
     }
 
-    factor = -1.0f / ((goal->tmr_count) + 1.0f) + 1.0f;
-    gfactor = (factor * 8.0f - factor * 8.0f) * 0.75f + 0.25f;
+    {
+        const F32 a_base = 8.0f;
+        const F32 add_base = 0.0f;
+
+        F32 denom = goal->tmr_count + 1.0f;
+
+        F32 tmp = (-1.0f / denom) + 1.0f;
+
+        F32 a = add_base + tmp;
+
+        F32 prod = a_base * a;
+
+        S32 ia = (S32)a;
+        F32 da = (F32)ia;
+        F32 a_frac = a - da;
+
+        S32 ip = (S32)prod;
+        F32 dp = (F32)ip;
+        F32 p_frac = prod - dp;
+
+        factor = a_frac;
+
+        F32 sub = p_frac - (a_frac * 8.0f);
+        gfactor = sub * 0.75f + 0.25f;
+    }
 
     tiki->model->RedMultiplier = gfactor;
     tiki->model->BlueMultiplier = 1.0f - gfactor;
@@ -1629,8 +1616,8 @@ static S32 thunderCountCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, 
 
     if (hght < 0.0f)
     {
-        hght = xurand();
-        (tiki->t1) = hght * 0.5f + 0.9f;
+        F32 r0 = xurand();
+        tiki->t1 = r0 * 0.5f + 0.9f;
 
         if ((xrand() & 7) == 0)
         {
@@ -1640,21 +1627,21 @@ static S32 thunderCountCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, 
         xVec3 sPos;
         xVec3 ePos;
 
-        xVec3Copy((xVec3*)&sPos, (xVec3*)&tiki->model->Mat->pos);
+        xVec3Copy(&sPos, (xVec3*)&tiki->model->Mat->pos);
         sPos.y += 2.6f;
-        sPos.x += (tiki->t2);
-        sPos.z += (tiki->t3);
+        sPos.x += tiki->t2;
+        sPos.z += tiki->t3;
 
-        xVec3Copy((xVec3*)&ePos, (xVec3*)&tiki->model->Mat->pos);
+        xVec3Copy(&ePos, (xVec3*)&tiki->model->Mat->pos);
 
-        hght = xurand();
-        ePos.y += hght;
+        F32 rr = xurand();
+        ePos.y += rr;
 
-        gfactor = xurand();
-        ePos.x += (gfactor - 0.5f) * (1.0f - hght);
+        F32 r1 = xurand();
+        ePos.x += (r1 - 0.5f) * (1.0f - rr);
 
-        gfactor = xurand();
-        ePos.z += (1.0f - hght) * (gfactor - 0.5f);
+        F32 r2 = xurand();
+        ePos.z += (1.0f - rr) * (r2 - 0.5f);
 
         sThunderLightningInfo.start = &sPos;
         sThunderLightningInfo.end = &ePos;
@@ -1663,24 +1650,26 @@ static S32 thunderCountCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, 
         tiki->SndPlayRandom(NPC_STYP_TIKITHUNDER);
     }
 
-    xVec3Copy((xVec3*)&thunderEmitterInfo.pos, (xVec3*)&tiki->model->Mat->pos);
+    xVec3Copy(&thunderEmitterInfo.pos, (xVec3*)&tiki->model->Mat->pos);
     thunderEmitterInfo.pos.y += 3.0f;
     thunderEmitterInfo.pos.x += tiki->t2;
     thunderEmitterInfo.pos.z += tiki->t3;
-    xParEmitterEmitCustom(cloudEmitter, 1.0f / 60, &thunderEmitterInfo);
+
+    xParEmitterEmitCustom(cloudEmitter, 1.0f / 60.0f, &thunderEmitterInfo);
 
     gfactor = tiki->t2 + 0.25f;
     tiki->t2 = gfactor;
-    if (0.5001f < gfactor)
+    if (gfactor > 0.5001f)
     {
         tiki->t2 = -0.5f;
         gfactor = tiki->t3 + 0.25f;
         tiki->t3 = gfactor;
-        if (0.5001f < gfactor)
+        if (gfactor > 0.5001f)
         {
             tiki->t3 = -0.5f;
         }
     }
+
     return nextgoal;
 }
 
@@ -1755,10 +1744,17 @@ static void loveyTikiRender(xEnt* ent)
     xVec3 center;
     xVec3 shadVec;
 
+    S32 alphaTooLow = 0;
+    S32 skipModelRender = 0;
+    S32 __frame_pad[8];
+
     if (model == NULL)
         return;
 
-    if ((xEntIsVisible(ent) == 1) && (model->Flags & 0x400) == 0)
+    if (!xEntIsVisible(ent))
+        return;
+
+    if ((model->Flags & 0x400) == 0)
     {
         xVec3Sub(&shadVec, (xVec3*)&globals.player.ent.model->Mat->pos, (xVec3*)&model->Mat->pos);
         shadVec.y = 0.0f;
@@ -1769,34 +1765,35 @@ static void loveyTikiRender(xEnt* ent)
         }
 
         cache.polyCount = 0;
-    }
 
-    if (factor > 0.0f)
+        if (factor > 0.0f)
+        {
+            if (factor > 1.0f)
+                factor = 1.0f;
+
+            xVec3Copy(&center, (xVec3*)&model->Mat->pos);
+            center.y += sLoveyIconOffset;
+
+            NPCC_RenderProjTextureFaceCamera(sHelmetRast, factor, &center, 0.7f,
+                                             sLoveyIconDist + sLoveyIconOffset, &cache, 1, ent);
+        }
+    }
+    else
     {
-        if (factor > 1.0f)
-            factor = 1.0f;
-
-        xVec3Copy(&center, (xVec3*)&model->Mat->pos);
-        center.y += sLoveyIconOffset;
-
-        NPCC_RenderProjTextureFaceCamera(sHelmetRast, factor, &center, 0.7f,
-                                         sLoveyIconDist + sLoveyIconOffset, &cache, 1, ent);
+        return;
     }
 
-    S32 alphaTooLow = 0;
-
+    alphaTooLow = 0;
     center.x = model->Mat->pos.x;
     center.y = model->Mat->pos.y - 10.0f;
     center.z = model->Mat->pos.z;
 
-    S32 shadowResult = iModelCullPlusShadow(model->Data, model->Mat, &center, &alphaTooLow);
-
-    if (shadowResult == 0)
+    if (iModelCullPlusShadow(model->Data, model->Mat, &center, &alphaTooLow) == 0)
     {
         F32 dot = 2.0f;
         if ((globals.player.ControlOff & 0x23f3) == 0)
         {
-            xVec3Sub(&shadVec, &(ent->bound).cyl.center, &globals.camera.mat.pos);
+            xVec3Sub(&shadVec, &ent->bound.cyl.center, &globals.camera.mat.pos);
             dot = xVec3Dot(&shadVec, &globals.camera.mat.at);
         }
 
@@ -1806,17 +1803,14 @@ static void loveyTikiRender(xEnt* ent)
             if (model->Alpha < 0.0f)
             {
                 model->Alpha = 0.0f;
-                // non-matching:
-                alphaTooLow = 1;
+                skipModelRender = 1;
             }
         }
         else
         {
             model->Alpha += 3.0f * globals.update_dt;
             if (model->Alpha > 1.0f)
-            {
                 model->Alpha = 1.0f;
-            }
         }
 
         for (xModelInstance* curr = model->Next; curr != NULL; curr = curr->Next)
@@ -1824,8 +1818,7 @@ static void loveyTikiRender(xEnt* ent)
             curr->Alpha = model->Alpha;
         }
 
-        // non-matching:
-        if (alphaTooLow)
+        if (skipModelRender)
         {
             return;
         }

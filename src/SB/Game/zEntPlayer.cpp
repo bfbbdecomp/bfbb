@@ -2312,8 +2312,6 @@ static U32 BounceCheck(xAnimTransition*, xAnimSingle*, void*)
     return globals.player.Bounced == 1;
 }
 
-
-
 // Equivalent: sda relocation scheduling + regswap
 static U32 BounceCB(xAnimTransition*, xAnimSingle*, void*)
 {
@@ -3530,7 +3528,6 @@ static U32 LassoSwingReleaseCB(xAnimTransition* tran, xAnimSingle* anim, void* o
     return 0;
 }
 
-
 static U8 StunBubbleTrail(xAnimSingle* anim)
 {
     S32 ret = 0;
@@ -3569,7 +3566,6 @@ static U8 BubbleBounceContrails(xAnimSingle* anim)
     }
     return ret;
 }
-
 
 static U32 StunStartFallCB(xAnimTransition*, xAnimSingle*, void*)
 {
@@ -3623,8 +3619,6 @@ static S32 MeleeAttackBoundCollide(xEnt* ent, zScene* zscn, xBound* meleeB)
 
     return cbdata.hitsomething;
 }
-
-
 
 static S32 CheckObjectAgainstMeleeBound(xEnt* ent, void* data)
 {
@@ -3708,10 +3702,6 @@ static U32 count_talk_anims(xAnimTable* anims)
 
     return talkAnimCount;
 }
-
-
-
-
 
 static void load_player_ini(zPlayerSettings& ps, xModelInstance& model, xModelAssetParam* modelass,
                             U32 params_size)
@@ -7577,12 +7567,6 @@ WEAK xVec3* NPCC_upDir(xEnt* ent)
 {
     // TODO: see note in previous function
     return (xVec3*)&ent->model->Mat->up;
-}
-
-WEAK S32 zGooIs(xEnt* ent)
-{
-    F32 temp;
-    return zGooIs(ent, temp, 0);
 }
 
 WEAK S32 zNPCCommon::SetCarryState(en_NPC_CARRY_STATE)
