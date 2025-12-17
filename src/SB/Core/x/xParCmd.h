@@ -54,8 +54,6 @@ struct xParCmd
     xParCmdAsset* tasset;
 };
 
-struct xParGroup;
-
 typedef void (*xParCmdUpdateFunc)(xParCmd* c, xParGroup* ps, F32 dt);
 
 void xParCmdInit();

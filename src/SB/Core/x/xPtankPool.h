@@ -48,12 +48,32 @@ struct ptank_pool
         U32 size;
     } hide;
 
-    bool valid() const;
-    void reset();
+    bool valid() const
+    {
+        return ptank != NULL;
+    }
+
+    bool at_block_end() const
+    {
+        return (used & 0x3F) == 0;
+    }
+
+    void unlock_block()
+    {
+        RpPTankAtomicUnlock(ptank);
+        RPATOMICPTANKPLUGINDATA(ptank)->instFlags |= 0x800000;
+        RPATOMICPTANKPLUGINDATA(ptank)->actPCount = used;
+        used = 0;
+    }
+
+    void reset()
+    {
+        ptank = NULL;
+        used = 0;
+    }
+
     void flush();
     void grab_block(ptank_group_type type);
-    bool at_block_end() const;
-    void unlock_block();
     void lock_block();
 };
 
@@ -117,7 +137,7 @@ struct ptank_pool__color_mat_uv2 : ptank_pool {
 };
 
 // total size: 0x38
-struct ptank_pool__pos_color_size_uv2 : public ptank_pool
+struct ptank_pool__pos_color_size_uv2 : ptank_pool
 {
     xVec3* pos;
     iColor_tag* color;
@@ -125,8 +145,61 @@ struct ptank_pool__pos_color_size_uv2 : public ptank_pool
     xVec2* uv;
     S32 stride;
 
-    void next();
-    void flush();
+    void next()
+    {
+        if (at_block_end())
+        {
+            if (valid())
+            {
+                unlock_block();
+            }
+
+            grab_block(PGT_POS_COLOR_SIZE_UV2);
+
+            if (!valid())
+            {
+                return;
+            }
+
+            lock_block();
+        }
+        else
+        {
+            pos = (xVec3*)((char*)pos +  stride);
+            color = (iColor_tag*)((char*)color +  stride);
+            size = (xVec2*)((char*)size +  stride);
+            uv = (xVec2*)((char*)uv +  stride);
+        }
+
+        used += 1;
+    }
+
+    void lock_block()
+    {
+        RpPTankLockStruct ls_color;
+        RpPTankLockStruct ls_pos;
+        RpPTankLockStruct ls_size;
+        RpPTankLockStruct ls_uv;
+
+        RpPTankAtomicLock(ptank, &ls_pos, rpPTANKLFLAGPOSITION, rpPTANKLOCKWRITE);
+        RpPTankAtomicLock(ptank, &ls_color, rpPTANKLFLAGCOLOR, rpPTANKLOCKWRITE);
+        RpPTankAtomicLock(ptank, &ls_size, rpPTANKLFLAGSIZE, rpPTANKLOCKWRITE);
+        RpPTankAtomicLock(ptank, &ls_uv, rpPTANKLFLAGVTX2TEXCOORDS, rpPTANKLOCKWRITE);
+
+        pos = (xVec3*)ls_pos.data;
+        color = (iColor_tag*)ls_color.data;
+        size = (xVec2*)ls_size.data;
+        uv = (xVec2*)ls_uv.data;
+        stride = ls_pos.stride;
+    }
+
+    void flush()
+    {
+        hide.data = (U8*)size + stride;
+        hide.stride = stride;
+        hide.size = 4; 
+        ptank_pool::flush();
+    }
 };
 
 void xPTankPoolSceneEnter();
