@@ -2,7 +2,7 @@
 
 #include "xMath3.h"
 #include "xMathInlines.h"
-
+#include "iAnim.h"
 #include "iModel.h"
 
 #include <types.h>
@@ -266,4 +266,34 @@ void vec2vecMat(xMat4x3* m, xVec3* v1, xVec3* v2)
     xVec3Cross(&v3, v1, v2);
     F32 f1 = xasin(xVec3Normalize(&v3, &v3));
     xMat4x3Rot(m, &v3, f1);
+}
+
+static void bakeMorphAnim(RpGeometry* geom, void* anim) {
+    
+    if (*(U32*)anim & 0x80000000)
+    {
+        return;
+    }
+    
+    *(U32*)anim |= 0x80000000;
+    
+    xMat4x3 mat;
+    xVec3 tran[64];
+    xQuat quat[64];
+
+    iAnimEval(anim, 0.0f, 0x0, tran, quat);
+    xQuatToMat(quat, &mat);
+    mat.pos = tran[0];
+
+    S32 i, j;
+    for (i = 0; i < geom->numMorphTargets; i++)
+    {
+        S32 numV = geom->numVertices;
+        xVec3* v = (xVec3*)geom->morphTarget[i].verts;
+
+        for (j = 0; j < numV; j++)
+        {
+            xMat4x3Toworld(&v[j], &mat, &v[j]);
+        }
+    }
 }
