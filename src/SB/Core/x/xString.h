@@ -26,6 +26,7 @@ S32 xStrParseFloatList(F32* dest, const char* strbuf, S32 max);
 
 S32 imemcmp(void const* d1, void const* d2, size_t size);
 S32 icompare(const substr& s1, const substr& s2);
+size_t atox(const substr& s, size_t& read_size);
 
 size_t rskip_ws(substr& s);
 size_t rskip_ws(const char*& text, size_t& size);
@@ -35,7 +36,7 @@ const char* find_char(const substr& s, const substr& cs);
 const char* skip_ws(substr& s);
 const char* skip_ws(const char*& text, size_t& size);
 size_t atox(const substr& s);
-size_t atox(const substr& s, size_t& read_size);
+
 size_t trim_ws(substr& s);
 size_t trim_ws(const char*& text, size_t& size);
 
