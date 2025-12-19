@@ -9,7 +9,6 @@
 struct tagiRenderArrays
 {
     // total size: 0x5280
-    public:
     U16 m_index[960]; // offset 0x0, size 0x780
     RxObjSpace3DVertex m_vertex[480]; // offset 0x780, size 0x4380
     F32 m_vertexTZ[480]; // offset 0x4B00, size 0x780
@@ -32,7 +31,8 @@ struct tagiRenderInput
     xVec4 m_camViewU; // offset 0x70, size 0x10
 };
 
-extern tagiRenderInput gRenderBuffer; 
+extern tagiRenderArrays gRenderArr;
+extern tagiRenderInput gRenderBuffer;
 
 void iParMgrInit();
 void iParMgrUpdate(F32 elapsedTime);

@@ -4,17 +4,64 @@
 #include "xMathInlines.h"
 #include "iAnim.h"
 #include "iModel.h"
+#include "xstransvc.h"
+#include "iParMgr.h"
 
 #include <types.h>
 
-static u32 sLassoRaster;
-static u32 sNumGuideLists;
+static RwRaster* sLassoRaster;
+static U32 sNumGuideLists;
 static zLassoGuide* sCurrentGuide;
-static void* lnverts;
+static RxObjSpace3DVertex* lnverts;
 
 static zLassoGuideList sGuideList[64];
 
-static s32 negativeHondaX = 1;
+static S32 negativeHondaX = 1;
+
+static void fizzicalRadius(zLasso* lasso, f32 arg1, xVec3* arg2);
+static void fizzicalCenter(zLasso* lasso, f32 arg1, xVec3* arg2);
+static void fizzicalNormal(zLasso* lasso, f32 arg1, xVec3* arg2);
+static void fizzicalHonda(zLasso* lasso, f32 arg1, xVec3* arg2);
+static void nonfizzicalHonda(zLasso* lasso, f32 arg1, xVec3* arg2);
+static void fizzicalSlack(zLasso* lasso, f32 arg1, xVec3* arg2);
+static void initVertMap(zLassoGuide* guide);
+static void bakeMorphAnim(RpGeometry* geom, void* anim);
+
+void zLasso_Init(zLasso* lasso, xModelInstance* model, F32 x, F32 y, F32 z)
+{
+    if (sLassoRaster == NULL)
+    {
+        RwTexture* tempTexture = (RwTexture*)xSTFindAsset(xStrHash("rope"), NULL);
+        if (tempTexture != NULL)
+        {
+            sLassoRaster = tempTexture->raster;
+        }
+        else
+        {
+            sLassoRaster = NULL;
+        }
+    }
+
+    iModelTagSetup(&lasso->tag, model->Data, x, y, z);
+
+    lasso->model = model;
+    lnverts = gRenderArr.m_vertex;
+}
+
+void zLasso_AddGuide(xEnt* ent, xAnimState* lassoAnim, xModelInstance* lassoModel)
+{
+    S32 givenSlot = -1;
+    for (U32 i = 0; i < sNumGuideLists; i++)
+    {
+    }
+
+    sGuideList[0].numGuides = sGuideList[0].numGuides + 1;
+    // sGuideList[0].guide[0].poly = lassoModel;
+    // sGuideList[0].guide[0].lassoAnim = lassoAnim;
+    initVertMap(sGuideList[0].guide);
+
+    bakeMorphAnim(lassoModel->Data->geometry, *lassoAnim->Data->RawData);
+}
 
 void zLasso_SetGuide(xEnt* ent, xAnimState* lassoAnim)
 {
@@ -73,8 +120,7 @@ void zLasso_InterpToGuide(zLasso* lasso)
         S32 vertMapIdx = 0;
         for (S32 i = 0; i < numVerts; i++)
         {
-            xVec3AddTo(&lasso->tgCenter,
-                       (xVec3*)v + sCurrentGuide->vertMap[vertMapIdx]);
+            xVec3AddTo(&lasso->tgCenter, (xVec3*)v + sCurrentGuide->vertMap[vertMapIdx]);
             vertMapIdx += 1;
         }
 
@@ -98,7 +144,7 @@ void zLasso_InterpToGuide(zLasso* lasso)
 
 void zLasso_Render(zLasso* l)
 {
-    if ((((l->flags & 0x800) != 0) && ((l->flags & 0x4000) != 0)) || 
+    if ((((l->flags & 0x800) != 0) && ((l->flags & 0x4000) != 0)) ||
         (((l->flags & 0x800) == 0 && ((l->flags & 0x2000) != 0))))
     {
     }
@@ -408,9 +454,9 @@ static void bakeMorphAnim(RpGeometry* geom, void* anim)
     {
         return;
     }
-    
+
     *(U32*)anim |= 0x80000000;
-    
+
     xMat4x3 mat;
     xVec3 tran[64];
     xQuat quat[64];
