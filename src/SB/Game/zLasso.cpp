@@ -258,7 +258,7 @@ void xMat4x3Rot(xMat4x3* m, const xVec3* v, F32 f)
     xMat4x3RotC(m, v->x, v->y, v->z, f);
 }
 
-void vec2vecMat(xMat4x3* m, xVec3* v1, xVec3* v2)
+static void vec2vecMat(xMat4x3* m, xVec3* v1, xVec3* v2)
 {
     xVec3 v3;
     xVec3Cross(&v3, v1, v2);
@@ -266,8 +266,8 @@ void vec2vecMat(xMat4x3* m, xVec3* v1, xVec3* v2)
     xMat4x3Rot(m, &v3, f1);
 }
 
-static void bakeMorphAnim(RpGeometry* geom, void* anim) {
-    
+static void bakeMorphAnim(RpGeometry* geom, void* anim)
+{
     if (*(U32*)anim & 0x80000000)
     {
         return;
