@@ -104,6 +104,142 @@ void zLasso_Render(zLasso* l)
     }
 }
 
+void zLasso_Update(zLasso* lasso, xEnt* ent, F32 dt)
+{
+    xVec3 newPoint;
+    iModelTagEval(ent->model->Data, &lasso->tag, lasso->model->Mat, &newPoint);
+    xVec3Copy(&lasso->anchor, (xVec3*)&ent->model->Mat->pos);
+    xVec3SubFrom(&newPoint, &lasso->anchor);
+
+    if (!(lasso->flags & 0x800))
+    {
+        lasso->secsLeft -= dt;
+
+        if (lasso->secsLeft < 0.0f)
+        {
+            lasso->secsLeft = 0.0f;
+            lasso->flags |= 0x800;
+        }
+
+        F32 interp = 1.0f - (lasso->secsLeft / lasso->secsTotal);
+        if (!(lasso->flags & 0x2000))
+        {
+            if (lasso->flags & 0x8)
+            {
+                fizzicalRadius(lasso, dt, &newPoint);
+            }
+            else
+            {
+                lasso->crRadius = lasso->stRadius * (1.0f - interp) + lasso->tgRadius * interp;
+            }
+
+            if (lasso->flags & 0x2)
+            {
+                fizzicalCenter(lasso, dt, &newPoint);
+            }
+            else
+            {
+                xVec3SMul(&lasso->crCenter, &lasso->stCenter, 1.0f - interp);
+                xVec3AddScaled(&lasso->crCenter, &lasso->tgCenter, interp);
+                xVec3SubFrom(&lasso->crCenter, &lasso->anchor);
+            }
+            
+            if (lasso->flags & 0x4)
+            {
+                fizzicalNormal(lasso, dt, &newPoint);
+            }
+            else
+            {
+                xVec3SMul(&lasso->crNormal, &lasso->stNormal, 1.0f - interp);
+                xVec3AddScaled(&lasso->crNormal, &lasso->tgNormal, interp);
+            }
+
+            xVec3SMulBy(&lasso->crNormal, 1.0f / xVec3Length(&lasso->crNormal));
+
+            if (lasso->flags & 0x10)
+            {
+                fizzicalHonda(lasso, dt, &newPoint);
+            }
+            else
+            {
+                nonfizzicalHonda(lasso, dt, &newPoint);
+            }
+        }
+
+        if (lasso->flags & 0x20)
+        {
+            fizzicalSlack(lasso, dt, &newPoint);
+        }
+        else
+        {
+            lasso->crSlack = lasso->stSlack * (1.0f - interp) + lasso->tgSlack * interp;
+        }
+    }
+    else
+    {
+        if (!(lasso->flags & 0x4000))
+        {
+            if (lasso->flags & 0x100)
+            {
+                fizzicalRadius(lasso, dt, &newPoint);
+            }
+
+            if (lasso->flags & 0x40)
+            {
+                fizzicalCenter(lasso, dt, &newPoint);
+            }
+
+            if (lasso->flags & 0x80)
+            {
+                fizzicalNormal(lasso, dt, &newPoint);
+                xVec3SMulBy(&lasso->crNormal, 1.0f / xVec3Length(&lasso->crNormal));
+            }
+
+            if (lasso->flags & 0x200)
+            {
+                fizzicalHonda(lasso, dt, &newPoint);
+            }
+            else
+            {
+                nonfizzicalHonda(lasso, dt, &newPoint);
+            }
+        }
+
+        if (lasso->flags & 0x400)
+        {
+            fizzicalSlack(lasso, dt, &newPoint);
+        }
+    }
+
+    xVec3Copy(&lasso->lastRefs[lasso->reindex[4]], &newPoint);
+
+    lasso->reindex[0] = lasso->reindex[4];
+
+    lasso->reindex[1] = lasso->reindex[0] + 1;
+    if (lasso->reindex[1] > 4)
+    {
+        lasso->reindex[1] -= 5;
+    }
+
+    lasso->reindex[2] = lasso->reindex[0] + 2;
+    if (lasso->reindex[2] > 4)
+    {
+        lasso->reindex[2] -= 5;
+    }
+
+    lasso->reindex[3] = lasso->reindex[0] + 3;
+    if (lasso->reindex[3] > 4)
+    {
+        lasso->reindex[3] -= 5;
+    }
+
+    lasso->reindex[4] = lasso->reindex[0] + 4;
+    if (lasso->reindex[4] > 4)
+    {
+        lasso->reindex[4] -= 5;
+    }
+}
+
 void zLasso_InitTimer(zLasso* lasso, F32 interpTime)
 {
     lasso->secsTotal = interpTime;
