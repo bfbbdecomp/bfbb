@@ -440,6 +440,65 @@ void xMat4x3Rot(xMat4x3* m, const xVec3* v, F32 f)
     xMat4x3RotC(m, v->x, v->y, v->z, f);
 }
 
+static void initVertMap(zLassoGuide* guide)
+{
+    RpGeometry* geom = guide->poly->Data->geometry;
+    RpTriangle* tris = geom->triangles;
+    S32 numTri = geom->numTriangles;
+
+    S32 center = tris->vertIndex[0];
+    S32 init = tris->vertIndex[0];
+    
+    if (((init != tris->vertIndex[4] && init != tris->vertIndex[5] && init != tris->vertIndex[6]) ||
+         (init != tris->vertIndex[8] && init != tris->vertIndex[9] && init != tris->vertIndex[10])) &&
+        ((init = tris->vertIndex[1], init != tris->vertIndex[4] && init != tris->vertIndex[5] && init != tris->vertIndex[6]) ||
+         (init != tris->vertIndex[8] && init != tris->vertIndex[9] && init != tris->vertIndex[10])))
+    {
+        init = tris->vertIndex[2];
+    }
+    
+    if (init == tris->vertIndex[0]) {
+        init = tris->vertIndex[1];
+    }
+    
+    S32 vertIdx = 0;
+    S32 curr = init;
+    S32 currTri;
+    ushort* puVar5;
+    
+    do {
+        vertIdx = vertIdx + 1;
+        guide->vertMap[vertIdx - 1] = curr;
+        
+        if (vertIdx == numTri) {
+            vertIdx = 0;
+        }
+        
+        while (true) {
+            puVar5 = &tris->vertIndex[vertIdx];
+            currTri = puVar5[0];
+            
+            if (curr == currTri || curr == puVar5[1] || curr == puVar5[2]) {
+                break;
+            }
+            
+            vertIdx = vertIdx + 1;
+            if (vertIdx == numTri) {
+                vertIdx = 0;
+            }
+        }
+        
+        if ((curr != currTri && center != currTri)) {
+            currTri = puVar5[1];            
+            if ((curr != currTri && center != currTri)) {
+                currTri = puVar5[2];
+            }
+        }
+        
+        curr = currTri;
+    } while (currTri != init);
+}
+
 static void vec2vecMat(xMat4x3* m, xVec3* v1, xVec3* v2)
 {
     xVec3 v3;
