@@ -6,11 +6,39 @@
 #include <types.h>
 #include <rwcore.h>
 
-extern _tagLightningAdd gLightningTweakAddInfo;
-extern zLightning* sLightning[0x30];
-extern RwRaster* sLightningRaster;
-extern xVec3 sTweakStart;
-extern xVec3 sTweakEnd;
+_tagLightningAdd gLightningTweakAddInfo;
+
+static zLightning* sLightning[48];
+static xFuncPiece sLFuncX[10];
+static xFuncPiece sLFuncY[10];
+static xFuncPiece sLFuncZ[10];
+static xVec3 sLFuncVal[10];
+static xVec3 sLFuncSlope[10][2];
+static F32 sLFuncEnd[10];
+static xVec3 sTweakStart;
+static xVec3 sTweakEnd;
+static tweak_callback sLightningStartCB;
+static tweak_callback sLightningChangeCB;
+static xVec3 sPoint[5];
+static F32 sSize[5];
+
+char* lightning_type_names[4] = { "Line", "Rotating", "Zeus", "Func" };
+static zParEmitter* sSparkEmitter;
+static RwRaster* sLightningRaster;
+static F32 sLFuncJerkTime;
+static F32 sLFuncUVOffset;
+
+static F32 sLFuncJerkFreq = 20.0f;
+static F32 sLFuncShift = 15.0f;
+static F32 sLFuncMaxPStep = 1.0f / 16.0f;
+static F32 sLFuncMinPStep = 1.0f / 16.0f;
+static F32 sLFuncMinScale = 3.0f / 10.0f;
+static F32 sLFuncMaxScale = 1.0f;
+static F32 sLFuncScalePerLength = 0.15f;
+static F32 sLFuncMinSpan = 3.0f;
+static F32 sLFuncSpanPerLength = 1.5f;
+static F32 sLFuncSlopeRange = 2.0f;
+static F32 sLFuncUVSpeed = 1.0f;
 
 void xDebugAddTweak(const char*, F32*, F32, F32, const tweak_callback*, void*, U32)
 {

@@ -88,6 +88,8 @@ struct zLightning
     F32 time_total;
 };
 
+extern _tagLightningAdd gLightningTweakAddInfo;
+
 void lightningTweakChangeType(tweak_info& t);
 void lightningTweakStart(tweak_info& t);
 void zLightningInit();
