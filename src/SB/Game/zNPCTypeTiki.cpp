@@ -517,73 +517,87 @@ S32 zNPCTiki::SetCarryState(en_NPC_CARRY_STATE cs)
         return 0;
     }
 
-    if (cs != zNPCCARRY_THROW)
+    if (cs == zNPCCARRY_THROW)
     {
-        if (cs >= zNPCCARRY_THROW)
+        return 0;
+    }
+
+    if (cs >= zNPCCARRY_THROW)
+    {
+        if (cs < 4)
         {
-            if (cs < 4)
+            if (this->numChildren == 0)
             {
-                if (this->numChildren == 0)
-                {
-                    return 1;
-                }
-
-                for (S32 i = 0; i < 4; i++)
-                {
-                    if (this->children[i] != NULL && this->children[i]->bound.box.box.lower.y <
-                                                         0.2f + this->bound.box.box.upper.y)
-                    {
-                        return 0;
-                    }
-                }
-
                 return 1;
+            }
+
+            if (this->children[0] != NULL &&
+                this->children[0]->bound.box.box.lower.y < 0.2f + this->bound.box.box.upper.y)
+            {
+                return 0;
+            }
+
+            if (this->children[1] != NULL &&
+                this->children[1]->bound.box.box.lower.y < 0.2f + this->bound.box.box.upper.y)
+            {
+                return 0;
+            }
+
+            if (this->children[2] != NULL &&
+                this->children[2]->bound.box.box.lower.y < 0.2f + this->bound.box.box.upper.y)
+            {
+                return 0;
+            }
+
+            if (this->children[3] != NULL &&
+                this->children[3]->bound.box.box.lower.y < 0.2f + this->bound.box.box.upper.y)
+            {
+                return 0;
             }
 
             return 1;
         }
 
-        if (cs != zNPCCARRY_NONE)
-        {
-            this->tikiFlag |= 0x10;
-            this->landHt = FLOAT_MIN;
-            RemoveFromFamily();
-            return 1;
-        }
+        return 0;
     }
 
-    if ((this->tikiFlag & 0x10))
+    if (cs != zNPCCARRY_NONE)
     {
-        this->tikiFlag &= ~0x10;
-
-        if (this->frame != NULL)
-        {
-            this->frame->mat.up.x = 0.0f;
-            this->frame->mat.up.y = 1.0f;
-            this->frame->mat.up.z = 0.0f;
-        }
-
-        this->model->Mat->up.x = 0.0f;
-        this->model->Mat->up.y = 1.0f;
-        this->model->Mat->up.z = 0.0f;
-
-        if (this->SelfType() == NPC_TYPE_TIKI_STONE)
-        {
-            this->tikiFlag |= 0x25;
-            this->bound.type = XBOUND_TYPE_BOX;
-        }
-        else
-        {
-            this->Damage(DMGTYP_SIDE, 0, NULL);
-        }
+        this->tikiFlag |= 0x10;
+        this->landHt = FLOAT_MIN;
+        RemoveFromFamily();
         return 1;
     }
-    else
+
+    if ((this->tikiFlag & 0x10) == 0)
     {
         return 0;
     }
 
-    return 0;
+    this->tikiFlag &= ~0x10;
+
+    if (this->frame != NULL)
+    {
+        this->frame->mat.up.x = 0.0f;
+        this->frame->mat.up.y = 1.0f;
+        this->frame->mat.up.z = 0.0f;
+    }
+
+    this->model->Mat->up.x = 0.0f;
+    this->model->Mat->up.y = 1.0f;
+    this->model->Mat->up.z = 0.0f;
+
+    if (this->SelfType() == NPC_TYPE_TIKI_STONE)
+    {
+        this->tikiFlag |= 0x25;
+        this->bound.type = XBOUND_TYPE_BOX;
+    }
+    else
+    {
+        this->Damage(DMGTYP_SIDE, 0, NULL);
+    }
+
+    return 1;
 }
 
 void zNPCTiki::SelfSetup()
@@ -1744,10 +1758,6 @@ static void loveyTikiRender(xEnt* ent)
     xVec3 center;
     xVec3 shadVec;
 
-    S32 alphaTooLow = 0;
-    S32 skipModelRender = 0;
-    S32 __frame_pad[8];
-
     if (model == NULL)
         return;
 
@@ -1765,25 +1775,23 @@ static void loveyTikiRender(xEnt* ent)
         }
 
         cache.polyCount = 0;
-
-        if (factor > 0.0f)
-        {
-            if (factor > 1.0f)
-                factor = 1.0f;
-
-            xVec3Copy(&center, (xVec3*)&model->Mat->pos);
-            center.y += sLoveyIconOffset;
-
-            NPCC_RenderProjTextureFaceCamera(sHelmetRast, factor, &center, 0.7f,
-                                             sLoveyIconDist + sLoveyIconOffset, &cache, 1, ent);
-        }
     }
-    else
+
+    if (factor > 0.0f)
     {
-        return;
+        if (factor > 1.0f)
+            factor = 1.0f;
+
+        xVec3Copy(&center, (xVec3*)&model->Mat->pos);
+        center.y += sLoveyIconOffset;
+
+        NPCC_RenderProjTextureFaceCamera(sHelmetRast, factor, &center, 0.7f,
+                                         sLoveyIconDist + sLoveyIconOffset, &cache, 1, ent);
     }
 
-    alphaTooLow = 0;
+    S32 alphaTooLow = 0;
+    S32 skipModelRender = 0;
+
     center.x = model->Mat->pos.x;
     center.y = model->Mat->pos.y - 10.0f;
     center.z = model->Mat->pos.z;
@@ -1810,7 +1818,9 @@ static void loveyTikiRender(xEnt* ent)
         {
             model->Alpha += 3.0f * globals.update_dt;
             if (model->Alpha > 1.0f)
+            {
                 model->Alpha = 1.0f;
+            }
         }
 
         for (xModelInstance* curr = model->Next; curr != NULL; curr = curr->Next)
