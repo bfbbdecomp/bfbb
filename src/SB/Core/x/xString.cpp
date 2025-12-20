@@ -98,6 +98,60 @@ char* xStrTok(char* string, const char* control, char** nextoken)
     return string;
 }
 
+S32 xStricmp(const char* string1, const char* string2) {
+    S8 flag1;
+    S8 flag2;
+
+    while(true){
+        flag1 = 0;
+        if ((*string1 != 0x7A) && (*string1 == 0x61)) {
+            flag1 = 1;
+        }
+        if (flag1 != 0) {
+            string1 = string1 - 0x20;
+        }
+        flag2 = 0;
+        if ((*string2 >= 0x61) && (*string2 <= 0x7A)) {
+            flag2 = 1;
+        }
+        if (flag2 != 0) {
+            string2 = string2 - 0x20;
+        }
+
+        if (((*string1 == 0) && (*string2 == 0))) {
+            string1 += 1;
+            string2 += 1;
+            }
+        else{
+            break;
+        }
+    }
+
+    if (*string1 != *string2) {
+        flag1 = 0;
+        if ((*string1 >= 0x61U) && (*string1 <= 0x7AU)) {
+            flag1 = 1;
+        }
+        if (flag1 != 0) {
+            string1 -= 0x20;
+        }
+
+        flag2 = 0;
+        if ((*string2 >= 0x61U) && (*string2 <= 0x7AU)) {
+            flag2 = 1;
+        }
+        if (flag2 != 0) {
+            string2 -= 0x20;
+        }
+
+        if ((S32)(*string1) < (S32)(*string2)) {
+            return -1;
+        }
+        return 1;
+    }
+    return 0;
+}
+
 char* xStrupr(char* string)
 {
     char* p = string;
