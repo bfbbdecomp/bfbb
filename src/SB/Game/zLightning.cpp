@@ -6,9 +6,11 @@
 #include <types.h>
 #include <rwcore.h>
 
+#define NUM_LIGHTNING 48
+
 _tagLightningAdd gLightningTweakAddInfo;
 
-static zLightning* sLightning[48];
+static zLightning* sLightning[NUM_LIGHTNING];
 static xFuncPiece sLFuncX[10];
 static xFuncPiece sLFuncY[10];
 static xFuncPiece sLFuncZ[10];
@@ -82,6 +84,67 @@ static void lightningTweakStart(const tweak_info& t)
     gLightningTweakAddInfo.start = &s;
     gLightningTweakAddInfo.end = &e;
     zLightningAdd(&gLightningTweakAddInfo);
+}
+
+void zLightningUpdate(F32 dt)
+{
+    S32 i;
+    for (i = 0; i < NUM_LIGHTNING; i++)
+    {
+        if (sLightning[i] != NULL && sLightning[i]->flags & 0x1)
+        {
+            UpdateLightning(sLightning[i], dt);
+        }
+    }
+
+    sLFuncUVOffset = 1.0f * dt + sLFuncUVOffset;
+    if (sLFuncUVOffset > 1.0f)
+    {
+        sLFuncUVOffset -= 1.0f;
+    }
+
+    sLFuncJerkTime += 20.0f * dt;
+    if (!(sLFuncJerkTime > 1.0f))
+    {
+        return;
+    }
+
+    S32 picker = 9.0f * xurand();
+    if (picker >= 9)
+    {
+        picker = 8;
+    }
+    if (picker < 0)
+    {
+        picker = 0;
+    }
+
+    xVec3Init(&sLFuncVal[picker], 2.0f * (xurand() - 0.5f), 2.0f * (xurand() - 0.5f), 2.0f * (xurand() - 0.5f));
+    xVec3Init(&sLFuncSlope[picker][0], 2.0f * (xurand() - 0.5f), 2.0f * (xurand() - 0.5f), 2.0f * (xurand() - 0.5f));
+    xVec3Init(&sLFuncSlope[picker][1], 2.0f * (xurand() - 0.5f), 2.0f * (xurand() - 0.5f), 2.0f * (xurand() - 0.5f));
+
+    sLFuncEnd[picker] = 0.25f * (xurand() * 0.5f) + (picker + 1);
+
+    for (S32 j = 0; j <= picker + 1; j++)
+    {
+        F32 prevEnd;
+        if (picker == 0)
+        {
+            i = 9;
+            prevEnd = 0.0f;
+        }
+        else
+        {
+            i = picker - 1;
+            prevEnd = sLFuncEnd[i];
+        }
+
+        xFuncPiece_EndPoints(&sLFuncX[j], prevEnd, sLFuncEnd[j], sLFuncVal[j].x, sLFuncVal[i].x);
+        xFuncPiece_EndPoints(&sLFuncY[j], prevEnd, sLFuncEnd[j], sLFuncVal[j].y, sLFuncVal[i].y);
+        xFuncPiece_EndPoints(&sLFuncZ[j], prevEnd, sLFuncEnd[j], sLFuncVal[j].z, sLFuncVal[i].z);
+    }
+
+    sLFuncJerkTime = 0.0f;
 }
 
 void zLightningRender()
