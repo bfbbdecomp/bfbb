@@ -6,68 +6,39 @@
 #include <types.h>
 #include <rwcore.h>
 
-extern _tagLightningAdd gLightningTweakAddInfo;
-extern zLightning* sLightning[0x30];
-extern RwRaster* sLightningRaster;
-extern xVec3 sTweakStart;
-extern xVec3 sTweakEnd;
+_tagLightningAdd gLightningTweakAddInfo;
 
-// Taken from zLightning.s
-// Defining these here makes the stringBase0 offsets match in the later functions.
-static char* str1 = "Line";
-static char* str2 = "Rotating";
-static char* str3 = "Zeus";
-static char* str4 = "Func";
-static char* str5 = "Lightning|\x01Type Info";
-static char* str6 = "Lightning|\x01Type Info|Setup Degrees";
-static char* str7 = "Lightning|\x01Type Info|Move Degrees";
-static char* str8 = "Lightning|\x01Type Info|Normal Offset";
-static char* str9 = "Lightning|\x01Type Info|Back Offset";
-static char* str10 = "Lightning|\x01Type Info|Side Offset";
-static char* str11 = "PAREMIT_EG_SPARK";
-static char* str12 = "LIGHTNING";
-static char* str13 = "Lightning|\x01\x01Go";
-static char* str14 = "Start Lightning";
-static char* str15 = "Lightning|\x01Globals|\x01\x01JerkFrequency";
-static char* str16 = "Lightning|\x01Globals|\x01\x02ShiftSpeed";
-static char* str17 = "Lightning|\x01Globals|\x01\x03MinPStep";
-static char* str18 = "Lightning|\x01Globals|\x01\x03MaxPStep";
-static char* str19 = "Lightning|\x01Globals|\x02\x01MinScale";
-static char* str20 = "Lightning|\x01Globals|\x02\x01MaxScale";
-static char* str21 = "Lightning|\x01Globals|\x02\x01ScalePerLength";
-static char* str22 = "Lightning|\x01Globals|\x02\x02MinSpan";
-static char* str23 = "Lightning|\x01Globals|\x02\x02SpanPerLength";
-static char* str24 = "Lightning|\x01Globals|\x02\x03SlopeRange";
-static char* str25 = "Lightning|\x01Globals|\x02\x03UVSpeed";
-static char* str26 = "Lightning|\x01Time";
-static char* str27 = "Lightning|\x01Total Points";
-static char* str28 = "Lightning|\x01Type";
-static char* str29 = "Lightning|\x02Flag|Rot Scalar";
-static char* str30 = "Lightning|\x02Flag|No Fade Out";
-static char* str31 = "Lightning|\x02Flag|Arc";
-static char* str32 = "Lightning|\x02Flag|Vertical Orientation";
-static char* str33 = "Lightning|\x02Flag|Taper Thickness At End";
-static char* str34 = "Lightning|\x02Flag|Taper Thickness At Start";
-static char* str35 = "Lightning|\x02Start|x";
-static char* str36 = "Lightning|\x02Start|y";
-static char* str37 = "Lightning|\x02Start|z";
-static char* str38 = "Lightning|\x03End|x";
-static char* str39 = "Lightning|\x03End|y";
-static char* str40 = "Lightning|\x03End|z";
-static char* str41 = "Lightning|\x04Color|\x01R";
-static char* str42 = "Lightning|\x04Color|\x02G";
-static char* str43 = "Lightning|\x04Color|\x03B";
-static char* str44 = "Lightning|\x04Color|\x04A";
-static char* str45 = "Lightning|Lengths|Rot Radius";
-static char* str46 = "Lightning|Lengths|Arc Height";
-static char* str47 = "Lightning|Lengths|Thickness";
-static char* str48 = "Lightning|Randomness|Rand Radius";
-static char* str49 = "X to test lightning\n";
-static char* str50 = "               ";
-static char* str51 = "1";
-static char* str52 = "0";
-static char* str53 = "-";
-static char* str54 = "\n";
+static zLightning* sLightning[48];
+static xFuncPiece sLFuncX[10];
+static xFuncPiece sLFuncY[10];
+static xFuncPiece sLFuncZ[10];
+static xVec3 sLFuncVal[10];
+static xVec3 sLFuncSlope[10][2];
+static F32 sLFuncEnd[10];
+static xVec3 sTweakStart;
+static xVec3 sTweakEnd;
+static tweak_callback sLightningStartCB;
+static tweak_callback sLightningChangeCB;
+static xVec3 sPoint[5];
+static F32 sSize[5];
+
+char* lightning_type_names[4] = { "Line", "Rotating", "Zeus", "Func" };
+static zParEmitter* sSparkEmitter;
+static RwRaster* sLightningRaster;
+static F32 sLFuncJerkTime;
+static F32 sLFuncUVOffset;
+
+static F32 sLFuncJerkFreq = 20.0f;
+static F32 sLFuncShift = 15.0f;
+static F32 sLFuncMaxPStep = 1.0f / 16.0f;
+static F32 sLFuncMinPStep = 1.0f / 16.0f;
+static F32 sLFuncMinScale = 3.0f / 10.0f;
+static F32 sLFuncMaxScale = 1.0f;
+static F32 sLFuncScalePerLength = 0.15f;
+static F32 sLFuncMinSpan = 3.0f;
+static F32 sLFuncSpanPerLength = 1.5f;
+static F32 sLFuncSlopeRange = 2.0f;
+static F32 sLFuncUVSpeed = 1.0f;
 
 void xDebugAddTweak(const char*, F32*, F32, F32, const tweak_callback*, void*, U32)
 {
