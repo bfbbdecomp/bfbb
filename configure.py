@@ -558,7 +558,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zNPCTypeRobot.cpp"),
             Object(NonMatching, "SB/Game/zNPCTypeVillager.cpp"),
             Object(NonMatching, "SB/Game/zNPCTypeAmbient.cpp"),
-            Object(NonMatching, "SB/Game/zNPCTypeTiki.cpp"),
+            Object(NonMatching, "SB/Game/zNPCTypeTiki.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Core/x/xBehaveMgr.cpp"),
             Object(Matching, "SB/Core/x/xBehaviour.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/x/xBehaveGoalSimple.cpp", extra_cflags=["-sym on"]),

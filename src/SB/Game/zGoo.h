@@ -10,6 +10,11 @@ void zGooInit(S32 nobj);
 void zGooExit();
 S32 zGooAdd(xEnt* obj, F32 depth, S32 freezeGroup);
 S32 zGooIs(xEnt* obj, F32& depth, U32 playerCheck);
+inline S32 zGooIs(xEnt* ent)
+{
+    F32 temp;
+    return zGooIs(ent, temp, 0);
+};
 void zGooCollsBegin();
 void zGooCollsEnd();
 void zGooStopTide();
