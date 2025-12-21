@@ -41,14 +41,6 @@ namespace
         }
     }
 
-    static void flush_triggered()
-    {
-    }
-
-    static void reset_auto_wait()
-    {
-    }
-
     void trigger_pads(U32 pressed)
     {
         if ((pressed & 0x10) != 0)
@@ -109,6 +101,14 @@ namespace
         }
     }
 
+    void flush_triggered()
+    {
+    }
+
+    void reset_auto_wait()
+    {
+    }
+
     void deactivate()
     {
         stop_audio_effect();
@@ -127,7 +127,6 @@ namespace
         active->dialog_box->flag.visible = false;
     }
 
-    void flush_triggered();
     void stop_wait(ztalkbox& talkbox, const F32*, U32);
 
     static void stop();
@@ -291,15 +290,6 @@ void ztalkbox::reset()
 
 namespace
 {
-
-    struct state_type
-    {
-        state_enum type;
-
-        void start();
-        void stop();
-    };
-
     void state_type::start()
     {
     }
@@ -307,7 +297,6 @@ namespace
     void state_type::stop()
     {
     }
-
 } // namespace
 
 void ztalkbox::clear_text()
