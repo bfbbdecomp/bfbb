@@ -95,9 +95,28 @@ void xDebugUpdate();
 void xDebugExit();
 void xDebugTimestampScreen();
 
-void xDebugAddTweak(const char*, F32*, F32, F32, const tweak_callback*, void*, U32);
 void xDebugRemoveTweak(const char*);
 void xDebugUpdate();
 
+void xDebugAddTweak(const char*, F32*, F32, F32, const tweak_callback*, void*, U32)
+{
+}
+
+void xDebugAddTweak(const char*, S16*, S16, S16, const tweak_callback*, void*, U32)
+{
+}
+
+void xDebugAddTweak(const char*, U8*, U8, U8, const tweak_callback*, void*, U32)
+{
+}
+
+void xDebugAddFlagTweak(const char*, U32*, U32, const tweak_callback*, void*, U32)
+{
+}
+
+void xDebugAddSelectTweak(const char*, U32*, const char**, const U32*, U32, const tweak_callback*,
+                          void*, U32)
+{
+}
 
 #endif
