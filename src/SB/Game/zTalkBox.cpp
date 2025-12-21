@@ -365,3 +365,58 @@ void ztalkbox::permit(U32 add_flags, U32 remove_flags)
     shared.permit &= ~remove_flags;
     shared.permit |= add_flags;
 }
+
+namespace
+{
+
+    static void parse_tag_pause(xtextbox::jot&, const xtextbox&, const xtextbox&, const xtextbox::split_tag&)
+    {
+
+    }
+
+    static void reset_tag_pause(xtextbox::jot&, const xtextbox&, const xtextbox&, const xtextbox::split_tag&)
+    {
+
+    }
+
+    static unsigned char trigger_pause(const xtextbox::jot&)
+    {
+        return 1;
+    }
+}
+
+void start_state_type::stop()
+{
+}
+
+signed char start_state_type::update(xScene&, float)
+{
+    return 2;
+}
+
+void next_state_type::stop()
+{
+
+}
+
+void stop_state_type::start()
+{
+
+}
+
+void stop_state_type::stop()
+{
+
+}
+
+signed char stop_state_type::update(xScene&, float)
+{
+    return -1;
+}
+
+void wait_context::reset_type()
+{
+
+    *(U16*)&this->type = 0;
+
+}

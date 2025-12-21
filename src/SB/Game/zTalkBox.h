@@ -155,6 +155,24 @@ namespace
         void stop();
     };
 
+    struct next_state_type
+    {
+        void stop();
+    };
+
+    struct start_state_type
+    {
+        void stop();
+        signed char update(xScene&, float);
+    };
+
+    struct stop_state_type
+    {
+        void start();
+        void stop();
+        signed char update(xScene&, float);
+    };
+
     struct jot;
     struct callback
     {
@@ -252,6 +270,7 @@ namespace
         F32 delay;
         U32 event_mask;
         query_enum query;
+        void reset_type();
     };
 
     struct trigger_pair
