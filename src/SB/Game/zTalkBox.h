@@ -61,27 +61,22 @@ struct ztalkbox : xBase
     {
         callback()
         {
-
         }
 
         virtual void on_signal(U32)
         {
-
         }
 
         virtual void on_start()
         {
-
         }
 
         virtual void on_stop()
         {
-
         }
 
         virtual void on_answer(answer_enum answer)
         {
-
         }
     };
 
@@ -164,14 +159,14 @@ namespace
     struct start_state_type
     {
         void stop();
-        signed char update(xScene&, float);
+        S8 update(xScene& scn, F32 dt);
     };
 
     struct stop_state_type
     {
         void start();
         void stop();
-        signed char update(xScene&, float);
+        S8 update(xScene& scn, F32 dt);
     };
 
     struct jot;
@@ -310,6 +305,6 @@ namespace
         zNPCCommon* speak_npc; // 0x8694
         U32 speak_player; // 0x8698
     };
-}
+} // namespace
 
 #endif

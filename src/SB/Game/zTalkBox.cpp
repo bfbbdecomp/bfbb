@@ -373,18 +373,17 @@ void ztalkbox::load(xBase& data, xDynAsset& asset, unsigned long)
 
 namespace
 {
-
-    static void parse_tag_pause(xtextbox::jot&, const xtextbox&, const xtextbox&, const xtextbox::split_tag&)
+    static void parse_tag_pause(xtextbox::jot&, const xtextbox&, const xtextbox&,
+                                const xtextbox::split_tag&)
     {
-
     }
 
-    static void reset_tag_pause(xtextbox::jot&, const xtextbox&, const xtextbox&, const xtextbox::split_tag&)
+    static void reset_tag_pause(xtextbox::jot&, const xtextbox&, const xtextbox&,
+                                const xtextbox::split_tag&)
     {
-
     }
 
-    static unsigned char trigger_pause(const xtextbox::jot&)
+    U8 trigger_pause(const xtextbox::jot&)
     {
         return 1;
     }
@@ -394,40 +393,35 @@ namespace
         type = t;
     }
 
-}
+} // namespace
 
 void start_state_type::stop()
 {
 }
 
-signed char start_state_type::update(xScene&, float)
+S8 start_state_type::update(xScene& scn, F32 dt)
 {
     return 2;
 }
 
 void next_state_type::stop()
 {
-
 }
 
 void stop_state_type::start()
 {
-
 }
 
 void stop_state_type::stop()
 {
-
 }
 
-signed char stop_state_type::update(xScene&, float)
+S8 stop_state_type::update(xScene& scn, F32 dt)
 {
     return -1;
 }
 
 void wait_context::reset_type()
 {
-
     *(U16*)&this->type = 0;
-
 }
