@@ -366,6 +366,11 @@ void ztalkbox::permit(U32 add_flags, U32 remove_flags)
     shared.permit |= add_flags;
 }
 
+void ztalkbox::load(xBase& data, xDynAsset& asset, unsigned long)
+{
+    ((ztalkbox&)data).load((const ztalkbox::asset_type&)asset);
+}
+
 namespace
 {
 
@@ -383,6 +388,12 @@ namespace
     {
         return 1;
     }
+
+    state_type::state_type(state_enum t)
+    {
+        type = t;
+    }
+
 }
 
 void start_state_type::stop()

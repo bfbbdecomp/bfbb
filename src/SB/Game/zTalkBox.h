@@ -150,9 +150,10 @@ namespace
     struct state_type
     {
         state_enum type;
-
-        void start();
-        void stop();
+        
+        state_type(state_enum t);
+        virtual void start();
+        virtual void stop();
     };
 
     struct next_state_type
