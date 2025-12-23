@@ -39,7 +39,7 @@ FILE __files[4] =
 		0,                  // _2C
 		0,                  // _30
 		0,                  // _34
-		nullptr,            // _38
+		NULL,            // _38
 		&__read_console,    // _3C
 		&__write_console,   // _40
 		&__close_console,   // _44
@@ -71,7 +71,7 @@ FILE __files[4] =
 		0,                   // _2C
 		0,                   // _30
 		0,                   // _34
-		nullptr,             // _38
+		NULL,             // _38
 		&__read_console,     // _3C
 		&__write_console,    // _40
 		&__close_console,    // _44
@@ -103,7 +103,7 @@ FILE __files[4] =
 		0,                   // _2C
 		0,                   // _30
 		0,                   // _34
-		nullptr,             // _38
+		NULL,             // _38
 		&__read_console,     // _3C
 		&__write_console,    // _40
 		&__close_console,    // _44
@@ -135,7 +135,7 @@ void __close_all()
         {
             plast->mMode.file_kind = __unavailable_file;
             if ((p != NULL) && p->mIsDynamicallyAllocated)
-                plast->mNextFile = nullptr;
+                plast->mNextFile = NULL;
         }
     }
 

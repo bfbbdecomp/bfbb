@@ -397,7 +397,7 @@ s32 CARDCheck(s32 channel)
 
     result = CARDCheckExAsync(channel, &xferBytes, __CARDSyncCallback);
 
-    if (result < 0 || &xferBytes == nullptr)
+    if (result < 0 || &xferBytes == NULL)
     {
         return result;
     }
