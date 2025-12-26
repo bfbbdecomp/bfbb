@@ -8,75 +8,76 @@
 
 void putwc(void)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 
 void putwchar(void)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 
 void fputwc(void)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 
 void getwc(void)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 
 void getwchar(void)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 
 void fgetwc(void)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 
 void ungetwc(void)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 
 void fputws(void)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 
 void fgetws(void)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 
 int fwide(FILE* stream, int mode)
 {
-	int res;
-	int orientation;
+    int res;
+    int orientation;
 
-	if (stream == nullptr || stream->mMode.file_kind == __closed_file)
-		return 0;
+    if (stream == NULL || stream->mMode.file_kind == __closed_file)
+        return 0;
 
-	orientation = stream->mMode.file_orientation;
-	switch (orientation) {
-	case __unoriented:
-		if (mode > 0)
-			stream->mMode.file_orientation = __wide_oriented;
-		else if (mode < 0)
-			stream->mMode.file_orientation = __char_oriented;
+    orientation = stream->mMode.file_orientation;
+    switch (orientation)
+    {
+    case __unoriented:
+        if (mode > 0)
+            stream->mMode.file_orientation = __wide_oriented;
+        else if (mode < 0)
+            stream->mMode.file_orientation = __char_oriented;
 
-		res = mode;
-		break;
+        res = mode;
+        break;
 
-	case __wide_oriented:
-		res = 1;
-		break;
+    case __wide_oriented:
+        res = 1;
+        break;
 
-	case __char_oriented:
-		res = -1;
-		break;
-	}
-	return res;
+    case __char_oriented:
+        res = -1;
+        break;
+    }
+    return res;
 }

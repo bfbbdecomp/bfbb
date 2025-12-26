@@ -83,7 +83,6 @@ typedef wchar_t wint_t;
 #define TRUE 1
 #define FALSE 0
 
-#define nullptr 0
 #define null 0
 
 #ifndef NULL
