@@ -35,7 +35,7 @@ static xVec3 sUnderCamPos;
 static ztextbox* sHideText[5];
 
 /* .sbss */
-widget_chunk* comboHUD;
+widget_chunk* comboHUD; // TODO: should be externed in the header, but that doesn't show up in objdiff
 static zUIFont* sHideUIF;
 static S32 comboPending;
 static S32 comboLastCounter;
