@@ -15,27 +15,29 @@
 
 int _ftell(FILE* file)
 {
-	int charsInUndoBuffer = 0;
-	int position;
+    int charsInUndoBuffer = 0;
+    int position;
 
-	u8 tmp_kind = file->mMode.file_kind;
-	if (!(tmp_kind == __disk_file || tmp_kind == __console_file) || file->mState.error) {
-		errno = 0x28;
-		return -1;
-	}
+    u8 tmp_kind = file->mMode.file_kind;
+    if (!(tmp_kind == __disk_file || tmp_kind == __console_file) || file->mState.error)
+    {
+        errno = 0x28;
+        return -1;
+    }
 
-	if (file->mState.io_state == __neutral)
-		return (file->mPosition);
+    if (file->mState.io_state == __neutral)
+        return (file->mPosition);
 
-	position = file->mBufferPosition + (file->mBufferPtr - file->mBuffer);
+    position = file->mBufferPosition + (file->mBufferPtr - file->mBuffer);
 
-	if (file->mState.io_state >= __rereading) {
-		charsInUndoBuffer = file->mState.io_state - __rereading + 1;
-		position -= charsInUndoBuffer;
-	}
+    if (file->mState.io_state >= __rereading)
+    {
+        charsInUndoBuffer = file->mState.io_state - __rereading + 1;
+        position -= charsInUndoBuffer;
+    }
 
-	// got added in later it seems?
-	/*if (!file->mMode.binary_io) {
+    // got added in later it seems?
+    /*if (!file->mMode.binary_io) {
 		int n = file->mBufferPtr - file->mBuffer - charsInUndoBuffer;
 		u8* p = (u8*)file->mBuffer;
 
@@ -44,87 +46,99 @@ int _ftell(FILE* file)
 				position++;
 	}*/
 
-	return (position);
+    return (position);
 }
 
 int ftell(FILE* stream)
 {
-	int retval;
+    int retval;
 
-	__begin_critical_region(stdin_access);
-	retval = (long)_ftell(stream);
-	__end_critical_region(stdin_access);
-	return retval;
+    __begin_critical_region(stdin_access);
+    retval = (long)_ftell(stream);
+    __end_critical_region(stdin_access);
+    return retval;
 }
 
-int _fseek(FILE *file, fpos_t offset, int whence)
+int _fseek(FILE* file, fpos_t offset, int whence)
 {
-	fpos_t pos;
-	__pos_proc func;
+    fpos_t pos;
+    __pos_proc func;
 
-	unsigned char fileKind = file->mMode.file_kind;
-	if (fileKind != 1 || file->mState.error != 0) {
-		errno = 0x28;
-		return -1;
-	}
+    unsigned char fileKind = file->mMode.file_kind;
+    if (fileKind != 1 || file->mState.error != 0)
+    {
+        errno = 0x28;
+        return -1;
+    }
 
-	if (file->mState.io_state == 1) {
-		if (__flush_buffer(file, nullptr) != 0) {
-			file->mState.error  = 1;
-			file->mBufferLength = 0;
-			errno                = 0x28;
-			return -1;
-		}
-	}
+    if (file->mState.io_state == 1)
+    {
+        if (__flush_buffer(file, NULL) != 0)
+        {
+            file->mState.error = 1;
+            file->mBufferLength = 0;
+            errno = 0x28;
+            return -1;
+        }
+    }
 
-	if (whence == SEEK_CUR) {
-		whence = SEEK_SET;
+    if (whence == SEEK_CUR)
+    {
+        whence = SEEK_SET;
 
-		if ((pos = _ftell(file)) < 0)
-			pos = 0;
+        if ((pos = _ftell(file)) < 0)
+            pos = 0;
 
-		offset +=  pos;
-	}
+        offset += pos;
+    }
 
-	if ((whence != SEEK_END) && (file->mMode.io_mode != 3) && (file->mState.io_state == 2 || file->mState.io_state == 3)) {
-		if ((offset >= file->mPosition) || !(offset >= file->mBufferPosition)) {
-			file->mState.io_state = 0;
-		} else {
-			file->mBufferPtr      = file->mBuffer + (offset - file->mBufferPosition);
-			file->mBufferLength   = file->mPosition - offset;
-			file->mState.io_state = 2;
-		}
-	} else {
-		file->mState.io_state = 0;
-	}
+    if ((whence != SEEK_END) && (file->mMode.io_mode != 3) &&
+        (file->mState.io_state == 2 || file->mState.io_state == 3))
+    {
+        if ((offset >= file->mPosition) || !(offset >= file->mBufferPosition))
+        {
+            file->mState.io_state = 0;
+        }
+        else
+        {
+            file->mBufferPtr = file->mBuffer + (offset - file->mBufferPosition);
+            file->mBufferLength = file->mPosition - offset;
+            file->mState.io_state = 2;
+        }
+    }
+    else
+    {
+        file->mState.io_state = 0;
+    }
 
-	if (file->mState.io_state == 0) {
+    if (file->mState.io_state == 0)
+    {
+        if ((func = file->positionFunc) != NULL &&
+            func(file->mHandle, &offset, whence, file->ref_con) != 0)
+        {
+            file->mState.error = 1;
+            file->mBufferLength = 0;
+            errno = 0x28;
+            return -1;
+        }
+        else
+        {
+            file->mState.eof = 0;
+            file->mPosition = offset;
+            file->mBufferLength = 0;
+        }
+    }
 
-		if ((func = file->positionFunc) != nullptr && func(file->mHandle, &offset, whence, file->ref_con) != 0)
-		{
-			file->mState.error = 1;
-			file->mBufferLength = 0;
-			errno = 0x28;
-			return -1;
-		}
-		else
-		{
-			file->mState.eof    = 0;
-			file->mPosition     = offset;
-			file->mBufferLength = 0;
-		}
-	}
-
-	return 0;
+    return 0;
 }
 
-int fseek(FILE *stream, fpos_t offset, int whence)
+int fseek(FILE* stream, fpos_t offset, int whence)
 {
-	fpos_t start;
-	int code;
-	start = offset;
-	__begin_critical_region(stdin_access);
-	code = _fseek(stream, start, whence); // 0 if successful, -1 if error
-	__end_critical_region(stdin_access);
-	return code;
+    fpos_t start;
+    int code;
+    start = offset;
+    __begin_critical_region(stdin_access);
+    code = _fseek(stream, start, whence); // 0 if successful, -1 if error
+    __end_critical_region(stdin_access);
+    return code;
 }

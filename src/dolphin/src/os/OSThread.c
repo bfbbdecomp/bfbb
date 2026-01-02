@@ -305,8 +305,8 @@ static OSThread* SelectThread(BOOL yield)
 
     if (RunQueueBits == 0)
     {
-        SwitchThreadCallback(__OSCurrentThread, nullptr);
-        __OSCurrentThread = nullptr;
+        SwitchThreadCallback(__OSCurrentThread, NULL);
+        __OSCurrentThread = NULL;
         OSSetCurrentContext(&IdleContext);
         do
         {

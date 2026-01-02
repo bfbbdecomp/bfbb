@@ -421,7 +421,7 @@ u32 OSLoadFont(OSFontHeader* fontInfo, void* temp)
     u8* ptr;
     int fontCodeT, sheet, numChars, row, column, x, y;
 
-    u32 fontSize = ReadFont(temp, OS_FONT_ENCODE_SJIS, nullptr);
+    u32 fontSize = ReadFont(temp, OS_FONT_ENCODE_SJIS, NULL);
     if (fontSize)
     {
         Decode(temp, (void*)fontInfo);

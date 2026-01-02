@@ -97,7 +97,10 @@ struct ztextbox : xBase
     void clear_text();
     void refresh();
     void get_text(char* buffer, size_t buffer_size) const;
-    bool visible();
+    bool visible()
+    {
+        return this->flag.visible;
+    }
 };
 
 #endif
