@@ -14,7 +14,7 @@ extern int __close_console(u32);
 // clang-format off
 FILE __files[4] = 
 { 
-	{ 0,                  // _00
+	{ 0,                    // _00
 		0,                  // _04, open_mode
 		1,                  // _04, io_mode
 		1,                  // _04, buffer_mode
@@ -31,7 +31,7 @@ FILE __files[4] =
 		0,                  // _10
 		0,                  // _12
 		0,                  // _14
-		0,								  // _18
+		0,					// _18
 		stdin_buff,         // _1C
 		sizeof(stdin_buff), // _20
 		stdin_buff,         // _24
@@ -39,14 +39,14 @@ FILE __files[4] =
 		0,                  // _2C
 		0,                  // _30
 		0,                  // _34
-		nullptr,            // _38
+		NULL,               // _38
 		&__read_console,    // _3C
 		&__write_console,   // _40
 		&__close_console,   // _44
 		0,                  // _48
 		&__files[1]         // _4C
 	},
-	{ 1,                   // _00
+	{ 1,                     // _00
 		0,                   // _04, open_mode
 		2,                   // _04, io_mode
 		1,                   // _04, buffer_mode
@@ -63,7 +63,7 @@ FILE __files[4] =
 		0,                   // _10
 		0,                   // _12
 		0,                   // _14
-		0,								   // _18
+		0,					 // _18
 		stdout_buff,         // _1C
 		sizeof(stdout_buff), // _20
 		stdout_buff,         // _24
@@ -71,14 +71,14 @@ FILE __files[4] =
 		0,                   // _2C
 		0,                   // _30
 		0,                   // _34
-		nullptr,             // _38
+		NULL,                // _38
 		&__read_console,     // _3C
 		&__write_console,    // _40
 		&__close_console,    // _44
 		0,                   // _48
 		&__files[2]          // _4C
 	},
-	{ 2,                   // _00
+	{ 2,                     // _00
 		0,                   // _04, open_mode
 		2,                   // _04, io_mode
 		0,                   // _04, buffer_mode
@@ -95,7 +95,7 @@ FILE __files[4] =
 		0,                   // _10
 		0,                   // _12
 		0,                   // _14
-		0,								   // _18
+		0,					 // _18
 		stderr_buff,         // _1C
 		sizeof(stderr_buff), // _20
 		stderr_buff,         // _24
@@ -103,7 +103,7 @@ FILE __files[4] =
 		0,                   // _2C
 		0,                   // _30
 		0,                   // _34
-		nullptr,             // _38
+		NULL,                // _38
 		&__read_console,     // _3C
 		&__write_console,    // _40
 		&__close_console,    // _44
@@ -135,7 +135,7 @@ void __close_all()
         {
             plast->mMode.file_kind = __unavailable_file;
             if ((p != NULL) && p->mIsDynamicallyAllocated)
-                plast->mNextFile = nullptr;
+                plast->mNextFile = NULL;
         }
     }
 

@@ -619,7 +619,8 @@ void zMainShowProgressBar()
         strcpy(acStack_8c, loadingText);
         acStack_8c[progBar] = '\0';
         memcpy(formattedStr, &loadingText[progBar], strlen(loadingText) - progBar);
-        sprintf(auStack_cc, "{font=0}{h*2}{w*2}%s{color=FFFFFFFF}%s{~:c}", acStack_8c, formattedStr);
+        sprintf(auStack_cc, "{font=0}{h*2}{w*2}%s{color=FFFFFFFF}%s{~:c}", acStack_8c,
+                formattedStr);
         zMainMemCardRenderText(auStack_cc, '\x01');
         percentageDone += 10;
     }
@@ -760,7 +761,7 @@ void zMainMemCardSpaceQuery()
 
 static void zMainMemCardQueryPost(S32 needed, S32 available, S32 neededFiles, S32 unk0)
 {
-    RwCamera* cam = nullptr;
+    RwCamera* cam = NULL;
     RwRGBA colour = {};
     RwInt32 clearMode = 3;
 
@@ -775,7 +776,7 @@ static void zMainMemCardQueryPost(S32 needed, S32 available, S32 neededFiles, S3
 
 void zMainMemCardRenderText(const char* a, bool enabled)
 {
-    RwCamera* cam = nullptr;
+    RwCamera* cam = NULL;
     RwRGBA colour = {};
     RwInt32 clearMode = 3;
 
