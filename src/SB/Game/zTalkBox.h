@@ -34,8 +34,8 @@ struct ztalkbox : xBase
                 bool sound : 8;
                 bool event : 8;
             } type;
-            F32 delay;
-            S32 which_event;
+            F32 delay; //Offset 8d3c
+            S32 which_event; //Offset 0x8d40
         } auto_wait;
         struct
         {
@@ -85,9 +85,9 @@ struct ztalkbox : xBase
         bool visible : 1;
     } flag;
     const asset_type* asset;
-    ztextbox* dialog_box;
-    ztextbox* prompt_box;
-    ztextbox* quit_box;
+    ztextbox* dialog_box; //Offset 0x18
+    ztextbox* prompt_box; //Offset 0x1c
+    ztextbox* quit_box; //Offset 0x20
     struct
     {
         const char* skip;
@@ -145,7 +145,7 @@ namespace
     struct state_type
     {
         state_enum type;
-        
+
         state_type(state_enum t);
         virtual void start();
         virtual void stop();
@@ -262,11 +262,12 @@ namespace
             U8 event : 1;
             U16 pad : 12;
         } type;
-        U8 need;
+        U8 need; //Offset 08d3a
         F32 delay;
-        U32 event_mask;
-        query_enum query;
+        U32 event_mask; //Offset 08d40
+        query_enum query; //Offset 08d44
         void reset_type();
+        wait_context& operator=(const wait_context& rhs);
     };
 
     struct trigger_pair
@@ -277,7 +278,7 @@ namespace
 
     struct shared_type
     {
-        S32 flags;  
+        S32 flags;
         U32 permit;
         ztalkbox* active; // 0x8
         state_type* state; // 0xC
@@ -304,6 +305,43 @@ namespace
         F32 volume; // 0x8690
         zNPCCommon* speak_npc; // 0x8694
         U32 speak_player; // 0x8698
+    };
+
+    struct sound_context
+    {
+        // total size: 0x18
+        U32 id; // offset 0x0, size 0x4
+        enum
+        {
+            ACTION_SET = 0,
+            ACTION_PUSH = 1,
+            ACTION_POP = 2,
+        } action : 8; // offset 0x4, size 0x4
+        enum
+        {
+            TYPE_INVALID = 0,
+            TYPE_VOLUME = 1,
+            TYPE_TARGET = 2,
+            TYPE_ORIGIN = 3,
+        } type : 8; // offset 0x4, size 0x4
+        enum
+        {
+            SOURCE_MEMORY = 0,
+            SOURCE_STREAM = 1,
+        } source : 8; // offset 0x4, size 0x4
+        U8 anim; // offset 0x7, size 0x1
+        union
+        { // inferred
+            struct
+            {
+                // total size: 0x8
+                float left; // offset 0x0, size 0x4
+                float right; // offset 0x4, size 0x4
+            } volume; // offset 0x8, size 0x8
+            unsigned int target; // offset 0x8, size 0x4
+            class xVec3 origin; // offset 0x8, size 0xC
+        };
+        U32 speaker; // offset 0x14, size 0x4
     };
 } // namespace
 

@@ -1,6 +1,7 @@
 #include "xstransvc.h"
 #include "zTalkBox.h"
-
+#include "xDebug.h"
+#include "zEntPlayer.h"
 #include <types.h>
 
 namespace
@@ -102,10 +103,6 @@ namespace
     }
 
     void flush_triggered()
-    {
-    }
-
-    void reset_auto_wait()
     {
     }
 
@@ -366,21 +363,115 @@ void ztalkbox::permit(U32 add_flags, U32 remove_flags)
     shared.permit |= add_flags;
 }
 
-void ztalkbox::load(xBase& data, xDynAsset& asset, unsigned long)
+void ztalkbox::load(xBase& data, xDynAsset& asset, size_t)
 {
     ((ztalkbox&)data).load((const ztalkbox::asset_type&)asset);
 }
 
+void ztalkbox::load_settings(xIniFile& ini) //TODO
+{
+    shared.volume = xIniGetFloat(&ini, "talk_box.volume", 2.0f);
+    xDebugAddTweak("Talk Box|\u{1}Globals|volume", &shared.volume, 0.1f, 10.0f, NULL, NULL, 0);
+}
+
 namespace
 {
+    static U8 read_bool(const substr& s, bool def) //TODO 99%
+    {
+        extern const substr negative[6];
+        extern const substr positive[6];
+        if (def)
+        {
+            for (U32 i = 0; i < 6; ++i)
+            {
+                if (icompare(s, negative[i]) == 0)
+                    return 0;
+            }
+            return 1;
+        }
+        else
+            for (U32 i = 0; i < 6; ++i)
+            {
+                if (icompare(s, positive[i]) == 0)
+                    return 1;
+            }
+        return 0;
+    }
     static void parse_tag_pause(xtextbox::jot&, const xtextbox&, const xtextbox&,
                                 const xtextbox::split_tag&)
     {
     }
 
-    static void reset_tag_pause(xtextbox::jot&, const xtextbox&, const xtextbox&,
-                                const xtextbox::split_tag&)
+    static void parse_tag_trap(xtextbox::jot& j, const xtextbox&, const xtextbox&,
+                               const xtextbox::split_tag& ti) //TODO 99%
     {
+        U8 c = 0;
+
+        if (ti.action.size == 1 && ti.action.text[0] == '=')
+        {
+            if (read_bool(ti.value, 1) != 0)
+            {
+                c = 1;
+            }
+        }
+
+        *(U8*)&j.context = c;
+    }
+
+    static void reset_tag_pause(xtextbox::jot&, const xtextbox&, const xtextbox&,
+                                const xtextbox::split_tag&) //DONE
+    {
+    }
+    static void reset_tag_sound(xtextbox::jot& j, const xtextbox&, const xtextbox& tb,
+                                const xtextbox::split_tag&) //DONE
+    {
+        if (!shared.active)
+        {
+            return;
+        }
+
+        if (&shared.active->dialog_box->tb != &tb)
+        {
+            return;
+        }
+
+        sound_context& c = *(sound_context*)j.context;
+
+        j.context_size = 24;
+
+        c.id = 0;
+        c.action = sound_context::ACTION_SET;
+    }
+    static void reset_tag_trap(xtextbox::jot& j, const xtextbox&, const xtextbox& ctb,
+                               const xtextbox::split_tag&) //DONE
+    {
+        if (!shared.active)
+        {
+            return;
+        }
+
+        if (&shared.active->dialog_box->tb != &ctb)
+        {
+            return;
+        }
+
+        *(bool*)&j.context = (shared.active->asset->trap != 0);
+    }
+
+    static void reset_tag_allow_quit(xtextbox::jot& j, const xtextbox&, const xtextbox& ctb,
+                                     const xtextbox::split_tag&) //DONE
+    {
+        if (!shared.active)
+        {
+            return;
+        }
+
+        if (&shared.active->dialog_box->tb != &ctb)
+        {
+            return;
+        }
+
+        *(bool*)&j.context = (shared.active->asset->allow_quit != 0);
     }
 
     U8 trigger_pause(const xtextbox::jot&)
@@ -388,9 +479,85 @@ namespace
         return 1;
     }
 
+    U8 trigger_allow_quit(const xtextbox::jot& j) //DONE
+    {
+        shared.allow_quit = (j.context != NULL);
+
+        return 1;
+    }
+    U8 trigger_auto_wait(const xtextbox::jot& j) //DONE
+    {
+        shared.auto_wait = *(const wait_context*)j.context;
+
+        return 1;
+    }
     state_type::state_type(state_enum t)
     {
         type = t;
+    }
+
+    wait_context& wait_context::operator=(const wait_context& rhs) //FIXME
+    {
+        type = rhs.type;
+        need = rhs.need;
+        delay = rhs.delay;
+        event_mask = rhs.event_mask;
+        query = rhs.query;
+        return *this;
+    }
+
+    void stop_audio_effect() //TODO
+    {
+        if (!shared.active)
+        {
+            return;
+        }
+
+        if (shared.active->asset == 0)
+        {
+            return;
+        }
+    }
+    static void reset_auto_wait() //DONE
+    {
+        const ztalkbox::asset_type* a = shared.active->asset;
+
+        shared.auto_wait.type.time = a->auto_wait.type.time;
+        shared.auto_wait.type.prompt = a->auto_wait.type.prompt;
+        shared.auto_wait.type.sound = a->auto_wait.type.sound;
+        shared.auto_wait.type.event = a->auto_wait.type.event;
+
+        shared.auto_wait.delay = a->auto_wait.delay;
+
+        shared.auto_wait.need = 0;
+
+        if (a->auto_wait.which_event <= 0 || a->auto_wait.which_event >= 32)
+        {
+            shared.auto_wait.event_mask = -1;
+        }
+        else
+        {
+            shared.auto_wait.event_mask = 1u << a->auto_wait.which_event;
+        }
+
+        shared.auto_wait.query = Q_SKIP;
+    }
+    static void reset_tag_auto_wait(xtextbox::jot& j, const xtextbox&, const xtextbox& ctb,
+                                    const xtextbox::split_tag&) //DONE
+    {
+        if (!shared.active)
+        {
+            return;
+        }
+        if (&shared.active->dialog_box->tb != &ctb)
+        {
+            return;
+        }
+
+        wait_context& c = *(wait_context*)j.context;
+        j.context_size = sizeof(wait_context);
+        reset_auto_wait();
+        c = shared.auto_wait;
     }
 
 } // namespace
@@ -424,4 +591,17 @@ S8 stop_state_type::update(xScene& scn, F32 dt)
 void wait_context::reset_type()
 {
     *(U16*)&this->type = 0;
+}
+
+static U8 trigger_trap(const xtextbox::jot& j) //DONE
+{
+    if (j.context != 0)
+    {
+        zEntPlayerControlOff(CONTROL_OWNER_TALK_BOX);
+    }
+    else
+    {
+        zEntPlayerControlOn(CONTROL_OWNER_TALK_BOX);
+    }
+    return 1;
 }
