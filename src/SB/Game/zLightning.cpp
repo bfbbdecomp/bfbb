@@ -26,6 +26,11 @@ static xVec3 sPoint[5];
 static F32 sSize[5];
 
 const char* lightning_type_names[4] = { "Line", "Rotating", "Zeus", "Func" };
+#define LYT_TYPE_LINE 0
+#define LYT_TYPE_ROTATING 1
+#define LYT_TYPE_ZEUS 2
+#define LYT_TYPE_FUNC 3
+
 static zParEmitter* sSparkEmitter;
 static RwRaster* sLightningRaster;
 static F32 sLFuncJerkTime;
@@ -197,6 +202,224 @@ void zLightningInit()
     xDebugAddTweak("Lightning|Randomness|Rand Radius", &gLightningTweakAddInfo.rand_radius, 0.0f, 1000000000.0f, NULL, NULL, 0x2);
 }
 
+static zLightning* FindFreeLightning()
+{
+    for (int i = 0; i != (sizeof(sLightning) / sizeof(zLightning*)); i++)
+    {
+        if (sLightning[i] != NULL)
+        {
+            if (!(sLightning[i]->flags & 1))
+            {
+                return sLightning[i];
+            }
+        }
+        else
+        {
+            sLightning[i] = (zLightning*)xMemAlloc(gActiveHeap, 0x234, 0);
+            return sLightning[i];
+        }
+    }
+
+    return 0;
+}
+
+// FIXME: Logic is nearly perfect but there are some incorrect values used causing register mismatches
+//          inside the loop logic, as well as incorrect r1 local offsets throughout
+zLightning* zLightningAdd(_tagLightningAdd* add)
+{
+    zLightning* new_lightning;
+    if (!(new_lightning = FindFreeLightning()))
+    {
+        return NULL;
+    }
+
+    new_lightning->type = add->type;
+    new_lightning->flags = add->flags | 0x41;
+    new_lightning->color = add->color;
+
+    if (new_lightning->type != LYT_TYPE_FUNC)
+    {
+        new_lightning->legacy.total_points = add->total_points;
+        new_lightning->legacy.end_points = add->end_points;        
+        new_lightning->legacy.arc_height = add->arc_height;
+        new_lightning->legacy.rand_radius = add->rand_radius;
+        
+        S32 zeusOnStraightPoint = TRUE;
+        F32 currot = 0.0f;
+
+        switch (new_lightning->type)
+        {
+        case LYT_TYPE_LINE:
+            break;
+        case LYT_TYPE_ROTATING:
+            new_lightning->legacy.rot.degrees = add->move_degrees;
+            new_lightning->legacy.rot.height = add->rot_radius;
+            break;
+        case LYT_TYPE_ZEUS:
+            new_lightning->legacy.zeus.normal_offset = add->zeus_normal_offset;
+            new_lightning->legacy.zeus.back_offset = add->zeus_back_offset;
+            new_lightning->legacy.zeus.side_offset = add->zeus_side_offset;
+            break;
+        }
+
+        xVec3 dir;
+        if (add->flags & 0x80)
+        {
+            if (add->end_points - 1 < 0)
+            {
+                xVec3Sub(&dir, &add->start[add->total_points - 1], add->start);
+            }
+            else
+            {
+                xVec3Sub(&dir, &add->end[add->end_points - 1], add->start);
+            }
+        }
+        else
+        {
+            xVec3Sub(&dir, add->end, add->start);
+        }
+
+        xVec3Normalize(&dir, &dir);
+
+        if (dir.y > 0.999f || dir.y < -0.999f)
+        {
+            xVec3Init(&new_lightning->legacy.arc_normal, 1.0f, 0.0f, 0.0f);
+        }
+        else
+        {
+            new_lightning->legacy.arc_normal.x = -(dir.x * dir.y);
+            new_lightning->legacy.arc_normal.y = dir.z * dir.z + dir.x * dir.x;
+            new_lightning->legacy.arc_normal.z = -(dir.z * dir.y);
+            xVec3Normalize(&new_lightning->legacy.arc_normal, &new_lightning->legacy.arc_normal);
+        }
+
+        xVec3 arc_orthogonal;
+        xVec3Cross(&arc_orthogonal, &new_lightning->legacy.arc_normal, &dir);
+
+        F32 pos = 0.0f;
+        F32 inc = 1.0f / (new_lightning->legacy.total_points - 1.0f);
+
+        S32 i;
+        S32 j = 0;
+        for (i = 0; i < new_lightning->legacy.total_points; i++)
+        {
+
+            new_lightning[i].legacy.thickness[0] = add->thickness * 0.5f;
+
+            if (add->flags & 0x400)
+            {
+                new_lightning[i].legacy.thickness[0] *= 1.0f - pos;
+            }
+            
+            if (add->flags & 0x800)
+            {
+                new_lightning[i].legacy.thickness[0] *= pos;
+            }
+            
+            if ((add->flags & 0x400) && (add->flags & 0x800))
+            {
+                new_lightning[i].legacy.thickness[0] *= 4.0f;
+            }
+
+            if (add->flags & 0x80)
+            {
+                if (i - (add->total_points - add->end_points) < 0)
+                {
+                    new_lightning[i].legacy.point[0] = add->start[j];
+                }
+                else
+                {
+                    new_lightning[i].legacy.point[0] = add->end[i - (add->total_points - add->end_points)];
+                }
+            }
+            else
+            {
+                xVec3Lerp(&new_lightning[i].legacy.point[0], add->start, add->end, pos);
+            }
+
+            switch (new_lightning->type)
+            {
+            case LYT_TYPE_LINE:
+                break;
+            case LYT_TYPE_ROTATING:
+                new_lightning[i].legacy.rot.deg[0] = currot;
+
+                while (new_lightning[i].legacy.rot.deg[0] > 180.0f)
+                {
+                    new_lightning[i].legacy.rot.deg[0] -= 360.0f;
+                }
+
+                while (new_lightning[i].legacy.rot.deg[0] < -180.0f)
+                {
+                    new_lightning[i].legacy.rot.deg[0] += 360.0f;
+                }
+
+                currot += add->setup_degrees;
+                break;
+            case LYT_TYPE_ZEUS:
+                if (i != 0 && i == new_lightning[i].legacy.total_points - 1)
+                {
+                    break;
+                }
+
+                xVec3 unk_r1_20;
+                if (zeusOnStraightPoint)
+                {
+                    xVec3Copy(&unk_r1_20, new_lightning[i].legacy.point);
+                    zeusOnStraightPoint = FALSE;
+                }
+                else
+                {
+                    xVec3Copy(new_lightning[i].legacy.point, &unk_r1_20);
+                    xVec3AddScaled(new_lightning->legacy.point, &new_lightning->legacy.arc_normal, new_lightning->legacy.zeus.normal_offset);
+                    xVec3AddScaled(new_lightning->legacy.point, &arc_orthogonal, -new_lightning->legacy.zeus.back_offset);
+                    xVec3AddScaled(new_lightning->legacy.point, &dir, -new_lightning->legacy.zeus.side_offset);
+
+                    zeusOnStraightPoint = TRUE;
+                }
+
+                break;
+            }
+
+            if (new_lightning->flags & 0x20)
+            {
+                F32 scalar = 4.0f * pos + pos * pos * -4.0f;
+                if (scalar > 0.0f)
+                {
+                    xVec3AddScaled(&new_lightning[j].legacy.base_point[0], &new_lightning->legacy.arc_normal, scalar * new_lightning->legacy.arc_height);
+                }
+            }
+
+            new_lightning->legacy.base_point[0] = new_lightning->legacy.point[0];
+
+            pos += inc;
+            j++;
+        }
+    }
+    else
+    {
+        zLightningModifyEndpoints(new_lightning, add->start, add->end);
+
+        new_lightning->func.endParam[0] = 10.0f * xurand();
+        new_lightning->func.endParam[1] = 10.0f * xurand();
+        new_lightning->func.endVel[0] = -1.0f;
+        new_lightning->func.endVel[1] = 1.0f;
+        new_lightning->func.width = add->thickness;
+        new_lightning->func.arc_height = add->arc_height;
+    }
+
+    if (new_lightning->flags & 0x10)
+    {
+        new_lightning->time_left = new_lightning->time_total = 0.1f;
+    }
+    else
+    {
+        new_lightning->time_left = new_lightning->time_total = add->time;
+    }
+
+    return new_lightning;
+}
+
 static void lightningTweakStart(const tweak_info& t)
 {
     xVec3 s, e;
@@ -300,25 +523,4 @@ void zLightningShow(zLightning* l, S32 show)
 void zLightningKill(zLightning* l)
 {
     l->flags &= 0xfffffefe;
-}
-
-static zLightning* FindFreeLightning()
-{
-    for (int i = 0; i != (sizeof(sLightning) / sizeof(zLightning*)); i++)
-    {
-        if (sLightning[i] != NULL)
-        {
-            if (!(sLightning[i]->flags & 1))
-            {
-                return sLightning[i];
-            }
-        }
-        else
-        {
-            sLightning[i] = (zLightning*)xMemAlloc(gActiveHeap, 0x234, 0);
-            return sLightning[i];
-        }
-    }
-
-    return 0;
 }
