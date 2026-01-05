@@ -378,8 +378,8 @@ namespace
 {
     static U8 read_bool(const substr& s, bool def)
     {
-        const substr negative[6] = {};
-        const substr positive[6] = {};
+        extern const substr negative[6];
+        extern const substr positive[6];
         if (def)
         {
             for (U32 i = 0; i < 6; ++i)
