@@ -363,23 +363,23 @@ void ztalkbox::permit(U32 add_flags, U32 remove_flags)
     shared.permit |= add_flags;
 }
 
-void ztalkbox::load(xBase& data, xDynAsset& asset, size_t)
+void ztalkbox::load(xBase& data, xDynAsset& asset, u32)
 {
     ((ztalkbox&)data).load((const ztalkbox::asset_type&)asset);
 }
 
-void ztalkbox::load_settings(xIniFile& ini) //TODO
+void ztalkbox::load_settings(xIniFile& ini)
 {
     shared.volume = xIniGetFloat(&ini, "talk_box.volume", 2.0f);
-    xDebugAddTweak("Talk Box|\u{1}Globals|volume", &shared.volume, 0.1f, 10.0f, NULL, NULL, 0);
+    xDebugAddTweak("Talk Box|\01GlobalsGlobals|volume", &shared.volume, 0.1f, 10.0f, NULL, NULL, 0);
 }
 
 namespace
 {
-    static U8 read_bool(const substr& s, bool def) //TODO 99%
+    static U8 read_bool(const substr& s, bool def)
     {
-        extern const substr negative[6];
-        extern const substr positive[6];
+        const substr negative[6] = {};
+        const substr positive[6] = {};
         if (def)
         {
             for (U32 i = 0; i < 6; ++i)
@@ -390,11 +390,13 @@ namespace
             return 1;
         }
         else
+        {
             for (U32 i = 0; i < 6; ++i)
             {
                 if (icompare(s, positive[i]) == 0)
                     return 1;
             }
+        }
         return 0;
     }
     static void parse_tag_pause(xtextbox::jot&, const xtextbox&, const xtextbox&,
@@ -403,9 +405,9 @@ namespace
     }
 
     static void parse_tag_trap(xtextbox::jot& j, const xtextbox&, const xtextbox&,
-                               const xtextbox::split_tag& ti) //TODO 99%
+                               const xtextbox::split_tag& ti)
     {
-        U8 c = 0;
+        bool c = 0;
 
         if (ti.action.size == 1 && ti.action.text[0] == '=')
         {
@@ -415,15 +417,15 @@ namespace
             }
         }
 
-        *(U8*)&j.context = c;
+        *(bool*)&j.context = c;
     }
 
     static void reset_tag_pause(xtextbox::jot&, const xtextbox&, const xtextbox&,
-                                const xtextbox::split_tag&) //DONE
+                                const xtextbox::split_tag&)
     {
     }
     static void reset_tag_sound(xtextbox::jot& j, const xtextbox&, const xtextbox& tb,
-                                const xtextbox::split_tag&) //DONE
+                                const xtextbox::split_tag&)
     {
         if (!shared.active)
         {
@@ -443,7 +445,7 @@ namespace
         c.action = sound_context::ACTION_SET;
     }
     static void reset_tag_trap(xtextbox::jot& j, const xtextbox&, const xtextbox& ctb,
-                               const xtextbox::split_tag&) //DONE
+                               const xtextbox::split_tag&)
     {
         if (!shared.active)
         {
@@ -459,7 +461,7 @@ namespace
     }
 
     static void reset_tag_allow_quit(xtextbox::jot& j, const xtextbox&, const xtextbox& ctb,
-                                     const xtextbox::split_tag&) //DONE
+                                     const xtextbox::split_tag&)
     {
         if (!shared.active)
         {
@@ -479,13 +481,13 @@ namespace
         return 1;
     }
 
-    U8 trigger_allow_quit(const xtextbox::jot& j) //DONE
+    U8 trigger_allow_quit(const xtextbox::jot& j)
     {
         shared.allow_quit = (j.context != NULL);
 
         return 1;
     }
-    U8 trigger_auto_wait(const xtextbox::jot& j) //DONE
+    U8 trigger_auto_wait(const xtextbox::jot& j)
     {
         shared.auto_wait = *(const wait_context*)j.context;
 
@@ -506,7 +508,7 @@ namespace
         return *this;
     }
 
-    void stop_audio_effect() //TODO
+    void stop_audio_effect()
     {
         if (!shared.active)
         {
@@ -518,7 +520,7 @@ namespace
             return;
         }
     }
-    static void reset_auto_wait() //DONE
+    static void reset_auto_wait()
     {
         const ztalkbox::asset_type* a = shared.active->asset;
 
@@ -543,7 +545,7 @@ namespace
         shared.auto_wait.query = Q_SKIP;
     }
     static void reset_tag_auto_wait(xtextbox::jot& j, const xtextbox&, const xtextbox& ctb,
-                                    const xtextbox::split_tag&) //DONE
+                                    const xtextbox::split_tag&)
     {
         if (!shared.active)
         {
@@ -593,7 +595,7 @@ void wait_context::reset_type()
     *(U16*)&this->type = 0;
 }
 
-static U8 trigger_trap(const xtextbox::jot& j) //DONE
+static U8 trigger_trap(const xtextbox::jot& j)
 {
     if (j.context != 0)
     {

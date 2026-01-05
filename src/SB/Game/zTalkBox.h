@@ -313,21 +313,21 @@ namespace
         U32 id; // offset 0x0, size 0x4
         enum
         {
-            ACTION_SET = 0,
-            ACTION_PUSH = 1,
-            ACTION_POP = 2,
+            ACTION_SET,
+            ACTION_PUSH,
+            ACTION_POP,
         } action : 8; // offset 0x4, size 0x4
         enum
         {
-            TYPE_INVALID = 0,
-            TYPE_VOLUME = 1,
-            TYPE_TARGET = 2,
-            TYPE_ORIGIN = 3,
+            TYPE_INVALID,
+            TYPE_VOLUME,
+            TYPE_TARGET,
+            TYPE_ORIGIN,
         } type : 8; // offset 0x4, size 0x4
         enum
         {
-            SOURCE_MEMORY = 0,
-            SOURCE_STREAM = 1,
+            SOURCE_MEMORY,
+            SOURCE_STREAM,
         } source : 8; // offset 0x4, size 0x4
         U8 anim; // offset 0x7, size 0x1
         union
