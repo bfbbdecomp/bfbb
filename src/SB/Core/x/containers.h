@@ -175,15 +175,65 @@ template <class T, U32 N> struct fixed_queue
     T _buffer[N + 1];
 
     void reset();
-    void front();
-    void pop_front();
+    T& front();
+    T& pop_front();
     void push_front(const T& element);
-    void push_back();
+    void push_back(const T& element);
     bool full() const;
-    void back();
-    void pop_back();
+    T& back();
+    T& pop_back();
     bool empty() const;
     U32 size() const;
+
+    struct iterator {
+        U32 _it;
+        fixed_queue<T, N>* _owner;
+
+        T& operator*() const
+        {
+            return _owner->_buffer[_it];
+        }
+
+        bool operator!=(const iterator& other) const
+        {
+            return _it != other._it;
+        }
+
+        iterator* operator+=(S32 value)
+        {
+            // This operation should be equivalent to 1 << ceil(logbase2(N)), which can be used as a mask
+            // for doing a fast modulus. This should be computed compile time, but there is no constexpr here
+            // And I don't know if this fixed_queue will see use again. So here it sits
+            const S32 mask = ((1 << (31 - __cntlzw(N))) - 1);
+            value += _it;
+            _it = value & mask;
+            return this;
+        }
+
+        iterator* operator++()
+        {
+            *this += 1;
+            return this;
+        }
+    };
+
+    iterator create_iterator(u32 initial_location) const
+    {
+        iterator it;
+        it._it = initial_location;
+        it._owner = const_cast<fixed_queue<T, N>*>(this);
+        return it;
+    }
+
+    iterator begin() const
+    {
+        return create_iterator(_first);
+    }
+
+    iterator end() const
+    {
+        return create_iterator(_last);
+    }
 };
 
 #endif
