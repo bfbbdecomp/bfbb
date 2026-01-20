@@ -3,6 +3,7 @@
 #include "xDebug.h"
 #include "zGlobals.h"
 #include "xstransvc.h"
+#include "xParEmitter.h"
 
 #include <types.h>
 #include <rwcore.h>
@@ -107,8 +108,8 @@ void zLightningInit()
 
     for (S32 i = 0; i < 10; i++) {
         xVec3Init(&sLFuncVal[i], 2.0f * (xurand() - 0.5f), 2.0f * (xurand() - 0.5f), 2.0f * (xurand() - 0.5f));
-        xVec3Init(&sLFuncSlope[i][0], 2.0f * (2.0f * (xurand() - 0.5f)), 2.0f * (2.0f * (xurand() - 0.5f)), 2.0f * (2.0f * (xurand() - 0.5f)));
-        xVec3Init(&sLFuncSlope[i][1], 2.0f * (2.0f * (xurand() - 0.5f)), 2.0f * (2.0f * (xurand() - 0.5f)), 2.0f * (2.0f * (xurand() - 0.5f)));
+        xVec3Init(&sLFuncSlope[i][0], sLFuncSlopeRange * (2.0f * (xurand() - 0.5f)), sLFuncSlopeRange * (2.0f * (xurand() - 0.5f)), sLFuncSlopeRange * (2.0f * (xurand() - 0.5f)));
+        xVec3Init(&sLFuncSlope[i][1], sLFuncSlopeRange * (2.0f * (xurand() - 0.5f)), sLFuncSlopeRange * (2.0f * (xurand() - 0.5f)), sLFuncSlopeRange * (2.0f * (xurand() - 0.5f)));
 
         sLFuncEnd[i] = 0.25f * (xurand() - 0.5f) + (i + 1);
     }
@@ -157,7 +158,7 @@ void zLightningInit()
     gLightningTweakAddInfo.zeus_back_offset = 0.2f;
     gLightningTweakAddInfo.zeus_side_offset = 0.0f;
 
-    sLightningStartCB.on_change = &lightningTweakStart;
+    sLightningStartCB.on_change = (void (*)(tweak_info&))&lightningTweakStart;
     sLightningChangeCB.on_change = &lightningTweakChangeType;
 
     xDebugAddTweak("Lightning|\01\01Go", "Start Lightning", &sLightningStartCB, NULL, 0x2);
