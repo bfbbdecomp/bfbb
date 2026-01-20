@@ -91,19 +91,15 @@ struct zLightning
 extern _tagLightningAdd gLightningTweakAddInfo;
 
 void lightningTweakChangeType(tweak_info& t);
-void lightningTweakStart(tweak_info& t);
 void zLightningInit();
 zLightning* zLightningAdd(_tagLightningAdd* add);
-void UpdateLightning(zLightning* l, F32 seconds);
-void zLightningUpdate(F32 seconds);
+void zLightningUpdate(F32 dt);
 void zLightningFunc_Render(zLightning* l);
 void zLightningShow(zLightning* l, S32 show);
 void zLightningKill(zLightning* l);
 void RenderLightning(zLightning* l);
 void zLightningRender();
 void zLightningModifyEndpoints(zLightning* l, xVec3* start, xVec3* end);
-void zLightningInit();
-void zLightningUpdate(F32 seconds);
 void zLightningRender();
 
 #endif
