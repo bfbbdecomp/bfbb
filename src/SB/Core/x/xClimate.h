@@ -3,9 +3,9 @@
 
 #include <types.h>
 #include "xVec3.h"
+#include "zParEmitter.h"
 
 struct xEnvAsset;
-struct zParEmitter;
 
 extern const float snow_life;
 
