@@ -104,12 +104,8 @@ struct xPsyche : RyzMemData
     PSY_BRAIN_STATUS psystat;
     xBase fakebase;
 
-    xGoal* GIDInStack(S32 gid) const;
-    void ImmTranOn();
-    void ImmTranOff();
-    S32 ImmTranIsOn();
-    S32 HasGoal(S32 goal);
     xGoal* GetCurGoal() const;
+    xGoal* GIDInStack(S32 gid) const;
     S32 GIDOfActive() const;
     S32 GIDOfPending() const;
     S32 GIDOfSafety() const
@@ -118,10 +114,11 @@ struct xPsyche : RyzMemData
     }
     xGoal* GetPrevRecovery(S32 gid) const;
     S32 Timestep(F32 dt, void* updCtxt);
+    S32 ParseTranRequest(en_trantype trantyp, S32 trangid);
     xGoal* FindGoal(S32 gid);
     S32 GoalSet(S32 gid, S32 r5);
     S32 GoalPop(S32 gid_popto, S32 r5);
-    S32 GoalNone(S32 denyExplicit);
+    S32 GoalNone(S32 p1, S32 denyExplicit);
     S32 GoalSwap(S32 gid, S32 r5);
     S32 GoalPopRecover(S32 overpend);
     S32 GoalPopToBase(S32 overpend);
@@ -132,21 +129,22 @@ struct xPsyche : RyzMemData
     void BrainExtend();
     void BrainEnd();
     xGoal* AddGoal(S32 gid, void* createData);
-    void ForceTran(F32, void*);
+    void ForceTran(F32 dt, void* ctx);
     void FreshWipe();
+    S32 TranGoal(F32 dt, void* updCtxt);
     F32 TimerGet(en_xpsytime tymr);
     void TimerClear();
-    void SetTopState(en_GOALSTATE);
-    void SetOwner(xBase*, void*);
-    void KillBrain(xFactory*);
-    void Lobotomy(xFactory*);
+    void SetTopState(en_GOALSTATE state);
+    void SetOwner(xBase* clt_owner, void* userContext);
+    void KillBrain(xFactory* factory);
+    void Lobotomy(xFactory* factory);
     void TimerUpdate(F32 dt);
     void SetSafety(S32 goalID)
     {
         gid_safegoal = goalID;
     }
-    void Amnesia(S32);
-    S32 IndexInStack(S32) const;
+    void Amnesia(S32 i);
+    S32 IndexInStack(S32 gid) const;
     void SetNotify(xPSYNote* notice)
     {
         cb_notice = notice;
@@ -155,6 +153,41 @@ struct xPsyche : RyzMemData
     xBase* GetClient()
     {
         return this->clt_owner;
+    }
+    S32 ExpTranIsOn()
+    {
+        return !(this->flg_psyche & 4);
+    }
+    void ExpTranOff()
+    {
+        this->flg_psyche |= 4;
+    }
+    void ExpTranOn()
+    {
+        this->flg_psyche &= ~4;
+    }
+    void DBG_HistAdd(S32 gid)
+    {
+    }
+
+    void ImmTranOn()
+    {
+        this->flg_psyche |= 1;
+    }
+
+    void ImmTranOff()
+    {
+        this->flg_psyche &= ~1;
+    }
+
+    S32 ImmTranIsOn()
+    {
+        return this->flg_psyche & 1;
+    }
+
+    S32 HasGoal(S32 goal)
+    {
+        return FindGoal(goal) != NULL;
     }
 };
 
