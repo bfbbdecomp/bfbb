@@ -58,8 +58,8 @@ void xBehaveMgr::Startup(S32 size, S32 tmpAlloc)
 
     g_behavmgr->RegBuiltIn();
     XOrdInit(&psylist, size, 0);
-    psypool = (xPsyche*)xMemAlloc(gActiveHeap, size * 0x68, 0);
-    memset(psypool, 0, size * 0x68);
+    psypool = (xPsyche*)xMemAlloc(gActiveHeap, size * sizeof(xPsyche), 0);
+    memset(psypool, 0, size * sizeof(xPsyche));
 }
 
 void xBehaveMgr::RegBuiltIn()
@@ -896,19 +896,17 @@ S32 xPsyche::TranGoal(F32 dt, void* updCtxt)
             if (this->staktop >= 0)
             {
                 this->goalstak[this->staktop]->SetState(GOAL_STAT_EXIT);
+                break;
             }
-            else
-            {
-            case PEND_TRAN_PUSH:
-                this->staktop += 1;
-            case PEND_TRAN_SWAP:
-                this->goalstak[this->staktop] = this->pendgoal;
-                topgoal = this->goalstak[this->staktop];
-                topgoal->SetState(GOAL_STAT_ENTER);
-                this->DBG_HistAdd(topgoal->GetID());
-                this->pendgoal = NULL;
-                this->pendtype = PEND_TRAN_INPROG;
-            }
+        case PEND_TRAN_PUSH:
+            this->staktop += 1;
+        case PEND_TRAN_SWAP:
+            this->goalstak[this->staktop] = this->pendgoal;
+            topgoal = this->goalstak[this->staktop];
+            topgoal->SetState(GOAL_STAT_ENTER);
+            this->DBG_HistAdd(topgoal->GetID());
+            this->pendgoal = NULL;
+            this->pendtype = PEND_TRAN_INPROG;
             break;
         case PEND_TRAN_POP:
             this->goalstak[this->staktop] = 0;
