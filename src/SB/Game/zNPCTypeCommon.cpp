@@ -754,7 +754,7 @@ S32 zNPCCommon::NPCMessage(NPCMsg* mail)
 void zNPCCommon::Move(xScene* xscn, F32 dt, xEntFrame* frm)
 {
     bool retval = false;
-    if ((npcset.useNavSplines) && ((flg_move)&8))
+    if ((npcset.useNavSplines) && ((flg_move) & 8))
         if (this->drv_data && (this->drv_data->driver || this->drv_data->odriver))
         {
             retval = true;
@@ -889,7 +889,7 @@ S32 zNPCCommon::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam
         xPsyche* psy = this->psy_instinct;
         if (psy)
         {
-            psy->GoalNone(1);
+            psy->GoalNone(1, 1);
         }
         break;
     }
@@ -2433,7 +2433,7 @@ void zNPCCommon_WonderReset()
 U32 zNPCCommon::CanDoSplines()
 {
     bool retval = false;
-    if ((npcset.useNavSplines) && ((flg_move)&8))
+    if ((npcset.useNavSplines) && ((flg_move) & 8))
     {
         retval = true;
     }
@@ -3197,26 +3197,6 @@ void xNPCBasic::PostInit()
 void xNPCBasic::Render()
 {
     xEntRender(this);
-}
-
-void xPsyche::ImmTranOn()
-{
-    flg_psyche |= 1;
-}
-
-void xPsyche::ImmTranOff()
-{
-    flg_psyche &= 0xfffffffe;
-}
-
-S32 xPsyche::ImmTranIsOn()
-{
-    return flg_psyche & 1;
-}
-
-S32 xPsyche::HasGoal(S32 goal)
-{
-    return FindGoal(goal) != NULL;
 }
 
 U32 xSndIsPlaying(U32 assetID, U32 parid)
