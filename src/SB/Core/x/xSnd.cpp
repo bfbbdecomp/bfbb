@@ -127,6 +127,10 @@ void xSndStopAll(U32 mask)
     xSndDelayedInit();
 }
 
+void xSndStopFade(U32 id, F32 fade_time)
+{
+}
+
 void xSndSetCategoryVol(sound_category category, F32 vol)
 {
     gSnd.categoryVolFader[category] = vol;
