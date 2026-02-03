@@ -128,8 +128,6 @@ struct xNPCBasic : xEnt, xFactoryInst
     {
         return 0;
     }
-
-    virtual void Destroy();
 };
 
 void NPC_spdBasedColFreq(xNPCBasic* npc, F32 dt);
