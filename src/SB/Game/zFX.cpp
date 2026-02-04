@@ -14,13 +14,17 @@
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
 
 extern xFXRing sPatrickStunRing[3];
-extern xFXRing sPorterRing[2];
 extern xFXRing sHammerRing[1];
-extern xFXRing sMuscleArmRing[1];
 extern xFXRing sPorterRing[2];
-extern xFXRing sPatrickStunRing[3];
+extern xFXRing sMuscleArmRing[1];
 
-extern zFXGooInstance zFXGooInstances[24];
+// TODO: the above vars should be const (like they are below). Simply need to find what they are equal to.
+// const xFXRing sPatrickStunRing[3] = { 1, 2, 3 };
+// const xFXRing sHammerRing[1] = { 0 };
+// const xFXRing sPorterRing[2] = { 0 };
+// const xFXRing sMuscleArmRing[1] = { 0 };
+
+zFXGooInstance zFXGooInstances[24];
 
 extern char zFX_strings[];
 extern ztextbox* goo_timer_textbox;
