@@ -25,8 +25,6 @@
 #define ID_gloss_edge 0xB8C2351E
 #define ID_rainbowfilm_smooth32 0x741B0566
 
-extern const char _stringBase0_7[];
-
 /* Global variables from .comm segment */
 xFXRing ringlist[RING_COUNT];
 xFXStreak sStreakList[10];
@@ -595,30 +593,6 @@ static F32 sAuraPulseAng[2];
 static _xFXAuraAngle sAuraAngle[2];
 static RwTexture* gAuraTex = NULL;
 static _xFXAura sAura[AURA_COUNT];
-
-__declspec(section ".rodata") static const char _stringBase0_7[] = "bubble buddy\0"
-                                                                   "bubble missile\0"
-                                                                   "bubble helmet\0"
-                                                                   "bubble bowling ball\0"
-                                                                   "bubble shoeL\0"
-                                                                   "bubble shoeR\0"
-                                                                   "spec3\0"
-                                                                   "default_env_map.RW3\0"
-                                                                   "gloss_edge\0"
-                                                                   "update frame\n\0"
-                                                                   "fx_streak1\0"
-                                                                   "BLENDZERO\0"
-                                                                   "BLENDONE\0"
-                                                                   "BLENDSRCCOLOR\0"
-                                                                   "BLENDINVSRCCOLOR\0"
-                                                                   "BLENDSRCALPHA\0"
-                                                                   "BLENDINVSRCALPHA\0"
-                                                                   "BLENDDESTALPHA\0"
-                                                                   "BLENDINVDESTALPHA\0"
-                                                                   "BLENDDESTCOLOR\0"
-                                                                   "BLENDINVDESTCOLOR\0"
-                                                                   "BLENDSRCALPHASAT\0"
-                                                                   "FX|Ribbon";
 
 void xFXStartup()
 {

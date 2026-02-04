@@ -26,12 +26,7 @@ U32 oldSoundMode;
 U32 oldMusicVolume;
 U32 oldSFXVolume;
 
-extern st_ZDISPATCH_DEPOT g_zdsp_depot;
-
-extern iColor_tag _1143;
-
-extern iColor_tag _1142;
-extern F64 _1199; // 4503601774854144.0f // float conversion number
+st_ZDISPATCH_DEPOT g_zdsp_depot = { 0 };
 
 extern U8 menu_fmv_played;
 extern char zEventLogBuf[256][20];
@@ -447,8 +442,8 @@ S32 ZDSP_elcb_event(xBase*, xBase* xb, U32 toEvent, const F32* toParam, xBase* t
         zhud::hide();
         break;
     case 0x120:
-        iColor_tag black = _1142;
-        iColor_tag clear = _1143;
+        iColor_tag black = { 0x00, 0x00, 0x00, 0xFF };
+        iColor_tag clear = { 0x00, 0x00, 0x00, 0x00 };
         xScrFxFade(&clear, &black, *toParam, 0, 1);
         break;
     case 0x126:
@@ -533,7 +528,7 @@ void WRAP_xsnd_setMusicVolume(S32 i)
 
 void WRAP_xsnd_setSFXVolume(S32 i)
 {
-    F32 fcmp = 0.01f * i; // - _1199;
+    F32 fcmp = 0.01f * i;
     F32 f = MIN(fcmp, 1.0f); //1.0f < fcmp ? fcmp : 1.0f;
 
     if (f > 1.0f)

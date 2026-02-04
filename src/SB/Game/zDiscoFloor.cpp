@@ -19,36 +19,6 @@
 #include <stdio.h>
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\stdlib.h>
 
-extern U32 current_disco_floor;
-
-extern F32 _710_2; // 1.0f
-extern F32 _908; // 1.5f
-extern F32 _909_1; // 5.0f
-extern F32 _910; // 6.0f
-extern F32 _911_1; // 0.01f
-extern F32 _912; // 0.05f
-extern F32 _913_0; // 17.0f
-extern F32 _914_0; // -10.0f
-extern F32 _915; // 0.95f
-extern F32 _916_0; // 27.0f
-extern F32 _917_1; // 0.231f
-extern F32 _918_1; // 0.75f
-extern F32 _919_1; // 0.0f
-extern F32 _1129; // 0.25f
-extern F32 _1174_0; // 2*PI
-extern F32 _1260_1; // 0.1f
-extern F32 _1270_1; // 0.5f
-extern F32 _1271_0; // 0.2f
-extern F32 _1272; // 0.7f
-extern F32 _1273_0; // 0.3f
-extern F32 _1406; // 25.0f
-extern F32 _1407; // 100.0f
-extern F32 _1419_2; // 10.0f
-extern F32 _1461_0; // 0.35f
-extern F32 _1462_0; // 255.0f
-
-extern const char _stringBase0_89[];
-
 namespace
 {
     struct
@@ -56,6 +26,11 @@ namespace
         xLightKit kit;
         xLightKitLight light[1];
     } glow_light;
+
+    U32 current_disco_floor;
+
+    const F32 close_encounters[5] = { 2, 4, 0, -12, -5 };
+    const F32 blues_scale[6] = { -12, -8, -5, 0, 2, 4 };
 
     void create_glow_light()
     {
@@ -144,7 +119,7 @@ namespace
 
             for (S32 j = 1; j < 5; j++)
             {
-                sprintf(buffer + prefix_size, _stringBase0_89, j, i);
+                sprintf(buffer + prefix_size, "%0*d", j, i);
 
                 tiles[total].ent = find_object(buffer);
 
@@ -251,9 +226,6 @@ namespace
     }
 } // namespace
 
-extern F32 close_encounters[5];
-extern F32 blues_scale[6];
-
 namespace
 {
     void play_sound(z_disco_floor& df)
@@ -293,7 +265,7 @@ namespace
                 pitch_offset += tmp;
             }
 
-            xSndPlay3D(xStrHash(_stringBase0_89 + 5), 0.231f, pitch_offset, 0, 0, &df.bound.center,
+            xSndPlay3D(xStrHash("Disco_6_Alt"), 0.231f, pitch_offset, 0, 0, &df.bound.center,
                        0.75f * df.bound.r, 1.5f * df.bound.r, SND_CAT_GAME, 0.0f);
 
             df.sound_delay = 0.0f;
@@ -308,10 +280,10 @@ namespace
 
         if (df.transition_time < df.transition_delay)
         {
-            return _919_1;
+            return 0.0f;
         }
 
-        if (df.sound_delay > _912)
+        if (df.sound_delay > 0.05f)
         {
             play_sound(df);
         }
@@ -351,7 +323,7 @@ namespace
             dt = df.state_time - df.state_delay;
         }
 
-        df.state_time = _919_1;
+        df.state_time = 0.0f;
         df.next_state = df.state + (df.flag.forward ? 1 : -1);
 
         if (df.next_state < df.min_state)
@@ -390,7 +362,7 @@ namespace
         }
         else
         {
-            df.transition_time = _919_1;
+            df.transition_time = 0.0f;
         }
 
         refresh_state(df);
@@ -436,7 +408,7 @@ namespace
 
         *ltm = *mat;
 
-        if (_919_1 != model->Scale.x)
+        if (0.0f != model->Scale.x)
         {
             ltm->right *= model->Scale.x;
             ltm->up *= model->Scale.y;
@@ -459,7 +431,7 @@ namespace
 
         *ltm = *mat;
 
-        if (_919_1 != model->Scale.x)
+        if (0.0f != model->Scale.x)
         {
             ltm->right *= model->Scale.x;
             ltm->up *= model->Scale.y;
@@ -514,7 +486,7 @@ namespace
 void z_disco_floor::init()
 {
     create_glow_light();
-    xDebugRemoveTweak(_stringBase0_89 + 17);
+    xDebugRemoveTweak("Disco Floor");
     add_global_tweaks();
     clone_pipe.init();
 }
@@ -767,7 +739,7 @@ void z_disco_floor::reset()
 {
     flag.culled = false;
     flag.forward = true;
-    pulse_time = _1174_0 * xurand();
+    pulse_time = (PI * 2) * xurand();
     transition_delay = asset->interval.transition;
     state_delay = asset->interval.state;
     min_state = 0;
@@ -803,7 +775,7 @@ void z_disco_floor::update(xScene&, F32 dt)
         dt = update_transition(*this, dt);
     }
 
-    if (dt > _919_1)
+    if (dt > 0.0f)
     {
         update_state(*this, dt);
     }
@@ -835,12 +807,12 @@ void z_disco_floor::set_state(size_t state, bool immediate)
     else
     {
         next_state = state;
-        transition_time = _919_1;
+        transition_time = 0.0f;
 
         translate_mask(next_state_mask, state_masks[next_state], tiles_size);
     }
 
-    state_time = _919_1;
+    state_time = 0.0f;
 
     refresh_state(*this);
 }
@@ -912,7 +884,7 @@ void z_disco_floor::refresh_spheres()
             RwSphere& msphere = it->ent->model->Data->worldBoundingSphere;
             xVec3& scale = it->ent->model->Scale;
 
-            if (_919_1 != scale.x)
+            if (0.0f != scale.x)
             {
                 if (scale.x >= scale.y && scale.x >= scale.z)
                 {
@@ -930,8 +902,8 @@ void z_disco_floor::refresh_spheres()
 
             it->sphere.center = (xVec3&)msphere;
             it->sphere.r = msphere.radius;
-            it->sphere.center.y += _1260_1;
-            it->sphere.r += _1260_1;
+            it->sphere.center.y += 0.1f;
+            it->sphere.r += 0.1f;
 
             it++;
         }
@@ -959,7 +931,7 @@ void z_disco_floor::refresh_cull_dist()
 {
     if (!tiles_size)
     {
-        cull_dist_glow = cull_dist_update = _919_1;
+        cull_dist_glow = cull_dist_update = 0.0f;
     }
     else
     {
@@ -967,8 +939,8 @@ void z_disco_floor::refresh_cull_dist()
 
         if (!lod)
         {
-            cull_dist_glow = _1406;
-            cull_dist_update = _1407;
+            cull_dist_glow = 25.0f;
+            cull_dist_update = 100.0f;
         }
         else
         {
@@ -990,21 +962,21 @@ void z_disco_floor::distance_cull()
     flag.culled = (dist >= max_update_dist);
 
     F32 min_glow_dist = cull_dist_glow + bound.r;
-    F32 max_glow_dist = _1419_2 + min_glow_dist;
+    F32 max_glow_dist = 10.0f + min_glow_dist;
 
     flag.glow_culled = (dist >= max_glow_dist);
 
     if (dist <= min_glow_dist)
     {
-        glow_fade = _710_2;
+        glow_fade = 1.0f;
     }
     else if (dist >= max_glow_dist)
     {
-        glow_fade = _919_1;
+        glow_fade = 0.0f;
     }
     else
     {
-        glow_fade = _1260_1 * (max_glow_dist - dist);
+        glow_fade = 0.1f * (max_glow_dist - dist);
     }
 }
 
@@ -1037,24 +1009,24 @@ void z_disco_floor::effects_render(S32 group)
 {
     F32 glow = pulse_glow[group];
 
-    if (_919_1 == glow)
+    if (0.0f == glow)
     {
         return;
     }
 
     // non-matching: regalloc
 
-    F32 dyoffset = _1260_1 * glow;
-    F32 dalpha = _1461_0 * -glow;
+    F32 dyoffset = 0.1f * glow;
+    F32 dalpha = 0.35f * -glow;
     F32 yoffset = dyoffset;
-    F32 alpha = _1272 * glow;
+    F32 alpha = 0.7f * glow;
 
     for (S32 i = 0; i < 2; i++)
     {
         RpAtomic* atomic = NULL;
         tile_data* tile = tiles[group];
         tile_data* end_tile = tile + tiles_size;
-        F32 alphaf = _1462_0 * alpha + _1270_1;
+        F32 alphaf = 255.0f * alpha + 0.5f;
 
         while (tile != end_tile)
         {

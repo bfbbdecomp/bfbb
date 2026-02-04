@@ -14,7 +14,6 @@ static _zLight* sLight[32];
 S32 sLightTotal;
 static _tagPartition sLightPart;
 zVolume* sPartitionVolume;
-extern char zLight_strings[];
 S32 gNumTemporaryLights;
 static _zLight* gTemporaryLights[32];
 void (*sEffectFuncs[18])(_zLight*, F32) = {};
@@ -46,7 +45,7 @@ void zLightResetAll(xEnv* env)
     {
         xPartitionWorld(&sLightPart, env, 10, 1, 10);
     }
-    xPartitionDump(&sLightPart, zLight_strings);
+    xPartitionDump(&sLightPart, "Lighting");
 }
 
 void zLightInit(void* b, void* tasset)
@@ -281,7 +280,7 @@ void zLightSetVolume(zVolume* vol)
     }
     else
     {
-        U32 lp_id = xStrHash(zLight_strings + 9);
+        U32 lp_id = xStrHash("LIGHT_PARTITION");
         if (vol->id == lp_id)
         {
             sPartitionVolume = vol;
