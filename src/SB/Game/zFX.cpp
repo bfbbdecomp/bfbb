@@ -13,14 +13,93 @@
 #include <stdlib.h>
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
 
-extern xFXRing sPatrickStunRing[3];
-extern xFXRing sPorterRing[2];
-extern xFXRing sHammerRing[1];
-extern xFXRing sMuscleArmRing[1];
-extern xFXRing sPorterRing[2];
-extern xFXRing sPatrickStunRing[3];
+const xFXRing sPatrickStunRing[3] = { { 0x741b0566,
+                                        1.0f,
+                                        { 0.0f, 0.0f, 0.0f },
+                                        0.0f,
+                                        0.5f,
+                                        4.0f,
+                                        PI / 2.0f,
+                                        PI / -2.0f,
+                                        0.5f,
+                                        -0.25f,
+                                        { 255, 255, 255, 255 },
+                                        32,
+                                        3,
+                                        1,
+                                        { NULL } },
+                                      { 0x741b0566,
+                                        1.5f,
+                                        { 0.0f, 0.0f, 0.0f },
+                                        0.0f,
+                                        0.75f,
+                                        5.0f,
+                                        PI / 2.0f,
+                                        PI / -2.0f,
+                                        0.375f,
+                                        -0.1875f,
+                                        { 127, 127, 127, 127 },
+                                        32,
+                                        2,
+                                        1,
+                                        { NULL } },
+                                      { 0x741b0566,
+                                        2.0f,
+                                        { 0.0f, 0.0f, 0.0f },
+                                        0.0f,
+                                        1.0f,
+                                        6.0f,
+                                        PI / 2.0f,
+                                        PI / -2.0f,
+                                        0.25f,
+                                        -0.125f,
+                                        { 63, 63, 63, 63 },
+                                        32,
+                                        1,
+                                        1,
+                                        { NULL } } };
+const xFXRing sHammerRing[1] = {
+    0x741b0566, 0.75f, { 0.0f, 0.0f, 0.0f },   0.0f, 0.4f, 2.4f, PI / 2.0f, PI / -2.0f,
+    0.6f,       -0.6f, { 255, 255, 255, 127 }, 32,   2,    1,    NULL
+};
+const xFXRing sPorterRing[2] = {
+    { 0x741b0566,
+      1.2f,
+      { 0.0f, 0.0f, 0.0f },
+      0.1f,
+      0.0f,
+      3.0f,
+      PI / 2.0f,
+      PI / -2.0f,
+      0.6f,
+      -0.6f,
+      { 180, 180, 45, 127 },
+      16,
+      2,
+      1,
+      { NULL } },
+    { 0x741b0566,
+      0.5f,
+      { 0.0f, 0.25f, 0.0f },
+      0.0f,
+      1.5f,
+      -3.0f,
+      PI / -2.0f,
+      PI / 2.0f,
+      1.2f,
+      -2.4f,
+      { 64, 128, 128, 127 },
+      8,
+      2,
+      1,
+      { NULL } },
+};
+const xFXRing sMuscleArmRing[1] = {
+    0x741b0566, 3.0f,  { 0.0f, 0.0f, 0.0f },   0.0f, 0.0f, 90.0f, PI / 2.0f, 0.0f,
+    0.6f,       30.0f, { 255, 255, 255, 160 }, 48,   1,    1,     NULL
+};
 
-extern zFXGooInstance zFXGooInstances[24];
+zFXGooInstance zFXGooInstances[24];
 
 extern char zFX_strings[];
 extern ztextbox* goo_timer_textbox;

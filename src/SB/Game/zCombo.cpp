@@ -10,10 +10,6 @@
 #include "zTextBox.h"
 #include "zUIFont.h"
 
-extern const char zCombo_Strings[];
-extern const F32 zCombo_float_zero;
-extern const F32 zCombo_float_minusone;
-
 struct zComboReward
 {
     S32 reward;

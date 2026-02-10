@@ -17,21 +17,7 @@
 #include "xColor.h"
 #include "iCollide.h"
 
-extern float xNPCBasic_float_0;
-extern float xNPCBasic_float_1;
-extern float xNPCBasic_float_onehalf;
-extern float xNPCBasic_float_onequarter;
-extern float xNPCBasic_float_15;
-extern float xNCPBasic_float_0p10000000;
-extern float xNPCBasic_float_0p75;
-extern float xNPCBasic_float_1eminus5;
-extern float xNPCBasic_float_0p2;
-extern float xNPCBasic_float_thirty;
-extern float xNPCBasic_float_0p04;
-extern float xNPCBasic_float_0p025;
-
-extern xEntCollis g_colrec;
-extern xVec3 lbl_8026A3F8;
+static xEntCollis g_colrec = { 0 };
 
 void NPC_alwaysUseSphere(xEnt*, xVec3*);
 void NPC_entwrap_setup(xEnt*);
@@ -45,17 +31,17 @@ void NPC_entwrap_render(xEnt*);
 // The order of the function pointer assignment instructions at the end of the
 void xNPCBasic::Init(xEntAsset* asset)
 {
-    if (xNPCBasic_float_0 == asset->scale.x)
+    if (0.0f == asset->scale.x)
     {
-        asset->scale.x = xNPCBasic_float_1;
+        asset->scale.x = 1.0f;
     }
-    if (xNPCBasic_float_0 == asset->scale.y)
+    if (0.0f == asset->scale.y)
     {
-        asset->scale.y = xNPCBasic_float_1;
+        asset->scale.y = 1.0f;
     }
-    if (xNPCBasic_float_0 == asset->scale.z)
+    if (0.0f == asset->scale.z)
     {
-        asset->scale.z = xNPCBasic_float_1;
+        asset->scale.z = 1.0f;
     }
 
     xEnt* thisEnt = this;
@@ -125,14 +111,15 @@ void xNPCBasic::Reset()
 void NPC_alwaysUseSphere(xEnt* ent, xVec3* value)
 {
     xNPCBasic* npc = (xNPCBasic*)ent;
-    xVec3 bndcent = lbl_8026A3F8;
+    const xVec3 vec = { 0, 0, 0 };
+    xVec3 bndcent = vec;
 
     xVec3Copy(&bndcent, xEntGetPos(npc));
-    bndcent.y += xNPCBasic_float_0p75;
+    bndcent.y += 0.75f;
 
     npc->bound.type = XBOUND_TYPE_SPHERE;
     xVec3Copy(&npc->bound.sph.center, &bndcent);
-    npc->bound.sph.r = xNPCBasic_float_0p75;
+    npc->bound.sph.r = 0.75f;
     if (npc->bound.type != XBOUND_TYPE_NA)
     {
         xQuickCullForBound(&npc->bound.qcd, &npc->bound);
@@ -148,12 +135,12 @@ void NPC_alwaysUseSphere(xEnt* ent, xVec3* value)
 
 void NPC_spdBasedColFreq(xNPCBasic* npc, F32 dt)
 {
-    if (dt < xNPCBasic_float_1eminus5)
+    if (dt < 1e-5f)
     {
         return;
     }
     F32 d = xVec3Length(&npc->frame->vel);
-    if (d < xNPCBasic_float_0p2)
+    if (d < 0.2f)
     {
         return;
     }
@@ -169,7 +156,7 @@ void NPC_spdBasedColFreq(xNPCBasic* npc, F32 dt)
                      npc->bound.box.box.upper.z - npc->bound.box.box.lower.z);
     }
 
-    S32 nf = xNPCBasic_float_thirty * (radius / d);
+    S32 nf = 30.0f * (radius / d);
     npc->colFreq = MIN(npc->colFreq, nf);
 }
 
@@ -215,10 +202,10 @@ void xNPCBasic::Process(xScene* xscn, F32 dt)
 
     if (frame != NULL && (flags1.flg_upward & 0x2))
     {
-        frame->dpos.y = MAX(xNPCBasic_float_0, frame->dpos.y);
-        frame->dvel.y = MAX(xNPCBasic_float_0, frame->dvel.y);
-        frame->vel.y = MAX(xNPCBasic_float_0, frame->vel.y);
-        frame->oldvel.y = MAX(xNPCBasic_float_0, frame->oldvel.y);
+        frame->dpos.y = MAX(0.0f, frame->dpos.y);
+        frame->dvel.y = MAX(0.0f, frame->dvel.y);
+        frame->vel.y = MAX(0.0f, frame->vel.y);
+        frame->oldvel.y = MAX(0.0f, frame->oldvel.y);
         model->Mat->pos.y = MAX(model->Mat->pos.y, frame->oldmat.pos.y);
     }
 
@@ -254,7 +241,7 @@ void xNPCBasic::Process(xScene* xscn, F32 dt)
         DBG_PStatOn(eNPCPerfEnable);
     }
 
-    if ((pflags & (0x2 | 0x1)) != 0 && xVec3Length2(&frame->vel) > xNCPBasic_float_0p10000000)
+    if ((pflags & (0x2 | 0x1)) != 0 && xVec3Length2(&frame->vel) > 0.1f)
     {
         NPC_spdBasedColFreq(this, dt);
     }
@@ -302,9 +289,9 @@ void NPC_entwrap_reset(xEnt* ent)
 void NPC_entwrap_update(xEnt* ent, xScene* scn, F32 dt_caller)
 {
     F32 dt = dt_caller;
-    if (dt > xNPCBasic_float_0p04)
+    if (dt > 0.04f)
     {
-        dt = xNPCBasic_float_0p025;
+        dt = 0.025000002f;
     }
 
     xNPCBasic* npc = (xNPCBasic*)ent;

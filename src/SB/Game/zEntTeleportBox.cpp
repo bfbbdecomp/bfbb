@@ -27,66 +27,13 @@ static U32 sPlayerNear;
 static zUIFont* sTeleportUI;
 static F32 sTeleportCamPitch;
 
-static const char _stringBase0_79[] = "Box_open\0"
-                                      "teleportation_box_bind\0"
-                                      "TBox\0"
-                                      "Closed\0"
-                                      "Open\0"
-                                      "JumpIn\0"
-                                      "Teleport\0"
-                                      "JumpOut\0"
-                                      "Closed2Open\0"
-                                      "teleportation_box_closed.anm\0"
-                                      "\0"
-                                      "teleportation_box_jumpin_teleport.anm\0"
-                                      "teleportation_box_open.anm\0"
-                                      "teleportation_box_teleport_jumpout.anm\0"
-                                      "teleportation_box_teleport.anm\0"
-                                      "teleportation_box_closedtoopen.anm\0"
-                                      "mnu4 teleport box\0"
-                                      "Box_shuffle_alt\0"
-                                      "Box_shuffle_open";
-
-extern F32 _777_1;
-extern F32 _778_0;
-extern F32 _779_2;
-extern F32 _780_2;
-extern F32 _853_3;
-extern F32 _858_3;
-extern F32 _860_3;
-extern F32 _888_0;
-extern F32 _943;
-extern F32 _944_0;
-extern F32 _945_2;
-extern F32 _946_3;
-extern F32 _947_2;
-extern F32 _970_1;
-extern F32 _971_0;
-extern F32 _972_0;
-extern F32 _973_0;
-extern F32 _974_0;
-extern F32 _975_1;
-extern F32 _976_2;
-extern F32 _977_2;
-extern F32 _978_2;
-extern F32 _979;
-extern F32 _980;
-extern F32 _1051_2;
-extern F32 _1052_1;
-extern F64 _1054_3;
-
-#undef PI
-#undef ONEEIGHTY
-#define PI _777_1
-#define ONEEIGHTY _778_0
-
 static void VecFromAngle(float a, xVec3* v)
 {
     xMat3x3 mat;
 
     xMat3x3Identity(&mat);
-    xMat3x3Euler(&mat, DEG2RAD(a), _779_2, _779_2);
-    xVec3Init(v, _779_2, _779_2, _780_2);
+    xMat3x3Euler(&mat, DEG2RAD(a), 0.0f, 0.0f);
+    xVec3Init(v, 0.0f, 0.0f, 1.0f);
     xMat3x3LMulVec(v, &mat, v);
 }
 
@@ -151,7 +98,7 @@ static U32 CtoOCheck(xAnimTransition*, xAnimSingle*, void* object)
     F32 dy__ = player->bound.sph.center.y - ((_zEntTeleportBox*)object)->model->Mat->pos.y;
     F32 dz__ = player->bound.sph.center.z - ((_zEntTeleportBox*)object)->model->Mat->pos.z;
 
-    return (SQR(dx__) + SQR(dy__) + SQR(dz__) < _853_3);
+    return (SQR(dx__) + SQR(dy__) + SQR(dz__) < 11.56f);
 }
 
 static U32 CtoOCB(xAnimTransition*, xAnimSingle*, void* object)
@@ -161,11 +108,10 @@ static U32 CtoOCB(xAnimTransition*, xAnimSingle*, void* object)
 
     xVec3Copy(&tmp, (xVec3*)&((_zEntTeleportBox*)object)->model->Mat->pos);
 
-    tmp.y += _780_2;
+    tmp.y += 1.0f;
 
     zFX_SpawnBubbleHit(&tmp, 50);
-    xSndPlay3D(xStrHash(_stringBase0_79), _858_3, _779_2, 128, 0, &tmp, _779_2, SND_CAT_GAME,
-               _779_2);
+    xSndPlay3D(xStrHash("Box_open"), 0.77f, 0.0f, 128, 0, &tmp, 0.0f, SND_CAT_GAME, 0.0f);
 
     return 0;
 }
@@ -213,11 +159,11 @@ static U32 JumpOutEffectPlrEjectCB(U32, xAnimActiveEffect*, xAnimSingle*, void* 
     xVec3 tmp;
 
     tbox->currPlrState = PLAYER_STATE_EJECTING;
-    tbox->plrCtrlTimer = _888_0;
+    tbox->plrCtrlTimer = 1.2f;
 
     xVec3Copy(&tmp, (xVec3*)&tbox->model->Mat->pos);
 
-    tmp.y += _780_2;
+    tmp.y += 1.0f;
 
     zFX_SpawnBubbleHit(&tmp, 50);
 
@@ -255,7 +201,7 @@ void zEntTeleportBox_Update(xEnt* rawent, xScene* sc, F32 dt)
     F32 dy__ = globals.player.ent.bound.sph.center.y - ent->model->Mat->pos.y;
     F32 dz__ = globals.player.ent.bound.sph.center.z - ent->model->Mat->pos.z;
 
-    if (SQR(dx__) + SQR(dy__) + SQR(dz__) < _853_3)
+    if (SQR(dx__) + SQR(dy__) + SQR(dz__) < 11.56f)
     {
         ent->currPlayerNear = 1;
     }
@@ -273,7 +219,7 @@ void zEntTeleportBox_Update(xEnt* rawent, xScene* sc, F32 dt)
         else
         {
             sPlayerNear = 0;
-            zEntEvent((char*)_stringBase0_79 + 285, eEventInvisible);
+            zEntEvent("mnu4 teleport box", eEventInvisible);
         }
     }
 
@@ -285,14 +231,14 @@ void zEntTeleportBox_Update(xEnt* rawent, xScene* sc, F32 dt)
         {
             if (xEntIsVisible(sTeleportUI))
             {
-                zEntEvent((char*)_stringBase0_79 + 285, eEventInvisible);
+                zEntEvent("mnu4 teleport box", eEventInvisible);
             }
         }
         else
         {
             if (!xEntIsVisible(sTeleportUI) && target->status == STATUS_CLOSED)
             {
-                zEntEvent((char*)_stringBase0_79 + 285, eEventVisible);
+                zEntEvent("mnu4 teleport box", eEventVisible);
             }
         }
     }
@@ -300,14 +246,14 @@ void zEntTeleportBox_Update(xEnt* rawent, xScene* sc, F32 dt)
     xVec3 playerMid;
     xVec3Copy(&playerMid, (xVec3*)&globals.player.ent.model->Mat->pos);
 
-    playerMid.y += _946_3;
+    playerMid.y += 0.5f;
 
     if (xPointInBox(&ent->trig[0], &playerMid) || xPointInBox(&ent->trig[1], &playerMid) ||
         xPointInBox(&ent->trig[0], (xVec3*)&globals.player.ent.model->Mat->pos) ||
         xPointInBox(&ent->trig[1], (xVec3*)&globals.player.ent.model->Mat->pos))
     {
         if (ent->currPlrState == PLAYER_STATE_OUTSIDE && zEntTeleportBox_isOpen(ent) &&
-            globals.player.ent.frame->vel.y <= _779_2 && globals.player.Health != 0)
+            globals.player.ent.frame->vel.y <= 0.0f && globals.player.Health != 0)
         {
             ent->jumpInAnim = 1;
             ent->currPlrState = PLAYER_STATE_INSIDE;
@@ -355,12 +301,12 @@ void zEntTeleportBox_Update(xEnt* rawent, xScene* sc, F32 dt)
 
             zEntPlayerControlOff(CONTROL_OWNER_TELEPORT_BOX);
 
-            globals.player.ent.frame->vel.x = _779_2;
-            globals.player.ent.frame->vel.z = _779_2;
-            globals.player.KnockBackTimer = _779_2;
+            globals.player.ent.frame->vel.x = 0.0f;
+            globals.player.ent.frame->vel.z = 0.0f;
+            globals.player.KnockBackTimer = 0.0f;
 
-            xSndPlay3D(xStrHash(_stringBase0_79 + 303), _858_3, _779_2, 128, 0,
-                       (xVec3*)&ent->model->Mat->pos, _779_2, SND_CAT_GAME, _944_0);
+            xSndPlay3D(xStrHash("Box_shuffle_alt"), 0.77f, 0.0f, 128, 0,
+                       (xVec3*)&ent->model->Mat->pos, 0.0f, SND_CAT_GAME, 0.1f);
             zRumbleStart(SDR_TeleportStart);
 
             break;
@@ -382,7 +328,7 @@ void zEntTeleportBox_Update(xEnt* rawent, xScene* sc, F32 dt)
 
                 xMat3x3GetEuler(&mat, &ypr);
 
-                ypr.x = _777_1 * target->tasset->launchAngle / _778_0;
+                ypr.x = PI * target->tasset->launchAngle / 180.0f;
 
                 xMat3x3Euler(&mat, &ypr);
 
@@ -397,7 +343,7 @@ void zEntTeleportBox_Update(xEnt* rawent, xScene* sc, F32 dt)
             }
 
             zRumbleStart(SDR_Teleport);
-            zPadAddRumble(eRumble_VeryLight, _945_2, 0, 0);
+            zPadAddRumble(eRumble_VeryLight, 0.4f, 0, 0);
 
             break;
         }
