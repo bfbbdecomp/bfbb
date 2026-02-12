@@ -845,7 +845,7 @@ S32 NPCC_LampStatus()
 
 U32 NPCC_ForceTalkOk()
 {
-    return globals.player.g.DisableForceConversation == 0 ? 1 : 0;
+    return globals.player.g.DisableForceConversation == 0;
 }
 
 RwRaster* NPCC_FindRWRaster(const char* txtrname)
