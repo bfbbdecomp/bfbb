@@ -26,7 +26,7 @@ struct zNPCVillager : zNPCCommon
     ztaskbox* converse; //0x2a8
     S32 current_talk_anim;
 
-    zNPCVillager(S32 myType) :zNPCCommon(myType)
+    zNPCVillager(S32 myType) : zNPCCommon(myType)
     {
     }
 
@@ -300,7 +300,7 @@ struct zNPCNewsFish : zNPCVillager
     void SpeakStop(); // 0xAC zNPCNewsFish
     U32 AnimPick(S32, en_NPC_GOAL_SPOT, xGoal*); // 0xB0 zNPCVillager
     void GetParm(en_npcparm, void*); // 0xB4 zNPCCommon
-    void GetParmDefault(en_npcparm, void*); // 0xB8 zNPCCommon
+    S32 GetParmDefault(en_npcparm, void*); // 0xB8 zNPCCommon
     F32 GenShadCacheRad(); // 0xBC zNPCVillager
     xEntDrive* PRIV_GetDriverData(); // 0xC0 zNPCCommon
     zNPCLassoInfo* PRIV_GetLassoData(); // 0xC4 zNPCCommon
@@ -342,7 +342,7 @@ void ZNPC_Villager_Shutdown();
 xFactoryInst* ZNPC_Create_Villager(S32 who, RyzMemGrow* growCtxt, void*);
 void ZNPC_Destroy_Villager(xFactoryInst* inst);
 S32 zParamGetF32List(xModelAssetParam* parmdata, U32 pdatsize, const char* str32, S32 found,
-                       F32* non_choices, F32 len_mvptspline);
+                     F32* non_choices, F32 len_mvptspline);
 void zNPCVillager_SceneFinish();
 void zNPCVillager_SceneTimestep(xScene* xscn, F32 dt);
 

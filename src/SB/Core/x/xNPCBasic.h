@@ -25,6 +25,7 @@ enum en_npcdcat
     eNPCDCAT_Ten = 10,
     eNPCDCAT_Eleven = 11,
     eNPCDCAT_Thirteen = 13,
+    eNPCDCAT_Fourteen = 14,
 };
 
 struct xNPCBasic : xEnt, xFactoryInst
@@ -62,7 +63,10 @@ struct xNPCBasic : xEnt, xFactoryInst
     // Offset: 0x138
     xShadowSimpleCache simpShadow_embedded;
 
-    xNPCBasic(S32);
+    xNPCBasic(S32 value)
+    {
+        myNPCType = value;
+    }
 
     S32 SelfType() const;
     void RestoreColFlags()
@@ -76,16 +80,25 @@ struct xNPCBasic : xEnt, xFactoryInst
     }
 
     void DBG_PStatClear();
-    void DBG_PStatCont(en_npcperf stat);
-    void DBG_PStatOn(en_npcperf stat);
+    void DBG_PStatOn(en_npcperf stat)
+    {
+    }
+
+    void DBG_PStatCont(en_npcperf stat)
+    {
+    }
     S32 DBG_IsNormLog(en_npcdcat input, S32 input2);
     void DBG_HaltOnMe(U32, char*);
 
     // DO NOT CHANGE THE ORDER OF THESE, the order determines the
     // vtable layout which needs to remain fixed.
     virtual void Init(xEntAsset* asset);
-    virtual void PostInit();
-    virtual void Setup();
+    virtual void PostInit()
+    {
+    }
+    virtual void Setup()
+    {
+    }
 
     virtual void PostSetup()
     {
@@ -95,10 +108,18 @@ struct xNPCBasic : xEnt, xFactoryInst
     virtual void Process(xScene* xscn, F32 dt);
     virtual void BUpdate(xVec3*);
     virtual void NewTime(xScene* xscn, F32 dt);
-    virtual void Move(xScene* xscn, F32 dt, xEntFrame* frm);
+    virtual void Move(xScene* xscn, F32 dt, xEntFrame* frm)
+    {
+    }
     virtual S32 SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
-                         xBase* toParamWidget, S32* handled);
-    virtual void Render();
+                         xBase* toParamWidget, S32* handled)
+    {
+        return 1;
+    }
+    virtual void Render()
+    {
+        xEntRender(this);
+    }
     virtual void Save(xSerial*) const;
     virtual void Load(xSerial*);
     virtual void CollideReview();

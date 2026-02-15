@@ -124,13 +124,14 @@ struct Firework
     void Detonate();
 };
 
-bool NPCC_ForceTalkOk();
+U32 NPCC_ForceTalkOk();
 void NPCWidget_Startup();
 void NPCWidget_Shutdown();
 void NPCWidget_ScenePrepare();
 void NPCWidget_SceneFinish();
 void NPCWidget_SceneReset();
 void NPCWidget_ScenePostInit();
+NPCWidget* NPCWidget_Find(en_NPC_UI_WIDGETS which);
 void NPCSupport_Startup();
 void NPCSupport_ScenePrepare();
 void NPCSupport_SceneFinish();

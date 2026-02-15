@@ -19,6 +19,15 @@
 
 class zAnimFxSound;
 
+enum en_lassanim
+{
+    LASS_ANIM_UNKNOWN = 0,
+    LASS_ANIM_GRAB = 1,
+    LASS_ANIM_HOLD = 2,
+    LASS_ANIM_NOMORE = 3,
+    LASS_ANIM_FORCEINT = 2147483647,
+};
+
 enum en_npcparm
 {
     NPC_PARM_NONE,
@@ -104,8 +113,6 @@ enum en_NPC_GOAL_SPOT
     NPC_GSPOT_NOMORE,
     NPC_GSPOT_FORCEINT = 0x7fffffff
 };
-
-
 
 enum en_npcvibe
 {
@@ -312,7 +319,9 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
     zNPCLassoInfo* lassdata; //0x24C
     NPCSndQueue snd_queue[4]; //0x250
 
-    zNPCCommon(S32 myType);
+    zNPCCommon(S32 myType) : xNPCBasic(myType)
+    {
+    }
 
     F32 TurnToFace(F32 dt, const xVec3* dir_want, F32 useTurnRate);
     F32 ThrottleApply(F32 dt, const xVec3* dir, S32 force3D);
@@ -325,25 +334,21 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
                          xBase* toParamWidget, S32* handled);
     void VelStop();
     static void ConfigSceneDone();
-    U32 LassoInit();
+    S32 LassoInit();
+    S32 LassoGetAnims(xModelInstance* modgrab, xModelInstance* modhold);
+    void LassoSyncAnims(en_lassanim lassanim);
     zNPCLassoInfo* GimmeLassInfo();
     void AddDEVGoals(xPsyche*);
-    U32 DBG_Name(); // return type might be wrong
-    void DBG_AddTweakers();
-    void DBG_RptDataSize();
-    U32 DBG_InstName(); // return type might be wrong
-    xAnimTable* AnimGetTable();
     F32 AnimTimeRemain(xAnimState* ast);
     F32 AnimTimeCurrent();
     F32 AnimDuration(xAnimState* ast);
-    bool IsMountableType(en_ZBASETYPE type);
+    S32 IsMountableType(en_ZBASETYPE type);
     void MvptReset(zMovePoint* nav_goto);
     S32 MvptCycle();
     void TagVerts();
     S32 HaveLOSToPos(xVec3*, float, xScene*, xBase*, xCollis*);
     void ModelScaleSet(F32 x, F32 y, F32 z);
     void ModelScaleSet(F32 unk);
-    void ModelScaleSet(const xVec3* vec);
     xModelInstance* ModelAtomicFind(int index, int idx_prev, xModelInstance* mdl_prev);
     xModelInstance* ModelAtomicHide(int index, xModelInstance* mdl);
     xModelInstance* ModelAtomicShow(int index, xModelInstance* mdl);
@@ -361,14 +366,14 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
     void GetParm(en_npcparm pid, xVec3* val);
     void GetParm(en_npcparm pid, zMovePoint** val);
     S32 HasSpline();
-    U32 CanDoSplines();
+    S32 CanDoSplines();
     S32 IsAttackFrame(F32 tym_anim, S32 series);
     void GiveReward();
     void PlayerKiltMe();
     S32 SndPlayFromSFX(xSFX* sfx, U32* sid_played);
     S32 SndPlayFromAFX(zAnimFxSound* afx, U32* sid_played);
     S32 SndPlayRandom(en_NPC_SOUND sndtype);
-    //U32 SndStart(U32 aid_toplay, NPCSndProp* sprop, F32 radius);
+    U32 SndStart(U32 aid_toplay, NPCSndProp* sprop, F32 radius);
     S32 SndChanIsBusy(S32 flg_chan);
     void SndKillSounds(S32 flg_chan, S32 all);
     S32 SndQueUpdate(F32 dt);
@@ -420,7 +425,59 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
     S32 SomethingWonderful();
     S32 SndIsAnyPlaying();
 
-    // vTable (xNPCBasic)
+    U32 DBG_Name() // Seil: return type might be wrong
+    {
+        return 0;
+    }
+
+    void DBG_AddTweakers()
+    {
+    }
+
+    void DBG_RptDataSize()
+    {
+    }
+
+    U32 DBG_InstName() // Seil: return type might be wrong
+    {
+        return this->DBG_Name();
+    }
+
+    void ModelScaleSet(const xVec3* vec)
+    {
+        ModelScaleSet(vec->x, vec->y, vec->z);
+    }
+
+    xAnimTable* AnimGetTable()
+    {
+        return model->Anim->Table;
+    }
+
+    // xNPCBasic vtable at: 0x2949F4
+    // vtable reference is stored immidately _after_ object fields in an xNPCBasic
+    // instance. That is, sizeof(xNPCBasic) = sizeof(visible fields) + an extra 4
+    // bytes for the vtable pointer after those fields.
+    // vtable[0] = NULL (I think these first two are for RTTI which is disabled)
+    // vtable[1] = NULL
+    // vtable[2] = Init(FP9xEntAsset)
+    // vtable[3] = PostInit(Fv)
+    // vtable[4] = Setup(Fv)
+    // vtable[5] = PostSetup(Fv)
+    // vtable[6] = Reset(Fv)
+    // vtable[7] = Process(FP6xScenef)
+    // vtable[8] = BUpdate(FP5xVec3)
+    // vtable[9] = NewTime(FP6xScenef)
+    // vtable[10] = Move(FP6xScenefP9xEntFrame)
+    // vtable[11] = SysEvent(FP5xBaseP5xBaseUiPCfP5xBasePi)
+    // vtable[12] = Render(Fv)
+    // vtable[13] = Save(CFP7xSerial)
+    // vtable[14] = Load(FP7xSerial)
+    // vtable[15] = CollideReview(Fv)
+    // vtable[16] = ColChkFlags(CFv)
+    // vtable[17] = ColPenFlags(CFv)
+    // vtable[18] = ColChkByFlags(CFv)
+    // vtable[19] = ColPenByFlags(CFv)
+    // vtable[20] = PhysicsFlags(CFv)
 
     virtual void Init(xEntAsset* asset);
     virtual void Reset();
@@ -448,7 +505,9 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
     virtual void ParseINI();
     virtual void ParseLinks();
     virtual void ParseProps();
-    virtual void SelfSetup();
+    virtual void SelfSetup()
+    {
+    }
     virtual void SelfDestroy();
     virtual S32 IsHealthy();
     virtual S32 IsAlive()
@@ -457,7 +516,10 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
     }
     virtual void Damage(en_NPC_DAMAGE_TYPE damtype, xBase* who, const xVec3* vec_hit);
     virtual S32 Respawn(const xVec3* pos, zMovePoint* mvptFirst, zMovePoint* mvptSpawnRef);
-    virtual void DuploOwner(zNPCCommon* duper);
+    virtual void DuploOwner(zNPCCommon* duper)
+    {
+        npc_duplodude = duper;
+    }
     virtual void DuploNotice(en_SM_NOTICES, void*);
     virtual S32 CanRope();
     virtual void LassoNotify(en_LASSO_EVENT event);
@@ -465,10 +527,20 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
     virtual void Stun(F32 stuntime)
     {
     }
-    virtual void SpeakBegin();
-    virtual void SpeakEnd();
-    virtual void SpeakStart(U32 sound, U32 param_2, S32 param_3);
-    virtual void SpeakStop();
+    virtual void SpeakBegin()
+    {
+    }
+
+    virtual void SpeakEnd()
+    {
+    }
+
+    virtual void SpeakStart(U32 sound, U32 param_2, S32 param_3)
+    {
+    }
+    virtual void SpeakStop()
+    {
+    }
 
     virtual U32 AnimPick(S32 animID, en_NPC_GOAL_SPOT gspot, xGoal* goal)
     {
@@ -476,18 +548,25 @@ struct zNPCCommon : xNPCBasic //Size of zNPCCommon: 0x2A0
     }
 
     virtual void GetParm(en_npcparm pid, void* val);
-    virtual void GetParmDefault(en_npcparm pid, void* val);
-    virtual F32 GenShadCacheRad();
-    virtual xEntDrive* PRIV_GetDriverData();
-    virtual zNPCLassoInfo* PRIV_GetLassoData();
+    virtual S32 GetParmDefault(en_npcparm pid, void* val);
+    virtual F32 GenShadCacheRad()
+    {
+        return 2.4f;
+    }
+    virtual xEntDrive* PRIV_GetDriverData()
+    {
+        return NULL;
+    }
+    virtual zNPCLassoInfo* PRIV_GetLassoData()
+    {
+        return NULL;
+    }
     virtual S32 LassoSetup();
 
 protected:
     // This prevents implicit destructors from being generated in subclasses of zNPCCommon
     ~zNPCCommon();
 };
-
-
 
 xFactoryInst* ZNPC_Create_Common(S32 who, RyzMemGrow* grow, void*);
 void ZNPC_Destroy_Common(xFactoryInst* inst);

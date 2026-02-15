@@ -163,4 +163,9 @@ inline U32 xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, xEnt*
     return xSndPlay3D(id, vol, pitch, priority, flags, ent, radius / 4.0f, radius, category, delay);
 }
 
+inline U32 xSndIsPlaying(U32 assetID, U32 parid)
+{
+    return iSndIsPlaying(assetID, parid);
+}
+
 #endif
