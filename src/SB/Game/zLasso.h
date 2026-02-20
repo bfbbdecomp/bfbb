@@ -50,6 +50,7 @@ struct zLassoGuideList // Size: 0xE0
 };
 
 void zLasso_scenePrepare();
+void zLasso_Init(zLasso* lasso, xModelInstance* model, F32 x, F32 y, F32 z);
 void zLasso_InitTimer(zLasso* lasso, F32 interpTime);
 void zLasso_ResetTimer(zLasso* lasso, F32 interpTime);
 void zLasso_AddGuide(xEnt* ent, xAnimState* lassoAnim, xModelInstance* modelInst);

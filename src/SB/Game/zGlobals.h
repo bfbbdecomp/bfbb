@@ -64,7 +64,7 @@ struct zGlobalSettings
     F32 RotMatchMaxAngle;
     F32 RotMatchMatchTime;
     F32 RotMatchRelaxTime;
-    F32 Gravity;
+    F32 Gravity; // 0x924
     F32 BBashTime;
     F32 BBashHeight;
     F32 BBashDelay;
@@ -157,7 +157,7 @@ struct zPlayerGlobals
     S32 Slide;
     F32 SlideTimer;
     S32 Stepping;
-    S32 JumpState;
+    S32 JumpState; // 0x16D4
     S32 LastJumpState;
 
     // 0x16DC in globals
@@ -289,7 +289,7 @@ struct zPlayerGlobals
     xModelTag head_tag;
     U32 TongueFlags[2];
     xVec3 RootUp;
-    xVec3 RootUpTarget;
+    xVec3 RootUpTarget; // 0x1d2c
     zCheckPoint cp;
     U32 SlideTrackSliding;
     U32 SlideTrackCount;
@@ -300,15 +300,15 @@ struct zPlayerGlobals
     F32 SlideTrackDecay; //0x1f2c
     F32 SlideTrackLean;
     F32 SlideTrackLand; // 0x1f34
-    U8 sb_model_indices[14];
-    xModelInstance* sb_models[14];
+    U8 sb_model_indices[14]; // [0] 0x1f38
+    xModelInstance* sb_models[14]; // [0] 0x1f48
     U32 currentPlayer; //0x1f80
     xVec3 PredictRotate;
     xVec3 PredictTranslate;
     F32 PredictAngV;
     xVec3 PredictCurrDir;
     F32 PredictCurrVel;
-    F32 KnockBackTimer;
+    F32 KnockBackTimer; // 0x1fb0
     F32 KnockIntoAirTimer; // 0x1FB4
 };
 
