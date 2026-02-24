@@ -201,7 +201,8 @@ void xFXStreakInit();
 void xFXStreakUpdate(F32 dt);
 void xFXStreakUpdate(U32 streakID, const xVec3*, const xVec3*);
 void xFXStreakRender();
-U32 xFXStreakStart(F32 frequency, F32 alphaFadeRate, F32 alphaStart, U32 textureID, const iColor_tag* edge_a, const iColor_tag* edge_b, S32 taper);
+U32 xFXStreakStart(F32 frequency, F32 alphaFadeRate, F32 alphaStart, U32 textureID,
+                   const iColor_tag* edge_a, const iColor_tag* edge_b, S32 taper);
 void xFXStreakStop(U32);
 void xFXShineInit();
 void xFXShineUpdate(F32 dt);

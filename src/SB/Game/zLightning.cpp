@@ -421,6 +421,114 @@ zLightning* zLightningAdd(_tagLightningAdd* add)
     return new_lightning;
 }
 
+static void UpdateLightning(zLightning* l, F32 dt)
+{
+    if (!(l->flags & 0x10))
+    {
+        l->time_left -= dt;
+    }
+
+    if (l->time_left <= 0.0f)
+    {
+        if (l->flags & 0x100)
+        {
+            l->time_left = 0.0f;
+            l->flags &= ~0x40;
+        }
+        else
+        {
+            l->flags &= ~0x1;
+        }
+    }
+
+    if (l->type != LYT_TYPE_FUNC)
+    {
+        
+        
+        if (l->type == LYT_TYPE_LINE || l->type == LYT_TYPE_ZEUS)
+        {
+            S32 i;
+            F32 full = l->legacy.rand_radius * dt;
+            F32 half = 0.5f * full;
+            
+            for (i = 1; i < l->legacy.total_points - 1; i++)
+            {
+                l->legacy.point[i].x = (full * xurand() + -half) + l->legacy.base_point[i].x;
+                l->legacy.point[i].y = (full * xurand() + -half) + l->legacy.base_point[i].y;
+                l->legacy.point[i].z = (full * xurand() + -half) + l->legacy.base_point[i].z;
+                
+                if (l->flags & 0x20)
+                {
+                    // TODO: Fix float op order and grouping
+                    F32 sc1 = ((F32)i / (F32)l->legacy.total_points);
+                    sc1 = (4.0f * sc1 + -4.0f * sc1 * sc1) * l->legacy.arc_height;
+
+                    xVec3AddScaled(&l->legacy.point[i], &l->legacy.arc_normal, sc1);
+                }
+            }
+        }
+        else if (l->type == LYT_TYPE_ROTATING)
+        {
+            xVec3 dir;
+            xVec3Sub(&dir, &l->legacy.base_point[l->legacy.total_points - 1], &l->legacy.base_point[0]);
+            xVec3Normalize(&dir, &dir);
+
+            F32 full = l->legacy.rand_radius * dt;
+            F32 half = 0.5f * full;
+            
+            for (S32 i = 1; i < l->legacy.total_points - 1; i++)
+            {
+                xMat3x3 mat3;
+                xMat3x3Rot(&mat3, &dir, PI * l->legacy.rot.deg[i] * 180.0f);
+
+                xVec3 vec;
+                xVec3Copy(&vec, &l->legacy.arc_normal);
+
+                F32 sc2;
+            }
+            
+            F32 sc1;
+            // S32 i;
+        }
+
+        if ((l->flags & 0x2) && sSparkEmitter != NULL && (xrand() & 0x3))
+        {
+            xParEmitterCustomSettings info;
+            info.custom_flags = 0xD00;
+
+            U32 rand = xrand();
+            info.pos = l->legacy.point[(rand / l->legacy.total_points) * l->legacy.total_points - rand];
+            xrand();
+            
+            xParEmitterEmitCustom(sSparkEmitter, dt, &info);
+        }
+    }
+    else
+    {
+        l->func.endParam[0] += dt * (l->func.endVel[0] * sLFuncShift);
+        while (l->func.endParam[0] > sLFuncEnd[9])
+        {
+            l->func.endParam[0] -= 10.0f;
+        }
+
+        while (l->func.endParam[0] < 0.0f)
+        {
+            l->func.endParam[0] += 10.0f;
+        }
+
+        l->func.endParam[1] += dt * (l->func.endVel[1] * sLFuncShift);
+        while (l->func.endParam[1] > sLFuncEnd[9])
+        {
+            l->func.endParam[1] -= 10.0f;
+        }
+
+        while (l->func.endParam[1] < 0.0f)
+        {
+            l->func.endParam[1] += 10.0f;
+        }
+    }
+}
+
 static void lightningTweakStart(const tweak_info& t)
 {
     xVec3 s, e;
