@@ -84,9 +84,6 @@ void update_poppers(F32 dt);
 
 void update_entrails(F32 dt);
 
-void xDebugAddTweak(const char* unk1, const char* unk2, const tweak_callback* unk3, void* unk4,
-                    U32 unk5);
-
 xFXRing* zFXMuscleArmWave(const xVec3* pos);
 
 void zFX_SpawnBubbleTrail(const xVec3*, unsigned int);
