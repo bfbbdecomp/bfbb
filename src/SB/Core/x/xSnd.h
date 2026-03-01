@@ -95,6 +95,69 @@ template <S32 N> struct sound_queue
     void play(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, U32 parentID,
               sound_category snd_category);
     void push(U32 id);
+
+    void pop()
+    {
+        xSndStop(_playing[head]);
+        head = (head + 1) % (N + 1);
+    }
+    S32 size() const
+    {
+        if (tail >= head)
+        {
+            return tail - head;
+        }
+        return tail + (N + 1) - head;
+    }
+    void clear()
+    {
+        while (size() > 0)
+        {
+            pop();
+        }
+    }
+    U32 recent(S32 index) const
+    {
+        S32 i = tail - index - 1;
+        if (i < 0)
+        {
+            i += (N + 1);
+        }
+        return _playing[i];
+    }
+    bool playing(S32 index, bool streaming) const
+    {
+        S32 count = size();
+        S32 i;
+
+        if (index < 0 || index > count)
+        {
+            index = count;
+        }
+
+        if (streaming)
+        {
+            for (i = 0; i < index; i++)
+            {
+                if (!xSndIsPlayingByHandle(recent(i)))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        else
+        {
+            for (i = 0; i < index; i++)
+            {
+                if (xSndIsPlayingByHandle(recent(i)))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
 };
 
 enum sound_effect

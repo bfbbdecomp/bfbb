@@ -42,7 +42,8 @@ template <class T> struct static_queue
     U32 _max_size_mask;
     T* _buffer;
 
-    struct iterator {
+    struct iterator
+    {
         U32 _it;
         static_queue<T>* _owner;
 
@@ -68,12 +69,12 @@ template <class T> struct static_queue
             return this;
         }
     };
-    
+
     bool empty() const
     {
         return size() == 0;
     }
-    
+
     U32 size() const
     {
         return _size;
@@ -93,7 +94,7 @@ template <class T> struct static_queue
         _buffer = (T*)xMemAlloc(gActiveHeap, sizeof(T) * (size), 0);
         clear();
     }
-    
+
     void clear()
     {
         _size = 0;
@@ -140,7 +141,7 @@ template <class T> struct static_queue
     {
         return size() == max_size();
     }
-    
+
     U32 max_size() const
     {
         return _max_size - 1;
@@ -160,7 +161,7 @@ template <class T> struct static_queue
             _size -= mod_max_size(other._it - it._it);
         }
     }
-    
+
     iterator end() const
     {
         iterator it;
@@ -190,11 +191,11 @@ template <class T, U32 N> struct fixed_queue
     }
     void pop_front()
     {
-        _first = (_first + 1) & N;
+        _first = (_first + 1) % (N + 1);
     }
     void push_front()
     {
-        _first = (_first + N) & N; 
+        _first = (_first + N) & N;
     }
     void push_front(const T& data)
     {
@@ -202,7 +203,10 @@ template <class T, U32 N> struct fixed_queue
         T& new_front = front();
         new_front = data;
     }
-    void push_back();
+    void push_back()
+    {
+        _last = (_last + 1) % (N + 1);
+    }
     U32 max_size() const
     {
         return N;
@@ -229,7 +233,8 @@ template <class T, U32 N> struct fixed_queue
         return _last - _first;
     }
 
-    struct iterator {
+    struct iterator
+    {
         U32 _it;
         fixed_queue<T, N>* _owner;
 
@@ -245,8 +250,8 @@ template <class T, U32 N> struct fixed_queue
 
         iterator* operator+=(S32 value)
         {
-            value += _it;
-            _it = (value + N) & N;
+            value = _it + value;
+            _it = (value + N + 1) % (N + 1);
             return this;
         }
 
@@ -296,5 +301,4 @@ template <class T, U32 N> struct fixed_queue
         return create_iterator(_last);
     }
 };
-
 #endif

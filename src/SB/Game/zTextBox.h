@@ -69,12 +69,12 @@ struct ztextbox : xBase
         bool show_backdrop : 1; // bit 26
         bool visible : 1; // bit 27
         bool hack_invisible : 1; // bit 28
-    } flag;
-    asset_type* asset;
-    xtextbox tb;
+    } flag; //0x10
+    asset_type* asset; //0x14
+    xtextbox tb; //0x18
     const char* segments[16];
     U32 segments_size;
-    ztextbox* next;
+    ztextbox* next; //0xc4
     ztextbox* prev;
     RwRaster* bgtex;
 
