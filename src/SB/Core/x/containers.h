@@ -42,7 +42,8 @@ template <class T> struct static_queue
     U32 _max_size_mask;
     T* _buffer;
 
-    struct iterator {
+    struct iterator
+    {
         U32 _it;
         static_queue<T>* _owner;
 
@@ -68,12 +69,12 @@ template <class T> struct static_queue
             return this;
         }
     };
-    
+
     bool empty() const
     {
         return size() == 0;
     }
-    
+
     U32 size() const
     {
         return _size;
@@ -93,7 +94,7 @@ template <class T> struct static_queue
         _buffer = (T*)xMemAlloc(gActiveHeap, sizeof(T) * (size), 0);
         clear();
     }
-    
+
     void clear()
     {
         _size = 0;
@@ -140,7 +141,7 @@ template <class T> struct static_queue
     {
         return size() == max_size();
     }
-    
+
     U32 max_size() const
     {
         return _max_size - 1;
@@ -160,7 +161,7 @@ template <class T> struct static_queue
             _size -= mod_max_size(other._it - it._it);
         }
     }
-    
+
     iterator end() const
     {
         iterator it;
@@ -173,17 +174,105 @@ template <class T, U32 N> struct fixed_queue
     U32 _first;
     U32 _last;
     T _buffer[N + 1];
+    T& back();
 
-    void reset();
-    void front();
-    void pop_front();
-    void push_front(const T& element);
+    struct iterator
+    {
+        fixed_queue* queue;
+        U32 index;
+
+        T& operator*() const;
+        iterator& operator+=(int n);
+        iterator operator-=(int n);
+        iterator operator-(int n) const;
+    };
+
+    iterator end() const;
+    iterator create_iterator(u32 index) const;
     void push_back();
-    bool full() const;
-    void back();
-    void pop_back();
     bool empty() const;
-    U32 size() const;
+    void pop_front();
+    T& front();
+    iterator begin() const;
+    void reset();
+    void clear();
 };
 
+template <class T, U32 N> T& fixed_queue<T, N>::iterator::operator*() const
+{
+    return queue->_buffer[index];
+}
+
+template <class T, U32 N>
+typename fixed_queue<T, N>::iterator& fixed_queue<T, N>::iterator::operator+=(int n)
+{
+    index = (index + n) % (N + 1);
+    return *this;
+}
+
+template <class T, U32 N>
+typename fixed_queue<T, N>::iterator fixed_queue<T, N>::iterator::operator-=(int n)
+{
+    return operator+=(-n);
+}
+template <class T, U32 N>
+typename fixed_queue<T, N>::iterator fixed_queue<T, N>::iterator::operator-(int n) const
+{
+    iterator it = *this;
+    it -= n;
+    return it;
+}
+template <class T, U32 N> T& fixed_queue<T, N>::back()
+{
+    iterator it = end();
+    return *(it - 1);
+}
+template <class T, U32 N> void fixed_queue<T, N>::reset()
+{
+    clear();
+}
+
+template <class T, U32 N> void fixed_queue<T, N>::clear()
+{
+    _first = 0;
+    _last = 0;
+}
+
+template <class T, U32 N> bool fixed_queue<T, N>::empty() const
+{
+    return _first == _last;
+}
+template <class T, U32 N> T& fixed_queue<T, N>::front()
+{
+    iterator it = begin();
+    return *it;
+}
+
+template <class T, U32 N> void fixed_queue<T, N>::pop_front()
+{
+    _first = (_first + 1) % (N + 1);
+}
+
+template <class T, U32 N> void fixed_queue<T, N>::push_back()
+{
+    _last = (_last + 1) % (N + 1);
+}
+template <class T, U32 N>
+typename fixed_queue<T, N>::iterator fixed_queue<T, N>::create_iterator(u32 index) const
+{
+    iterator it;
+    it.queue = (fixed_queue*)this;
+    it.index = index;
+    return it;
+}
+
+template <class T, U32 N> typename fixed_queue<T, N>::iterator fixed_queue<T, N>::begin() const
+{
+    return create_iterator(_first);
+}
+
+template <class T, U32 N> typename fixed_queue<T, N>::iterator fixed_queue<T, N>::end() const
+{
+    return create_iterator(_last);
+}
 #endif

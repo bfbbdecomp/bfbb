@@ -95,7 +95,75 @@ template <S32 N> struct sound_queue
     void play(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, U32 parentID,
               sound_category snd_category);
     void push(U32 id);
+    void clear();
+    S32 size() const;
+    void pop();
+    bool playing(S32 index, bool streaming) const;
+    U32 recent(S32 index) const;
 };
+template <S32 N> void sound_queue<N>::pop()
+{
+    xSndStop(_playing[head]);
+    head = (head + 1) % (N + 1);
+}
+template <S32 N> S32 sound_queue<N>::size() const
+{
+    if (tail >= head)
+    {
+        return tail - head;
+    }
+    return tail + (N + 1) - head;
+}
+template <S32 N> void sound_queue<N>::clear()
+{
+    while (size() > 0)
+    {
+        pop();
+    }
+}
+template <S32 N> U32 sound_queue<N>::recent(S32 index) const
+{
+    S32 i = tail - index - 1;
+    if (i < 0)
+    {
+        i += (N + 1);
+    }
+    return _playing[i];
+}
+template <S32 N> bool sound_queue<N>::playing(S32 index, bool streaming) const
+{
+    S32 count = size();
+
+    if (index < 0 || index > count)
+    {
+        index = count;
+    }
+
+    if (streaming)
+    {
+        S32 i = 0;
+        for (; i < index; i++)
+        {
+            if (!xSndIsPlayingByHandle(recent(i)))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    else
+    {
+        S32 i = 0;
+        for (; i < index; i++)
+        {
+            if (xSndIsPlayingByHandle(recent(i)))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+}
 
 enum sound_effect
 {
