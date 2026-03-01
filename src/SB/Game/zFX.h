@@ -50,7 +50,7 @@ void on_spawn_bubble_wall(const tweak_info& tweak);
 void zFX_SceneEnter(RpWorld* world);
 void zFX_SceneExit(RpWorld* world);
 void zFX_SceneReset();
-void zFXHammer(xVec3* pos);
+void zFXHammer(const xVec3* pos);
 void zFXPorterWave(const xVec3* pos);
 
 void zFXGooEnable(RpAtomic* atomic, S32 freezeGroup);

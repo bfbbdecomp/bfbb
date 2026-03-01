@@ -173,11 +173,11 @@ struct NCINEntry
     void (*cb_fxanim)(zCutsceneMgr*, NCINEntry*, RpAtomic*, RwMatrixTag*, U32, U32);
     void (*cb_fxrend)(zCutsceneMgr*, NCINEntry*);
     F32 tym_beg;
-    F32 tym_end;
+    F32 tym_end; // 0x14
     xVec3 pos_A[2];
     xVec3 pos_B[2];
     S8* twk_name;
-    S32 idx_anim;
+    S32 idx_anim; // 0x4c
     S32 idx_bone;
     S32 flg_stat;
     NCINData fxdata;
