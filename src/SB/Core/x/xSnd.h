@@ -133,6 +133,7 @@ template <S32 N> U32 sound_queue<N>::recent(S32 index) const
 template <S32 N> bool sound_queue<N>::playing(S32 index, bool streaming) const
 {
     S32 count = size();
+    S32 i;
 
     if (index < 0 || index > count)
     {
@@ -141,8 +142,7 @@ template <S32 N> bool sound_queue<N>::playing(S32 index, bool streaming) const
 
     if (streaming)
     {
-        S32 i = 0;
-        for (; i < index; i++)
+        for (i = 0; i < index; i++)
         {
             if (!xSndIsPlayingByHandle(recent(i)))
             {
@@ -153,8 +153,7 @@ template <S32 N> bool sound_queue<N>::playing(S32 index, bool streaming) const
     }
     else
     {
-        S32 i = 0;
-        for (; i < index; i++)
+        for (i = 0; i < index; i++)
         {
             if (xSndIsPlayingByHandle(recent(i)))
             {
