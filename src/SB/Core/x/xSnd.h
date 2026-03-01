@@ -101,7 +101,7 @@ template <S32 N> struct sound_queue
         xSndStop(_playing[head]);
         head = (head + 1) % (N + 1);
     }
-    const S32 size()
+    S32 size() const
     {
         if (tail >= head)
         {
@@ -116,7 +116,7 @@ template <S32 N> struct sound_queue
             pop();
         }
     }
-    const U32 recent(S32 index)
+    U32 recent(S32 index) const
     {
         S32 i = tail - index - 1;
         if (i < 0)
@@ -125,7 +125,7 @@ template <S32 N> struct sound_queue
         }
         return _playing[i];
     }
-    const bool playing(S32 index, bool streaming)
+    bool playing(S32 index, bool streaming) const
     {
         S32 count = size();
         S32 i;
