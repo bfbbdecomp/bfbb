@@ -291,7 +291,6 @@ namespace
     {
         struct
         {
-<<<<<<< HEAD
             U8 time : 1; // bitfield size: 0x8
             U8 prompt : 1; // bitfield size: 0x8
             U8 sound : 1; // bitfield size: 0x8
@@ -304,20 +303,6 @@ namespace
         query_enum query; //Offset 08d44
         void reset_type(); //Offset 08d48
         wait_context& operator=(const wait_context& rhs); //Offset 08d4c
-=======
-            U8 time : 1;
-            U8 prompt : 1;
-            U8 sound : 1;
-            U8 event : 1;
-            U16 pad : 12;
-        } type;
-        U8 need; //Offset 08d3a
-        F32 delay;
-        U32 event_mask; //Offset 08d40
-        query_enum query; //Offset 08d44
-        void reset_type();
-        wait_context& operator=(const wait_context& rhs);
->>>>>>> a84fa4ac7c0cdf9f0c8b11dbcadf8130da48d553
     };
 
     struct trigger_pair
@@ -388,7 +373,6 @@ namespace
                 float left; // offset 0x0, size 0x4
                 float right; // offset 0x4, size 0x4
             } volume; // offset 0x8, size 0x8
-<<<<<<< HEAD
             U32 target; // offset 0x8, size 0x4
             xVec3 origin; // offset 0x8, size 0xC
         };
@@ -456,13 +440,6 @@ namespace
         void (*writePeek)(void*, U32, void*, char*); // offset 0x24, size 0x4
     };
 
-=======
-            unsigned int target; // offset 0x8, size 0x4
-            class xVec3 origin; // offset 0x8, size 0xC
-        };
-        U32 speaker; // offset 0x14, size 0x4
-    };
->>>>>>> a84fa4ac7c0cdf9f0c8b11dbcadf8130da48d553
 } // namespace
 struct location_asset : xDynAsset
 {

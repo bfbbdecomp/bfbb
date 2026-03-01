@@ -149,11 +149,7 @@ struct xEnt : xBase
     U8 penby; // XENT_COLLTYPE_* bitmask
 
     // Offset: 0x24
-<<<<<<< HEAD
-    xModelInstance* model; //0x24 0x704 in globals
-=======
     xModelInstance* model; // 0x704 in globals
->>>>>>> a84fa4ac7c0cdf9f0c8b11dbcadf8130da48d553
     xModelInstance* collModel;
     xModelInstance* camcollModel;
     xLightKit* lightKit;
@@ -166,11 +162,7 @@ struct xEnt : xBase
 
     // Offset: 0x44
     xEntRenderCallback render;
-<<<<<<< HEAD
-    xEntFrame* frame; //0x48 0x728 in globals
-=======
     xEntFrame* frame; // 0x728 in globals
->>>>>>> a84fa4ac7c0cdf9f0c8b11dbcadf8130da48d553
     xEntCollis* collis; //0x4c
 
     // Offset: 0x50
