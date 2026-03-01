@@ -202,6 +202,13 @@ public:
     void ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos, const xVec3* vel) const;
 };
 
+struct NPARParmMonsoonRain {
+    F32 tym_lifespan;
+    RwRGBA colr_base;
+    F32 siz_base[2];
+    xVec3 acc_base;
+};
+
 class NPARParmOilBub
 {
     // total size: 0x1C
@@ -320,6 +327,17 @@ void NPAR_EmitOilTrailz(const xVec3* pos);
 void NPAR_EmitOilVapors(const xVec3* pos);
 void NPAR_EmitTubeSparklies(const xVec3* pos, const xVec3* vel);
 void NPAR_EmitVSSpray(const xVec3* pos, const xVec3* vel);
+void NPAR_Upd_OilBubble(NPARMgmt* mgmt, F32 dt);
+void NPAR_Upd_TubeSpiral(NPARMgmt* mgmt, F32 dt);
+void NPAR_Upd_TubeConfetti(NPARMgmt* mgmt, F32 dt);
+void NPAR_Upd_GloveDust(NPARMgmt* mgmt, F32 dt);
+void NPAR_Upd_MonsoonRain(NPARMgmt* mgmt, F32 dt);
+void NPAR_Upd_SleepyZeez(NPARMgmt* mgmt, F32 dt);
+void NPAR_Upd_ChuckSplash(NPARMgmt* mgmt, F32 dt);
+void NPAR_Upd_VisSplash(NPARMgmt* mgmt, F32 dt);
+void NPAR_Upd_TarTarGunk(NPARMgmt* mgmt, F32 dt);
+void NPAR_Upd_DogBreath(NPARMgmt* mgmt, F32 dt);
+void NPAR_Upd_Fireworks(NPARMgmt* mgmt, F32 dt);
 NPARMgmt* NPAR_PartySetup(en_nparptyp parType, void** userData, NPARXtraData* xtraData);
 void NPAR_SceneReset();
 static void NPCC_ShadowCacheReset();
