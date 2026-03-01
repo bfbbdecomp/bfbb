@@ -6,20 +6,11 @@
 
 #include <types.h>
 
-static S32 init = 0;
-
 void zNPCFXShutdown()
 {
 }
 
-void zNPCFXCinematic_Init()
-{
-    if (!init)
-    {
-        init = 1;
-    }
-}
-
+// TODO: NEEDS REWRITEN / CORRECTED
 void NCIN_Par_BPLANK_JET_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
@@ -58,6 +49,7 @@ void NCIN_Par_BPLANK_JET_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
     fxrec->pos_B[0] = 5.0f;
 }
 
+// TODO: NEEDS REWRITEN / CORRECTED
 void NCIN_Par_BPLANK_JET_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
@@ -96,6 +88,7 @@ void NCIN_Par_BPLANK_JET_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
     fxrec->pos_B[0] = 5.0f;
 }
 
+// TODO: NEEDS REWRITEN / CORRECTED
 void NCIN_Par_BPLANK_SBB_FLAMES_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
@@ -134,6 +127,7 @@ void NCIN_Par_BPLANK_SBB_FLAMES_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32
     fxrec->pos_B[0] = 5.0f;
 }
 
+// TODO: NEEDS REWRITEN / CORRECTED
 void NCIN_Par_BPLANK_SBB_FLAMES_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
@@ -172,6 +166,7 @@ void NCIN_Par_BPLANK_SBB_FLAMES_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32
     fxrec->pos_B[0] = 5.0f;
 }
 
+// TODO: NEEDS REWRITEN / CORRECTED
 void NCIN_Par_BPLANK_SBB_JET_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
@@ -210,6 +205,7 @@ void NCIN_Par_BPLANK_SBB_JET_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 pa
     fxrec->pos_B[0] = 5.0f;
 }
 
+// TODO: NEEDS REWRITEN / CORRECTED
 void NCIN_Par_BPLANK_SBB_JET_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
@@ -248,6 +244,7 @@ void NCIN_Par_BPLANK_SBB_JET_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 pa
     fxrec->pos_B[0] = 5.0f;
 }
 
+// TODO: NEEDS REWRITEN / CORRECTED
 void NCIN_Par_BPLANK_SBB_SMOKE_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
@@ -286,6 +283,7 @@ void NCIN_Par_BPLANK_SBB_SMOKE_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 
     fxrec->pos_B[0] = 5.0f;
 }
 
+// TODO: NEEDS REWRITEN / CORRECTED
 void NCIN_Par_BPLANK_SBB_SMOKE_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
@@ -324,6 +322,7 @@ void NCIN_Par_BPLANK_SBB_SMOKE_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 
     fxrec->pos_B[0] = 5.0f;
 }
 
+// TODO: NEEDS REWRITEN / CORRECTED
 void NCIN_Par_CIN_BIGDUP_SMOKE_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
@@ -362,6 +361,7 @@ void NCIN_Par_CIN_BIGDUP_SMOKE_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 pa
     fxrec->pos_B[0] = 5.0f;
 }
 
+// TODO: NEEDS REWRITEN / CORRECTED
 void NCIN_Par_CIN_BIGDUP_SPAWN_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
@@ -400,6 +400,7 @@ void NCIN_Par_CIN_BIGDUP_SPAWN_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 pa
     fxrec->pos_B[0] = 5.0f;
 }
 
+// TODO: NEEDS REWRITEN / CORRECTED
 void NCIN_Par_CIN_PLATFORM_JETS_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
@@ -446,15 +447,15 @@ void NCINBeNosey::CanRenderNow()
     NCINEntry* fxrec;
 }
 
-void NCIN_Generic_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
+void NCIN_Generic_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 killit)
 {
-    if (param != 0)
+    if (killit != 0)
     {
         fxrec->flg_stat |= 4;
-        return;
     }
 }
 
+// TODO: NEEDS REWRITEN / CORRECTED
 void NCIN_BubSlam(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
@@ -471,10 +472,10 @@ void NCIN_BubSlam(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
     switch (fxrec->typ_ncinfx)
     {
     case 3:
-        zFX_SpawnBubbleSlam(&fxrec->pos_A[0], 64, fxrec->tym_beg, fxrec->tym_end, fxrec->tym_end);
+        zFX_SpawnBubbleSlam(&fxrec->pos_A[0], 64, PI, 2.0f, 2.0f);
         break;
     case 2:
-        zFX_SpawnBubbleSlam(&fxrec->pos_A[0], 128, fxrec->tym_beg, fxrec->tym_end, fxrec->tym_end);
+        zFX_SpawnBubbleSlam(&fxrec->pos_A[0], 128, PI, 5.0f, 5.0f);
         break;
     default:
         break;
@@ -503,25 +504,23 @@ void NCIN_BubTrailBone_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic*, RwMa
     zFX_SpawnBubbleTrail(&pos, 1);
 }
 
-void NCIN_BubHit(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
+void NCIN_BubHit(const zCutsceneMgr*, NCINEntry* fxrec, S32 killit)
 {
-    if (param != 0)
+    if (killit != 0)
     {
         fxrec->flg_stat |= 4;
-        return;
     }
-
     else
     {
         if (fxrec->flg_stat & 2)
         {
             zFX_SpawnBubbleHit(&fxrec->pos_A[0], 16);
         }
-
         zFX_SpawnBubbleHit(&fxrec->pos_A[0], 3);
     }
 }
 
+// TODO: NEEDS REWRITEN / CORRECTED
 void NCIN_Zapper(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
@@ -558,17 +557,16 @@ void NCIN_HammerShock(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
         fxrec->flg_stat |= 4;
         return;
     }
-
-    if (fxrec->flg_stat & 2)
+    else if (fxrec->flg_stat & 2)
     {
         zFXHammer(&fxrec->pos_A[0]);
         fxrec->flg_stat |= 4;
     }
 }
 
-void NCIN_HammerStreak_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
+static void NCIN_HammerStreak_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 killit)
 {
-    if (param != 0)
+    if (killit != 0)
     {
         fxrec->flg_stat |= 4;
 
@@ -577,11 +575,8 @@ void NCIN_HammerStreak_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 
         fxrec->fxdata.strkdata.sid_horz = 57005;
         fxrec->fxdata.strkdata.sid_vert = 57005;
-
-        return;
     }
-
-    if (fxrec->flg_stat & 2)
+    else if (fxrec->flg_stat & 2)
     {
         en_npcstreak styp_h = NPC_STRK_HAMMERSMASH_HORZ;
         en_npcstreak styp_v = NPC_STRK_HAMMERSMASH_VERT;
@@ -603,19 +598,15 @@ void NCIN_HammerStreak_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic*, RwMa
     U32 sid_horz = fxrec->fxdata.strkdata.sid_horz;
 }
 
-void NCIN_WaterSplash(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
+void NCIN_WaterSplash(const zCutsceneMgr*, NCINEntry* fxrec, S32 killit)
 {
-    if (param != 0)
+    if (killit != 0)
     {
         fxrec->flg_stat |= 4;
-        return;
     }
-
-    if (fxrec->flg_stat & 2)
+    else if (fxrec->flg_stat & 2)
     {
-        const F32 splash_radius = -1.0f;
-
-        NPCC_MakeASplash(&fxrec->pos_A[0], splash_radius);
+        NPCC_MakeASplash(&fxrec->pos_A[0], -1.0f);
         fxrec->flg_stat |= 4;
     }
 }
