@@ -5,14 +5,9 @@
 #include "zNPCTypeCommon.h"
 #include "xIni.h"
 #include "containers.h"
-#include "zEntPlayer.h"
 #include "xScene.h"
 #include "xCamera.h"
-#include "xPad.h"
-#include "xUpdateCull.h"
-#include "xGlobals.h"
 #include "zCutsceneMgr.h"
-#include "zGlobals.h"
 #include "xSnd.h"
 
 struct ztalkbox : xBase
@@ -410,34 +405,6 @@ namespace
     {
         // total size: 0x4
         U32 flags; // offset 0x0, size 0x4
-    };
-
-    struct st_PKR_ASSET_TOCINFO
-    {
-        U32 aid; // offset 0x0, size 0x4
-        st_PACKER_ASSETTYPE* typeref; // offset 0x4, size 0x4
-        U32 sector; // offset 0x8, size 0x4
-        U32 plus_offset; // offset 0xC, size 0x4
-        U32 size; // offset 0x10, size 0x4
-        void* mempos; // offset 0x14, size 0x4
-    };
-
-    struct st_PACKER_ASSETTYPE
-    {
-        // total size: 0x28
-        U32 typetag; // offset 0x0, size 0x4
-        U32 tflags; // offset 0x4, size 0x4
-        S32 typalign; // offset 0x8, size 0x4
-        void* (*readXForm)(void*, U32, void*, U32,
-                           U32*); // offset 0xC, size 0x4
-        void* (*writeXForm)(void*, U32, void*, void*, U32,
-                            U32*); // offset 0x10, size 0x4
-        S32 (*assetLoaded)(void*, U32, void*, S32); // offset 0x14, size 0x4
-        void* (*makeData)(void*, U32, void*, S32*,
-                          S32*); // offset 0x18, size 0x4
-        void (*cleanup)(void*, U32, void*); // offset 0x1C, size 0x4
-        void (*assetUnloaded)(void*, U32); // offset 0x20, size 0x4
-        void (*writePeek)(void*, U32, void*, char*); // offset 0x24, size 0x4
     };
 
 } // namespace

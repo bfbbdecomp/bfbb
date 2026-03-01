@@ -44,7 +44,7 @@ namespace
         }
     }
 
-    static void trigger(unsigned int event)
+    static void trigger(U32 event)
     {
         if (shared.delay_events)
         {
@@ -770,7 +770,7 @@ namespace
         dst_pos->operator=(*src_pos = loc);
     }
 
-    static void turn_player(float yaw)
+    static void turn_player(F32 yaw)
     {
         xMat3x3& m = *(xMat3x3*)globals.player.ent.model->Mat;
         xVec3 ang;
@@ -1127,7 +1127,7 @@ namespace
             active.quit_box->deactivate();
         }
     }
-    static void stop_wait(ztalkbox& e, const float* args, U32 args_size)
+    static void stop_wait(ztalkbox& e, const F32* args, U32 args_size)
     {
         if (shared.active != &e)
         {
@@ -1538,7 +1538,7 @@ void ztalkbox::hide()
         quit_box->deactivate();
     }
 }
-void ztalkbox::MasterTellSlaves(int isBeginning)
+void ztalkbox::MasterTellSlaves(S32 isBeginning)
 {
     S32 i = 0;
 
@@ -1559,7 +1559,7 @@ void ztalkbox::MasterTellSlaves(int isBeginning)
         }
     }
 }
-void ztalkbox::MasterLoveSlave(xBase* slave, int starting)
+void ztalkbox::MasterLoveSlave(xBase* slave, S32 starting)
 {
     switch (slave->baseType)
     {
@@ -1921,7 +1921,7 @@ namespace
 
         return true;
     }
-    static bool trigger_jot(int index)
+    static bool trigger_jot(S32 index)
     {
         xtextbox::jot* jots = ((xtextbox::layout*)&shared.lt)->jots();
         return trigger_jot(jots[index]);
