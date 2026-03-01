@@ -8,6 +8,8 @@
 #include <types.h>
 #include "zGame.h"
 #include "xSnd.h"
+#include "xEvent.h"
+#include "zBase.h"
 
 U32 xGroupGetCount(xGroup* g);
 xBase* xGroupGetItemPtr(xGroup* g, U32 index);
@@ -1127,7 +1129,7 @@ namespace
             active.quit_box->deactivate();
         }
     }
-    static void stop_wait(ztalkbox& e, const F32* args, U32 args_size)
+    static void stop_wait(ztalkbox& e, const F32* args, u32 args_size)
     {
         if (shared.active != &e)
         {
@@ -1135,9 +1137,8 @@ namespace
         }
 
         U32 mask = 0;
-        U32 i = 0;
 
-        for (; i < args_size; i++)
+        for (U32 i = 0; i < args_size; i++)
         {
             U32 v = (U32)args[i];
 
@@ -1162,30 +1163,30 @@ namespace
 
         switch (event)
         {
-        case 10:
-        case 88:
+        case eEventReset:
+        case eEventSceneEnd:
             e.reset();
             break;
-        case 4:
-        case 504:
+        case eEventInvisible:
+        case eEventFastInvisible:
             e.hide();
             break;
-        case 3:
-        case 503:
+        case eEventVisible:
+        case eEventFastVisible:
             e.show();
             break;
-        case 335:
+        case eEventStartConversation:
         {
             U32 textID = ((U32*)argf == NULL) ? 0 : *(U32*)argf;
             e.start_talk(textID, NULL, NULL);
             flush_triggered();
             break;
         }
-        case 336:
+        case eEventEndConversation:
             e.stop_talk();
             flush_triggered();
             break;
-        case 352:
+        case eEventTalkBox_StopWait:
             if (argf == NULL)
             {
                 stop_wait(e, NULL, 0);
@@ -1196,43 +1197,31 @@ namespace
             }
             flush_triggered();
             break;
-        case 334:
+        case eEventSetText:
             if ((U32*)argf != NULL)
             {
                 e.set_text(*(U32*)argf);
             }
             break;
-        case 338:
+        case eEventAddText:
             if ((U32*)argf != NULL)
             {
                 e.add_text(*(U32*)argf);
             }
             break;
-        case 339:
+        case eEventClearText:
             e.clear_text();
             break;
-        case 75:
-        case 76:
-        case 342:
-        case 343:
-        case 344:
-        case 345:
-        case 346:
-        case 347:
-        case 348:
-        case 349:
-        case 350:
-        case 351:
-        case 353:
-        case 356:
-        case 357:
-        case 358:
-        case 359:
-        case 452:
-        case 453:
-        case 454:
-        case 465:
-        case 466:
+
+        case eEventPadPressRight:
+        case eEventPadPressLeft:
+        case eEventOpenTBox:
+        case eEventCloseTBox:
+        case eEventTalkBox_OnSignal18:
+        case eEventTalkBox_OnSignal19:
+        case eEventTalkBox_OnStart:
+        case eEventTalkBox_OnYes:
+        case eEventTalkBox_OnNo:
             break;
         }
 
@@ -1540,9 +1529,7 @@ void ztalkbox::hide()
 }
 void ztalkbox::MasterTellSlaves(S32 isBeginning)
 {
-    S32 i = 0;
-
-    for (; i < (S32)linkCount; i++)
+    for (S32 i = 0; i < (S32)linkCount; i++)
     {
         xLinkAsset* link = &this->link[i];
 
@@ -1563,12 +1550,12 @@ void ztalkbox::MasterLoveSlave(xBase* slave, S32 starting)
 {
     switch (slave->baseType)
     {
-    case 0x11:
+    case eBaseTypeGroup:
     {
         xGroup* grp = (xGroup*)slave;
         S32 cnt = xGroupGetCount(grp);
-        S32 i = 0;
-        for (; i < cnt; i++)
+
+        for (S32 i = 0; i < cnt; i++)
         {
             xBase* grpitem = xGroupGetItemPtr(grp, i);
             if (grpitem)
@@ -1578,7 +1565,7 @@ void ztalkbox::MasterLoveSlave(xBase* slave, S32 starting)
         }
         break;
     }
-    case 0x2b:
+    case eBaseTypeNPC:
     {
         zNPCCommon* npc = (zNPCCommon*)slave;
         if (starting)
