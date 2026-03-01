@@ -250,7 +250,8 @@ template <class T, U32 N> struct fixed_queue
 
         iterator* operator+=(S32 value)
         {
-            _it = (_it + value) % (N + 1);
+            value = _it + value;
+            _it = (value + N + 1) % (N + 1);
             return this;
         }
 
