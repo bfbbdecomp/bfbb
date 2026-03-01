@@ -176,6 +176,7 @@ template <class T, U32 N> struct fixed_queue
     T _buffer[N + 1];
     T& back();
 
+<<<<<<< HEAD
     struct iterator
     {
         fixed_queue* queue;
@@ -196,6 +197,129 @@ template <class T, U32 N> struct fixed_queue
     iterator begin() const;
     void reset();
     void clear();
+=======
+    void reset()
+    {
+        clear();
+    }
+    void clear()
+    {
+        _last = 0;
+        _first = 0;
+    }
+    T& front()
+    {
+        fixed_queue<T, N>::iterator it = begin();
+        return *it;
+    }
+    void pop_front()
+    {
+        _first = (_first + 1) & N;
+    }
+    void push_front()
+    {
+        _first = (_first + N) & N; 
+    }
+    void push_front(const T& data)
+    {
+        push_front();
+        T& new_front = front();
+        new_front = data;
+    }
+    void push_back();
+    U32 max_size() const
+    {
+        return N;
+    }
+    bool full() const
+    {
+        return size() == max_size();
+    }
+    T& back()
+    {
+        fixed_queue<T, N>::iterator it = end() - 1;
+        return *it;
+    }
+    void pop_back()
+    {
+        _last = (_last + N) & N;
+    }
+    bool empty() const
+    {
+        return _last == _first;
+    }
+    U32 size() const
+    {
+        return _last - _first;
+    }
+
+    struct iterator {
+        U32 _it;
+        fixed_queue<T, N>* _owner;
+
+        T& operator*() const
+        {
+            return _owner->_buffer[_it];
+        }
+
+        bool operator!=(const iterator& other) const
+        {
+            return _it != other._it;
+        }
+
+        iterator* operator+=(S32 value)
+        {
+            value += _it;
+            _it = (value + N) & N;
+            return this;
+        }
+
+        iterator* operator-=(S32 value)
+        {
+            iterator* tmp = operator+=(-value);
+            return tmp;
+        }
+
+        iterator* operator--()
+        {
+            *this -= 1;
+            return this;
+        }
+
+        iterator operator-(S32 value) const
+        {
+            iterator tmp;
+            tmp._it = _it;
+            tmp._owner = _owner;
+            tmp -= value;
+            return tmp;
+        }
+
+        iterator* operator++()
+        {
+            *this += 1;
+            return this;
+        }
+    };
+
+    iterator create_iterator(u32 initial_location) const
+    {
+        iterator it;
+        it._it = initial_location;
+        it._owner = const_cast<fixed_queue<T, N>*>(this);
+        return it;
+    }
+
+    iterator begin() const
+    {
+        return create_iterator(_first);
+    }
+
+    iterator end() const
+    {
+        return create_iterator(_last);
+    }
+>>>>>>> a84fa4ac7c0cdf9f0c8b11dbcadf8130da48d553
 };
 
 template <class T, U32 N> T& fixed_queue<T, N>::iterator::operator*() const

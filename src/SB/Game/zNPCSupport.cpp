@@ -843,9 +843,9 @@ S32 NPCC_LampStatus()
     return g_pc_playerInvisible == 0 ? true : false;
 }
 
-bool NPCC_ForceTalkOk()
+U32 NPCC_ForceTalkOk()
 {
-    return globals.player.g.DisableForceConversation == 0 ? 1 : 0;
+    return globals.player.g.DisableForceConversation == 0;
 }
 
 RwRaster* NPCC_FindRWRaster(const char* txtrname)

@@ -8,6 +8,8 @@
 #include "zNPCSpawner.h"
 #include "containers.h"
 #include "xBehaviour.h"
+#include "xSnd.h"
+#include "zCamera.h"
 
 struct sound_data_type
 {
@@ -186,6 +188,8 @@ struct aqua_beam
     void update_rings(F32);
     void kill_ring();
     void render();
+    void render_ring(aqua_beam::ring_segment&);
+    void emit_ring();
 };
 
 struct zNPCPrawn : zNPCSubBoss
@@ -261,10 +265,13 @@ struct zNPCPrawn : zNPCSubBoss
     void vanish();
     void reappear();
     void render_closeup();
-    void turning() const;
+    bool turning() const;
     void update_round();
     void decompose();
     void set_floor_state(zNPCPrawn::floor_state_enum, bool, bool);
+    void set_life(S32);
+    void hide_model();
+    zNPCSpawner* make_spawner(S32);
     void Damage(en_NPC_DAMAGE_TYPE, xBase*, const xVec3*);
 
     xVec3& get_center() const;
@@ -304,7 +311,8 @@ struct zNPCGoalPrawnBeam : zNPCGoalCommon
     F32 sweep_dir;
     F32 delay;
 
-    void update_aim(float);
+    bool update_aim(F32);
+    S32 update_fire(F32);
     zNPCGoalPrawnBeam(S32 goalID) : zNPCGoalCommon(goalID)
     {
     }

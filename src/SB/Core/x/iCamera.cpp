@@ -9,20 +9,11 @@
 
 #include <string.h>
 
-extern F32 sCameraNearClip;
-extern F32 sCameraFarClip;
-extern RwCamera* sMainGameCamera;
+RwCamera* globalCamera;
+static RwCamera* sMainGameCamera;
 
-extern F32 _640_0;
-extern F32 _706_0;
-extern F32 _707_1;
-extern F32 _708_3;
-extern F32 _709_1;
-extern F32 _741_3;
-extern F32 _742_1;
-extern F32 _743_1;
-extern F64 _769_1;
-extern F64 _826_0;
+F32 sCameraNearClip = 0.05f;
+F32 sCameraFarClip = 400.0f;
 
 RwCamera* iCameraCreate(S32 width, S32 height, S32 mainGameCamera)
 {
@@ -37,8 +28,8 @@ RwCamera* iCameraCreate(S32 width, S32 height, S32 mainGameCamera)
     RwCameraSetFarClipPlane(camera, sCameraFarClip);
     RwCameraSetNearClipPlane(camera, sCameraNearClip);
 
-    vw.x = _640_0;
-    vw.y = _640_0;
+    vw.x = 1.0f;
+    vw.y = 1.0f;
 
     RwCameraSetViewWindow(camera, &vw);
 
@@ -231,10 +222,10 @@ void iCameraSetFOV(RwCamera* cam, F32 fov)
 {
     RwV2d vw;
 
-    vw.x = itan(_706_0 * (_707_1 * fov) / _708_3);
+    vw.x = itan(PI * (0.5f * fov) / 180.0f);
 
     // non-matching: frsp instruction is here for some reason
-    vw.y = _709_1 * vw.x;
+    vw.y = 0.75f * vw.x;
 
     RwCameraSetViewWindow(cam, &vw);
 }
@@ -271,18 +262,16 @@ void iCamGetViewMatrix(RwCamera* camera, xMat4x3* view_matrix)
 
 void iCameraSetNearFarClip(F32 nearPlane, F32 farPlane)
 {
-    if (nearPlane <= *(const F32*)&_742_1)
+    if (nearPlane <= 0.0f)
     {
-        nearPlane = _741_3;
+        nearPlane = 0.05f;
     }
 
     sCameraNearClip = nearPlane;
 
-    // non-matching: _742_1 is loaded too early
-
-    if (farPlane <= *(const F32*)&_742_1)
+    if (farPlane <= 0.0f)
     {
-        farPlane = _743_1;
+        farPlane = 400.0f;
     }
 
     sCameraFarClip = farPlane;
@@ -295,7 +284,7 @@ void iCameraSetFogParams(iFogParams* fp, F32 time)
         xglobals->fog.type = rwFOGTYPENAFOGTYPE;
         xglobals->fogA.type = rwFOGTYPENAFOGTYPE;
     }
-    else if (_742_1 == time || fp->type != xglobals->fogA.type)
+    else if (0.0f == time || fp->type != xglobals->fogA.type)
     {
         xglobals->fog = *fp;
         xglobals->fogA = *fp;
@@ -306,7 +295,8 @@ void iCameraSetFogParams(iFogParams* fp, F32 time)
         xglobals->fogA = xglobals->fog;
         xglobals->fogB = *fp;
 
-        // todo
+        xglobals->fog_t0 = iTimeGet();
+        xglobals->fog_t1 = xglobals->fog_t0 + (iTime)(time * 1000.0f);
     }
 }
 

@@ -190,6 +190,7 @@ void xSndSetVol(U32 snd, F32 vol);
 void xSndSetPitch(U32 snd, F32 pitch);
 void xSndStop(U32 snd);
 void xSndStopAll(U32 mask);
+void xSndStopFade(U32, F32);
 void xSndPauseAll(U32 pause_effects, U32 pause_streams);
 void xSndPauseCategory(U32 mask, U32 pause);
 void xSndDelayedInit();
@@ -228,6 +229,11 @@ inline U32 xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, xEnt*
                       sound_category category, F32 delay)
 {
     return xSndPlay3D(id, vol, pitch, priority, flags, ent, radius / 4.0f, radius, category, delay);
+}
+
+inline U32 xSndIsPlaying(U32 assetID, U32 parid)
+{
+    return iSndIsPlaying(assetID, parid);
 }
 
 #endif

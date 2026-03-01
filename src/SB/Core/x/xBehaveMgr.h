@@ -1,10 +1,7 @@
 #ifndef XBEHAVEMGR_H
 #define XBEHAVEMGR_H
 
-#include "xBase.h"
 #include "xBehaviour.h"
-#include "xordarray.h"
-#include "xFactory.h"
 
 struct xBehaveMgr : RyzMemData
 {

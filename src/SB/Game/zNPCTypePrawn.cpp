@@ -108,7 +108,7 @@ namespace
         F32 w;
         F32 h;
 
-        void create(S32, S32);
+        bool create(S32, S32);
         void destroy();
         void set_background(iColor_tag);
         void set_model_texture(xModelInstance&);
@@ -119,12 +119,109 @@ namespace
         void move(const xVec3&, const xVec3&);
     };
 
-    void television::create(S32 i1, S32 i2)
+    bool television::create(S32 width, S32 height)
     {
+        cam = NULL;
+        raster = NULL;
+        bgraster = NULL;
+        world = NULL;
+        memset(&bgcolor, 0x0, sizeof(bgcolor));
+
+        w = (float)width;
+        h = (float)height;
+        cam = RwCameraCreate();
+        if (cam == NULL)
+        {
+            destroy();
+            return FALSE;
+        }
+
+        RwBBox worldBbox;
+        worldBbox.sup.z = 100000.f;
+        worldBbox.sup.y = 100000.f;
+        worldBbox.sup.x = 100000.f;
+
+        worldBbox.inf.z = -100000.f;
+        worldBbox.inf.y = -100000.f;
+        worldBbox.inf.x = -100000.f;
+
+        world = RpWorldCreate(&worldBbox);
+        if (world == NULL)
+        {
+            destroy();
+            return FALSE;
+        }
+
+        RpWorldAddCamera(world, cam);
+        _rwObjectHasFrameSetFrame(cam, RwFrameCreate());
+
+        xVec2 windowSize;
+        windowSize.x = 1.0;
+        windowSize.y = 1.0;
+        RwCameraSetViewWindow(cam, (const RwV2d*)&windowSize);
+        RwCameraSetProjection(cam, rwPERSPECTIVE);
+
+        if (cam->object.object.parent == NULL)
+        {
+            destroy();
+            return FALSE;
+        }
+
+        raster =
+            RwRasterCreate(width, height, 32, rwRASTERGAMMACORRECTED | rwRASTERPIXELLOCKEDWRITE);
+        if (raster == NULL)
+        {
+            destroy();
+            return FALSE;
+        }
+        cam->frameBuffer = raster;
+        if (cam == NULL)
+        {
+            destroy();
+            return FALSE;
+        }
+        texture = RwTextureCreate(raster);
+        if (texture == NULL)
+        {
+            destroy();
+            return FALSE;
+        }
+        texture->filterAddressing = (texture->filterAddressing & 0xFFFFFF00) | rwFILTERLINEAR;
+
+        RwCameraSetNearClipPlane(cam, 0.3f);
+        RwCameraSetFarClipPlane(cam, 10000.0f);
+
+        return TRUE;
     }
 
     void television::destroy()
     {
+        if (texture != NULL)
+        {
+            RwTextureDestroy(texture);
+        }
+        else if (raster != NULL)
+        {
+            RwRasterDestroy(raster);
+        }
+        if (cam != NULL)
+        {
+            RwFrame* cam_frame = (RwFrame*)cam->object.object.parent;
+            if (cam_frame != NULL)
+            {
+                _rwObjectHasFrameSetFrame(cam, NULL);
+                RwFrameDestroy(cam_frame);
+            }
+            RpWorldRemoveCamera(world, cam);
+            RwCameraDestroy(cam);
+        }
+        if (world != NULL)
+        {
+            RpWorldDestroy(world);
+        }
+        cam = NULL;
+        raster = NULL;
+        world = NULL;
     }
 
     void television::set_background(iColor_tag color)
@@ -136,13 +233,70 @@ namespace
         this->bgcolor.alpha = color.a;
     }
 
-    void television::set_model_texture(xModelInstance& m)
+    void television::set_model_texture(xModelInstance& model)
     {
+        for (S32 bucketSlot = 0; bucketSlot < 2; bucketSlot++)
+        {
+            RpGeometry* modelGeometry = model.Bucket[bucketSlot]->Data->geometry;
+            if (modelGeometry == 0 || modelGeometry->matList.numMaterials <= 0)
+            {
+                break;
+            }
+            RpMaterialSetTexture(modelGeometry->matList.materials[0], this->texture);
+        }
     }
 
-    void television::update(xModelInstance& m, xLightKit* l)
+    void television::update(xModelInstance& model_inst, xLightKit* light_kit)
     {
+        RwCamera* globalCamera = (RwCamera*)(RwEngineInstance->curCamera);
+        if (globalCamera != NULL)
+        {
+            RwCameraEndUpdate(globalCamera);
+            RwGameCubeCameraTextureFlush(globalCamera->frameBuffer, 0);
+        }
+        if (this->bgraster == NULL)
+        {
+            RwCameraClear(this->cam, &this->bgcolor, rwCAMERACLEARIMAGE | rwCAMERACLEARZ);
+        }
+        else
+        {
+            RwCameraClear(this->cam, &this->bgcolor, rwCAMERACLEARZ);
+        }
+        RwCameraBeginUpdate(this->cam);
+        if (this->bgraster != NULL)
+        {
+            render_background();
+        }
+        zRenderState(SDRS_Default);
+
+        if (light_kit != NULL)
+        {
+            xLightKit_Enable(light_kit, this->world);
+        }
+        xModelInstance* currentInstance = &model_inst;
+
+        while (currentInstance != NULL)
+        {
+            if (currentInstance->Flags & 1)
+            {
+                iModelRender(currentInstance->Data, currentInstance->Mat);
+            }
+            currentInstance = currentInstance->Next;
+        }
+        if (light_kit != NULL)
+        {
+            // Doesn't use light_kit, but does a nullcheck?
+            xLightKit_Enable(NULL, this->world);
+        }
+        render_static();
+        RwCameraEndUpdate(this->cam);
+        RwGameCubeCameraTextureFlush(this->cam->frameBuffer, 0);
+        if (globalCamera != NULL)
+        {
+            RwCameraBeginUpdate(globalCamera);
+        }
     }
+
 
     void television::render_static()
     {
@@ -169,7 +323,8 @@ namespace
 
     void television::move(const xVec3& v1, const xVec3& v2)
     {
-        RwFrameTranslate((RwFrame*)this->cam->object.object.parent, (const RwV3d*)&v1, rwCOMBINEREPLACE);
+        RwFrameTranslate((RwFrame*)this->cam->object.object.parent, (const RwV3d*)&v1,
+                         rwCOMBINEREPLACE);
         xMat3x3LookAt((xMat3x3*)this->cam->object.object.parent, &v2, &v1);
     }
 
@@ -345,19 +500,19 @@ void aqua_beam::load(const aqua_beam::config& c, U32 i)
 
 void aqua_beam::load(const aqua_beam::config& c, RpAtomic& a)
 {
+    ring.model_data = &a;
+    cfg = c;
+    ring.queue.reset();
 }
 
-void aqua_beam::reset() // I don't know whats wrong here. Probably a simple error
+void aqua_beam::reset()
 {
     firing = 0;
     bool tempBvar;
 
-    while (true)
+    while (!(tempBvar = ring.queue.empty()))
     {
         aqua_beam::kill_ring();
-        tempBvar = ring.queue.empty();
-        if (tempBvar)
-            break;
     }
     ring_sounds = 0;
 }
@@ -384,19 +539,37 @@ void aqua_beam::update(F32 dt)
     update_rings(dt);
 }
 
+void aqua_beam::emit_ring()
+{
+    if (!ring.queue.full())
+    {
+        kill_ring();
+    }
+    ring.queue.push_front();
+}
+
 void aqua_beam::render()
+{
+    fixed_queue<aqua_beam::ring_segment, 31>::iterator entry = ring.queue.begin();
+    while (entry != ring.queue.end())
+    {
+        render_ring(*entry);
+        ++entry;
+    }
+}
+
+void render_ring(aqua_beam::ring_segment& segment)
 {
 }
 
 void aqua_beam::kill_ring()
 {
-    // TODO: found this in an old ss i had
-    // just putting it back
-    ring.queue.back();
-    xModelInstanceFree((xModelInstance*)this);
-    if (this != 0)
+    aqua_beam::ring_segment& back = ring.queue.back();
+    xModelInstanceFree(back.model);
+
+    if (back.sound_handle != 0)
     {
-        kill_sound(3, (U32)this);
+        kill_sound(3, back.sound_handle);
     }
     ring.queue.pop_back();
 }
@@ -478,7 +651,22 @@ void zNPCPrawn::NewTime(xScene* xscn, float dt)
     zNPCPrawn::render_closeup();
 }
 
-
+void zNPCPrawn::Damage(en_NPC_DAMAGE_TYPE damage_type, xBase* base, const xVec3* vec)
+{
+    S32 active_id = this->psy_instinct->GIDOfActive();
+    switch (damage_type)
+    {
+    case DMGTYP_BOULDER:
+    case DMGTYP_BUBBOWL:
+        if (active_id == NPC_GOAL_PRAWNBOWL)
+        {
+            set_life(this->life - 1);
+        }
+        break;
+    default:
+        break;
+    }
+}
 
 void zNPCPrawn::ParseINI()
 {
@@ -491,61 +679,106 @@ void zNPCPrawn::ParseINI()
     tweak.safe.pattern.max = zParamGetInt(this->parmdata, this->pdatsize, "safe.pattern.max", 0);
     tweak.begin.pattern.min = zParamGetInt(this->parmdata, this->pdatsize, "begin.pattern.min", 0);
     tweak.begin.pattern.max = zParamGetInt(this->parmdata, this->pdatsize, "begin.pattern.max", 1);
-    tweak.begin.state_delay = zParamGetFloat(this->parmdata, this->pdatsize, "begin.state_delay", 0.0f);
-    tweak.begin.transition_delay = zParamGetFloat(this->parmdata, this->pdatsize, "begin.transition_delay", 1.0f);
+    tweak.begin.state_delay =
+        zParamGetFloat(this->parmdata, this->pdatsize, "begin.state_delay", 0.0f);
+    tweak.begin.transition_delay =
+        zParamGetFloat(this->parmdata, this->pdatsize, "begin.transition_delay", 1.0f);
     tweak.beam.delay[0] = zParamGetFloat(this->parmdata, this->pdatsize, "beam.delay[0]", 2.5f);
     tweak.beam.delay[1] = zParamGetFloat(this->parmdata, this->pdatsize, "beam.delay[1]", 4.5f);
     tweak.beam.delay[2] = zParamGetFloat(this->parmdata, this->pdatsize, "beam.delay[2]", 6.5f);
     tweak.beam.pattern.min = zParamGetInt(this->parmdata, this->pdatsize, "beam.pattern.min", 3);
     tweak.beam.pattern.max = zParamGetInt(this->parmdata, this->pdatsize, "beam.pattern.max", 0x13);
-    tweak.beam.state_delay = zParamGetFloat(this->parmdata, this->pdatsize, "beam.state_delay", 0.05f);
-    tweak.beam.transition_delay = zParamGetFloat(this->parmdata, this->pdatsize, "beam.transition_delay", 0.05f);
-    tweak.beam.exhaust_vel = zParamGetFloat(this->parmdata, this->pdatsize, "beam.exhaust_vel", 15.0f);
+    tweak.beam.state_delay =
+        zParamGetFloat(this->parmdata, this->pdatsize, "beam.state_delay", 0.05f);
+    tweak.beam.transition_delay =
+        zParamGetFloat(this->parmdata, this->pdatsize, "beam.transition_delay", 0.05f);
+    tweak.beam.exhaust_vel =
+        zParamGetFloat(this->parmdata, this->pdatsize, "beam.exhaust_vel", 15.0f);
     tweak.beam.knock_back = zParamGetFloat(this->parmdata, this->pdatsize, "beam.knock_back", 1.0f);
-    tweak.beam.sweep.amount[0] = zParamGetInt(this->parmdata, this->pdatsize, "beam.sweep.amount[0]", 2);
-    tweak.beam.sweep.amount[1] = zParamGetInt(this->parmdata, this->pdatsize, "beam.sweep.amount[1]", 3);
-    tweak.beam.sweep.amount[2] = zParamGetInt(this->parmdata, this->pdatsize, "beam.sweep.amount[2]", 4);
+    tweak.beam.sweep.amount[0] =
+        zParamGetInt(this->parmdata, this->pdatsize, "beam.sweep.amount[0]", 2);
+    tweak.beam.sweep.amount[1] =
+        zParamGetInt(this->parmdata, this->pdatsize, "beam.sweep.amount[1]", 3);
+    tweak.beam.sweep.amount[2] =
+        zParamGetInt(this->parmdata, this->pdatsize, "beam.sweep.amount[2]", 4);
     tweak.beam.sweep.arc = zParamGetFloat(this->parmdata, this->pdatsize, "beam.sweep.arc", 20.0f);
     tweak.beam.sweep.arc = zParamGetFloat(this->parmdata, this->pdatsize, "beam.sweep.delay", 0.5f);
-    tweak.beam.sweep.arc = zParamGetFloat(this->parmdata, this->pdatsize, "beam.sweep.accel", 60.0f);
-    tweak.beam.sweep.arc = zParamGetFloat(this->parmdata, this->pdatsize, "beam.sweep.max_vel", 26.5f);
-    tweak.beam.sweep.arc = zParamGetFloat(this->parmdata, this->pdatsize, "beam.fire.ring.size", 0.4f);
-    tweak.beam.sweep.arc = zParamGetFloat(this->parmdata, this->pdatsize, "beam.fire.ring.alpha", 1.0f);
-    tweak.beam.sweep.arc = zParamGetFloat(this->parmdata, this->pdatsize, "beam.fire.ring.vel", 9.0f);
-    tweak.beam.sweep.arc = zParamGetFloat(this->parmdata, this->pdatsize, "beam.fire.ring.accel", 10.0f);
-    tweak.beam.sweep.arc = zParamGetFloat(this->parmdata, this->pdatsize, "beam.fire.ring.emit_delay", 0.1f);
-    tweak.beam.sweep.arc = zParamGetFloat(this->parmdata, this->pdatsize, "beam.fire.ring.grow", 0.15f);
-    tweak.beam.sweep.arc = zParamGetFloat(this->parmdata, this->pdatsize, "beam.fire.ring.fade_dist", 15.0f);
-    tweak.beam.sweep.arc = zParamGetFloat(this->parmdata, this->pdatsize, "beam.fire.ring.kill_dist", 20.0f);
-    tweak.beam.sweep.arc = zParamGetFloat(this->parmdata, this->pdatsize, "beam.fire.ring.follow", 0.0f);
-    tweak.beam.sweep.arc = zParamGetFloat(this->parmdata, this->pdatsize, "beam.fire.ring.hit_radius", 0.3f);
-    tweak.beam.fire.ring.hit_offset = zParamGetVector(this->parmdata, this->pdatsize, "beam.fire.ring.hit_offset", xVec3::create(0.0f, 0.0f, 0.0f), &tweak.beam.fire.ring.hit_offset);
-    tweak.beam.fire.emit_bone = zParamGetInt(this->parmdata, this->pdatsize, "beam.fire.emit_bone", 0x2b);
-    tweak.beam.fire.offset = zParamGetVector(this->parmdata, this->pdatsize, "beam.fire.offset", xVec3::create(0.0f, 0.0f, 0.0f), &tweak.beam.fire.offset);
+    tweak.beam.sweep.arc =
+        zParamGetFloat(this->parmdata, this->pdatsize, "beam.sweep.accel", 60.0f);
+    tweak.beam.sweep.arc =
+        zParamGetFloat(this->parmdata, this->pdatsize, "beam.sweep.max_vel", 26.5f);
+    tweak.beam.sweep.arc =
+        zParamGetFloat(this->parmdata, this->pdatsize, "beam.fire.ring.size", 0.4f);
+    tweak.beam.sweep.arc =
+        zParamGetFloat(this->parmdata, this->pdatsize, "beam.fire.ring.alpha", 1.0f);
+    tweak.beam.sweep.arc =
+        zParamGetFloat(this->parmdata, this->pdatsize, "beam.fire.ring.vel", 9.0f);
+    tweak.beam.sweep.arc =
+        zParamGetFloat(this->parmdata, this->pdatsize, "beam.fire.ring.accel", 10.0f);
+    tweak.beam.sweep.arc =
+        zParamGetFloat(this->parmdata, this->pdatsize, "beam.fire.ring.emit_delay", 0.1f);
+    tweak.beam.sweep.arc =
+        zParamGetFloat(this->parmdata, this->pdatsize, "beam.fire.ring.grow", 0.15f);
+    tweak.beam.sweep.arc =
+        zParamGetFloat(this->parmdata, this->pdatsize, "beam.fire.ring.fade_dist", 15.0f);
+    tweak.beam.sweep.arc =
+        zParamGetFloat(this->parmdata, this->pdatsize, "beam.fire.ring.kill_dist", 20.0f);
+    tweak.beam.sweep.arc =
+        zParamGetFloat(this->parmdata, this->pdatsize, "beam.fire.ring.follow", 0.0f);
+    tweak.beam.sweep.arc =
+        zParamGetFloat(this->parmdata, this->pdatsize, "beam.fire.ring.hit_radius", 0.3f);
+    tweak.beam.fire.ring.hit_offset =
+        zParamGetVector(this->parmdata, this->pdatsize, "beam.fire.ring.hit_offset",
+                        xVec3::create(0.0f, 0.0f, 0.0f), &tweak.beam.fire.ring.hit_offset);
+    tweak.beam.fire.emit_bone =
+        zParamGetInt(this->parmdata, this->pdatsize, "beam.fire.emit_bone", 0x2b);
+    tweak.beam.fire.offset =
+        zParamGetVector(this->parmdata, this->pdatsize, "beam.fire.offset",
+                        xVec3::create(0.0f, 0.0f, 0.0f), &tweak.beam.fire.offset);
     tweak.beam.fire.yaw = zParamGetFloat(this->parmdata, this->pdatsize, "beam.fire.yaw", 0.0f);
     tweak.beam.fire.pitch = zParamGetFloat(this->parmdata, this->pdatsize, "beam.fire.pitch", 5.5f);
     isin(tweak.beam.fire.pitch);
     icos(tweak.beam.fire.pitch);
-    tweak.aim_lane.duration = zParamGetFloat(this->parmdata, this->pdatsize, "aim_lane.duration", 2.0f);
-    tweak.aim_lane.state_delay = zParamGetFloat(this->parmdata, this->pdatsize, "aim_lane.state_delay", 0.1f);
-    tweak.aim_lane.transition_delay = zParamGetFloat(this->parmdata, this->pdatsize, "aim_lane.transition_delay", 0.1f);
-    tweak.aim_lane.pattern.first = zParamGetInt(this->parmdata, this->pdatsize, "aim_lane.pattern.first", 0x15);
-    tweak.aim_lane.pattern.range = zParamGetInt(this->parmdata, this->pdatsize, "aim_lane.pattern.range", 0x8);
-    tweak.aim_lane.pattern.offset = zParamGetInt(this->parmdata, this->pdatsize, "aim_lane.pattern.offset", 0x9);
-    tweak.aim_lane.pattern.size = zParamGetInt(this->parmdata, this->pdatsize, "aim_lane.pattern.size", 0x4);
-    tweak.lane.duration[0] = zParamGetFloat(this->parmdata, this->pdatsize, "lane.duration[0]", 8.0f);
-    tweak.lane.duration[1] = zParamGetFloat(this->parmdata, this->pdatsize, "lane.duration[1]", 7.0f);
-    tweak.lane.duration[2] = zParamGetFloat(this->parmdata, this->pdatsize, "lane.duration[2]", 6.0f);
-    tweak.lane.state_delay = zParamGetFloat(this->parmdata, this->pdatsize, "lane.state_delay", 0.0f);
-    tweak.lane.transition_delay = zParamGetFloat(this->parmdata, this->pdatsize, "lane.transition_delay", 0.1f);
-    tweak.lane.pattern.first = zParamGetInt(this->parmdata, this->pdatsize, "lane.pattern.first", 0x39);
-    tweak.lane.pattern.range = zParamGetInt(this->parmdata, this->pdatsize, "lane.pattern.range", 0x8);
-    tweak.lane.pattern.offset = zParamGetInt(this->parmdata, this->pdatsize, "lane.pattern.offset", 0x9);
-    tweak.lane.pattern.size = zParamGetInt(this->parmdata, this->pdatsize, "lane.pattern.size", 0x4);
-    tweak.danger.state_delay = zParamGetFloat(this->parmdata, this->pdatsize, "danger.state_delay", 0.2f);
-    tweak.danger.transition_delay = zParamGetFloat(this->parmdata, this->pdatsize, "danger.transition_delay", 0.2f);
-    tweak.danger.cycle_delay = zParamGetFloat(this->parmdata, this->pdatsize, "danger.cycle_delay", 6.0f);
-    tweak.danger.pattern_offset = zParamGetInt(this->parmdata, this->pdatsize, "danger.pattern_offset", 0x5d);
+    tweak.aim_lane.duration =
+        zParamGetFloat(this->parmdata, this->pdatsize, "aim_lane.duration", 2.0f);
+    tweak.aim_lane.state_delay =
+        zParamGetFloat(this->parmdata, this->pdatsize, "aim_lane.state_delay", 0.1f);
+    tweak.aim_lane.transition_delay =
+        zParamGetFloat(this->parmdata, this->pdatsize, "aim_lane.transition_delay", 0.1f);
+    tweak.aim_lane.pattern.first =
+        zParamGetInt(this->parmdata, this->pdatsize, "aim_lane.pattern.first", 0x15);
+    tweak.aim_lane.pattern.range =
+        zParamGetInt(this->parmdata, this->pdatsize, "aim_lane.pattern.range", 0x8);
+    tweak.aim_lane.pattern.offset =
+        zParamGetInt(this->parmdata, this->pdatsize, "aim_lane.pattern.offset", 0x9);
+    tweak.aim_lane.pattern.size =
+        zParamGetInt(this->parmdata, this->pdatsize, "aim_lane.pattern.size", 0x4);
+    tweak.lane.duration[0] =
+        zParamGetFloat(this->parmdata, this->pdatsize, "lane.duration[0]", 8.0f);
+    tweak.lane.duration[1] =
+        zParamGetFloat(this->parmdata, this->pdatsize, "lane.duration[1]", 7.0f);
+    tweak.lane.duration[2] =
+        zParamGetFloat(this->parmdata, this->pdatsize, "lane.duration[2]", 6.0f);
+    tweak.lane.state_delay =
+        zParamGetFloat(this->parmdata, this->pdatsize, "lane.state_delay", 0.0f);
+    tweak.lane.transition_delay =
+        zParamGetFloat(this->parmdata, this->pdatsize, "lane.transition_delay", 0.1f);
+    tweak.lane.pattern.first =
+        zParamGetInt(this->parmdata, this->pdatsize, "lane.pattern.first", 0x39);
+    tweak.lane.pattern.range =
+        zParamGetInt(this->parmdata, this->pdatsize, "lane.pattern.range", 0x8);
+    tweak.lane.pattern.offset =
+        zParamGetInt(this->parmdata, this->pdatsize, "lane.pattern.offset", 0x9);
+    tweak.lane.pattern.size =
+        zParamGetInt(this->parmdata, this->pdatsize, "lane.pattern.size", 0x4);
+    tweak.danger.state_delay =
+        zParamGetFloat(this->parmdata, this->pdatsize, "danger.state_delay", 0.2f);
+    tweak.danger.transition_delay =
+        zParamGetFloat(this->parmdata, this->pdatsize, "danger.transition_delay", 0.2f);
+    tweak.danger.cycle_delay =
+        zParamGetFloat(this->parmdata, this->pdatsize, "danger.cycle_delay", 6.0f);
+    tweak.danger.pattern_offset =
+        zParamGetInt(this->parmdata, this->pdatsize, "danger.pattern_offset", 0x5d);
 }
 
 void zNPCPrawn::SelfSetup()
@@ -575,79 +808,82 @@ void zNPCPrawn::Render()
     zNPCPrawn::render_debug();
 }
 
-// void zNPCPrawn::update_round()
-// {
-// }
-/* zNPCPrawn::update_round (void) */
 void zNPCPrawn::update_round()
 {
-    S32 var_r4;
-    S32 temp_r3;
-    S32 var_r30;
-    zNPCPrawn* var_r31;
-    zNPCSpawner** temp_r3_2;
-
-    temp_r3 = this->life;
-    if (temp_r3 == 0)
+    S32 life = this->life;
+    if (life == 0)
     {
         this->round = 3;
     }
     else
     {
-        this->round = 2 - ((S32)((temp_r3 - 1) * 3) / (s32)this->cfg_npc->useBoxBound);
+        this->round = 2 - (S32)((life - 1) * 3) / this->cfg_npc->pts_damage;
     }
-    var_r30 = 0;
-    var_r31 = this;
-    do
+    S32 spawnerCount = sizeof(this->spawner) / sizeof(*this->spawner);
+    for (S32 spawnerIndex = 0; spawnerIndex < spawnerCount; spawnerIndex++)
     {
-        temp_r3_2 = var_r31->spawner;
-        if (temp_r3_2 != NULL)
+        zNPCSpawner* current_spawner = this->spawner[spawnerIndex];
+        if (current_spawner != NULL)
         {
-            var_r4 = 4;
-            if (var_r30 > (s32)this->round)
+            en_SM_NOTICES spawnerNotice = SM_NOTE_DUPRESUME;
+            if (spawnerIndex > this->round)
             {
-                var_r4 = 3;
+                spawnerNotice = SM_NOTE_DUPPAUSE;
             }
-            //Notify__11zNPCSpawnerF13en_SM_NOTICESPv(temp_r3_2, (en_SM_NOTICES) var_r4, NULL);
+            current_spawner->Notify(spawnerNotice, NULL);
         }
-        var_r30 += 1;
-        var_r31 += 4;
-    } while (var_r30 < 3);
+    }
 }
 
-// void zNPCPrawn::decompose()
-// {
-// }
-/* zNPCPrawn::decompose (void) */
+void zNPCPrawn::hide_model()
+{
+    xModelInstance* inst = this->model;
+    while (inst != NULL)
+    {
+        inst->Flags &= 0xFFFC;
+        inst = inst->Next;
+    }
+}
+
 void zNPCPrawn::decompose()
 {
-    S32 i;
-    zNPCPrawn* var_r31;
-    zNPCSpawner** temp_r3;
-
-    var_r31 = this;
+    S32 spawnerIndex;
+    zNPCSpawner* spawner;
     vanish();
-    if ((U8)var_r31->fighting != 0)
+
+    if (this->fighting != 0)
     {
-        var_r31->fighting = 0;
-        //set_floor_state(var_r31, (zNPCPrawn::floor_state_enum) 0, 1, 1);
-        //hide_model(var_r31);
-        i = 0;
+        this->fighting = 0;
+        set_floor_state(FS_SAFE, TRUE, TRUE);
+        hide_model();
+        spawnerIndex = 0;
+
         do
         {
-            temp_r3 = var_r31->spawner;
-            if (temp_r3 != NULL)
+            spawner = this->spawner[spawnerIndex];
+            if (spawner != NULL)
             {
-                //Notify__11zNPCSpawnerF13en_SM_NOTICESPv(temp_r3, (en_SM_NOTICES) 6, NULL);
-                //Notify__11zNPCSpawnerF13en_SM_NOTICESPv(var_r31->unk2D0, (en_SM_NOTICES) 7, NULL);
-                0; //pass
+                spawner->Notify(SM_NOTE_DUPDEAD, NULL);
+                spawner->Notify(SM_NOTE_KILLKIDS, NULL);
             }
-            i += 1;
-            var_r31 += 4;
-        } while (i < 3);
-        //zCameraEnableTracking((camera_owner_enum) 8);
-        //stop__13xBinaryCameraFv((xBinaryCamera *) &boss_cam__27@unnamed@zNPCTypePrawn_cpp@);
+            spawnerIndex++;
+        } while (spawnerIndex < sizeof(this->spawner) / sizeof(*this->spawner));
+        zCameraEnableTracking(CO_BOSS);
+        boss_cam.stop();
     }
+}
+
+zNPCSpawner* zNPCPrawn::make_spawner(S32 i)
+{
+    zNPCSpawner* spawner = this->spawner[i];
+    if (spawner != NULL)
+    {
+        return spawner;
+    }
+    this->spawner[i] = zNPCSpawner_GetInstance();
+    this->spawner[i]->Subscribe(this);
+    this->spawner[i]->SetWaveMode(SM_WAVE_CONTINUOUS, tweak.spawn_delay, -1);
+    return this->spawner[i];
 }
 
 void zNPCPrawn::update_particles(float)
@@ -733,10 +969,20 @@ void zNPCPrawn::render_closeup()
 {
 }
 
-void zNPCGoalPrawnBeam::update_aim(float dt) //Needs clrlwi and cntlzw to be finished
+bool zNPCGoalPrawnBeam::update_aim(F32 dt)
 {
     zNPCPrawn& prawn = *((zNPCPrawn*)this->psyche->clt_owner);
-    prawn.turning();
+    return !prawn.turning();
+}
+
+S32 zNPCGoalPrawnBeam::update_fire(F32 dt)
+{
+    zNPCPrawn& prawn = *((zNPCPrawn*)this->psyche->clt_owner);
+    prawn.beam.start();
+    prawn.delay = 0.0f;
+    prawn.turn.accel = tweak.beam.sweep.accel;
+    prawn.turn.max_vel = tweak.beam.sweep.max_vel;
+    return 2;
 }
 
 S32 zNPCGoalPrawnIdle::Enter(float dt, void* updCtxt)
@@ -818,7 +1064,7 @@ void zNPCPrawn::render_debug()
 // {
 // }
 /* zNPCPrawn::turning (void) const */
-void zNPCPrawn::turning() const
+bool zNPCPrawn::turning() const
 {
     F32 spC;
     F32 sp8;
@@ -832,6 +1078,7 @@ void zNPCPrawn::turning() const
     var_r0 = 0;
     temp_r6 = this->model->Mat;
     temp_f3 = this->turn.vel;
+    return TRUE;
 }
 
 xVec3& zNPCPrawn::get_facing() const
@@ -866,5 +1113,5 @@ U8 zNPCPrawn::PhysicsFlags() const
 
 S32 zNPCPrawn::IsAlive()
 {
-    return this->life != 0;
+    return this->life > 0;
 }
