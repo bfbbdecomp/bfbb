@@ -11,39 +11,11 @@ struct DispatchEntry gTRKDispatchTable[33] = {
 	{ &TRKDoSupportMask }, { &TRKDoCPUType },     { &TRKDoUnsupported }, { &TRKDoUnsupported },   { &TRKDoUnsupported },
 	{ &TRKDoUnsupported }, { &TRKDoUnsupported }, { &TRKDoUnsupported }, { &TRKDoUnsupported },   { &TRKDoUnsupported },
 	{ &TRKDoUnsupported }, { &TRKDoReadMemory },  { &TRKDoWriteMemory }, { &TRKDoReadRegisters }, { &TRKDoWriteRegisters },
-	{ &TRKDoUnsupported }, { &TRKDoUnsupported }, { &TRKDoFlushCache },  { &TRKDoUnsupported },   { &TRKDoContinue },
+	{ &TRKDoUnsupported }, { &TRKDoUnsupported }, { &TRKDoFlushCache },  { &TRKDoSetOption },     { &TRKDoContinue },
 	{ &TRKDoStep },        { &TRKDoStop },        { &TRKDoUnsupported }, { &TRKDoUnsupported },   { &TRKDoUnsupported },
 	{ &TRKDoUnsupported }, { &TRKDoUnsupported },
 };
 
-/*
- * --INFO--
- * Address:	8021CEE0
- * Size:	000014
- */
-DSError TRKInitializeDispatcher()
-{
-	gTRKDispatchTableSize = 32;
-	return DS_NoError;
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A0
- */
-DSError TRKOverrideDispatch(TRKBuffer* buffer)
-{
-	return DS_NoError;
-
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	8021CEF4
- * Size:	000084
- */
 DSError TRKDispatchMessage(TRKBuffer* buffer)
 {
 	DSError error;
@@ -57,4 +29,16 @@ DSError TRKDispatchMessage(TRKBuffer* buffer)
 		error = gTRKDispatchTable[command].fn(buffer);
 	}
 	return error;
+}
+
+DSError TRKInitializeDispatcher()
+{
+	gTRKDispatchTableSize = 32;
+	return DS_NoError;
+}
+
+static DSError TRKOverrideDispatch(TRKBuffer* buffer)
+{
+	(void)buffer;
+	return DS_NoError;
 }
