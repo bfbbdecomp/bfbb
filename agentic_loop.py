@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import os
 import signal
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -51,6 +52,22 @@ def build_prompt(branch: str) -> str:
     )
 
 
+def resolve_codex_command() -> list[str]:
+    if os.name == "nt":
+        candidates = ("codex.exe", "codex.cmd", "codex.bat", "codex")
+    else:
+        candidates = ("codex",)
+
+    for candidate in candidates:
+        resolved = shutil.which(candidate)
+        if resolved:
+            return [resolved]
+
+    raise FileNotFoundError(
+        "Could not find the Codex CLI in PATH. Install Codex or add its executable location to PATH."
+    )
+
+
 def terminate_process_tree(proc: subprocess.Popen[bytes]) -> None:
     if os.name == "nt":
         subprocess.run(
@@ -69,6 +86,7 @@ def terminate_process_tree(proc: subprocess.Popen[bytes]) -> None:
 
 def run_once(repo_root: Path, timeout_seconds: int) -> int:
     prompt = build_prompt(get_current_branch(repo_root))
+    codex_command = resolve_codex_command()
     popen_kwargs = {
         "cwd": repo_root,
     }
@@ -78,7 +96,7 @@ def run_once(repo_root: Path, timeout_seconds: int) -> int:
     else:
         popen_kwargs["start_new_session"] = True
 
-    proc = subprocess.Popen(["codex", "exec", "--yolo", prompt], **popen_kwargs)
+    proc = subprocess.Popen(codex_command + ["exec", "--yolo", prompt], **popen_kwargs)
 
     try:
         return proc.wait(timeout=timeout_seconds)
