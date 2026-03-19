@@ -212,16 +212,14 @@ void xPsyche::Amnesia(S32 i)
     }
 }
 
-// Non-matching: Loop/alloc issue
 S32 xPsyche::IndexInStack(S32 gid) const
 {
-    const xGoal* const* goal = this->goalstak;
     S32 top = this->staktop;
     S32 da_idx = -1;
 
-    for (S32 i = 0; i <= top; i++, goal++)
+    for (S32 i = 0; i <= top; i++)
     {
-        if (gid == (*goal)->GetID())
+        if (gid == this->goalstak[i]->GetID())
         {
             da_idx = i;
             break;
@@ -242,16 +240,14 @@ xGoal* xPsyche::GetCurGoal() const
     }
 }
 
-// Non-matching: Loop/alloc issue
 xGoal* xPsyche::GIDInStack(S32 gid) const
 {
-    xGoal* const* goal = this->goalstak;
     S32 top = this->staktop;
     xGoal* da_goal = NULL;
 
-    for (S32 i = 0; i <= top; i++, goal++)
+    for (S32 i = 0; i <= top; i++)
     {
-        xGoal* tmpgoal = *goal;
+        xGoal* tmpgoal = this->goalstak[i];
 
         if (gid == tmpgoal->GetID())
         {
