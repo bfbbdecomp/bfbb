@@ -21,6 +21,10 @@ def safe_float(value: Any, default: float = 0.0) -> float:
     return parsed if math.isfinite(parsed) else default
 
 
+def measure_percent(measures: dict[str, Any], key: str, default: float = MATCH_COMPLETE) -> float:
+    return safe_float(measures.get(key, default), default)
+
+
 def default_report_path(repo_root: Path) -> Path:
     preferred = repo_root / "build" / "GQPE78" / "report.json"
     if preferred.exists():
@@ -83,19 +87,72 @@ def incomplete_function_rows(unit: dict[str, Any]) -> list[tuple[float, str, str
     return rows
 
 
-def unit_sort_key(unit: dict[str, Any], sort_mode: str) -> tuple[float, float, float, float, str]:
+def has_real_source_path(unit: dict[str, Any]) -> bool:
+    metadata = unit.get("metadata", {})
+    if not isinstance(metadata, dict):
+        return False
+
+    source_path = metadata.get("source_path")
+    return isinstance(source_path, str) and bool(source_path)
+
+
+def polish_sort_key(unit: dict[str, Any]) -> tuple[int, float, float, float, float, float, str]:
     measures = unit.get("measures", {})
     if not isinstance(measures, dict):
         measures = {}
 
-    fuzzy = safe_float(measures.get("fuzzy_match_percent", 0.0))
-    matched_functions = safe_float(measures.get("matched_functions_percent", 0.0))
-    matched_code = safe_float(measures.get("matched_code_percent", 0.0))
-    matched_data = safe_float(measures.get("matched_data_percent", 0.0))
+    fuzzy = measure_percent(measures, "fuzzy_match_percent", 0.0)
+    matched_functions = measure_percent(measures, "matched_functions_percent")
+    matched_code = measure_percent(measures, "matched_code_percent")
+    matched_data = measure_percent(measures, "matched_data_percent")
+    name = str(unit.get("name", ""))
+
+    # Prefer units that are nearly complete across every report axis instead of
+    # raw fuzzy score alone. This keeps the default list focused on clean polish
+    # work rather than units that still have a large code/data gap.
+    weakest_metric = min(fuzzy, matched_functions, matched_code, matched_data)
+    weighted_quality = (
+        fuzzy * 0.20
+        + matched_functions * 0.15
+        + matched_code * 0.40
+        + matched_data * 0.25
+    )
+    missing_metric_count = sum(
+        1
+        for key in ("matched_code_percent", "matched_data_percent", "matched_functions_percent")
+        if key not in measures
+    )
+    source_rank = 0 if has_real_source_path(unit) else 1
+
+    return (
+        missing_metric_count,
+        source_rank,
+        -weakest_metric,
+        -weighted_quality,
+        -matched_code,
+        -matched_data,
+        -matched_functions,
+        -fuzzy,
+        name,
+    )
+
+
+def unit_sort_key(unit: dict[str, Any], sort_mode: str) -> tuple[Any, ...]:
+    measures = unit.get("measures", {})
+    if not isinstance(measures, dict):
+        measures = {}
+
+    fuzzy = measure_percent(measures, "fuzzy_match_percent", 0.0)
+    matched_functions = measure_percent(measures, "matched_functions_percent")
+    matched_code = measure_percent(measures, "matched_code_percent")
+    matched_data = measure_percent(measures, "matched_data_percent")
     name = str(unit.get("name", ""))
 
     if sort_mode == "lowest":
         return (fuzzy, matched_functions, matched_code, matched_data, name)
+
+    if sort_mode == "polish":
+        return polish_sort_key(unit)
 
     return (-fuzzy, -matched_functions, -matched_code, -matched_data, name)
 
@@ -107,6 +164,13 @@ def display_source(unit: dict[str, Any]) -> str:
         if isinstance(source_path, str) and source_path:
             return source_path
     return str(unit.get("name", "<unknown>"))
+
+
+def format_measure(measures: dict[str, Any], key: str, default: float = MATCH_COMPLETE) -> str:
+    if key not in measures:
+        return "   n/a"
+
+    return f"{measure_percent(measures, key, default):6.2f}%"
 
 
 def parse_args() -> argparse.Namespace:
@@ -131,9 +195,9 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--sort",
-        choices=("closest", "lowest"),
-        default="closest",
-        help="rank units by highest incomplete fuzzy match or lowest fuzzy match",
+        choices=("polish", "closest", "lowest"),
+        default="polish",
+        help="rank units by balanced near-match polish, highest incomplete fuzzy match, or lowest fuzzy match",
     )
     parser.add_argument(
         "--list",
@@ -168,7 +232,12 @@ def main() -> int:
         return 0
 
     incomplete_units.sort(key=lambda unit: unit_sort_key(unit, args.sort))
-    label = "Highest-match incomplete targets" if args.sort == "closest" else "Lowest-match targets"
+    if args.sort == "polish":
+        label = "Quality-first near-match targets"
+    elif args.sort == "closest":
+        label = "Highest-match incomplete targets"
+    else:
+        label = "Lowest-match targets"
     print(f"{label} from {report_path.relative_to(repo_root).as_posix()}:")
 
     for index, unit in enumerate(incomplete_units[:count], 1):
@@ -176,13 +245,13 @@ def main() -> int:
         if not isinstance(measures, dict):
             measures = {}
 
-        fuzzy = safe_float(measures.get("fuzzy_match_percent", 0.0))
-        matched_code = safe_float(measures.get("matched_code_percent", 0.0))
-        matched_data = safe_float(measures.get("matched_data_percent", 0.0))
+        fuzzy = measure_percent(measures, "fuzzy_match_percent", 0.0)
+        matched_code = format_measure(measures, "matched_code_percent")
+        matched_data = format_measure(measures, "matched_data_percent")
         name = str(unit.get("name", "<unknown>"))
         source = display_source(unit)
         print(
-            f"{index:2}. fuzzy {fuzzy:7.3f}% | code {matched_code:6.2f}% | data {matched_data:6.2f}%  "
+            f"{index:2}. fuzzy {fuzzy:7.3f}% | code {matched_code} | data {matched_data}  "
             f"{name}  {source}"
         )
 

@@ -30,20 +30,24 @@ def build_prompt(branch: str) -> str:
     if branch not in {"main", "master", "DETACHED"}:
         branch_note = (
             f"The current branch is '{branch}'. Treat it as the existing long-lived mega-PR branch "
-            "and keep iterating on it."
+            "and keep iterating on it. Commit to it, push to it, and do not create or switch to another branch."
         )
     else:
         branch_note = (
             f"The current branch is '{branch}'. If the worktree is clean, create one long-lived PR "
-            "branch for this automation run and keep reusing it."
+            "branch for this automation run and keep reusing it for every later commit."
         )
 
     return (
         "Follow the instructions in AGENTS.md in this repo. Never ask the user for input. "
         f"{branch_note} "
         "Use tools/agent_select_target.py to choose the next target from build/GQPE78/report.json. "
+        "Prefer the selector's default quality-first near-match ranking. "
+        "Prioritize balanced near-matches that are close across fuzzy, code, data, and function metrics. "
         "Focus on plausible BFBB source and real match improvements. "
-        "Do not create tiny one-off PRs. If a PR already exists for the branch, keep updating that same PR."
+        "Prefer typed, readable, source-plausible code over contrived score hacks; a clean near-match is better than a hacked 100%. "
+        "Do not create tiny one-off PRs. If a PR already exists for the branch, keep updating that same PR. "
+        "After each meaningful improvement, build, verify, commit, push the active branch, and continue iterating."
     )
 
 

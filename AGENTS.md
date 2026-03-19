@@ -2,7 +2,7 @@
 
 This file is the runbook for automated contributions to **BFBB**.
 
-Goal: make steady, source-plausible match progress in this repo and keep that work on one long-lived PR branch instead of spinning up a new PR for every small improvement.
+Goal: make steady, source-plausible match progress in this repo and keep that work on one long-lived PR branch instead of spinning up a new PR for every small improvement. When driven by `agentic_loop.py`, keep repeating that loop indefinitely while there are credible code/data improvements to make.
 
 ## Project assumptions
 
@@ -39,7 +39,7 @@ Success criteria:
 
 ### 1) Branch and PR management
 
-- If you are already on a non-`main` branch, keep using it.
+- If you are already on a non-`main` branch, treat it as the active long-lived automation branch. Stay on it, commit to it, and push back to it.
 - If you are on `main` and the worktree is clean, update `main` and create one long-lived branch for the automation run, for example:
 
   ```sh
@@ -50,6 +50,7 @@ Success criteria:
 - Create at most one PR for that branch.
 - Once the PR exists, keep pushing more commits to the same branch and updating the same PR.
 - Do not create a new PR for each unit or function.
+- Do not branch-hop during the loop. If a usable non-`main` branch is already checked out, keep iterating there.
 - Do not assume local uncommitted changes are disposable. If unrelated user work is present, leave it alone.
 
 ### 2) Pick the next target
@@ -60,12 +61,13 @@ Run:
 python tools/agent_select_target.py
 ```
 
-The selector is intentionally simple in this repo:
+The selector's default mode is quality-first near-match polishing:
 - it reads `build/GQPE78/report.json`
-- it ranks incomplete units by match score
+- it ranks incomplete units by balanced progress across fuzzy, code, data, and function match metrics
+- it prefers near-complete units with real source paths over source-less or badly imbalanced targets
 - it prints a short list of candidate units and a few weak functions
 
-Prefer polishing near-match units first unless there is a concrete reason to chase a lower-match file.
+Prefer polishing near-match units first unless there is a concrete reason to chase a lower-match file. Only drop into lower-match exploration when the near-match queue is blocked or exhausted.
 
 ### 3) Edit source
 
@@ -77,12 +79,14 @@ Priorities:
 - clean up decompiler output into readable C/C++
 - define proper structs, enums, types, and linkage
 - use real member access instead of pointer math
+- prefer fixes that improve source plausibility even when they are not the fastest way to move a score
 
 Avoid:
 - hardcoded offsets where a typed field belongs in a struct
 - extern hacks added only to move a score
 - junk comments, debug notes, or commented-out code
 - contrived compiler-coaxing that does not look like plausible original source
+- trading readable, typed, source-plausible code for a hacked 100% result
 
 Follow the repo conventions in `CONTRIBUTING.md`.
 
@@ -104,19 +108,19 @@ If the local objdiff CLI exists, a typical command is:
 build/tools/objdiff-cli.exe diff -p . -u <unit> -o - <symbol>
 ```
 
-Treat real code and data improvements as the signal. Formatting-only churn is not success.
+Treat real code and data improvements as the signal. Formatting-only churn is not success. A clean, source-plausible near-match is better than an implausible perfect match.
 
 ### 5) Commit and update the PR
 
-- Commit meaningful improvements on the current branch.
-- Push the branch.
+- Commit meaningful improvements on the current active branch.
+- Push the current branch after each meaningful improvement.
 - If no PR exists yet and the branch has real progress, create one.
 - If a PR already exists for the branch, update that PR instead of opening another one.
 - Keep the PR description cumulative as the branch grows.
 
 ### 6) Repeat
 
-Stay on the same branch and repeat the loop until the PR has a worthwhile set of high-quality improvements.
+Stay on the same branch and repeat the loop until the PR has a worthwhile set of high-quality improvements. After each successful push, go back to target selection and continue iterating.
 
 ## Quality bar
 
@@ -124,6 +128,7 @@ Stay on the same branch and repeat the loop until the PR has a worthwhile set of
 - Progress must be real in report/objdiff output.
 - Source should look like plausible original game code.
 - Prefer definitions, types, and readable control flow over temporary score hacks.
+- A clean 99.99% is better than a hacked or implausible 100%.
 - Never revert unrelated user changes.
 - Never use destructive git cleanup unless explicitly requested.
 
