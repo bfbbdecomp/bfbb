@@ -499,13 +499,11 @@ static void XST_unlock(st_STRAN_SCENE* sdata)
 {
     if (sdata != NULL)
     {
-        if (g_xstdata.loadlock & 1 << sdata->lockid)
+        U32 lock = 1 << sdata->lockid;
+
+        if (g_xstdata.loadlock & lock)
         {
-            // Can't figure out how to get the andc instruction instead of two instructions
-            // Seems to only generate andc if I remove the memset call.
-            // NOTE (Square): pulling 1 << sdata->lockid into a temp variable works but
-            // causes regswaps.
-            g_xstdata.loadlock &= ~(1 << sdata->lockid);
+            g_xstdata.loadlock &= ~lock;
             memset(sdata, 0, sizeof(st_STRAN_SCENE));
         }
     }
