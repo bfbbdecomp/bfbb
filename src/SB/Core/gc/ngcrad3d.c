@@ -1,6 +1,7 @@
 #include "ngcrad3d.h"
 
 #include <dolphin/gx.h>
+#include <dolphin/os.h>
 #include "iFMV.h"
 #include <bink/include/rad3d.h>
 
@@ -31,30 +32,57 @@ static void Setup_surface_array()
     Built_tables = 1;
 }
 
-// TODO:
-// Defining this struct locally because i believe this isnt 100% right. Or if it is right why isnt this in the bink.h or other headers?
-// inestigate this
-
 struct RAD3DIMAGE
 {
-    int a;
-    int b;
-    unsigned int c;
-    int d;
-    int e;
-    void* f;
-    int g;
-    int h;
+    U32 width;
+    U32 height;
+    U32 alpha_pixels;
+    U32 pixel_size;
+    U32 surface_type;
+    void* texture_buffer;
+    U32 texture_size;
+    GXTexObj texture;
 };
+
+HRAD3DIMAGE Open_RAD_3D_image(HRAD3D, U32 width, U32 height, U32 rad3d_surface_format)
+{
+    RAD3DIMAGE* image;
+    U32 pixel_info;
+
+    Setup_surface_array();
+
+    pixel_info = Pixel_info[rad3d_surface_format];
+    image = (RAD3DIMAGE*)iFMVmalloc(sizeof(RAD3DIMAGE));
+    if (image == NULL)
+    {
+        return NULL;
+    }
+
+    image->width = width;
+    image->height = height;
+    image->alpha_pixels = pixel_info >> 31;
+    image->pixel_size = pixel_info & 0xff;
+    image->surface_type = rad3d_surface_format;
+    image->texture_size =
+        GXGetTexBufferSize((u16)width, (u16)height, D3D_surface_type[rad3d_surface_format], 0, 0);
+    image->texture_buffer = iFMVmalloc(image->texture_size);
+    GXInitTexObj(&image->texture, image->texture_buffer, (u16)width, (u16)height,
+                 (GXTexFmt)D3D_surface_type[rad3d_surface_format], (GXTexWrapMode)0,
+                 (GXTexWrapMode)0, (GXBool)0);
+    GXInitTexObjLOD(&image->texture, (GXTexFilter)1, (GXTexFilter)1, 1.0f, 0.0f, 0.0f,
+                    (GXBool)0, (GXBool)0, (GXAnisotropy)0);
+
+    return image;
+}
 
 void Close_RAD_3D_image(struct RAD3DIMAGE* image)
 {
     if (image != 0)
     {
-        if (image->f != 0)
+        if (image->texture_buffer != 0)
         {
-            iFMVfree(image->f);
-            image->f = 0;
+            iFMVfree(image->texture_buffer);
+            image->texture_buffer = 0;
         }
         iFMVfree(image);
     }
@@ -70,35 +98,26 @@ S32 Lock_RAD_3D_image(HRAD3DIMAGE rad_image, void* out_pixel_buffer, U32* out_bu
 
     if (out_pixel_buffer != 0)
     {
-        *(void**)(out_pixel_buffer) = rad_image->f;
+        *(void**)(out_pixel_buffer) = rad_image->texture_buffer;
     }
 
     if (out_buffer_pitch != 0)
     {
-        *out_buffer_pitch = rad_image->a * rad_image->d;
+        *out_buffer_pitch = rad_image->width * rad_image->pixel_size;
     }
 
     if (arg3 != 0)
     {
-        *arg3 = rad_image->e;
+        *arg3 = rad_image->surface_type;
     }
 
     return 1;
 }
 
-static void GXColor4u8(int r3, int r4, int r5, int r6)
+void Unlock_RAD_3D_image(HRAD3DIMAGE rad_image)
 {
-    int ptr = 0xcc010000;
-    *((char*)(ptr)-0x8000) = r3;
-    *((char*)(ptr)-0x8000) = r4;
-    *((char*)(ptr)-0x8000) = r5;
-    *((char*)(ptr)-0x8000) = r6;
-}
-
-static void GXPosition3s16(int r3, int r4, int r5)
-{
-    int ptr = 0xcc010000;
-    *(short*)((char*)(ptr)-0x8000) = r3;
-    *(short*)((char*)(ptr)-0x8000) = r4;
-    *(short*)((char*)(ptr)-0x8000) = r5;
+    if (rad_image != NULL)
+    {
+        DCStoreRange(rad_image->texture_buffer, rad_image->texture_size);
+    }
 }
