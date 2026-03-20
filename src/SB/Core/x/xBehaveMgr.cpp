@@ -1038,10 +1038,12 @@ void xPsyche::TimerUpdate(F32 dt)
 
     if (this->staktop >= 0)
     {
-        this->tmr_stack[0][this->staktop] += dt;
+        F32* timer = &this->tmr_stack[0][this->staktop];
+        *timer += dt;
     }
     else
     {
-        this->tmr_stack[0][this->staktop] += dt;
+        F32* timer = &this->tmr_stack[0][this->staktop];
+        *timer += dt;
     }
 }
