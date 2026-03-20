@@ -501,11 +501,12 @@ static void XST_unlock(st_STRAN_SCENE* sdata)
     if (sdata != NULL)
     {
         st_STRAN_DATA* stran = &g_xstdata;
+        U32 loadlock = stran->loadlock;
         U32 lock = 1 << sdata->lockid;
 
-        if (stran->loadlock & lock)
+        if (loadlock & lock)
         {
-            stran->loadlock &= ~lock;
+            stran->loadlock = loadlock & ~lock;
             memset(sdata, 0, sizeof(st_STRAN_SCENE));
         }
     }
