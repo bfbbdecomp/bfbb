@@ -79,6 +79,38 @@ struct xEntFrame
 
     // Offset: 0xE0
     U32 mode;
+
+    xEntFrame& operator=(const xEntFrame& rhs)
+    {
+        mat = rhs.mat;
+        oldmat = rhs.oldmat;
+        *(S32*)(&oldvel.x) = *(S32*)(&rhs.oldvel.x);
+        *(S32*)(&oldvel.y) = *(S32*)(&rhs.oldvel.y);
+        *(S32*)(&oldvel.z) = *(S32*)(&rhs.oldvel.z);
+        *(S32*)(&oldrot.axis.x) = *(S32*)(&rhs.oldrot.axis.x);
+        *(S32*)(&oldrot.axis.y) = *(S32*)(&rhs.oldrot.axis.y);
+        *(S32*)(&oldrot.axis.z) = *(S32*)(&rhs.oldrot.axis.z);
+        *(S32*)(&oldrot.angle) = *(S32*)(&rhs.oldrot.angle);
+        *(S32*)(&drot.axis.x) = *(S32*)(&rhs.drot.axis.x);
+        *(S32*)(&drot.axis.y) = *(S32*)(&rhs.drot.axis.y);
+        *(S32*)(&drot.axis.z) = *(S32*)(&rhs.drot.axis.z);
+        *(S32*)(&drot.angle) = *(S32*)(&rhs.drot.angle);
+        *(S32*)(&rot.axis.x) = *(S32*)(&rhs.rot.axis.x);
+        *(S32*)(&rot.axis.y) = *(S32*)(&rhs.rot.axis.y);
+        *(S32*)(&rot.axis.z) = *(S32*)(&rhs.rot.axis.z);
+        *(S32*)(&rot.angle) = *(S32*)(&rhs.rot.angle);
+        *(S32*)(&dpos.x) = *(S32*)(&rhs.dpos.x);
+        *(S32*)(&dpos.y) = *(S32*)(&rhs.dpos.y);
+        *(S32*)(&dpos.z) = *(S32*)(&rhs.dpos.z);
+        *(S32*)(&dvel.x) = *(S32*)(&rhs.dvel.x);
+        *(S32*)(&dvel.y) = *(S32*)(&rhs.dvel.y);
+        *(S32*)(&dvel.z) = *(S32*)(&rhs.dvel.z);
+        *(S32*)(&vel.x) = *(S32*)(&rhs.vel.x);
+        *(S32*)(&vel.y) = *(S32*)(&rhs.vel.y);
+        *(S32*)(&vel.z) = *(S32*)(&rhs.vel.z);
+        mode = rhs.mode;
+        return *this;
+    }
 };
 
 struct xEntCollis

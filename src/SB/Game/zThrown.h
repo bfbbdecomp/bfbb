@@ -51,6 +51,30 @@ struct zThrownStruct
     S32 driveDebounce;
     xEnt* driveLastFloor;
     xEntFrame frame;
+
+    zThrownStruct& operator=(const zThrownStruct& rhs)
+    {
+        ent = rhs.ent;
+        stackEnt = rhs.stackEnt;
+        stackTgt = rhs.stackTgt;
+        patLauncher = rhs.patLauncher;
+        oldupdate = rhs.oldupdate;
+        *(S32*)(&vel.x) = *(S32*)(&rhs.vel.x);
+        *(S32*)(&vel.y) = *(S32*)(&rhs.vel.y);
+        *(S32*)(&vel.z) = *(S32*)(&rhs.vel.z);
+        *(S32*)(&oldcollpos.x) = *(S32*)(&rhs.oldcollpos.x);
+        *(S32*)(&oldcollpos.y) = *(S32*)(&rhs.oldcollpos.y);
+        *(S32*)(&oldcollpos.z) = *(S32*)(&rhs.oldcollpos.z);
+        collResetTimer = rhs.collResetTimer;
+        killTimer = rhs.killTimer;
+        stats = rhs.stats;
+        oldRecShadow = rhs.oldRecShadow;
+        drv = rhs.drv;
+        driveDebounce = rhs.driveDebounce;
+        driveLastFloor = rhs.driveLastFloor;
+        frame = rhs.frame;
+        return *this;
+    }
 };
 
 void zThrown_Setup(zScene* sc);
