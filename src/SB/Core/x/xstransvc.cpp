@@ -438,9 +438,9 @@ char* xST_xAssetID_HIPFullPath(U32 aid, U32* sceneID)
 static S32 XST_PreLoadScene(st_STRAN_SCENE* sdata, const char* name)
 {
     S32 buf = 0;
-    st_PACKER_READ_FUNCS* pkrf = g_pkrf;
+    U32 options = 0x2e;
 
-    sdata->spkg = pkrf->Init(sdata->userdata, (char*)name, 0x2e, &buf, g_typeHandlers);
+    sdata->spkg = g_pkrf->Init(sdata->userdata, (char*)name, options, &buf, g_typeHandlers);
     if (sdata->spkg != NULL)
     {
         return buf;
@@ -500,13 +500,12 @@ static void XST_unlock(st_STRAN_SCENE* sdata)
 {
     if (sdata != NULL)
     {
-        U32 lock = 1 << sdata->lockid;
         st_STRAN_DATA* stran = &g_xstdata;
-        U32 loadlock = stran->loadlock;
+        U32 lock = 1 << sdata->lockid;
 
-        if (loadlock & lock)
+        if (stran->loadlock & lock)
         {
-            stran->loadlock = loadlock & ~lock;
+            stran->loadlock &= ~lock;
             memset(sdata, 0, sizeof(st_STRAN_SCENE));
         }
     }
