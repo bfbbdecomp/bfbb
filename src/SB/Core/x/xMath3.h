@@ -65,6 +65,20 @@ struct xBBox
 {
     xVec3 center;
     xBox box;
+
+    xBBox& operator=(const xBBox& rhs)
+    {
+        *(S32*)(&center.x) = *(S32*)(&rhs.center.x);
+        *(S32*)(&center.y) = *(S32*)(&rhs.center.y);
+        *(S32*)(&center.z) = *(S32*)(&rhs.center.z);
+        *(S32*)(&box.upper.x) = *(S32*)(&rhs.box.upper.x);
+        *(S32*)(&box.upper.y) = *(S32*)(&rhs.box.upper.y);
+        *(S32*)(&box.upper.z) = *(S32*)(&rhs.box.upper.z);
+        *(S32*)(&box.lower.x) = *(S32*)(&rhs.box.lower.x);
+        *(S32*)(&box.lower.y) = *(S32*)(&rhs.box.lower.y);
+        *(S32*)(&box.lower.z) = *(S32*)(&rhs.box.lower.z);
+        return *this;
+    }
 };
 
 struct xCylinder
