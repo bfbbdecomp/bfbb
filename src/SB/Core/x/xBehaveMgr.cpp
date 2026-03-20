@@ -1029,15 +1029,19 @@ void xPsyche::TimerClear()
     this->tmr_stack[0][this->staktop] = 0.0f;
 }
 
-// Non-matching: Needs an extra branch that does the same `+= dt`
 void xPsyche::TimerUpdate(F32 dt)
 {
-    F32* p;
     if (this->staktop < 0)
     {
         return;
     }
 
-    p = &this->tmr_stack[0][this->staktop];
-    *p += dt;
+    if (this->staktop >= 0)
+    {
+        this->tmr_stack[0][this->staktop] += dt;
+    }
+    else
+    {
+        this->tmr_stack[0][this->staktop] += dt;
+    }
 }
