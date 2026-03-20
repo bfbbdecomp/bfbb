@@ -80,7 +80,7 @@ void ztaskbox::start_talk(zNPCCommon* npc)
                 ztalkbox* talkbox = (ztalkbox*)zSceneFindObject(asset->talk_box);
                 if (talkbox != NULL)
                 {
-                    U32 text = current->get_text(asset->stages[state]);
+                    const char* text = current->get_text(asset->stages[state]);
                     if (text != 0)
                     {
                         shared = this;
@@ -306,7 +306,7 @@ void ztaskbox::on_talk_stop(ztalkbox::answer_enum answer)
     }
 }
 
-U32 ztaskbox::get_text(U32 textID)
+const char* ztaskbox::get_text(U32 textID)
 {
     U32 id = textID;
     xGroup* group = (xGroup*)zSceneFindObject(textID);
@@ -314,7 +314,7 @@ U32 ztaskbox::get_text(U32 textID)
     {
         if (group->baseType != eBaseTypeGroup)
         {
-            return 0;
+            return NULL;
         }
 
         id = group->get_any();
@@ -322,20 +322,16 @@ U32 ztaskbox::get_text(U32 textID)
 
     if (id == 0)
     {
-        return 0;
+        return NULL;
     }
 
-    // What type is this?
-    void* asset = xSTFindAsset(id, NULL);
+    xTextAsset* asset = (xTextAsset*)xSTFindAsset(id, NULL);
     if (asset == NULL)
     {
-        return 0;
+        return NULL;
     }
-    else
-    {
-        // HACK
-        return (U32)asset + 4;
-    }
+
+    return (const char*)(asset + 1);
 }
 
 S32 ztaskbox::cb_dispatch(xBase*, xBase* to, U32 event, const F32*, xBase*)
