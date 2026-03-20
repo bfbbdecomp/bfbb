@@ -438,14 +438,15 @@ char* xST_xAssetID_HIPFullPath(U32 aid, U32* sceneID)
 static S32 XST_PreLoadScene(st_STRAN_SCENE* sdata, const char* name)
 {
     S32 buf = 0;
-    st_PACKER_READ_DATA* spkg =
-        g_pkrf->Init(sdata->userdata, (char*)name, 0x2e, &buf, g_typeHandlers);
-    sdata->spkg = spkg;
+    U32 options = 0x2e;
+
+    sdata->spkg = g_pkrf->Init(sdata->userdata, (char*)name, options, &buf, g_typeHandlers);
     if (sdata->spkg != NULL)
     {
         return buf;
     }
-    return NULL;
+
+    return 0;
 }
 
 static char* XST_translate_sid(U32 sid, char* extension)
@@ -499,13 +500,13 @@ static void XST_unlock(st_STRAN_SCENE* sdata)
 {
     if (sdata != NULL)
     {
-        if (g_xstdata.loadlock & 1 << sdata->lockid)
+        st_STRAN_DATA* stran = &g_xstdata;
+        U32 loadlock = stran->loadlock;
+        U32 lock = 1 << sdata->lockid;
+
+        if (loadlock & lock)
         {
-            // Can't figure out how to get the andc instruction instead of two instructions
-            // Seems to only generate andc if I remove the memset call.
-            // NOTE (Square): pulling 1 << sdata->lockid into a temp variable works but
-            // causes regswaps.
-            g_xstdata.loadlock &= ~(1 << sdata->lockid);
+            stran->loadlock = loadlock & ~lock;
             memset(sdata, 0, sizeof(st_STRAN_SCENE));
         }
     }

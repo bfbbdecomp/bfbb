@@ -20,7 +20,7 @@ static void DefaultSwitchThreadCallback(OSThread* from, OSThread* to)
 {
 }
 
-extern u8 _stack_addr[];
+extern u8 _stack_addr : 0x803D8A50;
 extern u8 _stack_end[];
 
 #define AddTail(queue, thread, link)                                                               \
@@ -119,7 +119,7 @@ void __OSThreadInit()
 
     OSClearContext(&thread->context);
     OSSetCurrentContext(&thread->context);
-    thread->stackBase = (void*)_stack_addr;
+    thread->stackBase = (void*)((u32)&_stack_addr);
     thread->stackEnd = (void*)_stack_end;
     *(thread->stackEnd) = OS_THREAD_STACK_MAGIC;
 

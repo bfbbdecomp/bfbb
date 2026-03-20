@@ -999,13 +999,16 @@ void xEntMotionDebugExit()
     dbg_idx = -1;
 }
 
-// This scheduling is absolutely shambolic
 void xEntMotionDebugAdd(xEntMotion* motion)
 {
     if (dbg_num < dbg_num_allocd)
     {
-        dbg_num++;
-        dbg_xems[dbg_num] = motion;
+        U16 index = dbg_num;
+        U16 next = index + 1;
+        xEntMotion** xems = dbg_xems;
+
+        dbg_num = next;
+        xems[index] = motion;
     }
 }
 

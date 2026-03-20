@@ -212,16 +212,14 @@ void xPsyche::Amnesia(S32 i)
     }
 }
 
-// Non-matching: Loop/alloc issue
 S32 xPsyche::IndexInStack(S32 gid) const
 {
+    S32 top = this->staktop;
     S32 da_idx = -1;
 
-    for (S32 i = 0; i <= this->staktop; i++)
+    for (S32 i = 0; i <= top; i++)
     {
-        xGoal* tmpgoal = this->goalstak[i];
-
-        if (gid == tmpgoal->GetID())
+        if (gid == this->goalstak[i]->GetID())
         {
             da_idx = i;
             break;
@@ -242,12 +240,12 @@ xGoal* xPsyche::GetCurGoal() const
     }
 }
 
-// Non-matching: Loop/alloc issue
 xGoal* xPsyche::GIDInStack(S32 gid) const
 {
+    S32 top = this->staktop;
     xGoal* da_goal = NULL;
 
-    for (S32 i = 0; i <= this->staktop; i++)
+    for (S32 i = 0; i <= top; i++)
     {
         xGoal* tmpgoal = this->goalstak[i];
 
@@ -1031,15 +1029,21 @@ void xPsyche::TimerClear()
     this->tmr_stack[0][this->staktop] = 0.0f;
 }
 
-// Non-matching: Needs an extra branch that does the same `+= dt`
 void xPsyche::TimerUpdate(F32 dt)
 {
-    F32* p;
     if (this->staktop < 0)
     {
         return;
     }
 
-    p = &this->tmr_stack[0][this->staktop];
-    *p += dt;
+    if (this->staktop >= 0)
+    {
+        F32* timer = &this->tmr_stack[0][this->staktop];
+        *timer += dt;
+    }
+    else
+    {
+        F32* timer = &this->tmr_stack[0][this->staktop];
+        *timer += dt;
+    }
 }

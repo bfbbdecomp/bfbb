@@ -120,12 +120,19 @@ static void zSurfaceInitDefaultSurface()
 
 void zSurfaceRegisterMapper(U32 assetId)
 {
-    if (sMapperCount >= MAX_MAPPER) return;
-    if (!assetId) return;
+    zMaterialMapAsset* mapper;
 
-    sMapper[sMapperCount] = (zMaterialMapAsset*)xSTFindAsset(assetId, NULL);
-    if (sMapper[sMapperCount]) {
-        sMapperCount++;
+    if (sMapperCount >= MAX_MAPPER)
+        return;
+
+    if (!assetId)
+        return;
+
+    mapper = (zMaterialMapAsset*)xSTFindAsset(assetId, NULL);
+    sMapper[sMapperCount] = mapper;
+    if (mapper)
+    {
+        sMapperCount = sMapperCount + 1;
     }
 }
 

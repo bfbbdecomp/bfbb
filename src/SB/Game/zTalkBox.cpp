@@ -931,10 +931,14 @@ namespace
     }
     static void stop_audio_effect()
     {
-        if ((shared.active) && (shared.active->asset->audio_effect != 1))
+        if (shared.active)
         {
-            zMusicSetVolume(1.0f, music_fade_delay);
-            return;
+            switch (shared.active->asset->audio_effect)
+            {
+            case 1:
+                zMusicSetVolume(1.0f, music_fade_delay);
+                break;
+            }
         }
     }
 
