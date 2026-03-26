@@ -16,11 +16,8 @@ DSError TRKDoNotifyStopped(u8 cmd)
 {
     DSError err;
     int reqIdx;
-    TRKBuffer* msg;
     int bufIdx;
-
-    // &msg
-    // &bufIdx
+    TRKBuffer* msg;
 
     err = TRKGetFreeBuffer(&bufIdx, &msg);
     if (err == DS_NoError)
