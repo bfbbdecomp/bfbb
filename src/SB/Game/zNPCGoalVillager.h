@@ -49,6 +49,11 @@ struct zNPCGoalPlayerNear : zNPCGoalCommon
     void DoCheatPanHandle();
     void ChkCheatDogTrix(S32* goal, en_trantype* trantype);
 
+    virtual S32 Enter(F32 dt, void* updCtxt);
+    virtual S32 Exit(F32 dt, void* updCtxt);
+    virtual S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
+    virtual S32 Suspend(F32 dt, void* updCtxt);
+    virtual S32 Resume(F32 dt, void* updCtxt);
     virtual S32 NPCMessage(NPCMsg* mail);
 };
 
@@ -72,6 +77,7 @@ struct zNPCGoalTalk : zNPCGoalCommon
     void StartSFX(xSFX* sfx);
 
     virtual S32 Enter(F32 dt, void* updCtxt);
+    virtual S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
     virtual S32 Exit(F32 dt, void* updCtxt);
     virtual S32 NPCMessage(NPCMsg* mail);
 };
@@ -85,6 +91,9 @@ struct zNPCGoalChatter : zNPCGoalCommon
     {
         SetFlags(1 << 1);
     }
+
+    virtual S32 Enter(F32 dt, void* updCtxt);
+    virtual S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
 };
 
 struct zNPCGoalSpeak : zNPCGoalCommon
@@ -100,6 +109,7 @@ struct zNPCGoalSpeak : zNPCGoalCommon
 
     virtual S32 Enter(F32 dt, void* updCtxt);
     virtual S32 Exit(F32 dt, void* updCtxt);
+    virtual S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
     virtual S32 NPCMessage(NPCMsg* mail);
 };
 
