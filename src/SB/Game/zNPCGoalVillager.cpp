@@ -654,6 +654,45 @@ S32 zNPCGoalChatter::Enter(F32 dt, void* updCtxt)
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
+S32 zNPCGoalChatter::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene)
+{
+    F32 dist_plyr;
+    S32 nextgoal = 0;
+    zNPCVillager* npc = (zNPCVillager*)(psyche->clt_owner);
+    xVec3 dir_plyr = { 0.0f, 0.0f, 0.0f };
+
+    xVec3Sub(&dir_plyr, xEntGetPos(&globals.player.ent), xEntGetPos(npc));
+    dist_plyr = xVec3Length(&dir_plyr);
+    if (dist_plyr > 0.25f)
+    {
+        xVec3SMulBy(&dir_plyr, 1.0f / dist_plyr);
+        npc->TurnToFace(dt, &dir_plyr, -1.0f);
+    }
+
+    npc->VelStop();
+
+    if (psyche->TimerGet(XPSY_TYMR_CURGOAL) > 0.25f)
+    {
+        if (!npc->SndChanIsBusy(2))
+        {
+            *trantype = GOAL_TRAN_SET;
+            nextgoal = NPC_GOAL_IDLE;
+        }
+        else if (!npc->SndIsAnyPlaying())
+        {
+            *trantype = GOAL_TRAN_SET;
+            nextgoal = NPC_GOAL_IDLE;
+        }
+    }
+
+    if (*trantype != GOAL_TRAN_NONE)
+    {
+        return nextgoal;
+    }
+
+    return xGoal::Process(trantype, dt, updCtxt, scene);
+}
+
 S32 zNPCGoalHurt::Enter(F32 dt, void* updCtxt)
 {
     zNPCVillager* npc = (zNPCVillager*)psyche->clt_owner;
@@ -875,7 +914,7 @@ U8 zNPCGoalBoyFall::CollReview(void* updCtxt)
     {
         zSurfaceGetSurface(coll);
         gooDepth = 0.0f;
-        if (coll->optr == 0)
+        if (coll->optr == NULL)
         {
             hitGround = 1;
         }
