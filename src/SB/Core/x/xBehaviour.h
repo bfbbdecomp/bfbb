@@ -145,6 +145,7 @@ struct xPsyche : RyzMemData
     }
     void Amnesia(S32 i);
     S32 IndexInStack(S32 gid) const;
+    S32 IndexInStack(const xGoal* gid) const;
     void SetNotify(xPSYNote* notice)
     {
         cb_notice = notice;

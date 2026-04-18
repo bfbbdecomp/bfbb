@@ -77,6 +77,7 @@ struct zNPCGoalTalk : zNPCGoalCommon
     void StartSFX(xSFX* sfx);
 
     virtual S32 Enter(F32 dt, void* updCtxt);
+    virtual S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
     virtual S32 Exit(F32 dt, void* updCtxt);
     virtual S32 NPCMessage(NPCMsg* mail);
 };

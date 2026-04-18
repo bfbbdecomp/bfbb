@@ -12,6 +12,7 @@
 #include "zNPCGoals.h"
 #include "zGoo.h"
 #include "zSurface.h"
+#include "iMath.h"
 
 xFactoryInst* GOALCreate_Villager(S32 who, RyzMemGrow* grow, void*)
 {
@@ -471,6 +472,95 @@ S32 zNPCGoalTalk::Exit(F32 dt, void* updCtxt)
     npc->RestoreColFlags();
 
     return xGoal::Exit(dt, updCtxt);
+}
+
+S32 zNPCGoalTalk::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene)
+{
+    xPsyche* psy = this->psyche;
+    zNPCVillager* npc = (zNPCVillager*)psy->clt_owner;
+    xVec3 dir_plyr;
+    F32 ds2_plyr;
+
+    if (stopTalking)
+    {
+        if (psy->IndexInStack(this) > 0)
+        {
+            *trantype = GOAL_TRAN_POP;
+            return 1;
+        }
+        npc->TossMyConverse();
+        *trantype = GOAL_TRAN_SET;
+        return psy->GIDOfSafety();
+    }
+
+    ds2_plyr = npc->XYZDstSqToPlayer(&dir_plyr);
+
+    if (!((F32)__fabs(dir_plyr.y) > 6.0f))
+    {
+        SQ(dir_plyr.z);
+        SQ(dir_plyr.x);
+    }
+
+    npc->VelStop();
+    npc->frame->mat.pos.x = pos_maintain.x;
+    npc->frame->mat.pos.z = pos_maintain.z;
+    npc->frame->mode |= 1;
+
+    if (ds2_plyr > 0.001f)
+    {
+        xVec3SMulBy(&dir_plyr, 1.0f / xsqrt(ds2_plyr));
+        npc->TurnToFace(dt, &dir_plyr, -1.0f);
+    }
+
+    if (tmr_minTalk < 0.0f)
+    {
+        if (killAndExit && !stopTalking)
+        {
+            npc->SndKillSounds(2, 0);
+            stopTalking = 1;
+        }
+        else if (!stopTalking)
+        {
+            if (sfx_curTalk)
+            {
+                if (!npc->SndChanIsBusy(2))
+                {
+                    killAndExit = 1;
+                }
+            }
+            else if (aid_curSound)
+            {
+                if (!npc->SndChanIsBusy(2))
+                {
+                    killAndExit = 1;
+                }
+            }
+        }
+    }
+
+    if (tmr_cycleAnim < 0.0f)
+    {
+        DoAutoAnim(NPC_GSPOT_ALTA, 0);
+
+        F32 fa = (xrand() & 0x800000) ? 3.0f : 6.0f;
+        F32 fb = (xrand() & 0x800000) ? 3.0f : 6.0f;
+        tmr_cycleAnim = 0.25f * (xurand() - 0.5f) * fa + fb;
+    }
+
+    tmr_minTalk = MAX(-1.0f, tmr_minTalk - dt);
+    tmr_cycleAnim = MAX(-1.0f, tmr_cycleAnim - dt);
+
+    if (jawdata)
+    {
+        jawtime += dt;
+        npc->model->Anim->Single->BilinearLerp[0] = xJaw_EvalData(jawdata, jawtime);
+    }
+    else
+    {
+        npc->model->Anim->Single->BilinearLerp[0] = 0.0f;
+    }
+
+    return xGoal::Process(trantype, dt, updCtxt, NULL);
 }
 
 S32 zNPCGoalTalk::NPCMessage(NPCMsg* mail)
