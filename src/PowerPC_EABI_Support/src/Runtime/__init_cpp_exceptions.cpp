@@ -3,6 +3,10 @@
 #include "PowerPC_EABI_Support/Runtime/__ppc_eabi_linker.h"
 #include "PowerPC_EABI_Support/Runtime/__init_cpp_exceptions.h"
 
+#ifdef __MWERKS__
+#undef __declspec
+#endif
+
 static int fragmentID = -2;
 
 extern char *GetR2() ;

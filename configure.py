@@ -843,7 +843,7 @@ config.libs = [
         [
             Object(NonMatching, "Runtime/__mem.c", extra_cflags=["-inline on, deferred"]),
             Object(Matching, "Runtime/__va_arg.c"),
-            Object(NonMatching, "Runtime/global_destructor_chain.c"),
+            Object(Matching, "Runtime/global_destructor_chain.c"),
             Object(NonMatching, "Runtime/New.cp"),
             Object(NonMatching, "Runtime/NMWException.cp"),
             Object(Matching, "Runtime/CPlusLibPPC.cp"),
@@ -871,7 +871,7 @@ config.libs = [
             Object(Matching, "MSL_C/MSL_Common/errno.c"),
             Object(NonMatching, "MSL_C/MSL_Common/file_io.c"),
             Object(NonMatching, "MSL_C/MSL_Common/FILE_POS.C"),
-            Object(NonMatching, "MSL_C/MSL_Common/locale.c"),
+            Object(Matching, "MSL_C/MSL_Common/locale.c"),
             Object(NonMatching, "MSL_C/MSL_Common/mbstring.c"),
             Object(NonMatching, "MSL_C/MSL_Common/mem.c"),
             Object(NonMatching, "MSL_C/MSL_Common/mem_funcs.c"),
@@ -923,7 +923,7 @@ config.libs = [
             Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/w_fmod.c"),
             Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/w_log.c"),
             Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/w_pow.c"),
-            Object(NonMatching, "MSL_C/PPC_EABI/math_ppc.c"),
+            Object(Matching, "MSL_C/PPC_EABI/math_ppc.c"),
         ]
     ),
     trkLib(
@@ -945,7 +945,7 @@ config.libs = [
             Object(NonMatching, "debugger/embedded/MetroTRK/Portable/mem_TRK.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Portable/string_TRK.c"),
             Object(Matching, "debugger/embedded/MetroTRK/Processor/ppc/Generic/flush_cache.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Processor/ppc/Generic/__exception.s"),
+            Object(Matching, "debugger/embedded/MetroTRK/Processor/ppc/Generic/__exception.s"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Processor/ppc/Generic/targimpl.c"),
             Object(Matching, "debugger/embedded/MetroTRK/Processor/ppc/Export/targsupp.s"),
             Object(Matching, "debugger/embedded/MetroTRK/Processor/ppc/Generic/mpc_7xx_603e.c"),
