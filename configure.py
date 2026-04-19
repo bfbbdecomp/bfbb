@@ -849,7 +849,7 @@ config.libs = [
             Object(Matching, "Runtime/CPlusLibPPC.cp"),
             Object(NonMatching, "Runtime/ptmf.c"),
             Object(NonMatching, "Runtime/runtime.c"),
-            Object(NonMatching, "Runtime/__init_cpp_exceptions.cpp"),
+            Object(Matching, "Runtime/__init_cpp_exceptions.cpp"),
             Object(NonMatching, "Runtime/Gecko_ExceptionPPC.cp"),
             Object(NonMatching, "Runtime/GCN_mem_alloc.c"),
         ]
@@ -930,7 +930,7 @@ config.libs = [
         "TRK_MINNOW_DOLPHIN",
         [
             Object(NonMatching, "debugger/embedded/MetroTRK/Portable/mainloop.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/nubevent.c"),
+            Object(Matching, "debugger/embedded/MetroTRK/Portable/nubevent.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Portable/nubassrt.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Portable/nubinit.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Portable/msg.c"),
@@ -940,7 +940,7 @@ config.libs = [
             Object(NonMatching, "debugger/embedded/MetroTRK/Portable/msghndlr.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Portable/support.c"),
             Object(Matching, "debugger/embedded/MetroTRK/Portable/mutex_TRK.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/notify.c"),
+            Object(Matching, "debugger/embedded/MetroTRK/Portable/notify.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Portable/main_TRK.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Portable/mem_TRK.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Portable/string_TRK.c"),

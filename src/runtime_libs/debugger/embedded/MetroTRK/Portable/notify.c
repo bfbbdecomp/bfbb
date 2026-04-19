@@ -1,4 +1,3 @@
-
 #include "PowerPC_EABI_Support/MetroTRK/trk.h"
 
 inline DSError TRKWaitForACK(TRKBuffer* msg, MessageCommandID cmd)
@@ -16,11 +15,8 @@ DSError TRKDoNotifyStopped(u8 cmd)
 {
     DSError err;
     int reqIdx;
-    TRKBuffer* msg;
     int bufIdx;
-
-    // &msg
-    // &bufIdx
+    TRKBuffer* msg;
 
     err = TRKGetFreeBuffer(&bufIdx, &msg);
     if (err == DS_NoError)
