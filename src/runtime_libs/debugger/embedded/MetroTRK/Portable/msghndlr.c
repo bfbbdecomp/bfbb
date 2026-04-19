@@ -7,12 +7,24 @@ typedef struct _TRK_Msg {
 	u8 m_msg[4]; // TODO: unknown array length
 } TRK_Msg;
 
+static BOOL IsTRKConnected ATTRIBUTE_ALIGN(8);
+
+BOOL GetTRKConnected(void)
+{
+	return IsTRKConnected;
+}
+
+void SetTRKConnected(BOOL connected)
+{
+	IsTRKConnected = connected;
+}
+
 /*
  * --INFO--
  * Address:	8021CF78
  * Size:	000098
  */
-void TRKMessageIntoReply(TRKBuffer* buffer, MessageCommandID ackCmd, DSReplyError errSentInAck)
+static inline void TRKMessageIntoReply(TRKBuffer* buffer, MessageCommandID ackCmd, DSReplyError errSentInAck)
 {
 	TRKResetBuffer(buffer, 1);
 
@@ -25,7 +37,7 @@ void TRKMessageIntoReply(TRKBuffer* buffer, MessageCommandID ackCmd, DSReplyErro
  * Address:	8021D010
  * Size:	000050
  */
-DSError TRKSendACK(TRKBuffer* buffer)
+static inline DSError TRKSendACK(TRKBuffer* buffer)
 {
 	DSError err;
 	int ackTries;
@@ -52,16 +64,6 @@ DSError TRKStandardACK(TRKBuffer* buffer, MessageCommandID commandID, DSReplyErr
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000008
- */
-void TRKDoError(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
  * Address:	8021D094
  * Size:	000028
  */
@@ -77,6 +79,7 @@ DSError TRKDoUnsupported(TRKBuffer* buffer)
  */
 DSError TRKDoConnect(TRKBuffer* buffer)
 {
+	IsTRKConnected = TRUE;
 	return TRKStandardACK(buffer, DSMSG_ReplyACK, DSREPLY_NoError);
 }
 
@@ -87,9 +90,11 @@ DSError TRKDoConnect(TRKBuffer* buffer)
  */
 DSError TRKDoDisconnect(TRKBuffer* buffer)
 {
-	DSError error = TRKStandardACK(buffer, DSMSG_ReplyACK, DSREPLY_NoError);
+	DSError error;
 	TRKEvent event;
 
+	IsTRKConnected = FALSE;
+	error = TRKStandardACK(buffer, DSMSG_ReplyACK, DSREPLY_NoError);
 	if (error == DS_NoError) {
 		TRKConstructEvent(&event, 1);
 		TRKPostEvent(&event);
@@ -216,7 +221,7 @@ DSError TRKDoCPUType(TRKBuffer* buffer)
  */
 DSError TRKDoReadMemory(TRKBuffer* buffer)
 {
-	u8 tempBuf[0x800] ATTRIBUTE_ALIGN(32);
+	u8 tempBuf[0x800];
 	u32 length;
 	u32 msg_start;
 	u16 msg_length;
@@ -299,7 +304,7 @@ DSError TRKDoReadMemory(TRKBuffer* buffer)
  */
 DSError TRKDoWriteMemory(TRKBuffer* buffer)
 {
-	u8 tmpBuffer[0x800] ATTRIBUTE_ALIGN(32);
+	u8 tmpBuffer[0x800];
 	u32 length;
 	u32 msg_start;
 	u16 msg_length;
@@ -738,4 +743,54 @@ DSError TRKDoStop(TRKBuffer* b)
 	}
 
 	return TRKStandardACK(b, DSMSG_ReplyACK, replyError);
+}
+
+/*
+ * --INFO--
+ * Address:	8021E21C
+ * Size:	0001A4
+ */
+DSError TRKDoSetOption(TRKBuffer* buffer)
+{
+	DSError error;
+	u8 msg_command;
+	u8 msg_option;
+	u8 msg_param;
+
+	msg_command = 0;
+	msg_option = 0;
+	msg_param = 0;
+
+	TRKSetBufferPosition(buffer, DSREPLY_NoError);
+	error = TRKReadBuffer1_ui8(buffer, &msg_command);
+	if (error == DS_NoError)
+		error = TRKReadBuffer1_ui8(buffer, &msg_option);
+	if (error == DS_NoError)
+		error = TRKReadBuffer1_ui8(buffer, &msg_param);
+
+	if (error != DS_NoError) {
+		TRKResetBuffer(buffer, 1);
+		if (buffer->position < 0x880) {
+			buffer->data[buffer->position++] = DSMSG_ReplyACK;
+			buffer->length += 1;
+		}
+		if (buffer->position < 0x880) {
+			buffer->data[buffer->position++] = DSREPLY_PacketSizeError;
+			buffer->length += 1;
+		}
+		TRKSendACK(buffer);
+	} else if (msg_option == 1) {
+		SetUseSerialIO(msg_param);
+	}
+
+	TRKResetBuffer(buffer, 1);
+	if (buffer->position < 0x880) {
+		buffer->data[buffer->position++] = DSMSG_ReplyACK;
+		buffer->length += 1;
+	}
+	if (buffer->position < 0x880) {
+		buffer->data[buffer->position++] = DSREPLY_NoError;
+		buffer->length += 1;
+	}
+	return TRKSendACK(buffer);
 }
