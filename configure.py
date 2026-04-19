@@ -848,7 +848,7 @@ config.libs = [
             Object(NonMatching, "Runtime/NMWException.cp"),
             Object(Matching, "Runtime/CPlusLibPPC.cp"),
             Object(NonMatching, "Runtime/ptmf.c"),
-            Object(NonMatching, "Runtime/runtime.c"),
+            Object(Matching, "Runtime/runtime.c"),
             Object(Matching, "Runtime/__init_cpp_exceptions.cpp"),
             Object(NonMatching, "Runtime/Gecko_ExceptionPPC.cp"),
             Object(NonMatching, "Runtime/GCN_mem_alloc.c"),
