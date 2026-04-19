@@ -221,14 +221,14 @@ DSError TRKDoCPUType(TRKBuffer* buffer)
  */
 DSError TRKDoReadMemory(TRKBuffer* buffer)
 {
-	u8 tempBuf[0x800];
-	u32 length;
-	u32 msg_start;
-	u16 msg_length;
-	u8 msg_options;
-	u8 msg_command;
-	DSReplyError replyError;
 	DSError error;
+	DSReplyError replyError;
+	u8 tempBuf[0x800];
+	u32 msg_start;
+	u32 length;
+	u16 msg_length;
+	u8 msg_command;
+	u8 msg_options;
 
 	if (buffer->length != 8) {
 		error = TRKStandardACK(buffer, DSMSG_ReplyACK, DSREPLY_PacketSizeError);
@@ -304,14 +304,14 @@ DSError TRKDoReadMemory(TRKBuffer* buffer)
  */
 DSError TRKDoWriteMemory(TRKBuffer* buffer)
 {
-	u8 tmpBuffer[0x800];
-	u32 length;
-	u32 msg_start;
-	u16 msg_length;
-	u8 msg_options;
-	u8 msg_command;
-	DSReplyError replyError;
 	DSError error;
+	DSReplyError replyError;
+	u8 tmpBuffer[0x800];
+	u32 msg_start;
+	u32 length;
+	u16 msg_length;
+	u8 msg_command;
+	u8 msg_options;
 
 	if (buffer->length <= 8) {
 		error = TRKStandardACK(buffer, DSMSG_ReplyACK, DSREPLY_PacketSizeError);
@@ -390,14 +390,14 @@ DSError TRKDoWriteMemory(TRKBuffer* buffer)
  */
 DSError TRKDoReadRegisters(TRKBuffer* buffer)
 {
-	DSMessageRegisterOptions options;
-	u32 registerDataLength;
-	u16 msg_lastRegister;
-	u16 msg_firstRegister;
-	u8 msg_options;
-	u8 msg_command;
 	DSError error;
 	DSReplyError replyError;
+	DSMessageRegisterOptions options;
+	u32 registerDataLength;
+	u16 msg_firstRegister;
+	u16 msg_lastRegister;
+	u8 msg_command;
+	u8 msg_options;
 
 	if (buffer->length != 6) {
 		error = TRKStandardACK(buffer, DSMSG_ReplyACK, DSREPLY_PacketSizeError);
@@ -478,14 +478,14 @@ DSError TRKDoReadRegisters(TRKBuffer* buffer)
  */
 DSError TRKDoWriteRegisters(TRKBuffer* buffer)
 {
-	DSMessageRegisterOptions options;
-	u32 registerDataLength;
-	u16 msg_lastRegister;
-	u16 msg_firstRegister;
-	u8 msg_options;
-	u8 msg_command;
 	DSError error;
 	DSReplyError replyError;
+	DSMessageRegisterOptions options;
+	u32 registerDataLength;
+	u16 msg_firstRegister;
+	u16 msg_lastRegister;
+	u8 msg_command;
+	u8 msg_options;
 
 	if (buffer->length <= 6) {
 		error = TRKStandardACK(buffer, DSMSG_ReplyACK, DSREPLY_PacketSizeError);
@@ -569,12 +569,12 @@ DSError TRKDoWriteRegisters(TRKBuffer* buffer)
  */
 DSError TRKDoFlushCache(TRKBuffer* buffer)
 {
-	u32 msg_end;
-	u32 msg_start;
-	u8 msg_options;
-	u8 msg_command;
 	DSError error;
 	DSReplyError replyErr;
+	u32 msg_start;
+	u32 msg_end;
+	u8 msg_command;
+	u8 msg_options;
 
 	if (buffer->length != 10) {
 		error = TRKStandardACK(buffer, DSMSG_ReplyACK, DSREPLY_PacketSizeError);
@@ -645,11 +645,11 @@ DSError TRKDoContinue(TRKBuffer* buffer)
 DSError TRKDoStep(TRKBuffer* buffer)
 {
 	DSError error;
-	u32 msg_rangeEnd;
-	u32 msg_rangeStart;
-	u8 msg_count;
-	u8 msg_options;
 	u8 msg_command;
+	u8 msg_options;
+	u8 msg_count;
+	u32 msg_rangeStart;
+	u32 msg_rangeEnd;
 	u32 pc;
 
 	if (buffer->length < 3) {
@@ -753,44 +753,43 @@ DSError TRKDoStop(TRKBuffer* b)
 DSError TRKDoSetOption(TRKBuffer* buffer)
 {
 	DSError error;
-	u8 msg_command;
-	u8 msg_option;
-	u8 msg_param;
+	u8 spA;
+	u8 sp9;
+	u8 sp8;
 
-	msg_command = 0;
-	msg_option = 0;
-	msg_param = 0;
-
+	spA = 0;
+	sp9 = 0;
+	sp8 = 0;
 	TRKSetBufferPosition(buffer, DSREPLY_NoError);
-	error = TRKReadBuffer1_ui8(buffer, &msg_command);
-	if (error == DS_NoError)
-		error = TRKReadBuffer1_ui8(buffer, &msg_option);
-	if (error == DS_NoError)
-		error = TRKReadBuffer1_ui8(buffer, &msg_param);
-
+	error = TRKReadBuffer1_ui8(buffer, &spA);
+	if (error == DS_NoError) {
+		error = TRKReadBuffer1_ui8(buffer, &sp9);
+	}
+	if (error == DS_NoError) {
+		error = TRKReadBuffer1_ui8(buffer, &sp8);
+	}
 	if (error != DS_NoError) {
 		TRKResetBuffer(buffer, 1);
 		if (buffer->position < 0x880) {
-			buffer->data[buffer->position++] = DSMSG_ReplyACK;
-			buffer->length += 1;
+			buffer->data[buffer->position++] = 0x80;
+			buffer->length++;
 		}
 		if (buffer->position < 0x880) {
-			buffer->data[buffer->position++] = DSREPLY_PacketSizeError;
-			buffer->length += 1;
+			buffer->data[buffer->position++] = 1;
+			buffer->length++;
 		}
 		TRKSendACK(buffer);
-	} else if (msg_option == 1) {
-		SetUseSerialIO(msg_param);
+	} else if (sp9 == 1) {
+		SetUseSerialIO(sp8);
 	}
-
 	TRKResetBuffer(buffer, 1);
 	if (buffer->position < 0x880) {
-		buffer->data[buffer->position++] = DSMSG_ReplyACK;
-		buffer->length += 1;
+		buffer->data[buffer->position++] = 0x80;
+		buffer->length++;
 	}
 	if (buffer->position < 0x880) {
-		buffer->data[buffer->position++] = DSREPLY_NoError;
-		buffer->length += 1;
+		buffer->data[buffer->position++] = 0;
+		buffer->length++;
 	}
 	return TRKSendACK(buffer);
 }
