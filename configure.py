@@ -929,7 +929,7 @@ config.libs = [
     trkLib(
         "TRK_MINNOW_DOLPHIN",
         [
-            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/mainloop.c"),
+            Object(Matching, "debugger/embedded/MetroTRK/Portable/mainloop.c"),
             Object(Matching, "debugger/embedded/MetroTRK/Portable/nubevent.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Portable/nubassrt.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Portable/nubinit.c"),
