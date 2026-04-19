@@ -2,6 +2,10 @@
 #include <dolphin/dolphin.h>
 #include "PowerPC_EABI_Support/Runtime/__ppc_eabi_linker.h"
 
+#ifdef __MWERKS__
+#undef __declspec
+#endif
+
 extern void InitMetroTRK();
 extern void exit(int);
 extern int main(int argc, char* argv[]);

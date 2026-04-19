@@ -813,7 +813,7 @@ config.libs = [
             Object(Matching, "dolphin/src/os/OSThread.c"),
             Object(Matching, "dolphin/src/os/OSTime.c"),
             Object(Matching, "dolphin/src/os/OSSync.c"),
-            Object(NonMatching, "dolphin/src/os/init/__start.c"),
+            Object(Matching, "dolphin/src/os/init/__start.c"),
             Object(Matching, "dolphin/src/os/init/__ppc_eabi_init.cpp")
         ]
     ),
