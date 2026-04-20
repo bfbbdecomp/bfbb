@@ -281,73 +281,24 @@ unsigned long long __strtoull(int base, int max_width, int (*ReadProc)(void*, in
 	return value;
 }
 
-unsigned long strtoul(const char* str, char** end, int base)
-{
-	unsigned long value;
-	int count, negative, overflow;
-
-	__InStrCtrl isc;
-	isc.NextChar         = (char*)str;
-	isc.NullCharDetected = 0;
-
-	value = __strtoul(base, 0x7FFFFFFF, &__StringRead, (void*)&isc, &count, &negative, &overflow);
-
-	if (end) {
-		*end = (char*)str + count;
-	}
-
-	if (overflow) {
-		value = ULONG_MAX;
-		errno = 0x22;
-	} else if (negative) {
-		value = -value;
-	}
-
-	return value;
-}
-
-void strtoull(void)
-{
-	// UNUSED FUNCTION
-}
-
-long strtol(const char* str, char** end, int base)
+int atoi(const char* str)
 {
 	unsigned long uvalue;
-	long svalue;
+	int svalue;
 	int count, negative, overflow;
 
 	__InStrCtrl isc;
 	isc.NextChar         = (char*)str;
 	isc.NullCharDetected = 0;
 
-	uvalue = __strtoul(base, 0x7FFFFFFF, &__StringRead, (void*)&isc, &count, &negative, &overflow);
+	uvalue = __strtoul(10, 0x7FFFFFFF, &__StringRead, (void*)&isc, &count, &negative, &overflow);
 
-	if (end) {
-		*end = (char*)str + count;
-	}
-
-	if (overflow || (!negative && uvalue > LONG_MAX) || (negative && uvalue > -LONG_MIN)) {
-		svalue = (negative ? -LONG_MIN : LONG_MAX);
+	if (overflow || (!negative && uvalue > INT_MAX) || (negative && uvalue > -INT_MIN)) {
+		svalue = (negative ? -INT_MIN : INT_MAX);
 		errno  = ERANGE;
 	} else {
-		svalue = (negative ? (long)-uvalue : (long)uvalue);
+		svalue = (negative ? (int)-uvalue : (int)uvalue);
 	}
 
 	return svalue;
-}
-
-void strtoll(void)
-{
-	// UNUSED FUNCTION
-}
-
-int atoi(const char* str)
-{
-	// UNUSED FUNCTION
-}
-
-void atol(void)
-{
-	// UNUSED FUNCTION
 }
