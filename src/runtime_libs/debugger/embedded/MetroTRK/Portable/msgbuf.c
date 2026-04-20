@@ -37,12 +37,13 @@ DSError TRKInitializeMessageBuffers(void)
  */
 DSError TRKGetFreeBuffer(int* msgID, TRKBuffer** outMsg)
 {
-	DSError error = DS_NoMessageBufferAvailable;
 	int i;
+	DSError error = DS_NoMessageBufferAvailable;
+	TRKBuffer* buf;
 	*outMsg = NULL;
 
 	for (i = 0; i < 3; i++) {
-		TRKBuffer* buf = NULL;
+		buf = NULL;
 
 		if (i >= 0 && i < 3) {
 			buf = &gTRKMsgBufs[i];
@@ -216,8 +217,8 @@ DSError TRKAppendBuffer1_ui16(TRKBuffer* buffer, const u16 data)
 {
 	u8* bigEndianData;
 	u8 swapBuffer[sizeof(data)];
-	u32 length;
 	DSError error;
+	u32 length;
 
 	if (gTRKBigEndian) {
 		bigEndianData = (u8*)&data;
@@ -255,8 +256,8 @@ DSError TRKAppendBuffer1_ui32(TRKBuffer* buffer, const u32 data)
 {
 	u8* bigEndianData;
 	u8 swapBuffer[sizeof(data)];
-	u32 length;
 	DSError error;
+	u32 length;
 
 	if (gTRKBigEndian) {
 		bigEndianData = (u8*)&data;
@@ -295,8 +296,8 @@ DSError TRKAppendBuffer1_ui64(TRKBuffer* buffer, const u64 data)
 {
 	u8* bigEndianData;
 	u8 swapBuffer[sizeof(data)];
-	u32 length;
 	DSError error;
+	u32 length;
 	if (gTRKBigEndian) {
 		bigEndianData = (u8*)&data;
 	} else {
