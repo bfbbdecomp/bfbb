@@ -28,7 +28,7 @@ inline static FILE* freopen(const char* name, const char* mode, FILE* file)
 		return NULL;
 	}
 
-	if (file->mMode.file_kind != __closed_file) {
+	if (file && file->mMode.file_kind != __closed_file) {
 		if (file == NULL) {
 			__flush_all();
 		}
@@ -130,8 +130,7 @@ int fclose(FILE* file)
 
 		if (file->mState.io_state != 1)
 		{
-			file->mState.io_state = 0;
-			flush_result = 0;
+			file->mState.io_state = flush_result = 0;
 		}
 		else
 		{
@@ -146,10 +145,9 @@ int fclose(FILE* file)
 			}
 			else
 			{
-				file->mState.io_state = 0;
+				file->mState.io_state = flush_result = 0;
 				file->mPosition = pos;
-				file->mBufferLength = 0;
-				flush_result = 0;
+				file->mBufferLength = flush_result;
 			}
 		}
 	}
@@ -232,7 +230,7 @@ int __get_file_modes(const char* mode, file_modes* modes)
 	signed char mode_char;
 	int mode_str;
 	unsigned char open_mode;
-	int io_mode;
+	signed char io_mode;
 
 	modes->file_kind = __disk_file;
 	mode_char = mode[0];
@@ -300,7 +298,7 @@ int __get_file_modes(const char* mode, file_modes* modes)
 		return 0;
 	}
 
-	modes->io_mode = io_mode;
+	modes->io_mode = (unsigned char)io_mode;
 	return 1;
 }
 

@@ -884,7 +884,7 @@ config.libs = [
             Object(NonMatching, "MSL_C/MSL_Common/ctype.c", cflags=cflags_runtime),
             Object(NonMatching, "MSL_C/MSL_Common/direct_io.c", cflags=cflags_runtime),
             Object(Matching, "MSL_C/MSL_Common/errno.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/file_io.c", cflags=cflags_runtime),
+            Object(NonMatching, "MSL_C/MSL_Common/file_io.c", cflags=cflags_runtime + ["-D_MSL_WIDE_CHAR"]),
             Object(NonMatching, "MSL_C/MSL_Common/FILE_POS.C", cflags=cflags_msl_runtime_cpp),
             Object(Matching, "MSL_C/MSL_Common/locale.c"),
             Object(NonMatching, "MSL_C/MSL_Common/mbstring.c", mw_version="GC/1.3", cflags=cflags_msl_gc13_runtime),
