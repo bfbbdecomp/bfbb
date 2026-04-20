@@ -4,39 +4,13 @@ BOOL gTRKBigEndian;
 
 /*
  * --INFO--
- * Address:	8021C310
- * Size:	0000D4
+ * Address:	8021C408
+ * Size:	000028
  */
-DSError TRKInitializeNub(void)
+void TRKNubWelcome(void)
 {
-	DSError ret;
-	DSError uartErr;
-
-	ret = TRKInitializeEndian();
-
-	if (ret == DS_NoError)
-		usr_put_initialize();
-	if (ret == DS_NoError)
-		ret = TRKInitializeEventQueue();
-	if (ret == DS_NoError)
-		ret = TRKInitializeMessageBuffers();
-	if (ret == DS_NoError)
-		ret = TRKInitializeDispatcher();
-
-	if (ret == DS_NoError) {
-		uartErr = TRKInitializeIntDrivenUART(0x0000e100, 1, 0, (volatile u8**)&gTRKInputPendingPtr);
-		TRKTargetSetInputPendingPtr(gTRKInputPendingPtr);
-		if (uartErr != DS_NoError) {
-			ret = uartErr;
-		}
-	}
-
-	if (ret == DS_NoError)
-		ret = TRKInitializeSerialHandler();
-	if (ret == DS_NoError)
-		ret = TRKInitializeTarget();
-
-	return ret;
+	TRK_board_display("MetroTRK for GAMECUBE v2.0");
+	return;
 }
 
 /*
@@ -52,25 +26,20 @@ DSError TRKTerminateNub(void)
 
 /*
  * --INFO--
- * Address:	8021C408
- * Size:	000028
+ * Address:	8021C310
+ * Size:	0000D4
  */
-void TRKNubWelcome(void)
-{
-	TRK_board_display("MetroTRK for Dolphin v0.8");
-	return;
-}
-
-/*
- * --INFO--
- * Address:	8021C430
- * Size:	000074
- */
-BOOL TRKInitializeEndian(void)
+DSError TRKInitializeNub(void)
 {
 	u8 bendian[4];
-	BOOL result   = FALSE;
-	gTRKBigEndian = TRUE;
+	BOOL* bigEndian;
+	DSError ret;
+	DSError uartErr;
+	volatile u8** inputPendingPtr;
+
+	ret       = DS_NoError;
+	bigEndian = &gTRKBigEndian;
+	*bigEndian = TRUE;
 
 	bendian[0] = 0x12;
 	bendian[1] = 0x34;
@@ -78,11 +47,37 @@ BOOL TRKInitializeEndian(void)
 	bendian[3] = 0x78;
 
 	if (*(u32*)bendian == 0x12345678) {
-		gTRKBigEndian = TRUE;
+		*bigEndian = TRUE;
 	} else if (*(u32*)bendian == 0x78563412) {
-		gTRKBigEndian = FALSE;
+		*bigEndian = FALSE;
 	} else {
-		result = TRUE;
+		ret = TRUE;
 	}
-	return result;
+
+	if (ret == DS_NoError)
+		usr_put_initialize();
+	if (ret == DS_NoError)
+		ret = TRKInitializeEventQueue();
+	if (ret == DS_NoError)
+		ret = TRKInitializeMessageBuffers();
+	if (ret == DS_NoError)
+		ret = TRKInitializeDispatcher();
+
+	InitializeProgramEndTrap();
+
+	if (ret == DS_NoError) {
+		inputPendingPtr = (volatile u8**)&gTRKInputPendingPtr;
+		uartErr = TRKInitializeIntDrivenUART(0x0000e100, 1, 0, inputPendingPtr);
+		TRKTargetSetInputPendingPtr((void*)*inputPendingPtr);
+		if (uartErr != DS_NoError) {
+			ret = uartErr;
+		}
+	}
+
+	if (ret == DS_NoError)
+		ret = TRKInitializeSerialHandler();
+	if (ret == DS_NoError)
+		ret = TRKInitializeTarget();
+
+	return ret;
 }

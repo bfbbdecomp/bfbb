@@ -932,7 +932,7 @@ config.libs = [
             Object(Matching, "debugger/embedded/MetroTRK/Portable/mainloop.c"),
             Object(Matching, "debugger/embedded/MetroTRK/Portable/nubevent.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Portable/nubassrt.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/nubinit.c"),
+            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/nubinit.c", extra_cflags=["-sdata 0", "-sdata2 0"]),
             Object(NonMatching, "debugger/embedded/MetroTRK/Portable/msg.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Portable/msgbuf.c"),
             Object(NonMatching, "debugger/embedded/MetroTRK/Portable/serpoll.c"),
