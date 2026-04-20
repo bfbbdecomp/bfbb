@@ -20,6 +20,7 @@ extern int __open_file(const char* name, file_modes mode, __file_handle* handle)
 inline static FILE* freopen(const char* name, const char* mode, FILE* file)
 {
 	file_modes modes;
+	u32 pos;
 
 	__stdio_atexit();
 
@@ -27,14 +28,56 @@ inline static FILE* freopen(const char* name, const char* mode, FILE* file)
 		return NULL;
 	}
 
-	fclose(file);
+	if (file->mMode.file_kind != __closed_file) {
+		if (file == NULL) {
+			__flush_all();
+		}
+		else if (file->mState.error == 0 && file->mMode.file_kind != __closed_file) {
+			if (file->mMode.io_mode != 1) {
+				if (file->mState.io_state >= 3) {
+					file->mState.io_state = 2;
+				}
+
+				if (file->mState.io_state == 2) {
+					file->mBufferLength = 0;
+				}
+
+				if (file->mState.io_state != 1) {
+					file->mState.io_state = 0;
+				}
+				else {
+					if (file->mMode.file_kind != __disk_file || (pos = ftell(file)) < 0) {
+						pos = 0;
+					}
+
+					if (__flush_buffer(file, 0) != 0) {
+						file->mState.error = 1;
+						file->mBufferLength = 0;
+					}
+					else {
+						file->mState.io_state = 0;
+						file->mPosition = pos;
+						file->mBufferLength = 0;
+					}
+				}
+			}
+		}
+
+		(*file->closeFunc)(file->mHandle);
+		file->mMode.file_kind = __closed_file;
+		file->mHandle = 0;
+
+		if (file->mState.free_buffer) {
+			free(file->mBuffer);
+		}
+	}
 	clearerr(file);
 
 	if (!__get_file_modes(mode, &modes)) {
 		return NULL;
 	}
 
-	__init_file(file, modes, 0, 0x400);
+	__init_file(file, modes, 0, 0x1000);
 
 	if (__open_file(name, modes, &file->mHandle)) {
 		file->mMode.file_kind = __closed_file;
@@ -53,74 +96,123 @@ inline static FILE* freopen(const char* name, const char* mode, FILE* file)
 
 int fclose(FILE* file)
 {
-    int flush_result, close_result;
+	int flush_result, close_result;
+	u32 pos;
 
-    if (file == NULL)
-        return (-1);
-    if (file->mMode.file_kind == __closed_file)
-        return (0);
+	if (file == NULL)
+		return (-1);
+	if (file->mMode.file_kind == __closed_file)
+		return (0);
 
-    flush_result = fflush(file);
+	if (file == NULL)
+	{
+		flush_result = __flush_all();
+	}
+	else if (file->mState.error != 0 || file->mMode.file_kind == __closed_file)
+	{
+		flush_result = -1;
+	}
+	else if (file->mMode.io_mode == 1)
+	{
+		flush_result = 0;
+	}
+	else
+	{
+		if (file->mState.io_state >= 3)
+		{
+			file->mState.io_state = 2;
+		}
 
-    close_result = (*file->closeFunc)(file->mHandle);
+		if (file->mState.io_state == 2)
+		{
+			file->mBufferLength = 0;
+		}
 
-    file->mMode.file_kind = __closed_file;
-    file->mHandle = 0;
+		if (file->mState.io_state != 1)
+		{
+			file->mState.io_state = 0;
+			flush_result = 0;
+		}
+		else
+		{
+			if (file->mMode.file_kind != __disk_file || (pos = ftell(file)) < 0)
+				pos = 0;
 
-    if (file->mState.free_buffer)
-        free(file->mBuffer);
-    return ((flush_result || close_result) ? -1 : 0);
+			if (__flush_buffer(file, 0) != 0)
+			{
+				file->mState.error = 1;
+				file->mBufferLength = 0;
+				flush_result = -1;
+			}
+			else
+			{
+				file->mState.io_state = 0;
+				file->mPosition = pos;
+				file->mBufferLength = 0;
+				flush_result = 0;
+			}
+		}
+	}
+
+	close_result = (*file->closeFunc)(file->mHandle);
+
+	file->mMode.file_kind = __closed_file;
+	file->mHandle = 0;
+
+	if (file->mState.free_buffer)
+		free(file->mBuffer);
+	return ((flush_result || close_result) ? -1 : 0);
 }
 
 int fflush(FILE* file)
 {
-    u32 pos;
+	u32 pos;
 
-    if (file == NULL)
-    {
-        return __flush_all();
-    }
+	if (file == NULL)
+	{
+		return __flush_all();
+	}
 
-    if (file->mState.error != 0 || file->mMode.file_kind == __closed_file)
-    {
-        return -1;
-    }
+	if (file->mState.error != 0 || file->mMode.file_kind == __closed_file)
+	{
+		return -1;
+	}
 
-    if (file->mMode.io_mode == 1)
-    {
-        return 0;
-    }
+	if (file->mMode.io_mode == 1)
+	{
+		return 0;
+	}
 
-    if (file->mState.io_state >= 3)
-    {
-        file->mState.io_state = 2;
-    }
+	if (file->mState.io_state >= 3)
+	{
+		file->mState.io_state = 2;
+	}
 
-    if (file->mState.io_state == 2)
-    {
-        file->mBufferLength = 0;
-    }
+	if (file->mState.io_state == 2)
+	{
+		file->mBufferLength = 0;
+	}
 
-    if (file->mState.io_state != 1)
-    {
-        file->mState.io_state = 0;
-        return 0;
-    }
+	if (file->mState.io_state != 1)
+	{
+		file->mState.io_state = 0;
+		return 0;
+	}
 
-    if (file->mMode.file_kind != __disk_file || (pos = ftell(file)) < 0)
-        pos = 0;
+	if (file->mMode.file_kind != __disk_file || (pos = ftell(file)) < 0)
+		pos = 0;
 
-    if (__flush_buffer(file, 0) != 0)
-    {
-        file->mState.error = 1;
-        file->mBufferLength = 0;
-        return -1;
-    }
+	if (__flush_buffer(file, 0) != 0)
+	{
+		file->mState.error = 1;
+		file->mBufferLength = 0;
+		return -1;
+	}
 
-    file->mState.io_state = 0;
-    file->mPosition = pos;
-    file->mBufferLength = 0;
-    return 0;
+	file->mState.io_state = 0;
+	file->mPosition = pos;
+	file->mBufferLength = 0;
+	return 0;
 }
 
 FILE* fopen(const char* name, const char* mode)
