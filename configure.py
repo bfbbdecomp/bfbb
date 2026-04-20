@@ -249,6 +249,16 @@ cflags_runtime = [
     "-inline auto",
 ]
 
+cflags_msl_gc13_runtime = [
+    *cflags_base,
+    "-use_lmw_stmw on",
+    "-str reuse,pool,readonly",
+    "-common off",
+    "-inline deferred,auto",
+    "-char signed",
+    "-lang=c",
+]
+
 # dolphin library flags
 cflags_dolphin = [
     *cflags_base,
@@ -873,7 +883,7 @@ config.libs = [
             Object(NonMatching, "MSL_C/MSL_Common/FILE_POS.C"),
             Object(Matching, "MSL_C/MSL_Common/locale.c"),
             Object(NonMatching, "MSL_C/MSL_Common/mbstring.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/mem.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/mem.c", mw_version="GC/1.3", cflags=cflags_msl_gc13_runtime),
             Object(NonMatching, "MSL_C/MSL_Common/mem_funcs.c"),
             Object(NonMatching, "MSL_C/MSL_Common/misc_io.c"),
             Object(NonMatching, "MSL_C/MSL_Common/printf.c"),
