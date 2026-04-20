@@ -8,28 +8,30 @@ __signal_func_ptr signal_funcs[6];
 int raise(int sig)
 {
     __signal_func_ptr signal_func;
+    __signal_func_ptr* signal_ptr;
 
     if (sig < 1 || sig > 6)
     {
         return -1;
     }
 
-    __begin_critical_region(stderr_access);
-    signal_func = signal_funcs[sig - 1];
+    __begin_critical_region(4);
+    signal_ptr = &signal_funcs[sig];
+    signal_func = *--signal_ptr;
 
-    if (signal_func != ((__std(__signal_func_ptr))1))
+    if ((unsigned long)signal_func != 1)
     {
-        signal_funcs[sig - 1] = ((__std(__signal_func_ptr))0);
+        *signal_ptr = NULL;
     }
 
-    __end_critical_region(stderr_access);
+    __end_critical_region(4);
 
-    if (signal_func == ((__std(__signal_func_ptr))1) || (signal_func == ((__std(__signal_func_ptr))0) && sig == 1))
+    if ((unsigned long)signal_func == 1 || (signal_func == NULL && sig == 1))
     {
         return 0;
     }
 
-    if (signal_func == ((__std(__signal_func_ptr))0))
+    if (signal_func == NULL)
     {
         exit(0);
     }
