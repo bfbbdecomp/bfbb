@@ -882,7 +882,7 @@ config.libs = [
             Object(NonMatching, "MSL_C/MSL_Common/file_io.c"),
             Object(NonMatching, "MSL_C/MSL_Common/FILE_POS.C"),
             Object(Matching, "MSL_C/MSL_Common/locale.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/mbstring.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/mbstring.c", mw_version="GC/1.3", cflags=cflags_msl_gc13_runtime),
             Object(NonMatching, "MSL_C/MSL_Common/mem.c", mw_version="GC/1.3", cflags=cflags_msl_gc13_runtime),
             Object(NonMatching, "MSL_C/MSL_Common/mem_funcs.c"),
             Object(NonMatching, "MSL_C/MSL_Common/misc_io.c"),
