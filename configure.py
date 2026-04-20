@@ -901,7 +901,7 @@ config.libs = [
             Object(NonMatching, "MSL_C/MSL_Common/strtoul.c"),
             Object(Matching, "MSL_C/MSL_Common/float.c"),
             Object(NonMatching, "MSL_C/MSL_Common/char_io.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/wchar_io.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/wchar_io.c", cflags=cflags_runtime),
             Object(NonMatching, "MSL_C/MSL_Common_Embedded/uart_console_io_gcn.c")
         ]
     ),
