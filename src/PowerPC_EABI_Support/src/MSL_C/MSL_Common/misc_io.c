@@ -1,10 +1,13 @@
+#include "PowerPC_EABI_Support/MSL_C/MSL_Common/misc_io.h"
+
 extern void (*__stdio_exit)(void);
 
 extern void __close_all(void);
 
-void clearerr(void)
+void clearerr(FILE* stream)
 {
-	// UNUSED FUNCTION
+	stream->mState.eof = 0;
+	stream->mState.error = 0;
 }
 
 void feof(void)
