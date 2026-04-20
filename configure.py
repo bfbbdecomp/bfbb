@@ -259,6 +259,11 @@ cflags_msl_gc13_runtime = [
     "-lang=c",
 ]
 
+cflags_msl_runtime_cpp = [
+    *cflags_runtime,
+    "-lang=c++",
+]
+
 # dolphin library flags
 cflags_dolphin = [
     *cflags_base,
@@ -880,7 +885,7 @@ config.libs = [
             Object(NonMatching, "MSL_C/MSL_Common/direct_io.c"),
             Object(Matching, "MSL_C/MSL_Common/errno.c"),
             Object(NonMatching, "MSL_C/MSL_Common/file_io.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/FILE_POS.C"),
+            Object(NonMatching, "MSL_C/MSL_Common/FILE_POS.C", cflags=cflags_msl_runtime_cpp),
             Object(Matching, "MSL_C/MSL_Common/locale.c"),
             Object(NonMatching, "MSL_C/MSL_Common/mbstring.c", mw_version="GC/1.3", cflags=cflags_msl_gc13_runtime),
             Object(NonMatching, "MSL_C/MSL_Common/mem.c", mw_version="GC/1.3", cflags=cflags_msl_gc13_runtime),

@@ -13,7 +13,7 @@
 #define SEEK_CUR (1)
 #define SEEK_END (2)
 
-int _ftell(FILE* file)
+inline fpos_t _ftell(FILE* file)
 {
     int charsInUndoBuffer = 0;
     int position;
