@@ -890,7 +890,7 @@ config.libs = [
             Object(NonMatching, "MSL_C/MSL_Common/qsort.c"),
             Object(NonMatching, "MSL_C/MSL_Common/rand.c"),
             Object(NonMatching, "MSL_C/MSL_Common/scanf.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/signal.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/signal.c", cflags=cflags_msl_gc13_runtime),
             Object(NonMatching, "MSL_C/MSL_Common/string.c"),
             Object(NonMatching, "MSL_C/MSL_Common/strtold.c"),
             Object(NonMatching, "MSL_C/MSL_Common/strtoul.c"),

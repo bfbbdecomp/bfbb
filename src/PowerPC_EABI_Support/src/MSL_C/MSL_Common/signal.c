@@ -3,36 +3,34 @@
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/critical_regions.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/abort_exit.h"
 
-__signal_func_ptr signal_funcs[6];
+#define SIGNAL_NUM 6
+
+__signal_func_ptr signal_funcs[SIGNAL_NUM];
 
 int raise(int sig)
 {
     __signal_func_ptr signal_func;
-    __signal_func_ptr* signal_ptr;
 
-    if (sig < 1 || sig > 6)
-    {
+    if (sig < 1 || sig > SIGNAL_NUM) {
         return -1;
     }
 
-    __begin_critical_region(4);
-    signal_ptr = &signal_funcs[sig];
-    signal_func = *--signal_ptr;
+    __begin_critical_region(stderr_access);
+    signal_func = signal_funcs[sig - 1];
 
-    if ((unsigned long)signal_func != 1)
-    {
-        *signal_ptr = NULL;
+    if (signal_func != ((__std(__signal_func_ptr))1)) {
+        signal_funcs[sig - 1] = ((__std(__signal_func_ptr))0);
     }
 
-    __end_critical_region(4);
+    __end_critical_region(stderr_access);
 
-    if ((unsigned long)signal_func == 1 || (signal_func == NULL && sig == 1))
+    if (signal_func == ((__std(__signal_func_ptr))1) ||
+        (signal_func == ((__std(__signal_func_ptr))0) && sig == 1))
     {
         return 0;
     }
 
-    if (signal_func == NULL)
-    {
+    if (signal_func == ((__std(__signal_func_ptr))0)) {
         exit(0);
     }
 
