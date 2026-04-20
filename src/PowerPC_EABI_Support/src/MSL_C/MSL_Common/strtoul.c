@@ -44,7 +44,7 @@ unsigned long __strtoul(int base, int max_width, int (*ReadProc)(void*, int, int
 	while (count <= max_width && c != -1 && !final_state(scan_state)) {
 		switch (scan_state) {
 		case start:
-			if (isspace(c)) {
+			if (_isspace(c)) {
 				c = fetch();
 				count--;
 				spaces++;
@@ -98,7 +98,7 @@ unsigned long __strtoul(int base, int max_width, int (*ReadProc)(void*, int, int
 				value_max = ULONG_MAX / base;
 			}
 
-			if (isdigit(c)) {
+			if (_isdigit(c)) {
 				if ((c -= '0') >= base) {
 					if (scan_state == digit_loop) {
 						scan_state = finished;
@@ -109,7 +109,7 @@ unsigned long __strtoul(int base, int max_width, int (*ReadProc)(void*, int, int
 					c += '0';
 					break;
 				}
-			} else if (!isalpha(c) || (toupper(c) - 'A' + 10) >= base) {
+			} else if (!_isalpha(c) || (_toupper(c) - 'A' + 10) >= base) {
 				if (scan_state == digit_loop) {
 					scan_state = finished;
 				} else {
@@ -118,7 +118,7 @@ unsigned long __strtoul(int base, int max_width, int (*ReadProc)(void*, int, int
 
 				break;
 			} else {
-				c = toupper(c) - 'A' + 10;
+				c = _toupper(c) - 'A' + 10;
 			}
 
 			if (value > value_max) {
@@ -175,7 +175,7 @@ unsigned long long __strtoull(int base, int max_width, int (*ReadProc)(void*, in
 	while (count <= max_width && c != -1 && !final_state(scan_state)) {
 		switch (scan_state) {
 		case start:
-			if (isspace(c)) {
+			if (_isspace(c)) {
 				c = fetch();
 				count--;
 				spaces++;
@@ -229,7 +229,7 @@ unsigned long long __strtoull(int base, int max_width, int (*ReadProc)(void*, in
 				value_max = ullmax / base;
 			}
 
-			if (isdigit(c)) {
+			if (_isdigit(c)) {
 				if ((c -= '0') >= base) {
 					if (scan_state == digit_loop) {
 						scan_state = finished;
@@ -240,7 +240,7 @@ unsigned long long __strtoull(int base, int max_width, int (*ReadProc)(void*, in
 					c += '0';
 					break;
 				}
-			} else if (!isalpha(c) || (toupper(c) - 'A' + 10) >= base) {
+			} else if (!_isalpha(c) || (_toupper(c) - 'A' + 10) >= base) {
 				if (scan_state == digit_loop) {
 					scan_state = finished;
 				} else {
@@ -249,7 +249,7 @@ unsigned long long __strtoull(int base, int max_width, int (*ReadProc)(void*, in
 
 				break;
 			} else {
-				c = toupper(c) - 'A' + 10;
+				c = _toupper(c) - 'A' + 10;
 			}
 
 			if (value > value_max) {
@@ -285,7 +285,7 @@ int atoi(const char* str)
 {
 	unsigned long uvalue;
 	int svalue;
-	int count, negative, overflow;
+	int overflow, negative, count;
 
 	__InStrCtrl isc;
 	isc.NextChar         = (char*)str;
