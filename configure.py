@@ -894,7 +894,7 @@ config.libs = [
             Object(NonMatching, "MSL_C/MSL_Common/printf.c"),
             Object(NonMatching, "MSL_C/MSL_Common/qsort.c"),
             Object(NonMatching, "MSL_C/MSL_Common/rand.c", cflags=cflags_runtime),
-            Object(NonMatching, "MSL_C/MSL_Common/scanf.c"),
+            Object(NonMatching, "MSL_C/MSL_Common/scanf.c", cflags=cflags_runtime + ["-inline deferred"]),
             Object(NonMatching, "MSL_C/MSL_Common/signal.c", cflags=cflags_msl_gc13_runtime),
             Object(NonMatching, "MSL_C/MSL_Common/string.c", cflags=cflags_runtime),
             Object(NonMatching, "MSL_C/MSL_Common/strtold.c"),
