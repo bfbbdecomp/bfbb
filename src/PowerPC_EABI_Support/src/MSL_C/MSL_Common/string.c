@@ -250,15 +250,19 @@ char* strncat(char* dst, const char* src, size_t n)
     const unsigned char* srcPtr = (const unsigned char*)src - 1;
     unsigned char* dstPtr       = (unsigned char*)dst - 1;
 
-    (void)n;
-
     while (*++dstPtr) {
     }
 
     --dstPtr;
-    while ((*++dstPtr = *++srcPtr) != 0) {
+    n++;
+    while (--n) {
+        if (!(*++dstPtr = *++srcPtr)) {
+            --dstPtr;
+            break;
+        }
     }
 
+    *++dstPtr = 0;
     return dst;
 }
 
