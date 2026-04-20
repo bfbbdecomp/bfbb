@@ -37,7 +37,6 @@ void __prep_buffer(FILE* file)
 int __load_buffer(FILE* file, size_t* bytes_loaded, int mode)
 {
     int ioresult;
-    char* buffer_start;
 
     __prep_buffer(file);
 
@@ -60,19 +59,6 @@ int __load_buffer(FILE* file, size_t* bytes_loaded, int mode)
     }
 
     file->mPosition += file->mBufferLength;
-
-    if (!file->mMode.binary_io) {
-        int i;
-
-        buffer_start = file->mBuffer;
-        for (i = file->mBufferLength; i != 0; i--) {
-            char c = *buffer_start;
-            buffer_start++;
-            if (c == '\n') {
-                file->mPosition++;
-            }
-        }
-    }
 
     return __no_io_error;
 }
