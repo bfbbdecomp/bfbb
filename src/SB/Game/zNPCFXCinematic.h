@@ -202,9 +202,12 @@ struct NCINBeNosey : XCSNNosey
 {
     zCutsceneMgr* use_csnmgr;
     NCINEntry* use_fxtab;
+    S32 x;
 
-    void UpdatedAnimated(RpAtomic* model, RwMatrixTag* animMat, U32 animIndex, U32 dataIndex);
     void CanRenderNow();
+    void Init(const zCutsceneMgr* csnmgr, NCINEntry* fxtab, S32 x);
+    void Done();
+    void UpdatedAnimated(RpAtomic* model, RwMatrixTag* animMat, U32 animIndex, U32 dataIndex);
 };
 
 #endif
