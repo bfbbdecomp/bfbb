@@ -3,12 +3,10 @@
 #include "xParEmitter.h"
 
 #include "zNPCFXCinematic.h"
+#include "zParPTank.h"
+#include "zNPCTypeBossSB2.h"
 
 #include <types.h>
-
-void zNPCFXShutdown()
-{
-}
 
 // TODO: NEEDS REWRITEN / CORRECTED
 void NCIN_Par_BPLANK_JET_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
@@ -447,6 +445,24 @@ void NCINBeNosey::CanRenderNow()
     NCINEntry* fxrec;
 }
 
+void zNPCFXShutdown()
+{
+}
+
+void NCINBeNosey::Init(const zCutsceneMgr* m, NCINEntry* e, S32 i)
+{
+    this->use_fxtab = e;
+    this->x = i;
+    this->use_csnmgr = (zCutsceneMgr*)m;
+}
+
+void NCINBeNosey::Done()
+{
+    this->use_fxtab = 0;
+    this->x = 0;
+    this->use_csnmgr = 0;
+}
+
 void NCIN_Generic_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 killit)
 {
     if (killit != 0)
@@ -698,8 +714,74 @@ void NCIN_ShieldPop(const zCutsceneMgr*, NCINEntry*, S32)
 {
 }
 
+void NCIN_MidFish_Upd(const zCutsceneMgr* mgr, NCINEntry* e, S32 i)
+{
+    if (i != 0)
+    {
+        e->flg_stat |= 4;
+    }
+}
+
+void NCIN_BombTrail_Upd(const zCutsceneMgr* mgr, NCINEntry* e, S32 i)
+{
+    if (i != 0)
+    {
+        e->flg_stat |= 4;
+    }
+}
+
+void NCIN_BombTrail_AR(const zCutsceneMgr* mgr, NCINEntry* e, RpAtomic* a, RwMatrixTag* t, U32 i1, U32 i2)
+{
+    if (i1 == 0x4)
+    {
+        zFX_SpawnBubbleTrail((const xVec3*)&t->pos, 0x4);
+    }
+}
+
+void NCIN_BoneTrail_Upd(const zCutsceneMgr* mgr, NCINEntry* e, S32 i)
+{
+    if (i != 0)
+    {
+        e->flg_stat |= 4;
+    }
+}
+
+void NCIN_BoneTrail_AR(const zCutsceneMgr* mgr, NCINEntry* e, RpAtomic* a, RwMatrixTag* t, U32 i1, U32 i2)
+{
+    if (i1 == 0x7)
+    {
+        zFX_SpawnBubbleTrail((const xVec3*)&t->pos, 0x4);
+    }
+}
+
+void NCIN_HookRecoil_Upd(const zCutsceneMgr* mgr, NCINEntry* e, S32 i)
+{
+    if (i != 0)
+    {
+        e->flg_stat |= 4;
+    }
+}
+
+void NCIN_SpatGlow_Upd(const zCutsceneMgr* mgr, NCINEntry* e, S32 i)
+{
+    if (i != 0)
+    {
+        e->flg_stat |= 4;
+    }
+}
+
 void clamp_bone_index(NCINEntry*, RpAtomic*)
 {
+}
+
+void xCutscene::NoseyClear()
+{
+    this->NoseySet(0);
+}
+
+void xCutscene::NoseySet(XCSNNosey* nosey)
+{
+    this->cb_nosey = nosey;
 }
 
 void NPCCone::TextureSet(RwRaster* raster)
