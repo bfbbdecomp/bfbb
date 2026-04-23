@@ -738,7 +738,7 @@ void NCIN_BombTrail_AR(const zCutsceneMgr* mgr, NCINEntry* e, RpAtomic* a, RwMat
     }
 }
 
-void NCIN_BoneTrail_Upd(const zCutsceneMgr* mgr, NCINEntry* e, U32 i)
+void NCIN_BoneTrail_Upd(const zCutsceneMgr* mgr, NCINEntry* e, S32 i)
 {
     if (i != 0)
     {
