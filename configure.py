@@ -1237,6 +1237,9 @@ config.progress_categories = [
     ProgressCategory("bink", "Bink SDK"),
 ]
 config.progress_each_module = args.verbose
+config.progress_report_args = [
+    "--deduplicate",
+]
 
 if args.mode == "configure":
     # Write build.ninja and objdiff.json

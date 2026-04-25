@@ -205,6 +205,7 @@ class ProjectConfig:
         self.progress_each_module: bool = (
             False  # Include individual modules, disable for large numbers of modules
         )
+        self.progress_report_args: List[str] = []  # Extra arguments for objdiff report
         self.progress_categories: List[ProgressCategory] = []  # Additional categories
         self.print_progress_categories: Union[bool, List[str]] = (
             True  # Print additional progress categories in the CLI progress output
@@ -1282,9 +1283,14 @@ def generate_build_ninja(
         # Generate progress report
         ###
         n.comment("Generate progress report")
+        report_args = (
+            f" {' '.join(config.progress_report_args)}"
+            if config.progress_report_args
+            else ""
+        )
         n.rule(
             name="report",
-            command=f"{objdiff} report generate -o $out",
+            command=f"{objdiff} report generate{report_args} -o $out",
             description="REPORT",
         )
         n.build(
