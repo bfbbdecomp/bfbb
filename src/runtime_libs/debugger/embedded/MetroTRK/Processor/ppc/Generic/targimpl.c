@@ -644,8 +644,8 @@ DSError TRKTargetAccessExtended2(u32 firstRegister, u32 lastRegister, TRKBuffer*
  */
 DSError TRKTargetVersions(DSVersions* versions)
 {
-	versions->kernelMajor   = 0;
-	versions->kernelMinor   = 8;
+	versions->kernelMajor   = 2;
+	versions->kernelMinor   = 0;
 	versions->protocolMajor = 1;
 	versions->protocolMinor = 10;
 	return DS_NoError;
@@ -1051,6 +1051,7 @@ DSError TRKTargetAddStopInfo(TRKBuffer* buffer)
 {
 	DSError error;
 	u32 instruction;
+	s32 i;
 
 	error = TRKAppendBuffer1_ui32(buffer, gTRKCPUState.Default.PC);
 	if (error == DS_NoError) {
@@ -1060,6 +1061,15 @@ DSError TRKTargetAddStopInfo(TRKBuffer* buffer)
 		error = TRKAppendBuffer1_ui32(buffer, instruction);
 	if (error == DS_NoError)
 		error = TRKAppendBuffer1_ui16(buffer, gTRKCPUState.Extended1.exceptionID);
+
+	if (error == DS_NoError) {
+		for (i = 0; i < 32; i++) {
+			error = TRKAppendBuffer1_ui32(buffer, (u16)gTRKCPUState.Default.GPR[i]);
+		}
+		for (i = 0; i < 32; i++) {
+			error = TRKAppendBuffer1_ui64(buffer, (u16)gTRKCPUState.Float.FPR[i]);
+		}
+	}
 
 	return error;
 }
@@ -1231,28 +1241,53 @@ u32 TRKTargetGetPC()
 DSError TRKTargetSupportRequest(void)
 {
 	DSError error;
-	// u32 spC;
+	u32 position;
+	u8 commandId;
 	size_t* length;
 	TRKEvent event;
 	u8 ioResult;
-	u8 commandId;
 
-	commandId = (MessageCommandID)gTRKCPUState.Default.GPR[3];
-	if (commandId != DSMSG_ReadFile && commandId != DSMSG_WriteFile) {
+	commandId = gTRKCPUState.Default.GPR[3];
+	if (commandId != DSMSG_ReadFile && commandId != DSMSG_WriteFile && commandId != DSMSG_OpenFile && commandId != DSMSG_CloseFile
+	    && commandId != DSMSG_PositionFile) {
 		TRKConstructEvent(&event, NUBEVENT_Exception);
 		TRKPostEvent(&event);
 		return DS_NoError;
 	}
 
-	length = (size_t*)gTRKCPUState.Default.GPR[5];
-	error  = TRKSuppAccessFile((u8)gTRKCPUState.Default.GPR[4], (u8*)gTRKCPUState.Default.GPR[6], length, (DSIOResult*)&ioResult, TRUE,
-	                           commandId == DSMSG_ReadFile);
-	if (ioResult == DS_IONoError && error != DS_NoError) {
-		ioResult = DS_IOError;
-	}
-	gTRKCPUState.Default.GPR[3] = ioResult;
-	if (commandId == DSMSG_ReadFile) {
-		TRK_flush_cache((void*)gTRKCPUState.Default.GPR[6], *length);
+	if (commandId == DSMSG_OpenFile) {
+		error = HandleOpenFileSupportRequest((const char*)gTRKCPUState.Default.GPR[4], gTRKCPUState.Default.GPR[5] & 0xFF,
+		                                     (u32*)gTRKCPUState.Default.GPR[6], (u8*)&ioResult);
+		if (ioResult == DS_IONoError && error != DS_NoError) {
+			ioResult = DS_IOError;
+		}
+		gTRKCPUState.Default.GPR[3] = ioResult;
+	} else if (commandId == DSMSG_CloseFile) {
+		error = HandleCloseFileSupportRequest(gTRKCPUState.Default.GPR[4], (u8*)&ioResult);
+		if (ioResult == DS_IONoError && error != DS_NoError) {
+			ioResult = DS_IOError;
+		}
+		gTRKCPUState.Default.GPR[3] = ioResult;
+	} else if (commandId == DSMSG_PositionFile) {
+		position = *(u32*)gTRKCPUState.Default.GPR[5];
+		error    = HandlePositionFileSupportRequest(gTRKCPUState.Default.GPR[4], &position, (u8)gTRKCPUState.Default.GPR[6], (u8*)&ioResult);
+		if (ioResult == DS_IONoError && error != DS_NoError) {
+			ioResult = DS_IOError;
+		}
+		gTRKCPUState.Default.GPR[3]        = ioResult;
+		*(u32*)gTRKCPUState.Default.GPR[5] = position;
+	} else {
+		u8 fileHandle = gTRKCPUState.Default.GPR[4];
+		u8* data      = (u8*)gTRKCPUState.Default.GPR[6];
+		length        = (size_t*)gTRKCPUState.Default.GPR[5];
+		error         = TRKSuppAccessFile(fileHandle, data, length, &ioResult, TRUE, commandId == DSMSG_ReadFile);
+		if (ioResult == DS_IONoError && error != DS_NoError) {
+			ioResult = DS_IOError;
+		}
+		gTRKCPUState.Default.GPR[3] = ioResult;
+		if (commandId == DSMSG_ReadFile) {
+			TRK_flush_cache((void*)gTRKCPUState.Default.GPR[6], *length);
+		}
 	}
 	gTRKCPUState.Default.PC += 4;
 	return error;
@@ -1309,11 +1344,12 @@ u32 TRKTargetStop()
  * Address:	8021FB40
  * Size:	0000B0
  */
-DSError TRKPPCAccessSPR(void* value, u32 spr_register_num, BOOL read)
+inline DSError TRKPPCAccessSPR(void* value, u32 spr_register_num, BOOL read)
 {
 	/* Initialize instruction array with nop */
 
-	u32 access_func[5] = { INSTR_NOP, INSTR_NOP, INSTR_NOP, INSTR_NOP, INSTR_NOP };
+	u32 access_func[10] = { INSTR_NOP, INSTR_NOP, INSTR_NOP, INSTR_NOP, INSTR_NOP,
+							INSTR_NOP, INSTR_NOP, INSTR_NOP, INSTR_NOP, INSTR_NOP };
 	/*
 	** Construct a small assembly function to perform the
 	** requested access and call it.  The read/write function
@@ -1347,10 +1383,11 @@ DSError TRKPPCAccessSPR(void* value, u32 spr_register_num, BOOL read)
  * Address:	8021FBF0
  * Size:	000078
  */
-DSError TRKPPCAccessPairedSingleRegister(void* srcDestPtr, u32 psr, BOOL read)
+inline DSError TRKPPCAccessPairedSingleRegister(void* srcDestPtr, u32 psr, BOOL read)
 {
 	// all nop by default
-	u32 instructionData[] = { INSTR_NOP, INSTR_NOP, INSTR_NOP, INSTR_NOP, INSTR_NOP };
+	u32 instructionData[] = { INSTR_NOP, INSTR_NOP, INSTR_NOP, INSTR_NOP, INSTR_NOP,
+							  INSTR_NOP, INSTR_NOP, INSTR_NOP, INSTR_NOP, INSTR_NOP };
 
 	if (read) {
 		instructionData[0] = INSTR_PSQ_ST(psr, 0, 3, 0, 0); // psq_st psr, 0(r3), 0, 0
@@ -1369,11 +1406,12 @@ DSError TRKPPCAccessPairedSingleRegister(void* srcDestPtr, u32 psr, BOOL read)
  * Address:	8021FC68
  * Size:	000180
  */
-DSError TRKPPCAccessFPRegister(void* srcDestPtr, u32 fpr, BOOL read)
+inline DSError TRKPPCAccessFPRegister(void* srcDestPtr, u32 fpr, BOOL read)
 {
 	DSError error = DS_NoError;
 	// all nop by default
-	u32 instructionData1[] = { INSTR_NOP, INSTR_NOP, INSTR_NOP, INSTR_NOP, INSTR_NOP };
+	u32 instructionData1[] = { INSTR_NOP, INSTR_NOP, INSTR_NOP, INSTR_NOP, INSTR_NOP,
+							   INSTR_NOP, INSTR_NOP, INSTR_NOP, INSTR_NOP, INSTR_NOP };
 
 	if (fpr < FP_FPSCR_ACCESS) {
 		if (read) {
@@ -1385,31 +1423,6 @@ DSError TRKPPCAccessFPRegister(void* srcDestPtr, u32 fpr, BOOL read)
 		error = TRKPPCAccessSpecialReg(srcDestPtr, instructionData1, read);
 
 	} else if (fpr == FP_FPSCR_ACCESS) {
-		if (read) {
-			/*
-			    stfd    f1, 0 (r4)
-			    mffs    sp
-			    stfd    f1, 0 (r3)
-			    lfd     f1, 0 (r4)
-			*/
-			instructionData1[0] = 0xD8240000;
-			instructionData1[1] = 0xFC20048E;
-			instructionData1[2] = 0xD8230000;
-			instructionData1[3] = 0xC8240000;
-		} else {
-			/*
-			    stfd    f1, 0 (r4)
-			    lfd     f1, 0 (r3)
-			    mtfsf   0xff, f1
-			    lfd     f1, 0 (r4)
-			*/
-			instructionData1[0] = 0xD8240000;
-			instructionData1[1] = 0xC8230000;
-			instructionData1[2] = 0xFDFE0D8E;
-			instructionData1[3] = 0xC8240000;
-		}
-
-		error = TRKPPCAccessSpecialReg(srcDestPtr, instructionData1, read);
 		*(u64*)srcDestPtr &= 0xFFFFFFFF;
 
 	} else if (fpr == FP_FPECR_ACCESS) {
@@ -1432,9 +1445,10 @@ DSError TRKPPCAccessFPRegister(void* srcDestPtr, u32 fpr, BOOL read)
  * Address:	8021FDE8
  * Size:	000068
  */
-DSError TRKPPCAccessSpecialReg(void* value, u32* access_func, BOOL read)
+inline DSError TRKPPCAccessSpecialReg(void* value, u32* access_func, BOOL read)
 {
 	typedef void (*asm_access_type)(void*, void*);
+	asm_access_type asm_access;
 
 	/*
 	** Construct a small assembly function to perform the
@@ -1447,14 +1461,16 @@ DSError TRKPPCAccessSpecialReg(void* value, u32* access_func, BOOL read)
 
 	/*
 	** Put blr instruction at the end of access function (it should be
-	** a 5-instruction array w/the last one empty).
+	** a 10-instruction array w/the last one empty).
 	*/
 
-	access_func[4] = INSTR_BLR;
+	access_func[9] = INSTR_BLR;
 
 	/*
 	** Now that the instruction array is built, get a function pointer to it.
 	*/
+
+	asm_access = (asm_access_type)access_func;
 
 #if DEBUG_VECTORREG_ACCESS
 
@@ -1477,8 +1493,8 @@ DSError TRKPPCAccessSpecialReg(void* value, u32* access_func, BOOL read)
 #endif
 
 	// Flush cache
-	TRK_flush_cache((void*)(u32)access_func, (sizeof(access_func) * 5));
-	((asm_access_type)access_func)((u32*)value, (void*)&TRKvalue128_temp);
+	TRK_flush_cache((void*)(u32)access_func, (sizeof(access_func) * 10));
+	(*asm_access)((u32*)value, (void*)&TRKvalue128_temp);
 
 	return DS_NoError;
 }

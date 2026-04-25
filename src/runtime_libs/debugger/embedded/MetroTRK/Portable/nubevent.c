@@ -4,51 +4,24 @@ TRKEventQueue gTRKEventQueue;
 
 /*
  * --INFO--
- * Address:	8021C0B4
- * Size:	00005C
- */
-DSError TRKInitializeEventQueue()
-{
-    TRKInitializeMutex(&gTRKEventQueue);
-    TRKAcquireMutex(&gTRKEventQueue);
-    gTRKEventQueue.count = 0;
-    gTRKEventQueue.next = 0;
-    gTRKEventQueue.eventID = 0x100;
-    TRKReleaseMutex(&gTRKEventQueue);
-    return DS_NoError;
-}
-
-/*
- * --INFO--
- * Address:	8021C110
+ * Address:	8021C2EC
  * Size:	000024
  */
-void TRKCopyEvent(TRKEvent* dstEvent, const TRKEvent* srcEvent)
+void TRKDestructEvent(TRKEvent* event)
 {
-    TRK_memcpy(dstEvent, srcEvent, sizeof(TRKEvent));
+    TRKReleaseBuffer(event->msgBufID);
 }
 
 /*
  * --INFO--
- * Address:	8021C134
- * Size:	0000C0
+ * Address:	8021C2D4
+ * Size:	000018
  */
-BOOL TRKGetNextEvent(TRKEvent* event)
+void TRKConstructEvent(TRKEvent* event, int eventType)
 {
-    BOOL status = 0;
-    TRKAcquireMutex(&gTRKEventQueue);
-    if (0 < gTRKEventQueue.count)
-    {
-        TRKCopyEvent(event, &gTRKEventQueue.events[gTRKEventQueue.next]);
-        gTRKEventQueue.count--;
-        gTRKEventQueue.next++;
-        if (gTRKEventQueue.next == 2)
-            gTRKEventQueue.next = 0;
-
-        status = 1;
-    }
-    TRKReleaseMutex(&gTRKEventQueue);
-    return status;
+    event->eventType = eventType;
+    event->eventID = 0;
+    event->msgBufID = -1;
 }
 
 /*
@@ -70,7 +43,7 @@ DSError TRKPostEvent(TRKEvent* event)
     else
     {
         nextEventID = (gTRKEventQueue.next + gTRKEventQueue.count) % 2;
-        TRKCopyEvent(&gTRKEventQueue.events[nextEventID], event);
+        TRK_memcpy(&gTRKEventQueue.events[nextEventID], event, sizeof(TRKEvent));
         gTRKEventQueue.events[nextEventID].eventID = gTRKEventQueue.eventID;
         gTRKEventQueue.eventID++;
         if (gTRKEventQueue.eventID < 0x100)
@@ -85,22 +58,39 @@ DSError TRKPostEvent(TRKEvent* event)
 
 /*
  * --INFO--
- * Address:	8021C2D4
- * Size:	000018
+ * Address:	8021C134
+ * Size:	0000C0
  */
-void TRKConstructEvent(TRKEvent* event, int eventType)
+BOOL TRKGetNextEvent(TRKEvent* event)
 {
-    event->eventType = eventType;
-    event->eventID = 0;
-    event->msgBufID = -1;
+    BOOL status = 0;
+    TRKAcquireMutex(&gTRKEventQueue);
+    if (0 < gTRKEventQueue.count)
+    {
+        TRK_memcpy(event, &gTRKEventQueue.events[gTRKEventQueue.next], sizeof(TRKEvent));
+        gTRKEventQueue.count--;
+        gTRKEventQueue.next++;
+        if (gTRKEventQueue.next == 2)
+            gTRKEventQueue.next = 0;
+
+        status = 1;
+    }
+    TRKReleaseMutex(&gTRKEventQueue);
+    return status;
 }
 
 /*
  * --INFO--
- * Address:	8021C2EC
- * Size:	000024
+ * Address:	8021C0B4
+ * Size:	00005C
  */
-void TRKDestructEvent(TRKEvent* event)
+DSError TRKInitializeEventQueue()
 {
-    TRKReleaseBuffer(event->msgBufID);
+    TRKInitializeMutex(&gTRKEventQueue);
+    TRKAcquireMutex(&gTRKEventQueue);
+    gTRKEventQueue.count = 0;
+    gTRKEventQueue.next = 0;
+    gTRKEventQueue.eventID = 0x100;
+    TRKReleaseMutex(&gTRKEventQueue);
+    return DS_NoError;
 }

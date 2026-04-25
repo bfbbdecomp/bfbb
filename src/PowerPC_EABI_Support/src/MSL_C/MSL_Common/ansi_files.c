@@ -1,15 +1,30 @@
 #include "types.h"
+#include "string.h"
+#include "PowerPC_EABI_Support/MSL_C/MSL_Common/alloc.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/ansi_files.h"
+#include "PowerPC_EABI_Support/MSL_C/MSL_Common/file_io.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/critical_regions.h"
+
+#ifndef _IONBF
+#define _IONBF 0
+#endif
+
+#ifndef _IOFBF
+#define _IOFBF 2
+#endif
 
 static char stdin_buff[0x100];
 static char stdout_buff[0x100];
 static char stderr_buff[0x100];
 
-extern void fclose(FILE*);
 extern int __read_console(u32, char*, u32*, void*);
 extern int __write_console(u32, char*, u32*, void*);
 extern int __close_console(u32);
+extern int __position_file(__file_handle file, fpos_t* position, int mode, __ref_con ref_con);
+extern int __read_file(__file_handle file, char* buff, size_t* count, __ref_con ref_con);
+extern int __write_file(__file_handle file, char* buff, size_t* count, __ref_con ref_con);
+extern int __close_file(__file_handle file);
+extern int setvbuf(FILE* file, char* buffer, int mode, size_t size);
 
 // clang-format off
 FILE __files[4] = 
@@ -113,6 +128,64 @@ FILE __files[4] =
 };
 // clang-format on
 
+FILE* __find_unopened_file(void)
+{
+    FILE* result;
+    FILE* prev;
+    FILE* file = __files[2].mNextFile;
+
+    while (file != NULL) {
+        if (file->mMode.file_kind == __closed_file) {
+            return file;
+        }
+        prev = file;
+        file = file->mNextFile;
+    }
+
+    result = (FILE*)malloc(sizeof(FILE));
+    if (result == NULL) {
+        result = NULL;
+    } else {
+        memset(result, 0, sizeof(FILE));
+        result->mIsDynamicallyAllocated = 1;
+        prev->mNextFile = result;
+        return result;
+    }
+
+    return result;
+}
+
+void __init_file(FILE* file, file_modes mode, unsigned char* buffer, unsigned long buffer_size)
+{
+    file->mHandle = 0;
+    file->mMode = mode;
+
+    file->mState.io_state = __neutral;
+    file->mState.free_buffer = 0;
+    file->mState.eof = 0;
+    file->mState.error = 0;
+
+    file->mPosition = 0;
+
+    if (buffer_size != 0) {
+        setvbuf(file, (char*)buffer, _IOFBF, buffer_size);
+    } else {
+        setvbuf(file, NULL, _IONBF, 0);
+    }
+
+    file->mBufferPtr = file->mBuffer;
+    file->mBufferLength = 0;
+
+    if (file->mMode.file_kind == __disk_file) {
+        file->positionFunc = __position_file;
+        file->readFunc = __read_file;
+        file->writeFunc = __write_file;
+        file->closeFunc = __close_file;
+    }
+
+    file->ref_con = NULL;
+}
+
 void __close_all()
 {
     FILE* p = &__files[0];
@@ -156,4 +229,27 @@ u32 __flush_all()
         __stream = __stream->mNextFile;
     };
     return retval;
+}
+
+int __flush_line_buffered_output_files(void)
+{
+    int result = 0;
+    FILE* file = &__files[0];
+    unsigned char* file_bytes;
+    unsigned short mode_bits;
+
+    while (file != NULL) {
+        file_bytes = (unsigned char*)file;
+        mode_bits = *(unsigned short*)(file_bytes + 4);
+        if ((((mode_bits >> 6) & 7) != 0) && (((file_bytes[4] >> 1) & 1) != 0) &&
+            (((file_bytes[8] & 0xE0) >> 5) == 1u)) {
+            if (fflush(file) != 0) {
+                result = -1;
+            }
+        }
+
+        file = file->mNextFile;
+    }
+
+    return result;
 }
