@@ -9,7 +9,7 @@
 #include "string.h"
 #include "stdio.h"
 #include "stdlib.h"
-
+#include "PowerPC_EABI_Support/MSL_C/MSL_Common/wchar_io.h"
 #define TARGET_FLOAT_BITS           64
 #define TARGET_FLOAT_BYTES          (TARGET_FLOAT_BITS / 8)
 #define TARGET_FLOAT_MAX_EXP        LDBL_MAX_EXP
@@ -62,10 +62,13 @@ static const char* parse_format(const char* format_string, va_list* arg, print_f
 	f.field_width           = 0;
 	f.precision             = 0;
 
-	if ((c = *++s) == '%') {
+	c = *(volatile const unsigned char*)(format_string + 1);
+	++s;
+	c = (signed char)c;
+	if (c == '%') {
 		f.conversion_char = c;
 		*format           = f;
-		return ((const char*)s + 1);
+		return s + 1;
 	}
 
 	for (;;) {
@@ -111,7 +114,7 @@ static const char* parse_format(const char* format_string, va_list* arg, print_f
 
 		c = *++s;
 	} else {
-		while (isdigit(c)) {
+		while (__ctype_map[(unsigned char)c] & __digit) {
 			f.field_width = (f.field_width * 10) + (c - '0');
 			c             = *++s;
 		}
@@ -133,7 +136,7 @@ static const char* parse_format(const char* format_string, va_list* arg, print_f
 
 			c = *++s;
 		} else {
-			while (isdigit(c)) {
+			while (__ctype_map[(unsigned char)c] & __digit) {
 				f.precision = (f.precision * 10) + (c - '0');
 				c           = *++s;
 			}
@@ -530,7 +533,8 @@ static char* double2hex(long double num, char* buff, print_format format)
 		}
 
 		return p;
-	} else if (*dec.sig.text == 'N') {
+	}
+	else if (*dec.sig.text == 'N') {
 		if (*(char*)&num & 0x80) {
 			p = buff - 5;
 			if (format.conversion_char == 'A')
@@ -701,14 +705,14 @@ static char* float2str(long double num, char* buff, print_format format)
 		if (num < 0) {
 			p = buff - 5;
 
-			if (isupper(format.conversion_char)) {
+			if (__ctype_map[format.conversion_char] & __upper_case) {
 				strcpy(p, "-INF");
 			} else {
 				strcpy(p, "-inf");
 			}
 		} else {
 			p = buff - 4;
-			if (isupper(format.conversion_char)) {
+			if (__ctype_map[format.conversion_char] & __upper_case) {
 				strcpy(p, "INF");
 			} else {
 				strcpy(p, "inf");
@@ -721,14 +725,14 @@ static char* float2str(long double num, char* buff, print_format format)
 		if (dec.sign) {
 			p = buff - 5;
 
-			if (isupper(format.conversion_char)) {
+			if (__ctype_map[format.conversion_char] & __upper_case) {
 				strcpy(p, "-NAN");
 			} else {
 				strcpy(p, "-nan");
 			}
 		} else {
 			p = buff - 4;
-			if (isupper(format.conversion_char)) {
+			if (__ctype_map[format.conversion_char] & __upper_case) {
 				strcpy(p, "NAN");
 			} else {
 				strcpy(p, "nan");
@@ -1157,12 +1161,12 @@ static int __pformatter(void* (*WriteProc)(void*, const char*, size_t), void* Wr
 	return chars_written;
 }
 
-static void* __FileWrite(void* pFile, const char* pBuffer, size_t char_num)
+void* __FileWrite(void* pFile, const char* pBuffer, size_t char_num)
 {
 	return (fwrite(pBuffer, 1, char_num, (FILE*)pFile) == char_num ? pFile : 0);
 }
 
-static void* __StringWrite(void* pCtrl, const char* pBuffer, size_t char_num)
+void* __StringWrite(void* pCtrl, const char* pBuffer, size_t char_num)
 {
 	size_t chars;
 	__OutStrCtrl* ctrl = (__OutStrCtrl*)pCtrl;
@@ -1174,9 +1178,25 @@ static void* __StringWrite(void* pCtrl, const char* pBuffer, size_t char_num)
 	return (void*)1;
 }
 
-void printf(const char* format, ...)
+int printf(const char* format, ...)
 {
-	// UNUSED FUNCTION
+	int ret;
+
+	if (fwide(stdout, -1) >= 0) {
+		return -1;
+	}
+
+	__begin_critical_region(stdin_access);
+
+	{
+		va_list args;
+		va_start(args, format);
+		ret = __pformatter(&__FileWrite, (void*)stdout, format, args);
+		va_end(args);
+	}
+
+	__end_critical_region(stdin_access);
+	return ret;
 }
 
 int fprintf(FILE* file, const char* format, ...)
@@ -1211,12 +1231,7 @@ int vprintf(const char* pFormat, va_list arg)
 	return ret;
 }
 
-void vfprintf(void)
-{
-	// UNUSED FUNCTION
-}
-
-int vsnprintf(char* s, size_t n, const char* format, va_list arg)
+static inline int vsnprintf(char* s, size_t n, const char* format, va_list arg)
 {
 	int end;
 	__OutStrCtrl osc;
@@ -1234,13 +1249,6 @@ int vsnprintf(char* s, size_t n, const char* format, va_list arg)
 }
 
 int vsprintf(char* s, const char* format, va_list arg) { return vsnprintf(s, 0xFFFFFFFF, format, arg); }
-
-int snprintf(char* s, size_t n, const char* format, ...)
-{
-	va_list args;
-	va_start(args, format);
-	return vsnprintf(s, n, format, args);
-}
 
 int sprintf(char* s, const char* format, ...)
 {

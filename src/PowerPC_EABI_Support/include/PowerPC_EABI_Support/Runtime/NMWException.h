@@ -2,7 +2,7 @@
 #define _NMWEXCEPTION
 
 #include "types.h"
-#include "exception" //#include <exception>
+#include "PowerPC_EABI_Support/Runtime/exception.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -20,12 +20,22 @@ typedef struct CatchInfo {
 	void* stacktop;
 } CatchInfo;
 
+typedef struct DestructorChain {
+	struct DestructorChain* next;
+	void* destructor;
+	void* object;
+} DestructorChain;
+
+struct __eti_init_info;
+
 void __unregister_fragment(int fragmentID);
-// struct __eti_init_info* info
-int __register_fragment(void* info, char* TOC);
+int __register_fragment(struct __eti_init_info* info, char* TOC);
 void* __register_global_object(void* object, void* destructor, void* regmem);
 void __destroy_global_chain(void);
 extern char __throw_catch_compare(const char* throwtype, const char* catchtype, s32* offset_result);
+extern void __end__catch(CatchInfo* catchinfo);
+extern void __throw(char* throwtype, void* location, void* dtor);
+extern void __unexpected(CatchInfo* catchinfo);
 
 #ifdef __cplusplus
 }

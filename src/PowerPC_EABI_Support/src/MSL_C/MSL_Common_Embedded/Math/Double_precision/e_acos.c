@@ -57,6 +57,25 @@ qS2 =  2.02094576023350569471e+00, /* 0x40002AE5, 0x9C598AC8 */
 qS3 = -6.88283971605453293030e-01, /* 0xBFE6066C, 0x1B8D0159 */
 qS4 =  7.70381505559019352791e-02; /* 0x3FB3B8C5, 0xB12E9282 */
 
+static inline double local_sqrt(double x)
+{
+    if (x > 0.0) {
+        double guess = __frsqrte(x);
+
+        guess = 0.5 * guess * (3.0 - guess * guess * x);
+        guess = 0.5 * guess * (3.0 - guess * guess * x);
+        guess = 0.5 * guess * (3.0 - guess * guess * x);
+        guess = 0.5 * guess * (3.0 - guess * guess * x);
+        return x * guess;
+    } else if (x == 0.0) {
+        return 0.0;
+    } else if (x) {
+        return NAN;
+    }
+
+    return *(float*)__float_huge;
+}
+
 #ifdef __STDC__
 	double __ieee754_acos(double x)
 #else
@@ -86,13 +105,13 @@ qS4 =  7.70381505559019352791e-02; /* 0x3FB3B8C5, 0xB12E9282 */
 	    z = (one+x)*0.5;
 	    p = z*(pS0+z*(pS1+z*(pS2+z*(pS3+z*(pS4+z*pS5)))));
 	    q = one+z*(qS1+z*(qS2+z*(qS3+z*qS4)));
-	    s = sqrt(z);
+	    s = local_sqrt(z);
 	    r = p/q;
 	    w = r*s-pio2_lo;
 	    return pi - 2.0*(s+w);
 	} else {			/* x > 0.5 */
 	    z = (one-x)*0.5;
-	    s = sqrt(z);
+	    s = local_sqrt(z);
 	    df = s;
 	    __LO(df) = 0;
 	    c  = (z-df*df)/(s+df);

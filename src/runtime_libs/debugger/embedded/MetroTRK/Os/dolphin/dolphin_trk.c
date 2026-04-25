@@ -3,7 +3,6 @@
 #define EXCEPTIONMASK_ADDR 0x80000044
 
 static u32 lc_base;
-extern u32 _db_stack_addr;
 
 static u32 TRK_ISR_OFFSETS[15] = { PPC_SystemReset,
                                    PPC_MachineCheck,
@@ -21,10 +20,12 @@ static u32 TRK_ISR_OFFSETS[15] = { PPC_SystemReset,
                                    PPC_SystemManagementInterrupt,
                                    PPC_ThermalManagementInterrupt };
 
-void __TRK_reset()
+#pragma section code_type ".init"
+void __TRK_reset(void)
 {
     __TRK_copy_vectors();
 }
+#pragma section code_type
 
 /*
  * --INFO--
@@ -66,8 +67,8 @@ ASM void InitMetroTRK()
 	mtspr  0x3f2, r0
 	mtspr  0x3f5, r0
 	//Restore stack pointer
-	lis r1, _db_stack_addr@h
-	ori r1, r1, _db_stack_addr@l
+	lis r1, 0x803D
+	ori r1, r1, 0x9A50
 	mr r3, r5
 	bl InitMetroTRKCommTable //Initialize comm table
 	/*
@@ -118,6 +119,11 @@ u32 TRKTargetTranslate(u32 param_0)
         }
     }
 
+    if ((param_0 >= 0x7E000000) && (param_0 <= 0x80000000))
+    {
+        return param_0;
+    }
+
     return param_0 & 0x3FFFFFFF | 0x80000000;
 }
 
@@ -126,7 +132,7 @@ u32 TRKTargetTranslate(u32 param_0)
  * Address:	8021FF5C
  * Size:	000060
  */
-void TRK_copy_vector(u32 offset)
+static inline void TRK_copy_vector(u32 offset)
 {
     void* destPtr = (void*)TRKTargetTranslate(offset);
     TRK_memcpy(destPtr, gTRKInterruptVectorTable + offset, 0x100);
@@ -138,7 +144,7 @@ void TRK_copy_vector(u32 offset)
  * Address:	8021FFBC
  * Size:	000094
  */
-void __TRK_copy_vectors(void)
+static inline void __TRK_copy_vectors(void)
 {
     int i;
     u32 mask;

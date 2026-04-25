@@ -249,6 +249,32 @@ cflags_runtime = [
     "-inline auto",
 ]
 
+cflags_msl_gc13_runtime = [
+    *cflags_base,
+    "-use_lmw_stmw on",
+    "-str reuse,pool,readonly",
+    "-common off",
+    "-inline deferred,auto",
+    "-char signed",
+    "-lang=c",
+]
+
+cflags_msl_runtime_c = [
+    *cflags_base,
+    "-use_lmw_stmw on",
+    "-str reuse,pool,readonly",
+    "-common off",
+    "-inline deferred,auto",
+    "-fp_contract off",
+    "-char signed",
+    "-lang=c",
+]
+
+cflags_msl_runtime_cpp = [
+    *cflags_runtime,
+    "-lang=c++",
+]
+
 # dolphin library flags
 cflags_dolphin = [
     *cflags_base,
@@ -841,66 +867,96 @@ config.libs = [
         "Runtime.PPCEABI.H",
         [],
         [
-            Object(NonMatching, "Runtime/__mem.c", extra_cflags=["-inline on, deferred"]),
+            Object(Matching, "Runtime/__mem.c"),
             Object(Matching, "Runtime/__va_arg.c"),
-            Object(NonMatching, "Runtime/global_destructor_chain.c"),
-            Object(NonMatching, "Runtime/New.cp"),
-            Object(NonMatching, "Runtime/NMWException.cp"),
+            Object(Matching, "Runtime/global_destructor_chain.c"),
+            Object(
+                Matching,
+                "Runtime/New.cp",
+                mw_version="GC/2.6",
+                cflags=[
+                    flag
+                    for flag in cflags_runtime
+                    if flag not in ("-RTTI off", "-Cpp_exceptions off", "-inline auto", "-str reuse,pool,readonly")
+                ]
+                + ["-Cpp_exceptions on", "-RTTI on", "-inline auto,deferred", "-str reuse,nopool,readonly"],
+            ),
+            Object(
+                Matching,
+                "Runtime/NMWException.cp",
+                mw_version="GC/2.0p1",
+                cflags=[
+                    flag
+                    for flag in cflags_runtime
+                    if flag not in ("-RTTI off", "-Cpp_exceptions off")
+                ]
+                + ["-Cpp_exceptions on", "-RTTI on", "-inline auto,deferred"],
+            ),
             Object(Matching, "Runtime/CPlusLibPPC.cp"),
-            Object(NonMatching, "Runtime/ptmf.c"),
-            Object(NonMatching, "Runtime/runtime.c"),
-            Object(NonMatching, "Runtime/__init_cpp_exceptions.cpp"),
-            Object(NonMatching, "Runtime/Gecko_ExceptionPPC.cp"),
-            Object(NonMatching, "Runtime/GCN_mem_alloc.c"),
+            Object(Matching, "Runtime/ptmf.c"),
+            Object(Matching, "Runtime/runtime.c"),
+            Object(Matching, "Runtime/__init_cpp_exceptions.cpp"),
+            Object(
+                Matching,
+                "Runtime/Gecko_ExceptionPPC.cp",
+                cflags=[
+                    flag
+                    for flag in cflags_runtime
+                    if flag not in ("-RTTI off", "-Cpp_exceptions off", "-str reuse,pool,readonly")
+                ]
+                + ["-Cpp_exceptions on", "-RTTI on", "-str reuse,nopool,readonly"],
+                extab_padding=[0x02, 0x55],
+            ),
+            Object(Matching, "Runtime/GCN_mem_alloc.c", extra_cflags=["-str reuse,nopool,readonly"]),
         ]
     ),
     mslLib(
         "MSL_C.PPCEABI.H",
         ["-str pool", "-opt level=0, peephole, schedule, nospace", "-inline off", "-sym on"],
         [
-            Object(NonMatching, "MSL_C/PPC_EABI/abort_exit.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/alloc.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/ansi_files.c"),
-            Object(NonMatching, "MSL_C/MSL_Common_Embedded/ansi_fp.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/arith.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/bsearch.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/buffer_io.c"),
+            Object(Matching, "MSL_C/PPC_EABI/abort_exit.c", cflags=cflags_runtime),
+            Object(Matching, "MSL_C/MSL_Common/alloc.c", cflags=cflags_msl_runtime_c),
+            Object(Matching, "MSL_C/MSL_Common/ansi_files.c", mw_version="GC/1.3", cflags=cflags_msl_gc13_runtime),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/ansi_fp.c", cflags=cflags_msl_runtime_c),
+            Object(Matching, "MSL_C/MSL_Common/arith.c", cflags=cflags_runtime),
+            Object(Matching, "MSL_C/MSL_Common/bsearch.c"),
+            Object(Matching, "MSL_C/MSL_Common/buffer_io.c", cflags=cflags_runtime),
             Object(Matching, "MSL_C/PPC_EABI/critical_regions.gamecube.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/ctype.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/direct_io.c"),
+            Object(Matching, "MSL_C/MSL_Common/ctype.c", cflags=cflags_runtime),
+            Object(Matching, "MSL_C/MSL_Common/direct_io.c", cflags=cflags_runtime),
             Object(Matching, "MSL_C/MSL_Common/errno.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/file_io.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/FILE_POS.C"),
-            Object(NonMatching, "MSL_C/MSL_Common/locale.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/mbstring.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/mem.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/mem_funcs.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/misc_io.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/printf.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/qsort.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/rand.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/scanf.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/signal.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/string.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/strtold.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/strtoul.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/float.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/char_io.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/wchar_io.c"),
-            Object(NonMatching, "MSL_C/MSL_Common_Embedded/uart_console_io_gcn.c")
+            Object(Matching, "MSL_C/MSL_Common/file_io.c", cflags=cflags_msl_runtime_c + ["-D_MSL_WIDE_CHAR"]),
+            Object(Matching, "MSL_C/MSL_Common/FILE_POS.C", cflags=cflags_msl_runtime_cpp),
+            Object(Matching, "MSL_C/MSL_Common/locale.c"),
+            Object(Matching, "MSL_C/MSL_Common/mbstring.c", mw_version="GC/1.3", cflags=cflags_msl_gc13_runtime),
+            Object(Matching, "MSL_C/MSL_Common/mem.c", mw_version="GC/1.3", cflags=cflags_msl_gc13_runtime),
+            Object(Matching, "MSL_C/MSL_Common/mem_funcs.c", cflags=cflags_runtime),
+            Object(Matching, "MSL_C/MSL_Common/misc_io.c", cflags=cflags_runtime),
+            Object(Matching, "MSL_C/MSL_Common/printf.c", mw_version="GC/2.0p1", cflags=cflags_msl_runtime_c),
+            Object(Matching, "MSL_C/MSL_Common/qsort.c", cflags=cflags_msl_runtime_c),
+            Object(Matching, "MSL_C/MSL_Common/rand.c", cflags=cflags_runtime),
+            Object(Matching, "MSL_C/MSL_Common/scanf.c", cflags=cflags_runtime + ["-inline deferred"]),
+            Object(Matching, "MSL_C/MSL_Common/signal.c", cflags=cflags_msl_gc13_runtime),
+            Object(Matching, "MSL_C/MSL_Common/string.c", cflags=cflags_runtime),
+            Object(Matching, "MSL_C/MSL_Common/strtold.c", cflags=cflags_msl_runtime_c),
+            Object(Matching, "MSL_C/MSL_Common/strtoul.c", cflags=cflags_runtime),
+            Object(Matching, "MSL_C/MSL_Common/float.c"),
+            Object(Matching, "MSL_C/MSL_Common/char_io.c", cflags=cflags_runtime),
+            Object(Matching, "MSL_C/MSL_Common/wchar_io.c", cflags=cflags_runtime),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/uart_console_io_gcn.c", cflags=cflags_runtime)
         ]
     ),
     mslLib(
         "fdlibm.PPCEABI.H",
         [],
         [
-            Object(NonMatching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/e_acos.c"),
-            Object(NonMatching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/e_asin.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/e_acos.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/e_asin.c"),
             Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/e_atan2.c"),
             Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/e_exp.c"),
             Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/e_fmod.c"),
             Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/e_log.c"),
-            Object(NonMatching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/e_pow.c"),
+            Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/e_pow.c"),
             Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/e_rem_pio2.c"),
             Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/k_cos.c"),
             Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/k_rem_pio2.c"),
@@ -923,52 +979,57 @@ config.libs = [
             Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/w_fmod.c"),
             Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/w_log.c"),
             Object(Matching, "MSL_C/MSL_Common_Embedded/Math/Double_precision/w_pow.c"),
-            Object(NonMatching, "MSL_C/PPC_EABI/math_ppc.c"),
+            Object(Matching, "MSL_C/PPC_EABI/math_ppc.c"),
         ]
     ),
     trkLib(
         "TRK_MINNOW_DOLPHIN",
         [
-            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/mainloop.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/nubevent.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/nubassrt.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/nubinit.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/msg.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/msgbuf.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/serpoll.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/dispatch.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/msghndlr.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/support.c"),
+            Object(Matching, "debugger/embedded/MetroTRK/Portable/mainloop.c"),
+            Object(Matching, "debugger/embedded/MetroTRK/Portable/nubevent.c"),
+            Object(Matching, "debugger/embedded/MetroTRK/Portable/nubassrt.c"),
+            Object(Matching, "debugger/embedded/MetroTRK/Portable/nubinit.c", extra_cflags=["-sdata 0", "-sdata2 0"]),
+            Object(Matching, "debugger/embedded/MetroTRK/Portable/msg.c", mw_version="GC/1.3", cflags=cflags_trk),
+            Object(Matching, "debugger/embedded/MetroTRK/Portable/msgbuf.c", mw_version="GC/1.3", cflags=cflags_trk),
+            Object(Matching, "debugger/embedded/MetroTRK/Portable/serpoll.c", extra_cflags=["-sdata 0", "-sdata2 0"]),
+            Object(Matching, "debugger/embedded/MetroTRK/Portable/dispatch.c", extra_cflags=["-sdata 0", "-sdata2 0"]),
+            Object(Matching, "debugger/embedded/MetroTRK/Portable/msghndlr.c", mw_version="GC/2.6", cflags=cflags_trk),
+            Object(Matching, "debugger/embedded/MetroTRK/Portable/support.c"),
             Object(Matching, "debugger/embedded/MetroTRK/Portable/mutex_TRK.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/notify.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/main_TRK.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/mem_TRK.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Portable/string_TRK.c"),
+            Object(Matching, "debugger/embedded/MetroTRK/Portable/notify.c"),
+            Object(Matching, "debugger/embedded/MetroTRK/Portable/main_TRK.c", extra_cflags=["-sdata 0", "-sdata2 0"]),
+            Object(Matching, "debugger/embedded/MetroTRK/Portable/mem_TRK.c"),
+            Object(Matching, "debugger/embedded/MetroTRK/Portable/string_TRK.c"),
             Object(Matching, "debugger/embedded/MetroTRK/Processor/ppc/Generic/flush_cache.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Processor/ppc/Generic/__exception.s"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Processor/ppc/Generic/targimpl.c"),
+            Object(Matching, "debugger/embedded/MetroTRK/Processor/ppc/Generic/__exception.s"),
+            Object(Matching, "debugger/embedded/MetroTRK/Processor/ppc/Generic/targimpl.c", mw_version="GC/2.6", cflags=[*cflags_trk, "-gccinc", "-common off"]),
             Object(Matching, "debugger/embedded/MetroTRK/Processor/ppc/Export/targsupp.s"),
             Object(Matching, "debugger/embedded/MetroTRK/Processor/ppc/Generic/mpc_7xx_603e.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Os/dolphin/dolphin_trk.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Os/dolphin/usr_put.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Os/dolphin/dolphin_trk_glue.c"),
+            Object(Matching, "debugger/embedded/MetroTRK/Os/dolphin/dolphin_trk.c", mw_version="GC/2.6", cflags=cflags_trk),
+            Object(Matching, "debugger/embedded/MetroTRK/Os/dolphin/usr_put.c"),
+            Object(Matching, "debugger/embedded/MetroTRK/Os/dolphin/dolphin_trk_glue.c", mw_version="GC/2.6", cflags=cflags_trk),
             Object(Matching, "debugger/embedded/MetroTRK/Os/dolphin/targcont.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Os/dolphin/target_options.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Os/dolphin/UDP_Stubs.c"),
-            Object(NonMatching, "debugger/embedded/MetroTRK/Export/mslsupp.c"),
+            Object(Matching, "debugger/embedded/MetroTRK/Os/dolphin/target_options.c", extra_cflags=["-sdata 0", "-sdata2 0"]),
+            Object(Matching, "debugger/embedded/MetroTRK/Os/dolphin/UDP_Stubs.c"),
+             Object(
+                Matching,
+                "debugger/embedded/MetroTRK/Export/mslsupp.c",
+                mw_version="GC/2.6",
+                cflags=cflags_trk,
+            ),
 
-            Object(NonMatching, "gamedev/cust_connection/cc/exi2/GCN/EXI2_DDH_GCN/main.c"),
-            Object(NonMatching, "gamedev/cust_connection/utils/common/CircleBuffer.c"),
-            Object(NonMatching, "gamedev/cust_connection/cc/exi2/GCN/EXI2_GDEV_GCN/main.c"),
-            Object(NonMatching, "gamedev/cust_connection/utils/common/MWTrace.c"),
-            Object(NonMatching, "gamedev/cust_connection/utils/gc/MWCriticalSection_gc.cpp"),
+            Object(Matching, "gamedev/cust_connection/cc/exi2/GCN/EXI2_DDH_GCN/main.c"),
+            Object(Matching, "gamedev/cust_connection/utils/common/CircleBuffer.c"),
+            Object(Matching, "gamedev/cust_connection/cc/exi2/GCN/EXI2_GDEV_GCN/main.c"),
+            Object(Matching, "gamedev/cust_connection/utils/common/MWTrace.c"),
+            Object(Matching, "gamedev/cust_connection/utils/gc/MWCriticalSection_gc.cpp"),
         ]
     ),
     mslLib(
         "MSL_C.PPCEABI.bare.H",
         [],
         [
-            Object(NonMatching, "MSL_C/MSL_Common/extras.c")
+            Object(Matching, "MSL_C/MSL_Common/extras.c")
         ]
     ),
     RenderWareLib(

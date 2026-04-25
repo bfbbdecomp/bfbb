@@ -54,6 +54,7 @@ class Object:
             "asflags": None,
             "asm_dir": None,
             "cflags": None,
+            "extab_padding": None,
             "extra_asflags": [],
             "extra_cflags": [],
             "extra_clang_flags": [],
@@ -91,6 +92,7 @@ class Object:
         set_default("add_to_all", True)
         set_default("asflags", config.asflags)
         set_default("asm_dir", config.asm_dir)
+        set_default("extab_padding", None)
         set_default("host", False)
         set_default("mw_version", config.linker_version)
         set_default("scratch_preset_id", config.scratch_preset_id)
@@ -407,7 +409,10 @@ def generate_build_ninja(
     n.variable("ninja_required_version", "1.3")
     n.newline()
 
-    configure_script = Path(os.path.relpath(os.path.abspath(sys.argv[0])))
+    configure_entry = sys.argv[0]
+    if configure_entry in {"", "-"} or not Path(configure_entry).exists():
+        configure_entry = "configure.py"
+    configure_script = Path(os.path.relpath(os.path.abspath(configure_entry)))
     python_lib = Path(os.path.relpath(__file__))
     python_lib_dir = python_lib.parent
     n.comment("The arguments passed to configure.py, for rerunning it.")
@@ -626,6 +631,16 @@ def generate_build_ninja(
     mwcc_sjis_cmd = f"{wrapper_cmd}{sjiswrap} {mwcc} $cflags -MMD -c $in -o $basedir"
     mwcc_sjis_implicit: List[Optional[Path]] = [*mwcc_implicit, sjiswrap]
 
+    # MWCC with extab post-processing
+    mwcc_extab_cmd = (
+        f'{CHAIN}{mwcc_cmd} && {dtk} extab clean --padding "$extab_padding" $out $out'
+    )
+    mwcc_extab_implicit: List[Optional[Path]] = [*mwcc_implicit, dtk]
+    mwcc_sjis_extab_cmd = (
+        f'{CHAIN}{mwcc_sjis_cmd} && {dtk} extab clean --padding "$extab_padding" $out $out'
+    )
+    mwcc_sjis_extab_implicit: List[Optional[Path]] = [*mwcc_sjis_implicit, dtk]
+
     # MWLD
     mwld = compiler_path / "mwldeppc.exe"
     mwld_cmd = f"{wrapper_cmd}{mwld} $ldflags -o $out @$out.rsp"
@@ -688,6 +703,26 @@ def generate_build_ninja(
     n.rule(
         name="mwcc_sjis",
         command=mwcc_sjis_cmd,
+        description="MWCC $out",
+        depfile="$basefile.d",
+        deps="gcc",
+    )
+    n.newline()
+
+    n.comment("MWCC build (with extab post-processing)")
+    n.rule(
+        name="mwcc_extab",
+        command=mwcc_extab_cmd,
+        description="MWCC $out",
+        depfile="$basefile.d",
+        deps="gcc",
+    )
+    n.newline()
+
+    n.comment("MWCC build (with UTF-8 to Shift JIS wrapper & extab post-processing)")
+    n.rule(
+        name="mwcc_sjis_extab",
+        command=mwcc_sjis_extab_cmd,
         description="MWCC $out",
         depfile="$basefile.d",
         deps="gcc",
@@ -905,18 +940,29 @@ def generate_build_ninja(
             if ("prodg" in obj.options["mw_version"].lower()):
                 fakerule = "prodg"
                 fakeimplicit = ngccc_implicit
+            variables = {
+                "mw_version": Path(obj.options["mw_version"]),
+                "cflags": cflags_str,
+                "basedir": os.path.dirname(obj.src_obj_path),
+                "basefile": obj.src_obj_path.with_suffix(""),
+            }
+            if obj.options["extab_padding"] is not None:
+                if obj.options["shift_jis"]:
+                    fakerule = "mwcc_sjis_extab"
+                    fakeimplicit = mwcc_sjis_extab_implicit
+                elif fakerule == "mwcc":
+                    fakerule = "mwcc_extab"
+                    fakeimplicit = mwcc_extab_implicit
+                variables["extab_padding"] = "".join(
+                    f"{i:02x}" for i in obj.options["extab_padding"]
+                )
             lib_name = obj.options["lib"]
             n.comment(f"{obj.name}: {lib_name} (linked {obj.completed})")
             n.build(
                 outputs=obj.src_obj_path,
                 rule=fakerule,
                 inputs=src_path,
-                variables={
-                    "mw_version": Path(obj.options["mw_version"]),
-                    "cflags": cflags_str,
-                    "basedir": os.path.dirname(obj.src_obj_path),
-                    "basefile": obj.src_obj_path.with_suffix(""),
-                },
+                variables=variables,
                 implicit=(
                     fakeimplicit
                 ),

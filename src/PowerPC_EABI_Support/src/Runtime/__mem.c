@@ -1,103 +1,88 @@
-#include <string.h>
-#include <dolphin/types.h>
+#include "PowerPC_EABI_Support/Runtime/__mem.h"
 
-void* memset(void* dst, int c, size_t n)
+__declspec(section ".init") void* memset(void* dst, int val, size_t n)
 {
-    __fill_mem(dst, c, n);
-    return dst;
+    __fill_mem(dst, val, n);
+
+    return (dst);
 }
 
-void __fill_mem(void* dst, int c, size_t n)
+__declspec(section ".init") void __fill_mem(void* dst, int val, unsigned long n)
 {
-    u8* cdest;
-    u32* idest;
-    u32 i;
-    u32 cval;
+    unsigned long v = (unsigned char)val;
+    unsigned long i;
 
-    cval = (u8)c;
-    cdest = (u8*)dst - 1;
+    ((unsigned char*)dst) = ((unsigned char*)dst) - 1;
 
     if (n >= 32)
     {
-        i = ~(u32)cdest & 3;
-        if (i != 0)
+        i = (~(unsigned long)dst) & 3;
+
+        if (i)
         {
-            n = n - i;
+            n -= i;
+
             do
-            {
-                *(++cdest) = (u8)cval;
-            } while (--i);
-        }
-        if (cval != 0)
-        {
-            cval = cval << 24 | cval << 16 | cval << 8 | cval;
+                *++(((unsigned char*)dst)) = v;
+            while (--i);
         }
 
-        idest = (u32*)(cdest - 3);
+        if (v)
+            v |= v << 24 | v << 16 | v << 8;
+
+        ((unsigned long*)dst) = ((unsigned long*)(((unsigned char*)dst) + 1)) - 1;
+
         i = n >> 5;
-        if (i != 0)
-        {
+
+        if (i)
             do
             {
-                idest[1] = cval; // 4
-                idest[2] = cval; // 8
-                idest[3] = cval; // c
-                idest[4] = cval; // 10
-                idest[5] = cval; // 14
-                idest[6] = cval; // 18
-                idest[7] = cval; // 1c
-                *(idest += 8) = cval; // 20
+                *++(((unsigned long*)dst)) = v;
+                *++(((unsigned long*)dst)) = v;
+                *++(((unsigned long*)dst)) = v;
+                *++(((unsigned long*)dst)) = v;
+                *++(((unsigned long*)dst)) = v;
+                *++(((unsigned long*)dst)) = v;
+                *++(((unsigned long*)dst)) = v;
+                *++(((unsigned long*)dst)) = v;
             } while (--i);
-        }
 
-        i = (n >> 2) & 7;
+        i = (n & 31) >> 2;
 
-        if (i != 0)
-        {
+        if (i)
             do
-            {
-                *++idest = cval;
-            } while (--i);
-        }
+                *++(((unsigned long*)dst)) = v;
+            while (--i);
 
-        cdest = (u8*)idest + 3;
+        ((unsigned char*)dst) = ((unsigned char*)(((unsigned long*)dst) + 1)) - 1;
+
         n &= 3;
     }
-    if (n != 0)
-    {
+
+    if (n)
         do
-        {
-            *++cdest = (u8)cval;
-        } while (--n);
-    }
+            *++(((unsigned char*)dst)) = v;
+        while (--n);
+
+    return;
 }
 
-void* memcpy(void* dst, const void* src, size_t n)
+__declspec(section ".init") void* memcpy(void* dst, const void* src, size_t n)
 {
-    u8* __src;
-    u8* __dst;
-    int i;
+    const char* p;
+    char* q;
+    int rev = ((unsigned long)src < (unsigned long)dst);
 
-    if (src >= dst)
+    if (!rev)
     {
-        __src = ((u8*)src) - 1;
-        __dst = ((u8*)dst) - 1;
-        i = n + 1;
-        while (--i)
-        {
-            *((u8*)++__dst) = *((u8*)++__src);
-        }
-        return dst;
+        for (p = (const char*)src - 1, q = (char*)dst - 1, n++; --n;)
+            *++q = *++p;
     }
     else
     {
-        __src = ((u8*)src) + n;
-        __dst = ((u8*)dst) + n;
-        i = n + 1;
-        while (--i)
-        {
-            *((u8*)--__dst) = *((u8*)--__src);
-        }
-        return dst;
+        for (p = (const char*)src + n, q = (char*)dst + n, n++; --n;)
+            *--q = *--p;
     }
+
+    return (dst);
 }
