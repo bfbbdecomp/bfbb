@@ -1472,26 +1472,21 @@ void bungee_state::insert_animations(xAnimTable& at)
     xAnimTableNewState(&at, "bungee_cycle_0", 0x10, 0, 1.0f, 0, 0, 0.0f, 0, 0, xAnimDefaultBeforeEnter, 0, 0);
     xAnimTableNewState(&at, "bungee_death_0", 0, 0, 1.0f, 0, 0, 0.0f, 0, 0, xAnimDefaultBeforeEnter, 0, 0);
 
-    if (0)
-    {
-    }
+    static const char* start_from = "JumpStart01 JumpLift01 JumpApex01 DJumpStart01 DJumpLift01 Fall01 FallHigh01";
+    static const char* start_to = "bungee_cycle_0";
 
-    if (0)
-    {
-    }
-
-    xAnimTableNewTransition(&at, "", "", check_anim_start, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, 0.5f, 0);
-    xAnimTableNewTransition(&at, "bungee_cycle_0", "bungee_dive_0", 0, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, fixed.dive.time, 0);
-    xAnimTableNewTransition(&at, "bungee_dive_0", "bungee_cycle_0", 0, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, fixed.dive.anim_out_time, 0);
-    xAnimTableNewTransition(&at, "bungee_cycle_0", "bungee_top_0", 0, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, fixed.top_anim_time, 0);
-    xAnimTableNewTransition(&at, "bungee_top_0", "bungee_cycle_0", 0, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, fixed.top_anim_time, 0);
-    xAnimTableNewTransition(&at, "bungee_cycle_0", "bungee_bottom_0", 0, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, fixed.bottom_anim_time, 0);
-    xAnimTableNewTransition(&at, "bungee_bottom_0", "bungee_cycle_0", 0, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, fixed.bottom_anim_time, 0);
-    xAnimTableNewTransition(&at, "bungee_cycle_0", "bungee_hit_0", 0, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, fixed.hit_anim_time, 0);
-    xAnimTableNewTransition(&at, "bungee_hit_0", "bungee_dive_0", 0, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, fixed.hit_anim_time, 0);
-    xAnimTableNewTransition(&at, "bungee_hit_0", "bungee_top_0", 0, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, fixed.hit_anim_time, 0);
-    xAnimTableNewTransition(&at, "bungee_hit_0", "bungee_bottom_0", 0, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, fixed.hit_anim_time, 0);
-    xAnimTableNewTransition(&at, "bungee_hit_0", "bungee_cycle_0", 0, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, fixed.hit_anim_time, 0);
-    xAnimTableNewTransition(&at, "bungee_hit_0", "bungee_death_0", 0, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, fixed.hit_anim_time, 0);
-    xAnimTableNewTransition(&at, "bungee_cycle_0", "Fall01", 0, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, 0.5f, 0);
+    shared.anim_tran.start = xAnimTableNewTransition(&at, start_from, start_to, check_anim_start, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, 0.5f, 0);
+    shared.anim_tran.dive_start = xAnimTableNewTransition(&at, "bungee_cycle_0", "bungee_dive_0", 0, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, fixed.dive.time, 0);
+    shared.anim_tran.dive_stop = xAnimTableNewTransition(&at, "bungee_dive_0", "bungee_cycle_0", 0, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, fixed.dive.anim_out_time, 0);
+    shared.anim_tran.top_start = xAnimTableNewTransition(&at, "bungee_cycle_0", "bungee_top_0", 0, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, fixed.top_anim_time, 0);
+    shared.anim_tran.top_stop = xAnimTableNewTransition(&at, "bungee_top_0", "bungee_cycle_0", 0, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, fixed.top_anim_time, 0);
+    shared.anim_tran.bottom_start = xAnimTableNewTransition(&at, "bungee_cycle_0", "bungee_bottom_0", 0, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, fixed.bottom_anim_time, 0);
+    shared.anim_tran.bottom_stop = xAnimTableNewTransition(&at, "bungee_bottom_0", "bungee_cycle_0", 0, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, fixed.bottom_anim_time, 0);
+    shared.anim_tran.hit = xAnimTableNewTransition(&at, "bungee_cycle_0", "bungee_hit_0", 0, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, fixed.hit_anim_time, 0);
+    xAnimTableNewTransition(&at, "bungee_hit_0", "bungee_dive_0", check_anim_hit_to_dive, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, fixed.hit_anim_time, 0);
+    xAnimTableNewTransition(&at, "bungee_hit_0", "bungee_top_0", check_anim_hit_to_top, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, fixed.hit_anim_time, 0);
+    xAnimTableNewTransition(&at, "bungee_hit_0", "bungee_bottom_0", check_anim_hit_to_bottom, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, fixed.hit_anim_time, 0);
+    xAnimTableNewTransition(&at, "bungee_hit_0", "bungee_cycle_0", check_anim_hit_to_cycle, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, fixed.hit_anim_time, 0);
+    xAnimTableNewTransition(&at, "bungee_hit_0", "bungee_death_0", check_anim_hit_to_death, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, fixed.hit_anim_time, 0);
+    shared.anim_tran.stop = xAnimTableNewTransition(&at, "bungee_cycle_0", "Fall01", 0, 0, 0x10, 0, 0.0f, 0.0f, 0, 0, 0.5f, 0);
 }
