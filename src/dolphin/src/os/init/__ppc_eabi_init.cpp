@@ -15,8 +15,10 @@ __declspec(section ".dtors") extern voidfunctionptr _dtors[];
 
 static void __init_cpp(void);
 
+#pragma section code_type ".init"
+
 // clang-format off
-__declspec(section ".init") asm void __init_hardware(void)
+asm void __init_hardware(void)
 { // clang-format off
     nofralloc
     mfmsr r0
@@ -30,7 +32,7 @@ __declspec(section ".init") asm void __init_hardware(void)
     blr
 }
 
-__declspec(section ".init") asm void __flush_cache(void *address, unsigned int size)
+asm void __flush_cache(void *address, unsigned int size)
 { // clang-format off
     nofralloc
     lis     r5, 0xffff
@@ -49,6 +51,8 @@ rept:
     blr
 }
 // clang-format on
+
+#pragma section code_type
 
 void __init_user(void)
 {

@@ -166,7 +166,6 @@ void MWTRACE(u8, char*, ...);
 
 //////// SUPPORT FUNCTIONS /////////
 DSError TRKRequestSend();
-u32 TRKAccessFile(u32, u32, u32*, u8*);
 ////////////////////////////////////
 
 ///// SERIAL POLLING FUNCTIONS /////

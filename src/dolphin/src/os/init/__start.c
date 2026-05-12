@@ -2,26 +2,27 @@
 #include "PowerPC_EABI_Support/Runtime/__ppc_eabi_linker.h"
 #include "PowerPC_EABI_Support/MetroTRK/dolphin_trk.h"
 
-void __check_pad3(void)
+#ifdef __MWERKS__
+#undef __declspec
+#endif
+
+#define SECTION_INIT __declspec(section ".init")
+
+#pragma section code_type ".init"
+
+SECTION_INIT void __check_pad3(void)
 {
     if ((Pad3Button & 0x0eef) == 0x0eef)
     {
         OSResetSystem(OS_RESET_RESTART, 0, FALSE);
     }
-    return;
 }
 
-void __set_debug_bba(void)
-{
-    Debug_BBA = 1;
-}
+SECTION_INIT void __set_debug_bba(void) { Debug_BBA = 1; }
 
-u8 __get_debug_bba(void)
-{
-    return Debug_BBA;
-}
+SECTION_INIT u8 __get_debug_bba(void) { return Debug_BBA; }
 
-__declspec(weak) asm void __start(void)
+SECTION_INIT __declspec(weak) asm void __start(void)
 {
     // clang-format off
 	nofralloc
@@ -137,25 +138,7 @@ _goto_skip_init_bba:
     // clang-format on
 }
 
-__declspec(section ".init") inline void __copy_rom_section(void* dst, const void* src,
-                                                           unsigned long size)
-{
-    if (size && (dst != src))
-    {
-        memcpy(dst, src, size);
-        __flush_cache(dst, size);
-    }
-}
-
-__declspec(section ".init") inline void __init_bss_section(void* dst, unsigned long size)
-{
-    if (size)
-    {
-        memset(dst, 0, size);
-    }
-}
-
-asm static void __init_registers(void)
+SECTION_INIT asm void __init_registers(void)
 {
     // clang-format off
     nofralloc
@@ -194,11 +177,28 @@ asm static void __init_registers(void)
 	ori r2, r2, _SDA2_BASE_@l
 	lis r13, _SDA_BASE_@h
 	ori r13, r13, _SDA_BASE_@l
-	blr
+    blr
     // clang-format on
 }
 
-void __init_data(void)
+inline static void __copy_rom_section(void* dst, const void* src, u32 size)
+{
+    if (size && (dst != src))
+    {
+        memcpy(dst, src, size);
+        __flush_cache(dst, size);
+    }
+}
+
+inline static void __init_bss_section(void* dst, u32 size)
+{
+    if (size)
+    {
+        memset(dst, 0, size);
+    }
+}
+
+SECTION_INIT void __init_data(void)
 {
     __rom_copy_info* dci;
     __bss_init_info* bii;
@@ -222,6 +222,7 @@ void __init_data(void)
     }
 }
 
+#pragma section code_type ".text"
 __declspec(weak) void InitMetroTRK_BBA(void)
 {
     return;

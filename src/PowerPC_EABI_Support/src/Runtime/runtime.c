@@ -789,6 +789,7 @@ asm void __cvt_ull_dbl(void)
 
 asm void __cvt_sll_flt(void)
 {
+    nofralloc;
     stwu r1, -0x10(r1);
     clrrwi.r5, r3, 31;
     beq L_802BA62C;
@@ -837,7 +838,6 @@ L_802BA6B4:;
     lfd f1, 0x8(r1);
     frsp f1, f1;
     addi r1, r1, 0x10;
-    frfree; // Build error said to add this
     blr
 }
 

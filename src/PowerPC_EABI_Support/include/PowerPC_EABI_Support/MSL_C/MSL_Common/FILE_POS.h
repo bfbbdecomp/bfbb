@@ -11,7 +11,7 @@ extern "C" {
     int fseek(FILE *stream, fpos_t offset, int whence);
     int _fseek(FILE *stream, fpos_t offset, int whence);
     int ftell(FILE *stream);
-    int _ftell(FILE *stream);
+    fpos_t _ftell(FILE *stream);
 
 #ifdef __cplusplus
 };
