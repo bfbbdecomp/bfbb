@@ -51,31 +51,40 @@ struct zThrownStruct
     S32 driveDebounce;
     xEnt* driveLastFloor;
     xEntFrame frame;
+
+    zThrownStruct& operator=(const zThrownStruct& rhs)
+    {
+        ent = rhs.ent;
+        stackEnt = rhs.stackEnt;
+        stackTgt = rhs.stackTgt;
+        patLauncher = rhs.patLauncher;
+        oldupdate = rhs.oldupdate;
+        *(S32*)(&vel.x) = *(S32*)(&rhs.vel.x);
+        *(S32*)(&vel.y) = *(S32*)(&rhs.vel.y);
+        *(S32*)(&vel.z) = *(S32*)(&rhs.vel.z);
+        *(S32*)(&oldcollpos.x) = *(S32*)(&rhs.oldcollpos.x);
+        *(S32*)(&oldcollpos.y) = *(S32*)(&rhs.oldcollpos.y);
+        *(S32*)(&oldcollpos.z) = *(S32*)(&rhs.oldcollpos.z);
+        collResetTimer = rhs.collResetTimer;
+        killTimer = rhs.killTimer;
+        stats = rhs.stats;
+        oldRecShadow = rhs.oldRecShadow;
+        drv = rhs.drv;
+        driveDebounce = rhs.driveDebounce;
+        driveLastFloor = rhs.driveLastFloor;
+        frame = rhs.frame;
+        return *this;
+    }
 };
 
 void zThrown_Setup(zScene* sc);
-void zThrown_AddTempFrame(zThrownStruct* thrown);
-void Recurse_TranslateStack(xEnt* ent, xVec3* delta);
 void zThrown_Reset();
 void zThrown_PatrickLauncher(xEnt* ent, xEnt* launcher);
-S32 zThrownCollide_CauseDamage(zThrownStruct* thrown, xEntCollis* collis);
-void zThrownCollide_ThrowFruit(zThrownStruct* thrown, xEntCollis* collis, F32* bounce,
-                               F32* friction);
 S32 zThrown_KillFruit(xEnt* ent);
-void zThrownCollide_ThrowFreeze(zThrownStruct* thrown, xEntCollis* collis, F32* bounce,
-                                F32* friction);
-void zThrownCollide_DestructObj(zThrownStruct* thrown, xEntCollis* collis, F32* bounce,
-                                F32* friction);
-void zThrownCollide_BSandyHead(zThrownStruct* thrown, xEntCollis* collis, F32* bounce,
-                               F32* friction);
-void zThrownCollide_Tiki(zThrownStruct* thrown, xEntCollis* collis, F32* bounce, F32* friction);
 void zThrown_AddFruit(xEnt* ent);
 S32 zThrown_IsFruit(xEnt* ent, F32* stackHeight);
 S32 zThrown_IsStacked(xEnt* ent);
-void checkAgainstButtons(xEnt* ent);
-xBase* zThrown_ButtonIteratorCB(xBase* b, zScene* scn, void* user);
 void xDrawSphere(const xSphere* s, U32 unk);
-S32 zThrown_KillFruit(xEnt* ent);
 void zThrown_LaunchDir(xEnt* ent, xVec3* dir);
 
 #endif
