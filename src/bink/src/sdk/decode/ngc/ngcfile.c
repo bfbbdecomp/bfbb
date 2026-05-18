@@ -3,11 +3,20 @@
 #include "ngcfile.h"
 #include "ngcrgb.h"
 
+/*
+ * The unmodified BFBB Dolphin DVD header includes "types.h", which resolves to
+ * the game's type header under the Bink compiler include order. radbase.h has
+ * already pulled in dolphin/types.h, so skip that duplicate typedef block.
+ */
+#ifndef BFBB_TYPES_H
+#define BFBB_TYPES_H
+#endif
+
 #include <dolphin/dvd/dvd.h>
-#include <dolphin/dvd/dvdfs.h>
 #include <dolphin/os/OSInterrupt.h>
 
 void PTR4* memmove(void PTR4* dest, const void PTR4* src, u32 len);
+s32 DVDConvertPathToEntrynum(const char PTR4* path);
 
 typedef enum NGCBinkFileOwnership
 {
