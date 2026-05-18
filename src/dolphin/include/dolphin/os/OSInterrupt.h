@@ -107,9 +107,6 @@ OSInterruptMask OSGetInterruptMask(void);
 OSInterruptMask OSSetInterruptMask(OSInterruptMask mask);
 OSInterruptMask __OSMaskInterrupts(OSInterruptMask mask);
 OSInterruptMask __OSUnmaskInterrupts(OSInterruptMask mask);
-BOOL OSDisableInterrupts(void);
-BOOL OSEnableInterrupts(void);
-BOOL OSRestoreInterrupts(BOOL level);
 
 #ifdef __cplusplus
 }

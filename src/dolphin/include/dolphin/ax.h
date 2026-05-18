@@ -240,17 +240,6 @@ typedef void (*AXCallback)();
 #define AX_SRC_TYPE_4TAP_12K 3
 #define AX_SRC_TYPE_4TAP_16K 4
 
-#define AX_SAMPLE_RATE 32000
-
-#define AX_PB_STATE_STOP 0
-#define AX_PB_STATE_RUN 1
-
-#define AX_PB_FORMAT_PCM16 10
-#define AX_PB_FORMAT_PCM8 25
-
-#define AX_MIX_MODE_DEFAULT 3
-#define AX_ADDR_HIGH_SHIFT 16
-
 // sync flags
 #define AX_SYNC_FLAG_COPYALL (1 << 31)
 #define AX_SYNC_FLAG_UNK1 (1 << 30) // reserved, unused?

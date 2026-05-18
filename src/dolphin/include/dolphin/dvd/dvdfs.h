@@ -1,8 +1,7 @@
 #ifndef _DOLPHIN_DVDFS_H
 #define _DOLPHIN_DVDFS_H
 
-#include <dolphin/dvd/dvd.h>
-#include <dolphin/os/OSThread.h>
+#include <dolphin/os.h>
 
 #ifdef __cplusplus
 extern "C"
