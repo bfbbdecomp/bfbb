@@ -7,15 +7,42 @@
 #define BINKVERSION "1.5y"
 #define BINKDATE "2003-09-23"
 
-#ifndef __RADRES__
-
 #ifndef __RADBASEH__
 #include "radbase.h"
 #endif
+#include "radcb.h"
 
 RADDEFSTART
 
 typedef struct BINK PTR4* HBINK;
+
+#define BINKMAXFRAMEBUFFERS 2
+
+typedef struct BINKPLANE
+{
+    s32 Allocate;
+    void PTR4* Buffer;
+    u32 BufferPitch;
+} BINKPLANE;
+
+typedef struct BINKFRAMEPLANESET
+{
+    BINKPLANE YPlane;
+    BINKPLANE cRPlane;
+    BINKPLANE cBPlane;
+    BINKPLANE APlane;
+} BINKFRAMEPLANESET;
+
+typedef struct BINKFRAMEBUFFERS
+{
+    s32 TotalFrames;
+    u32 YABufferWidth;
+    u32 YABufferHeight;
+    u32 cRcBBufferWidth;
+    u32 cRcBBufferHeight;
+    u32 FrameNum;
+    BINKFRAMEPLANESET Frames[BINKMAXFRAMEBUFFERS];
+} BINKFRAMEBUFFERS;
 
 struct BINKIO;
 typedef s32(RADLINK PTR4* BINKIOOPEN)(struct BINKIO PTR4* Bnkio, const char PTR4* name, u32 flags);
@@ -28,17 +55,17 @@ typedef void(RADLINK PTR4* BINKIOSETINFO)(struct BINKIO PTR4* Bnkio, void PTR4* 
                                           u32 FileSize, u32 simulate);
 typedef u32(RADLINK PTR4* BINKIOIDLE)(struct BINKIO PTR4* Bnkio);
 typedef void(RADLINK PTR4* BINKIOCLOSE)(struct BINKIO PTR4* Bnkio);
+typedef s32(RADLINK PTR4* BINKIOBGCONTROL)(struct BINKIO PTR4* Bnkio, u32 Control);
 
 typedef void(RADLINK PTR4* BINKCBSUSPEND)(struct BINKIO PTR4* Bnkio);
 typedef s32(RADLINK PTR4* BINKCBTRYSUSPEND)(struct BINKIO PTR4* Bnkio);
 typedef void(RADLINK PTR4* BINKCBRESUME)(struct BINKIO PTR4* Bnkio);
 typedef void(RADLINK PTR4* BINKCBIDLE)(struct BINKIO PTR4* Bnkio);
 
-// Unsorted
-// Pulled from previous bink.h to maintain the build
-extern void RADSetAudioMemory(void* (*malloc)(size_t), void (*free)(void*));
-extern void RADSetMemory(void* (*malloc)(size_t), void (*free)(void*));
-//
+void RADSetAudioMemory(RADMEMALLOC malloc_fn, RADMEMFREE free_fn);
+
+#define BINKIO_DATA_SIZE (128 + 32)
+#define BINK_CALLBACK_CONTROL_WORDS RADCB_CALLBACK_STORAGE_WORDS
 
 typedef struct BINKIO
 {
@@ -61,14 +88,19 @@ typedef struct BINKIO
     volatile u32 BufHighUsed;
     volatile u32 CurBufSize;
     volatile u32 CurBufUsed;
-    volatile u8 iodata[128 + 32];
+    union
+    {
+        volatile u32 Suspended;
+        // Platform IO drivers overlay their private state here.
+        volatile u8 iodata[BINKIO_DATA_SIZE];
+    };
 
     // filled in by the caller
     BINKCBSUSPEND suspend_callback;
     BINKCBTRYSUSPEND try_suspend_callback;
     BINKCBRESUME resume_callback;
     BINKCBIDLE idle_on_callback;
-    volatile u32 callback_control[16]; // buffer for background IO callback
+    volatile RADCB_CALLBACK_STORAGE callback_control; // RADCB_CALLBACK storage for background IO
 } BINKIO;
 
 struct BINKSND;
@@ -88,7 +120,9 @@ typedef s32(RADLINK PTR4* BINKSNDONOFF)(struct BINKSND PTR4* BnkSnd, s32 status)
 typedef s32(RADLINK PTR4* BINKSNDPAUSE)(struct BINKSND PTR4* BnkSnd, s32 status);
 typedef void(RADLINK PTR4* BINKSNDCLOSE)(struct BINKSND PTR4* BnkSnd);
 
-typedef BINKSNDOPEN(RADLINK PTR4* BINKSNDSYSOPEN)(u32 param);
+typedef BINKSNDOPEN(RADLINK PTR4* BINKSNDSYSOPEN)(UINTa param);
+
+#define BINKSND_DATA_SIZE 256
 
 typedef struct BINKSND
 {
@@ -108,7 +142,7 @@ typedef struct BINKSND
     u8 PTR4* sndend; // end of the sound buffer
     u8 PTR4* sndwritepos; // current write position
     u8 PTR4* sndreadpos; // current read position
-    u32 sndcomp; // sound compression handle
+    UINTa sndcomp; // sound compression handle
     u32 sndamt; // amount of sound currently in the buffer
     u32 sndconvert8; // convert back to 8-bit sound at runtime
     u32 sndendframe; // frame number that the sound ends on
@@ -118,13 +152,13 @@ typedef struct BINKSND
     u32 BestSizeIn16;
     u32 BestSizeMask;
     u32 SoundDroppedOut;
-    s32 NoThreadService;
     s32 OnOff;
+    s32 NoThreadService;
     u32 Latency;
-    u32 VideoScale;
     u32 freq;
     s32 bits, chans;
-    u8 snddata[256];
+    // Platform sound drivers overlay their private playback state here.
+    u8 snddata[BINKSND_DATA_SIZE];
 } BINKSND;
 
 typedef struct BINKRECT
@@ -136,15 +170,15 @@ typedef struct BINKRECT
 
 typedef struct BUNDLEPOINTERS
 {
-    void* typeptr;
-    void* type16ptr;
-    void* colorptr;
-    void* bits2ptr;
-    void* motionXptr;
-    void* motionYptr;
-    void* dctptr;
-    void* mdctptr;
-    void* patptr;
+    void PTR4* typeptr;    // 8x8 block types
+    void PTR4* type16ptr;  // 16x16 subblock types
+    void PTR4* colorptr;   // color values
+    void PTR4* bits2ptr;   // two-color pattern bits
+    void PTR4* motionXptr; // motion X offsets
+    void PTR4* motionYptr; // motion Y offsets
+    void PTR4* dctptr;     // intra DC values
+    void PTR4* mdctptr;    // inter/motion DC values
+    void PTR4* patptr;     // run lengths
 } BUNDLEPOINTERS;
 
 typedef struct BINK
@@ -170,8 +204,8 @@ typedef struct BINK
     s32 NumRects;
 
     u32 PlaneNum; // which set of planes is current
-    void PTR4* YPlane[2]; // pointer to the uncompressed Y (Cr and Cr follow)
-    void PTR4* APlane[2]; // decompressed alpha plane (if present)
+    void PTR4* YPlane[BINKMAXFRAMEBUFFERS]; // pointer to the uncompressed Y (Cr and Cr follow)
+    void PTR4* APlane[BINKMAXFRAMEBUFFERS]; // decompressed alpha plane (if present)
     u32 YWidth; // widths and heights of the video planes
     u32 YHeight;
     u32 UVWidth;
@@ -197,7 +231,7 @@ typedef struct BINK
 
     void PTR4* compframe; // compressed frame data
     void PTR4* preloadptr; // preloaded compressed frame data
-    u32* frameoffsets; // offsets of each of the frames
+    u32 PTR4* frameoffsets; // offsets of each of the frames
 
     BINKIO bio; // IO structure
     u8 PTR4* ioptr; // io buffer ptr
@@ -251,9 +285,6 @@ typedef struct BINK
     u32 lastblitflags; // flags used on last blit
     u32 lastdecompframe; // last frame number decompressed
 
-    u32 lastresynctime; // last loop point that we did a resync on
-    u32 doresync; // should we do a resync in the next doframe?
-
     u32 playingtracks; // how many tracks are playing
     u32 soundskips; // number of sound stops
     BINKSND PTR4* bsnd; // SND structures
@@ -265,10 +296,10 @@ typedef struct BINK
     u32 skipped_in_a_row; // how many frames have we skipped in a row
     u32 big_sound_skip_adj; // adjustment for large skips
     u32 big_sound_skip_reduce; // amount to reduce large skips by each frame
-    u32 last_time_almost_empty; // time of last almost empty IO buffer
     u32 last_read_count; // counter to keep track of the last bink IO
     u32 last_sound_count; // counter to keep track of the last bink sound
-    u32 snd_callback_buffer[16]; // buffer for background sound callback
+    u32 last_time_almost_empty; // time of last almost empty IO buffer
+    RADCB_CALLBACK_STORAGE snd_callback_buffer; // RADCB_CALLBACK storage for background sound
 } BINK;
 
 typedef struct BINKSUMMARY
@@ -308,13 +339,11 @@ typedef struct BINKSUMMARY
 
 typedef struct BINKREALTIME
 {
-    // TODO: marked these as volatile to get matches in radcb
-
     u32 FrameNum; // Current frame number
-    volatile u32 FrameRate; // frame rate
+    u32 FrameRate; // frame rate
     u32 FrameRateDiv; // frame rate divisor
     u32 Frames; // frames in this sample period
-    volatile u32 FramesTime; // time is ms for these frames
+    u32 FramesTime; // time is ms for these frames
     u32 FramesVideoDecompTime; // time decompressing these frames
     u32 FramesAudioDecompTime; // time decompressing these frames
     u32 FramesReadTime; // time reading these frames
@@ -324,7 +353,6 @@ typedef struct BINKREALTIME
     u32 ReadBufferSize; // size of read buffer
     u32 ReadBufferUsed; // amount of read buffer currently used
     u32 FramesDataRate; // data rate for these frames
-    // last offset it 0x34
 } BINKREALTIME;
 
 #define BINKMARKER1 'fKIB'
@@ -360,13 +388,17 @@ typedef struct BINKHDR
 #define BINKNOMMX 0x00040000L // Don't use MMX
 #define BINKNOSKIP 0x00080000L // Don't skip frames if falling behind
 #define BINKALPHA 0x00100000L // Decompress alpha plane (if present)
-#define BINKNOFILLIOBUF 0x00200000L // Fill the IO buffer in SmackOpen
+#define BINKNOFILLIOBUF 0x00200000L // Don't fill the IO buffer
 #define BINKSIMULATE 0x00400000L // Simulate the speed (call BinkSim first)
 #define BINKFILEHANDLE 0x00800000L // Use when passing in a file handle
 #define BINKIOSIZE 0x01000000L // Set an io size (call BinkIOSize first)
 #define BINKIOPROCESSOR 0x02000000L // Set an io processor (call BinkIO first)
 #define BINKFROMMEMORY 0x04000000L // Use when passing in a pointer to the file
 #define BINKNOTHREADEDIO 0x08000000L // Don't use a background thread for IO
+
+#define BINKBGIOSUSPEND 1
+#define BINKBGIORESUME 2
+#define BINKBGIOWAIT 0x80000000
 
 #define BINKSURFACEFAST 0x00000000L
 #define BINKSURFACESLOW 0x08000000L
@@ -388,6 +420,7 @@ typedef struct BINKHDR
 //#define BINKRBINVERT        0x00010000L // use reversed R and B planes
 
 #define BINKSURFACE8P 0
+#define BINKSURFACEP8 BINKSURFACE8P
 #define BINKSURFACE24 1
 #define BINKSURFACE24R 2
 #define BINKSURFACE32 3
@@ -405,25 +438,6 @@ typedef struct BINKHDR
 #define BINKSURFACEYV12 15
 #define BINKSURFACEMASK 15
 
-#ifdef __RADXBOX__
-
-#define BINKSURFACESALL 32
-#define BINKCONVERTERSMONO 64
-#define BINKCONVERTERS2X 256
-
-#define BINKCONVERTERSALL (BINKSURFACESALL | BINKCONVERTERSMONO | BINKCONVERTERS2X)
-
-#define BinkLoad() BinkLoadUnload(1)
-#define BinkUnload() BinkLoadUnload(0)
-
-#define BinkLoadConverter(val) BinkLoadUnloadConverter(val, 1)
-#define BinkUnloadConverter(val) BinkLoadUnloadConverter(val, 0)
-
-RADEXPFUNC void RADEXPLINK BinkLoadUnload(s32 inout);
-RADEXPFUNC void RADEXPLINK BinkLoadUnloadConverter(u32 surfaces, s32 inout);
-
-#endif
-
 #define BINKGOTOQUICK 1
 #define BINKGOTOQUICKSOUND 2
 
@@ -433,12 +447,6 @@ RADEXPFUNC void RADEXPLINK BinkLoadUnloadConverter(u32 surfaces, s32 inout);
 #define BINKGETKEYNOTEQUAL 128
 
 //=======================================================================
-
-#ifdef __RADMAC__
-#pragma export on
-
-RADEXPFUNC HBINK RADEXPLINK BinkMacOpen(void /*FSSpec*/* fsp, u32 flags);
-#endif
 
 RADEXPFUNC void PTR4* RADEXPLINK BinkLogoAddress(void);
 
@@ -452,9 +460,9 @@ RADEXPFUNC void RADEXPLINK BinkNextFrame(HBINK bnk);
 RADEXPFUNC s32 RADEXPLINK BinkWait(HBINK bnk);
 RADEXPFUNC void RADEXPLINK BinkClose(HBINK bnk);
 RADEXPFUNC s32 RADEXPLINK BinkPause(HBINK bnk, s32 pause);
-RADEXPFUNC s32 RADEXPLINK BinkCopyToBuffer(HBINK bnk, void* dest, s32 destpitch, u32 destheight,
+RADEXPFUNC s32 RADEXPLINK BinkCopyToBuffer(HBINK bnk, void PTR4* dest, s32 destpitch, u32 destheight,
                                            u32 destx, u32 desty, u32 flags);
-RADEXPFUNC s32 RADEXPLINK BinkCopyToBufferRect(HBINK bnk, void* dest, s32 destpitch, u32 destheight,
+RADEXPFUNC s32 RADEXPLINK BinkCopyToBufferRect(HBINK bnk, void PTR4* dest, s32 destpitch, u32 destheight,
                                                u32 destx, u32 desty, u32 srcx, u32 srcy, u32 srcw,
                                                u32 srch, u32 flags);
 RADEXPFUNC s32 RADEXPLINK BinkGetRects(HBINK bnk, u32 flags);
@@ -463,7 +471,6 @@ RADEXPFUNC u32 RADEXPLINK BinkGetKeyFrame(HBINK bnk, u32 frame, s32 flags);
 
 RADEXPFUNC s32 RADEXPLINK BinkSetVideoOnOff(HBINK bnk, s32 onoff);
 RADEXPFUNC s32 RADEXPLINK BinkSetSoundOnOff(HBINK bnk, s32 onoff);
-RADEXPFUNC void RADEXPLINK BinkFreeGlocalMemory(void);
 RADEXPFUNC void RADEXPLINK BinkSetVolume(HBINK bnk, u32 trackid, s32 volume);
 RADEXPFUNC void RADEXPLINK BinkSetPan(HBINK bnk, u32 trackid, s32 pan);
 RADEXPFUNC void RADEXPLINK BinkSetMixBins(HBINK bnk, u32 trackid, u32 PTR4* mix_bins, u32 total);
@@ -481,7 +488,7 @@ typedef struct BINKTRACK
     u32 MaxSize;
 
     HBINK bink;
-    u32 sndcomp;
+    UINTa sndcomp;
     s32 trackindex;
 } BINKTRACK;
 
@@ -496,46 +503,15 @@ RADEXPFUNC u32 RADEXPLINK BinkGetTrackID(HBINK bnk, u32 trackindex);
 RADEXPFUNC void RADEXPLINK BinkGetSummary(HBINK bnk, BINKSUMMARY PTR4* sum);
 RADEXPFUNC void RADEXPLINK BinkGetRealtime(HBINK bink, BINKREALTIME PTR4* run, u32 frames);
 
+#define BINKNOSOUND 0xffffffff
+
 RADEXPFUNC void RADEXPLINK BinkSetSoundTrack(u32 total_tracks, u32 PTR4* tracks);
 RADEXPFUNC void RADEXPLINK BinkSetIO(BINKIOOPEN io);
 RADEXPFUNC void RADEXPLINK BinkSetFrameRate(u32 forcerate, u32 forceratediv);
 RADEXPFUNC void RADEXPLINK BinkSetSimulate(u32 sim);
 RADEXPFUNC void RADEXPLINK BinkSetIOSize(u32 iosize);
 
-RADEXPFUNC s32 RADEXPLINK BinkSetSoundSystem(BINKSNDSYSOPEN open, u32 param);
-
-#ifdef __RADWIN__
-
-RADEXPFUNC BINKSNDOPEN RADEXPLINK BinkOpenDirectSound(u32 param); // don't call directly
-#define BinkSoundUseDirectSound(lpDS) BinkSetSoundSystem(BinkOpenDirectSound, (u32)lpDS)
-
-RADEXPFUNC BINKSNDOPEN RADEXPLINK BinkOpenWaveOut(u32 param); // don't call directly
-#define BinkSoundUseWaveOut() BinkSetSoundSystem(BinkOpenWaveOut, 0)
-
-#endif
-
-#ifndef __RADMAC__
-
-RADEXPFUNC BINKSNDOPEN RADEXPLINK BinkOpenMiles(u32 param); // don't call directly
-#define BinkSoundUseMiles(hdigdriver) BinkSetSoundSystem(BinkOpenMiles, (u32)hdigdriver)
-
-#endif
-
-#ifdef __RADMAC__
-
-RADEXPFUNC BINKSNDOPEN RADEXPLINK BinkOpenSoundManager(u32 param); // don't call directly
-#define BinkSoundUseSoundManager() BinkSetSoundSystem(BinkOpenSoundManager, 0)
-
-#endif
-
-#ifdef __RADLINUX__
-
-RADEXPFUNC BINKSNDOPEN RADEXPLINK BinkOpenSDLMixer(u32 param); // don't call directly
-#define BinkSoundUseSDLMixer() BinkSetSoundSystem(BinkOpenSDLMixer, 0)
-
-#endif
-
-#ifdef __RADNGC__
+RADEXPFUNC s32 RADEXPLINK BinkSetSoundSystem(BINKSNDSYSOPEN open, UINTa param);
 
 typedef void PTR4*(RADLINK PTR4* RADARAMALLOC)(u32 num_bytes);
 typedef void(RADLINK PTR4* RADARAMFREE)(void PTR4* ptr);
@@ -546,191 +522,20 @@ typedef struct RADARAMCALLBACKS
     RADARAMFREE aram_free;
 } RADARAMCALLBACKS;
 
-RADEXPFUNC BINKSNDOPEN RADEXPLINK BinkOpenAX(u32 param); // don't call directly
+RADEXPFUNC BINKSNDOPEN RADEXPLINK BinkOpenNGCSound(u32 param); // don't call directly
+#define BinkOpenAX BinkOpenNGCSound
 #define BinkSoundUseAX(functions)                                                                  \
     BinkSetSoundSystem(BinkOpenAX, (u32)functions) // takes a pointer to RADARAMCALLBACKS
 
 RADEXPFUNC BINKSNDOPEN RADEXPLINK BinkOpenMusyXSound(u32 param); // don't call directly
 #define BinkSoundUseMusyX() BinkSetSoundSystem(BinkOpenMusyXSound, 0)
 
-#endif
-
-#if defined(__RADXBOX__) || defined(__RADWIN__)
-
-RADEXPFUNC s32 RADEXPLINK BinkDX8SurfaceType(void* lpD3Ds);
-
-#endif
-
-#if defined(__RADWIN__)
-
-RADEXPFUNC s32 RADEXPLINK BinkDX9SurfaceType(void* lpD3Ds);
-
-#endif
-
-// The BinkBuffer API isn't implemented on DOS, Xbox or GameCube
-#if !defined(__RADDOS__) && !defined(__RADXBOX__) && !defined(__RADNGC__)
-
-//=========================================================================
-typedef struct BINKBUFFER* HBINKBUFFER;
-
-#define BINKBUFFERSTRETCHXINT 0x80000000
-#define BINKBUFFERSTRETCHX 0x40000000
-#define BINKBUFFERSHRINKXINT 0x20000000
-#define BINKBUFFERSHRINKX 0x10000000
-#define BINKBUFFERSTRETCHYINT 0x08000000
-#define BINKBUFFERSTRETCHY 0x04000000
-#define BINKBUFFERSHRINKYINT 0x02000000
-#define BINKBUFFERSHRINKY 0x01000000
-#define BINKBUFFERSCALES 0xff000000
-#define BINKBUFFERRESOLUTION 0x00800000
-
-#ifdef __RADMAC__
-
-//#include <windows.h>
-//#include <palettes.h>
-//#include <qdoffscreen.h>
-
-typedef struct BINKBUFFER
-{
-    u32 Width;
-    u32 Height;
-    u32 WindowWidth;
-    u32 WindowHeight;
-    u32 SurfaceType;
-    void* Buffer;
-    s32 BufferPitch;
-    u32 ScreenWidth;
-    u32 ScreenHeight;
-    u32 ScreenDepth;
-    u32 ScaleFlags;
-
-    s32 destx, desty;
-    s32 wndx, wndy;
-    u32 wnd;
-
-    s32 noclipping;
-    u32 type;
-    s32 issoftcur;
-    u32 cursorcount;
-
-} BINKBUFFER;
-
-#define BINKBUFFERAUTO 0
-#define BINKBUFFERDIRECT 1
-#define BINKBUFFERGWORLD 2
-#define BINKBUFFERTYPEMASK 31
-
-RADEXPFUNC HBINKBUFFER RADEXPLINK BinkBufferOpen(void* /*WindowPtr*/ wnd, u32 width, u32 height,
-                                                 u32 bufferflags);
-RADEXPFUNC s32 RADEXPLINK BinkGDSurfaceType(void* /*GDHandle*/ gd);
-RADEXPFUNC s32 RADEXPLINK BinkIsSoftwareCursor(void* /*GDHandle*/ gd);
-RADEXPFUNC s32 RADEXPLINK BinkCheckCursor(void* /*WindowPtr*/ wp, s32 x, s32 y, s32 w, s32 h);
-
-#else
-
-typedef struct BINKBUFFER
-{
-    u32 Width;
-    u32 Height;
-    u32 WindowWidth;
-    u32 WindowHeight;
-    u32 SurfaceType;
-    void* Buffer;
-    s32 BufferPitch;
-    s32 ClientOffsetX;
-    s32 ClientOffsetY;
-    u32 ScreenWidth;
-    u32 ScreenHeight;
-    u32 ScreenDepth;
-    u32 ExtraWindowWidth;
-    u32 ExtraWindowHeight;
-    u32 ScaleFlags;
-    u32 StretchWidth;
-    u32 StretchHeight;
-
-    s32 surface;
-    void* ddsurface;
-    void* ddclipper;
-    s32 destx, desty;
-    s32 wndx, wndy;
-    u32 wnd;
-    s32 minimized;
-    s32 ddoverlay;
-    s32 ddoffscreen;
-    s32 lastovershow;
-
-    s32 issoftcur;
-    u32 cursorcount;
-    void* buffertop;
-    u32 type;
-    s32 noclipping;
-
-    s32 loadeddd;
-    s32 loadedwin;
-
-    void* dibh;
-    void* dibbuffer;
-    s32 dibpitch;
-    void* dibinfo;
-    u32 dibdc;
-    u32 diboldbitmap;
-
-} BINKBUFFER;
-
-#define BINKBUFFERAUTO 0
-#define BINKBUFFERPRIMARY 1
-#define BINKBUFFERDIBSECTION 2
-#define BINKBUFFERYV12OVERLAY 3
-#define BINKBUFFERYUY2OVERLAY 4
-#define BINKBUFFERUYVYOVERLAY 5
-#define BINKBUFFERYV12OFFSCREEN 6
-#define BINKBUFFERYUY2OFFSCREEN 7
-#define BINKBUFFERUYVYOFFSCREEN 8
-#define BINKBUFFERRGBOFFSCREENVIDEO 9
-#define BINKBUFFERRGBOFFSCREENSYSTEM 10
-#define BINKBUFFERLAST 10
-#define BINKBUFFERTYPEMASK 31
-
-RADEXPFUNC HBINKBUFFER RADEXPLINK BinkBufferOpen(void* /*HWND*/ wnd, u32 width, u32 height,
-                                                 u32 bufferflags);
-RADEXPFUNC s32 RADEXPLINK BinkBufferSetHWND(HBINKBUFFER buf, void* /*HWND*/ newwnd);
-RADEXPFUNC s32 RADEXPLINK BinkDDSurfaceType(void PTR4* lpDDS);
-RADEXPFUNC s32 RADEXPLINK BinkIsSoftwareCursor(void PTR4* lpDDSP, void* /*HCURSOR*/ cur);
-RADEXPFUNC s32 RADEXPLINK BinkCheckCursor(void* /*HWND*/ wnd, s32 x, s32 y, s32 w, s32 h);
-RADEXPFUNC s32 RADEXPLINK BinkBufferSetDirectDraw(void PTR4* lpDirectDraw, void PTR4* lpPrimary);
-
-#endif
-
-RADEXPFUNC void RADEXPLINK BinkBufferClose(HBINKBUFFER buf);
-RADEXPFUNC s32 RADEXPLINK BinkBufferLock(HBINKBUFFER buf);
-RADEXPFUNC s32 RADEXPLINK BinkBufferUnlock(HBINKBUFFER buf);
-RADEXPFUNC void RADEXPLINK BinkBufferSetResolution(s32 w, s32 h, s32 bits);
-RADEXPFUNC void RADEXPLINK BinkBufferCheckWinPos(HBINKBUFFER buf, s32 PTR4* NewWindowX,
-                                                 s32 PTR4* NewWindowY);
-RADEXPFUNC s32 RADEXPLINK BinkBufferSetOffset(HBINKBUFFER buf, s32 destx, s32 desty);
-RADEXPFUNC void RADEXPLINK BinkBufferBlit(HBINKBUFFER buf, BINKRECT PTR4* rects, u32 numrects);
-RADEXPFUNC s32 RADEXPLINK BinkBufferSetScale(HBINKBUFFER buf, u32 w, u32 h);
-RADEXPFUNC char PTR4* RADEXPLINK BinkBufferGetDescription(HBINKBUFFER buf);
-RADEXPFUNC char PTR4* RADEXPLINK BinkBufferGetError();
-RADEXPFUNC void RADEXPLINK BinkRestoreCursor(s32 checkcount);
-RADEXPFUNC s32 RADEXPLINK BinkBufferClear(HBINKBUFFER buf, u32 RGB);
-
-#endif
-
 typedef void PTR4*(RADLINK PTR4* BINKMEMALLOC)(u32 bytes);
 typedef void(RADLINK PTR4* BINKMEMFREE)(void PTR4* ptr);
 
 RADEXPFUNC void RADEXPLINK BinkSetMemory(BINKMEMALLOC a, BINKMEMFREE f);
 
-#ifdef __RADMAC__
-
-#pragma export off
-
-#endif
-
 RADDEFEND
-
-#endif
 
 // @cdep pre $set(INCs,$INCs -I$clipfilename($file)) $ignore(TakeCPP)
 
