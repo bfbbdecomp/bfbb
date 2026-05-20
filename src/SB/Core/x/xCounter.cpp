@@ -152,9 +152,3 @@ int xCounterEventCB(xBase*, xBase* to, U32 toEvent, const F32*, xBase*)
 
     return 1;
 }
-
-// TODO: move to xDebug.cpp
-inline void xDebugRemoveTweak(const char*)
-{
-    return;
-}

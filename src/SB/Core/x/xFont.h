@@ -96,8 +96,8 @@ struct xtextbox
         void* context;
         basic_rect<F32> bounds;
         basic_rect<F32> render_bounds;
-        const callback* cb;
-        tag_type* tag;
+        const callback* cb; //0x34
+        tag_type* tag; //0x38
 
         void intersect_flags(const jot& other);
         void reset_flags();
@@ -138,9 +138,9 @@ struct xtextbox
     struct tag_entry
     {
         substr name;
-        char op;
-        substr* args;
-        size_t args_size;
+        char op; //0x08
+        substr* args; //0x0C
+        size_t args_size; //0x10
     };
 
     struct tag_entry_list
@@ -274,6 +274,7 @@ struct xtextbox::layout
     F32 yextent(F32 max, S32& size, S32 begin_jot, S32 end_jot) const;
     bool changed(const xtextbox& ctb);
     size_t jots_size() const;
+    jot* jots() const;
 };
 
 void render_fill_rect(const basic_rect<F32>& bounds, iColor_tag color);

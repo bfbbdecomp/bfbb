@@ -149,7 +149,7 @@ struct xEnt : xBase
     U8 penby; // XENT_COLLTYPE_* bitmask
 
     // Offset: 0x24
-    xModelInstance* model;
+    xModelInstance* model; // 0x704 in globals
     xModelInstance* collModel;
     xModelInstance* camcollModel;
     xLightKit* lightKit;
@@ -162,7 +162,7 @@ struct xEnt : xBase
 
     // Offset: 0x44
     xEntRenderCallback render;
-    xEntFrame* frame;
+    xEntFrame* frame; // 0x728 in globals
     xEntCollis* collis; //0x4c
 
     // Offset: 0x50
@@ -199,9 +199,9 @@ struct xEnt : xBase
 #define XENT_PFLAGS_HAS_FRICTION ((U8)(1 << 4))
 
 // More ent flags (xEnt::moreFlags)
-#define XENT_MORE_FLAGS_0x8 ((U8)1<<3)
-#define XENT_MORE_FLAGS_HITTABLE ((U8)1<<4)
-#define XENT_MORE_FLAGS_ANIM_COLL ((U8)1<<5)
+#define XENT_MORE_FLAGS_0x8 ((U8)1 << 3)
+#define XENT_MORE_FLAGS_HITTABLE ((U8)1 << 4)
+#define XENT_MORE_FLAGS_ANIM_COLL ((U8)1 << 5)
 
 // Collision types (xEnt::collType)
 #define XENT_COLLTYPE_NONE (U8)0

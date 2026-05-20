@@ -83,5 +83,6 @@ void xEntBoulder_Kill(xEntBoulder* ent);
 void xBoulderGenerator_Init(xBase& data, xDynAsset& asset, size_t);
 void xBoulderGenerator_Init(xBoulderGenerator* bg, xBoulderGeneratorAsset* asset);
 void xBoulderGenerator_Init(xBase& data, xDynAsset& asset);
+S32 xEntBoulderEventCB(xBase*, xBase*, U32, const F32*, xBase*);
 
 #endif

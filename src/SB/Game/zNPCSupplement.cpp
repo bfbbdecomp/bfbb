@@ -13,15 +13,329 @@
 #include <types.h>
 #include <rwplcore.h>
 
-extern NPARMgmt g_npar_mgmt[12];
-extern NPARInfo g_npar_info[12];
+static xShadowCache g_shadCaches[16];
+static NPARMgmt g_npar_mgmt[12];
+
+static NPARInfo g_npar_info[12] = {
+    {},
+    {
+        NPAR_Upd_OilBubble, 128, "fx_oil_bubble", 0x2
+    },
+    {
+        NPAR_Upd_TubeSpiral, 256, "fx_tubelet_flame", 0x2
+    },
+    {
+        NPAR_Upd_TubeConfetti, 64, "fx_tubelet_confetti_sep", 0x2
+    },
+    {
+        NPAR_Upd_GloveDust, 64, "fx_glove_dust", 0x2
+    },
+    {
+        NPAR_Upd_MonsoonRain, 64, "fx_monsoon_rain", 0x2
+    },
+    {
+        NPAR_Upd_SleepyZeez, 32, "fx_sleepy_zeez", 0x2
+    },
+    {
+        NPAR_Upd_ChuckSplash, 128, "fx_chuck_dripdrop", 0x2
+    },
+    {
+        NPAR_Upd_TarTarGunk, 256, "fx_tartar_gunk", 0x2
+    },
+    {
+        NPAR_Upd_DogBreath, 64, "fx_chomper_breath", 0x2
+    },
+    {
+        NPAR_Upd_VisSplash, 32, "fx_vissplash_sep", 0x2
+    },
+    {
+        NPAR_Upd_Fireworks, 128, "fx_firework", 0x0
+    }
+};
+
+static const NPARParmOilBub g_parm_oilbub[4] = {
+    {
+        1.2f, 
+        {255, 255, 255, 160}, 
+        {0.0f, 2.0f, 0.0f}, 
+        {0.1f, 0.4f}
+    },
+    {
+        0.5f,
+        {255, 255, 255, 160},
+        {0.0f, -8.0f, 0.0f},
+        {0.1f, 0.8f}
+    },
+    {
+        0.8f,
+        {255, 255, 255, 160},
+        {0.0f, 3.0f, 0.0f},
+        {0.05f, 0.25f}
+    },
+    {
+        1.2f,
+        {255, 255, 255, 255},
+        {0.0f, -10.0f, 0.0f},
+        {0.2f, 0.3f}
+    }
+};
+
+static const NPARParmTubeSpiral g_parm_tubespiral[4] = {
+    {
+        {204, 96, 204, 255},
+        {0.1f, 1.0f},
+    },
+    {
+        {255, 100, 70, 255},
+        {0.1f, 1.0f}
+    },
+    {
+        {204, 96, 204, 255},
+        {0.1f, 0.25f}
+    },
+    {
+        {255, 100, 70, 255},
+        {0.1f, 0.25f}
+    }
+};
+
+static const NPARParmTubeConfetti g_parm_tubeconfetti[2] = {
+    {
+        2.5f,
+        {255, 255, 255, 255},
+        {0.3f, 0.5f},
+        {0.0f, -2.5f, 0.0f},
+        {0.25f, 0.25f},
+        0,
+        {4, 2},
+        85
+    },
+    {
+        1.0f,
+        {255, 255, 255, 255},
+        {0.1f, 0.15f},
+        {0.0f, -3.5f, 0.0f},
+        {0.25f, 0.25f},
+        0,
+        {4, 2},
+        97
+    }
+};
+
+static const NPARParmGloveDust g_parm_glovedust[1] = {
+    {
+        0.4f,
+        {64, 32, 0, 128},
+        {0.1f, 0.5f},
+        {0.0f, -2.33f, 0.0f}
+    }
+};
+
+static const NPARParmMonsoonRain g_parm_monsoonrain = {
+    0.2f,
+    {160, 128, 64, 255},
+    {0.1f, 0.2f},
+    {0.0f, -0.33f, 0.0f}
+};
+
+static const NPARParmSleepyZeez g_parm_sleepyzeez[1] = {
+    {
+        2.0f,
+        {221, 221, 221, 255},
+        {0.1f, 1.2f},
+        {0.0f, 0.33f, 0.0f},
+        {0.5f, 0.5f},
+        0,
+        {1, 1},
+        100
+    }
+};
+
+static const NPARParmChuckSplash g_parm_chucksplash[5] = {
+    {
+        0.1f,
+        {0, 0, 255, 255},
+        {0.3f, 0.6f},
+        {0.0f, -3.0f, 0.0f},
+        0
+    },
+    {
+        0.4f,
+        {136, 136, 255, 255},
+        {0.2f, 0.8f},
+        {0.0f, -6.5f, 0.0f},
+        90
+    },
+    {
+        1.6f,
+        {68, 68, 255, 255},
+        {0.2f, 1.2f},
+        {0.0f, -4.0f, 0.0f},
+        90
+    },
+    {
+        0.5f,
+        {136, 136, 255, 255},
+        {0.2f, 1.0f},
+        {0.0f, -50.0f, 0.0f},
+        102
+    },
+    {
+        0.25f,
+        {136, 136, 255, 128},
+        {0.05f, 0.25f},
+        {0.0f, -10.0f, 0.0f},
+        100
+    }
+};
+
+static const NPARParmVisSplash g_parm_vissplash[1] = {
+    {
+        0.25f,
+        {136, 136, 255, 255},
+        {0.2f, 0.75f},
+        {0.0f, -20.0f},
+        92
+    }
+};
+
+static const NPARParmTarTarGunk g_parm_tartargunk[6] = {
+    {
+        0.25f,
+        {240, 240, 64, 255},
+        {0.05f, 0.6f},
+        {0.0f, -10.0f, 0.0f},
+        {1.0f, 1.0f},
+        0,
+        {1, 1},
+        100
+    },
+    {
+        0.3f,
+        {200, 255, 255, 128},
+        {0.5f, 2.1f},
+        {0.0f, 10.0f, 0.0f},
+        {1.0f, 1.0f},
+        0,
+        {1, 1},
+        100
+    },
+    {
+        0.75f,
+        {200, 255, 255, 128},
+        {0.2f, 1.0f},
+        {0.0f, 0.0f, 0.0f},
+        {1.0f, 1.0f},
+        0,
+        {1, 1},
+        100
+    },
+    {
+        0.5f,
+        {200, 255, 255, 128},
+        {0.5f, 0.5f},
+        {0.0f, -60.0f, 0.0f},
+        {1.0f, 1.0f},
+        0,
+        {1, 1},
+        80
+    },
+    {
+        0.5f,
+        {200, 255, 255, 128},
+        {0.05f, 0.2f},
+        {0.0f, 3.0f, 0.0f},
+        {1.0f, 1.0f},
+        0,
+        {1, 1},
+        90
+    },
+    {
+        1.5f,
+        {200, 255, 255, 128},
+        {0.3f, 0.7f},
+        {0.0f, 20.0f, 0.0f},
+        {1.0f, 1.0f},
+        0,
+        {1, 1},
+        50
+    },
+};
+
+static const NPARParmDogBreath g_parm_dogbreath[3] = {
+    {
+        5.0f,
+        {101, 132, 0, 128},
+        {0.05f, 0.6f},
+        {0.0f, 5.0f, 0.0f},
+        100,
+        {}
+    },
+    {
+        0.5f,
+        {101, 132, 0, 128},
+        {0.06f, 0.2f},
+        {0.0f, 30.0f, 0.0f},
+        60,
+        {}
+    },
+    {
+        1.5f,
+        {101, 132, 0, 200},
+        {0.05f, 1.4f},
+        {0.0f, 10.0f, 0.0f},
+        85,
+        {}
+    }
+};
+static const NPARParmFahrwerkz g_parm_fahrwerkz[4] = {
+    {
+        0.25f,
+        {240, 240, 64, 255},
+        {0.1f, 0.1f},
+        {0.0f, 0.0f, 0.0f},
+        {1.0f, 1.0f},
+        0,
+        {1, 1},
+        100
+    },
+    {
+        0.3f,
+        {200, 255, 255, 128},
+        {0.1f, 0.1f},
+        {0.0f, 0.0f, 0.0f},
+        {1.0f, 1.0f},
+        0,
+        {1, 1},
+        100
+    },
+    {
+        0.75f,
+        {200, 255, 255, 128},
+        {0.1f, 0.1f},
+        {0.0f, 0.0f, 0.0f},
+        {1.0f, 1.0f},
+        0,
+        {1, 1},
+        100
+    },
+    {
+        0.5f,
+        {200, 255, 255, 128},
+        {0.1f, 0.1f},
+        {0.0f, 0.0f, 0.0f},
+        {1.0f, 1.0f},
+        0,
+        {1, 1},
+        80
+    },
+};
+
 extern S32 g_gameExtrasFlags;
 extern S32 g_mon; // month
 extern S32 g_day; // day
 extern S32 g_isSpecialDay;
 static S8 g_shadCachesInUseFlags[16];
-
-extern StreakInfo info_950;
 
 void NPCSupplement_Startup()
 {
@@ -477,8 +791,6 @@ void NPARParmDogBreath::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* 
     par->nparmode = pmod;
 }
 
-NPARParmFahrwerkz g_parm_fahrwerkz[4];
-
 void NPAR_EmitFireworks(en_nparmode pmod, const xVec3* pos, const xVec3* vel)
 {
     NPARData *pNVar1;
@@ -494,7 +806,6 @@ void NPAR_EmitFWExhaust(const xVec3* pos, const xVec3* vel)
     NPAR_EmitFireworks(NPAR_MODE_FWEXHAUST, pos, vel);
 }
 
-NPARParmVisSplash g_parm_vissplash[4];
 
 void NPAR_EmitVisSplash(en_nparmode pmod, const xVec3* vel, const xVec3* pos)
 {
@@ -506,7 +817,6 @@ void NPAR_EmitVisSplash(en_nparmode pmod, const xVec3* vel, const xVec3* pos)
     }
 }
 
-NPARParmOilBub g_parm_oilbub[4];
 
 void NPAR_EmitOilBubble(en_nparmode pmod, const xVec3* pos, const xVec3* vel)
 {
@@ -518,7 +828,6 @@ void NPAR_EmitOilBubble(en_nparmode pmod, const xVec3* pos, const xVec3* vel)
     }
 }
 
-NPARParmTubeSpiral g_parm_tubespiral[4];
 
 // Equivalent: weird unnecessary use of mulli to index into g_parm_tubespiral.
 void NPAR_EmitTubeSpiral(const xVec3* pos, const xVec3* vel, F32 dt)
@@ -531,7 +840,6 @@ void NPAR_EmitTubeSpiral(const xVec3* pos, const xVec3* vel, F32 dt)
     }
 }
 
-NPARParmTubeConfetti g_parm_tubeconfetti[2];
 
 void NPAR_EmitTubeConfetti(const xVec3* pos, const xVec3* vel)
 {
@@ -566,7 +874,7 @@ void NPARParmTubeConfetti::ConfigPar(NPARData* par, en_nparmode pmod, const xVec
     par->xy_size[0] = siz_base[0];
     par->xy_size[1] = siz_base[0];
     par->color = colr_base;
-
+    
     if (pmod == 0)
     {
         par->color.red   = xurand() * 95.0f + 160.0f;
@@ -613,7 +921,7 @@ void NPARParmTubeConfetti::ConfigPar(NPARData* par, en_nparmode pmod, const xVec
 void NPARParmFahrwerkz::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos, const xVec3* vel) const
 {
     F32 fac_rand = 0.5f * xurand() + 0.5f;
-
+    
     par->fac_abuse = fac_rand;
     par->tmr_remain = tym_lifespan * fac_rand;
     par->tym_exist  = tym_lifespan * fac_rand;
@@ -622,7 +930,7 @@ void NPARParmFahrwerkz::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* 
     par->xy_size[0] = siz_base[0];
     par->xy_size[1] = siz_base[0];
     par->color = colr_base;
-
+    
     F32 justTheRand = fac_rand;
 
     F32 du = 1.0f / num_uvcell[0];
@@ -788,8 +1096,6 @@ void NPARParmChuckSplash::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3
     par->nparmode = pmod;
 }
 
-NPARParmChuckSplash g_parm_chucksplash[5];
-
 //todo
 void NPAR_EmitDroplets(en_nparmode pmod, const xVec3* pos, const xVec3* vel)
 {
@@ -820,8 +1126,6 @@ void NPAR_EmitOilSplash(const xVec3* pos, const xVec3* vel)
 {
     NPAR_EmitOilBubble(NPAR_MODE_ALT_C, pos, vel);
 }
-
-NPARParmTarTarGunk g_parm_tartargunk[6];
 
 void NPAR_EmitTarTarGunk(en_nparmode pmod, const xVec3* pos, const xVec3* vel)
 {
@@ -882,8 +1186,6 @@ void NPAR_EmitVSSpray(const xVec3* pos, const xVec3* vel)
 {
     NPAR_EmitVisSplash(NPAR_MODE_STD, pos, vel);
 }
-
-NPARParmDogBreath g_parm_dogbreath[3];
 
 void NPAR_EmitDoggyBreath(en_nparmode pmod, const xVec3* pos, const xVec3* vel)
 {

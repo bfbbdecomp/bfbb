@@ -356,11 +356,6 @@ void zFXGooUpdate(F32 dt)
     }
 }
 
-void xDebugAddTweak(const char* unk1, const char* unk2, const tweak_callback* unk3, void* unk4,
-                    U32 unk5)
-{
-}
-
 xVec3& xVec3::up_normalize()
 {
     return safe_normalize(xVec3::m_UnitAxisY);

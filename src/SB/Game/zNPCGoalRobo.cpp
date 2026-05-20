@@ -3840,6 +3840,28 @@ S32 zNPCGoalDamage::InputInfo(NPCDamageInfo* info)
     return flg_info;
 }
 
+S32 zNPCGoalBashed::Enter(F32 dt, void* updCtxt)
+{
+    F32 rand;
+    zNPCRobot* npc = (zNPCRobot*)(psyche->clt_owner);
+    npc->VelStop();
+    static F32 grav = globals.player.g.Gravity;
+    static F32 tym_bashrise = globals.player.g.BBashTime - globals.player.g.BBashCVTime;
+    static F32 player_bash_fromgrav = grav * 0.5f * tym_bashrise;
+    static F32 player_bash_speed =
+        (globals.player.g.BBashHeight + player_bash_fromgrav) / globals.player.g.BBashTime;
+    npc->frame->vel.y = 10.0f;
+    npc->frame->vel.x =
+        (globals.camera.mat.right.x * (xurand() - 0.5f) * 2.0f + globals.camera.mat.at.x) * 5.0f;
+    npc->frame->vel.z =
+        (globals.camera.mat.right.z * (xurand() - 0.5f) * 2.0f + globals.camera.mat.at.z) * 5.0f;
+    npc->frame->mode |= 4;
+    zNPCGoalLoopAnim::LoopCountSet(1);
+    npc->InflictPain(1, 0);
+    npc->SndPlayRandom(NPC_STYP_OUCH);
+    return zNPCGoalLoopAnim::Enter(dt, updCtxt);
+}
+
 S32 zNPCGoalBashed::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene)
 {
     xEnt* ent = ((xEnt*)(psyche->clt_owner));
@@ -3897,6 +3919,49 @@ S32 zNPCGoalKnock::InputInfo(NPCDamageInfo* info)
         flg_info = 0x10;
     }
     return flg_info;
+}
+
+S32 zNPCGoalWound::Enter(F32 dt, void* updCtxt)
+{
+    zNPCRobot* npc = (zNPCRobot*)(psyche->clt_owner);
+    this->flg_knock = 0;
+    F32 dst = npc->XZDstSqToPlayer(&this->dir_fling, NULL);
+    if (dst < 0.001f)
+    {
+        xVec3Copy(&this->dir_fling, NPCC_faceDir(&globals.player.ent));
+    }
+    else
+    {
+        xVec3SMulBy(&this->dir_fling, (-1.0f / xsqrt(dst)));
+    }
+    S32 iVar2 = npc->SelfType();
+    if (iVar2 == NPC_TYPE_TARTAR)
+    {
+        npc->spd_throttle = 18.0f;
+    }
+    else if (iVar2 == NPC_TYPE_SLEEPY)
+    {
+        npc->spd_throttle = 8.0f;
+    }
+    else
+    {
+        npc->spd_throttle = 7.0f;
+    }
+    if (npc->flg_move & 2)
+    {
+        npc->frame->vel.y = 5.0;
+    }
+    npc->InflictPain(1, 0);
+    npc->SndPlayRandom(NPC_STYP_DIZZY);
+    if (psyche->GIDInStack(NPC_GOAL_ALERT) == NULL)
+    {
+        this->flg_pushanim |= 0x10000;
+    }
+    else
+    {
+        this->flg_pushanim &= 0xfffeffff;
+    }
+    return zNPCGoalPushAnim::Enter(dt, updCtxt);
 }
 
 S32 zNPCGoalWound::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
@@ -4146,6 +4211,51 @@ S32 zNPCGoalRespawn::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScen
     }
     npc->VelStop();
     return xGoal::Process(trantype, dt, updCtxt, xscn);
+}
+
+void zNPCGoalRespawn::KickFromTheNest()
+{
+    zNPCGoalAfterlife* wanna;
+    zNPCRobot* npc = (zNPCRobot*)(psyche->clt_owner);
+    zMovePoint* nav_preserveCurr = npc->nav_curr;
+    zMovePoint* nav_preserveDest = npc->nav_dest;
+
+    npc->Reset();
+    npc->ModelScaleSet(0.0f);
+    wanna = (zNPCGoalAfterlife*)(psyche->FindGoal(NPC_GOAL_AFTERLIFE));
+    if (wanna != NULL)
+    {
+        wanna->DieWithABang();
+    }
+
+    xVec3Copy(npc->Pos(), &pos_poofHere);
+    xVec3Copy(&npc->frame->mat.pos, &pos_poofHere);
+
+    npc->frame->mode = 1;
+
+    npc->frame->dvel.x = 0.0f;
+    npc->frame->dvel.y = 0.0f;
+    npc->frame->dvel.z = 0.0f;
+
+    npc->frame->vel.x = 0.0f;
+    npc->frame->vel.y = 0.0f;
+    npc->frame->vel.z = 0.0f;
+
+    npc->frame->mode |= 0xc;
+
+    npc->frame->dpos.x = 0.0f;
+    npc->frame->dpos.y = 0.0f;
+    npc->frame->dpos.z = 0.0f;
+
+    npc->frame->mode |= 2;
+
+    npc->nav_past = nav_preserveCurr;
+    npc->nav_curr = nav_preserveCurr;
+    npc->nav_dest = nav_preserveDest;
+    npc->nav_lead = nav_preserveDest;
+
+    npc->arena.SetHome(npc, nav_preserveCurr);
+    npc->psy_instinct->GoalSet(NPC_GOAL_IDLE, 1);
 }
 
 S32 zNPCGoalRespawn::InputInfo(NPCSpawnInfo* info)

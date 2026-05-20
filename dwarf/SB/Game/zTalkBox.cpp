@@ -4637,4 +4637,3 @@ static enum state_enum update() {
         // Range: 0x322690 -> 0x322698
     }
 }
-

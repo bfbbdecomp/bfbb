@@ -99,7 +99,6 @@ void xEntBoulder_Init(void* ent, void* asset)
     xEntBoulder_Init((xEntBoulder*)ent, (xEntAsset*)asset);
 }
 
-S32 xEntBoulderEventCB(xBase*, xBase*, U32, const F32*, xBase*);
 void xEntBoulder_BUpdate(xEnt*, xVec3*);
 void xEntBoulder_Update(xEntBoulder*, xScene*, F32);
 

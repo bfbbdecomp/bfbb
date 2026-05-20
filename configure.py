@@ -159,7 +159,7 @@ if not config.non_matching:
 config.binutils_tag = "2.42-1"
 config.compilers_tag = "20250812"
 config.dtk_tag = "v1.7.0"
-config.objdiff_tag = "v3.4.1"
+config.objdiff_tag = "v3.7.1"
 config.sjiswrap_tag = "v1.2.2"
 config.wibo_tag = "1.0.0-beta.5"
 
@@ -417,7 +417,7 @@ config.libs = [
             Object(NonMatching, "SB/Core/x/xCollide.cpp",  extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/x/xCollideFast.cpp"),
             Object(Matching, "SB/Core/x/xColor.cpp"),
-            Object(Matching, "SB/Core/x/xCounter.cpp"),
+            Object(Matching, "SB/Core/x/xCounter.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Core/x/xCutscene.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Core/x/xDebug.cpp", extra_cflags=["-sym on"]),
             Object(Equivalent, "SB/Core/x/xEnt.cpp", extra_cflags=["-sym on"]),
@@ -435,7 +435,7 @@ config.libs = [
             Object(NonMatching, "SB/Core/x/xHudFontMeter.cpp"),
             Object(NonMatching, "SB/Core/x/xHudMeter.cpp"),
             Object(Equivalent, "SB/Core/x/xHudModel.cpp", extra_cflags=["-sym on"]),
-            Object(NonMatching, "SB/Core/x/xHudUnitMeter.cpp"),
+            Object(NonMatching, "SB/Core/x/xHudUnitMeter.cpp", extra_cflags=["-sym on   "]),
             Object(Matching, "SB/Core/x/xIni.cpp"),
             Object(NonMatching, "SB/Core/x/xMath.cpp"),
             Object(Matching, "SB/Core/x/xMath2.cpp"),
@@ -498,7 +498,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zLasso.cpp"),
             Object(NonMatching, "SB/Game/zLight.cpp"),
             Object(Matching, "SB/Game/zLightEffect.cpp"),
-            Object(NonMatching, "SB/Game/zLightning.cpp"),
+            Object(NonMatching, "SB/Game/zLightning.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zLOD.cpp"),
             Object(NonMatching, "SB/Game/zMain.cpp"),
             Object(Equivalent, "SB/Game/zMenu.cpp"),

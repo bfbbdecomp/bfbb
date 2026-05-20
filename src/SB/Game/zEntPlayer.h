@@ -368,10 +368,11 @@ struct zPlayerLassoInfo
     xAnimState* zeroAnim;
 };
 
-struct Melee_cbData {
+struct Melee_cbData
+{
     xEnt* ent; // offset 0x0, size 0x4
     zScene* zsc; // offset 0x4, size 0x4
-    xBound * meleeB; // offset 0x8, size 0x4
+    xBound* meleeB; // offset 0x8, size 0x4
     S32 hitsomething; // offset 0xC, size 0x4
 };
 
@@ -425,7 +426,7 @@ void zEntPlayer_GiveHealth(S32);
 void zEntPlayer_GiveSpatula(S32);
 void zEntPlayer_GivePatsSocksCurrentLevel(S32 quantity);
 
-static float CalcJumpImpulse(zJumpParam*, const zPlayerSettings*);
+void CalcJumpImpulse(zJumpParam*, const zPlayerSettings*);
 
 void zEntPlayer_LoadCheckPoint();
 
@@ -453,6 +454,8 @@ void zEntPlayer_SNDSetPitch(_tagePlayerSnd player_snd, F32 new_pitch);
 void zEntPlayer_SNDStop(_tagePlayerSnd player_snd);
 void zEntPlayer_SNDNotifyPlaying(U32 id);
 
+static void PlayerHackFixBbashMiss(xModelInstance* model);
+
 void zEntPlayerSpeakStop();
 
 void zEntPlayerControlOff(zControlOwner owner);
@@ -461,8 +464,8 @@ void zEntPlayerControlOn(zControlOwner owner);
 void zEntPlayer_StoreCheckPoint(xVec3* pos, F32 rot, U32 initCamID);
 
 S32 zEntPlayer_DamageNPCKnockBack(xBase* src, U32 damage, xVec3* npcPos);
+void zEntPlayer_DamageKnockIntoAir(F32 height);
 
-S32 zEntPlayer_DamageNPCKnockBack(xBase* src, U32 damage, xVec3* npcPos);
 void zEntPlayer_PredictPos(xVec3* pos, F32 timeIntoFuture, F32 leadFactor, S32 useTurn);
 
 void zEntPlayerCollTrigger(xEnt* ent, xScene* sc);

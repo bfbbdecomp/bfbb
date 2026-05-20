@@ -88,29 +88,18 @@ struct zLightning
     F32 time_total;
 };
 
+extern _tagLightningAdd gLightningTweakAddInfo;
+
 void lightningTweakChangeType(tweak_info& t);
-void lightningTweakStart(tweak_info& t);
 void zLightningInit();
 zLightning* zLightningAdd(_tagLightningAdd* add);
-void UpdateLightning(zLightning* l, F32 seconds);
-void zLightningUpdate(F32 seconds);
+void zLightningUpdate(F32 dt);
 void zLightningFunc_Render(zLightning* l);
 void zLightningShow(zLightning* l, S32 show);
 void zLightningKill(zLightning* l);
 void RenderLightning(zLightning* l);
 void zLightningRender();
 void zLightningModifyEndpoints(zLightning* l, xVec3* start, xVec3* end);
-void xDebugAddTweak(char* name, U8* property, U8 param_3, U8 param_4, tweak_callback* callback,
-                    void* param_6, U32 param_7);
-void xDebugAddFlagTweak(char* name, U32* property, U32 param_3, tweak_callback* callback,
-                        void* param_5, U32 param_6);
-void xDebugAddSelectTweak(char* name, U32* param_2, char** param_3, U32* param_4, U32 param_5,
-                          tweak_callback* callback, void* param_7, U32 param_8);
-void xDebugAddTweak(char* name, S16* property, S16 param_3, S16 param_4, tweak_callback* callback,
-                    void* param_6, U32 param_7);
-
-void zLightningInit();
-void zLightningUpdate(F32 seconds);
 void zLightningRender();
 
 #endif
