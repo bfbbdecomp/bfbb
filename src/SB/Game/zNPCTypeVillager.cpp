@@ -53,21 +53,8 @@ char* g_strz_folkanim[26] = {
 static U32 g_hash_platanim[2] = {};
 static char* g_strz_platanim[2] = { "fish_d_balloon_move", "fish_d_balloon_hit" };
 
-xEnt* CruiseBubbleDoesBubbleBuddyToo;
-static U32 bb_env_texture;
-static U32 bb_fresnel_texture;
 F32 g_vilg_ds2_playernear = 25.0f;
 static F32 g_rad_cowercheck = 15.0f;
-
-// Not sure why these are declared here but the data sections want it
-RwRaster* zNPCBalloonBoy::rast_shadBalloon;
-U32 zNPCBubbleBuddy::aid_fresnelTxtr;
-U32 zNPCBubbleBuddy::aid_enviroTxtr;
-RwTexture* zNPCBubbleBuddy::txtr_fresnel;
-RwTexture* zNPCBubbleBuddy::txtr_enviro;
-RwRaster* zNPCBubbleBuddy::rast_fresnel;
-RwRaster* zNPCBubbleBuddy::rast_enviro;
-F32 zNPCBubbleBuddy::alf_currBubBud = 1.0f;
 
 void ZNPC_Villager_Startup()
 {
@@ -1860,6 +1847,8 @@ void zNPCSandyBikini::VFXLeakyFaucet(F32 dt)
     }
 }
 
+RwRaster* zNPCBalloonBoy::rast_shadBalloon = NULL;
+
 void zNPCBalloonBoy::Init(xEntAsset* asset)
 {
     zNPCFish::Init(asset);
@@ -2134,6 +2123,15 @@ S32 zNPCBalloonBoy::IAmBallooning()
     return result;
 }
 
+U32 zNPCBubbleBuddy::aid_fresnelTxtr = 0;
+U32 zNPCBubbleBuddy::aid_enviroTxtr = 0;
+RwTexture* zNPCBubbleBuddy::txtr_fresnel = NULL;
+RwTexture* zNPCBubbleBuddy::txtr_enviro = NULL;
+RwRaster* zNPCBubbleBuddy::rast_fresnel = NULL;
+RwRaster* zNPCBubbleBuddy::rast_enviro = NULL;
+F32 zNPCBubbleBuddy::alf_currBubBud = 1.0f;
+xEnt* CruiseBubbleDoesBubbleBuddyToo;
+
 void zNPCBubbleBuddy::Init(xEntAsset* a)
 {
     zNPCFish::Init(a);
@@ -2197,6 +2195,9 @@ void zNPCBubbleBuddy_AlphaUpdate(F32 dt)
     F32 angle = NPCC_TmrCycle(&tmr_pulseAlpha, dt, 1.5f) * PI;
     zNPCBubbleBuddy::alf_currBubBud = LERP(MAX(0.0f, MIN(xabs(isin(angle)), 1.0f)), 0.5f, 0.5f);
 }
+
+static U32 bb_env_texture = 0;
+static U32 bb_fresnel_texture = 0;
 
 RpAtomic* NPC_BubBud_RenderCB(RpAtomic* atomic)
 {
