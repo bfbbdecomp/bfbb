@@ -141,7 +141,7 @@ struct zNPCGoalBoyFall : zNPCGoalCommon
     }
 
     virtual S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* scene);
-    virtual U8 CollReview(void*);
+    virtual S32 CollReview(void*);
 };
 
 struct zNPCGoalBoyWeep : zNPCGoalCommon
