@@ -12,7 +12,58 @@ U32 xUtil_crc_update(U32 crc_accum, char* data, S32 datasize);
 S32 xUtil_yesno(F32 wt_yes);
 void xUtil_wtadjust(F32* wts, S32 cnt, F32 arbref);
 
-template <typename T> static T* xUtil_select(T** arg0, S32 arg1, const F32* arg3);
+template <typename T> T* xUtil_select(T** data, S32 size, const F32* arg2)
+{
+    T* selected = NULL;
+    S32 selectIdx = 0;
+    F32 tempValue;
+
+    if (data == NULL)
+    {
+        return NULL;
+    }
+    else if (size < 1)
+    {
+        return NULL;
+    }
+
+    F32 randOffset = xurand();
+    if (arg2 == NULL)
+    {
+        selectIdx = (S32)(randOffset * (F32)size);
+    }
+    else
+    {
+        F32* roundingData = (F32*)arg2;
+        F32 threshold = 0.0f;
+        S32 counter = 0;
+
+        for (S32 i = size; i > 0; i--)
+        {
+            tempValue = threshold;
+            threshold += *roundingData;
+            if (randOffset >= tempValue && randOffset <= threshold)
+            {
+                selectIdx = counter;
+                break;
+            }
+            roundingData++;
+            counter++;
+        }
+    }
+
+    if (selectIdx >= size)
+    {
+        selectIdx = size - 1;
+    }
+
+    if (selectIdx < 0)
+    {
+        selectIdx = 0;
+    }
+
+    return data[selectIdx];
+}
 
 template <typename T> T xUtil_choose(T const* list, S32 size, F32 const* float_list)
 {
