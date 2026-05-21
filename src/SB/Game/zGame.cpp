@@ -437,6 +437,30 @@ void zGameSetup()
     gGameWhereAmI = eGameWhere_SetupEnd;
 }
 
+void zGameLoop()
+{
+    gGameWhereAmI = eGameWhere_LoopStart;
+    zGameStateSwitch(eGameState_Play);
+    sTimeLast = iTimeGet();
+
+    if (globals.cmgr)
+    {
+        zCutsceneMgrFinishLoad(globals.cmgr);
+    }
+
+    gGameWhereAmI = eGameWhere_LoopCalcTime;
+    sTimeCurrent = iTimeGet();
+    sTimeElapsed = iTimeDiffSec(sTimeLast, sTimeCurrent);
+
+    if (sHackSmoothedUpdate = 0)
+    {
+        if (sTimeElapsed <= 0.1)
+        {
+            sTimeElapsed = 0.016666668f;
+        }
+    }
+}
+
 S32 zGameIsPaused()
 {
     if (gGameMode == 8)
