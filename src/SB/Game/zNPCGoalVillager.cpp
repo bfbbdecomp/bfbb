@@ -985,9 +985,9 @@ S32 zNPCGoalBoyFall::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScen
     return xGoal::Process(trantype, dt, updCtxt, NULL);
 }
 
-U8 zNPCGoalBoyFall::CollReview(void* updCtxt)
+S32 zNPCGoalBoyFall::CollReview(void* updCtxt)
 {
-    U8 diditall = 0;
+    S32 diditall = 0;
     zNPCBalloonBoy* npc = ((zNPCBalloonBoy*)(psyche->clt_owner));
     xEntCollis* floor;
     F32 gooDepth;
