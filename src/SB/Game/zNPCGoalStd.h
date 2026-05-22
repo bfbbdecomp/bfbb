@@ -323,7 +323,7 @@ public:
     S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);
     S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
-    U8 CollReview(void*);
+    S32 CollReview(void*);
     void ApplyYank(S32 left);
     S32 flg_throw; // offset 0x4C, size 0x4
     S32 floorBounce; // offset 0x50, size 0x4
@@ -635,7 +635,7 @@ struct zNPCGoalPatThrow : zNPCGoalCommon
     }
 
     S32 Enter(F32 dt, void* updCtxt);
-    U8 CollReview(void*);
+    S32 CollReview(void*);
 };
 
 enum en_alertchuk
@@ -771,7 +771,7 @@ public:
     void FXWhirlwind();
     void CalcAttackVector();
     void CheckHandBones();
-    U8 CollReview(void*);
+    S32 CollReview(void*);
     F32 tmr_attack; // offset 0x4C, size 0x4
     F32 tmr_minAttack; // offset 0x50, size 0x4
     xVec3 pos_began; // offset 0x54, size 0xC
@@ -1050,11 +1050,12 @@ struct zNPCGoalDogLaunch : zNPCGoalCommon
     void ViciousAttack(xVec3* unk1, xVec3* unk2, zMovePoint* unk3, S32 unk4);
     void PreCollide();
     S32 BallisticUpdate(F32 dt);
-    void BubTrailCone(const xVec3* pos, S32 num, const xVec3* pos_rand, const xVec3* vel_rand, const xMat3x3* mat);
+    void BubTrailCone(const xVec3* pos, S32 num, const xVec3* pos_rand, const xVec3* vel_rand,
+                      const xMat3x3* mat);
     void FurryFlurry();
 
     void SilentSwimout(xVec3* unk1, xVec3* unk2, zMovePoint* unk3);
-    U8 CollReview(void*);
+    S32 CollReview(void*);
 };
 
 class zNPCGoalDogBark : public zNPCGoalLoopAnim
@@ -1349,7 +1350,7 @@ public:
     S32 Exit(F32 dt, void* updCtxt);
     S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
     S32 InputInfo(NPCDamageInfo* info);
-    U8 CollReview(void*);
+    S32 CollReview(void*);
     void StreakPrep();
     void StreakDone();
     void StreakUpdate();
@@ -1371,7 +1372,7 @@ public:
 
     S32 Enter(F32, void*);
     S32 Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn);
-    U8 CollReview(void*);
+    S32 CollReview(void*);
     S32 NPCMessage(NPCMsg*);
     xVec3 dir_fling; // offset 0x54, size 0xC
     S32 flg_knock; // offset 0x60, size 0x4

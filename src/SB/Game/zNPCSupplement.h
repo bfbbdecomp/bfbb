@@ -340,7 +340,11 @@ void NPAR_Upd_DogBreath(NPARMgmt* mgmt, F32 dt);
 void NPAR_Upd_Fireworks(NPARMgmt* mgmt, F32 dt);
 NPARMgmt* NPAR_PartySetup(en_nparptyp parType, void** userData, NPARXtraData* xtraData);
 void NPAR_SceneReset();
+void NPCC_RenderProjTexture(RwRaster* rast, F32 factor, xMat4x3* mat, F32 radius, F32 height,
+                            xShadowCache* cache, S32 fillCache, xEnt* ent);
 static void NPCC_ShadowCacheReset();
+xShadowCache* NPCC_ShadowCacheReserve();
+void NPCC_ShadowCacheRelease(xShadowCache* shadcache);
 void NPAR_Timestep(F32 dt);
 void NPAR_EmitDroplets(en_nparmode, const xVec3*, const xVec3*);
 void NPCC_MakeStreakInfo(en_npcstreak styp, StreakInfo* info);

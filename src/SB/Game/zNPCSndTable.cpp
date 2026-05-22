@@ -118,7 +118,6 @@ NPCSndProp* NPCS_SndFindProps(en_NPC_SOUND sndtype)
 
 en_NPC_SOUND NPCS_SndTypeFromHash(U32 aid_snd, NPCSndTrax* cust, NPCSndTrax* share)
 {
-    // non-matching
     en_NPC_SOUND da_type = NPC_STYP_BOGUS;
     NPCSndTrax* trax;
 
@@ -149,7 +148,7 @@ en_NPC_SOUND NPCS_SndTypeFromHash(U32 aid_snd, NPCSndTrax* cust, NPCSndTrax* sha
                 {
                     da_type = trax->typ_sound;
 
-                    return da_type;
+                    break;
                 }
             }
         }
@@ -158,82 +157,82 @@ en_NPC_SOUND NPCS_SndTypeFromHash(U32 aid_snd, NPCSndTrax* cust, NPCSndTrax* sha
     return da_type;
 }
 
-// WIP
 U32 NPCS_SndPickSimilar(en_NPC_SOUND sndtype, NPCSndTrax* cust, NPCSndTrax* share)
 {
-    S32 cnt = 0;
+    U32 aid_choice;
+    NPCSndTrax* trax;
+    S32 i;
+    S32 ingroup;
     S32 list[32] = {};
     F32 wts[32] = { 1.0f };
+    S32 cnt;
+    F32 use_wt;
 
-    for (S32 si = 0; si < 4; si++)
+    aid_choice = 0;
+    cnt = 0;
+
+    for (i = 0; i < 3; i++)
     {
-        NPCSndTrax* trax;
-        F32 weight;
-
-        if (si == 0)
+        if (i == 0)
         {
+            use_wt = 2.0f;
             trax = cust;
-            weight = 2.0f;
         }
-        else if (si == 1)
+        else if (i == 1)
         {
+            use_wt = 1.5f;
             trax = share;
-            weight = 1.5f;
+        }
+        else if (i == 2)
+        {
+            use_wt = 1.0f;
+            trax = NULL;
+            if (cnt < 5)
+                trax = g_sndTrax_General;
         }
         else
         {
-            if (cnt >= 5)
-            {
-                trax = NULL;
-                weight = 0.0f;
-            }
-            else if (si == 2)
-            {
-                trax = g_sndTrax_General;
-                weight = 1.0f;
-            }
-            else
-            {
+            use_wt = 1.0f;
+            trax = NULL;
+            if (cnt < 5)
                 trax = g_sndTrax_Universal;
-                weight = 1.0f;
-            }
         }
 
         if (trax == NULL)
-        {
             continue;
-        }
 
-        bool in_group = false;
-        for (; trax->typ_sound != NPC_STYP_LISTEND; trax++)
+        ingroup = 0;
+
+        while (trax->typ_sound != NPC_STYP_LISTEND)
         {
             if (trax->typ_sound == sndtype)
             {
-                in_group = true;
-                if (trax->aid_sound != 0 && cnt < 32)
+                ingroup = 1;
+
+                if (trax->aid_sound != 0)
                 {
-                    wts[cnt] = weight;
+                    wts[cnt] = use_wt;
                     list[cnt] = trax->aid_sound;
                     cnt++;
                 }
             }
-            else if (in_group)
+            else if (ingroup)
             {
                 break;
             }
 
             if (cnt >= 32)
-            {
                 break;
-            }
+
+            trax++;
         }
     }
 
     if (cnt > 0)
     {
         xUtil_wtadjust(wts, cnt, 1.0f);
-        return xUtil_choose(list, cnt, wts);
+        aid_choice = xUtil_choose(list, cnt, wts);
     }
 
-    return 0;
+    return aid_choice;
 }
