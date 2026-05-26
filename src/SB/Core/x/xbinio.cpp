@@ -57,16 +57,14 @@ static en_BIO_ASYNC_ERRCODES AsyncReadStatus(st_FILELOADINFO* fli);
 static void Swap2(char* d, S32 n);
 static void Swap4(char* d, S32 n);
 static void Swap8(char* d, S32 n);
-static tag_xFile* BFD_open(const char* filename, const char* mode, U32 lockid, S32,
-                           void* xtradata);
+static tag_xFile* BFD_open(const char* filename, const char* mode, U32 lockid, S32, void* xtradata);
 static void BFD_close(tag_xFile* bffp, void* xtradata);
 static S32 BFD_read(void* data, S32 elesize, S32 elecnt, tag_xFile* bffp, void* xtradata);
 static S32 BFD_seek(tag_xFile* bffp, S32 offset, S32 whence, void* xtradata);
 static S32 BFD_getLength(tag_xFile* bffp, void* xtradata);
 static S32 BFD_startSector(const char* filename);
 static void BFD_cb_GCP2_readasync(tag_xFile* bffp);
-static S32 BFD_AsyncRead(st_FILELOADINFO* fli, S32 pos, void* data, S32 size, S32 n,
-                           S32 endian);
+static S32 BFD_AsyncRead(st_FILELOADINFO* fli, S32 pos, void* data, S32 size, S32 n, S32 endian);
 static en_BIO_ASYNC_ERRCODES BFD_AsyncReadStatus(st_FILELOADINFO* fli);
 
 st_FILELOADINFO* xBinioLoadCreate(const char* filename)
@@ -433,8 +431,7 @@ static void Swap8(char* d, S32 n)
     }
 }
 
-static tag_xFile* BFD_open(const char* filename, const char* mode, U32 lockid, S32,
-                           void* xtradata)
+static tag_xFile* BFD_open(const char* filename, const char* mode, U32 lockid, S32, void* xtradata)
 {
     tag_xFile* bffp;
     U32 orc; // open return code
@@ -617,8 +614,7 @@ static void BFD_cb_GCP2_readasync(tag_xFile* bffp)
 {
 }
 
-static S32 BFD_AsyncRead(st_FILELOADINFO* fli, S32 pos, void* data, S32 size, S32 n,
-                           S32 endian)
+static S32 BFD_AsyncRead(st_FILELOADINFO* fli, S32 pos, void* data, S32 size, S32 n, S32 endian)
 {
     tag_xFile* file = (tag_xFile*)fli->privdata;
     st_BINIO_XTRADATA* xtra = (st_BINIO_XTRADATA*)fli->xtradata;
@@ -721,14 +717,4 @@ static en_BIO_ASYNC_ERRCODES BFD_AsyncReadStatus(st_FILELOADINFO* fli)
     }
 
     return status;
-}
-
-WEAK void xFileSetUserData(tag_xFile* file, void* userdata)
-{
-    file->user_data = userdata;
-}
-
-WEAK XFILE_READSECTOR_STATUS xFileReadAsyncStatus(S32 key, S32* amtToFar)
-{
-    return (XFILE_READSECTOR_STATUS)iFileReadAsyncStatus(key, amtToFar);
 }

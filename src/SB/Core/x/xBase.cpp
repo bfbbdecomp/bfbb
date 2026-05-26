@@ -49,23 +49,3 @@ void xBaseReset(xBase* xb, xBaseAsset* asset)
 
     xBaseValidate(xb);
 }
-
-void xBaseValidate(xBase* xb)
-{
-    xb->baseFlags |= 0x4;
-}
-
-bool xBaseIsEnabled(const xBase* xb)
-{
-    return (xb->baseFlags & 0x1);
-}
-
-void xBaseDisable(xBase* xb)
-{
-    xb->baseFlags &= ~0x1;
-}
-
-void xBaseEnable(xBase* xb)
-{
-    xb->baseFlags |= 0x1;
-}
