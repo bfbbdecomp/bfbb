@@ -9,14 +9,43 @@
 
 #include "xMathInlines.h"
 
-zThrownStruct zThrownList[32];
-LaunchStats l_normal;
-ThrowableStats zThrowableModels[23];
-U32 zThrownCount;
-U32 sFruitIsFreezy;
-U32 sDebugDepth;
-CarryableStats c_fruit;
-U32 sThrowButtonMask;
+static zThrownStruct zThrownList[32];
+static U32 zThrownCount;
+static U32 sThrowButtonMask;
+static F32 sSNDLandTimer;
+static U32 sFruitIsFreezy;
+static U32 sDebugDepth;
+
+static LaunchStats l_normal = {10.0f, 15.0f, 0.2f};
+static CarryableStats c_normal = {};
+static CarryableStats c_fruit = {24.0f};
+
+static ThrowableStats zThrowableModels[23] = {
+    {"__default__", zThrownCollide_DestructObj, &c_normal, &l_normal, {}, NULL, 0.0f, 0x0, 0x0, NULL},
+    {"tiki_wooden", zThrownCollide_DestructObj, &c_normal, &l_normal, {}, NULL, 0.0f, 0x0, 0x0, NULL},
+    {"reallybigrock", zThrownCollide_DestructObj, &c_normal, &l_normal, {}, NULL, 0.0f, 0x0, 0x0, NULL},
+    {"b3_roof_chunk_sm_a", zThrownCollide_DestructObj, &c_normal, &l_normal, {}, NULL, 0.0f, 0x0, 0x0, NULL},
+    {"b3_roof_chunk_sm_b", zThrownCollide_DestructObj, &c_normal, &l_normal, {}, NULL, 0.0f, 0x0, 0x0, NULL},
+    {"b3_roof_chunk_sm_c", zThrownCollide_DestructObj, &c_normal, &l_normal, {}, NULL, 0.0f, 0x0, 0x0, NULL},
+    {"b3_roof_chunk_sm_d", zThrownCollide_DestructObj, &c_normal, &l_normal, {}, NULL, 0.0f, 0x0, 0x0, NULL},
+    {"b3_roof_chunk_sm_e", zThrownCollide_DestructObj, &c_normal, &l_normal, {}, NULL, 0.0f, 0x0, 0x0, NULL},
+    {"b3_roof_chunk_sm_f", zThrownCollide_DestructObj, &c_normal, &l_normal, {}, NULL, 0.0f, 0x0, 0x0, NULL},
+    {"tiki_wooden_bind", zThrownCollide_Tiki, &c_normal, &l_normal, {}, NULL, 0.0f, 0x0, 0x0, NULL},
+    {"tiki_thunder_bind", zThrownCollide_Tiki, &c_normal, &l_normal, {}, NULL, 0.0f, 0x0, 0x0, NULL},
+    {"tiki_stone_bind", zThrownCollide_StoneTiki, &c_normal, &l_normal,{}, NULL, 0.0f, 0x0, 0x0, NULL},
+    {"fruit_freezy", zThrownCollide_ThrowFreeze, &c_fruit, &l_normal, {}, "fruit_freezy_shrapnel", 0.77f, 0x0, 0x0, NULL},
+    {"fruit_freezy_bind", zThrownCollide_ThrowFreeze, &c_fruit, &l_normal, {}, "fruit_freezy_shrapnel", 0.77f, 0x0, 0x0, NULL},
+    {"fruit_glow_blue", zThrownCollide_ThrowFruit, &c_fruit, &l_normal, {32, 32, 128, 255}, NULL, 0.92f, 0x0, 0x0, NULL},
+    {"fruit_glow_green", zThrownCollide_ThrowFruit, &c_fruit, &l_normal, {32, 128, 32, 255}, NULL, 0.92f, 0x0, 0x0, NULL},
+    {"fruit_glow_orange", zThrownCollide_ThrowFruit, &c_fruit, &l_normal, {128, 96, 32, 255}, NULL, 0.92f, 0x0, 0x0, NULL},
+    {"fruit_glow_red", zThrownCollide_ThrowFruit, &c_fruit, &l_normal, {128, 32, 32, 255}, NULL, 0.92f, 0x0, 0x0, NULL},
+    {"fruit_glow_yellow", zThrownCollide_ThrowFruit, &c_fruit, &l_normal, {128, 128, 32, 255}, NULL, 0.92f, 0x0, 0x0, NULL},
+    {"fruit_throw", zThrownCollide_ThrowFruit, &c_fruit, &l_normal, {32, 32, 32, 255}, "fruit_throw_shrapnel", 0.92f, 0x0, 0x0, NULL},
+    {"fruit_throw_bind", zThrownCollide_ThrowFruit, &c_fruit, &l_normal, {32, 32, 32, 255}, "fruit_throw_shrapnel", 0.92f, 0x0, 0x0, NULL},
+    {"boss_sa_head_bind", zThrownCollide_BSandyHead, &c_normal, &l_normal, {}, NULL, 0.0f, 0x0, 0x0, NULL},
+    {},
+};
+
 
 void zThrown_Setup(zScene* sc)
 {
