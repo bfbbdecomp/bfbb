@@ -60,6 +60,7 @@ MATH_INLINE int __fpclassifyf(f32 x)
     return 4;
 }
 
+#ifndef MATH_API_SKIP_FPCLASSIFYD
 MATH_INLINE int __fpclassifyd(f64 x)
 {
     switch (__HI(x) & 0x7ff00000)
@@ -83,6 +84,7 @@ MATH_INLINE int __fpclassifyd(f64 x)
     }
     return 4;
 }
+#endif
 
 #define fpclassify(x)                                                                              \
     ((sizeof(x) == sizeof(float)) ? __fpclassifyf((float)(x)) : __fpclassifyd((double)(x)))

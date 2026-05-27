@@ -20,13 +20,41 @@ enum scan_states {
 #define unfetch(c)              (*ReadProc)(ReadProcArg, c, __UngetAChar)
 
 unsigned long __strtoul(int base, int max_width, int (*ReadProc)(void*, int, int), void* ReadProcArg, int* chars_scanned, int* negative,
-                        int* overflow)
+                        int* overflow);
+unsigned long long __strtoull(int base, int max_width, int (*ReadProc)(void*, int, int), void* ReadProcArg, int* chars_scanned,
+                              int* negative, int* overflow);
+
+int atoi(const char* str)
+{
+	unsigned long uvalue;
+	int svalue;
+	int overflow, negative, count;
+
+	__InStrCtrl isc;
+	isc.NextChar         = (char*)str;
+	isc.NullCharDetected = 0;
+
+	uvalue = __strtoul(10, 0x7FFFFFFF, &__StringRead, (void*)&isc, &count, &negative, &overflow);
+
+	if (overflow || (!negative && uvalue > INT_MAX) || (negative && uvalue > -INT_MIN)) {
+		svalue = (negative ? -INT_MIN : INT_MAX);
+		errno  = ERANGE;
+	} else {
+		svalue = (negative ? (int)-uvalue : (int)uvalue);
+	}
+
+	return svalue;
+}
+
+unsigned long long __strtoull(int base, int max_width, int (*ReadProc)(void*, int, int), void* ReadProcArg, int* chars_scanned,
+                              int* negative, int* overflow)
 {
 	int scan_state          = start;
 	int count               = 0;
 	int spaces              = 0;
-	unsigned long value     = 0;
-	unsigned long value_max = 0;
+	unsigned long long value     = 0;
+	unsigned long long value_max = 0;
+	unsigned long long ullmax    = ULLONG_MAX;
 	int c;
 
 	*negative = *overflow = 0;
@@ -38,13 +66,13 @@ unsigned long __strtoul(int base, int max_width, int (*ReadProc)(void*, int, int
 	}
 
 	if (base != 0) {
-		value_max = ULONG_MAX / base;
+		value_max = ullmax / base;
 	}
 
 	while (count <= max_width && c != -1 && !final_state(scan_state)) {
 		switch (scan_state) {
 		case start:
-			if (isspace(c)) {
+			if (_isspace(c)) {
 				c = fetch();
 				count--;
 				spaces++;
@@ -95,10 +123,10 @@ unsigned long __strtoul(int base, int max_width, int (*ReadProc)(void*, int, int
 			}
 
 			if (!value_max) {
-				value_max = ULONG_MAX / base;
+				value_max = ullmax / base;
 			}
 
-			if (isdigit(c)) {
+			if (_isdigit(c)) {
 				if ((c -= '0') >= base) {
 					if (scan_state == digit_loop) {
 						scan_state = finished;
@@ -109,7 +137,7 @@ unsigned long __strtoul(int base, int max_width, int (*ReadProc)(void*, int, int
 					c += '0';
 					break;
 				}
-			} else if (!isalpha(c) || (toupper(c) - 'A' + 10) >= base) {
+			} else if (!_isalpha(c) || (_toupper(c) - 'A' + 10) >= base) {
 				if (scan_state == digit_loop) {
 					scan_state = finished;
 				} else {
@@ -118,7 +146,7 @@ unsigned long __strtoul(int base, int max_width, int (*ReadProc)(void*, int, int
 
 				break;
 			} else {
-				c = toupper(c) - 'A' + 10;
+				c = _toupper(c) - 'A' + 10;
 			}
 
 			if (value > value_max) {
@@ -127,7 +155,7 @@ unsigned long __strtoul(int base, int max_width, int (*ReadProc)(void*, int, int
 
 			value *= base;
 
-			if (c > (ULONG_MAX - value)) {
+			if (c > (ullmax - value)) {
 				*overflow = 1;
 			}
 
@@ -149,15 +177,14 @@ unsigned long __strtoul(int base, int max_width, int (*ReadProc)(void*, int, int
 	return value;
 }
 
-unsigned long long __strtoull(int base, int max_width, int (*ReadProc)(void*, int, int), void* ReadProcArg, int* chars_scanned,
-                              int* negative, int* overflow)
+unsigned long __strtoul(int base, int max_width, int (*ReadProc)(void*, int, int), void* ReadProcArg, int* chars_scanned, int* negative,
+                        int* overflow)
 {
-	int scan_state               = start;
-	int count                    = 0;
-	int spaces                   = 0;
-	unsigned long long value     = 0;
-	unsigned long long value_max = 0;
-	unsigned long long ullmax    = ULLONG_MAX;
+	int scan_state          = start;
+	int count               = 0;
+	int spaces              = 0;
+	unsigned long value     = 0;
+	unsigned long value_max = 0;
 	int c;
 
 	*negative = *overflow = 0;
@@ -169,13 +196,13 @@ unsigned long long __strtoull(int base, int max_width, int (*ReadProc)(void*, in
 	}
 
 	if (base != 0) {
-		value_max = ullmax / base;
+		value_max = ULONG_MAX / base;
 	}
 
 	while (count <= max_width && c != -1 && !final_state(scan_state)) {
 		switch (scan_state) {
 		case start:
-			if (isspace(c)) {
+			if (_isspace(c)) {
 				c = fetch();
 				count--;
 				spaces++;
@@ -226,10 +253,10 @@ unsigned long long __strtoull(int base, int max_width, int (*ReadProc)(void*, in
 			}
 
 			if (!value_max) {
-				value_max = ullmax / base;
+				value_max = ULONG_MAX / base;
 			}
 
-			if (isdigit(c)) {
+			if (_isdigit(c)) {
 				if ((c -= '0') >= base) {
 					if (scan_state == digit_loop) {
 						scan_state = finished;
@@ -240,7 +267,7 @@ unsigned long long __strtoull(int base, int max_width, int (*ReadProc)(void*, in
 					c += '0';
 					break;
 				}
-			} else if (!isalpha(c) || (toupper(c) - 'A' + 10) >= base) {
+			} else if (!_isalpha(c) || (_toupper(c) - 'A' + 10) >= base) {
 				if (scan_state == digit_loop) {
 					scan_state = finished;
 				} else {
@@ -249,7 +276,7 @@ unsigned long long __strtoull(int base, int max_width, int (*ReadProc)(void*, in
 
 				break;
 			} else {
-				c = toupper(c) - 'A' + 10;
+				c = _toupper(c) - 'A' + 10;
 			}
 
 			if (value > value_max) {
@@ -258,7 +285,7 @@ unsigned long long __strtoull(int base, int max_width, int (*ReadProc)(void*, in
 
 			value *= base;
 
-			if (c > (ullmax - value)) {
+			if (c > (ULONG_MAX - value)) {
 				*overflow = 1;
 			}
 
@@ -279,75 +306,4 @@ unsigned long long __strtoull(int base, int max_width, int (*ReadProc)(void*, in
 
 	unfetch(c);
 	return value;
-}
-
-unsigned long strtoul(const char* str, char** end, int base)
-{
-	unsigned long value;
-	int count, negative, overflow;
-
-	__InStrCtrl isc;
-	isc.NextChar         = (char*)str;
-	isc.NullCharDetected = 0;
-
-	value = __strtoul(base, 0x7FFFFFFF, &__StringRead, (void*)&isc, &count, &negative, &overflow);
-
-	if (end) {
-		*end = (char*)str + count;
-	}
-
-	if (overflow) {
-		value = ULONG_MAX;
-		errno = 0x22;
-	} else if (negative) {
-		value = -value;
-	}
-
-	return value;
-}
-
-void strtoull(void)
-{
-	// UNUSED FUNCTION
-}
-
-long strtol(const char* str, char** end, int base)
-{
-	unsigned long uvalue;
-	long svalue;
-	int count, negative, overflow;
-
-	__InStrCtrl isc;
-	isc.NextChar         = (char*)str;
-	isc.NullCharDetected = 0;
-
-	uvalue = __strtoul(base, 0x7FFFFFFF, &__StringRead, (void*)&isc, &count, &negative, &overflow);
-
-	if (end) {
-		*end = (char*)str + count;
-	}
-
-	if (overflow || (!negative && uvalue > LONG_MAX) || (negative && uvalue > -LONG_MIN)) {
-		svalue = (negative ? -LONG_MIN : LONG_MAX);
-		errno  = ERANGE;
-	} else {
-		svalue = (negative ? (long)-uvalue : (long)uvalue);
-	}
-
-	return svalue;
-}
-
-void strtoll(void)
-{
-	// UNUSED FUNCTION
-}
-
-int atoi(const char* str)
-{
-	// UNUSED FUNCTION
-}
-
-void atol(void)
-{
-	// UNUSED FUNCTION
 }

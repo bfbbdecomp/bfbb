@@ -1,8 +1,14 @@
-#include "PowerPC_EABI_Support/MetroTRK/trk.h"
+#include "PowerPC_EABI_Support/MetroTRK/Portable/mem_TRK.h"
 
 static void TRK_fill_mem(void* dest, int val, size_t count);
 
-void* TRK_memcpy(void* dest, const void* src, size_t count)
+__declspec(section ".init") void* TRK_memset(void* dest, int val, size_t count)
+{
+    TRK_fill_mem(dest, val, count);
+    return dest;
+}
+
+__declspec(section ".init") void* TRK_memcpy(void* dest, const void* src, size_t count)
 {
     u8* s = (u8*)src - 1;
     u8* d = (u8*)dest - 1;
@@ -13,11 +19,7 @@ void* TRK_memcpy(void* dest, const void* src, size_t count)
     {
         *++d = *++s;
     }
-}
 
-void* TRK_memset(void* dest, int val, size_t count)
-{
-    TRK_fill_mem(dest, val, count);
     return dest;
 }
 
