@@ -8,7 +8,7 @@ extern OSTime __OSGetSystemTime();
 static const char* __OSVersion =
     "<< Dolphin SDK - OS\trelease build: Apr 17 2003 12:33:06 (0x2301) >>";
 // needs to be "<< Dolphin SDK - DSP\trelease build: Apr 17 2003 12:34:16 (0x2301) >>"?
-extern char _db_stack_end[];
+extern char _db_stack_end[] AT_ADDRESS(0x803D8A50);
 
 #define OS_BI2_DEBUG_ADDRESS 0x800000F4
 #define DEBUGFLAG_ADDR 0x800030E8
@@ -32,8 +32,8 @@ static __OSExceptionHandler* OSExceptionTable;
 OSTime __OSStartTime;
 BOOL __OSInIPL;
 
-extern u8 __ArenaHi[];
-extern u8 __ArenaLo[];
+extern u8 __ArenaHi[] AT_ADDRESS(0x81800000);
+extern u8 __ArenaLo[] AT_ADDRESS(0x803D9A60);
 extern u32 __DVDLongFileNameFlag;
 extern u32 __PADSpec;
 
