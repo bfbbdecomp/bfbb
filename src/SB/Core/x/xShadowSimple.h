@@ -7,11 +7,21 @@
 struct xShadowSimpleQueue
 {
     // total size: 0x14
-    xShadowSimpleCache* cache; // offset 0x0, size 0x4
-    u32 priority; // offset 0x4, size 0x4
-    xEnt* ent; // offset 0x8, size 0x4
-    F32 radius; // offset 0xC, size 0x4
-    F32 ecc; // offset 0x10, size 0x4
+    xShadowSimpleCache* cache;
+    u32 priority;
+    xEnt* ent;
+    F32 radius;
+    F32 ecc;
+
+    xShadowSimpleQueue& operator=(const xShadowSimpleQueue& other)
+    {
+        cache = other.cache;
+        priority = other.priority;
+        ent = other.ent;
+        radius = other.radius;
+        ecc = other.ecc;
+        return *this;
+    }
 };
 
 struct xShadowSimplePoly
@@ -45,17 +55,20 @@ struct xShadowSimpleCache
     xVec3 corner[4];
 };
 
+struct zSimpleShadowTableEntry {
+    U32 modelID;
+    U32 assetID;
+    U32 flags;
+};
+
 struct zSimpleShadowTableHeader {
-    // total size: 0x4
-    U32 num;
+    S32 num;
+    zSimpleShadowTableEntry entry[1];
 };
 
 void xShadowSimple_Render();
 void xShadowSimple_Add(xShadowSimpleCache* cache, xEnt* ent, F32 radius, F32 ecc);
 void xShadowSimple_CacheInit(xShadowSimpleCache* cache, xEnt* ent, U8 alpha);
 void xShadowSimple_Init();
-void xShadowSimple_AddVerts(xShadowSimpleCache* cache);
-void xShadowSimple_CalcCorners(xShadowSimpleCache* cache, xEnt* ent, F32 radius, F32 ecc);
-void xShadowSimple_SceneCollide(xShadowSimpleCache* cache, xVec3* pos, F32 depth);
 
 #endif
