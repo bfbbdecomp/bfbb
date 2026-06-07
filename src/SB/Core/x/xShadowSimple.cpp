@@ -96,11 +96,13 @@ static int shadowRayEntCB(xEnt* ent, void* data)
                                   ((shadowRayEntData*)data)->line->start.y, 
                                   ((shadowRayEntData*)data)->line->start.z);
 
-                float dy = ((shadowRayEntData*)data)->line->end.y - start.y;
-                float t = (ent->bound.box.box.upper.y - start.y) / dy;
+                float end_y = ((shadowRayEntData*)data)->line->end.y;
+                float start_y = start.y;
+                float dy = end_y - start_y;
+                float t = (ent->bound.box.box.upper.y - start_y) / dy;
 
                 if (((shadowRayEntData*)data)->cache->shadowHeight > t && 
-                    ent->bound.box.box.upper.y > ((shadowRayEntData*)data)->line->end.y) {
+                    ent->bound.box.box.upper.y > end_y) {
                     
                     if (start.x > ent->bound.box.box.lower.x && start.x < ent->bound.box.box.upper.x &&
                         start.z > ent->bound.box.box.lower.z && start.z < ent->bound.box.box.upper.z) {
@@ -110,7 +112,8 @@ static int shadowRayEntCB(xEnt* ent, void* data)
 
                         temp_vec.y = ent->bound.box.box.upper.y;
                         temp_vec.z = start.z;
-                        temp_vec.x = start.x + 10.0f;                        
+                        temp_vec.x = start.x + 10.0f;
+                        
                         xVec3SubFrom(&temp_vec, (const xVec3*)&ent->model->Mat->pos);
                         
                         ((shadowRayEntData*)data)->cache->poly.vert[0].x = xVec3Dot(&temp_vec, (const xVec3*)&ent->model->Mat->right);
@@ -252,14 +255,10 @@ static void xShadowSimple_CalcCorners(xShadowSimpleCache* cache, xEnt* ent, floa
     float dy_r, dy_a;
 
     if (cache->flags & 1) {
-        float rz_temp = modelMat->right.z * radius;
-        float rx_temp = modelMat->right.x * radius;
-        float az_temp = modelMat->at.z * radius;
-        
-        rz = rz_temp * ecc;
-        rx = rx_temp * ecc;
+        rz = modelMat->right.z * radius * ecc;
+        rx = modelMat->right.x * radius * ecc;
+        az = modelMat->at.z * radius;
         ax = modelMat->at.x * radius;
-        az = az_temp;
 
         dy_r = rx * cache->dydx + rz * cache->dydz;
         dy_a = ax * cache->dydx + az * cache->dydz;
@@ -294,85 +293,94 @@ static void xShadowSimple_CalcCorners(xShadowSimpleCache* cache, xEnt* ent, floa
 
 static void xShadowSimple_AddVerts(xShadowSimpleCache* cache)
 {
-    if (cache->shadowHeight == 1e38f || sShadVertCount >= 384) {
+    if (cache->shadowHeight == 1e38f) {
         return;
     }
 
-    u32 index = sShadVertCount / 6;
+    if (sShadVertCount >= 384) {
+    } else {
+        float c0y = cache->corner[0].y;
+        float c0z = cache->corner[0].z;
+        float c0x = cache->corner[0].x;
+        sShadVert[sShadVertCount].x = c0x;
+        sShadVert[sShadVertCount].y = c0y;
+        sShadVert[sShadVertCount].z = c0z;
 
-    float c0y = cache->corner[0].y;
-    float c0z = cache->corner[0].z;
-    float c0x = cache->corner[0].x;
-    sShadVert[sShadVertCount].x = c0x;
-    sShadVert[sShadVertCount].y = c0y;
-    sShadVert[sShadVertCount].z = c0z;
+        float c1y = cache->corner[1].y;
+        float c1z = cache->corner[1].z;
+        float c1x = cache->corner[1].x;
+        sShadVert[sShadVertCount + 1].x = c1x;
+        sShadVert[sShadVertCount + 1].y = c1y;
+        sShadVert[sShadVertCount + 1].z = c1z;
 
-    float c1y = cache->corner[1].y;
-    float c1z = cache->corner[1].z;
-    float c1x = cache->corner[1].x;
-    sShadVert[sShadVertCount + 1].x = c1x;
-    sShadVert[sShadVertCount + 1].y = c1y;
-    sShadVert[sShadVertCount + 1].z = c1z;
+        float c2y = cache->corner[2].y;
+        float c2z = cache->corner[2].z;
+        float c2x = cache->corner[2].x;
+        sShadVert[sShadVertCount + 2].x = c2x;
+        sShadVert[sShadVertCount + 2].y = c2y;
+        sShadVert[sShadVertCount + 2].z = c2z;
 
-    float c2y = cache->corner[2].y;
-    float c2z = cache->corner[2].z;
-    float c2x = cache->corner[2].x;
-    sShadVert[sShadVertCount + 2].x = c2x;
-    sShadVert[sShadVertCount + 2].y = c2y;
-    sShadVert[sShadVertCount + 2].z = c2z;
+        float c3y = cache->corner[1].y;
+        float c3z = cache->corner[1].z;
+        float c3x = cache->corner[1].x;
+        sShadVert[sShadVertCount + 3].x = c3x;
+        sShadVert[sShadVertCount + 3].y = c3y;
+        sShadVert[sShadVertCount + 3].z = c3z;
 
-    float c3y = cache->corner[1].y;
-    float c3z = cache->corner[1].z;
-    float c3x = cache->corner[1].x;
-    sShadVert[sShadVertCount + 3].x = c3x;
-    sShadVert[sShadVertCount + 3].y = c3y;
-    sShadVert[sShadVertCount + 3].z = c3z;
+        float c4y = cache->corner[2].y;
+        float c4z = cache->corner[2].z;
+        float c4x = cache->corner[2].x;
+        sShadVert[sShadVertCount + 4].x = c4x;
+        sShadVert[sShadVertCount + 4].y = c4y;
+        sShadVert[sShadVertCount + 4].z = c4z;
 
-    float c4y = cache->corner[2].y;
-    float c4z = cache->corner[2].z;
-    float c4x = cache->corner[2].x;
-    sShadVert[sShadVertCount + 4].x = c4x;
-    sShadVert[sShadVertCount + 4].y = c4y;
-    sShadVert[sShadVertCount + 4].z = c4z;
+        float c5y = cache->corner[3].y;
+        float c5z = cache->corner[3].z;
+        float c5x = cache->corner[3].x;
+        sShadVert[sShadVertCount + 5].x = c5x;
+        sShadVert[sShadVertCount + 5].y = c5y;
+        sShadVert[sShadVertCount + 5].z = c5z;
 
-    float c5y = cache->corner[3].y;
-    float c5z = cache->corner[3].z;
-    float c5x = cache->corner[3].x;
-    sShadVert[sShadVertCount + 5].x = c5x;
-    sShadVert[sShadVertCount + 5].y = c5y;
-    sShadVert[sShadVertCount + 5].z = c5z;
+        u8 a0 = cache->alpha;
+        sShadVert[sShadVertCount].r = 0;
+        sShadVert[sShadVertCount].g = 0;
+        sShadVert[sShadVertCount].b = 0;
+        sShadVert[sShadVertCount].a = a0;
 
-    sShadVert[sShadVertCount].r = 0;
-    sShadVert[sShadVertCount].g = 0;
-    sShadVert[sShadVertCount].b = 0;
-    sShadVert[sShadVertCount].a = cache->alpha;
+        u8 a1 = cache->alpha;
+        sShadVert[sShadVertCount + 1].r = 0;
+        sShadVert[sShadVertCount + 1].g = 0;
+        sShadVert[sShadVertCount + 1].b = 0;
+        sShadVert[sShadVertCount + 1].a = a1;
 
-    sShadVert[sShadVertCount + 1].r = 0;
-    sShadVert[sShadVertCount + 1].g = 0;
-    sShadVert[sShadVertCount + 1].b = 0;
-    sShadVert[sShadVertCount + 1].a = cache->alpha;
+        u8 a2 = cache->alpha;
+        sShadVert[sShadVertCount + 2].r = 0;
+        sShadVert[sShadVertCount + 2].g = 0;
+        sShadVert[sShadVertCount + 2].b = 0;
+        sShadVert[sShadVertCount + 2].a = a2;
 
-    sShadVert[sShadVertCount + 2].r = 0;
-    sShadVert[sShadVertCount + 2].g = 0;
-    sShadVert[sShadVertCount + 2].b = 0;
-    sShadVert[sShadVertCount + 2].a = cache->alpha;
+        u8 a3 = cache->alpha;
+        sShadVert[sShadVertCount + 3].r = 0;
+        sShadVert[sShadVertCount + 3].g = 0;
+        sShadVert[sShadVertCount + 3].b = 0;
+        sShadVert[sShadVertCount + 3].a = a3;
 
-    sShadVert[sShadVertCount + 3].r = 0;
-    sShadVert[sShadVertCount + 3].g = 0;
-    sShadVert[sShadVertCount + 3].b = 0;
-    sShadVert[sShadVertCount + 3].a = cache->alpha;
+        u8 a4 = cache->alpha;
+        sShadVert[sShadVertCount + 4].r = 0;
+        sShadVert[sShadVertCount + 4].g = 0;
+        sShadVert[sShadVertCount + 4].b = 0;
+        sShadVert[sShadVertCount + 4].a = a4;
 
-    sShadVert[sShadVertCount + 4].r = 0;
-    sShadVert[sShadVertCount + 4].g = 0;
-    sShadVert[sShadVertCount + 4].b = 0;
-    sShadVert[sShadVertCount + 4].a = cache->alpha;
+        u8 a5 = cache->alpha;
+        sShadVert[sShadVertCount + 5].r = 0;
+        sShadVert[sShadVertCount + 5].g = 0;
+        sShadVert[sShadVertCount + 5].b = 0;
+        sShadVert[sShadVertCount + 5].a = a5;
 
-    sShadVert[sShadVertCount + 5].r = 0;
-    sShadVert[sShadVertCount + 5].g = 0;
-    sShadVert[sShadVertCount + 5].b = 0;
-    sShadVert[sShadVertCount + 5].a = cache->alpha;
-
-    sShadRasters[index] = (RwRaster*)cache->raster;
+        sShadRasters[sShadVertCount / 6] = (RwRaster*)cache->raster;
+        
+        sShadVertCount = *(volatile u32*)&sShadVertCount + 6;
+    }
 }
 
 #pragma push
