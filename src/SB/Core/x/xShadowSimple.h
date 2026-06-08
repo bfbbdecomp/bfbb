@@ -62,8 +62,7 @@ struct zSimpleShadowTableEntry {
 };
 
 struct zSimpleShadowTableHeader {
-    S32 num;
-    zSimpleShadowTableEntry entry[1];
+    U32 num;
 };
 
 void xShadowSimple_Render();

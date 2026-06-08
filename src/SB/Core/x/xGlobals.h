@@ -55,10 +55,6 @@ struct xGlobals
     U32 minVSyncCnt;
     U8 dontShowPadMessageDuringLoadingOrCutScene;
     U8 autoSaveFeature;
-    
-    U32 pad_0x6DC[1593];
-
-    xScene* sceneCur; 
 };
 
 #endif

@@ -7,7 +7,7 @@
 #include <types.h>
 
 #include "xShadowSimple.h"
-#include "xGlobals.h"
+#include "zGlobals.h"
 #include "xGrid.h"
 #include "xScene.h"
 
@@ -16,7 +16,6 @@
 #include "xQuickCull.h"
 #include "iModel.h"
 
-extern xGlobals globals;
 extern xGrid colls_grid;
 extern xGrid colls_oso_grid;
 extern xGrid npcs_grid;
