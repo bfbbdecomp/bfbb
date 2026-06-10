@@ -7,7 +7,7 @@
 #include "xSnd.h"
 #include "xEnt.h"
 #include "xCounter.h"
-#include "xMath.h"
+#include "xUtil.h"
 
 #include "zGameExtras.h"
 #include "zEntPlayer.h"
@@ -739,50 +739,4 @@ U32 zGame_HackIsGallery()
         return 1;
     }
     return 0;
-}
-
-template <> U32 xUtil_choose<U32>(U32 const* list, S32 size, F32 const* float_list)
-{
-    if (list == NULL)
-    {
-        return NULL;
-    }
-
-    if (size < 1)
-    {
-        return NULL;
-    }
-
-    S32 idx = 0;
-    F32 rand = xurand();
-
-    if (float_list == NULL)
-    {
-        idx = rand * size;
-    }
-    else
-    {
-        const F32* float_it = float_list;
-        F32 total = 0.0f;
-        for (S32 i = 0; i < size; float_it++, i++)
-        {
-            float prev_total = total;
-            total += *float_it;
-            if (rand >= prev_total && rand <= total)
-            {
-                idx = i;
-                break;
-            }
-        }
-    }
-
-    if (idx >= size)
-    {
-        idx = size - 1;
-    }
-    if (idx < 0)
-    {
-        idx = 0;
-    }
-    return list[idx];
 }

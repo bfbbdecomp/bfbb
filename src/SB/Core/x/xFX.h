@@ -167,6 +167,8 @@ extern xFXStreak sStreakList[10];
 extern xFXShine sShineList[2];
 extern xFXRing ringlist[RING_COUNT];
 
+extern RpAtomic* (*gAtomicRenderCallBack)(RpAtomic*);
+
 void xFXInit();
 U32 xFXShineStart(const xVec3*, F32, F32, F32, F32, U32, const iColor_tag*, const iColor_tag*, F32,
                   S32);

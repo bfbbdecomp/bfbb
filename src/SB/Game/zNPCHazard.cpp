@@ -10,7 +10,7 @@
 #include "zNPCSupport.h"
 #include "xMath.h"
 #include "xMathInlines.h"
-#include "zGameExtras.h"
+#include "xUtil.h"
 
 extern U32 g_hash_hazanim[3];
 extern char* g_strz_hazanim[3];
@@ -40,7 +40,7 @@ static en_hazmodel g_funfrag_choices[8] = {
     NPC_HAZMDL_FUNFRAG_CELLPHONE, NPC_HAZMDL_FUNFRAG_SHOE,
 };
 
-static zShrapnelAsset * g_data_hazshrap[5] = { NULL, NULL, NULL, NULL, NULL };
+static zShrapnelAsset* g_data_hazshrap[5] = { NULL, NULL, NULL, NULL, NULL };
 
 static char* g_strz_hazModel[30];
 static NPCHazard g_hazards[64];
@@ -374,7 +374,8 @@ void NPCHazard::Upd_PuppyNuke(F32 dt)
         }
     }
 
-    if (this->flg_casthurt == 0 && this->npc_owner != NULL && this->flg_hazard & 0x2000 && this->pam_interp > 0.7f)
+    if (this->flg_casthurt == 0 && this->npc_owner != NULL && this->flg_hazard & 0x2000 &&
+        this->pam_interp > 0.7f)
     {
         zNPCMsg_AreaNPCExplodeNoRobo(npc_owner, ball->rad_max, &this->pos_hazard);
         this->flg_casthurt = 1;
@@ -399,7 +400,8 @@ void NPCHazard::Upd_FodBomb(F32 dt)
         }
     }
 
-    if (this->flg_casthurt == 0 && this->npc_owner != NULL && this->flg_hazard & 0x2000 && this->pam_interp > 0.7f)
+    if (this->flg_casthurt == 0 && this->npc_owner != NULL && this->flg_hazard & 0x2000 &&
+        this->pam_interp > 0.7f)
     {
         zNPCMsg_AreaNPCExplodeNoRobo(npc_owner, ball->rad_max, &this->pos_hazard);
         this->flg_casthurt = 1;
@@ -415,7 +417,7 @@ void NPCHazard::FodBombBubbles(F32 dt)
     static const xVec3 pos_spread = { 0.1f, 2.0f, 0.1f };
     static const xVec3 pos_offsetFirst = { 0.0f, -0.5f, 0.0f };
     static const xVec3 pos_offsetLater = { 0.0f, -1.0f, 0.0f };
-    
+
     if (this->flg_hazard & 0x8)
     {
         xVec3 pos_emit = this->pos_hazard;
@@ -429,7 +431,7 @@ void NPCHazard::FodBombBubbles(F32 dt)
         xVec3 pos_emit = this->pos_hazard;
         pos_emit += pos_offsetLater;
 
-        zFX_SpawnBubbleSlam(&pos_emit, 0x18, PI, 4.0f * tym, tym);  
+        zFX_SpawnBubbleSlam(&pos_emit, 0x18, PI, 4.0f * tym, tym);
     }
 }
 
@@ -438,7 +440,8 @@ void NPCHazard::Upd_CattleProd(F32 dt)
     HAZCatProd* catprod = &this->custdata.catprod;
     catprod->rad_cur = LERP(isin(PI * this->pam_interp), catprod->rad_min, catprod->rad_max);
 
-    if (this->flg_hazard & 0x2000 && !(globals.player.DamageTimer > 0.0f) && this->tym_lifespan - this->tmr_remain > 0.25f)
+    if (this->flg_hazard & 0x2000 && !(globals.player.DamageTimer > 0.0f) &&
+        this->tym_lifespan - this->tmr_remain > 0.25f)
     {
         if (ColPlyrSphere(catprod->rad_cur))
         {
@@ -455,7 +458,7 @@ void NPCHazard::Upd_CattleProd(F32 dt)
         pos_lytend.x = catprod->rad_cur;
         pos_lytend.y = catprod->rad_cur;
         pos_lytend.z = catprod->rad_cur;
-        
+
         info.time = this->tmr_remain;
         info.start = &this->pos_hazard;
 
@@ -470,7 +473,7 @@ void NPCHazard::Upd_CattleProd(F32 dt)
         xVec3AddTo(&pos_lytend, &this->pos_hazard);
         info.end = &pos_lytend;
         catprod->zap_lyta = zLightningAdd(&info);
-        
+
         xVec3SubFrom(&pos_lytend, &this->pos_hazard);
         pos_lytend.y *= -1.0f;
         xVec3AddTo(&pos_lytend, &this->pos_hazard);
@@ -490,20 +493,21 @@ void NPCHazard::Upd_CattleProd(F32 dt)
             if (tym > 0.8f && tym < 1.0f)
             {
                 xVec3SMul(&pos_lytend, NPCC_faceDir(this->npc_owner), catprod->rad_cur);
-                xVec3AddScaled(&pos_lytend, NPCC_rightDir(this->npc_owner), (xrand() & 0x800000 ? 0.2f : 0.2f) * xurand());
+                xVec3AddScaled(&pos_lytend, NPCC_rightDir(this->npc_owner),
+                               (xrand() & 0x800000 ? 0.2f : 0.2f) * xurand());
             }
             else
             {
                 pos_lytend.x *= xurand();
                 pos_lytend.y *= xurand();
-                pos_lytend.z *= xurand(); 
+                pos_lytend.z *= xurand();
             }
         }
         else
         {
             pos_lytend.x *= xurand();
             pos_lytend.y *= xurand();
-            pos_lytend.z *= xurand();   
+            pos_lytend.z *= xurand();
         }
 
         xVec3AddTo(&pos_lytend, &this->pos_hazard);
@@ -543,7 +547,7 @@ void NPCHazard::Upd_TubeletBlast(F32 dt)
     }
 
     static S32 moreorless = 0;
-    
+
     if (--moreorless < 0)
     {
         moreorless = 3;
@@ -578,7 +582,8 @@ void NPCHazard::Upd_DuploBoom(F32 dt)
         }
     }
 
-    if (this->flg_casthurt == 0 && this->npc_owner != NULL && this->flg_hazard & 0x2000 && this->pam_interp > 0.7f)
+    if (this->flg_casthurt == 0 && this->npc_owner != NULL && this->flg_hazard & 0x2000 &&
+        this->pam_interp > 0.7f)
     {
         zNPCMsg_AreaNPCExplodeNoRobo(npc_owner, ball->rad_max, &this->pos_hazard);
         this->flg_casthurt = 1;
@@ -687,7 +692,7 @@ void NPCHazard::Upd_TTFlight(F32 dt)
                 ReconTarTar();
                 return;
             }
-            
+
             MarkForRecycle();
             return;
         }
@@ -728,7 +733,9 @@ void NPCHazard::Upd_TTFlight(F32 dt)
             PreCollide();
         }
 
-        F32 tym = this->tym_lifespan < this->tym_lifespan - this->tmr_remain ? this->tym_lifespan : this->tym_lifespan - this->tmr_remain;
+        F32 tym = this->tym_lifespan < this->tym_lifespan - this->tmr_remain ?
+                      this->tym_lifespan :
+                      this->tym_lifespan - this->tmr_remain;
         xParabolaEvalPos(parab, &this->pos_hazard, tym);
         xParabolaEvalVel(parab, &tartar->vel, tym);
 
@@ -748,36 +755,36 @@ void NPCHazard::Upd_TTFlight(F32 dt)
             if (ColPlyrSphere(tartar->rad_cur))
             {
                 HurtThePlayer();
-                g_data_hazshrap[2]->initCB(g_data_hazshrap[2], globals.player.ent.model, &tartar->vel, NULL);
-                
+                g_data_hazshrap[2]->initCB(g_data_hazshrap[2], globals.player.ent.model,
+                                           &tartar->vel, NULL);
+
                 xVec3 whence;
                 xParabolaEvalVel(parab, &whence, parab->maxTime);
                 xVec3Inv(&whence, &whence);
-    
+
                 TarTarSplash(&whence);
                 MarkForRecycle();
                 return;
             }
-
         }
-            StaggeredCollide();
+        StaggeredCollide();
 
-            if (this->flg_hazard & 0x8)
-            {
-                TarTarFalumpf();
-            }
-            else
-            {
-                TarTarGunkTrail();
-            }
+        if (this->flg_hazard & 0x8)
+        {
+            TarTarFalumpf();
+        }
+        else
+        {
+            TarTarGunkTrail();
+        }
 
-            static S32 moreorless = 0;
+        static S32 moreorless = 0;
 
-            if (--moreorless < 0)
-            {
-                moreorless = 4;
-                zFX_SpawnBubbleTrail(&this->pos_hazard, 0x6);
-            }
+        if (--moreorless < 0)
+        {
+            moreorless = 4;
+            zFX_SpawnBubbleTrail(&this->pos_hazard, 0x6);
+        }
     }
 }
 
@@ -1551,7 +1558,8 @@ void NPCHazard::ReconSlickOil()
     {
         xVec3Copy((xVec3*)&this->mdl_hazard->Mat->up, &dir_norm);
         NPCC_MakePerp((xVec3*)&this->mdl_hazard->Mat->at, &dir_norm);
-        xVec3Cross((xVec3*)&this->mdl_hazard->Mat->right, (xVec3*)&this->mdl_hazard->Mat->up, (xVec3*)&this->mdl_hazard->Mat->at);
+        xVec3Cross((xVec3*)&this->mdl_hazard->Mat->right, (xVec3*)&this->mdl_hazard->Mat->up,
+                   (xVec3*)&this->mdl_hazard->Mat->at);
     }
 
     xMat3x3 mat;
@@ -1574,7 +1582,7 @@ void NPCHazard::OilSplash(const xVec3* dir_norm)
     xVec3 up;
     xVec3 at;
     xVec3 rt;
-    
+
     if (dir_norm)
     {
         up = *dir_norm;
@@ -1626,7 +1634,7 @@ void NPCHazard::Upd_OilOoze(F32 dt)
 {
     static F32 seg_pam[2] = { 0.15f, 0.75f };
     HAZBall* ball = &this->custdata.ball;
-    
+
     if (this->pam_interp <= seg_pam[0])
     {
         ball->rad_cur = (ball->rad_max - ball->rad_min) * EASE(this->pam_interp / seg_pam[0]);
@@ -1634,7 +1642,8 @@ void NPCHazard::Upd_OilOoze(F32 dt)
     }
     else if (this->pam_interp >= seg_pam[1])
     {
-        ball->rad_cur = (ball->rad_max - ball->rad_min) * EASE(1.0f - ((this->pam_interp - seg_pam[1]) / (1.0f - seg_pam[1])));
+        ball->rad_cur = (ball->rad_max - ball->rad_min) *
+                        EASE(1.0f - ((this->pam_interp - seg_pam[1]) / (1.0f - seg_pam[1])));
         ball->rad_cur += ball->rad_min;
     }
     else
@@ -1667,7 +1676,8 @@ void NPCHazard::Upd_OilOoze(F32 dt)
 
     this->tmr_nextglob = -1.0f > this->tmr_nextglob - dt ? -1.0f : this->tmr_nextglob - dt;
 
-    if (this->flg_hazard & 0x2000 && !(globals.player.DamageTimer > 0.0f) && ColPlyrSphere(ball->rad_cur))
+    if (this->flg_hazard & 0x2000 && !(globals.player.DamageTimer > 0.0f) &&
+        ColPlyrSphere(ball->rad_cur))
     {
         NPCC_Slick_MakePlayerSlip(this->npc_owner);
     }
@@ -1689,7 +1699,7 @@ void NPCHazard::Upd_OilOoze(F32 dt)
 S32 NPCHazard::KickOilBurst()
 {
     NPCHazard* haz = HAZ_Acquire();
-    
+
     S32 ok;
     if (haz == NULL)
     {
@@ -1719,7 +1729,7 @@ S32 NPCHazard::KickOilGlobby()
 {
     HAZBall* ball = &this->custdata.ball;
     NPCHazard* haz = HAZ_Acquire();
-    
+
     S32 ok;
     if (haz == NULL)
     {
@@ -1783,7 +1793,7 @@ void NPCHazard::Upd_OilGlob(F32 dt)
     shroom->vel_rise += shroom->acc_rise * dt;
 
     if (this->flg_hazard & 0x2000 && !(globals.player.DamageTimer > 0.0f) &&
-            ColPlyrSphere(shroom->rad_cur))
+        ColPlyrSphere(shroom->rad_cur))
     {
         NPCC_Slick_MakePlayerSlip(this->npc_owner);
     }
@@ -1821,7 +1831,9 @@ void NPCHazard::Upd_FunFrag(F32 dt)
         PreCollide();
     }
 
-    F32 tym = this->tym_lifespan < this->tym_lifespan - this->tmr_remain ? this->tym_lifespan : this->tym_lifespan - this->tmr_remain;
+    F32 tym = this->tym_lifespan < this->tym_lifespan - this->tmr_remain ?
+                  this->tym_lifespan :
+                  this->tym_lifespan - this->tmr_remain;
     xParabolaEvalPos(parab, &this->pos_hazard, tym);
     xParabolaEvalVel(parab, &tartar->vel, tym);
 
@@ -1837,7 +1849,7 @@ void NPCHazard::StreakUpdate(U32 streakID, F32 rad)
 {
     xVec3 pos_left;
     pos_left = *(xVec3*)At() * 0.5f * rad;
-    
+
     xVec3 pos_right;
     pos_right = *(xVec3*)Up() * rad;
     pos_right += pos_left;
@@ -1881,7 +1893,9 @@ void NPCHazard::Upd_RoboBits(F32 dt)
         this->tym_lifespan = keepFlightTime;
     }
 
-    F32 tym = this->tym_lifespan < this->tym_lifespan - this->tmr_remain ? this->tym_lifespan : this->tym_lifespan - this->tmr_remain;
+    F32 tym = this->tym_lifespan < this->tym_lifespan - this->tmr_remain ?
+                  this->tym_lifespan :
+                  this->tym_lifespan - this->tmr_remain;
     xParabolaEvalPos(parab, &this->pos_hazard, tym);
     xParabolaEvalVel(parab, &tartar->vel, tym);
 
@@ -1895,7 +1909,8 @@ void NPCHazard::Upd_RoboBits(F32 dt)
 
 void NPCHazard::Upd_VisSplash(F32 dt)
 {
-    this->custdata.collide.rad_cur = LERP(this->pam_interp, this->custdata.collide.rad_min, this->custdata.collide.rad_max);
+    this->custdata.collide.rad_cur =
+        LERP(this->pam_interp, this->custdata.collide.rad_min, this->custdata.collide.rad_max);
 
     if (this->flg_hazard & 0x8)
     {
@@ -1917,7 +1932,7 @@ void NPCHazard::VisSplashSparklies()
         pos_emit *= rad;
         pos_emit += *(xVec3*)Up() * 0.2f;
         pos_emit += this->pos_hazard;
-        
+
         xVec3 vel_emit;
         vel_emit = *(xVec3*)Up();
         vel_emit *= 3.5f;

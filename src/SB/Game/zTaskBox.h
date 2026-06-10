@@ -31,9 +31,12 @@ struct ztaskbox : xBase
 
     struct callback
     {
-        callback();
-        virtual void on_talk_start();
-        virtual void on_talk_stop();
+        virtual void on_talk_start()
+        {
+        }
+        virtual void on_talk_stop()
+        {
+        }
     };
 
     struct talk_callback : ztalkbox::callback
@@ -107,7 +110,10 @@ struct ztaskbox : xBase
     static void init();
     bool exists(state_enum stage);
     static U32 get_text(U32);
-    U32 StatusGet() const;
+    U32 StatusGet() const
+    {
+        return this->state;
+    }
 };
 
 #endif

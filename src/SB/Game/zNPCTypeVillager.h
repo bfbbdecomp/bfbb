@@ -1,6 +1,7 @@
 #ifndef ZNPCTYPEVILLAGER_H
 #define ZNPCTYPEVILLAGER_H
 
+#include "xBehaviour.h"
 #include "zNPCSndLists.h"
 #include "zNPCSupport.h"
 #include "zNPCTypeCommon.h"
@@ -16,8 +17,20 @@ struct HiThere : ztaskbox::callback
 
     zNPCCommon* npc;
 
-    virtual void on_talk_start();
-    virtual void on_talk_stop();
+    virtual void on_talk_stop()
+    {
+        if (this->npc)
+        {
+            zNPCMsg_SendMsg(NPC_MID_TALKOFF, this->npc);
+        }
+    }
+    virtual void on_talk_start()
+    {
+        if (this->npc)
+        {
+            zNPCMsg_SendMsg(NPC_MID_TALKON, this->npc);
+        }
+    }
 };
 
 struct zNPCVillager : zNPCCommon
@@ -31,8 +44,15 @@ struct zNPCVillager : zNPCCommon
     }
 
     void FindMyConverse();
-    U8 ColPenByFlags() const;
-    U8 ColChkByFlags() const;
+    U8 ColChkByFlags() const
+    {
+        return 24;
+    }
+    U8 ColPenByFlags() const
+    {
+        return 24;
+    }
+    U8 ColChkFlags() const;
     U8 ColPenFlags() const;
     U8 PhysicsFlags() const;
     void Init(xEntAsset*);
@@ -40,13 +60,26 @@ struct zNPCVillager : zNPCCommon
     void ParseINI();
     void ParseNonRandTalk();
     void Process(xScene* xscn, F32 dt);
+    void CollideReview();
     void SelfSetup();
+    U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* goal);
+    S32 NPCMessage(NPCMsg* mail);
     void SpeakBegin();
     void SpeakEnd();
+    void SpeakStart(U32 sndid, U32 sndhandle, S32 anim);
+    void SpeakStop();
+    void AddTalking(xPsyche* psy, S32 (*eval_plyrnear)(xGoal*, void*, en_trantype*, F32, void*),
+                    S32 (*eval_talking)(xGoal*, void*, en_trantype*, F32, void*),
+                    S32 (*eval_chatter)(xGoal*, void*, en_trantype*, F32, void*),
+                    S32 (*eval_speak)(xGoal*, void*, en_trantype*, F32, void*));
     void TossMyConverse();
     S32 PlayerIsStaring();
     void ChkCheatSize();
-    F32 GenShadCacheRad();
+    F32 GenShadCacheRad()
+    {
+        return 1.5f;
+    }
+    virtual S32 FolkHandleMail(NPCMsg* mail);
 };
 
 struct zNPCFish : zNPCVillager
@@ -61,12 +94,19 @@ struct zNPCFish : zNPCVillager
     }
 
     void Init(xEntAsset*);
+    void Reset();
     void ParseINI();
     void FishSoundTables();
-    void CheckDoChat();
-    void Reset();
+    U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal);
     void SelfSetup();
-    xEntDrive* PRIV_GetDriverData();
+    void Process(xScene* xscn, F32 dt);
+    S32 FolkHandleMail(NPCMsg* mail);
+    void MonitorCowering(xScene* xscn, F32 dt);
+    void CheckDoChat();
+    xEntDrive* PRIV_GetDriverData()
+    {
+        return &raw_drvdata;
+    }
 };
 
 struct zNPCBubbleBuddy : zNPCFish
@@ -79,7 +119,10 @@ struct zNPCBubbleBuddy : zNPCFish
     void Setup();
     void Reset();
     void RenderExtra();
-    void Render();
+    void Render()
+    {
+        this->flg_xtrarend |= 1;
+    }
 
     static RwRaster* rast_fresnel;
     static RwRaster* rast_enviro;
@@ -87,6 +130,7 @@ struct zNPCBubbleBuddy : zNPCFish
     static RwTexture* txtr_fresnel;
     static U32 aid_enviroTxtr;
     static RwTexture* txtr_enviro;
+    static F32 alf_currBubBud;
 };
 
 enum en_BBOY_PLATANIM
@@ -114,8 +158,12 @@ struct zNPCBalloonBoy : zNPCFish
     void Render();
     void PlatShadRend();
     void AddBallooning(xPsyche* psy);
+    U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal);
+    S32 FolkHandleMail(NPCMsg* mail);
+    S32 ParseSysEvent(NPCSysEvent*);
     void PlatAnimSet(en_BBOY_PLATANIM anim);
     void PlatAnimSync();
+    S32 IAmBallooning();
 };
 
 struct zNPCSandyBikini : zNPCVillager
@@ -140,9 +188,22 @@ struct zNPCMerManChair : zNPCVillager
     }
 
     void Init(xEntAsset*);
-    U8 PhysicsFlags() const;
-    U8 ColPenFlags() const;
-    U8 ColChkFlags() const;
+    void Reset();
+    void SelfSetup();
+    U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal);
+    void Process(xScene* scn, F32 dt);
+    U8 ColChkFlags() const
+    {
+        return 0;
+    }
+    U8 ColPenFlags() const
+    {
+        return 0;
+    }
+    U8 PhysicsFlags() const
+    {
+        return 0;
+    }
 };
 
 struct zNPCNewsFish : zNPCVillager
@@ -257,58 +318,44 @@ struct zNPCNewsFish : zNPCVillager
     // 0x00000000; // 0x0
     // 0x00000000; // 0x4
     void Init(xEntAsset*); // 0x8 zNPCNewsFish
-    void PostInit(); // 0xC xNPCBasic
-    void Setup(); // 0x10 zNPCCommon
+    //void PostInit(); // 0xC xNPCBasic
+    //void Setup(); // 0x10 zNPCCommon
     void PostSetup(); // 0x14 zNPCNewsFish
     void Reset(); // 0x18 zNPCNewsFish
     void Process(xScene*, F32); // 0x1C zNPCNewsFish
-    void BUpdate(xVec3*); // 0x20 zNPCCommon
-    void NewTime(xScene*, F32); // 0x24 zNPCCommon
-    void Move(xScene*, F32, xEntFrame*); // 0x28 zNPCCommon
-    S32 SysEvent(xBase*, xBase*, U32, const F32*, xBase*, S32*); // 0x2C zNPCCommon
+    //void BUpdate(xVec3*); // 0x20 zNPCCommon
+    //void NewTime(xScene*, F32); // 0x24 zNPCCommon
+    //void Move(xScene*, F32, xEntFrame*); // 0x28 zNPCCommon
+    //S32 SysEvent(xBase*, xBase*, U32, const F32*, xBase*, S32*); // 0x2C zNPCCommon
     void Render(); // 0x30 zNPCNewsFish
-    void Save(xSerial*) const; // 0x34 xNPCBasic
-    void Load(xSerial*); // 0x38 xNPCBasic
-    void CollideReview(); // 0x3C zNPCVillager
-    U8 ColChkFlags() const; // 0x40 zNPCVillager
-    U8 ColPenFlags() const; // 0x44 zNPCVillager
-    U8 ColChkByFlags() const; // 0x48 zNPCVillager
-    U8 ColPenByFlags() const; // 0x4C zNPCVillager
-    U8 PhysicsFlags() const; // 0x50 zNPCVillager
-    void Destroy(); // 0x54 zNPCCommon
-    S32 NPCMessage(NPCMsg*); // 0x58 zNPCVillager
-    void RenderExtra(); // 0x5C zNPCCommon
-    void RenderExtraPostParticles(); // 0x60 zNPCCommon
-    void ParseINI(); // 0x64 zNPCVillager
-    void ParseLinks(); // 0x68 zNPCCommon
-    void ParseProps(); // 0x6C zNPCCommon
-    void SelfSetup(); // 0x70 zNPCNewsFish
-    void SelfDestroy(); // 0x74 zNPCCommon
-    S32 IsHealthy(); // 0x78 zNPCCommon
-    S32 IsAlive(); // 0x7C zNPCCommon
-    void Damage(en_NPC_DAMAGE_TYPE, xBase*, const xVec3*); // 0x80 zNPCCommon
-    S32 Respawn(const xVec3*, zMovePoint*, zMovePoint*); // 0x84 zNPCCommon
-    void DuploOwner(zNPCCommon*); // 0x88 zNPCCommon
-    void DuploNotice(en_SM_NOTICES, void*); // 0x8C zNPCCommon
-    S32 CanRope(); // 0x90 zNPCCommon
-    void LassoNotify(en_LASSO_EVENT); // 0x94 zNPCCommon
-    S32 SetCarryState(en_NPC_CARRY_STATE); // 0x98 zNPCCommon
-    void Stun(F32); // 0x9C zNPCCommon
-    void SpeakBegin(); // 0xA0 zNPCVillager
-    void SpeakEnd(); // 0xA4 zNPCVillager
+    //void Save(xSerial*) const; // 0x34 xNPCBasic
+    //void Load(xSerial*); // 0x38 xNPCBasic
+    //void CollideReview(); // 0x3C zNPCVillager
+    //U8 ColChkFlags() const; // 0x40 zNPCVillager
+    //U8 ColPenFlags() const; // 0x44 zNPCVillager
+    //U8 ColChkByFlags() const; // 0x48 zNPCVillager
+    //U8 ColPenByFlags() const; // 0x4C zNPCVillager
+    //U8 PhysicsFlags() const; // 0x50 zNPCVillager
+    //void Destroy(); // 0x54 zNPCCommon
+    //S32 NPCMessage(NPCMsg*); // 0x58 zNPCVillager
+    //void RenderExtra(); // 0x5C zNPCCommon
+    //void RenderExtraPostParticles(); // 0x60 zNPCCommon
+    //void ParseINI(); // 0x64 zNPCVillager
+    //void ParseLinks(); // 0x68 zNPCCommon
+    //void ParseProps(); // 0x6C zNPCCommon
+    void SelfSetup()
+    {
+    }
     void SpeakStart(U32 sndid, U32 sndhandle, S32 anim); // 0xA8 zNPCNewsFish
     void SpeakStop(); // 0xAC zNPCNewsFish
-    U32 AnimPick(S32, en_NPC_GOAL_SPOT, xGoal*); // 0xB0 zNPCVillager
-    void GetParm(en_npcparm, void*); // 0xB4 zNPCCommon
-    S32 GetParmDefault(en_npcparm, void*); // 0xB8 zNPCCommon
-    F32 GenShadCacheRad(); // 0xBC zNPCVillager
-    xEntDrive* PRIV_GetDriverData(); // 0xC0 zNPCCommon
-    zNPCLassoInfo* PRIV_GetLassoData(); // 0xC4 zNPCCommon
-    S32 LassoSetup(); // 0xC8 zNPCCommon
-    void FolkHandleMail(NPCMsg*); // 0xCC zNPCVillager
 
     void TalkOnScreen(S32 talkOnScreen);
-    zNPCNewsFish* get_said(zNPCNewsFish::say_enum);
+    S32 say(say_enum const*, unsigned long, S32, S32);
+    U8 say(say_enum s, S32 flags);
+    say_data* get_said(zNPCNewsFish::say_enum say)
+    {
+        return this->said + (S32)say;
+    };
 };
 
 struct zNPCNewsFishTV : zNPCVillager
@@ -317,11 +364,30 @@ struct zNPCNewsFishTV : zNPCVillager
     {
     }
 
-    U8 PhysicsFlags() const;
-    U8 ColPenByFlags() const;
-    U8 ColChkByFlags() const;
-    U8 ColPenFlags() const;
-    U8 ColChkFlags() const;
+    U8 ColChkFlags() const
+    {
+        return 0;
+    }
+
+    U8 ColPenFlags() const
+    {
+        return 0;
+    }
+
+    U8 ColChkByFlags() const
+    {
+        return 0;
+    }
+
+    U8 ColPenByFlags() const
+    {
+        return 0;
+    }
+
+    U8 PhysicsFlags() const
+    {
+        return 0;
+    }
 };
 
 xAnimTable* ZNPC_AnimTable_Villager();
@@ -331,7 +397,8 @@ xAnimTable* ZNPC_AnimTable_BalloonBoy();
 xAnimTable* ZNPC_AnimTable_BalloonBoy(xAnimTable* callerTable);
 xAnimTable* ZNPC_AnimTable_SuperFriend();
 xAnimTable* ZNPC_AnimTable_SuperFriend(xAnimTable* callerTable);
-S32 FOLK_grul_goAlert(xGoal*, void*, en_trantype*, F32, void*);
+S32 FOLK_grul_goAlert(xGoal* rawgoal, void*, en_trantype* trantype, F32, void*);
+S32 MERC_grul_goAlert(xGoal* rawgoal, void*, en_trantype* trantype, F32, void*);
 void FOLK_KillEffects();
 void FOLK_InitEffects();
 void zNPCVillager_ScenePostInit();
