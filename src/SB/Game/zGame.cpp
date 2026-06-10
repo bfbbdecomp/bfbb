@@ -13,11 +13,13 @@
 #include "zMusic.h"
 #include "zParPTank.h"
 #include "zSaveLoad.h"
+#include "zVolume.h"
 
 #include "iDraw.h"
 #include "iSystem.h"
 #include "iTRC.h"
 
+#include "xCamera.h"
 #include "xDebug.h"
 #include "xFont.h"
 #include "xMarkerAsset.h"
@@ -448,17 +450,120 @@ void zGameLoop()
         zCutsceneMgrFinishLoad(globals.cmgr);
     }
 
-    gGameWhereAmI = eGameWhere_LoopCalcTime;
-    sTimeCurrent = iTimeGet();
-    sTimeElapsed = iTimeDiffSec(sTimeLast, sTimeCurrent);
+    do {
+        gGameWhereAmI = eGameWhere_LoopCalcTime;
+        sTimeCurrent = iTimeGet();
+        sTimeElapsed = iTimeDiffSec(sTimeLast, sTimeCurrent);
 
-    if (sHackSmoothedUpdate = 0)
-    {
-        if (sTimeElapsed <= 0.1)
+        if (sHackSmoothedUpdate = 0)
         {
-            sTimeElapsed = 0.016666668f;
+            if (sTimeElapsed <= 0.1)
+            {
+                sTimeElapsed = 0.016666668f;
+            }
         }
+        else
+        {
+            sTimeElapsed = 0;
+        }
+
+        sTimeLast = sTimeCurrent;
+        iTimeGet();
+        //gloop_time += 1;
+        //gloop_ct += 1;
+        iTimeDiffSec(0);
+        //gloop_net_time = 0;
+        iTimeDiffSec(0);
+        //gloop_net_time_secs = 0;
+        gGameWhereAmI = eGameWhere_LoopPadUpdate;
+        xPadUpdate(0, sTimeElapsed);
+
+        if ((zGameExtras_CheatFlags() & 0x1000) != 0)
+        {
+
+        }
+
+        //xPadNormalizeAnalog(0, 0, 0);
+        gGameWhereAmI = eGameWhere_LoopTRCCheck;
+        iTRCDisk::CheckDVDAndResetState();
+
+        if (1)
+        {
+            zMusicNotify(0x7);
+        }
+
+        gGameWhereAmI = eGameWhere_LoopCheats;
+        zGameCheats(sTimeElapsed);
+        zGameExtras_SceneUpdate(sTimeElapsed);
+        iFileAsyncService();
+        gGameWhereAmI = eGameWhere_LoopSceneUpdate;
+        zSceneUpdate(sTimeElapsed);
+        gGameWhereAmI = eGameWhere_LoopPlayerUpdate;
+
+        if (zGameIsPaused())
+        {
+
+        }
+
+        gGameWhereAmI = eGameWhere_LoopSoundUpdate;
+        xSndSetListenerData(SND_LISTENER_CAMERA, 0);
+        xSndSetListenerData(SND_LISTENER_PLAYER, 0);
+        xSndUpdate();
+        gGameWhereAmI = eGameWhere_LoopSFXWidgets;
+        zSceneUpdateSFXWidgets();
+        gGameWhereAmI = eGameWhere_LoopHUDUpdate;
+        zhud::update(sTimeElapsed);
+        gGameWhereAmI = eGameWhere_LoopCameraUpdate;
+
+        if (1)
+        {
+            zCameraUpdate(&globals.camera, sTimeElapsed);
+        }
+
+        gGameWhereAmI = eGameWhere_LoopCameraFXUpdate;
+        xCameraFXBegin(&globals.camera);
+        xCameraFXUpdate(&globals.camera, sTimeElapsed);
+        gGameWhereAmI = eGameWhere_LoopFlyToInterface;
+        zScene_UpdateFlyToInterface(sTimeElapsed);
+        gGameWhereAmI = eGameWhere_LoopCameraBegin;
+        iTimeGet();
+        xCameraBegin(&globals.camera, 0x1);
+        iTimeGet();
+        //gwait_time += 1;
+        iTimeDiffSec(/*gwait_time, */0);
+        //gwait_time_secs = 0;
+        zVolume_OccludePrecalc(0/*&globals.player*/);
+        gGameWhereAmI = eGameWhere_LoopSceneRender;
+        zSceneRender();
+        xDebugUpdate();
+        gGameWhereAmI = eGameWhere_LoopCameraEnd;
+        xCameraEnd(&globals.camera, sTimeElapsed, 0x1);
+        iEnvEndRenderFX(0);
+        //RwGameCubeSetMinRetraceCount();
+        gGameWhereAmI = eGameWhere_LoopCameraShowRaster;
+        xCameraShowRaster(&globals.camera);
+        gGameWhereAmI = eGameWhere_LoopCameraFXEnd;
+        xCameraFXEnd(&globals.camera);
+        gGameWhereAmI = eGameWhere_LoopMusicUpdate;
+        zMusicUpdate(sTimeElapsed);
+        gGameWhereAmI = eGameWhere_LoopUpdateMode;
+        //zGameUpdateMode();
+        gFrameCount += 1;
+
+        if (0)
+        {
+
+        }
+        else
+        {
+
+        }
+
+        gGameWhereAmI = eGameWhere_LoopContinue;
     }
+    while (0/*zGameLoopContinue()*/);
+
+    gGameWhereAmI = eGameWhere_LoopEndGameLoop;
 }
 
 S32 zGameIsPaused()
