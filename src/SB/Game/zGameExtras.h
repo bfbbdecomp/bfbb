@@ -84,6 +84,4 @@ void GEC_cb_PanHandle();
 void zGame_HackGalleryInit();
 U32 zGame_HackIsGallery();
 
-template <class T> T xUtil_choose(T const* list, S32 size, F32 const* c);
-
 #endif

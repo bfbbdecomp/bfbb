@@ -40,8 +40,6 @@ basic_rect<F32> default_adjust = { 0.0f, 0.0f, 1.0f, 1.0f };
 extern iColor_tag zEntCruiseBubble_color_80_00_00_FF; // 128, 0, 0, 255
 extern iColor_tag zEntCruiseBubble_color_FF_14_14_FF; // 255, 20, 20, 255
 
-extern RpAtomic* (*gAtomicRenderCallBack)(RpAtomic*);
-
 namespace cruise_bubble
 {
     namespace

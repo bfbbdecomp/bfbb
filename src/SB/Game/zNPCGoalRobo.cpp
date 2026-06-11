@@ -5037,12 +5037,12 @@ void zNPCGoalDogLaunch::SilentSwimout(xVec3* unk1, xVec3* unk2, zMovePoint* unk3
     this->ViciousAttack(unk1, unk2, unk3, 1);
 }
 
-U8 zNPCGoalPatThrow::CollReview(void*)
+S32 zNPCGoalPatThrow::CollReview(void*)
 {
     return 0;
 }
 
-U8 zNPCGoalDogLaunch::CollReview(void*)
+S32 zNPCGoalDogLaunch::CollReview(void*)
 {
     return 0;
 }

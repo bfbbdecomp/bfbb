@@ -8,6 +8,7 @@
 #include "zGlobals.h"
 #include "xMathInlines.h"
 #include "zNPCTypeRobot.h"
+#include "xUtil.h"
 
 static SMDepot g_smdepot = {};
 static S32 g_drawSpawnBounds;
@@ -842,63 +843,4 @@ S32 zMovePoint::IsOn()
     // Cast is required by calling functions to occur in here
     // even though a single byte is moved into the return register
     return (S32)this->on;
-}
-
-template <typename T> T* xUtil_select(T** data, S32 size, const F32* arg2)
-{
-    T* selected = NULL;
-    S32 selectIdx = 0;
-
-    F32 randOffset;
-
-    if (data == NULL)
-    {
-        return NULL;
-    }
-    else if (size < 1)
-    {
-        return NULL;
-    }
-
-    randOffset = xurand();
-    if (arg2 == NULL)
-    {
-        selectIdx = (S32)(randOffset * (F32)size);
-    }
-    else
-    {
-        F32* roundingData = (F32*)arg2;
-        F32 threshold = 0.0f;
-        S32 counter = 0;
-
-        // TODO: Fix float arithmetic and symbols
-        for (S32 i = size; i > 0; i--)
-        {
-            F32 tempValue = threshold;
-            threshold += *roundingData;
-
-            if (randOffset >= threshold)
-            {
-                if (randOffset <= tempValue)
-                {
-                    selectIdx = counter;
-                    break;
-                }
-            }
-            roundingData++;
-            counter++;
-        }
-    }
-
-    if (selectIdx >= size)
-    {
-        selectIdx = size - 1;
-    }
-
-    if (selectIdx < 0)
-    {
-        selectIdx = 0;
-    }
-
-    return data[selectIdx];
 }
