@@ -449,17 +449,15 @@ void zNPCFXShutdown()
 {
 }
 
-void NCINBeNosey::Init(const zCutsceneMgr* m, NCINEntry* e, S32 i)
+void NCINBeNosey::Init(const zCutsceneMgr* m, NCINEntry* e, S32 i) // TODO: investigate missing member
 {
     this->use_fxtab = e;
-    this->x = i;
-    this->use_csnmgr = (zCutsceneMgr*)m;
+    this->use_csnmgr = m;
 }
 
 void NCINBeNosey::Done()
 {
     this->use_fxtab = 0;
-    this->x = 0;
     this->use_csnmgr = 0;
 }
 
