@@ -200,11 +200,13 @@ struct NPCCone
 
 struct NCINBeNosey : XCSNNosey
 {
-    zCutsceneMgr* use_csnmgr;
+    const zCutsceneMgr* use_csnmgr;
     NCINEntry* use_fxtab;
 
-    void UpdatedAnimated(RpAtomic* model, RwMatrixTag* animMat, U32 animIndex, U32 dataIndex);
     void CanRenderNow();
+    void Init(const zCutsceneMgr* csnmgr, NCINEntry* fxtab, S32 x);
+    void Done();
+    void UpdatedAnimated(RpAtomic* model, RwMatrixTag* animMat, U32 animIndex, U32 dataIndex);
 };
 
 #endif
