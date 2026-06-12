@@ -7,6 +7,8 @@
 #include "xMemMgr.h"
 #include "xRay3.h"
 
+struct xClumpCollBSPTree; 
+
 typedef const char* (*xSceneBase2NameCallback)(xBase*);
 typedef const char* (*xSceneID2NameCallback)(U32);
 typedef xBase* (*xSceneResolvIDCallback)(U32);
@@ -38,7 +40,13 @@ struct xScene
     xEnt** npcs;
     xEnt** act_ents;
     xEnt** nact_ents;
-    xEnv* env;
+    
+    // Offset: 0x44
+    union {
+        xEnv* env;
+        xClumpCollBSPTree* scenecoll;
+    };
+    
     xMemPool mempool;
     xSceneResolvIDCallback resolvID;
     xSceneBase2NameCallback base2Name;
