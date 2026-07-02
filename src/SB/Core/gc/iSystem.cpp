@@ -937,18 +937,16 @@ U32 iGetCurrFormattedDate(char* str)
 
     if (td.mday >= 10)
     {
-        str[0] = (td.mday / 10) + '0';
-        str++;
+        *str++ = (td.mday / 10) + '0';
     }
 
-    str[0] = (td.mday % 10) + '0';
-    str[1] = ',';
-    str[2] = ' ';
-    str[3] = (td.year / 1000) + '0';
-    str[4] = ((td.year / 100) % 10) + '0';
-    str[5] = ((td.year / 10) % 100) + '0';
-    str[6] = (td.year % 10) + '0';
-    str += 7;
+    *str++ = (td.mday % 10) + '0';
+    *str++ = ',';
+    *str++ = ' ';
+    *str++ = (td.year / 1000) + '0';
+    *str++ = ((td.year / 100) % 10) + '0';
+    *str++ = ((td.year / 10) % 100) + '0';
+    *str++ = (td.year % 10) + '0';
     *str++ = '\0';
 
     return str - start;
@@ -977,34 +975,31 @@ U32 iGetCurrFormattedTime(char* str)
 
     if (td.hour >= 10)
     {
-        str[0] = (td.hour / 10) + '0';
-        str++;
+        *str++ = (td.hour / 10) + '0';
     }
 
-    str[0] = (td.hour % 10) + '0';
-    str[1] = ':';
-    str[2] = (td.min / 10) + '0';
-    str[3] = (td.min % 10) + '0';
-    str[4] = ':';
-    str[5] = (td.sec / 10) + '0';
-    str[6] = (td.sec % 10) + '0';
-    str[7] = ' ';
+    *str++ = (td.hour % 10) + '0';
+    *str++ = ':';
+    *str++ = (td.min / 10) + '0';
+    *str++ = (td.min % 10) + '0';
+    *str++ = ':';
+    *str++ = (td.sec / 10) + '0';
+    *str++ = (td.sec % 10) + '0';
+    *str++ = ' ';
 
     if (am)
     {
-        str[8] = 'A';
-        str[9] = '.';
-        str[10] = 'M';
-        str[11] = '.';
-        str += 12;
+        *str++ = 'A';
+        *str++ = '.';
+        *str++ = 'M';
+        *str++ = '.';
     }
     else
     {
-        str[8] = 'P';
-        str[9] = '.';
-        str[10] = 'M';
-        str[11] = '.';
-        str += 12;
+        *str++ = 'P';
+        *str++ = '.';
+        *str++ = 'M';
+        *str++ = '.';
     }
 
     *str++ = '\0';
