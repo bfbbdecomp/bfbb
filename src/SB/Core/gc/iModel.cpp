@@ -224,20 +224,17 @@ S32 iModelSphereCull(xSphere* sphere)
     return (result == rwSPHEREOUTSIDE);
 }
 
-// Very nonmatching
 S32 iModelCullPlusShadow(RpAtomic* model, RwMatrix* mat, xVec3* shadowVec, S32* shadowOutside)
 {
     F32 xScale2, yScale2, zScale2;
     RwV3d *right, *up, *at;
     RwCamera* cam;
     RwSphere worldsph;
-    const RwFrustumPlane* frustumPlane;
-    S32 numPlanes;
+    const RwFrustumPlane *plane, *failedPlane;
+    S32 planesLeft, groupsLeft;
 
     cam = RwCameraGetCurrentCamera();
-
     RwV3dTransformPoints(&worldsph.center, &model->boundingSphere.center, 1, mat);
-
     right = &mat->right;
     up = &mat->up;
     at = &mat->at;
@@ -247,61 +244,92 @@ S32 iModelCullPlusShadow(RpAtomic* model, RwMatrix* mat, xVec3* shadowVec, S32* 
     worldsph.radius = model->boundingSphere.radius * xsqrt(MAX3(xScale2, yScale2, zScale2));
     model->worldBoundingSphere = worldsph;
 
-    numPlanes = 6;
-    frustumPlane = cam->frustumPlanes;
-    while (numPlanes--)
-    {
-        F32 nDot = worldsph.center.x * frustumPlane->plane.normal.x +
-                   worldsph.center.y * frustumPlane->plane.normal.y +
-                   worldsph.center.z * frustumPlane->plane.normal.z;
-        nDot -= frustumPlane->plane.distance;
+    plane = cam->frustumPlanes;
+    planesLeft = 5;
+    groupsLeft = 2;
+    failedPlane = NULL;
 
+    do
+    {
+        F32 nDot;
+
+        nDot = worldsph.center.x * plane[0].plane.normal.x +
+               worldsph.center.y * plane[0].plane.normal.y +
+               worldsph.center.z * plane[0].plane.normal.z;
+        nDot -= plane[0].plane.distance;
         if (nDot > worldsph.radius)
         {
-            F32 nDot;
-
-            F32 sDot = shadowVec->x * frustumPlane->plane.normal.x +
-                       shadowVec->y * frustumPlane->plane.normal.y +
-                       shadowVec->z * frustumPlane->plane.normal.z;
-            sDot -= frustumPlane->plane.distance;
-
-            if (sDot > worldsph.radius)
+            failedPlane = plane;
+        }
+        else
+        {
+            nDot = worldsph.center.x * plane[1].plane.normal.x +
+                   worldsph.center.y * plane[1].plane.normal.y +
+                   worldsph.center.z * plane[1].plane.normal.z;
+            nDot -= plane[1].plane.distance;
+            if (nDot > worldsph.radius)
             {
-                *shadowOutside = 1;
-                return 1;
+                failedPlane = plane + 1;
             }
-
-            frustumPlane++;
-            while (numPlanes--)
+            else
             {
-                nDot = worldsph.center.x * frustumPlane->plane.normal.x +
-                       worldsph.center.y * frustumPlane->plane.normal.y +
-                       worldsph.center.z * frustumPlane->plane.normal.z;
-                nDot -= frustumPlane->plane.distance;
-
-                sDot = shadowVec->x * frustumPlane->plane.normal.x +
-                       shadowVec->y * frustumPlane->plane.normal.y +
-                       shadowVec->z * frustumPlane->plane.normal.z;
-                sDot -= frustumPlane->plane.distance;
-
-                if (nDot > worldsph.radius && sDot > worldsph.radius)
+                nDot = worldsph.center.x * plane[2].plane.normal.x +
+                       worldsph.center.y * plane[2].plane.normal.y +
+                       worldsph.center.z * plane[2].plane.normal.z;
+                nDot -= plane[2].plane.distance;
+                planesLeft -= 1;
+                if (nDot > worldsph.radius)
                 {
-                    *shadowOutside = 1;
-                    return 1;
+                    failedPlane = plane + 2;
                 }
-
-                frustumPlane++;
             }
-
-            *shadowOutside = 0;
-            return 1;
         }
 
-        frustumPlane++;
+        if (failedPlane != NULL)
+            break;
+
+        plane += 3;
+        planesLeft -= 2;
+    } while (--groupsLeft);
+
+    if (failedPlane == NULL)
+    {
+        *shadowOutside = 0;
+        return 0;
+    }
+
+    {
+        F32 sDot = shadowVec->x * failedPlane->plane.normal.x +
+                   shadowVec->y * failedPlane->plane.normal.y +
+                   shadowVec->z * failedPlane->plane.normal.z;
+        sDot -= failedPlane->plane.distance;
+        if (sDot > worldsph.radius)
+        {
+            *shadowOutside = 1;
+            return 1;
+        }
+    }
+
+    plane = failedPlane + 1;
+    while (planesLeft--)
+    {
+        F32 nDot = worldsph.center.x * plane->plane.normal.x +
+                   worldsph.center.y * plane->plane.normal.y +
+                   worldsph.center.z * plane->plane.normal.z;
+        nDot -= plane->plane.distance;
+        F32 sDot = shadowVec->x * plane->plane.normal.x + shadowVec->y * plane->plane.normal.y +
+                   shadowVec->z * plane->plane.normal.z;
+        sDot -= plane->plane.distance;
+        if (nDot > worldsph.radius && sDot > worldsph.radius)
+        {
+            *shadowOutside = 1;
+            return 1;
+        }
+        plane++;
     }
 
     *shadowOutside = 0;
-    return 0;
+    return 1;
 }
 
 void iModelQuatToMat(xQuat* q, xVec3* a, RwMatrixTag* t)
@@ -434,8 +462,8 @@ U32 iModelVertCount(RpAtomic* model)
     return model->geometry->numVertices;
 }
 
-static inline void SkinXform(xVec3* dest, const xVec3* vert, RwMatrix* mat, const RwMatrix* skinmat,
-                             const F32* wt, const U32* idx, U32 count)
+static void SkinXform(xVec3* dest, const xVec3* vert, RwMatrix* mat, const RwMatrix* skinmat,
+                      const F32* wt, const U32* idx, U32 count)
 {
     U32 catMatFlags[2] = { 0, 0 };
     RwMatrix* catmat = (RwMatrix*)giAnimScratch;
@@ -465,7 +493,7 @@ static inline void SkinXform(xVec3* dest, const xVec3* vert, RwMatrix* mat, cons
         U32 wtidx = *idx;
         U32 maxwt = 4;
 
-        while (*fwt != 0.0f && maxwt)
+        while (*fwt && maxwt)
         {
             pMatrix = catmat + (wtidx & 0xFF);
 
@@ -477,8 +505,8 @@ static inline void SkinXform(xVec3* dest, const xVec3* vert, RwMatrix* mat, cons
                                 pMatrix->at.z * vert->z + pMatrix->pos.z);
 
             fwt++;
-            wtidx >>= 8;
             maxwt--;
+            wtidx >>= 8;
         }
 
         dest->x = rootmat->right.x * accumV.x + rootmat->up.x * accumV.y +
@@ -589,8 +617,8 @@ static inline void SkinNormals(xVec3* dest, const xVec3* normal, const RwMatrix*
                                 pMatrix->at.z * normal->z);
 
             fwt++;
-            wtidx >>= 8;
             maxwt--;
+            wtidx >>= 8;
         }
 
         dest->x = right.x * accumV.x + up.x * accumV.y + at.x * accumV.z;
