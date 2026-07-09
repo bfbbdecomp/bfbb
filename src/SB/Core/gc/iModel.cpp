@@ -1,5 +1,9 @@
 #include "iModel.h"
 
+#include "iCamera.h"
+#include "rpworld.h"
+#include "rwcore.h"
+#include "rwplcore.h"
 #include <types.h>
 #include <rpskin.h>
 #include <rpmatfx.h>
@@ -122,6 +126,92 @@ RpAtomic* FindAndInstanceAtomicCallback(RpAtomic* model, void* data)
     }
 
     return model;
+}
+
+RpAtomic* iModelStreamRead(RwStream* stream)
+{
+    static S32 num_models = 0;
+
+    if (stream == NULL)
+    {
+        return NULL;
+    }
+
+    if (RwStreamFindChunk(stream, 0x10, NULL, NULL) == 0)
+    {
+        RwStreamClose(stream, NULL);
+        return NULL;
+    }
+
+    RpClump* clump = RpClumpStreamRead(stream);
+    RwStreamClose(stream, NULL);
+    if (clump == NULL)
+    {
+        return NULL;
+    }
+
+    RwBBox bbox = { { 1000.0f, 1000.0f, 1000.0f }, { -1000.0f, -1000.0f, -1000.0f } };
+    instance_world = RpWorldCreate(&bbox);
+
+    instance_camera = iCameraCreate(640, 480, NULL);
+    RpWorldAddCamera(instance_world, instance_camera);
+
+    gLastAtomicCount = 0;
+    RpClumpForAllAtomics((RpClump*)stream, FindAndInstanceAtomicCallback, NULL);
+
+    RpWorldRemoveCamera(instance_world, instance_camera);
+    iCameraDestroy(instance_camera);
+    RpWorldDestroy(instance_world);
+
+    if (gLastAtomicCount > 1)
+    {
+        float maxRadius = -1.0f;
+        U32 maxIndex = 0;
+
+        for (U32 i = 0; i < gLastAtomicCount; i++)
+        {
+            RpAtomic* atomic = gLastAtomicList[i];
+            float radius = *(float*)((u8*)atomic + 0x28);
+            if (radius > maxRadius)
+            {
+                maxRadius = radius;
+                maxIndex = i;
+            }
+        }
+
+        for (U32 j = 0; j < gLastAtomicCount; j++)
+        {
+            if (j != maxIndex)
+            {
+                RpAtomic* atomic = gLastAtomicList[j];
+                RpAtomic* maxAtomic = gLastAtomicList[maxIndex];
+                float dist =
+                    xVec3Dist((xVec3*)((u8*)atomic + 0x1c), (xVec3*)((u8*)maxAtomic + 0x1c));
+                float testRadius = *(float*)((u8*)atomic + 0x28) + dist;
+                if (testRadius > maxRadius)
+                {
+                    maxRadius = testRadius;
+                }
+            }
+        }
+
+        maxRadius *= 1.05f;
+
+        for (U32 k = 0; k < gLastAtomicCount; k++)
+        {
+            if (k != maxIndex)
+            {
+                *(RwV3d*)((u8*)gLastAtomicList[k] + 0x1c) =
+                    *(RwV3d*)((u8*)gLastAtomicList[maxIndex] + 0x1c);
+            }
+
+            RpAtomic* atomic = gLastAtomicList[k];
+            *(float*)((u8*)atomic + 0x28) = maxRadius;
+            *(U32*)((u8*)atomic + 0x4c) &= ~0x2;
+        }
+    }
+
+    return gLastAtomicList[0];
 }
 
 RpAtomic* iModelFileNew(void* buffer, U32 size)
