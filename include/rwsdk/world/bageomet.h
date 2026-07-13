@@ -1,6 +1,10 @@
 #ifndef BAGEOMET_H
 #define BAGEOMET_H
 
+#define RpGeometryGetTriangles(_geometry) RpGeometryGetTrianglesMacro(_geometry)
+
+#define RpGeometryGetTrianglesMacro(_geometry) ((_geometry)->triangles)
+
 #define RpGeometryGetNumVertices(_geometry) ((_geometry)->numVertices)
 
 #define RpMorphTargetGetVertices(_mt) RpMorphTargetGetVerticesMacro(_mt)
