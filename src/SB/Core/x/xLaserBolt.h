@@ -126,12 +126,11 @@ struct xLaserBoltEmitter
     void emit_particle(effect_data& effect, bolt& b, F32 from_dist, F32 to_dist, F32 dt);
     void emit_decal(effect_data& effect, bolt& b, F32 from_dist, F32 to_dist, F32 dt);
     void emit_decal_dist(effect_data& effect, bolt& b, F32 from_dist, F32 to_dist, F32 dt);
-;
+    ;
     U32 visible() const;
 
     void debug_init(const char* texture_name)
     {
-
     }
 
     void emit_fx(effect_data& effect, bolt& b, F32 from_dist, F32 to_dist, F32 dt)
@@ -155,7 +154,7 @@ struct xLaserBoltEmitter
 
     void perturb_dir(xVec3& dir, F32 rand_angle)
     {
-        xVec3 temp = { 0.0f, 0.0f, 0.0f };
+        xVec3 temp = xVec3::m_Null; // literal zeroes leaks into other TUs' .rodata
         xMat3x3 mat;
 
         temp.x = (xurand() - 0.5f) * rand_angle;
@@ -174,7 +173,6 @@ struct xLaserBoltEmitter
 
     void debug_update(F32 dt)
     {
-
     }
 
     void flush_verts(RxObjSpace3DVertex* verts, S32 num_verts)
@@ -186,27 +184,23 @@ struct xLaserBoltEmitter
 
     void debug_render()
     {
-
     }
 
     void debug_refresh_effects(fx_when_enum when)
     {
-
     }
 
     void log_collide_statics(bool)
     {
-
     }
 
     void log_collide_dynamics(bool)
     {
-
     }
 
-    void set_bolt_verts(RxObjSpace3DVertex* vert, const xVec3& pointA, const xVec3& pointB, U8, const xVec3&)
+    void set_bolt_verts(RxObjSpace3DVertex* vert, const xVec3& pointA, const xVec3& pointB, U8,
+                        const xVec3&)
     {
-
     }
 };
 
