@@ -17,7 +17,6 @@ static RwFrame* GetChildFrameHierarchy(RwFrame* frame, void* data);
 U32 iModelNumBones(RpAtomic* model);
 S32 iModelCull(RpAtomic* model, RwMatrixTag* mat);
 S32 iModelSphereCull(xSphere* sphere);
-RpAtomic* iModelStreamRead(RwStream* stream);
 RpAtomic* iModelFileNew(void* buffer, U32 size);
 RpAtomic* iModelFile_RWMultiAtomic(RpAtomic* model);
 void iModelSetMaterialTexture(RpAtomic* model, void* texture);
