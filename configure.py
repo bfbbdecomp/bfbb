@@ -543,7 +543,7 @@ config.libs = [
             Object(NonMatching, "SB/Core/gc/isavegame.cpp"),
             Object(NonMatching, "SB/Core/gc/iScrFX.cpp"),
             Object(NonMatching, "SB/Core/gc/iSnd.cpp"),
-            Object(NonMatching, "SB/Core/gc/iSystem.cpp"),
+            Object(NonMatching, "SB/Core/gc/iSystem.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/gc/iTime.cpp"),
             Object(NonMatching, "SB/Core/gc/ngcrad3d.c"),
             Object(Matching, "SB/Game/zNPCGoals.cpp"),
