@@ -526,13 +526,13 @@ void* dlFopen(const char* name, const char* access)
         return NULL;
     }
 
-    fp->accessMode = 0;
+    fp->unk_2848 = 0;
     if (mode == 1)
     {
-        fp->accessMode = 1;
+        fp->unk_2848 = 1;
     }
 
-    if (fp->accessMode == 0)
+    if (fp->unk_2848 == 0)
     {
         RwEngineInstance->memoryFree(
             RWPLUGINOFFSET(dlFSUnkGlobals, RwEngineInstance, FSModuleInfo.globalsOffset)->unk_2C,
@@ -540,7 +540,7 @@ void* dlFopen(const char* name, const char* access)
         return NULL;
     }
 
-    if (DVDOpen(name, &fp->fileInfo) == 0)
+    if (DVDOpen(name, &fp->unk_2800) == 0)
     {
         RwEngineInstance->memoryFree(
             RWPLUGINOFFSET(dlFSUnkGlobals, RwEngineInstance, FSModuleInfo.globalsOffset)->unk_2C,
@@ -548,9 +548,9 @@ void* dlFopen(const char* name, const char* access)
         return NULL;
     }
 
-    fp->SOF = fp->fileInfo.length;
-    fp->POS = 0;
-    fp->bufferPos = DLFILE_BUF_SIZE;
+    fp->unk_2840 = fp->unk_2800.length;
+    fp->unk_283C = 0;
+    fp->unk_2844 = DLFILE_BUF_SIZE;
     FSOpenFiles++;
     return fp;
 }
@@ -559,7 +559,7 @@ static S32 dlFclose(void* fptr)
 {
     dlFile* fp = (dlFile*)fptr;
 
-    if (fp != NULL && FSOpenFiles != 0 && DVDClose(&fp->fileInfo) != 0)
+    if (fp != NULL && FSOpenFiles != 0 && DVDClose(&fp->unk_2800) != 0)
     {
         RwEngineInstance->memoryFree(
             RWPLUGINOFFSET(dlFSUnkGlobals, RwEngineInstance, FSModuleInfo.globalsOffset)->unk_2C,
@@ -598,24 +598,24 @@ static size_t dlFread(void* addr, size_t size, size_t count, void* fptr)
     dlFile* fp = (dlFile*)fptr;
     U32 numBytesToRead = size * count;
 
-    if ((U32)(fp->POS + numBytesToRead) > fp->SOF)
+    if ((U32)(fp->unk_283C + numBytesToRead) > fp->unk_2840)
     {
-        numBytesToRead = fp->SOF - fp->POS;
+        numBytesToRead = fp->unk_2840 - fp->unk_283C;
     }
-    if (fp->bufferPos < DLFILE_BUF_SIZE)
+    if (fp->unk_2844 < DLFILE_BUF_SIZE)
     {
         if (numBytesToRead > bytesRead)
         {
-            buffered = DLFILE_BUF_SIZE - fp->bufferPos;
+            buffered = DLFILE_BUF_SIZE - fp->unk_2844;
             if (numBytesToRead < buffered)
             {
                 buffered = numBytesToRead;
             }
             bytesRead = buffered;
-            memcpy(addr, fp->readBuffer + fp->bufferPos, buffered);
+            memcpy(addr, fp->readBuffer + fp->unk_2844, buffered);
             addr = (char*)addr + buffered;
-            fp->bufferPos += buffered;
-            fp->POS += buffered;
+            fp->unk_2844 += buffered;
+            fp->unk_283C += buffered;
         }
     }
     uVar1 = numBytesToRead - bytesRead;
@@ -625,7 +625,7 @@ static size_t dlFread(void* addr, size_t size, size_t count, void* fptr)
         {
             if (!((U32)addr & 0x1f) && !(uVar1 & 0x1f))
             {
-                uVar1 = DVDReadPrio(&fp->fileInfo, addr, uVar1, fp->POS, 2);
+                uVar1 = DVDReadPrio(&fp->unk_2800, addr, uVar1, fp->unk_283C, 2);
                 if ((S32)uVar1 < 0)
                 {
                     uVar1 = 0;
@@ -635,18 +635,18 @@ static size_t dlFread(void* addr, size_t size, size_t count, void* fptr)
             {
                 numBytesToRead -= bytesRead;
                 uVar1 = 0;
-                posTmp = fp->POS;
+                posTmp = fp->unk_283C;
                 S32 loopCount = (S32)numBytesToRead / DLFILE_BUF_SIZE + 1;
                 while (loopCount-- != 0)
                 {
-                    pos2 = fp->POS;
+                    pos2 = fp->unk_283C;
                     readSize = DLFILE_BUF_SIZE;
                     pos2 += uVar1;
-                    if ((S32)(fp->SOF - pos2) <= DLFILE_BUF_SIZE)
+                    if ((S32)(fp->unk_2840 - pos2) <= DLFILE_BUF_SIZE)
                     {
-                        readSize = (fp->SOF - pos2);
+                        readSize = (fp->unk_2840 - pos2);
                     }
-                    if (DVDReadPrio(&fp->fileInfo, fp->readBuffer, ((U32)readSize + 0x1f) & ~0x1f,
+                    if (DVDReadPrio(&fp->unk_2800, fp->readBuffer, ((U32)readSize + 0x1f) & ~0x1f,
                                     posTmp, 2) == -1)
                     {
                         return bytesRead + uVar1;
@@ -662,7 +662,7 @@ static size_t dlFread(void* addr, size_t size, size_t count, void* fptr)
                     else
                     {
                         memcpy(addr, fp->readBuffer, numBytesToRead);
-                        fp->bufferPos = numBytesToRead;
+                        fp->unk_2844 = numBytesToRead;
                         uVar1 += numBytesToRead;
                         posTmp += numBytesToRead;
                     }
@@ -671,20 +671,20 @@ static size_t dlFread(void* addr, size_t size, size_t count, void* fptr)
         }
         else
         {
-            buffered = ((U32)(fp->SOF - fp->POS) + 0x1f) & ~0x1f;
+            buffered = ((U32)(fp->unk_2840 - fp->unk_283C) + 0x1f) & ~0x1f;
             if ((S32)buffered > DLFILE_BUF_SIZE)
             {
                 buffered = DLFILE_BUF_SIZE;
             }
-            if (DVDReadPrio(&fp->fileInfo, fp->readBuffer, buffered, fp->POS, 2) == -1)
+            if (DVDReadPrio(&fp->unk_2800, fp->readBuffer, buffered, fp->unk_283C, 2) == -1)
             {
                 return bytesRead;
             }
             memcpy(addr, fp->readBuffer, uVar1);
-            fp->bufferPos = uVar1;
+            fp->unk_2844 = uVar1;
         }
         bytesRead += uVar1;
-        fp->POS += uVar1;
+        fp->unk_283C += uVar1;
     }
     return bytesRead / size;
 }
@@ -696,7 +696,7 @@ static size_t dlFwrite(const void* addr, size_t size, size_t count, void* fptr)
 
 static S32 dlFseek(void* fptr, long offset, int origin)
 {
-    S32 oldFPos = ((dlFile*)fptr)->POS;
+    S32 oldFPos = ((dlFile*)fptr)->unk_283C;
     dlFile* fp = (dlFile*)fptr;
     S32 bufStart;
 
@@ -704,34 +704,34 @@ static S32 dlFseek(void* fptr, long offset, int origin)
     {
     case 1:
     {
-        fp->POS = oldFPos + offset;
-        if ((S32)(fp->bufferPos + offset) >= 0 && (fp->bufferPos + offset) <= DLFILE_BUF_SIZE &&
-            fp->POS <= fp->SOF)
+        fp->unk_283C = oldFPos + offset;
+        if ((S32)(fp->unk_2844 + offset) >= 0 && (fp->unk_2844 + offset) <= DLFILE_BUF_SIZE &&
+            fp->unk_283C <= fp->unk_2840)
         {
-            fp->bufferPos += offset;
+            fp->unk_2844 += offset;
             return 0;
         }
         break;
     }
     case 2:
     {
-        S32 delta = (fp->POS = fp->SOF + offset) - oldFPos;
-        if ((S32)(fp->bufferPos + delta) >= 0 && (fp->bufferPos + delta) <= DLFILE_BUF_SIZE &&
-            fp->POS <= fp->SOF)
+        S32 delta = (fp->unk_283C = fp->unk_2840 + offset) - oldFPos;
+        if ((S32)(fp->unk_2844 + delta) >= 0 && (fp->unk_2844 + delta) <= DLFILE_BUF_SIZE &&
+            fp->unk_283C <= fp->unk_2840)
         {
-            fp->bufferPos += delta;
+            fp->unk_2844 += delta;
             return 0;
         }
         break;
     }
     case 0:
     {
-        fp->POS = offset;
+        fp->unk_283C = offset;
         S32 delta = offset - oldFPos;
-        if ((S32)(fp->bufferPos + delta) >= 0 && (fp->bufferPos + delta) <= DLFILE_BUF_SIZE &&
-            fp->POS <= fp->SOF)
+        if ((S32)(fp->unk_2844 + delta) >= 0 && (fp->unk_2844 + delta) <= DLFILE_BUF_SIZE &&
+            fp->unk_283C <= fp->unk_2840)
         {
-            fp->bufferPos += delta;
+            fp->unk_2844 += delta;
             return 0;
         }
         break;
@@ -742,24 +742,24 @@ static S32 dlFseek(void* fptr, long offset, int origin)
     }
     }
 
-    if (fp->POS > fp->SOF)
+    if (fp->unk_283C > fp->unk_2840)
     {
-        fp->POS = oldFPos;
+        fp->unk_283C = oldFPos;
         return -1;
     }
 
-    bufStart = (fp->POS / (U32)DLFILE_BUF_SIZE) * DLFILE_BUF_SIZE;
+    bufStart = (fp->unk_283C / (U32)DLFILE_BUF_SIZE) * DLFILE_BUF_SIZE;
 
-    if (DVDReadPrio(&fp->fileInfo, fp->readBuffer,
-                    (fp->SOF - bufStart <= DLFILE_BUF_SIZE) ? (fp->SOF - bufStart + 31) & ~31 :
+    if (DVDReadPrio(&fp->unk_2800, fp->readBuffer,
+                    (fp->unk_2840 - bufStart <= DLFILE_BUF_SIZE) ? (fp->unk_2840 - bufStart + 31) & ~31 :
                                                               DLFILE_BUF_SIZE,
                     bufStart, 2) == -1)
     {
-        fp->POS = oldFPos;
+        fp->unk_283C = oldFPos;
         return -1;
     }
 
-    fp->bufferPos = fp->POS - bufStart;
+    fp->unk_2844 = fp->unk_283C - bufStart;
     return 0;
 }
 
@@ -800,7 +800,7 @@ static char* dlFgets(char* buffer, S32 maxLen, void* fptr)
             i++;
         }
     }
-    if ((numBytesRead < maxLen) && (fp->POS == fp->SOF))
+    if ((numBytesRead < maxLen) && (fp->unk_283C == fp->unk_2840))
     {
         buffer[numBytesRead] = '\0';
     }
@@ -815,7 +815,7 @@ static S32 dlFputs(const char* buffer, void* fptr)
 static S32 dlFeof(void* fptr)
 {
     dlFile* fp = (dlFile*)fptr;
-    return fp->POS >= fp->SOF;
+    return fp->unk_283C >= fp->unk_2840;
 }
 
 static S32 dlFflush(void*)
@@ -826,7 +826,7 @@ static S32 dlFflush(void*)
 static S32 dlFtell(void* fptr)
 {
     dlFile* fp = (dlFile*)fptr;
-    return fp->POS;
+    return fp->unk_283C;
 }
 
 static void* _rwDolphinFSOpen(void* param_1, int param_2, int param_3)
@@ -843,7 +843,7 @@ static void* _rwDolphinFSOpen(void* param_1, int param_2, int param_3)
     }
 
     RwFileFunctions* funcs = RwOsGetFileInterface();
-    RWPLUGINOFFSET(dlFSUnkGlobals, RwEngineInstance, FSModuleInfo.globalsOffset)->fileFuncs =
+    RWPLUGINOFFSET(dlFSUnkGlobals, RwEngineInstance, FSModuleInfo.globalsOffset)->unk_00 =
         *funcs;
 
     funcs->rwfexist = dlFexist;
@@ -867,7 +867,7 @@ static void* _rwDolphinFSClose(void* param_1, int param_2, int param_3)
 {
     RwFileFunctions* osFileInterface = RwOsGetFileInterface();
     *osFileInterface =
-        (RWPLUGINOFFSET(dlFSUnkGlobals, RwEngineInstance, FSModuleInfo.globalsOffset))->fileFuncs;
+        (RWPLUGINOFFSET(dlFSUnkGlobals, RwEngineInstance, FSModuleInfo.globalsOffset))->unk_00;
     RwFreeListDestroy(
         (RWPLUGINOFFSET(dlFSUnkGlobals, RwEngineInstance, FSModuleInfo.globalsOffset))->unk_2C);
 
