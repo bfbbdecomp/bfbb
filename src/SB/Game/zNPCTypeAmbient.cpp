@@ -9,6 +9,7 @@
 #include "zNPCTypeAmbient.h"
 #include "zNPCTypes.h"
 #include <xutil.h>
+#include "macros.h"
 #include "xMathInlines.h"
 #include "zNPCGoals.h"
 #include "zGrid.h"
@@ -194,7 +195,7 @@ void zNPCAmbient::SelfSetup()
 U32 zNPCAmbient::AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal)
 {
     S32 idx;
-    U32 yeah = 0;
+    U32 anim = 0;
 
     switch (gid)
     {
@@ -210,10 +211,10 @@ U32 zNPCAmbient::AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal)
 
     if (idx >= 0)
     {
-        yeah = g_hash_ambianim[idx];
+        anim = g_hash_ambianim[idx];
     }
 
-    return yeah;
+    return anim;
 }
 
 S32 zNPCAmbient::NPCMessage(NPCMsg* mail)
@@ -558,37 +559,18 @@ void zNPCJelly::PlayWithAnimSpd()
 
 void zNPCJelly::PumpFaster()
 {
-    // 0x18
-    // 0x1d8 cfg_npc
-
     F32 spd = 4.0f;
 
-    F32 dvar3;
-    F32 dvar4;
+    F32 temp3;
+    F32 temp4;
 
     if (cfg_npc->spd_moveMax > spd)
     {
         spd = cfg_npc->spd_moveMax;
     }
-    dvar3 = this->spd_throttle / spd;
-    dvar4 = 1.0;
-    if (dvar3 < 1.0f)
-    {
-        dvar4 = dvar3;
-    }
-    if (dvar4 > 0.0f)
-    {
-        dvar4 = 1.0f;
-        if (dvar3 < dvar4)
-        {
-            dvar4 = dvar3;
-        }
-    }
-    else
-    {
-        dvar4 = 0.0f;
-    }
-    dvar4 = SMOOTH(dvar4, 1.0f, 2.5f);
+    temp3 = this->spd_throttle / spd;
+    temp4 = CLAMP(temp3, 0.0f, 1.0f);
+    temp4 = SMOOTH(temp4, 1.0f, 2.5f);
 
     AnimCurSingle();
 }
@@ -606,7 +588,7 @@ void zNPCJelly::PlayWithLightnin()
 U32 zNPCMimeFish::AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal)
 {
     S32 idx;
-    U32 yeah = 0;
+    U32 anim = 0;
 
     switch (gid)
     {
@@ -623,10 +605,10 @@ U32 zNPCMimeFish::AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal)
 
     if (idx >= 0)
     {
-        yeah = g_hash_ambianim[idx];
+        anim = g_hash_ambianim[idx];
     }
 
-    return yeah;
+    return anim;
 }
 
 void zNPCMimeFish::Process(xScene* xscn, F32 dt)
