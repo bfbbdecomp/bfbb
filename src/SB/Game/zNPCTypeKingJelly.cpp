@@ -45,41 +45,6 @@
 
 namespace
 {
-    S32 boss_cam()
-    {
-        return 0; //todo
-    }
-
-    S32 play_sound(int, const xVec3*)
-    {
-        return 0; //todo
-    }
-
-    S32 kill_sound(int)
-    {
-        return 0; //to do
-    }
-
-    void kill_sounds()
-    {
-        for (S32 i = 0; i < 11; i++)
-        {
-            kill_sound(i);
-        }
-    }
-
-    void reset_model_color(xModelInstance* submodel) //25% matching. will need rewritten
-    {
-        while (submodel != NULL)
-        {
-            submodel = submodel->Next;
-        }
-    }
-
-    void tweak()
-    {
-    }
-
     struct tweak_group
     {
         void* context;
@@ -194,6 +159,188 @@ namespace
         void load(xModelAssetParam* ap, U32 apsize);
         void register_tweaks(bool init, xModelAssetParam* ap, U32 apsize, const char*);
     };
+
+    struct sound_data_type 
+    {
+        U32 id[2]; // offset 0x0, size 0x8
+        U8 delayed; // offset 0x8, size 0x1
+        S8 amount; // offset 0x9, size 0x1
+        S8 playing; // offset 0xA, size 0x1
+        F32 time; // offset 0xC, size 0x4
+        U32 handle; // offset 0x10, size 0x4
+        xVec3 * loc; // offset 0x14, size 0x4
+    };
+
+    static tweak_group tweak;
+    static sound_data_type sound_data[11];
+    static zParEmitter* spawn_emitter;
+    static xParEmitterCustomSettings spawn_emitter_settings;
+    static zParEmitter* zap_emitter;
+    static xParEmitterCustomSettings zap_emitter_settings;
+    static zParEmitter* shock_ring_emitter;
+    static xParEmitterCustomSettings shock_ring_emitter_settings;
+    static zParEmitter* thump_ring_emitter;
+    static xParEmitterCustomSettings thump_ring_emitter_settings;
+    static xVec3 ring_segments[64];
+    
+    // TODO: fix this up
+    static char* sound_name[11][3] = {
+        {
+            "KJ_pulseupdown",
+            NULL,
+            NULL
+        },
+        {
+            "KJ_grunt",
+            NULL,
+            NULL
+        },
+        {
+            "KJ_Charge",
+            NULL,
+            NULL
+        },
+        {
+            "KJ_Cheer",
+            NULL,
+            NULL
+        },
+        {
+            "KJ_Land1",
+            NULL,
+            NULL
+        },
+        {
+            "KJ_Land2",
+            NULL,
+            NULL
+        },
+        {
+            "KJ_Mov",
+            NULL,
+            NULL
+        },
+        {
+            "KJ_Osc",
+            NULL,
+            NULL
+        },
+        {
+            "KJ_rise",
+            NULL,
+            NULL
+        },
+        {
+            "KJ_Taunt",
+            NULL,
+            NULL
+        },
+        {
+            "KJ_Pulse",
+            NULL,
+            NULL
+        },
+    };
+
+    static U8 sound_flags[11] = { 0x1, 0x0, 0x0, 0x0, 0x0,
+                                  0x0, 0x1, 0x1, 0x0, 0x0, 0x0};
+
+    // TODO: Match the data
+    static xBinaryCamera boss_cam = {};
+}
+
+namespace
+{
+    void init_sound()
+    {
+        memset(sound_data, NULL, sizeof(sound_data));
+
+        for (S32 i = 0; i < 11; i++)
+        {
+            for (S32 j = 0; j < 2; j++)
+            {
+                if (sound_name[i][j] == NULL)
+                {
+                    break;
+                }
+
+                sound_data[i].id[j] = xStrHash(sound_name[i][j]);
+                sound_data[i].amount++;
+            }
+            
+            sound_data[i].playing = -1;
+        }
+    }
+
+    void play_sound_immediate(S32 sound_index, const xVec3* pos)
+    {
+        sound_data_type& sound = sound_data[sound_index];
+
+        if (sound.handle != 0 && sound_flags[sound_index] & 0x1)
+        {
+            return;
+        }
+
+        sound.playing = 0;
+        sound.delayed = FALSE;
+
+        if (sound.amount > 1)
+        {
+            sound.playing = (xrand() >> 13) % sound.amount;
+        }
+
+        sound.handle = xSndPlay3D(
+            sound.playing,
+            tweak.sound[sound_index].volume,
+            1.0f,
+            tweak.sound[sound_index].priority,
+            0x0,
+            pos,
+            tweak.sound[sound_index].radius_inner,
+            tweak.sound[sound_index].radius_outer,
+            SND_CAT_GAME,
+            0.0f
+        );
+    }
+
+    void play_sound(S32 sound_index, const xVec3* pos)
+    {
+        if (tweak.sound[sound_index].delay <= 0.0f)
+        {
+            play_sound_immediate(sound_index, pos);
+            return;
+        }
+
+        sound_data_type& sound = sound_data[sound_index];
+        if (sound.handle != 0 && sound_flags[sound_index] & 0x1)
+        {
+            return;
+        }
+     
+        sound.delayed = TRUE;
+        sound.time = 0.0f;
+    }
+    
+    S32 kill_sound(int)
+    {
+        return 0; //to do
+    }
+
+    void kill_sounds()
+    {
+        for (S32 i = 0; i < 11; i++)
+        {
+            kill_sound(i);
+        }
+    }
+
+    void reset_model_color(xModelInstance* submodel) //25% matching. will need rewritten
+    {
+        while (submodel != NULL)
+        {
+            submodel = submodel->Next;
+        }
+    }
 
     void tweak_group::load(xModelAssetParam* ap, U32 apsize)
     {
