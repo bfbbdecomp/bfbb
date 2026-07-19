@@ -11,15 +11,13 @@ struct PreCalcOcclude
     xVec4 FrustVec[4];
 };
 
-extern zVolume* vols;
-extern U16 nvols;
+zVolume* vols;
+U16 nvols;
 
-extern S32 gOccludeCount;
-extern zVolume* gOccludeList[10];
-extern S32 gOccludeCalcCount;
-extern PreCalcOcclude gOccludeCalc[10];
-
-extern float lbl_803CDFB8;
+S32 gOccludeCount;
+zVolume* gOccludeList[10];
+S32 gOccludeCalcCount;
+PreCalcOcclude gOccludeCalc[10];
 
 static void zVolumeInit(zVolume* vol, xVolumeAsset* asset)
 {
@@ -132,7 +130,7 @@ void zVolume_OccludePrecalc(xVec3* camPos)
             depthdot = -depthdot;
         }
 
-        if (iabs(camdot - depthdot) >= lbl_803CDFB8)
+        if (iabs(camdot - depthdot) >= 1.0f)
         {
             calc->DepthVec.w = depthdot;
 
