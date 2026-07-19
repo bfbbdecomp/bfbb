@@ -133,28 +133,6 @@ void zMainParseINIGlobals(xIniFile* ini)
     globals.player.g.AnalogMax = xIniGetInt(ini, "g.AnalogMax", 0x6e);
     xScrFxLetterBoxSetSize(xIniGetFloat(ini, "ScrFxLetterBoxSize", 0.0f));
     xScrFxLetterBoxSetAlpha(xIniGetInt(ini, "ScrFxLetterBoxAlpha", 0xff));
-    globals.player.g.InitialShinyCount = xIniGetInt(ini, "g.InitialShinyCount", 0);
-    globals.player.g.InitialSpatulaCount = xIniGetInt(ini, "g.InitialSpatulaCount", 0);
-    globals.player.g.ShinyValuePurple = xIniGetInt(ini, "g.ShinyValuePurple", 100);
-    globals.player.g.ShinyValueBlue = xIniGetInt(ini, "g.ShinyValueBlue", 0x19);
-    globals.player.g.ShinyValueGreen = xIniGetInt(ini, "g.ShinyValueGreen", 10);
-    globals.player.g.ShinyValueYellow = xIniGetInt(ini, "g.ShinyValueYellow", 5);
-    globals.player.g.ShinyValueRed = xIniGetInt(ini, "g.ShinyValueRed", 1);
-    globals.player.g.ShinyValueCombo0 = xIniGetInt(ini, "g.ShinyValueCombo0", 0);
-    globals.player.g.ShinyValueCombo1 = xIniGetInt(ini, "g.ShinyValueCombo1", 0);
-    globals.player.g.ShinyValueCombo2 = xIniGetInt(ini, "g.ShinyValueCombo2", 2);
-    globals.player.g.ShinyValueCombo3 = xIniGetInt(ini, "g.ShinyValueCombo3", 3);
-    globals.player.g.ShinyValueCombo4 = xIniGetInt(ini, "g.ShinyValueCombo4", 3);
-    globals.player.g.ShinyValueCombo5 = xIniGetInt(ini, "g.ShinyValueCombo5", 5);
-    globals.player.g.ShinyValueCombo6 = xIniGetInt(ini, "g.ShinyValueCombo6", 10);
-    globals.player.g.ShinyValueCombo7 = xIniGetInt(ini, "g.ShinyValueCombo7", 0xf);
-    globals.player.g.ShinyValueCombo8 = xIniGetInt(ini, "g.ShinyValueCombo8", 0x14);
-    globals.player.g.ShinyValueCombo9 = xIniGetInt(ini, "g.ShinyValueCombo9", 0x19);
-    globals.player.g.ShinyValueCombo10 = xIniGetInt(ini, "g.ShinyValueCombo10", 0x1e);
-    globals.player.g.ShinyValueCombo11 = xIniGetInt(ini, "g.ShinyValueCombo11", 0x28);
-    globals.player.g.ShinyValueCombo12 = xIniGetInt(ini, "g.ShinyValueCombo12", 0x32);
-    globals.player.g.ShinyValueCombo13 = xIniGetInt(ini, "g.ShinyValueCombo13", 0x3c);
-    globals.player.g.ShinyValueCombo14 = xIniGetInt(ini, "g.ShinyValueCombo14", 0x4b);
     globals.player.g.ShinyValueCombo15 = xIniGetInt(ini, "g.ShinyValueCombo15", 100);
 
     globals.player.g.ComboTimer = xIniGetFloat(ini, "g.ComboTimer", 1.0f); // @1002;
