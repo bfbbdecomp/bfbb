@@ -275,9 +275,10 @@ jobs:
             echo "file_empty=true" >> $GITHUB_OUTPUT
           fi
 
-      - name: PR comment with file
-        if: ${{ steps.comment_file_check.outputs.file_empty == 'false' }}
-        uses: thollander/actions-comment-pull-request@v3
+      # This workflow doesn't have permissions to post a comment.
+      # Upload the comment and it will be picked up by the pr-comment.yml workflow
+      - name: Upload comment
+        uses: actions/upload-artifact@v4
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          file-path: pr.txt
+          name: pr.txt
+          path: pr.txt
