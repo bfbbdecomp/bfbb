@@ -28,6 +28,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Read PR number
+        uses: actions/github-script@v9
         id: pr_number
         with:
           script:
