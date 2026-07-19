@@ -2,7 +2,7 @@ name: Build
 
 on:
   push:
-  pull_request_target:
+  pull_request:
 
 jobs:
   build:
@@ -28,7 +28,7 @@ jobs:
 
       # Checkout the repository (PR from forked repo)
       - name: Checkout
-        if: ${{ github.event_name == 'pull_request_target'}}
+        if: ${{ github.event_name == 'pull_request'}}
         uses: actions/checkout@v4
         with:
           submodules: recursive
@@ -92,7 +92,7 @@ jobs:
 
       # Checkout the repository (PR from forked repo)
       - name: Checkout
-        if: ${{ github.event_name == 'pull_request_target'}}
+        if: ${{ github.event_name == 'pull_request'}}
         uses: actions/checkout@v4
         with:
           submodules: recursive
@@ -151,7 +151,7 @@ jobs:
 
       # Checkout the commit to generate CI progress report for PR comment report
       - name: Checkout previous report repo state
-        if: ${{ github.event_name == 'pull_request_target' }}
+        if: ${{ github.event_name == 'pull_request' }}
         run: |
           git checkout main
 
@@ -176,7 +176,7 @@ jobs:
     needs:
       - build
       - build-previous
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && github.event_name != 'pull_request_target'
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     steps:
       - name: Checkout website code
         uses: actions/checkout@v4
@@ -234,7 +234,7 @@ jobs:
     needs:
       - build
       - build-previous
-    if: github.event_name == 'pull_request_target'
+    if: github.event_name == 'pull_request'
     permissions:
       pull-requests: write
     steps:
