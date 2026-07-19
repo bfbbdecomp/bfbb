@@ -751,8 +751,9 @@ static S32 dlFseek(void* fptr, long offset, int origin)
     bufStart = (fp->unk_283C / (U32)DLFILE_BUF_SIZE) * DLFILE_BUF_SIZE;
 
     if (DVDReadPrio(&fp->unk_2800, fp->readBuffer,
-                    (fp->unk_2840 - bufStart <= DLFILE_BUF_SIZE) ? (fp->unk_2840 - bufStart + 31) & ~31 :
-                                                              DLFILE_BUF_SIZE,
+                    (fp->unk_2840 - bufStart <= DLFILE_BUF_SIZE) ?
+                        (fp->unk_2840 - bufStart + 31) & ~31 :
+                        DLFILE_BUF_SIZE,
                     bufStart, 2) == -1)
     {
         fp->unk_283C = oldFPos;
@@ -843,8 +844,7 @@ static void* _rwDolphinFSOpen(void* param_1, int param_2, int param_3)
     }
 
     RwFileFunctions* funcs = RwOsGetFileInterface();
-    RWPLUGINOFFSET(dlFSUnkGlobals, RwEngineInstance, FSModuleInfo.globalsOffset)->unk_00 =
-        *funcs;
+    RWPLUGINOFFSET(dlFSUnkGlobals, RwEngineInstance, FSModuleInfo.globalsOffset)->unk_00 = *funcs;
 
     funcs->rwfexist = dlFexist;
     funcs->rwfopen = dlFopen;

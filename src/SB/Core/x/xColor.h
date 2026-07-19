@@ -20,4 +20,12 @@ extern const iColor_tag g_PINK;
 
 iColor_tag xColorFromRGBA(U8 r, U8 g, U8 b, U8 a);
 
+inline void xColorInit(iColor_tag* ret, U8 r, U8 g, U8 b, U8 a)
+{
+    ret->r = r;
+    ret->g = g;
+    ret->b = b;
+    ret->a = a;
+}
+
 #endif
