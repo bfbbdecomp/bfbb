@@ -21,7 +21,6 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: PR comment with file
-        if: ${{ steps.comment_file_check.outputs.file_empty == 'false' }}
         uses: thollander/actions-comment-pull-request@v3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
