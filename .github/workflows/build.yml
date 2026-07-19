@@ -258,14 +258,14 @@ jobs:
         id: ok-command
         run: |
           ./objdiff report changes artifacts/previous.json artifacts/progress.json -o artifacts/changes.json
-          ./ok --changes artifacts/changes.json pr > pr.txt
-          cat pr.txt
+          ./ok --changes artifacts/changes.json pr > pr_comment.txt
+          cat pr_comment.txt
 
       - name: Verify OK Bot Comment is Not Empty
         id: comment_file_check
         run: |
-          FILE_PATH="pr.txt"
-          echo "===== pr.txt contents (debug) ====="
+          FILE_PATH="pr_comment.txt"
+          echo "===== pr_comment.txt contents (debug) ====="
           sed -n '1,200p' "$FILE_PATH" || true
           echo "===== end debug ====="
           # Consider the file empty if it has zero bytes OR only whitespace/newlines.
