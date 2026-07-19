@@ -23,7 +23,9 @@ struct response_curve
     U32 nodes; // offset 0x8,
     U32 active_node; // offset 0xC,
 
-    static void init(U32, const void*, U32, const char*, const char**, const tweak_callback*,
+    // static void init(U32, const void*, U32, const char*, const char**, const tweak_callback*,
+    //  void*);
+    static void init(U64, const void*, U64, const char*, const char**, const tweak_callback*,
                      void*);
     void end_t() const;
 };
@@ -227,6 +229,7 @@ struct zNPCB_SB2 : zNPCBoss
 
     zNPCB_SB2(S32 myType);
     void Init(xEntAsset* asset);
+    void ParseINI();
     void Setup();
     void SelfSetup();
     void Reset();

@@ -1174,6 +1174,23 @@ void zNPCB_SB2::Init(xEntAsset* asset)
     this->init_slugs();
 }
 
+namespace
+{
+
+    void response_curve::init(U64, const void*, U64, const char*, const char**, const tweak_callback*,
+                     void*)
+    {
+        
+    }
+
+}
+
+void zNPCB_SB2::ParseINI()
+{
+    zNPCCommon::ParseINI();
+    tweak.load(parmdata, pdatsize);
+}
+
 void zNPCB_SB2::Setup()
 {
     xEnt* ent; 
@@ -1409,26 +1426,31 @@ void zNPCB_SB2::reset_speed()
 
 S32 zNPCB_SB2::player_platform()
 {
-    if (((globals.player.ent.collis->colls->flags & 1) != 0))
+    if (((globals.player.ent.collis->colls->flags & 1) == 0) 
+    || (globals.player.ent.collis->colls->optr == 0) 
+    || (((xEnt*)globals.player.ent.collis->colls->optr)->baseType != 6))
     {
-        return 1;
+        return 0;
     }
+
+    // &platforms offset 0x92C, size 0x5C0
+   
 
     return NULL;
 }
 
-void zNPCB_SB2::activate_hand(zNPCB_SB2::hand_enum hand, bool)
+void zNPCB_SB2::activate_hand(zNPCB_SB2::hand_enum hand, bool active)
 {
-   hands[0].hurt_player = 1;
-   hands[0].hit_platforms = 0x10;
-   hands[0].ent->penby = 0x10;
+   this->hands[hand].hurt_player = 1;
+   this->hands[hand].hit_platforms = active;
+   this->hands[hand].ent->penby = 0x10;
 }
 
 void zNPCB_SB2::deactivate_hand(zNPCB_SB2::hand_enum hand)
 {
-   hands[0].hit_platforms = 0;
-   hands[0].hurt_player = 0x10;
-   hands[0].ent->penby = 0;
+   this->hands[hand].hit_platforms = 0;
+   this->hands[hand].hurt_player = 0;
+   this->hands[hand].ent->penby = 0x10;
 }
 
 S32 zNPCB_SB2::player_on_ground() const
