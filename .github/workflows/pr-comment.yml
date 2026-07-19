@@ -46,4 +46,4 @@ jobs:
         with:
           pr-number: ${{ steps.pr_number.outputs.pr_number }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          file-path: pr.txt
+          file-path: pr_comment.txt
