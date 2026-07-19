@@ -35,7 +35,8 @@ jobs:
           script: |
             try {
               const fs = require('fs')
-              const pr_number = fs.readFileSync('./pr_number.txt')
+              const pr_number_txt = fs.readFileSync('./pr_number.txt')
+              const pr_number = Number(pr_number_txt)
               core.setOutput('pr_number', pr_number)
             } catch (error) {
               core.setFailed(error.message)
