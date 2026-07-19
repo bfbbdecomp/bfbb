@@ -134,6 +134,7 @@ jobs:
         with:
           fetch-depth: 2
           submodules: recursive
+          ref: main
 
       # Set Git config
       - name: Git config
@@ -143,17 +144,12 @@ jobs:
       - name: Prepare
         run: cp -R /orig .
 
-      # Checkout the commit to generate OK bot report used for website build
+      # If we pushed to main, we need to go back one commit
+      # to generate OK bot report used for website build
       - name: Checkout previous report repo state
         if: ${{ github.event_name == 'push' }}
         run: |
           git checkout HEAD^
-
-      # Checkout the commit to generate CI progress report for PR comment report
-      - name: Checkout previous report repo state
-        if: ${{ github.event_name == 'pull_request' }}
-        run: |
-          git checkout main
 
       # Generate report for previous repo state
       - name: Generate previous report
