@@ -13,20 +13,37 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - name: Download PR comment
+      - name: Download PR number
         uses: actions/download-artifact@v4
         with:
-          name: pr.txt
+          name: pr_number.txt
           run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Debug
-        run: |
-          echo "PR #:        ${{ github.event.workflow_run.pull_requests[0].number }}"
+      - name: Download PR comment
+        uses: actions/download-artifact@v4
+        with:
+          name: pr_comment.txt
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Read PR number
+        id: pr_number
+        with:
+          script:
+            result-encoding: string
+            script: |
+              try {
+                const fs = require('fs')
+                const pr_number = fs.readFileSync('./pr_number.txt')
+                core.setOutput('pr_number', pr_number)
+              } catch (error) {
+                core.setFailed(error.message)
+              }
+      
       - name: PR comment with file
         uses: thollander/actions-comment-pull-request@v3
         with:
-          pr-number: ${{ github.event.workflow_run.pull_requests[0].number }}
+          pr-number: ${{ steps.pr_number.outputs.pr_number }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           file-path: pr.txt

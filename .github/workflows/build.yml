@@ -280,5 +280,17 @@ jobs:
       - name: Upload comment
         uses: actions/upload-artifact@v4
         with:
-          name: pr.txt
-          path: pr.txt
+          name: pr_comment.txt
+          path: pr_comment.txt
+
+      - name: Save PR number
+        env:
+          PR_NUM: ${{ github.event.number }}
+        run: |
+          echo $PR_NUM > pr_number.txt
+
+      - name: Upload PR number
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr_number.txt
+          path: pr_number.txt
