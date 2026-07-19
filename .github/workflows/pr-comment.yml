@@ -20,6 +20,10 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Debug
+        run: |
+          echo "PR #:        ${{ github.event.workflow_run.pull_requests[0].number }}"
+
       - name: PR comment with file
         uses: thollander/actions-comment-pull-request@v3
         with:
