@@ -2400,7 +2400,6 @@ bink/src/sdk/decode/ngc/ngcfile.c:
 bink/src/sdk/decode/yuv.cpp:
 	.text       start:0x8019CE8C end:0x801A414C
 	.text       start:0x801A414C end:0x801A414C
-	.rodata     start:0x80274E00 end:0x80274E60
 	.data       start:0x802AFFC0 end:0x802B0240
 	.data       start:0x802B0240 end:0x802B0240
 	.bss        start:0x80362C88 end:0x80363C88
@@ -2410,6 +2409,7 @@ bink/src/sdk/decode/yuv.cpp:
 bink/src/sdk/decode/binkacd.c:
 	.text       start:0x801A414C end:0x801A4E30
 	.text       start:0x801A4E30 end:0x801A4E30
+	.rodata     start:0x80274E00 end:0x80274E60
 	.data       start:0x802B0240 end:0x802B0380
 	.sdata      start:0x803CAE30 end:0x803CAE30
 
@@ -2443,27 +2443,24 @@ bink/src/sdk/decode/ngc/ngcrgb.c:
 bink/src/sdk/decode/ngc/ngcyuy2.c:
 	.text       start:0x801ABC7C end:0x801AC988
 	.text       start:0x801AC988 end:0x801AC988
-	.rodata     start:0x80275300 end:0x80275480
-	.sdata2     start:0x803CFC30 end:0x803CFC40
 
 bink/src/sdk/varbits.c:
 	.text       start:0x801AC988 end:0x801ACB6C
 	.text       start:0x801ACB6C end:0x801ACB6C
-	.rodata     start:0x80275480 end:0x802754E0
+	.rodata     start:0x80275300 end:0x80275480
+	.sdata2     start:0x803CFC30 end:0x803CFC40
 
 bink/src/sdk/fft.c:
 	.text       start:0x801ACB6C end:0x801B0E50
 	.text       start:0x801B0E50 end:0x801B0E50
-	.rodata     start:0x802754E0 end:0x802754E0
+	.rodata     start:0x80275480 end:0x802754E0
 	.sdata2     start:0x803CFC40 end:0x803CFC40
 
 bink/src/sdk/dct.c:
 	.text       start:0x801B0E50 end:0x801B1F24
 	.text       start:0x801B1F24 end:0x801B1F24
-	.rodata     start:0x802754E0 end:0x802794E0
-	.rodata     start:0x802794E0 end:0x80279920
-	.sdata2     start:0x803CFC40 end:0x803CFC60
-	.sdata2     start:0x803CFC60 end:0x803CFC70
+	.rodata     start:0x802754E0 end:0x80279920
+	.sdata2     start:0x803CFC40 end:0x803CFC70
 
 bink/src/sdk/bitplane.c:
 	.text       start:0x801B1F24 end:0x801B5350
