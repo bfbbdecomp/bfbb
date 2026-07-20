@@ -104,9 +104,12 @@ zFXGooInstance zFXGooInstances[24];
 extern char zFX_strings[];
 extern ztextbox* goo_timer_textbox;
 
-xVec3 bubblehit_pos_rnd;
-xVec3 bubblehit_vel_rnd;
-float bubblehit_vel_scale;
+xVec3 bubblehit_pos_rnd = { 0.25f, 0.25f, 0.25f };
+xVec3 bubblehit_vel_rnd = { 6.0f, 6.0f, 6.0f };
+xVec3 bubbletrail_pos_rnd = { 0.25f, 0.25f, 0.25f };
+xVec3 bubbletrail_vel_rnd = { 0.25f, 0.25f, 0.25f };
+
+F32 bubblehit_vel_scale = 1.0f;
 
 void xDrawSphere2(const xVec3*, F32, U32)
 {
@@ -115,6 +118,11 @@ void xDrawSphere2(const xVec3*, F32, U32)
 void on_spawn_bubble_wall(const tweak_info& tweak)
 {
     zFX_SpawnBubbleWall();
+}
+
+void zFX_SceneEnter(RpWorld* world)
+{
+    // tweak_callback cb_spawn_bubble_wall;
 }
 
 void zFX_SceneExit(RpWorld* world)
@@ -202,6 +210,73 @@ void zFXUpdate(F32 dt)
     update_poppers(dt);
     update_entrails(dt);
     xFXUpdate(dt);
+}
+
+void zFXGooFreeze(RpAtomic* atomic, const xVec3* center, xVec3* ref_parPosVec)
+{
+    S32 i;
+    zFXGooInstance* goo = zFXGooInstances;
+    S32 freezeGroup = -1;
+
+    for (i = 0; i < 24; i++)
+    {
+        if ((goo->state == 0) && (goo->atomic == atomic))
+        {
+            freezeGroup = goo->freezeGroup;
+            break;
+        }
+        goo++;
+    }
+
+    if (freezeGroup != -1)
+    {
+        xSndPlay3D(0x7bc0c0ce, 10.0f, 0.0f, 0x80, 0, center, 0.0f, 0.0f, SND_CAT_GAME, 0.0f);
+        xSndPlay3D(0xb9b1d325, 10.0f, 0.0f, 0x80, 0, center, 0.0f, 0.0f, SND_CAT_GAME, 0.0f);
+        xClimateSetSnow(1.0f);
+
+        for (i = 0; i < 24; i++)
+        {
+            if (goo->freezeGroup == freezeGroup)
+            {
+                goo->state = zFXGooStateFreezing;
+                goo->timer = 0.0f;
+
+                // goo->w0 = goo->timer + (goo->center * 4) + 0x30;
+
+                *goo->orig_verts = *center;
+
+                goo->min = 3.0f;
+                goo->max = 4.0f;
+
+                goo->ref_parentPos = ref_parPosVec;
+
+                if (ref_parPosVec != NULL)
+                {
+                    goo->pos_parentOnFreeze = *ref_parPosVec;
+                }
+                else
+                {
+                    goo->pos_parentOnFreeze = g_O3;
+                }
+            }
+            goo++;
+        }
+    }
+}
+
+S32 zFXGooIs(xEnt* obj, F32& depth, U32 playerCheck)
+{
+    S32 i;
+    zFXGooInstance* goo;
+    xVec3* pos;
+
+    return 0;
+}
+
+void zFXGooEventSetWarb(xEnt* ent, const F32* warb)
+{
+    S32 i;
+    zFXGooInstance* goo;
 }
 
 namespace

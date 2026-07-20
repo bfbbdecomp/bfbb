@@ -1,42 +1,29 @@
 #include "iSystem.h"
 
-#include "dolphin/dvd/dvd.h"
-#include "dolphin/gx/GXFrameBuffer.h"
-#include "dolphin/gx/GXManage.h"
-#include "dolphin/gx/GXStruct.h"
-#include "dolphin/hio.h"
-#include "dolphin/os/OSError.h"
-#include "dolphin/vi.h"
-#include "rpcollis.h"
-#include "rphanim.h"
+#include <stdio.h>
+
+#include <rwcore.h>
+
 #include "rpmatfx.h"
 #include "rpptank.h"
 #include "rpskin.h"
 #include "rpusrdat.h"
-#include "rpworld.h"
-#include "rwplcore.h"
-#include "xBase.h"
+
+#include "xDebug.h"
+#include "xSnd.h"
 #include "xFX.h"
 #include "xShadow.h"
 #include "xstransvc.h"
-#include <stdio.h>
-#include <types.h>
-
-#include <rwcore.h>
-
-#include "xDebug.h"
-#include "xMath.h"
-#include "xSnd.h"
-#include "xPad.h"
-#include "xMemMgr.h"
 
 #include "iMemMgr.h"
 #include "iSystem.h"
-#include "iFile.h"
 #include "iFMV.h"
-#include "iTime.h"
 #include "iTRC.h"
 
+// .bss
+static RwMemoryFunctions MemoryFunctions;
+
+// .comm
 struct
 {
     GXRenderModeObj* renderMode;
@@ -45,16 +32,23 @@ struct
 } deviceConfig;
 RwVideoMode sVideoMode;
 
+// .sbss
 GXDrawSyncCallback old_dsc;
 U16 last_error;
 OSContext* last_context;
-U32 size;
 U32 add;
+U32 size;
 S32 gEmergencyMemLevel;
+
+// .sdata
 void* bad_val = (void*)0x81abcaa0;
 U32 test_alloc_val = 0x210A;
+static S32 rwID_DOLPHINDEVICEMODULE = 0x430;
 
-static RwMemoryFunctions MemoryFunctions;
+static RwTexture* TextureRead(const RwChar* name, const RwChar* maskName);
+static void* _rwDolphinFSOpen(void*, int, int);
+static void* _rwDolphinFSClose(void*, int, int);
+static S32 DolphinInstallFileSystem();
 
 static const char* __deadstripped()
 {
@@ -217,37 +211,34 @@ static U32 RWAttachPlugins()
 {
     if (!RpWorldPluginAttach())
     {
-        return true;
+        return TRUE;
     }
     if (!RpCollisionPluginAttach())
     {
-        return true;
+        return TRUE;
     }
     if (!RpSkinPluginAttach())
     {
-        return true;
+        return TRUE;
     }
     if (!RpHAnimPluginAttach())
     {
-        return true;
+        return TRUE;
     }
     if (!RpMatFXPluginAttach())
     {
-        return true;
+        return TRUE;
     }
     if (!RpUserDataPluginAttach())
     {
-        return true;
+        return TRUE;
     }
     if (!RpPTankPluginAttach())
     {
-        return true;
+        return TRUE;
     }
-    return false;
+    return FALSE;
 }
-
-static S32 DolphinInstallFileSystem();
-static RwTexture* TextureRead(const RwChar* name, const RwChar* maskName);
 
 static S32 RenderWareInit()
 {
@@ -280,7 +271,7 @@ static S32 RenderWareInit()
         return TRUE;
     }
     RwTextureSetReadCallBack(TextureRead);
-    RwRenderStateSet((RwRenderState)0x14, (void*)0x2); // RwRenderState 0x14 isn't defined??
+    RwRenderStateSet(rwRENDERSTATECULLMODE, (void*)rwCULLMODECULLBACK);
     xShadowInit();
     xFXInit();
     RwTextureSetMipmapping(TRUE);
@@ -314,7 +305,7 @@ static RwTexture* TextureRead(const RwChar* name, const RwChar* maskName)
         if (asset->raster != NULL && asset->raster->depth < 8)
         {
             RwGameCubeRasterExt* ext =
-                (RwGameCubeRasterExt*)((U32)asset->raster + _RwGameCubeRasterExtOffset);
+                RWPLUGINOFFSET(RwGameCubeRasterExt, asset->raster, _RwGameCubeRasterExtOffset);
             if (ext == NULL || ext->unk_c != 14)
             {
                 asset = NULL;
@@ -336,7 +327,7 @@ void null_func()
 }
 
 extern "C" {
-void mem_null(U32 param_1, U32 param_2)
+static void mem_null(U32 param_1, U32 param_2)
 {
     add = param_1;
     size = param_2;
@@ -368,7 +359,7 @@ void free(void* __ptr)
 }
 }
 
-void _rwDolphinHeapFree(void* __ptr)
+static void _rwDolphinHeapFree(void* __ptr)
 {
     if (__ptr == bad_val)
     {
@@ -392,7 +383,8 @@ void _rwDolphinHeapFree(void* __ptr)
     }
 }
 
-void* _rwDolphinHeapAlloc(u32 size)
+// non-matching: sda scheduling
+static void* _rwDolphinHeapAlloc(u32 size)
 {
     static u32 alloc_num = 0;
     U32 alloc = (U32)malloc(size + 0x20);
@@ -423,6 +415,473 @@ void* _rwDolphinHeapAlloc(u32 size)
     }
 
     return (void*)alloc;
+}
+
+static void* _rwDolphinHeapCalloc(u32 p1, u32 p2)
+{
+    void* __s = _rwDolphinHeapAlloc(p1 * p2);
+    if (__s != NULL)
+    {
+        memset(__s, 0, p1 * p2);
+    }
+    return __s;
+}
+
+static void* _rwDolphinHeapRealloc(void* p1, u32 p2)
+{
+    u32 __n;
+    void* __dest;
+
+    if (p1 != NULL)
+        __n = *(u32*)((u8*)p1 - 0x20);
+    else
+        __n = 0;
+
+    if (p2 < __n)
+        return p1;
+
+    __dest = _rwDolphinHeapAlloc(p2);
+    if (__dest != NULL)
+    {
+        if (__n < p2)
+            memcpy(__dest, p1, __n);
+        else
+            memcpy(__dest, p1, p2);
+        _rwDolphinHeapFree(p1);
+    }
+    return __dest;
+}
+
+S32 DolphinInitMemorySystem(RwMemoryFunctions* memoryFuncs)
+{
+    memoryFuncs->rwmalloc = _rwDolphinHeapAlloc;
+    memoryFuncs->rwcalloc = _rwDolphinHeapCalloc;
+    memoryFuncs->rwrealloc = _rwDolphinHeapRealloc;
+    memoryFuncs->rwfree = _rwDolphinHeapFree;
+
+    return 1;
+}
+
+static S32 dlAccessToMode(const char* mode)
+{
+    char c;
+    S32 ret = 0;
+
+    if (mode == 0)
+    {
+        return 0;
+    }
+
+    c = mode[0];
+
+    if (c == 'r' && (mode[1] == '\0' || (mode[1] == 'b' && mode[2] == '\0')))
+    {
+        ret = 1;
+    }
+    else if (c == 'w' && (mode[1] == '\0' || (mode[1] == 'b' && mode[2] == '\0')))
+    {
+        ret = 0xe;
+    }
+    else if (c == 'a' && (mode[1] == '\0' || (mode[1] == 'b' && mode[2] == '\0')))
+    {
+        ret = 6;
+    }
+    else if (c == 'r' && mode[1] == '+' && (mode[2] == '\0' || (mode[2] == 'b' && mode[3] == '\0')))
+    {
+        ret = 3;
+    }
+    else if (c == 'w' && mode[1] == '+' && (mode[2] == '\0' || (mode[2] == 'b' && mode[3] == '\0')))
+    {
+        ret = 0xf;
+    }
+    else if (c == 'a' && mode[1] == '+' && (mode[2] == '\0' || (mode[2] == 'b' && mode[3] == '\0')))
+    {
+        ret = 7;
+    }
+
+    return ret;
+}
+
+// both need to be after alloc_num from _rwDolphinHeapAlloc
+static S32 FSOpenFiles;
+struct RwModuleInfo
+{
+    s32 globalsOffset;
+    s32 numInstances;
+};
+static RwModuleInfo FSModuleInfo; // Type only exists in PS2 dwarf, symbol only exists on GC
+
+void* dlFopen(const char* name, const char* access)
+{
+    U32 mode = dlAccessToMode(access);
+    if (mode == 0)
+    {
+        return NULL;
+    }
+
+    dlFile* fp = (dlFile*)RwEngineInstance->memoryAlloc(
+        RWPLUGINOFFSET(dlFSUnkGlobals, RwEngineInstance, FSModuleInfo.globalsOffset)->unk_2C);
+    if (fp == NULL)
+    {
+        return NULL;
+    }
+
+    fp->unk_2848 = 0;
+    if (mode == 1)
+    {
+        fp->unk_2848 = 1;
+    }
+
+    if (fp->unk_2848 == 0)
+    {
+        RwEngineInstance->memoryFree(
+            RWPLUGINOFFSET(dlFSUnkGlobals, RwEngineInstance, FSModuleInfo.globalsOffset)->unk_2C,
+            fp);
+        return NULL;
+    }
+
+    if (DVDOpen(name, &fp->unk_2800) == 0)
+    {
+        RwEngineInstance->memoryFree(
+            RWPLUGINOFFSET(dlFSUnkGlobals, RwEngineInstance, FSModuleInfo.globalsOffset)->unk_2C,
+            fp);
+        return NULL;
+    }
+
+    fp->unk_2840 = fp->unk_2800.length;
+    fp->unk_283C = 0;
+    fp->unk_2844 = DLFILE_BUF_SIZE;
+    FSOpenFiles++;
+    return fp;
+}
+
+static S32 dlFclose(void* fptr)
+{
+    dlFile* fp = (dlFile*)fptr;
+
+    if (fp != NULL && FSOpenFiles != 0 && DVDClose(&fp->unk_2800) != 0)
+    {
+        RwEngineInstance->memoryFree(
+            RWPLUGINOFFSET(dlFSUnkGlobals, RwEngineInstance, FSModuleInfo.globalsOffset)->unk_2C,
+            fp);
+
+        FSOpenFiles--;
+        return 0;
+    }
+    return -1;
+}
+
+static RwBool dlFexist(const char* name)
+{
+    void* fp;
+
+    fp = ((void* (*)(const char*, const char*))((void**)RwOsGetFileInterface())[1])(name, "r");
+
+    if (fp != 0)
+    {
+        ((void (*)(void*))((void**)RwOsGetFileInterface())[2])(fp);
+        return true;
+    }
+
+    return false;
+}
+
+// non-matching: r25/r26/r27 register issue
+static size_t dlFread(void* addr, size_t size, size_t count, void* fptr)
+{
+    S32 pos2;
+    S32 posTmp;
+    S32 bytesRead = 0;
+    S32 readSize;
+    U32 buffered;
+    U32 uVar1;
+    dlFile* fp = (dlFile*)fptr;
+    U32 numBytesToRead = size * count;
+
+    if ((U32)(fp->unk_283C + numBytesToRead) > fp->unk_2840)
+    {
+        numBytesToRead = fp->unk_2840 - fp->unk_283C;
+    }
+    if (fp->unk_2844 < DLFILE_BUF_SIZE)
+    {
+        if (numBytesToRead > bytesRead)
+        {
+            buffered = DLFILE_BUF_SIZE - fp->unk_2844;
+            if (numBytesToRead < buffered)
+            {
+                buffered = numBytesToRead;
+            }
+            bytesRead = buffered;
+            memcpy(addr, fp->readBuffer + fp->unk_2844, buffered);
+            addr = (char*)addr + buffered;
+            fp->unk_2844 += buffered;
+            fp->unk_283C += buffered;
+        }
+    }
+    uVar1 = numBytesToRead - bytesRead;
+    if (uVar1 != 0)
+    {
+        if (uVar1 >= DLFILE_BUF_SIZE)
+        {
+            if (!((U32)addr & 0x1f) && !(uVar1 & 0x1f))
+            {
+                uVar1 = DVDReadPrio(&fp->unk_2800, addr, uVar1, fp->unk_283C, 2);
+                if ((S32)uVar1 < 0)
+                {
+                    uVar1 = 0;
+                }
+            }
+            else
+            {
+                numBytesToRead -= bytesRead;
+                uVar1 = 0;
+                posTmp = fp->unk_283C;
+                S32 loopCount = (S32)numBytesToRead / DLFILE_BUF_SIZE + 1;
+                while (loopCount-- != 0)
+                {
+                    pos2 = fp->unk_283C;
+                    readSize = DLFILE_BUF_SIZE;
+                    pos2 += uVar1;
+                    if ((S32)(fp->unk_2840 - pos2) <= DLFILE_BUF_SIZE)
+                    {
+                        readSize = (fp->unk_2840 - pos2);
+                    }
+                    if (DVDReadPrio(&fp->unk_2800, fp->readBuffer, ((U32)readSize + 0x1f) & ~0x1f,
+                                    posTmp, 2) == -1)
+                    {
+                        return bytesRead + uVar1;
+                    }
+                    if ((S32)numBytesToRead >= readSize)
+                    {
+                        memcpy(addr, fp->readBuffer, readSize);
+                        numBytesToRead -= readSize;
+                        uVar1 += readSize;
+                        posTmp += readSize;
+                        addr = (char*)addr + readSize;
+                    }
+                    else
+                    {
+                        memcpy(addr, fp->readBuffer, numBytesToRead);
+                        fp->unk_2844 = numBytesToRead;
+                        uVar1 += numBytesToRead;
+                        posTmp += numBytesToRead;
+                    }
+                }
+            }
+        }
+        else
+        {
+            buffered = ((U32)(fp->unk_2840 - fp->unk_283C) + 0x1f) & ~0x1f;
+            if ((S32)buffered > DLFILE_BUF_SIZE)
+            {
+                buffered = DLFILE_BUF_SIZE;
+            }
+            if (DVDReadPrio(&fp->unk_2800, fp->readBuffer, buffered, fp->unk_283C, 2) == -1)
+            {
+                return bytesRead;
+            }
+            memcpy(addr, fp->readBuffer, uVar1);
+            fp->unk_2844 = uVar1;
+        }
+        bytesRead += uVar1;
+        fp->unk_283C += uVar1;
+    }
+    return bytesRead / size;
+}
+
+static size_t dlFwrite(const void* addr, size_t size, size_t count, void* fptr)
+{
+    return 0;
+}
+
+static S32 dlFseek(void* fptr, long offset, int origin)
+{
+    S32 oldFPos = ((dlFile*)fptr)->unk_283C;
+    dlFile* fp = (dlFile*)fptr;
+    S32 bufStart;
+
+    switch (origin)
+    {
+    case 1:
+    {
+        fp->unk_283C = oldFPos + offset;
+        if ((S32)(fp->unk_2844 + offset) >= 0 && (fp->unk_2844 + offset) <= DLFILE_BUF_SIZE &&
+            fp->unk_283C <= fp->unk_2840)
+        {
+            fp->unk_2844 += offset;
+            return 0;
+        }
+        break;
+    }
+    case 2:
+    {
+        S32 delta = (fp->unk_283C = fp->unk_2840 + offset) - oldFPos;
+        if ((S32)(fp->unk_2844 + delta) >= 0 && (fp->unk_2844 + delta) <= DLFILE_BUF_SIZE &&
+            fp->unk_283C <= fp->unk_2840)
+        {
+            fp->unk_2844 += delta;
+            return 0;
+        }
+        break;
+    }
+    case 0:
+    {
+        fp->unk_283C = offset;
+        S32 delta = offset - oldFPos;
+        if ((S32)(fp->unk_2844 + delta) >= 0 && (fp->unk_2844 + delta) <= DLFILE_BUF_SIZE &&
+            fp->unk_283C <= fp->unk_2840)
+        {
+            fp->unk_2844 += delta;
+            return 0;
+        }
+        break;
+    }
+    default:
+    {
+        return -1;
+    }
+    }
+
+    if (fp->unk_283C > fp->unk_2840)
+    {
+        fp->unk_283C = oldFPos;
+        return -1;
+    }
+
+    bufStart = (fp->unk_283C / (U32)DLFILE_BUF_SIZE) * DLFILE_BUF_SIZE;
+
+    if (DVDReadPrio(&fp->unk_2800, fp->readBuffer,
+                    (fp->unk_2840 - bufStart <= DLFILE_BUF_SIZE) ?
+                        (fp->unk_2840 - bufStart + 31) & ~31 :
+                        DLFILE_BUF_SIZE,
+                    bufStart, 2) == -1)
+    {
+        fp->unk_283C = oldFPos;
+        return -1;
+    }
+
+    fp->unk_2844 = fp->unk_283C - bufStart;
+    return 0;
+}
+
+// non-matching: mr, subi, and li scheduling at the start
+static char* dlFgets(char* buffer, S32 maxLen, void* fptr)
+{
+    dlFile* fp = (dlFile*)fptr;
+    S32 i;
+    S32 numBytesRead;
+    i = 0;
+    numBytesRead = dlFread(buffer, 1, maxLen - 1, fp);
+    if (numBytesRead == 0)
+        return NULL;
+    while (i < numBytesRead)
+    {
+        if (buffer[i] == '\n')
+        {
+            i++;
+            buffer[i] = '\0';
+            i -= numBytesRead;
+            dlFseek(fp, i, 1);
+            return buffer;
+        }
+        if (buffer[i] == '\r')
+        {
+            if ((i < numBytesRead - 1) && (buffer[i + 1] == '\n'))
+            {
+                memcpy(&buffer[i], &buffer[i + 1], (numBytesRead - i) - 1);
+                numBytesRead--;
+            }
+            else
+            {
+                i++;
+            }
+        }
+        else
+        {
+            i++;
+        }
+    }
+    if ((numBytesRead < maxLen) && (fp->unk_283C == fp->unk_2840))
+    {
+        buffer[numBytesRead] = '\0';
+    }
+    return buffer;
+}
+
+static S32 dlFputs(const char* buffer, void* fptr)
+{
+    return -1;
+}
+
+static S32 dlFeof(void* fptr)
+{
+    dlFile* fp = (dlFile*)fptr;
+    return fp->unk_283C >= fp->unk_2840;
+}
+
+static S32 dlFflush(void*)
+{
+    return 0;
+}
+
+static S32 dlFtell(void* fptr)
+{
+    dlFile* fp = (dlFile*)fptr;
+    return fp->unk_283C;
+}
+
+static void* _rwDolphinFSOpen(void* param_1, int param_2, int param_3)
+{
+    FSModuleInfo.globalsOffset = param_2;
+
+    RWPLUGINOFFSET(dlFSUnkGlobals, RwEngineInstance, FSModuleInfo.globalsOffset)->unk_2C =
+        RwFreeListCreate(sizeof(dlFile), 5, 0x20);
+
+    if (RWPLUGINOFFSET(dlFSUnkGlobals, RwEngineInstance, FSModuleInfo.globalsOffset)->unk_2C ==
+        NULL)
+    {
+        return NULL;
+    }
+
+    RwFileFunctions* funcs = RwOsGetFileInterface();
+    RWPLUGINOFFSET(dlFSUnkGlobals, RwEngineInstance, FSModuleInfo.globalsOffset)->unk_00 = *funcs;
+
+    funcs->rwfexist = dlFexist;
+    funcs->rwfopen = dlFopen;
+    funcs->rwfclose = dlFclose;
+    funcs->rwfread = dlFread;
+    funcs->rwfwrite = dlFwrite;
+    funcs->rwfgets = dlFgets;
+    funcs->rwfputs = dlFputs;
+    funcs->rwfeof = dlFeof;
+    funcs->rwfseek = dlFseek;
+    funcs->rwfflush = dlFflush;
+    funcs->rwftell = dlFtell;
+
+    FSModuleInfo.numInstances++;
+
+    return param_1;
+}
+
+static void* _rwDolphinFSClose(void* param_1, int param_2, int param_3)
+{
+    RwFileFunctions* osFileInterface = RwOsGetFileInterface();
+    *osFileInterface =
+        (RWPLUGINOFFSET(dlFSUnkGlobals, RwEngineInstance, FSModuleInfo.globalsOffset))->unk_00;
+    RwFreeListDestroy(
+        (RWPLUGINOFFSET(dlFSUnkGlobals, RwEngineInstance, FSModuleInfo.globalsOffset))->unk_2C);
+
+    FSModuleInfo.numInstances--;
+
+    return param_1;
+}
+
+static S32 DolphinInstallFileSystem()
+{
+    DVDInit();
+    RwUInt32 plugin =
+        RwEngineRegisterPlugin(0x30, rwID_DOLPHINDEVICEMODULE, _rwDolphinFSOpen, _rwDolphinFSClose);
+    return plugin >> 0x1f ^ 1;
 }
 
 S32 iGetMinute()
@@ -457,36 +916,93 @@ S32 iGetMonth()
     return td.mon + 1;
 }
 
-// Template for future use. TODO
-char* iGetCurrFormattedDate(char* input)
+char* months[] = { "January ", "February ", "March ",     "April ",   "May ",      "June ",
+                   "July ",    "August ",   "September ", "October ", "November ", "December " };
+
+char* dotw[] = {
+    "Sunday ", "Monday ", "Tuesday ", "Wednesday ", "Thursday ", "Friday ", "Saturday "
+};
+
+U32 iGetCurrFormattedDate(char* str)
 {
-    return NULL;
+    char* start = str;
+    OSTime ticks = OSGetTime();
+    OSCalendarTime td;
+
+    OSTicksToCalendarTime(ticks, &td);
+
+    strcpy(str, dotw[td.wday]);
+    strcat(str, months[td.mon]);
+    str += strlen(str);
+
+    if (td.mday >= 10)
+    {
+        *str++ = (td.mday / 10) + '0';
+    }
+
+    *str++ = (td.mday % 10) + '0';
+    *str++ = ',';
+    *str++ = ' ';
+    *str++ = (td.year / 1000) + '0';
+    *str++ = ((td.year / 100) % 10) + '0';
+    *str++ = ((td.year / 10) % 100) + '0';
+    *str++ = (td.year % 10) + '0';
+    *str++ = '\0';
+
+    return str - start;
 }
 
-// WIP.
-char* iGetCurrFormattedTime(char* input)
+U32 iGetCurrFormattedTime(char* str)
 {
+    char* start = str;
+    S32 am = 0;
+
     OSTime ticks = OSGetTime();
     OSCalendarTime td;
     OSTicksToCalendarTime(ticks, &td);
-    bool pm = false;
-    // STUFF.
-    char* ret = input;
-    // STUFF.
-    if (pm)
+
+    if (td.hour < 12)
     {
-        ret[8] = 'P';
-        ret[9] = '.';
-        ret[10] = 'M';
-        ret[11] = '.';
+        am = 1;
     }
     else
     {
-        ret[8] = 'A';
-        ret[9] = '.';
-        ret[10] = 'M';
-        ret[11] = '.';
+        td.hour -= 12;
     }
-    ret[12] = '\0';
-    return ret + (0xd - (S32)input);
+
+    if (td.hour == 0)
+        td.hour = 12;
+
+    if (td.hour >= 10)
+    {
+        *str++ = (td.hour / 10) + '0';
+    }
+
+    *str++ = (td.hour % 10) + '0';
+    *str++ = ':';
+    *str++ = (td.min / 10) + '0';
+    *str++ = (td.min % 10) + '0';
+    *str++ = ':';
+    *str++ = (td.sec / 10) + '0';
+    *str++ = (td.sec % 10) + '0';
+    *str++ = ' ';
+
+    if (am)
+    {
+        *str++ = 'A';
+        *str++ = '.';
+        *str++ = 'M';
+        *str++ = '.';
+    }
+    else
+    {
+        *str++ = 'P';
+        *str++ = '.';
+        *str++ = 'M';
+        *str++ = '.';
+    }
+
+    *str++ = '\0';
+
+    return str - start;
 }

@@ -14,6 +14,7 @@ struct zNPCAmbient : zNPCCommon
     void Process(xScene* xscn, F32 dt);
     S32 NPCMessage(NPCMsg* mail);
     void SelfSetup();
+    U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal);
 
     virtual U8 ColChkFlags() const;
     virtual U8 ColPenFlags() const;
@@ -47,7 +48,7 @@ struct zNPCJelly : zNPCAmbient
     void PlayWithAlpha(F32 unk);
     void PlayWithAnimSpd();
     void PumpFaster();
-    xVec3* JellyBoneWorldPos(xVec3* pos, S32 idx_request) const;
+    void JellyBoneWorldPos(xVec3* pos, S32 idx_request) const;
     void PlayWithLightnin();
     void SetAlpha(F32 alpha);
 
@@ -62,6 +63,7 @@ struct zNPCNeptune : zNPCAmbient
     void ParseINI();
     void SelfSetup();
     void Reset();
+    U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal);
 
     U8 ColChkFlags() const;
     U8 ColPenFlags() const;
@@ -76,6 +78,7 @@ struct zNPCMimeFish : zNPCAmbient
     void Reset();
     void SelfSetup();
     void Process(xScene* xscn, F32 dt);
+    U32 AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal);
 };
 
 void ZNPC_Ambient_Startup();
