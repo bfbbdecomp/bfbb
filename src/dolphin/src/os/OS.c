@@ -8,7 +8,7 @@ extern OSTime __OSGetSystemTime();
 static const char* __OSVersion =
     "<< Dolphin SDK - OS\trelease build: Apr 17 2003 12:33:06 (0x2301) >>";
 // needs to be "<< Dolphin SDK - DSP\trelease build: Apr 17 2003 12:34:16 (0x2301) >>"?
-extern char _db_stack_end[];
+extern char _stack_addr[];
 
 #define OS_BI2_DEBUG_ADDRESS 0x800000F4
 #define DEBUGFLAG_ADDR 0x800030E8
@@ -270,19 +270,19 @@ void OSInit(void)
         // set up bottom of heap (ArenaLo)
         // grab address from BootInfo if it exists, otherwise use default __ArenaLo
 
-        OSSetArenaLo((BootInfo->arenaLo == NULL) ? __ArenaLo : BootInfo->arenaLo);
+        OSSetArenaLo((BootInfo->arenaLo == NULL) ? &__ArenaLo : BootInfo->arenaLo);
 
         // if the input arenaLo is null, and debug flag location exists (and flag is < 2),
         //     set arenaLo to just past the end of the db stack
         if ((BootInfo->arenaLo == NULL) && (BI2DebugFlag != 0) && (*BI2DebugFlag < 2))
         {
-            debugArenaLo = (char*)(((u32)_db_stack_end + 0x1f) & ~0x1f);
+            debugArenaLo = (void*)(((u32)(char*)&_stack_addr + 0x1f) & ~0x1f);
             OSSetArenaLo(debugArenaLo);
         }
 
         // set up top of heap (ArenaHi)
         // grab address from BootInfo if it exists, otherwise use default __ArenaHi
-        OSSetArenaHi((BootInfo->arenaHi == NULL) ? __ArenaHi : BootInfo->arenaHi);
+        OSSetArenaHi((BootInfo->arenaHi == NULL) ? &__ArenaHi : BootInfo->arenaHi);
 
         // OS INIT AND REPORT //
         // initialise a whole bunch of OS stuff

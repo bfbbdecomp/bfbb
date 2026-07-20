@@ -3,6 +3,8 @@
 #include "ctype.h"
 #include "stdio.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/stdio_api.h"
+#include "PowerPC_EABI_Support/MSL_C/MSL_Common/strtold.h"
+#include "PowerPC_EABI_Support/MSL_C/MSL_Common/strtoul.h"
 
 typedef long long intmax_t;
 
@@ -52,13 +54,13 @@ static const char* parse_format(const char* format_string, scan_format* format)
 		c                     = *++s;
 	}
 
-	if (isdigit(c)) {
+	if (_isdigit(c)) {
 		f.field_width = 0;
 
 		do {
 			f.field_width = (f.field_width * 10) + (c - '0');
 			c             = *++s;
-		} while (isdigit(c));
+		} while (_isdigit(c));
 
 		if (f.field_width == 0) {
 			f.conversion_char = 0xFF;
@@ -260,12 +262,12 @@ static int __sformatter(int (*ReadProc)(void*, int, int), void* ReadProcArg, con
 	conversions    = 0;
 
 	while (!terminate && (format_char = *format_ptr) != 0) {
-		if (isspace(format_char)) {
+		if (_isspace(format_char)) {
 			do {
 				format_char = *++format_ptr;
-			} while (isspace(format_char));
+			} while (_isspace(format_char));
 
-			while (isspace(c = (*ReadProc)(ReadProcArg, 0, __GetAChar)))
+			while (_isspace(c = (*ReadProc)(ReadProcArg, 0, __GetAChar)))
 				++chars_read;
 
 			(*ReadProc)(ReadProcArg, c, __UngetAChar);
@@ -478,7 +480,7 @@ static int __sformatter(int (*ReadProc)(void*, int, int), void* ReadProcArg, con
 			conversions++;
 			break;
 		case '%':
-			while (isspace(c = (*ReadProc)(ReadProcArg, 0, __GetAChar)))
+			while (_isspace(c = (*ReadProc)(ReadProcArg, 0, __GetAChar)))
 				chars_read++;
 
 			if (c != '%') {
@@ -490,7 +492,7 @@ static int __sformatter(int (*ReadProc)(void*, int, int), void* ReadProcArg, con
 			break;
 		case 's':
 			c = (*ReadProc)(ReadProcArg, 0, __GetAChar);
-			while (isspace(c)) {
+			while (_isspace(c)) {
 				chars_read++;
 				c = (*ReadProc)(ReadProcArg, 0, __GetAChar);
 			}
@@ -579,11 +581,6 @@ exit:
 	return items_assigned;
 }
 
-void __FileRead(void)
-{
-	// UNUSED FUNCTION
-}
-
 int __StringRead(void* pPtr, int ch, int act)
 {
 	char ret;
@@ -617,32 +614,12 @@ int __StringRead(void* pPtr, int ch, int act)
 	return 0;
 }
 
-void fscanf(void)
-{
-	// UNUSED FUNCTION
-}
-
-void vscanf(void)
-{
-	// UNUSED FUNCTION
-}
-
-void scanf(void)
-{
-	// UNUSED FUNCTION
-}
-
-void vfscanf(void)
-{
-	// UNUSED FUNCTION
-}
-
 inline int isspace_string(const char* s)
 {
 	int i = 0;
 
 	while (s[i] != '\0') {
-		if (!isspace(s[i++]))
+		if (!_isspace(s[i++]))
 			return 0;
 	}
 

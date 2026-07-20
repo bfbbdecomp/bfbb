@@ -1,106 +1,21 @@
 #include "PowerPC_EABI_Support/MetroTRK/trk.h"
 
-void* gTRKInputPendingPtr;
 static TRKFramingState gTRKFramingState;
+void* gTRKInputPendingPtr = 0;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
- */
-void TRKDiscardFrame(void)
+DSError TRKTerminateSerialHandler(void)
 {
-	// UNUSED FUNCTION
+	return 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000040
- */
-void TRKRejectFrame(void)
+DSError TRKInitializeSerialHandler(void)
 {
-	// UNUSED FUNCTION
+	gTRKFramingState.msgBufID     = -1;
+	gTRKFramingState.receiveState = 0;
+	gTRKFramingState.isEscape     = 0;
+	return 0;
 }
 
-/*
- * --INFO--
- * Address:	8021CD14
- * Size:	0000D0
- */
-TRKBufferID TRKTestForPacket(void)
-{
-	int bytes;
-	int batch;
-	DSError err;
-	TRKBuffer* b;
-	int id;
-
-	bytes = TRKPollUART();
-
-	if (bytes > 0) {
-		TRKGetFreeBuffer(&id, &b);
-		if (bytes > 0x880) {
-			for (; bytes > 0; bytes -= batch) {
-				batch = bytes > 0x880 ? 0x880 : bytes;
-				TRKReadUARTN(b->data, batch);
-			}
-			TRKStandardACK(b, DSMSG_ReplyNAK, 6);
-		} else {
-			err = TRKReadUARTN(b->data, bytes);
-			if (err == DS_NoError) {
-				b->length = bytes;
-				return id;
-			}
-		}
-	}
-
-	if (id != -1) {
-		TRKReleaseBuffer(id);
-	}
-	return -1;
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	000070
- */
-void TRKProcessFrame(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	8021CDE4
- * Size:	00007C
- */
-void TRKGetInput(void)
-{
-	TRKBuffer* msgbuffer;
-	int bufID;
-	u8 command;
-
-	bufID = TRKTestForPacket();
-
-	if (bufID != -1) {
-		msgbuffer = TRKGetBuffer(bufID);
-		TRKSetBufferPosition(msgbuffer, 0);
-		TRKReadBuffer1_ui8(msgbuffer, &command);
-		if (command < 0x80) {
-			TRKProcessInput(bufID);
-		} else {
-			TRKReleaseBuffer(bufID);
-		}
-	}
-}
-
-/*
- * --INFO--
- * Address:	8021CE60
- * Size:	000050
- */
 void TRKProcessInput(TRKBufferID bufID)
 {
 	TRKEvent event;
@@ -111,25 +26,123 @@ void TRKProcessInput(TRKBufferID bufID)
 	TRKPostEvent(&event);
 }
 
-/*
- * --INFO--
- * Address:	8021CEB0
- * Size:	000024
- */
-DSError TRKInitializeSerialHandler(void)
+void TRKGetInput(void)
 {
-	gTRKFramingState.msgBufID     = -1;
-	gTRKFramingState.receiveState = 0;
-	gTRKFramingState.isEscape     = 0;
-	return 0;
+	TRKBuffer* msgBuffer;
+	TRKBufferID id;
+	u8 command;
+
+	id = TRKTestForPacket();
+	if (id != -1) {
+		msgBuffer = TRKGetBuffer(id);
+		TRKSetBufferPosition(msgBuffer, 0);
+		TRKReadBuffer1_ui8(msgBuffer, &command);
+		if (command < 0x80) {
+			TRKEvent event;
+
+			TRKConstructEvent(&event, NUBEVENT_Request);
+			event.msgBufID            = id;
+			gTRKFramingState.msgBufID = -1;
+			TRKPostEvent(&event);
+		} else {
+			TRKReleaseBuffer(id);
+		}
+	}
 }
 
-/*
- * --INFO--
- * Address:	8021CED4
- * Size:	000008
- */
-DSError TRKTerminateSerialHandler(void)
+static inline BOOL serpoll_inline_00(TRKBuffer* buffer)
 {
-	return 0;
+	if (buffer->length < 2) {
+		TRKStandardACK(buffer, DSMSG_ReplyNAK, DSREPLY_PacketSizeError);
+		if (gTRKFramingState.msgBufID != -1) {
+			TRKReleaseBuffer(gTRKFramingState.msgBufID);
+			gTRKFramingState.msgBufID = -1;
+		}
+		gTRKFramingState.buffer       = NULL;
+		gTRKFramingState.receiveState = DSRECV_Wait;
+		return FALSE;
+	}
+
+	buffer->position = 0;
+	buffer->length--;
+	return TRUE;
+}
+
+TRKBufferID TRKTestForPacket(void)
+{
+	s32 var_r29;
+	s32 var_r3;
+	s8 sp8;
+	s32 temp_r3;
+
+	var_r29 = 0;
+	var_r3 = TRKReadUARTPoll(&sp8);
+	while (var_r3 == 0 && var_r29 == 0) {
+		if (gTRKFramingState.receiveState != DSRECV_InFrame) {
+			gTRKFramingState.isEscape = FALSE;
+		}
+
+		switch (gTRKFramingState.receiveState) {
+		case DSRECV_Wait:
+			if (sp8 == 0x7E) {
+				var_r29 = TRKGetFreeBuffer(&gTRKFramingState.msgBufID, &gTRKFramingState.buffer);
+				gTRKFramingState.fcsType      = 0;
+				gTRKFramingState.receiveState = DSRECV_Found;
+			}
+			break;
+		case DSRECV_Found:
+			if (sp8 == 0x7E) {
+				break;
+			}
+			gTRKFramingState.receiveState = DSRECV_InFrame;
+			/* fallthrough */
+		case DSRECV_InFrame:
+			if (sp8 == 0x7E) {
+				if (gTRKFramingState.isEscape) {
+					TRKStandardACK(gTRKFramingState.buffer, DSMSG_ReplyNAK, DSREPLY_EscapeError);
+					if (gTRKFramingState.msgBufID != -1) {
+						TRKReleaseBuffer(gTRKFramingState.msgBufID);
+						gTRKFramingState.msgBufID = -1;
+					}
+					gTRKFramingState.buffer       = NULL;
+					gTRKFramingState.receiveState = DSRECV_Wait;
+					break;
+				}
+
+				if (serpoll_inline_00(gTRKFramingState.buffer)) {
+					temp_r3                       = gTRKFramingState.msgBufID;
+					gTRKFramingState.msgBufID     = -1;
+					gTRKFramingState.buffer       = NULL;
+					gTRKFramingState.receiveState = DSRECV_Wait;
+					return temp_r3;
+				}
+				gTRKFramingState.receiveState = DSRECV_Wait;
+			} else {
+				if (gTRKFramingState.isEscape) {
+					sp8 ^= 0x20;
+					gTRKFramingState.isEscape = FALSE;
+				} else if (sp8 == 0x7D) {
+					gTRKFramingState.isEscape = TRUE;
+					break;
+				}
+				var_r29 = TRKAppendBuffer1_ui8(gTRKFramingState.buffer, sp8);
+				gTRKFramingState.fcsType += sp8;
+			}
+			break;
+		case DSRECV_FrameOverflow:
+			if (sp8 == 0x7E) {
+				if (gTRKFramingState.msgBufID != -1) {
+					TRKReleaseBuffer(gTRKFramingState.msgBufID);
+					gTRKFramingState.msgBufID = -1;
+				}
+				gTRKFramingState.buffer       = NULL;
+				gTRKFramingState.receiveState = DSRECV_Wait;
+			}
+			break;
+		}
+
+		var_r3 = TRKReadUARTPoll(&sp8);
+	}
+
+	return -1;
 }

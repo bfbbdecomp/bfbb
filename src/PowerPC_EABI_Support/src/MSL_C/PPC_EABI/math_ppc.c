@@ -1,4 +1,5 @@
 #define MATH_INLINE
+#define MATH_API_SKIP_FPCLASSIFYD
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/math_api.h"
 #include "fdlibm.h"
 
