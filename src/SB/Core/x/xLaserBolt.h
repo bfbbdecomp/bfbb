@@ -154,7 +154,7 @@ struct xLaserBoltEmitter
 
     void perturb_dir(xVec3& dir, F32 rand_angle)
     {
-        xVec3 temp = xVec3::m_Null; // literal zeroes leaks into other TUs' .rodata
+        xVec3 temp = { 0.0f, 0.0f, 0.0f };
         xMat3x3 mat;
 
         temp.x = (xurand() - 0.5f) * rand_angle;
