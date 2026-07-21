@@ -93,6 +93,7 @@ RpAtomic* FindAndInstanceAtomicCallback(RpAtomic* model, void* data)
     }
     if (gLastAtomicCount < 0x100)
     {
+        // sda scheduling
         gLastAtomicList[gLastAtomicCount] = model;
         gLastAtomicCount++;
     }
@@ -120,6 +121,7 @@ RpAtomic* FindAndInstanceAtomicCallback(RpAtomic* model, void* data)
 
     if (gLastAtomicCount < 0x100)
     {
+        // sda scheduling
         gLastAtomicList[gLastAtomicCount] = model;
         gLastAtomicCount++;
     }
@@ -189,7 +191,7 @@ static RpAtomic* iModelStreamRead(RwStream* stream)
             {
                 testRadius = xVec3Dist((xVec3*)&gLastAtomicList[i]->boundingSphere.center,
                                        (xVec3*)&gLastAtomicList[maxIndex]->boundingSphere.center);
-                testRadius += gLastAtomicList[i]->boundingSphere.radius; // ???
+                testRadius += gLastAtomicList[i]->boundingSphere.radius; // FPR swap???
                 if (testRadius > maxRadius)
                 {
                     maxRadius = testRadius;
@@ -314,6 +316,7 @@ void iModelAnimMatrices(RpAtomic* model, xQuat* quat, xVec3* tran, RwMatrixTag* 
 
     if (pCurrentFrame != NULL)
     {
+        // float/sda scheduling
         pMatrixStackTop = &matrixStack[0];
         pMatrixStackTop->at.z = 1.0f;
 
@@ -330,6 +333,8 @@ void iModelAnimMatrices(RpAtomic* model, xQuat* quat, xVec3* tran, RwMatrixTag* 
         matrixStack[0].pos.x = 0.0f;
         matrixStack[0].flags |= 0x20003;
 
+        // non-volatile registers are acting up and their instructions
+        // are being scheduled weirdly
         matrixStack[1] = matrixStack[0];
         numFrames = pCurrentFrame->nodeIndex;
         pMatrixArray = (&matrixStack[1]);
@@ -365,6 +370,7 @@ void iModelAnimMatrices(RpAtomic* model, xQuat* quat, xVec3* tran, RwMatrixTag* 
             quat++;
             tran++;
             iVar1++;
+            // r27 and r28 swap
         }
     }
 }
@@ -415,10 +421,12 @@ S32 iModelCull(RpAtomic* model, RwMatrix* mat)
 
     RwV3dTransformPoints(&sph.center, &model->boundingSphere.center, 1, mat);
 
-    RwReal f1 = RwV3dDotProductMacro(&mat->right, &mat->right);
+    // FPR hell
     RwReal f3 = RwV3dDotProductMacro(&mat->up, &mat->up);
     RwReal f4 = RwV3dDotProductMacro(&mat->at, &mat->at);
+    RwReal f1 = RwV3dDotProductMacro(&mat->right, &mat->right);
 
+    // cror???
     sph.radius = model->boundingSphere.radius * xsqrt(MAX(f1, MAX(f3, f4)));
 
     model->worldBoundingSphere = sph;
@@ -614,6 +622,7 @@ U32 iModelVertEval(RpAtomic* model, U32 index, U32 count, RwMatrix* mat, xVec3* 
     return count;
 }
 
+// register scheduling
 static inline void SkinNormals(xVec3* dest, const xVec3* normal, const RwMatrix* mat,
                                const RwMatrix* skinmat, const F32* wt, const U32* idx, U32 count)
 {
@@ -721,8 +730,7 @@ U32 iModelNormalEval(xVec3* out, const RpAtomic& m, const RwMatrixTag* mat, size
     else
     {
         xMat4x3 nmat;
-        xMat3x3Normalize(
-            &nmat, (xMat3x3*)&mat);
+        xMat3x3Normalize(&nmat, (xMat3x3*)&mat);
         nmat.pos.assign(0.0f, 0.0f, 0.0f);
         RwV3dTransformPoints((RwV3d*)out, (RwV3d*)in, size, (RwMatrix*)&nmat);
     }
@@ -926,6 +934,7 @@ static RpMaterial* iModelSetMaterialAlphaCB(RpMaterial* material, void* data)
     return material;
 }
 
+// sda scheduling
 void iModelSetMaterialAlpha(RpAtomic* model, U8 alpha)
 {
     RpGeometry* geom = RpAtomicGetGeometry(model);
@@ -945,6 +954,7 @@ void iModelSetMaterialAlpha(RpAtomic* model, U8 alpha)
     sMaterialFlags |= 0x1;
 }
 
+// sda scheduling
 static RpMaterial* iModelResetMaterialCB(RpMaterial* material, void* data)
 {
     if ((sMaterialFlags & 0x3) == 0x3)
@@ -1015,6 +1025,7 @@ void iModelSetMaterialTexture(RpAtomic* model, void* texture)
     geom = model->geometry;
     sMaterialIdx = 0;
     RpGeometryForAllMaterials(geom, iModelSetMaterialTextureCB, texture);
+    // sda scheduling
     sMaterialFlags |= 4;
     sLastMaterial = model;
 }
@@ -1038,6 +1049,7 @@ static RpMaterial* iModelMaterialMulCB(RpMaterial* material, void* data)
     F32 tmp;
     F32* mods = (F32*)data;
 
+    // sda scheduling
     tmp = col.red * mods[0];
     U8_COLOR_CLAMP(col.red, tmp);
 
@@ -1052,7 +1064,6 @@ static RpMaterial* iModelMaterialMulCB(RpMaterial* material, void* data)
     return material;
 }
 
-// TODO: once again, fix after RW implementation
 void iModelMaterialMul(RpAtomic* model, F32 rm, F32 gm, F32 bm)
 {
     RpGeometry* geom = RpAtomicGetGeometry(model);
@@ -1073,6 +1084,7 @@ void iModelMaterialMul(RpAtomic* model, F32 rm, F32 gm, F32 bm)
 
     RpGeometryForAllMaterials(geom, iModelMaterialMulCB, cols);
 
+    // sda scheduling
     sMaterialFlags |= 0x2;
     sLastMaterial = model;
 }
