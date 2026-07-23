@@ -536,7 +536,7 @@ config.libs = [
             Object(NonMatching, "SB/Core/gc/iMath3.cpp"),
             Object(NonMatching, "SB/Core/gc/iMemMgr.cpp"),
             Object(Matching, "SB/Core/gc/iMix.c"),
-            Object(NonMatching, "SB/Core/gc/iModel.cpp"),
+            Object(NonMatching, "SB/Core/gc/iModel.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Core/gc/iMorph.cpp"),
             Object(Equivalent, "SB/Core/gc/iPad.cpp"),
             Object(NonMatching, "SB/Core/gc/iParMgr.cpp"),
