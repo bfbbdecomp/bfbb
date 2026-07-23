@@ -1,10 +1,14 @@
+#include "zFX.h"
+
+#include "rpworld.h"
+#include "rwplcore.h"
+#include "xDebug.h"
 #include "xEnt.h"
 #include "xFX.h"
 #include "xMath.h"
 #include "xMath3.h"
 
-#include "zHud.h"
-#include "zFX.h"
+#include "zGlobals.h"
 #include "zScene.h"
 #include "zTextBox.h"
 
@@ -27,7 +31,7 @@ const xFXRing sPatrickStunRing[3] = { { 0x741b0566,
                                         32,
                                         3,
                                         1,
-                                        { NULL } },
+                                        NULL },
                                       { 0x741b0566,
                                         1.5f,
                                         { 0.0f, 0.0f, 0.0f },
@@ -42,7 +46,7 @@ const xFXRing sPatrickStunRing[3] = { { 0x741b0566,
                                         32,
                                         2,
                                         1,
-                                        { NULL } },
+                                        NULL },
                                       { 0x741b0566,
                                         2.0f,
                                         { 0.0f, 0.0f, 0.0f },
@@ -57,7 +61,7 @@ const xFXRing sPatrickStunRing[3] = { { 0x741b0566,
                                         32,
                                         1,
                                         1,
-                                        { NULL } } };
+                                        NULL } };
 const xFXRing sHammerRing[1] = {
     0x741b0566, 0.75f, { 0.0f, 0.0f, 0.0f },   0.0f, 0.4f, 2.4f, PI / 2.0f, PI / -2.0f,
     0.6f,       -0.6f, { 255, 255, 255, 127 }, 32,   2,    1,    NULL
@@ -77,7 +81,7 @@ const xFXRing sPorterRing[2] = {
       16,
       2,
       1,
-      { NULL } },
+      NULL },
     { 0x741b0566,
       0.5f,
       { 0.0f, 0.25f, 0.0f },
@@ -92,24 +96,20 @@ const xFXRing sPorterRing[2] = {
       8,
       2,
       1,
-      { NULL } },
+      NULL },
 };
 const xFXRing sMuscleArmRing[1] = {
     0x741b0566, 3.0f,  { 0.0f, 0.0f, 0.0f },   0.0f, 0.0f, 90.0f, PI / 2.0f, 0.0f,
     0.6f,       30.0f, { 255, 255, 255, 160 }, 48,   1,    1,     NULL
 };
 
+static const float defaultGooTimes[4] = {};
+static const float defaultGooWarbc[4] = {};
+
 zFXGooInstance zFXGooInstances[24];
+U32 gFXSurfaceFlags = 0;
 
 extern char zFX_strings[];
-extern ztextbox* goo_timer_textbox;
-
-xVec3 bubblehit_pos_rnd = { 0.25f, 0.25f, 0.25f };
-xVec3 bubblehit_vel_rnd = { 6.0f, 6.0f, 6.0f };
-xVec3 bubbletrail_pos_rnd = { 0.25f, 0.25f, 0.25f };
-xVec3 bubbletrail_vel_rnd = { 0.25f, 0.25f, 0.25f };
-
-F32 bubblehit_vel_scale = 1.0f;
 
 void xDrawSphere2(const xVec3*, F32, U32)
 {
@@ -120,10 +120,27 @@ void on_spawn_bubble_wall(const tweak_info& tweak)
     zFX_SpawnBubbleWall();
 }
 
+static void init_poppers();
+static void setup_entrails(zScene&);
 void zFX_SceneEnter(RpWorld* world)
 {
-    // tweak_callback cb_spawn_bubble_wall;
+    xFXanimUV2PSetTexture(NULL);
+    xFX_SceneEnter(world);
+    zFXGoo_SceneEnter();
+    init_poppers();
+    setup_entrails(*globals.sceneCur);
+
+    static tweak_callback cb_spawn_bubble_wall =
+        tweak_callback::create_change(on_spawn_bubble_wall);
+    xDebugAddTweak("FX|Spawn Bubble Wall", "Go!", &cb_spawn_bubble_wall, NULL, 0);
 }
+
+xVec3 bubblehit_pos_rnd = { 0.25f, 0.25f, 0.25f };
+xVec3 bubblehit_vel_rnd = { 6.0f, 6.0f, 6.0f };
+xVec3 bubbletrail_pos_rnd = { 0.25f, 0.25f, 0.25f };
+xVec3 bubbletrail_vel_rnd = { 0.25f, 0.25f, 0.25f };
+
+F32 bubblehit_vel_scale = 1.0f;
 
 void zFX_SceneExit(RpWorld* world)
 {
@@ -160,6 +177,97 @@ void zFXPorterWave(const xVec3* pos)
 xFXRing* zFXMuscleArmWave(const xVec3* pos)
 {
     return xFXRingCreate(pos, &sMuscleArmRing[0]);
+}
+
+static ztextbox* goo_timer_textbox = NULL;
+static void* g_txtr_gooFrozen = NULL;
+// WIP
+void zFXGooEnable(RpAtomic* atomic, S32 freezeGroup)
+{
+    S32 i;
+    zFXGooInstance* goo = zFXGooInstances;
+    g_txtr_gooFrozen = NULL;
+    for (i = 0; i < 24; i++, goo++)
+    {
+        if (goo->state == zFXGooStateInactive)
+        {
+            break;
+        }
+        if (goo->atomic == atomic)
+        {
+            return;
+        }
+    }
+    if (i == 24)
+    {
+        return;
+    }
+
+    goo->freezeGroup = freezeGroup;
+    RpGeometry* geom = RpAtomicGetGeometry(atomic);
+    if (geom->preLitLum == NULL)
+    {
+        RpGeometry* new_geometry = RpGeometryCreate(geom->numVertices, geom->numTriangles, 0x7E);
+        for (i = 0; i < geom->numVertices; i++)
+        {
+            new_geometry->morphTarget->verts[i] = geom->morphTarget->verts[i];
+            new_geometry->morphTarget->normals[i] = geom->morphTarget->normals[i];
+
+            new_geometry->preLitLum[i].red = 0xff;
+            new_geometry->preLitLum[i].green = 0xff;
+            new_geometry->preLitLum[i].blue = 0xff;
+            new_geometry->preLitLum[i].alpha = 0xff;
+
+            *new_geometry->texCoords[0] = *geom->texCoords[0];
+        }
+        for (i = 0; i < geom->numVertices; i++)
+        {
+            RwUInt16 vert1, vert2, vert3;
+            RpGeometryTriangleGetVertexIndices(geom, geom->triangles + i, &vert1, &vert2, &vert3);
+            RpGeometryTriangleSetVertexIndices(new_geometry, new_geometry->triangles + i, vert1,
+                                               vert2, vert3);
+
+            RpGeometryTriangleSetMaterial(new_geometry, new_geometry->triangles + i,
+                                          RpGeometryTriangleGetMaterial(geom, geom->triangles));
+        }
+
+        RwSphere boundingSphere;
+        RpMorphTargetCalcBoundingSphere(new_geometry->morphTarget, &boundingSphere);
+        new_geometry->morphTarget->boundingSphere = boundingSphere;
+        RpGeometryUnlock(new_geometry);
+        RpAtomicSetGeometry(atomic, new_geometry, 0);
+        geom = new_geometry;
+    }
+
+    xVec3* orig_verts = (xVec3*)xMemAllocSize(sizeof(xVec3) * geom->numVertices);
+    RwRGBA* orig_colors = (RwRGBA*)xMemAllocSize(sizeof(RwRGBA) * geom->numVertices);
+    RwTexCoords* something = (RwTexCoords*)xMemAllocSize(sizeof(RwTexCoords) * geom->numVertices);
+    memcpy(orig_verts, geom->morphTarget, sizeof(xVec3) * geom->numVertices);
+    memcpy(orig_colors, geom->preLitLum, sizeof(RwRGBA) * geom->numVertices);
+    memcpy(something, geom->texCoords, sizeof(RwTexCoords) * geom->numVertices);
+    RpAtomicSetRenderCallBack(atomic, &zFXGooRenderAtomic);
+    goo->atomic = atomic;
+    goo->orig_verts = orig_verts;
+    goo->orig_colors = orig_colors;
+    *(void**)(&goo->time) = (void*)something;
+    memcpy(goo->warbc + 1, defaultGooWarbc, sizeof(defaultGooWarbc));
+    goo->w2 = goo->warbc[1];
+    goo->warbc[0] = goo->warbc[3];
+    memcpy(goo->state_time + 1, defaultGooTimes, sizeof(defaultGooTimes));
+
+    goo->state = zFXGooStateNormal;
+    goo->timer = 0.0f;
+    goo->min = 3.0f;
+    goo->max = 4.0f;
+    goo->ref_parentPos = NULL;
+
+    if (gCurEnv != NULL)
+    {
+        gCurEnv->easset->climateFlags = 2;
+        gCurEnv->easset->climateStrengthMin = 0.0f;
+        gCurEnv->easset->climateStrengthMax = 0.0f;
+        xClimateInitAsset(&gClimate, gCurEnv->easset);
+    }
 }
 
 void zFXGoo_SceneEnter()

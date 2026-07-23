@@ -64,6 +64,7 @@ void zFXGooEventSetFreezeDuration(xEnt* obj, const F32 param);
 void zFXGooEventMelt(xEnt* obj);
 
 void zFXGooUpdate(F32 dt);
+RpAtomic* zFXGooRenderAtomic(RpAtomic* atomic);
 
 void zFXUpdate(F32 dt);
 
@@ -77,8 +78,6 @@ void zFX_SpawnBubbleBlast(const xVec3* pos, U32 num, F32 rang, F32 bvel, F32 rve
 void reset_poppers();
 
 void reset_entrails();
-
-static void init_poppers();
 
 void update_poppers(F32 dt);
 
