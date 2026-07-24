@@ -21,12 +21,14 @@ enum zFXGooState
     zFXGooStateForce32Bit = 0xffffffff
 };
 
+// Definition updated based on Rat proto data. 
 struct zFXGooInstance
 {
     RpAtomic* atomic;
     S32 freezeGroup;
     xVec3* orig_verts;
     RwRGBA* orig_colors;
+    RwTexCoords* orig_uvs;
     F32 time;
     F32 timer;
     F32 w0;
@@ -34,7 +36,6 @@ struct zFXGooInstance
     F32 warbc[4];
     F32 state_time[4];
     xVec3 center;
-    S32 padding; // Padding used for zFXGoo_SceneExit().
     zFXGooState state;
     F32 warb_time;
     F32 alpha;
@@ -69,6 +70,8 @@ RpAtomic* zFXGooRenderAtomic(RpAtomic* atomic);
 void zFXUpdate(F32 dt);
 
 S32 zFXGooIs(xEnt* obj, F32& depth, U32 playerCheck);
+
+F32 zFXGooFreezeTimeLeft();
 
 void zFX_SpawnBubbleHit(const xVec3* pos, U32 num);
 void zFX_SpawnBubbleWall();
