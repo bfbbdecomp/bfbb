@@ -7,11 +7,16 @@
 #include "xFX.h"
 #include "xMath.h"
 #include "xMath3.h"
+#include "xMathInlines.h"
 
+#include "xSnd.h"
+#include "zEnt.h"
 #include "zGlobals.h"
+#include "zGoo.h"
 #include "zScene.h"
 #include "zTextBox.h"
 
+#include <stdio.h>
 #include <types.h>
 #include <string.h>
 #include <stdlib.h>
@@ -109,8 +114,6 @@ static const float defaultGooWarbc[4] = {};
 zFXGooInstance zFXGooInstances[24];
 U32 gFXSurfaceFlags = 0;
 
-extern char zFX_strings[];
-
 void xDrawSphere2(const xVec3*, F32, U32)
 {
 }
@@ -205,58 +208,70 @@ void zFXGooEnable(RpAtomic* atomic, S32 freezeGroup)
 
     goo->freezeGroup = freezeGroup;
     RpGeometry* geom = RpAtomicGetGeometry(atomic);
+    S32 numVertices = geom->numVertices;
+    S32 numTriangles = geom->numTriangles;
     if (geom->preLitLum == NULL)
     {
-        RpGeometry* new_geometry = RpGeometryCreate(geom->numVertices, geom->numTriangles, 0x7E);
-        for (i = 0; i < geom->numVertices; i++)
+        RpGeometry* new_geom = RpGeometryCreate(numVertices, numTriangles, 0x7E);
+        RwV3d* verts = geom->morphTarget->verts;
+        RwV3d* normals = geom->morphTarget->normals;
+        RwTexCoords* texCoords = geom->texCoords[0];
+        RwV3d* new_verts = new_geom->morphTarget->verts;
+        RwV3d* new_normals = new_geom->morphTarget->normals;
+        RwRGBA* new_preLitLum = new_geom->preLitLum;
+        RwTexCoords* new_texCoords = new_geom->texCoords[0];
+        for (i = 0; i < numVertices; i++, verts++, new_verts++, normals++, new_normals++,
+            new_preLitLum++, texCoords++, new_texCoords++)
         {
-            new_geometry->morphTarget->verts[i] = geom->morphTarget->verts[i];
-            new_geometry->morphTarget->normals[i] = geom->morphTarget->normals[i];
+            new_verts[0] = verts[0];
+            new_normals[0] = normals[0];
 
-            new_geometry->preLitLum[i].red = 0xff;
-            new_geometry->preLitLum[i].green = 0xff;
-            new_geometry->preLitLum[i].blue = 0xff;
-            new_geometry->preLitLum[i].alpha = 0xff;
+            new_preLitLum[0].red = 0xff;
+            new_preLitLum[0].green = 0xff;
+            new_preLitLum[0].blue = 0xff;
+            new_preLitLum[0].alpha = 0xff;
 
-            *new_geometry->texCoords[0] = *geom->texCoords[0];
+            new_texCoords[0] = texCoords[0];
         }
-        for (i = 0; i < geom->numVertices; i++)
+
+        RpTriangle* orig_triangles = geom->triangles;
+        RpTriangle* triangles = new_geom->triangles;
+        for (i = 0; i < numTriangles; i++, orig_triangles++, triangles++)
         {
             RwUInt16 vert1, vert2, vert3;
-            RpGeometryTriangleGetVertexIndices(geom, geom->triangles + i, &vert1, &vert2, &vert3);
-            RpGeometryTriangleSetVertexIndices(new_geometry, new_geometry->triangles + i, vert1,
-                                               vert2, vert3);
+            RpGeometryTriangleGetVertexIndices(geom, orig_triangles, &vert1, &vert2, &vert3);
+            RpGeometryTriangleSetVertexIndices(new_geom, triangles, vert1, vert2, vert3);
 
-            RpGeometryTriangleSetMaterial(new_geometry, new_geometry->triangles + i,
-                                          RpGeometryTriangleGetMaterial(geom, geom->triangles));
+            RpMaterial* orig_material = RpGeometryTriangleGetMaterial(geom, orig_triangles);
+            RpGeometryTriangleSetMaterial(new_geom, triangles, orig_material);
         }
 
         RwSphere boundingSphere;
-        RpMorphTargetCalcBoundingSphere(new_geometry->morphTarget, &boundingSphere);
-        new_geometry->morphTarget->boundingSphere = boundingSphere;
-        RpGeometryUnlock(new_geometry);
-        RpAtomicSetGeometry(atomic, new_geometry, 0);
-        geom = new_geometry;
+        RpMorphTargetCalcBoundingSphere(new_geom->morphTarget, &boundingSphere);
+        new_geom->morphTarget->boundingSphere = boundingSphere;
+        RpGeometryUnlock(new_geom);
+        RpAtomicSetGeometry(atomic, new_geom, 0);
+        geom = new_geom;
     }
 
-    xVec3* orig_verts = (xVec3*)xMemAllocSize(sizeof(xVec3) * geom->numVertices);
-    RwRGBA* orig_colors = (RwRGBA*)xMemAllocSize(sizeof(RwRGBA) * geom->numVertices);
-    RwTexCoords* something = (RwTexCoords*)xMemAllocSize(sizeof(RwTexCoords) * geom->numVertices);
-    memcpy(orig_verts, geom->morphTarget, sizeof(xVec3) * geom->numVertices);
-    memcpy(orig_colors, geom->preLitLum, sizeof(RwRGBA) * geom->numVertices);
-    memcpy(something, geom->texCoords, sizeof(RwTexCoords) * geom->numVertices);
+    xVec3* orig_verts = (xVec3*)xMemAllocSize(sizeof(xVec3) * numVertices);
+    RwRGBA* orig_colors = (RwRGBA*)xMemAllocSize(sizeof(RwRGBA) * numVertices);
+    RwTexCoords* orig_uvs = (RwTexCoords*)xMemAllocSize(sizeof(RwTexCoords) * numVertices);
+    memcpy(orig_verts, geom->morphTarget->verts, sizeof(xVec3) * numVertices);
+    memcpy(orig_colors, geom->preLitLum, sizeof(RwRGBA) * numVertices);
+    memcpy(orig_uvs, geom->texCoords[0], sizeof(RwTexCoords) * numVertices);
     RpAtomicSetRenderCallBack(atomic, &zFXGooRenderAtomic);
     goo->atomic = atomic;
     goo->orig_verts = orig_verts;
     goo->orig_colors = orig_colors;
-    *(void**)(&goo->time) = (void*)something;
-    memcpy(goo->warbc + 1, defaultGooWarbc, sizeof(defaultGooWarbc));
-    goo->w2 = goo->warbc[1];
-    goo->warbc[0] = goo->warbc[3];
-    memcpy(goo->state_time + 1, defaultGooTimes, sizeof(defaultGooTimes));
+    goo->orig_uvs = orig_uvs;
+    memcpy(goo->warbc, defaultGooWarbc, sizeof(defaultGooWarbc));
+    goo->w0 = goo->warbc[0];
+    goo->w2 = goo->warbc[2];
+    memcpy(goo->state_time, defaultGooTimes, sizeof(defaultGooTimes));
 
     goo->state = zFXGooStateNormal;
-    goo->timer = 0.0f;
+    goo->time = 0.0f;
     goo->min = 3.0f;
     goo->max = 4.0f;
     goo->ref_parentPos = NULL;
@@ -280,7 +295,7 @@ void zFXGoo_SceneEnter()
         goo->state = zFXGooStateInactive;
         goo++;
     }
-    U32 gameID = xStrHash(zFX_strings + 0x19); // "FREEZY_TIMER_TEXTBOX"
+    U32 gameID = xStrHash("FREEZY_TIMER_TEXTBOX");
     goo_timer_textbox = (ztextbox*)zSceneFindObject(gameID);
 }
 
@@ -306,9 +321,123 @@ void zFXGoo_SceneExit()
     zFXGooInstance* goo = zFXGooInstances;
     for (i = 0; i < 0x18; i++)
     {
-        memset(goo, 0, 4);
+        memset(&goo->atomic, 0, sizeof(RpAtomic*));
         goo->state = zFXGooStateInactive;
         goo++;
+    }
+}
+
+// Regalloc
+void zFXGooUpdateInstance(zFXGooInstance* goo, F32 dt)
+{
+    zFXGooState old_state = goo->state;
+    if (goo->state != zFXGooStateNormal)
+    {
+        goo->time += dt;
+        if (goo->time >= goo->timer)
+        {
+            goo->state = (zFXGooState)(((S32)goo->state + 1) & 0x3);
+            goo->timer = (goo->time + goo->state_time[goo->state]) - (goo->time - goo->timer);
+        }
+    }
+
+    if (xabs(goo->state_time[goo->state] < 1e-5f))
+    {
+        goo->state_time[goo->state] = 1e-5f;
+    }
+    goo->alpha = 1.0f - ((goo->timer - goo->time) / goo->state_time[goo->state]);
+    goo->alpha = CLAMP(goo->alpha, 0.0f, 1.0f);
+
+    switch (goo->state)
+    {
+    case zFXGooStateNormal:
+    {
+        if (old_state == zFXGooStateMelting)
+        {
+            zGooMeltFinished(goo->atomic);
+        }
+        goo->alpha = 0.0f;
+        break;
+    }
+    case zFXGooStateFreezing:
+    {
+        F32 rate = xpow(1.1f, 60.0f * dt);
+        goo->min *= rate;
+        goo->max *= rate;
+        break;
+    }
+    case zFXGooStateFrozen:
+    {
+        goo->alpha = 1.0f;
+        if (goo->timer - goo->time <= 2.5f)
+        {
+            xClimateSetSnow(0.0f);
+            if (!xSndIsPlaying(0x7bc0c0ce))
+            {
+                xSndPlay3D(0x7bc0c0ce, 10.0f, 0.0f, 0x80, 0x10000, &goo->center, 0.0f, SND_CAT_GAME,
+                           0.0f);
+            }
+        }
+        break;
+    }
+    case zFXGooStateMelting:
+    {
+        goo->alpha = 1.0f - goo->alpha;
+        F32 rate = xpow(0.9090909f, 60.0f * dt);
+        goo->min *= rate;
+        goo->max *= rate;
+        break;
+    }
+    }
+
+    goo->warbc[0] = goo->w0 * (1.0f - goo->alpha);
+    goo->warbc[2] = goo->w2 * (1.0f - goo->alpha);
+    F32 tmp = xpow(1.0f - goo->alpha, 1.5f);
+    goo->warb_time += tmp * dt;
+
+    if (goo->alpha < 1.0f && goo->atomic != NULL)
+    {
+        RpGeometry* geom = RpAtomicGetGeometry(goo->atomic);
+        if (geom != NULL && RpGeometryLock(geom, 2))
+        {
+            F32 warb_time = goo->warb_time;
+            xVec3* verts = goo->orig_verts;
+            RwV3d* morphVerts = geom->morphTarget->verts;
+            for (S32 s = 0; s < geom->numVertices; s++, verts++, morphVerts++)
+            {
+                F32 a = xfmod(goo->warbc[1] * (verts->x + warb_time), 2 * PI);
+                F32 b = xfmod(goo->warbc[3] * (verts->z + warb_time), 2 * PI);
+                F32 c = isin(a);
+
+                a = goo->warbc[0] * c + verts->y;
+
+                F32 d = isin(b);
+
+                morphVerts->y = goo->warbc[2] * d + a;
+            }
+
+            RpGeometryUnlock(geom);
+        }
+    }
+
+    if(goo_timer_textbox != NULL)
+    {
+        F32 freeze_time = zFXGooFreezeTimeLeft();
+
+        if(freeze_time > 0.0f) {
+            S32 len = freeze_time;
+            if(len > 0x63) {
+                len = 0x63;
+            }
+
+            static char counter_text[] = "##:##";
+            sprintf(counter_text, "%02d", len);
+            goo_timer_textbox->set_text(counter_text);
+            goo_timer_textbox->activate();
+        }
+        else {
+            goo_timer_textbox->deactivate();
+        }
     }
 }
 
@@ -347,9 +476,9 @@ void zFXGooFreeze(RpAtomic* atomic, const xVec3* center, xVec3* ref_parPosVec)
             if (goo->freezeGroup == freezeGroup)
             {
                 goo->state = zFXGooStateFreezing;
-                goo->timer = 0.0f;
+                goo->time = 0.0f;
 
-                // goo->w0 = goo->timer + (goo->center * 4) + 0x30;
+                // goo->timer = goo->time + (goo->center * 4) + 0x30;
 
                 *goo->orig_verts = *center;
 
