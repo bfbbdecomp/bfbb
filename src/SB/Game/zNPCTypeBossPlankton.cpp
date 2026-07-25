@@ -1147,8 +1147,7 @@ void zNPCBPlankton::Process(xScene* xscn, F32 dt)
     update_turn(dt);
     update_move(dt);
     update_animation(dt); //uvar5 = update anim
-    check_player_damage(); //uvar1 = check_player_damage
-    if (psy_instinct != 0) //psy_instinct isnt right, needs (uvar1 & 0xff)
+    if ((U8)check_player_damage())
     {
         zEntPlayer_Damage(0, 1); //needs xBase* instead of 0
     }
@@ -1323,9 +1322,17 @@ void zNPCBPlankton::update_follow(F32 dt)
     }
 }
 
-void zNPCBPlankton::check_player_damage()
+void zNPCBPlankton::give_control()
 {
-    // TODO
+    if (!this->crony)
+        return;
+
+    this->crony->ThanksImDone();
+}
+
+S32 zNPCBPlankton::check_player_damage()
+{
+    return (((-globals.player.cheat_mode) | globals.player.cheat_mode) & 1);
 }
 
 void zNPCBPlankton::init_beam()
