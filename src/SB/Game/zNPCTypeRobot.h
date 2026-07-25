@@ -1,13 +1,13 @@
 #ifndef ZNPCTYPEROBOT_H
 #define ZNPCTYPEROBOT_H
 
-#include "xPad.h"
-#include "xModel.h"
-
-#include "zNPCTypeCommon.h"
-#include "zNPCSupport.h"
 #include "zNPCGlyph.h"
 #include "zNPCHazard.h"
+#include "zNPCSupport.h"
+#include "zNPCTypeCommon.h"
+
+#include "xModel.h"
+#include "xPad.h"
 
 typedef struct zNPCRobot;
 extern char* g_strz_roboanim[41];
@@ -192,7 +192,6 @@ struct zNPCFodBomb : zNPCRobot
     void Setup();
     void BlinkerReset();
     void BlinkerUpdate(F32 dt, F32 pct_timeRemain);
-
 };
 
 struct zNPCFodBzzt : zNPCRobot

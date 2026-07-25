@@ -1,10 +1,12 @@
-#include "iModel.h"
 #include "xModel.h"
+
 #include "xMemMgr.h"
 #include "xMorph.h"
 
-#include <types.h>
+#include "iModel.h"
+
 #include <string.h>
+#include <types.h>
 
 RpMorphTarget anim_coll_old_mt;
 S32 xModelPipeCount[16];

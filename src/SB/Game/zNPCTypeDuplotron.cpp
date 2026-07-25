@@ -1,10 +1,12 @@
-#include "xGroup.h"
-#include "xMathInlines.h"
+#include "zNPCTypeDuplotron.h"
+
 #include "zGlobals.h"
 #include "zNPCGoalCommon.h"
 #include "zNPCGoals.h"
 #include "zNPCSupport.h"
-#include "zNPCTypeDuplotron.h"
+
+#include "xGroup.h"
+#include "xMathInlines.h"
 
 #define ANIM_Unknown 0
 #define ANIM_Idle01 1

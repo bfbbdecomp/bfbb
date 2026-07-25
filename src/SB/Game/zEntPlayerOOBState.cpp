@@ -1,18 +1,22 @@
 #include "zEntPlayerOOBState.h"
+
+#include "zEntCruiseBubble.h"
+#include "zEntPlayerBungeeState.h"
+#include "zGameState.h"
 #include "zGlobals.h"
+#include "zRenderState.h"
+#include "zSaveLoad.h"
+#include "zSurface.h"
 
 #include "xMath.h"
 #include "xMathInlines.h"
-#include "zSurface.h"
-#include "zRenderState.h"
-#include "zEntPlayerBungeeState.h"
-#include "zEntCruiseBubble.h"
-#include "zGameState.h"
 #include "xScrFx.h"
-#include "zSaveLoad.h"
+
+#include "iDraw.h"
+
+#include <rwplcore.h>
 
 #include <types.h>
-#include <rwplcore.h>
 
 bool oob_player_teleported;
 
@@ -374,13 +378,13 @@ void oob_state::init()
 
     static in_state_type in_state;
     shared.states[0] = &in_state;
-    
+
     static out_state_type out_state;
     shared.states[1] = &out_state;
-    
+
     static grab_state_type grab_state;
     shared.states[2] = &grab_state;
-    
+
     static drop_state_type drop_state;
     shared.states[3] = &drop_state;
 
@@ -819,7 +823,7 @@ namespace oob_state
         grab_state_type::tutorial_callback::tutorial_callback(grab_state_type& owner) : owner(owner)
         {
         }
-        
+
         out_state_type::out_state_type() : state_type(STATE_OUT)
         {
         }
@@ -828,13 +832,9 @@ namespace oob_state
         {
         }
 
-        void state_type::start()
-        {
-        };
+        void state_type::start() {};
 
-        void state_type::stop()
-        {
-        };
+        void state_type::stop() {};
     } // namespace
 } // namespace oob_state
 
@@ -872,7 +872,6 @@ U8 oob_state::update(xScene& scene, F32 dt)
         shared.state = shared.states[newtype];
         shared.state->start();
     }
-
 
     return shared.control;
 }
@@ -923,7 +922,7 @@ void oob_state::fx_render()
         render_fade();
         render_ghost();
     }
-    
+
     if (shared.render_hand && shared.model != NULL)
     {
         render_hand();
@@ -979,8 +978,7 @@ namespace oob_state
             shared.control = 0;
         };
 
-        void in_state_type::stop()
-        {
+        void in_state_type::stop() {
 
         };
 
@@ -1044,13 +1042,13 @@ namespace oob_state
                     return STATE_GRAB;
                 }
             }
-            else 
+            else
             {
                 if (!globals.player.JumpState)
                 {
                     shared.reset_time = 0.0f;
                 }
-                
+
                 shared.reset_time -= dt;
                 if (shared.reset_time <= 0.0f)
                 {
@@ -1072,7 +1070,7 @@ namespace oob_state
             shared.flags |= 0x4;
             shared.vertical = FABS(fixed.in_loc.y - fixed.out_loc.y) > 0.01f;
             shared.control = TRUE;
-            
+
             this->move_substate = shared.model != NULL ? SS_REORIENT : SS_INVALID;
             this->reorient_time = fixed.reorient_time;
 
@@ -1165,12 +1163,12 @@ namespace oob_state
         {
             this->player_start = globals.player.cp.pos;
             this->move_substate = shared.model != NULL ? SS_MOVING_IN : SS_INVALID;
-            
+
             shared.vel = fixed.drop.in_vel;
             shared.accel = 0.0f;
             shared.loc.x = fixed.in_loc.x;
             shared.loc.y = fixed.in_loc.y;
-            
+
             this->fade_substate = SS_START_FADE_IN;
             this->fade_start_time = fixed.drop.fade_start_time;
             this->fade_time = fixed.drop.fade_time;
@@ -1182,7 +1180,7 @@ namespace oob_state
             globals.player.ControlOffTimer = FLOAT_MAX;
             xScrFxStopFade();
             zCameraDisableInput();
-            
+
             xModelInstance& m = *p.model;
             xEntFrame& f = *p.frame;
 
@@ -1195,12 +1193,14 @@ namespace oob_state
             *(xMat4x3*)m.Mat = f.mat;
 
             shared_target.pos = *(xVec3*)&m.Mat->pos;
-            
+
             set_camera(true);
             globals.camera.tgt_mat = &shared_target;
             globals.camera.tgt_omat = &shared_target;
-            xCameraMove(&globals.camera, 0x20, fixed.cam_dist, fixed.cam_height, PI + globals.player.cp.rot, 0.0f, 0.0f, 0.0f);
-            xCameraLookYPR(&globals.camera, 0x0, globals.player.cp.rot, fixed.cam_pitch, 0.0f, 0.0f, 0.0f, 0.0f);
+            xCameraMove(&globals.camera, 0x20, fixed.cam_dist, fixed.cam_height,
+                        PI + globals.player.cp.rot, 0.0f, 0.0f, 0.0f);
+            xCameraLookYPR(&globals.camera, 0x0, globals.player.cp.rot, fixed.cam_pitch, 0.0f, 0.0f,
+                           0.0f, 0.0f);
         }
 
         void drop_state_type::stop()
@@ -1209,7 +1209,7 @@ namespace oob_state
             globals.player.ControlOffTimer = 1.0f;
 
             reset_camera();
-            
+
             shared.render_hand = FALSE;
             shared.fade_alpha = 1.0f;
             shared.flags &= ~0x4;

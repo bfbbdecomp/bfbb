@@ -1,12 +1,15 @@
-#include <types.h>
 #include "zMusic.h"
-#include "xSnd.h"
-#include "xMath.h"
-#include "xString.h"
-#include "zGlobals.h"
+
 #include "zGameState.h"
+#include "zGlobals.h"
 #include "zScene.h"
+
+#include "xMath.h"
+#include "xSnd.h"
+#include "xString.h"
+
 #include <string.h>
+#include <types.h>
 
 #define TRACK_COUNT 2
 

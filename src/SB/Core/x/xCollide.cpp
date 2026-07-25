@@ -1,14 +1,18 @@
 #include "xCollide.h"
+
 #include "xCollideFast.h"
-#include "zSurface.h"
-#include "iCollide.h"
-#include "iMath3.h"
-#include "rpcollis.h"
-#include "rpcollbsptree.h"
-#include "rpworld.h"
 #include "xMathInlines.h"
 #include "xScene.h"
+
+#include "iCollide.h"
+#include "iMath3.h"
+
 #include "zGrid.h"
+#include "zSurface.h"
+
+#include <rpcollbsptree.h>
+#include <rpcollis.h>
+#include <rpworld.h>
 
 #include <PowerPC_EABI_Support/MSL_C/MSL_Common/cmath>
 #include <types.h>

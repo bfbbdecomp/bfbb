@@ -1,16 +1,17 @@
 #include "zNPCHazard.h"
 
-#include <types.h>
-#include <string.h>
-
 #include "zGlobals.h"
-#include "zNPCTypeCommon.h"
-#include "zNPCTypes.h"
 #include "zNPCSupplement.h"
 #include "zNPCSupport.h"
+#include "zNPCTypeCommon.h"
+#include "zNPCTypes.h"
+
 #include "xMath.h"
 #include "xMathInlines.h"
 #include "xUtil.h"
+
+#include <string.h>
+#include <types.h>
 
 extern U32 g_hash_hazanim[3];
 extern char* g_strz_hazanim[3];

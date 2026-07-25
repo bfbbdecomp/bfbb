@@ -1,10 +1,11 @@
-#include <types.h>
-
 #include "xEvent.h"
+
 #include "xString.h"
 #include "xstransvc.h"
 
 #include "zScene.h"
+
+#include <types.h>
 
 char zEventLogBuf[256][20];
 
@@ -29,8 +30,7 @@ void zEntEvent(U32 toID, U32 toEvent)
     }
 }
 
-void zEntEvent(U32 toID, U32 toEvent, F32 toParam0, F32 toParam1, F32 toParam2,
-               F32 toParam3)
+void zEntEvent(U32 toID, U32 toEvent, F32 toParam0, F32 toParam1, F32 toParam2, F32 toParam3)
 {
     xBase* sendTo;
     F32 toParam[4];
@@ -53,8 +53,7 @@ void zEntEvent(xBase* to, U32 toEvent)
     zEntEvent(NULL, 0, to, toEvent, NULL, NULL, 0);
 }
 
-void zEntEvent(xBase* to, U32 toEvent, F32 toParam0, F32 toParam1, F32 toParam2,
-               F32 toParam3)
+void zEntEvent(xBase* to, U32 toEvent, F32 toParam0, F32 toParam1, F32 toParam2, F32 toParam3)
 {
     F32 toParam[4];
 

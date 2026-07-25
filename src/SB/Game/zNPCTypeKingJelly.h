@@ -1,14 +1,15 @@
 #ifndef ZNPCTYPEKINGJELLY_H
 #define ZNPCTYPEKINGJELLY_H
 
-#include "zNPCTypeSubBoss.h"
 #include "zNPCGoalCommon.h"
 #include "zNPCGoals.h"
-#include "xEnt.h"
+#include "zNPCTypeAmbient.h"
+#include "zNPCTypeSubBoss.h"
+
 #include "containers.h"
 #include "xBehaviour.h"
-#include "zNPCTypeAmbient.h"
 #include "xCamera.h"
+#include "xEnt.h"
 
 namespace auto_tweak
 {

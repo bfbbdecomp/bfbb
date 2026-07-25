@@ -1,12 +1,13 @@
 #ifndef ZENTPLAYER_H
 #define ZENTPLAYER_H
 
-#include "xMath3.h"
-#include "xEnt.h"
-#include "xAnim.h"
 #include "zEnt.h"
 #include "zLasso.h"
+
+#include "xAnim.h"
 #include "xColor.h"
+#include "xEnt.h"
+#include "xMath3.h"
 
 enum zControlOwner
 {

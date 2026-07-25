@@ -4,8 +4,8 @@
 #include "xFColor.h"
 #include "xMath3.h"
 
-#include <rwcore.h>
 #include <rpworld.h>
+#include <rwcore.h>
 
 #define ILIGHT_TYPE_NONE 0
 #define ILIGHT_TYPE_POINT 1

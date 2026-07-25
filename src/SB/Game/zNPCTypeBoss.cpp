@@ -1,11 +1,11 @@
 #include "zNPCTypeBoss.h"
 
-#include "zNPCTypes.h"
-#include "zNPCTypeBossSandy.h"
 #include "zNPCTypeBossPatrick.h"
+#include "zNPCTypeBossPlankton.h"
 #include "zNPCTypeBossSB1.h"
 #include "zNPCTypeBossSB2.h"
-#include "zNPCTypeBossPlankton.h"
+#include "zNPCTypeBossSandy.h"
+#include "zNPCTypes.h"
 
 #include "xString.h"
 

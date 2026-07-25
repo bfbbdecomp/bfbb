@@ -1,26 +1,26 @@
 #include "zFX.h"
 
-#include "rpworld.h"
-#include "rwplcore.h"
-#include "xDebug.h"
-#include "xEnt.h"
-#include "xFX.h"
-#include "xMath.h"
-#include "xMath3.h"
-#include "xMathInlines.h"
-
-#include "xSnd.h"
 #include "zEnt.h"
 #include "zGlobals.h"
 #include "zGoo.h"
 #include "zScene.h"
 #include "zTextBox.h"
 
-#include <stdio.h>
-#include <types.h>
-#include <string.h>
-#include <stdlib.h>
+#include "xDebug.h"
+#include "xEnt.h"
+#include "xFX.h"
+#include "xMath.h"
+#include "xMath3.h"
+#include "xMathInlines.h"
+#include "xSnd.h"
+
+#include "rpworld.h"
+#include "rwplcore.h"
 #include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <types.h>
 
 const xFXRing sPatrickStunRing[3] = { { 0x741b0566,
                                         1.0f,
@@ -420,13 +420,15 @@ void zFXGooUpdateInstance(zFXGooInstance* goo, F32 dt)
         }
     }
 
-    if(goo_timer_textbox != NULL)
+    if (goo_timer_textbox != NULL)
     {
         F32 freeze_time = zFXGooFreezeTimeLeft();
 
-        if(freeze_time > 0.0f) {
+        if (freeze_time > 0.0f)
+        {
             S32 len = freeze_time;
-            if(len > 0x63) {
+            if (len > 0x63)
+            {
                 len = 0x63;
             }
 
@@ -435,7 +437,8 @@ void zFXGooUpdateInstance(zFXGooInstance* goo, F32 dt)
             goo_timer_textbox->set_text(counter_text);
             goo_timer_textbox->activate();
         }
-        else {
+        else
+        {
             goo_timer_textbox->deactivate();
         }
     }

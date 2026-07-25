@@ -1,14 +1,17 @@
 #include "xParEmitter.h"
 
-#include <types.h>
-#include <zScene.h>
-#include <iModel.h>
-#include <xMathInlines.h>
-#include <xMath.h>
-#include <xGroup.h>
-#include <zGlobals.h>
-#include <xDebug.h>
-#include <xEvent.h>
+#include "xDebug.h"
+#include "xEvent.h"
+#include "xGroup.h"
+#include "xMath.h"
+#include "xMathInlines.h"
+
+#include "iModel.h"
+
+#include "zGlobals.h"
+#include "zScene.h"
+
+#include <string.h>
 
 void add_tweaks(xParEmitter& pe)
 {

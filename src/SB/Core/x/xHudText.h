@@ -1,8 +1,8 @@
 #ifndef XHUDTEXT_H
 #define XHUDTEXT_H
 
-#include "xHud.h"
 #include "xFont.h"
+#include "xHud.h"
 
 namespace xhud
 {

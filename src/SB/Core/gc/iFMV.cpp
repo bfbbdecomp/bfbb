@@ -8,9 +8,10 @@
 
 #include "xFile.h"
 #include "xPar.h"
-#include <dolphin/gx.h>
 
 #include "zGlobals.h"
+
+#include <dolphin/gx.h>
 
 // #include <dolphin.h>
 

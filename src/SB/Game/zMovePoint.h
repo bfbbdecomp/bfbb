@@ -1,9 +1,9 @@
 #ifndef ZMOVEPOINT_H
 #define ZMOVEPOINT_H
 
-#include "xMovePoint.h"
-
 #include "zScene.h"
+
+#include "xMovePoint.h"
 
 #include <types.h>
 

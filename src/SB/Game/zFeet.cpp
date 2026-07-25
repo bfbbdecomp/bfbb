@@ -1,12 +1,16 @@
-#include <types.h>
-#include <rwcore.h>
-#include <string.h>
+#include "zFeet.h"
+
+#include "zScene.h"
+#include "zSurface.h"
+
 #include "xBase.h"
 #include "xString.h"
 #include "xstransvc.h"
-#include "zFeet.h"
-#include "zScene.h"
-#include "zSurface.h"
+
+#include <rwcore.h>
+
+#include <string.h>
+#include <types.h>
 
 // TODO: replace hardcoded constant
 static U32 sSurfaceSoundIDStep[23];

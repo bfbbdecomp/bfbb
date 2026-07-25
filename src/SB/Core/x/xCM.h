@@ -1,9 +1,7 @@
 #ifndef XCM_H
 #define XCM_H
 
-#include <types.h>
 #include "xColor.h"
-#include "xBase.h"
 
 struct xCreditsData
 {

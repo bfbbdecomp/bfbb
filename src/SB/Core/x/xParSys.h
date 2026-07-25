@@ -4,9 +4,10 @@
 #include "xBase.h"
 #include "xParCmd.h"
 #include "xParGroup.h"
-#include "iParMgr.h"
-#include "xstransvc.h"
 #include "xScene.h"
+#include "xstransvc.h"
+
+#include "iParMgr.h"
 
 #include <rwcore.h>
 

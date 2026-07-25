@@ -1,11 +1,11 @@
 #ifndef ZBUSSTOP_H
 #define ZBUSSTOP_H
 
-#include "xVec3.h"
+#include "zEnt.h"
+
 #include "xBase.h"
 #include "xDynAsset.h"
-
-#include "zEnt.h"
+#include "xVec3.h"
 
 struct busstop_asset : xDynAsset
 {

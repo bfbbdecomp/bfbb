@@ -1,5 +1,7 @@
 #include "xPartition.h"
+
 #include "xMemMgr.h"
+
 #include <string.h>
 
 void xPartitionReset()
@@ -178,7 +180,7 @@ void xPartitionSpaceMove(_tagPartSpace* src, _tagPartSpace* dest, U32 data)
     }
 
     src_pre->next = src_lnk->next;
-    
+
     dest_lnk->next = src_lnk;
     dest_lnk->next->next = NULL;
 

@@ -1,8 +1,8 @@
 #ifndef XQUICKCULL_H
 #define XQUICKCULL_H
 
-#include "xVec3.h"
 #include "xMath3.h"
+#include "xVec3.h"
 
 // Size: 0x20
 struct xQCData

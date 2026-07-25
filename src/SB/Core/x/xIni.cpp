@@ -1,10 +1,12 @@
 #include "xIni.h"
+
 #include "xString.h"
+
 #include <rwplcore.h>
 
+#include <PowerPC_EABI_Support/MSL_C/MSL_Common/cstdlib>
+#include <PowerPC_EABI_Support/MSL_C/MSL_Common/cstring>
 #include <types.h>
-#include <PowerPC_EABI_Support\MSL_C\MSL_Common\cstdlib>
-#include <PowerPC_EABI_Support\MSL_C\MSL_Common\cstring>
 
 char* TrimWhitespace(char* string)
 {

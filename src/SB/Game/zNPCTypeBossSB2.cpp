@@ -1,29 +1,32 @@
 
 #include "zNPCTypeBossSB2.h"
-#include "PowerPC_EABI_Support/MSL_C++/MSL_Common/Include/new.h"
-#include "xLightKit.h"
-#include "zNPCGoalCommon.h"
-#include <types.h>
-#include "string.h"
-#include "iModel.h"
-#include "xCollide.h"
-#include "xMath.h"
-#include "xMath3.h"
-#include "xstransvc.h"
-#include "xSnd.h"
-#include "xVec3.h"
-#include "xDebug.h"
 
 #include "zCamera.h"
-#include "zEntSimpleObj.h"
 #include "zEntDestructObj.h"
+#include "zEntSimpleObj.h"
 #include "zGlobals.h"
 #include "zGrid.h"
-#include "zNPCTypeBossPatrick.h"
-#include "zRenderState.h"
 #include "zLightning.h"
+#include "zNPCGoalCommon.h"
+#include "zNPCTypeBossPatrick.h"
 #include "zNPCTypeRobot.h"
-#include <xMathInlines.h>
+#include "zRenderState.h"
+
+#include "xCollide.h"
+#include "xDebug.h"
+#include "xLightKit.h"
+#include "xMath.h"
+#include "xMath3.h"
+#include "xMathInlines.h"
+#include "xSnd.h"
+#include "xVec3.h"
+#include "xstransvc.h"
+
+#include "iModel.h"
+
+#include "PowerPC_EABI_Support/MSL_C++/MSL_Common/Include/new.h"
+#include "string.h"
+#include <types.h>
 
 #define ANIM_Unknown 0 //0x0
 #define ANIM_Idle01 1 // 0x4
@@ -1028,9 +1031,9 @@ xAnimTable* ZNPC_AnimTable_BossSB2()
     ANIM_ChopLeftBegin,
     ANIM_ChopLeftLoop,
     ANIM_ChopLeftEnd,
-    ANIM_ChopRightBegin,            
-    ANIM_ChopRightLoop,             
-    ANIM_ChopRightEnd,               
+    ANIM_ChopRightBegin,
+    ANIM_ChopRightLoop,
+    ANIM_ChopRightEnd,
     ANIM_SwipeLeftBegin,
     ANIM_SwipeLeftLoop,
     ANIM_SwipeLeftEnd,
@@ -1041,9 +1044,9 @@ xAnimTable* ZNPC_AnimTable_BossSB2()
     ANIM_KarateStart,
     ANIM_KarateLoop,
     ANIM_KarateEnd,
-    ANIM_Dizzy01,  
+    ANIM_Dizzy01,
     };
-    
+
 
     xAnimTable* table = xAnimTableNew("zNPCB_SB2_Karate", NULL, 0);
     //24 new state
@@ -1148,7 +1151,7 @@ void zNPCB_SB2::Init(xEntAsset* asset)
 
     m = this->model;
     this->models[0] = this->model;
-    
+
     this->models[1] = m->Next;
     this->models[2] = m->Next;
     this->models[3] = m->Next;
@@ -1176,7 +1179,7 @@ void zNPCB_SB2::Init(xEntAsset* asset)
 
 void zNPCB_SB2::Setup()
 {
-    xEnt* ent; 
+    xEnt* ent;
     xSphere o;
 
     this->create_glow_light();
@@ -1204,7 +1207,7 @@ void zNPCB_SB2::Setup()
 
     this->scan_cronies();
     (xBase*)&this->newsfish->id = zSceneFindObject(xStrHash("NPC_NEWSCASTER"));
-    
+
     if (this->newsfish->id != NULL)
     {
         this->newsfish->TalkOnScreen(1);
@@ -1232,7 +1235,7 @@ void zNPCB_SB2::Reset()
     {
         this->newsfish->Reset();
     }
-    
+
     reset_sound();
     zNPCCommon::Reset();
     memset(&flag.face_player, 0 , 0x10);
@@ -1351,7 +1354,7 @@ void zNPCB_SB2::decompose()
 {
 }
 
-void zNPCB_SB2::show_nodes() 
+void zNPCB_SB2::show_nodes()
 {
     // Haven't found 0x74
     S32 i;
@@ -1374,7 +1377,7 @@ void zNPCB_SB2::ouchie()
         set_vulnerable(false);
         psy_instinct->GoalSet(NPC_GOAL_BOSSSB2HIT, 1);
     }
-    
+
 }
 
 void zNPCB_SB2::Render()
@@ -1440,9 +1443,9 @@ S32 zNPCB_SB2::player_on_ground() const
 void zNPCB_SB2::emit_slug(zNPCB_SB2::slug_enum which)
 {
     slug_data& slug = slugs[which];
-    F32 launch_ang; 
+    F32 launch_ang;
     F32 accel_time;
-    
+
     if (slug.ent->id != 0)
     {
         slug.stage = (zNPCB_SB2::slug_stage)1;
@@ -1459,8 +1462,8 @@ void zNPCB_SB2::emit_slug(zNPCB_SB2::slug_enum which)
 
 void zNPCB_SB2::fire_slug(zNPCB_SB2::slug_enum which, zNPCB_SB2::platform_data& target)
 {
-    slug_data& slug = slugs[which]; 
-    xVec3 offset; 
+    slug_data& slug = slugs[which];
+    xVec3 offset;
     F32 idist;
 
     slug.stage = SLUG_DELAY;
@@ -1585,7 +1588,7 @@ xFactoryInst* zNPCGoalBossSB2Hit::create(S32 who, RyzMemGrow* grow, void* info)
     return new (who, grow) zNPCGoalBossSB2Hit(who, (zNPCB_SB2&)*info);
 }
 
-S32 zNPCGoalBossSB2Hit::Enter(F32 dt, void* updCtxt) 
+S32 zNPCGoalBossSB2Hit::Enter(F32 dt, void* updCtxt)
 {
     // Function needs set up differently
     // im just dumb

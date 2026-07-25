@@ -1,14 +1,16 @@
 #include "zCombo.h"
 
-#include <types.h>
-
-#include "xBase.h"
-#include "xHudText.h"
-#include "xstransvc.h"
-#include "xTextAsset.h"
 #include "zGlobals.h"
 #include "zTextBox.h"
 #include "zUIFont.h"
+
+#include "xBase.h"
+#include "xHudText.h"
+#include "xTextAsset.h"
+#include "xstransvc.h"
+
+#include <string.h>
+#include <types.h>
 
 struct zComboReward
 {

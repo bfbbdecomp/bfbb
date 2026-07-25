@@ -1,11 +1,12 @@
 #include "xShadow.h"
 
-#include "rpworld.h"
-
 #include "xMath.h"
+
 #include "iModel.h"
+
 #include "zGlobals.h"
 
+#include "rpworld.h"
 #include <types.h>
 
 RwRGBAReal ShadowLightColor = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -33,12 +34,14 @@ void xShadow_ListAdd(xEnt* ent);
 void xShadowManager_Add(xEnt* ent);
 static void GCSaveFrameBuffer();
 RwCamera* ShadowCameraSetSpherePersp(RwCamera* camera, RwV3d* center, float radius);
-int Im2DRenderQuad(float x1, float y1, float x2, float y2, float z, float recipCamZ, float uvOffset);
+int Im2DRenderQuad(float x1, float y1, float x2, float y2, float z, float recipCamZ,
+                   float uvOffset);
 
 /* Three more params than in DWARF.
 RwCamera* ShadowCameraUpdate(RwCamera* shadowCamera, void* model, void(*renderCB)(void*))
 */
-RwCamera* ShadowCameraUpdate(RwCamera* shadowCamera, void* model, void(*renderCB)(void*), RwV3d* center, float radius, int);
+RwCamera* ShadowCameraUpdate(RwCamera* shadowCamera, void* model, void (*renderCB)(void*),
+                             RwV3d* center, float radius, int);
 
 void xShadowInit()
 {
@@ -64,7 +67,8 @@ static S32 SetupShadow()
     // equal to either display width or height.
     // On GCN, this routine normally won't happen,
     // as we're already below both dimensions.
-    for (; (res > 640) || (res > 480); res >>= 1);
+    for (; (res > 640) || (res > 480); res >>= 1)
+        ;
 
     ShadowCamera = ShadowCameraCreatePersp(res);
     if (ShadowCamera == NULL)
@@ -92,7 +96,8 @@ U32 xShadowCameraCreate()
     return ((-setup | setup) >> 0x1f);
 }
 
-void xShadowCameraUpdate(void* model, void(*renderCB)(void*), xVec3* center, float radius, int shadowMode)
+void xShadowCameraUpdate(void* model, void (*renderCB)(void*), xVec3* center, float radius,
+                         int shadowMode)
 {
     ShadowCameraSetSpherePersp(ShadowCamera, (RwV3d*)center, radius);
     ShadowCameraUpdate(ShadowCamera, model, renderCB, (RwV3d*)center, radius, shadowMode);
@@ -106,13 +111,8 @@ static void modelRenderCB(void* param)
 
 S32 xShadowReceiveShadowSetup(xEnt* ent)
 {
-    if
-    (
-    (ent->model != NULL) &&
-    (xEntIsVisible(ent)) &&
-    (ent->baseFlags & 0x10) &&
-    (!iModelCull(ent->model->Data, ent->model->Mat))
-    )
+    if ((ent->model != NULL) && (xEntIsVisible(ent)) && (ent->baseFlags & 0x10) &&
+        (!iModelCull(ent->model->Data, ent->model->Mat)))
     {
         return 1;
     }
@@ -171,19 +171,19 @@ static void GCRestoreFrameBuffer()
     RwCamera* cam = *(RwCamera**)RwEngineInstance;
     F32 recipCamZ = (1.0f / cam->farPlane);
 
-    RwRenderStateSet(rwRENDERSTATESRCBLEND,      (void*)2);
-    RwRenderStateSet(rwRENDERSTATEDESTBLEND,     (void*)1);
-    RwRenderStateSet(rwRENDERSTATEZTESTENABLE,   (void*)0);
-    RwRenderStateSet(rwRENDERSTATEZWRITEENABLE,  (void*)0);
+    RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)2);
+    RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)1);
+    RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)0);
+    RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)0);
     RwRenderStateSet(rwRENDERSTATETEXTUREFILTER, (void*)1);
     RwRenderStateSet(rwRENDERSTATETEXTURERASTER, gc_saveraster);
 
     Im2DRenderQuad(0.0f, 0.0f, 256.0f, 256.0f, RwIm2DGetFarScreenZ(), recipCamZ, 0.001953125f);
 
-    RwRenderStateSet(rwRENDERSTATEZTESTENABLE,  (void*)1);
+    RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)1);
     RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)1);
-    RwRenderStateSet(rwRENDERSTATESRCBLEND,     (void*)5);
-    RwRenderStateSet(rwRENDERSTATEDESTBLEND,    (void*)6);
+    RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)5);
+    RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)6);
 }
 
 static RwCamera* ShadowCameraCreatePersp(S32 param)

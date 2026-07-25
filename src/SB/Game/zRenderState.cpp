@@ -1,9 +1,8 @@
 #include "zRenderState.h"
 
-#include "rwsdk/rwplcore.h"
-
 #include "iCamera.h"
 
+#include "rwsdk/rwplcore.h"
 #include <types.h>
 
 volatile _SDRenderState sRS;

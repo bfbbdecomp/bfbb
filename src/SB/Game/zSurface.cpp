@@ -1,15 +1,16 @@
 #include "zSurface.h"
+
 #include "zScene.h"
-#include "xstransvc.h"
+
 #include "xCollide.h"
-#include "xMathInlines.h"
-#include "xGroup.h"
 #include "xDebug.h"
-
-#include <types.h>
-#include <string.h>
-
+#include "xGroup.h"
 #include "xMath.h"
+#include "xMathInlines.h"
+#include "xstransvc.h"
+
+#include <string.h>
+#include <types.h>
 
 #define MAX_MAPPER 1
 
@@ -107,7 +108,6 @@ static void zSurfaceInitDefaultSurface()
     sDef_surf.moprops = &sDef_surf_props;
     sDef_surf_props.asset = &sDef_surf_asset;
 
-
     sDef_surf_asset.game_damage_type = 0;
     sDef_surf_asset.game_sticky = 0;
     sDef_surf_asset.game_damage_flags = 0;
@@ -120,11 +120,14 @@ static void zSurfaceInitDefaultSurface()
 
 void zSurfaceRegisterMapper(U32 assetId)
 {
-    if (sMapperCount >= MAX_MAPPER) return;
-    if (!assetId) return;
+    if (sMapperCount >= MAX_MAPPER)
+        return;
+    if (!assetId)
+        return;
 
     sMapper[sMapperCount] = (zMaterialMapAsset*)xSTFindAsset(assetId, NULL);
-    if (sMapper[sMapperCount]) {
+    if (sMapper[sMapperCount])
+    {
         sMapperCount++;
     }
 }
@@ -221,7 +224,8 @@ U8 zSurfaceOutOfBounds(const xSurface& s)
 
 F32 zSurfaceGetSlideStartAngle(const xSurface* surf)
 {
-    if (surf->moprops) {
+    if (surf->moprops)
+    {
         return DEG2RAD(((zSurfaceProps*)surf->moprops)->asset->sld_start);
     }
 
@@ -321,11 +325,14 @@ void zSurfaceLoad(xSurface* ent, xSerial* s)
 void zSurfaceSetup(xSurface* s)
 {
     zSurfaceProps* pp = (zSurfaceProps*)s->moprops;
-    if (!pp) return;
+    if (!pp)
+        return;
 
-    for (S32 i = 0; i < 2; i++) {
+    for (S32 i = 0; i < 2; i++)
+    {
         pp->texanim[i].group_ptr = NULL;
-        if (pp->texanim[i].group) {
+        if (pp->texanim[i].group)
+        {
             pp->texanim[i].group_ptr = zSceneFindObject(pp->texanim[i].group);
         }
     }
@@ -381,10 +388,10 @@ void zSurfaceUpdate(xBase* to, xScene* sc, F32 dt)
             }
             case 1:
             {
-                moprops->uvfx[j].trans.x = isin(2.0f * gFrameCount * (1.0f/60));
-                moprops->uvfx[j].trans.y = isin(2.0f * gFrameCount * (1.0f/60));
-                moprops->uvfx[j].scale.x = isin(2.0f * gFrameCount * (1.0f/60));
-                moprops->uvfx[j].scale.y = isin(2.0f * gFrameCount * (1.0f/60));
+                moprops->uvfx[j].trans.x = isin(2.0f * gFrameCount * (1.0f / 60));
+                moprops->uvfx[j].trans.y = isin(2.0f * gFrameCount * (1.0f / 60));
+                moprops->uvfx[j].scale.x = isin(2.0f * gFrameCount * (1.0f / 60));
+                moprops->uvfx[j].scale.y = isin(2.0f * gFrameCount * (1.0f / 60));
                 break;
             }
             case 2:

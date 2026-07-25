@@ -1,17 +1,16 @@
 #ifndef ZNPCTYPEBOSSPLANKTON_H
 #define ZNPCTYPEBOSSPLANKTON_H
 
+#include "zEntDestructObj.h"
+#include "zNPCGoalCommon.h"
+#include "zNPCGoals.h"
 #include "zNPCTypeBoss.h"
 #include "zNPCTypeVillager.h"
-#include "zNPCGoalCommon.h"
-#include "zEntDestructObj.h"
 
 #include "xDecal.h"
 #include "xLaserBolt.h"
-#include "xTimer.h"
-#include "zNPCGoals.h"
 #include "xParEmitter.h"
-#include "xLaserBolt.h"
+#include "xTimer.h"
 
 namespace auto_tweak
 {

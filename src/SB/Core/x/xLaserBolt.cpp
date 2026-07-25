@@ -1,13 +1,17 @@
 #include "xLaserBolt.h"
+
+#include "containers.h"
 #include "xString.h"
 #include "xstransvc.h"
-#include "iParMgr.h"
-#include "zEvent.h"
-#include "zBase.h"
-#include "zNPCTypeCommon.h"
-#include "zEntDestructObj.h"
-#include "containers.h"
 
+#include "iParMgr.h"
+
+#include "zBase.h"
+#include "zEntDestructObj.h"
+#include "zEvent.h"
+#include "zNPCTypeCommon.h"
+
+#include <string.h>
 #include <types.h>
 
 void xLaserBoltEmitter::init(u32 max_bolts, const char* texture_name)
@@ -17,7 +21,6 @@ void xLaserBoltEmitter::init(u32 max_bolts, const char* texture_name)
     this->bolts.init(max_bolts);
     debug_init(texture_name);
 }
-
 
 void xLaserBoltEmitter::set_texture(const char* name)
 {
@@ -60,7 +63,7 @@ void xLaserBoltEmitter::reset()
             emit_fx(*itfx, b, b.hit_dist, b.hit_dist, (1.0f / 60.0f));
             itfx++;
         }
-        
+
         ++it;
     }
 
@@ -130,11 +133,9 @@ void xLaserBoltEmitter::update(F32 dt)
 
     if (start_collide)
     {
-
     }
     else
     {
-
     }
 
     static_queue<bolt>::iterator it;
@@ -149,7 +150,7 @@ void xLaserBoltEmitter::update(F32 dt)
         effect_data* itfx;
         effect_data* endfx;
         // effect_data* itfx;
-        // effect_data* endfx;  
+        // effect_data* endfx;
     }
 }
 
@@ -173,7 +174,7 @@ void xLaserBoltEmitter::render()
         render(*it, v);
         ++it;
     }
-    
+
     if (v != vert)
     {
         flush_verts(v, vert - v);
@@ -210,7 +211,7 @@ void xLaserBoltEmitter::pre_collide(bolt& b)
 void xLaserBoltEmitter::collide_update(bolt& b)
 {
     xScene& scene = *globals.sceneCur;
- 
+
     // TODO: Investigate float regalloc mismatch
     xRay3 ray;
     ray.origin = b.origin;
@@ -218,12 +219,12 @@ void xLaserBoltEmitter::collide_update(bolt& b)
     ray.min_t = b.prev_check_dist - this->cfg.length;
     ray.max_t = b.dist;
     ray.flags = 0xC00;
-    
+
     if (ray.max_t < this->cfg.safe_dist)
     {
         ray.min_t = ray.max_t;
     }
-    
+
     xCollis player_coll;
     player_coll.flags = 0x300;
     xRayHitsBound(&ray, &globals.player.ent.bound, &player_coll);
@@ -255,9 +256,9 @@ void xLaserBoltEmitter::collide_update(bolt& b)
     log_collide_dynamics(scene_coll.flags & 0x1 || player_coll.flags & 0x1);
 }
 
-RxObjSpace3DVertex* xLaserBoltEmitter::render(bolt& b, RxObjSpace3DVertex *vert) 
-{       
-    F32 dist0 = b.prev_dist - this->cfg.length; 
+RxObjSpace3DVertex* xLaserBoltEmitter::render(bolt& b, RxObjSpace3DVertex* vert)
+{
+    F32 dist0 = b.prev_dist - this->cfg.length;
     if (dist0 < 0.0f)
     {
         dist0 = 0.0f;
@@ -276,12 +277,11 @@ RxObjSpace3DVertex* xLaserBoltEmitter::render(bolt& b, RxObjSpace3DVertex *vert)
 
     xVec3 loc0 = b.origin + b.dir * dist0;
     xVec3 loc1 = b.dir * dist0;
-    // xMat4x3 &cam_mat; 
+    // xMat4x3 &cam_mat;
     xVec3 dir;
     xVec3 right;
     xVec3 half_right;
 
-    
     set_bolt_verts(vert, loc0, loc1, 0xFF, half_right);
     return vert;
 }
@@ -314,7 +314,7 @@ void xLaserBoltEmitter::reset_fx(fx_when_enum when)
     effect_data* cur_fx = this->fx[when];
     effect_data* fx_end = cur_fx + this->fxsize[when];
     while (cur_fx != fx_end)
-    {        
+    {
         cur_fx->irate = cur_fx->rate > 0.0f ? 1.0f / cur_fx->rate : 0.0f;
         cur_fx++;
     }
@@ -336,7 +336,7 @@ void xLaserBoltEmitter::update_fx(bolt& b, F32 prev_dist, F32 dt)
     else if (tail_dist < b.hit_dist)
     {
         F32 from_dist = prev_dist - this->cfg.length;
-        
+
         effect_data* itfx = this->fx[5];
         effect_data* endfx = itfx + this->fxsize[5];
         if (from_dist < 0.0f)
@@ -373,13 +373,14 @@ void xLaserBoltEmitter::update_fx(bolt& b, F32 prev_dist, F32 dt)
     }
 }
 
-void xLaserBoltEmitter::emit_particle(effect_data& effect, bolt& b, F32 from_dist, F32 to_dist, F32 dt)
+void xLaserBoltEmitter::emit_particle(effect_data& effect, bolt& b, F32 from_dist, F32 to_dist,
+                                      F32 dt)
 {
     xParEmitter& pe = *effect.par;
     xParEmitterAsset& pea = *pe.tasset;
     F32 velmag = pea.vel.y;
-    
-    switch(effect.orient)
+
+    switch (effect.orient)
     {
     case FX_ORIENT_PATH:
         pea.vel = b.dir * velmag;
@@ -432,11 +433,12 @@ void xLaserBoltEmitter::emit_decal(effect_data& effect, bolt& b, F32 from_dist, 
     effect.decal->emit(mat, -1);
 }
 
-void xLaserBoltEmitter::emit_decal_dist(effect_data& effect, bolt& b, F32 from_dist, F32 to_dist, F32 dt)
+void xLaserBoltEmitter::emit_decal_dist(effect_data& effect, bolt& b, F32 from_dist, F32 to_dist,
+                                        F32 dt)
 {
     F32 start_dist = to_dist - from_dist;
     b.emitted = effect.rate * start_dist + b.emitted;
-    
+
     S32 total = effect.rate * start_dist + b.emitted;
     b.emitted -= total;
 

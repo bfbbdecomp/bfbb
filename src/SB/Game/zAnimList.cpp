@@ -1,10 +1,9 @@
-#include <types.h>
-
-#include "xAnim.h"
-#include "xstransvc.h"
-#include "xMemMgr.h"
-
 #include "zAnimList.h"
+
+#include "xMemMgr.h"
+#include "xstransvc.h"
+
+#include <types.h>
 
 S32 nals;
 // NOTE (Square): I think these are Asset IDs, not Anim IDs

@@ -1,18 +1,8 @@
 #ifndef XENT_H
 #define XENT_H
 
-#include <rwcore.h>
-#include <rpworld.h>
-#include <string.h>
-
-#include "xBase.h"
-#include "xMath3.h"
-#include "xModel.h"
-#include "xLightKit.h"
-#include "xGrid.h"
-#include "xBound.h"
 #include "xFFX.h"
-#include "xCollide.h"
+#include "xGrid.h"
 
 struct xEntAsset : xBaseAsset
 {

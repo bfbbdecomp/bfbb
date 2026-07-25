@@ -46,7 +46,7 @@ void __deadstripped_xDebug(F32 f, iColor_tag col)
 
     F32 x = NSCREENX(f);
     F32 y = NSCREENY(f);
-    
+
     xfont font;
     font = xfont::create(0, f, f, f, col, r1);
     xtextbox textbox = xtextbox::create(font, r1, 0, f, f, f, f);

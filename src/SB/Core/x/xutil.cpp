@@ -2,9 +2,9 @@
 
 #include "xMath.h"
 
-#include <ctype.h>
-#include <PowerPC_EABI_Support\MSL_C\MSL_Common\stdlib.h>
 #include <PowerPC_EABI_Support/MSL_C/MSL_Common/ctype_api.h>
+#include <PowerPC_EABI_Support/MSL_C/MSL_Common/stdlib.h>
+#include <ctype.h>
 
 static volatile S32 g_xutilinit; // volatile so xUtilShutdown matches
 static S32 g_crc_needinit = 1;

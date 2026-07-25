@@ -10,6 +10,7 @@
 #include "xVec3.h"
 
 #include <rwcore.h>
+
 #include <types.h>
 
 enum fx_type_enum

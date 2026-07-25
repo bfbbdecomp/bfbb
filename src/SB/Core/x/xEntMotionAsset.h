@@ -1,7 +1,5 @@
 #pragma once
 
-#include "xVec3.h"
-
 enum
 {
     k_XENTMOTIONMECH_SLIDE,

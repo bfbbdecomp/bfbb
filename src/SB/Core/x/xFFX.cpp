@@ -1,7 +1,8 @@
 #include "xFFX.h"
+
 #include "xEnt.h"
-#include "xMemMgr.h"
 #include "xMathInlines.h"
+#include "xMemMgr.h"
 
 #include <types.h>
 

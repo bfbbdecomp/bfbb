@@ -1,9 +1,10 @@
 #ifndef XENV_H
 #define XENV_H
 
-#include "iEnv.h"
-#include "xLightKit.h"
 #include "xBase.h"
+#include "xLightKit.h"
+
+#include "iEnv.h"
 
 struct xEnv
 {

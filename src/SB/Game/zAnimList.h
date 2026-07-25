@@ -1,6 +1,8 @@
 #ifndef ZANIMLIST_H
 #define ZANIMLIST_H
 
+#include "xAnim.h"
+
 #include <types.h>
 
 struct zAnimListAsset

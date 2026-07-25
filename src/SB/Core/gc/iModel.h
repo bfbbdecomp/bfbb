@@ -1,12 +1,11 @@
 #ifndef IMODEL_H
 #define IMODEL_H
 
-#include "xMath3.h"
 #include "xModel.h"
 
-#include <rwcore.h>
-#include <rpworld.h>
 #include <rphanim.h>
+#include <rpworld.h>
+#include <rwcore.h>
 
 void iModelInit();
 static RpAtomic* FindAndInstanceAtomicCallback(RpAtomic* model, void* data);

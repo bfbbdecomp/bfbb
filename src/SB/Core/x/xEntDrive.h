@@ -1,7 +1,6 @@
 #ifndef XENTDRIVE_H
 #define XENTDRIVE_H
 
-#include "xEnt.h"
 #include "xCollide.h"
 
 struct xEntDrive

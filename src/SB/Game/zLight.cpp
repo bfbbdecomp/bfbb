@@ -1,14 +1,16 @@
 #include "zLight.h"
-#include "zLightEffect.h"
-#include "zGlobals.h"
-#include "../rwsdk/rwplcore.h"
-#include "xShadow.h"
-#include "xPartition.h"
-#include "xString.h"
-#include "xPartition.h"
 
-#include <types.h>
+#include "zGlobals.h"
+#include "zLightEffect.h"
+
+#include "xPartition.h"
+#include "xShadow.h"
+#include "xString.h"
+
+#include <rwplcore.h>
+
 #include <string.h>
+#include <types.h>
 
 static _zLight* sLight[32];
 S32 sLightTotal;

@@ -2,10 +2,10 @@
 
 #include "zNPCGoals.h"
 #include "zNPCTypeTiki.h"
+#include "zNPCTypes.h"
 #include "zRumble.h"
 
 #include "xEvent.h"
-#include "zNPCTypes.h"
 
 xFactoryInst* GOALCreate_Tiki(S32 who, RyzMemGrow* grow, void*)
 {

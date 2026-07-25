@@ -5,6 +5,7 @@
 
 #include "xEnt.h"
 #include "xEnv.h"
+
 #include "iLight.h"
 
 // Size: 0x38
@@ -59,7 +60,6 @@ void zLightSetVolume(zVolume* vol);
 void zLightDestroyAll();
 void zLightDestroy(_zLight* param_1);
 void zLightUpdate(xBase* to, xScene*, F32 dt);
-S32 zLightEventCB(xBase* param_1, xBase* to, U32 toEvent, const float* param_4,
-                    xBase* param_5);
+S32 zLightEventCB(xBase* param_1, xBase* to, U32 toEvent, const float* param_4, xBase* param_5);
 
 #endif

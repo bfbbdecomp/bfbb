@@ -1,18 +1,20 @@
 #ifndef ZNPCSUPPLEMENT_H
 #define ZNPCSUPPLEMENT_H
 
-#include "iColor.h"
+#include "zLightning.h"
+#include "zNPCTypeCommon.h"
 
 #include "xMath2.h"
 #include "xPtankPool.h"
 #include "xShadow.h"
 #include "xVec3.h"
-#include "zNPCTypeCommon.h"
 
-#include "zLightning.h"
-#include <types.h>
-#include <rwplcore.h>
+#include "iColor.h"
+
 #include <rwcore.h>
+#include <rwplcore.h>
+
+#include <types.h>
 
 enum en_nparptyp
 {
@@ -202,7 +204,8 @@ public:
     void ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos, const xVec3* vel) const;
 };
 
-struct NPARParmMonsoonRain {
+struct NPARParmMonsoonRain
+{
     F32 tym_lifespan;
     RwRGBA colr_base;
     F32 siz_base[2];

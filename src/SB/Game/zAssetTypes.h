@@ -1,31 +1,12 @@
 #ifndef ZASSETTYPES_H
 #define ZASSETTYPES_H
 
-#include <types.h>
-#include <rwcore.h>
-#include <rpworld.h>
 #include "xSnd.h"
 
-#include "xJSP.h"
+#include <rpworld.h>
+#include <rwcore.h>
 
-#include "zEntCruiseBubble.h"
-#include "zEntPlayerAnimationTables.h"
-#include "xHudModel.h"
-#include "zNPCTypeAmbient.h"
-#include "zNPCTypeCommon.h"
-#include "zNPCTypeBossPatrick.h"
-#include "zNPCTypeBossPlankton.h"
-#include "zNPCTypeBossSandy.h"
-#include "zNPCTypeBossSB1.h"
-#include "zNPCTypeBossSB2.h"
-#include "zNPCTypeDuplotron.h"
-#include "zNPCTypeDutchman.h"
-#include "zNPCHazard.h"
-#include "zNPCTypeKingJelly.h"
-#include "zNPCTypePrawn.h"
-#include "zNPCTypeRobot.h"
-#include "zNPCTypeTest.h"
-#include "zNPCTypeTiki.h"
+#include <types.h>
 
 class HackModelRadius
 {

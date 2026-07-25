@@ -2,10 +2,10 @@
 #define ZCUTSCENEMGR_H
 
 #include "xCutsceneMgr.h"
+
 #include "rpworld.h"
 
 extern F32 gSkipTimeCutscene;
-
 
 struct xScene;
 struct zCutsceneMgr : xCutsceneMgr

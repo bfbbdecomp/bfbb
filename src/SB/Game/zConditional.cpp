@@ -1,10 +1,11 @@
 #include "zConditional.h"
 
-#include <types.h>
-
-#include "zVar.h"
 #include "zScene.h"
+#include "zVar.h"
+
 #include "xEvent.h"
+
+#include <types.h>
 
 S32 zConditionalEventCB(xBase*, xBase*, U32, const F32*, xBase*);
 

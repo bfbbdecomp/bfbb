@@ -1,11 +1,10 @@
 #ifndef XMATH3_H
 #define XMATH3_H
 
+#include "xIsect.h"
 #include "xMath.h"
-
 #include "xVec3.h"
 #include "xVec3Inlines.h"
-#include "xIsect.h"
 
 // Size: 0x30
 struct xMat3x3

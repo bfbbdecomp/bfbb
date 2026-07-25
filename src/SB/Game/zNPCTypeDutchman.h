@@ -1,14 +1,15 @@
 #ifndef ZNPCTYPEDUTCHMAN_H
 #define ZNPCTYPEDUTCHMAN_H
 
-#include "zNPCTypeSubBoss.h"
+#include "zCamera.h"
 #include "zNPCGoalCommon.h"
+#include "zNPCGoals.h"
+#include "zNPCTypeCommon.h"
+#include "zNPCTypeSubBoss.h"
+
 #include "containers.h"
 #include "xBehaviour.h"
-#include "zNPCTypeCommon.h"
-#include "zNPCGoals.h"
 #include "xCamera.h"
-#include "zCamera.h"
 #include "xMath3.h"
 
 namespace auto_tweak

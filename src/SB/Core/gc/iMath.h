@@ -1,8 +1,8 @@
 #ifndef IMATH_H
 #define IMATH_H
 
-#include <types.h>
 #include <intrin.h>
+#include <types.h>
 
 #ifdef __MWERKS__
 #define iabs(x) (float)(__fabs((float)x))

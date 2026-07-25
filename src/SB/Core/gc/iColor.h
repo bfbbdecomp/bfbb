@@ -1,8 +1,9 @@
 #ifndef ICOLOR_H
 #define ICOLOR_H
 
+#include "xHud.h"
+
 #include <types.h>
-#include <xHud.h>
 
 struct iColor_tag
 {

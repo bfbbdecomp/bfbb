@@ -1,11 +1,11 @@
 #ifndef ZENT_H
 #define ZENT_H
 
-#include "xEnt.h"
-#include "xAnim.h"
-
-#include "zScene.h"
 #include "zEvent.h"
+#include "zScene.h"
+
+#include "xAnim.h"
+#include "xEnt.h"
 
 //For inline/weak functions
 #include "xSnd.h"

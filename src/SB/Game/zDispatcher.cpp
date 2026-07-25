@@ -1,27 +1,29 @@
 #include "zDispatcher.h"
 
-#include <types.h>
-
-#include "zGlobals.h"
-#include "zRumble.h"
-#include "zVar.h"
-#include "zGameState.h"
-#include "zMusic.h"
-#include "zHud.h"
 #include "zFMV.h"
+#include "zGameState.h"
+#include "zGlobals.h"
+#include "zHud.h"
+#include "zMusic.h"
+#include "zRumble.h"
 #include "zSaveLoad.h"
-#include "xMemMgr.h"
-#include "xScrFx.h"
+#include "zVar.h"
+
 #include "xCM.h"
 #include "xFX.h"
 #include "xMath.h"
+#include "xMemMgr.h"
+#include "xScrFx.h"
+
 #include "string.h"
+#include <types.h>
 
 static void ZDSP_instInit(st_ZDISPATCH_DATA* dspdata, xBaseAsset* bass);
 static void ZDSP_instInitDep(st_ZDISPATCH_DATA* dspdata, zScene* scene);
 static void ZDSP_readAsset(st_ZDISPATCH_DATA* dspdata);
 static S32 ZDSP_doCommand(st_ZDISPATCH_DATA* dspdata, st_ZDISPATCH_CONTEXT* cmdCtxt);
-static S32 ZDSP_elcb_event(xBase*, xBase* xb, U32 toEvent, const F32* toParam, xBase* toParamWidget);
+static S32 ZDSP_elcb_event(xBase*, xBase* xb, U32 toEvent, const F32* toParam,
+                           xBase* toParamWidget);
 static void WRAP_xsnd_setMusicVolume(S32 i);
 static void WRAP_xsnd_setSFXVolume(S32 i);
 
@@ -482,7 +484,7 @@ static S32 ZDSP_elcb_event(xBase*, xBase* xb, U32 toEvent, const F32* toParam, x
         break;
 
     case eEventDispatcherAssert:
-        char events[512] = { };
+        char events[512] = {};
         char log[512];
         U32 c;
         U32 len;
@@ -495,7 +497,7 @@ static S32 ZDSP_elcb_event(xBase*, xBase* xb, U32 toEvent, const F32* toParam, x
             len = strlen((char*)&zEventLogBuf[i]);
         }
 
-        strcpy((char*) events, (char*) zEventLogBuf[c + 1]);
+        strcpy((char*)events, (char*)zEventLogBuf[c + 1]);
         for (i = c + 2; i < 0x13; i++)
         {
             strcat(log, zEventLogBuf[i]);

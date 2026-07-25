@@ -1,23 +1,25 @@
 #include "xFX.h"
 
+#include "xDebug.h"
+#include "xScrFx.h"
+#include "xstransvc.h"
+
+#include "iDraw.h"
 #include "iFX.h"
 #include "iMath.h"
 
-#include "xDebug.h"
-#include "xstransvc.h"
-#include "xScrFx.h"
-
 #include "zEntPickup.h"
-#include "zParEmitter.h"
-#include "zSurface.h"
 #include "zFX.h"
 #include "zGlobals.h"
+#include "zParEmitter.h"
 #include "zRumble.h"
+#include "zSurface.h"
+
+#include <rpmatfx.h>
+#include <rpskin.h>
+#include <rwplcore.h>
 
 #include <string.h>
-#include <rpmatfx.h>
-#include <rwplcore.h>
-#include <rpskin.h>
 
 // no clue why this file is so out of order
 

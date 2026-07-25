@@ -1,14 +1,17 @@
 #include "zNPCMessenger.h"
 
-#include "math.h"
-#include "xEnt.h"
-#include "xordarray.h"
-#include "xMathInlines.h"
 #include "zGlobals.h"
 #include "zNPCMgr.h"
 #include "zNPCTypeCommon.h"
 #include "zNPCTypeRobot.h"
 #include "zNPCTypes.h"
+
+#include "xEnt.h"
+#include "xMathInlines.h"
+#include "xordarray.h"
+
+#include "math.h"
+#include <string.h>
 #include <types.h>
 
 static NPCPSData g_postoffice = {};

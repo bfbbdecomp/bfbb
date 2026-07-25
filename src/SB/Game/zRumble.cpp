@@ -1,8 +1,9 @@
-#include "xPad.h"
-#include "xMath.h"
-
 #include "zRumble.h"
+
 #include "zGlobals.h"
+
+#include "xMath.h"
+#include "xPad.h"
 
 #include <types.h>
 

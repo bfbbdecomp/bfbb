@@ -1,23 +1,24 @@
 #include "zEntPickup.h"
 
-#include "zLOD.h"
-#include "zGame.h"
-#include "zGlobals.h"
 #include "zEntPlayerBungeeState.h"
 #include "zEntSimpleObj.h"
-#include "zGrid.h"
 #include "zFX.h"
+#include "zGame.h"
+#include "zGlobals.h"
+#include "zGrid.h"
+#include "zLOD.h"
 #include "zUI.h"
 
+#include "xFX.h"
 #include "xMath.h"
 #include "xMathInlines.h"
-#include "xFX.h"
 #include "xstransvc.h"
+
 #include "iAnim.h"
 #include "iModel.h"
 
-#include <string.h>
 #include <stdio.h>
+#include <string.h>
 
 #define PICKUP_TYPE_SHINY 0
 #define PICKUP_TYPE_1 1

@@ -1,18 +1,19 @@
-#include <types.h>
-
-#include "xVec3.h"
-#include "xMath3.h"
+#include "zNPCTypeAmbient.h"
 
 #include "zGlobals.h"
-#include "zNPCGoalAmbient.h"
-#include "zNPCSndLists.h"
-#include "zNPCTypeAmbient.h"
-#include "zNPCTypes.h"
-#include <xutil.h>
-#include "macros.h"
-#include "xMathInlines.h"
-#include "zNPCGoals.h"
 #include "zGrid.h"
+#include "zNPCGoalAmbient.h"
+#include "zNPCGoals.h"
+#include "zNPCSndLists.h"
+#include "zNPCTypes.h"
+
+#include "xMath3.h"
+#include "xMathInlines.h"
+#include "xVec3.h"
+#include "xutil.h"
+
+#include "macros.h"
+#include <types.h>
 
 U32 g_hash_ambianim[12] = { 0 };
 char* g_strz_ambianim[12] = {

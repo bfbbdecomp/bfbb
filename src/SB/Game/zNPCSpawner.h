@@ -2,12 +2,11 @@
 #define ZNPCSPAWNER_H
 
 #include "zMovePoint.h"
+#include "zNPCTypeCommon.h"
 
 #include "xRMemData.h"
 #include "xordarray.h"
 #include "xutil.h"
-
-#include "zNPCTypeCommon.h"
 
 enum en_SM_WAVE_MODE
 {

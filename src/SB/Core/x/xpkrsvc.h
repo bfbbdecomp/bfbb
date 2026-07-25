@@ -1,12 +1,13 @@
 #ifndef XPKRSVC_H
 #define XPKRSVC_H
 
-#include <types.h>
-#include <dolphin/os/OSTime.h>
-#include "PowerPC_EABI_Support\MSL_C\MSL_Common\time.h"
-
 #include "xhipio.h"
 #include "xordarray.h"
+
+#include <dolphin/os/OSTime.h>
+
+#include "PowerPC_EABI_Support/MSL_C/MSL_Common/time.h"
+#include <types.h>
 
 struct st_PACKER_ASSETTYPE
 {

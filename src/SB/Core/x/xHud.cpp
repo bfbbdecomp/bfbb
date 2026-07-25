@@ -1,15 +1,16 @@
 #include "xHud.h"
+
 #include "xDebug.h"
 #include "xEvent.h"
+#include "xHudText.h"
 #include "xMath.h"
 #include "xMathInlines.h"
 #include "xstransvc.h"
-#include "zGlobals.h"
-#include "xHudText.h"
 
 #include "zEnt.h"
+#include "zGlobals.h"
 
-#include <PowerPC_EABI_Support\MSL_C++\MSL_Common\Include\new.h>
+#include <PowerPC_EABI_Support/MSL_C++/MSL_Common/Include/new.h>
 #include <types.h>
 
 #define lengthof(x) (sizeof(x) / sizeof((x)[0]))

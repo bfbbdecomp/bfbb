@@ -1,11 +1,13 @@
 #include "xCM.h"
+
+#include "xDebug.h"
 #include "xEvent.h"
 #include "xFont.h"
-#include "xstransvc.h"
-#include "xDebug.h"
 #include "xVec3.h"
+#include "xstransvc.h"
 
 #include <rwplcore.h>
+
 #include <stdio.h>
 #include <types.h>
 

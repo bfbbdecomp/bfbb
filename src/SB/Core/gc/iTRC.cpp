@@ -1,19 +1,20 @@
 #include "iTRC.h"
 
-#include <PowerPC_EABI_Support/MSL_C/MSL_Common/strtoul.h>
-#include <string.h>
 #include <dolphin/gx/GXCull.h>
 #include <dolphin/gx/GXFrameBuffer.h>
 #include <dolphin/gx/GXGeometry.h>
+#include <dolphin/gx/GXLighting.h>
 #include <dolphin/gx/GXManage.h>
 #include <dolphin/gx/GXPixel.h>
+#include <dolphin/gx/GXTev.h>
 #include <dolphin/gx/GXTexture.h>
 #include <dolphin/gx/GXTransform.h>
-#include <dolphin/gx/GXLighting.h>
-#include <dolphin/gx/GXTev.h>
 #include <dolphin/mtx.h>
-#include <dolphin/vi/vifuncs.h>
 #include <dolphin/os.h>
+#include <dolphin/vi/vifuncs.h>
+
+#include <PowerPC_EABI_Support/MSL_C/MSL_Common/strtoul.h>
+#include <string.h>
 
 #define FONT_MATRIX_ID 0x1E
 #define TEXTBOX_MAX_TEXT_LENGTH 256

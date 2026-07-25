@@ -1,22 +1,24 @@
 #ifndef ZENTSIMPLEOBJ_H
 #define ZENTSIMPLEOBJ_H
 
+#include "zCollGeom.h"
 #include "zEnt.h"
+#include "zFX.h"
+#include "zGame.h"
+#include "zGlobals.h"
+#include "zGoo.h"
+#include "zLOD.h"
+#include "zShrapnel.h"
+
+#include "xEnt.h"
+#include "xMath.h"
 #include "xShadow.h"
+#include "xSkyDome.h"
 #include "xString.h"
 #include "xstransvc.h"
+
 #include "iAnim.h"
 #include "iModel.h"
-#include "zFX.h"
-#include "xEnt.h"
-#include "zCollGeom.h"
-#include "zGlobals.h"
-#include "xSkyDome.h"
-#include "zGoo.h"
-#include "zShrapnel.h"
-#include "xMath.h"
-#include "zGame.h"
-#include "zLOD.h"
 
 struct xSimpleObjAsset
 {

@@ -1,15 +1,16 @@
 #include "xDecal.h"
 
-#include <types.h>
-
+#include "containers.h"
 #include "xString.h"
 #include "xstransvc.h"
-#include "zGlobals.h"
-#include "containers.h"
 
-namespace 
+#include "zGlobals.h"
+
+#include <types.h>
+
+namespace
 {
-    static xDecalEmitter * active_emitters[32];
+    static xDecalEmitter* active_emitters[32];
     static U32 active_emitters_size;
 
     void register_emitter(xDecalEmitter* emitter)
@@ -22,7 +23,7 @@ namespace
     }
 
     F32 choose_greatest(F32 a, F32 b, F32 c);
-}  // end of anonymous namespace
+} // end of anonymous namespace
 
 void xDecalInit()
 {
@@ -67,7 +68,6 @@ void xDecalEmitter::set_texture(const char* name)
     set_texture(xStrHash(name));
 }
 
-
 void xDecalEmitter::set_texture(U32 id)
 {
     RwTexture* tex;
@@ -107,15 +107,19 @@ void xDecalEmitter::refresh_config()
     {
         this->cfg.texture.cols = 1;
     }
-    
+
     this->cfg.texture.uv[0].x = range_limit<F32>(this->cfg.texture.uv[0].x, 0.0f, 0.99f);
     this->cfg.texture.uv[0].y = range_limit<F32>(this->cfg.texture.uv[0].y, 0.0f, 0.99f);
-    this->cfg.texture.uv[1].x = range_limit<F32>(this->cfg.texture.uv[1].x, 0.01f + this->cfg.texture.uv[0].x, 1.0f);
-    this->cfg.texture.uv[1].y = range_limit<F32>(this->cfg.texture.uv[1].y, 0.01f + this->cfg.texture.uv[0].y, 1.0f);
+    this->cfg.texture.uv[1].x =
+        range_limit<F32>(this->cfg.texture.uv[1].x, 0.01f + this->cfg.texture.uv[0].x, 1.0f);
+    this->cfg.texture.uv[1].y =
+        range_limit<F32>(this->cfg.texture.uv[1].y, 0.01f + this->cfg.texture.uv[0].y, 1.0f);
 
     this->texture.units = this->cfg.texture.rows * this->cfg.texture.cols;
-    this->texture.size.x = (this->cfg.texture.uv[1].x - this->cfg.texture.uv[0].x) / this->cfg.texture.cols;
-    this->texture.size.y = (this->cfg.texture.uv[1].y - this->cfg.texture.uv[0].y) / this->cfg.texture.rows;
+    this->texture.size.x =
+        (this->cfg.texture.uv[1].x - this->cfg.texture.uv[0].x) / this->cfg.texture.cols;
+    this->texture.size.y =
+        (this->cfg.texture.uv[1].y - this->cfg.texture.uv[0].y) / this->cfg.texture.rows;
 
     this->texture.isize.assign(1.0f / this->texture.size.x, 1.0f / this->texture.size.y);
 }
@@ -148,7 +152,8 @@ void xDecalEmitter::emit(const xMat4x3& mat, S32 texture_index)
     else
     {
         udata.mat = mat;
-        F32 greatest_length = choose_greatest(udata.mat.right.length(), udata.mat.up.length(), udata.mat.at.length());
+        F32 greatest_length =
+            choose_greatest(udata.mat.right.length(), udata.mat.up.length(), udata.mat.at.length());
         udata.cull_size = greatest_length * 0.5f;
     }
 
@@ -156,7 +161,7 @@ void xDecalEmitter::emit(const xMat4x3& mat, S32 texture_index)
     {
         texture_index = this->select_texture_unit();
     }
-    
+
     udata.u = texture_index % this->cfg.texture.rows;
     udata.v = texture_index / this->cfg.texture.rows;
 }
@@ -176,7 +181,7 @@ namespace
         }
         return greatest;
     }
-}  // end of anonymous namespace
+} // end of anonymous namespace
 
 void xDecalEmitter::emit(const xMat4x3& mat, const xVec3& scale, S32 texture_index)
 {
@@ -201,14 +206,15 @@ void xDecalEmitter::emit(const xMat4x3& mat, const xVec3& scale, S32 texture_ind
         udata.mat.right *= scale.x;
         udata.mat.up *= scale.y;
         udata.mat.at *= scale.z;
-        udata.cull_size = 0.5f * choose_greatest(udata.mat.right.length(), udata.mat.up.length(), udata.mat.at.length());
+        udata.cull_size = 0.5f * choose_greatest(udata.mat.right.length(), udata.mat.up.length(),
+                                                 udata.mat.at.length());
     }
 
     if (texture_index < 0 || texture_index > (S32)this->texture.units)
     {
         texture_index = this->select_texture_unit();
     }
-    
+
     udata.u = texture_index % this->cfg.texture.rows;
     udata.v = texture_index / this->cfg.texture.rows;
 }
@@ -218,44 +224,44 @@ namespace
     void lerp(iColor_tag& out, F32 t, const iColor_tag& a, const iColor_tag& b);
     void lerp(U8& out, F32 t, U8 a, U8 b);
     void lerp(F32& out, F32 t, F32 a, F32 b);
-}  // end of anonymous namespace
+} // end of anonymous namespace
 
 void xDecalEmitter::update(F32 dt)
 {
     // Unused from DWARF
     // xVec4* _loc; // r2
     // F32 par_dist; // r1
-    
+
     debug_update(dt);
     F32 dage = dt * this->ilife;
-    
+
     ptank_pool__color_mat_uv2 pool;
     pool.reset();
-    
+
     pool.rs.texture = this->texture.asset;
     pool.rs.src_blend = this->cfg.blend_src;
     pool.rs.dst_blend = this->cfg.blend_dst;
     pool.rs.flags = this->cfg.flags & 0x1;
     this->curve_index = 0;
-    
+
     static_queue<unit_data>::iterator it = this->units.begin();
     while (it != this->units.end())
     {
         unit_data& unit = *it;
         unit.age += dage;
-        
+
         if (unit.age >= 1.0f)
         {
             break;
         }
-        
+
         update_frac(unit);
         curve_node& node0 = this->curve[unit.curve_index];
-        curve_node& node1 = this->curve[unit.curve_index+1];
-        
+        curve_node& node1 = this->curve[unit.curve_index + 1];
+
         F32 scale;
         lerp(scale, unit.frac, node0.scale, node1.scale);
-        
+
         *((F32*)&unit.mat.pos.z + 1) = unit.cull_size * scale;
         pool.next();
         if (!pool.valid())
@@ -278,7 +284,7 @@ namespace
     {
         out = a + (b - a) * t;
     }
-}
+} // namespace
 
 void xDecalEmitter::update_frac(xDecalEmitter::unit_data& unit)
 {
@@ -299,9 +305,11 @@ void xDecalEmitter::update_frac(xDecalEmitter::unit_data& unit)
     unit.frac = (1.0f / this->curve[this->curve_index + 1].time) * (unit.age - curve_time);
 }
 
-void xDecalEmitter::get_render_data(const xDecalEmitter::unit_data& unit, F32 scale, iColor_tag& color, xMat4x3& mat, xVec2& uv0, xVec2& uv1)
+void xDecalEmitter::get_render_data(const xDecalEmitter::unit_data& unit, F32 scale,
+                                    iColor_tag& color, xMat4x3& mat, xVec2& uv0, xVec2& uv1)
 {
-    lerp(color, unit.frac, this->curve[unit.curve_index].color, this->curve[unit.curve_index + 1].color);
+    lerp(color, unit.frac, this->curve[unit.curve_index].color,
+         this->curve[unit.curve_index + 1].color);
 
     if (this->cfg.flags & 0x2)
     {
@@ -341,7 +349,7 @@ namespace
     {
         out = ((F32)a + ((F32)b - (F32)a) * t) + 0.5f;
     }
-}
+} // namespace
 
 S32 xDecalEmitter::select_texture_unit()
 {
@@ -356,5 +364,5 @@ S32 xDecalEmitter::select_texture_unit()
     case TM_DEFAULT:
     default:
         return 0;
-    }    
+    }
 }

@@ -1,16 +1,18 @@
 #include "zCamera.h"
 
-#include <types.h>
-
 #include "zCameraTweak.h"
 #include "zEntPlayer.h"
 #include "zGlobals.h"
 #include "zMusic.h"
-#include "iMath.h"
+
 #include "xMathInlines.h"
-#include "xVec3Inlines.h"
 #include "xScrFx.h"
+#include "xVec3Inlines.h"
 #include "xstransvc.h"
+
+#include "iMath.h"
+
+#include <types.h>
 
 F32 zcam_overrot_tmr;
 S32 zcam_near;
@@ -96,7 +98,6 @@ static F32 rewardTiltAmount = -0.22f;
 extern zGlobals globals;
 extern const xVec3 g_O3;
 F32 gCameraLastFov;
-
 
 namespace
 {

@@ -1,16 +1,18 @@
 #include "iModel.h"
 
-#include <stdio.h>
-#include <types.h>
-#include <rpskin.h>
+#include "iAnim.h"
+#include "iCamera.h"
+
+#include "xMathInlines.h"
+
 #include <rpmatfx.h>
+#include <rpskin.h>
 #include <rpusrdat.h>
-#include <string.h>
 #include <world/bageomet.h>
 
-#include "iCamera.h"
-#include "iAnim.h"
-#include "xMathInlines.h"
+#include <stdio.h>
+#include <string.h>
+#include <types.h>
 
 #define MAX2(a, b) ((a) >= (b) ? (a) : (b))
 #define MAX3(a, b, c) (MAX2((a), MAX2((b), (c))))

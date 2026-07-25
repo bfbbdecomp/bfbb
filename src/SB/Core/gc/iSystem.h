@@ -1,9 +1,10 @@
 #ifndef ISYSTEM_H
 #define ISYSTEM_H
 
+#include <dolphin.h>
+
 #include "rwplcore.h"
 #include <types.h>
-#include <dolphin.h>
 
 extern "C" {
 void* malloc(U32 __size);

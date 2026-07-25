@@ -1,18 +1,19 @@
 #include "xCamera.h"
 
-#include "xstransvc.h"
+#include "xCollideFast.h"
 #include "xMath.h"
 #include "xMathInlines.h"
 #include "xScene.h"
-#include "xCollideFast.h"
 #include "xScrFx.h"
-#include "zGlobals.h"
-#include "zGrid.h"
+#include "xstransvc.h"
 
 #include "iMath.h"
 
-#include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
-#include <PowerPC_EABI_Support\MSL_C\MSL_Common\cstring>
+#include "zGlobals.h"
+#include "zGrid.h"
+
+#include <PowerPC_EABI_Support/MSL_C/MSL_Common/cmath>
+#include <PowerPC_EABI_Support/MSL_C/MSL_Common/cstring>
 
 #define CAMERAFX_ZOOM_MODE_0 0
 #define CAMERAFX_ZOOM_MODE_1 1

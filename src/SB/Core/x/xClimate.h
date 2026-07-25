@@ -1,8 +1,6 @@
 #ifndef XCLIMATE_H
 #define XCLIMATE_H
 
-#include <types.h>
-#include "xVec3.h"
 #include "zParEmitter.h"
 
 struct xEnvAsset;

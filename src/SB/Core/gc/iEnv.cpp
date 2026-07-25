@@ -1,8 +1,8 @@
 #include "iEnv.h"
 
+#include "iCamera.h"
 #include "iModel.h"
 
-#include "iCamera.h"
 #include "xMemMgr.h"
 
 static S32 sBeginDrawFX;

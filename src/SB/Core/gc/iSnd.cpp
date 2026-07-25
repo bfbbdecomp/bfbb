@@ -1,21 +1,23 @@
 #include "iSnd.h"
 
-#include "dolphin/ai.h"
-#include "dolphin/os.h"
-#include "dolphin/os/OSAlloc.h"
-#include "dolphin/os/OSCache.h"
 #include "iMemMgr.h"
 #include "iTRC.h"
+
+#include "xMath.h"
 #include "xSnd.h"
 #include "xstransvc.h"
-#include "xMath.h"
 
+#include <dolphin/ai.h>
 #include <dolphin/ar.h>
 #include <dolphin/ax.h>
 #include <dolphin/dvd/dvd.h>
 #include <dolphin/mix.h>
+#include <dolphin/os.h>
+#include <dolphin/os/OSAlloc.h>
+#include <dolphin/os/OSCache.h>
 
 #include <stdio.h>
+#include <string.h>
 #include <types.h>
 
 u32 aram_array[40];
@@ -613,16 +615,20 @@ bool iSndIsPlaying(U32 assetID)
     {
         if (gSnd.voice[i].assetID == assetID)
         {
-            if(streams[i].vinf.flags & 0xC000 && (streams[i].vinf.flags & 0x82) == 0) {
+            if (streams[i].vinf.flags & 0xC000 && (streams[i].vinf.flags & 0x82) == 0)
+            {
                 return true;
             }
             return false;
         }
     }
 
-    for(S32 i = 0; i < 0x3a; i++) {
-        if(gSnd.voice[i+6].assetID == assetID) {
-            if(voices[i].flags & 0x4 && (voices[i].flags & 0x8) == 0) {
+    for (S32 i = 0; i < 0x3a; i++)
+    {
+        if (gSnd.voice[i + 6].assetID == assetID)
+        {
+            if (voices[i].flags & 0x4 && (voices[i].flags & 0x8) == 0)
+            {
                 return true;
             }
             return false;
@@ -633,10 +639,12 @@ bool iSndIsPlaying(U32 assetID)
 
 bool iSndIsPlaying(U32 assetID, U32 parid)
 {
-    for(U32 i = 0; i < 0x40; i++) {
-        if((assetID == 0 || gSnd.voice[i].assetID == assetID) && gSnd.voice[i].parentID == parid)
+    for (U32 i = 0; i < 0x40; i++)
+    {
+        if ((assetID == 0 || gSnd.voice[i].assetID == assetID) && gSnd.voice[i].parentID == parid)
         {
-            if(iSndIsPlaying(gSnd.voice[i].assetID)) {
+            if (iSndIsPlaying(gSnd.voice[i].assetID))
+            {
                 return true;
             };
         }
@@ -646,7 +654,6 @@ bool iSndIsPlaying(U32 assetID, U32 parid)
 
 bool iSndIsPlayingByHandle(U32 handle)
 {
-
     if (handle == 0)
     {
         return false;
@@ -656,17 +663,18 @@ bool iSndIsPlayingByHandle(U32 handle)
     {
         if (gSnd.voice[i].sndID == handle)
         {
-            return (streams[i].vinf.flags & 0xC000  && (streams[i].vinf.flags & 0x82) == 0);
+            return (streams[i].vinf.flags & 0xC000 && (streams[i].vinf.flags & 0x82) == 0);
         }
     }
 
-    for(S32 i = 0; i < 0x3a; i++) {
-        if(gSnd.voice[i+6].sndID == handle) {
+    for (S32 i = 0; i < 0x3a; i++)
+    {
+        if (gSnd.voice[i + 6].sndID == handle)
+        {
             return (voices[i].flags & 0x4 && (voices[i].flags & 0x8) == 0);
         }
     }
     return false;
-    
 }
 
 U32 iVolFromX(F32 param1)

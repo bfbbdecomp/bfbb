@@ -1,13 +1,13 @@
 #include "xpkrsvc.h"
 
-#include <types.h>
-#include <string.h>
-#include <stdio.h>
-
-#include "xhipio.h"
-#include "xutil.h"
 #include "xMath.h"
 #include "xMemMgr.h"
+#include "xhipio.h"
+#include "xutil.h"
+
+#include <stdio.h>
+#include <string.h>
+#include <types.h>
 
 // Square and JESway: Function relocation issues will resolve themselves when all the functions
 //                    here 100% match, as it is apparently related to the instruction size of each function

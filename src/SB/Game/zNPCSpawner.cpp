@@ -1,14 +1,16 @@
 #include "zNPCSpawner.h"
 
-#include <types.h>
-
 #include "zEvent.h"
-#include "xDraw.h"
-#include "zNPCSupport.h"
 #include "zGlobals.h"
-#include "xMathInlines.h"
+#include "zNPCSupport.h"
 #include "zNPCTypeRobot.h"
+
+#include "xDraw.h"
+#include "xMathInlines.h"
 #include "xUtil.h"
+
+#include <string.h>
+#include <types.h>
 
 static SMDepot g_smdepot = {};
 static S32 g_drawSpawnBounds;

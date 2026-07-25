@@ -1,6 +1,5 @@
-#include <dolphin/mix.h>
-
 #include <dolphin/ai.h>
+#include <dolphin/mix.h>
 #include <dolphin/os.h>
 
 static MIXChannel __MIXChannel[64];
@@ -9,6 +8,7 @@ static int __MIXDvdStreamAttenCurrent;
 static int __MIXDvdStreamAttenUser;
 static u32 __MIXSoundMode;
 
+// clang-format off
 u16 __MIXVolumeTable[] =
 {
     0x0000, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001,
@@ -206,8 +206,8 @@ S8 __MIXAIVolumeTable[] =
     0x24, 0x28, 0x2D, 0x32, 0x39, 0x40, 0x47, 0x50,
     0x5A, 0x65, 0x71, 0x7F, 0x8F, 0xA0, 0xB4, 0xCA,
     0xE3, 0xFF
-
 };
+// clang-format on
 
 static u16 __MIXGetVolume(int index)
 {
@@ -224,26 +224,26 @@ static u16 __MIXGetVolume(int index)
 
 static void __MIXSetPan(MIXChannel* chan)
 {
-    int l  = chan->pan;
+    int l = chan->pan;
     int b = chan->span;
     int r = 0x7f - l;
     int f = 0x7f - b;
 
     if (__MIXSoundMode == 3)
     {
-        chan->l  = __MIX_DPL2_front[l];
-        chan->r  = __MIX_DPL2_front[r];
-        chan->f  = __MIX_DPL2_front[f];
-        chan->b  = __MIX_DPL2_front[b];
+        chan->l = __MIX_DPL2_front[l];
+        chan->r = __MIX_DPL2_front[r];
+        chan->f = __MIX_DPL2_front[f];
+        chan->b = __MIX_DPL2_front[b];
         chan->l1 = __MIX_DPL2_rear[r];
         chan->r1 = __MIX_DPL2_rear[l];
     }
     else
     {
-        chan->l  = __MIXPanTable[l];
-        chan->r  = __MIXPanTable[r];
-        chan->f  = __MIXPanTable[f];
-        chan->b  = __MIXPanTable[b];
+        chan->l = __MIXPanTable[l];
+        chan->r = __MIXPanTable[r];
+        chan->f = __MIXPanTable[f];
+        chan->b = __MIXPanTable[b];
     }
 }
 
@@ -298,20 +298,19 @@ void MIXInit()
     __MIXSoundMode = OSGetSoundMode();
 }
 
-void MIXInitChannel(AXVPB* p, u32 mode, int input, int auxA, int auxB, int pan,
-                    int span, int fader)
+void MIXInitChannel(AXVPB* p, u32 mode, int input, int auxA, int auxB, int pan, int span, int fader)
 {
     MIXChannel* chan = &__MIXChannel[p->index];
 
     u16 mixerCtrl;
 
     chan->axvpb = p;
-    chan->mode  = mode & 7;
+    chan->mode = mode & 7;
     chan->input = input;
-    chan->auxA  = auxA;
-    chan->auxB  = auxB;
-    chan->pan   = pan;
-    chan->span  = span;
+    chan->auxA = auxA;
+    chan->auxB = auxB;
+    chan->pan = pan;
+    chan->span = span;
     chan->fader = fader;
 
     __MIXSetPan(chan);
@@ -330,9 +329,9 @@ void MIXInitChannel(AXVPB* p, u32 mode, int input, int auxA, int auxB, int pan,
     switch (__MIXSoundMode)
     {
     case 0:
-        chan->vL  = __MIXGetVolume(chan->fader + chan->f);
-        chan->vR  = __MIXGetVolume(chan->fader + chan->f);
-        chan->vS  = __MIXGetVolume(chan->fader + chan->b);
+        chan->vL = __MIXGetVolume(chan->fader + chan->f);
+        chan->vR = __MIXGetVolume(chan->fader + chan->f);
+        chan->vS = __MIXGetVolume(chan->fader + chan->b);
         if (chan->mode & 1)
         {
             chan->vAL = __MIXGetVolume(chan->auxA + chan->f);
@@ -394,8 +393,8 @@ void MIXInitChannel(AXVPB* p, u32 mode, int input, int auxA, int auxB, int pan,
         break;
 
     case 3:
-        chan->vL  = __MIXGetVolume(chan->fader + chan->l + chan->f);
-        chan->vR  = __MIXGetVolume(chan->fader + chan->r + chan->f);
+        chan->vL = __MIXGetVolume(chan->fader + chan->l + chan->f);
+        chan->vR = __MIXGetVolume(chan->fader + chan->r + chan->f);
         chan->vBL = __MIXGetVolume(chan->fader + chan->l1 + chan->b);
         chan->vBR = __MIXGetVolume(chan->fader + chan->r1 + chan->b);
 
@@ -421,7 +420,7 @@ void MIXInitChannel(AXVPB* p, u32 mode, int input, int auxA, int auxB, int pan,
     int enabled = OSDisableInterrupts();
 
     p->pb.ve.currentVolume = chan->v;
-    p->pb.ve.currentDelta  = 0;
+    p->pb.ve.currentDelta = 0;
 
     if (p->pb.mix.vL = chan->vL)
     {
@@ -574,9 +573,9 @@ void MIXUpdateSettings()
         if (__MIXChannel[i].mode & 0x80000000)
         {
             cond1 = 1;
-            __MIXChannel[i].vL  = __MIXChannel[i].vL1;
-            __MIXChannel[i].vR  = __MIXChannel[i].vR1;
-            __MIXChannel[i].vS  = __MIXChannel[i].vS1;
+            __MIXChannel[i].vL = __MIXChannel[i].vL1;
+            __MIXChannel[i].vR = __MIXChannel[i].vR1;
+            __MIXChannel[i].vS = __MIXChannel[i].vS1;
             __MIXChannel[i].vAL = __MIXChannel[i].vAL1;
             __MIXChannel[i].vAR = __MIXChannel[i].vAR1;
             __MIXChannel[i].vAS = __MIXChannel[i].vAS1;
@@ -768,7 +767,7 @@ void MIXUpdateSettings()
         axvpb->sync |= 0x12;
     }
 
-    if ( __MIXDvdStreamAttenUser > __MIXDvdStreamAttenCurrent)
+    if (__MIXDvdStreamAttenUser > __MIXDvdStreamAttenCurrent)
     {
         __MIXDvdStreamAttenCurrent++;
         AISetStreamVolLeft(__MIXAIVolumeTable[*((volatile int*)(&__MIXDvdStreamAttenCurrent))]);

@@ -1,10 +1,12 @@
 #ifndef XJSP_H
 #define XJSP_H
 
-#include <types.h>
-#include <rwcore.h>
-#include <rpworld.h>
 #include "xClumpColl.h"
+
+#include <rpworld.h>
+#include <rwcore.h>
+
+#include <types.h>
 
 struct __rwMark
 {

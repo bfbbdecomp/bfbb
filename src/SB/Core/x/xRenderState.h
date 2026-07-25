@@ -2,6 +2,7 @@
 #define XRENDERSTATE_H
 
 #include <rwcore.h>
+
 #include <types.h>
 
 void xRenderStateSetDstBlendMode(S32 xmode);

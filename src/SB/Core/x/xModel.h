@@ -1,15 +1,15 @@
 #ifndef XMODEL_H
 #define XMODEL_H
 
-#include <rwcore.h>
-#include <rpworld.h>
-
 #include "xAnim.h"
 #include "xLightKit.h"
-#include "xSurface.h"
-#include "xMath3.h"
 #include "xMath2.h"
+#include "xMath3.h"
 #include "xModelBucket.h"
+#include "xSurface.h"
+
+#include <rpworld.h>
+#include <rwcore.h>
 
 struct xModelBucket;
 

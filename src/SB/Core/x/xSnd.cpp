@@ -1,9 +1,10 @@
 #include "xSnd.h"
 
-#include <types.h>
+#include "xVec3.h"
 
 #include "iSnd.h"
-#include "xVec3.h"
+
+#include <types.h>
 
 extern _xSndDelayed sDelayedSnd[16];
 extern U32 sDelayedPaused;
@@ -146,7 +147,9 @@ void xSndDelayedInit()
     sDelayedPaused = 0;
 }
 
-void xSndAddDelayed(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, U32 parentID, xEnt* parentEnt, xVec3* pos, F32 innerRadius, F32 outerRadius, sound_category category, F32 delay)
+void xSndAddDelayed(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, U32 parentID,
+                    xEnt* parentEnt, xVec3* pos, F32 innerRadius, F32 outerRadius,
+                    sound_category category, F32 delay)
 {
     _xSndDelayed* snd = &sDelayedSnd[0];
 
@@ -363,7 +366,8 @@ void reset_faders()
     faders_active = 0;
 }
 
-class fade_data {
+class fade_data
+{
     // total size: 0x18
 public:
     unsigned char in; // offset 0x0, size 0x1
@@ -378,12 +382,12 @@ public:
 
 void fade_data::operator=(const fade_data& rhs)
 {
-    in          = rhs.in;
-    handle      = rhs.handle;
+    in = rhs.in;
+    handle = rhs.handle;
     start_delay = rhs.start_delay;
-    time        = rhs.time;
-    end_time    = rhs.end_time;
-    volume      = rhs.volume;
+    time = rhs.time;
+    end_time = rhs.end_time;
+    volume = rhs.volume;
 }
 
 U32 xSndStreamReady(U32 owner)

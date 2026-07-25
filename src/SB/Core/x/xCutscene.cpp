@@ -1,19 +1,20 @@
 #include "xCutscene.h"
-#include "xSnd.h"
+
 #include "xAnim.h"
 #include "xDebug.h"
 #include "xModelBucket.h"
 #include "xSnd.h"
 
+#include "iAnim.h"
 #include "iCutscene.h"
 #include "iModel.h"
+
 #include "zCamera.h"
 #include "zGlobals.h"
-#include "iAnim.h"
 
-#include <types.h>
+#include <PowerPC_EABI_Support/MSL_C/MSL_Common/cmath>
 #include <string.h>
-#include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
+#include <types.h>
 
 xCutscene sActiveCutscene;
 U32 sCutTocCount;
@@ -345,9 +346,10 @@ void xCutscene_SetCamera(xCutscene* csn, xCamera* cam)
 
             U32 count;
 
-            F32 camFOV = 114.59155f *
-                         std::atan((12.7f * (keys[0].aperture[0] * lerp + keys[1].aperture[0] * invlerp)) /
-                                   (keys[0].focal * lerp + keys[1].focal * invlerp));
+            F32 camFOV =
+                114.59155f *
+                std::atan((12.7f * (keys[0].aperture[0] * lerp + keys[1].aperture[0] * invlerp)) /
+                          (keys[0].focal * lerp + keys[1].focal * invlerp));
             cam->mat = camMat;
             gCameraLastFov = 0.0f;
             xCameraSetFOV(&xglobals->camera, camFOV);

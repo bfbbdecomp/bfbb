@@ -1,16 +1,19 @@
 #include "zNPCTypeVillager.h"
 
-#include "xBehaveMgr.h"
-#include "xJaw.h"
-#include "xMathInlines.h"
 #include "zGameExtras.h"
 #include "zGlobals.h"
 #include "zNPCGoalVillager.h"
-#include "zNPCSupplement.h"
 #include "zNPCGoals.h"
+#include "zNPCSupplement.h"
 #include "zRenderState.h"
+
+#include "xBehaveMgr.h"
 #include "xDebug.h"
+#include "xJaw.h"
+#include "xMathInlines.h"
 #include "xUtil.h"
+
+#include <string.h>
 
 #define Unknown 0
 #define Idle01 1

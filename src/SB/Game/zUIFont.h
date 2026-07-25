@@ -43,8 +43,7 @@ void zUIFont_Load(zUIFont* ent, xSerial* s);
 void zUIFont_Reset(zUIFont* ent);
 void zUIFont_PreUpdate(zUIFont* ent, xScene* sc, F32 dt);
 void zUIFont_Update(zUIFont* ent, xScene*, F32);
-S32 zUIFontEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
-                     xBase* toParamWidget);
+S32 zUIFontEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* toParamWidget);
 void zUIFont_Render(xEnt* e);
 
 #endif
