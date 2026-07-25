@@ -1,5 +1,6 @@
 #include "zNPCTypeBossPlankton.h"
 #include "xDebug.h"
+#include "xMathInlines.h"
 
 #include <types.h>
 
@@ -1320,6 +1321,11 @@ void zNPCBPlankton::update_follow(F32 dt)
     {
         update_follow_camera(dt);
     }
+}
+
+F32 zNPCBPlankton::get_orbit_yaw(const xVec3& vec) const
+{
+    return xatan2(vec.x - this->orbit.center.x, vec.z - this->orbit.center.z);
 }
 
 void zNPCBPlankton::give_control()

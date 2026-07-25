@@ -118,7 +118,7 @@ struct zNPCBPlankton : zNPCBoss
     void Setup();
     void PostSetup();
     void Reset();
-    void Destroy();
+    void Destroy(); // 0x54
     void Process(xScene*, F32);
     S32 SysEvent(xBase*, xBase*, unsigned int, const F32*, xBase*, int*);
     void Render();
@@ -129,7 +129,7 @@ struct zNPCBPlankton : zNPCBoss
     S32 next_goal();
     void update_turn(F32);
     void update_move(F32);
-    void check_player_damage();
+    S32 check_player_damage();
     void reset_territories();
     void update_animation(F32);
     void update_follow(F32);
@@ -158,6 +158,7 @@ struct zNPCBPlankton : zNPCBoss
     xVec3& location() const;
     void face_player();
     void render_debug();
+    F32 get_orbit_yaw(const xVec3&) const;
     void give_control();
     void enable_emitter(xParEmitter&) const;
     void disable_emitter(xParEmitter&) const;
