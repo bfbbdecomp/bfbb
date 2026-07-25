@@ -3,6 +3,7 @@
 #include "rpworld.h"
 #include "rwplcore.h"
 #include "xDebug.h"
+#include "xDraw.h"
 #include "xEnt.h"
 #include "xFX.h"
 #include "xMath.h"
@@ -420,13 +421,15 @@ void zFXGooUpdateInstance(zFXGooInstance* goo, F32 dt)
         }
     }
 
-    if(goo_timer_textbox != NULL)
+    if (goo_timer_textbox != NULL)
     {
         F32 freeze_time = zFXGooFreezeTimeLeft();
 
-        if(freeze_time > 0.0f) {
+        if (freeze_time > 0.0f)
+        {
             S32 len = freeze_time;
-            if(len > 0x63) {
+            if (len > 0x63)
+            {
                 len = 0x63;
             }
 
@@ -435,10 +438,155 @@ void zFXGooUpdateInstance(zFXGooInstance* goo, F32 dt)
             goo_timer_textbox->set_text(counter_text);
             goo_timer_textbox->activate();
         }
-        else {
+        else
+        {
             goo_timer_textbox->deactivate();
         }
     }
+}
+
+void zFXGooUpdate(F32 dt)
+{
+    int i;
+    zFXGooInstance* pGoo = &zFXGooInstances[0];
+
+    for (i = 0; i < 0x18; i++)
+    {
+        if (pGoo->state != zFXGooStateInactive)
+        {
+            zFXGooUpdateInstance(pGoo, dt);
+        }
+        pGoo++;
+    }
+}
+
+RpAtomic* zFXGooRenderAtomic(class RpAtomic* atomic)
+{
+    if (g_txtr_gooFrozen == NULL)
+    {
+        g_txtr_gooFrozen = xSTFindAsset(0x13401f, NULL);
+        gAtomicRenderCallBack(atomic);
+    }
+
+    S32 i;
+    zFXGooInstance* goo = zFXGooInstances;
+    for (i = 0; i < 24; i++, goo++)
+    {
+        if (goo->state == zFXGooStateInactive)
+        {
+            continue;
+        }
+        if (goo->atomic == atomic)
+        {
+            break;
+        }
+    }
+
+    xDrawSetColor(0xff, 0x80, 0, 0xff);
+
+    xVec3 refPos;
+    if (goo->ref_parentPos != NULL)
+    {
+        refPos = *goo->ref_parentPos;
+    }
+    else
+    {
+        refPos = g_O3;
+    }
+
+    if (i != 24 && goo->state != zFXGooStateInactive && goo->state != zFXGooStateNormal)
+    {
+        RwIm3DVertex* vertexBuffer = gRenderBuffer.m_vertex;
+        U32 numVerts = 0;
+        if (g_txtr_gooFrozen != NULL)
+        {
+            RwRenderStateSet(rwRENDERSTATETEXTURERASTER, ((RwRaster*)g_txtr_gooFrozen)->parent);
+        }
+        else
+        {
+            RwRenderStateSet(rwRENDERSTATETEXTURERASTER, NULL);
+        }
+        RwRenderStateSet(rwRENDERSTATEVERTEXALPHAENABLE, (void*)TRUE);
+
+        RpGeometry* geom = RpAtomicGetGeometry(atomic);
+        RwRGBA* preLitLum = geom->preLitLum;
+        RwV3d* verts = geom->morphTarget->verts;
+        if (xabs(goo->max - goo->min) < 1e-5f)
+        {
+            goo->max += 1e-5f;
+        }
+
+        F32 a = (-255.0f * goo->alpha) / (goo->max - goo->min);
+        F32 b = (255.0f * goo->alpha * goo->min) / (goo->max - goo->min);
+
+        U8* bytes = (U8*)xMemPushTemp(geom->numVertices);
+
+        for (i = 0; i < geom->numVertices; i++)
+        {
+            xVec3 tmp;
+            xVec3Sub(&tmp, (xVec3*)&verts[i], &goo->center);
+            F32 c = a * xVec3Length2(&tmp) + b;
+            c = CLAMP(c, 0.0f, 255.0f);
+            bytes[i] = (U8)c;
+        }
+
+        RpTriangle* tri = geom->triangles;
+        for (i = 0; i < geom->numTriangles; i++, tri++)
+        {
+            if (numVerts > 0x1dd)
+            {
+                if (RwIm3DTransform(vertexBuffer, numVerts, NULL, 0x19) != NULL)
+                {
+                    RwIm3DRenderPrimitive(rwPRIMTYPETRILIST);
+                    RwIm3DEnd();
+                }
+                numVerts = 0;
+            }
+
+            RwIm3DVertex* currentVertBuf = &vertexBuffer[numVerts];
+            xVec3 a = *(xVec3*)&verts[tri->vertIndex[0]];
+            xVec3 b = *(xVec3*)&verts[tri->vertIndex[1]];
+            xVec3 c = *(xVec3*)&verts[tri->vertIndex[2]];
+
+            a += refPos;
+            b += refPos;
+            c += refPos;
+            numVerts += 3;
+
+            // This part needs to be rewritten somehow, I think it's correct logic though.
+            RwIm3DVertexSetPos(&currentVertBuf[0], a.x, 0.02f + a.y, a.z);
+            RwIm3DVertexSetPos(&currentVertBuf[1], b.x, 0.02f + b.y, b.z);
+            RwIm3DVertexSetPos(&currentVertBuf[2], c.x, 0.02f + c.y, c.z);
+
+            RwRGBA* a_color = &preLitLum[tri->vertIndex[0]];
+            RwIm3DVertexSetRGBA(&currentVertBuf[0], a_color->red, a_color->blue, a_color->red,
+                                bytes[tri->vertIndex[0]]);
+
+            RwRGBA* b_color = &preLitLum[tri->vertIndex[1]];
+            RwIm3DVertexSetRGBA(&currentVertBuf[1], b_color->red, b_color->blue, b_color->red,
+                                bytes[tri->vertIndex[1]]);
+
+            RwRGBA* c_color = &preLitLum[tri->vertIndex[2]];
+            RwIm3DVertexSetRGBA(&currentVertBuf[2], c_color->red, c_color->blue, c_color->red,
+                                bytes[tri->vertIndex[2]]);
+
+            currentVertBuf[0].u = goo->orig_uvs[tri->vertIndex[0]].u;
+            currentVertBuf[1].u = goo->orig_uvs[tri->vertIndex[1]].u;
+            currentVertBuf[2].u = goo->orig_uvs[tri->vertIndex[2]].u;
+            currentVertBuf[0].v = goo->orig_uvs[tri->vertIndex[0]].v;
+            currentVertBuf[1].v = goo->orig_uvs[tri->vertIndex[1]].v;
+            currentVertBuf[2].v = goo->orig_uvs[tri->vertIndex[2]].v;
+        }
+
+        if (RwIm3DTransform(vertexBuffer, numVerts, NULL, 0x19) != NULL)
+        {
+            RwIm3DRenderPrimitive(rwPRIMTYPETRILIST);
+            RwIm3DEnd();
+        }
+        xMemPopTemp(bytes);
+    }
+
+    return atomic;
 }
 
 void zFXUpdate(F32 dt)
@@ -652,21 +800,6 @@ void reset_poppers()
 }
 
 void zFXGooUpdateInstance(zFXGooInstance*, F32);
-
-void zFXGooUpdate(F32 dt)
-{
-    int i;
-    zFXGooInstance* pGoo = &zFXGooInstances[0];
-
-    for (i = 0; i < 0x18; i++)
-    {
-        if (pGoo->state != zFXGooStateInactive)
-        {
-            zFXGooUpdateInstance(pGoo, dt);
-        }
-        pGoo++;
-    }
-}
 
 xVec3& xVec3::up_normalize()
 {
