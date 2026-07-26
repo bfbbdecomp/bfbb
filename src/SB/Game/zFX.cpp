@@ -447,10 +447,10 @@ void zFXGooUpdateInstance(zFXGooInstance* goo, F32 dt)
 
 void zFXGooUpdate(F32 dt)
 {
-    int i;
+    S32 i;
     zFXGooInstance* pGoo = &zFXGooInstances[0];
 
-    for (i = 0; i < 0x18; i++)
+    for (i = 0; i < 24; i++)
     {
         if (pGoo->state != zFXGooStateInactive)
         {
