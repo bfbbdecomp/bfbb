@@ -1,15 +1,17 @@
 #ifndef ZNPCFXCINEMATIC_H
 #define ZNPCFXCINEMATIC_H
 
-#include <types.h>
 #include "zCutsceneMgr.h"
-#include "zNPCSupplement.h"
-#include "xVec3.h"
 #include "zLightning.h"
 #include "zNPCHazard.h"
+#include "zNPCSupplement.h"
 #include "zParEmitter.h"
 #include "zShrapnel.h"
+
+#include "xVec3.h"
+
 #include "rwcore.h"
+#include <types.h>
 
 void zNPCFXStartup();
 void zNPCFXShutdown();

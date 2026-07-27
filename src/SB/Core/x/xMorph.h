@@ -1,11 +1,12 @@
 #ifndef XMORPH_H
 #define XMORPH_H
 
-#include "iMorph.h"
 #include "xMath3.h"
 
-#include <rwcore.h>
+#include "iMorph.h"
+
 #include <rpworld.h>
+#include <rwcore.h>
 
 struct xMorphSeqFile
 {
@@ -38,7 +39,7 @@ struct xMorphTargetFile
     F32 Radius;
 };
 
-typedef void*(*xMorphFindAssetCallback)(U32, char*);
+typedef void* (*xMorphFindAssetCallback)(U32, char*);
 
 xMorphSeqFile* xMorphSeqSetup(void* data, xMorphFindAssetCallback FindAssetCB);
 void xMorphRender(xMorphSeqFile* seq, RwMatrix* mat, F32 time);

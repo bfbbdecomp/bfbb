@@ -1,6 +1,7 @@
 #include "iScrFX.h"
 
-#include "rwplcore.h"
+#include <rwplcore.h>
+
 #include <types.h>
 
 static U32 sMotionBlurEnabled;

@@ -1,15 +1,15 @@
 #ifndef ZNPCTYPEBOSSSANDY_H
 #define ZNPCTYPEBOSSSANDY_H
 
-#include "zNPCTypeBoss.h"
-#include "zNPCTypeVillager.h"
-#include "zNPCGoalCommon.h"
 #include "zCutsceneMgr.h"
 #include "zEntPickup.h"
+#include "zNPCGoalCommon.h"
+#include "zNPCTypeBoss.h"
+#include "zNPCTypeVillager.h"
 
+#include "xCamera.h"
 #include "xEntBoulder.h"
 #include "xFX.h"
-#include "xCamera.h"
 #include "xModel.h"
 
 struct BossDamageEffectRecord

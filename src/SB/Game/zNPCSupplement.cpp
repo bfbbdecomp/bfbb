@@ -1,21 +1,25 @@
 #include "zNPCSupplement.h"
-#include "zNPCSupport.h"
-#include "zNPCTypeRobot.h"
+
 #include "zGame.h"
 #include "zGameExtras.h"
 #include "zGlobals.h"
-#include "xCutsceneMgr.h"
+#include "zNPCSupport.h"
+#include "zNPCTypeRobot.h"
 
+#include "xCutsceneMgr.h"
 #include "xFX.h"
 #include "xMath.h"
+
 #include "iMath.h"
 
-#include <types.h>
 #include <rwplcore.h>
+
+#include <types.h>
 
 static xShadowCache g_shadCaches[16];
 static NPARMgmt g_npar_mgmt[12];
 
+// clang-format off
 static NPARInfo g_npar_info[12] = {
     {},
     {
@@ -55,9 +59,9 @@ static NPARInfo g_npar_info[12] = {
 
 static const NPARParmOilBub g_parm_oilbub[4] = {
     {
-        1.2f, 
-        {255, 255, 255, 160}, 
-        {0.0f, 2.0f, 0.0f}, 
+        1.2f,
+        {255, 255, 255, 160},
+        {0.0f, 2.0f, 0.0f},
         {0.1f, 0.4f}
     },
     {
@@ -330,6 +334,7 @@ static const NPARParmFahrwerkz g_parm_fahrwerkz[4] = {
         80
     },
 };
+// clang-format on
 
 extern S32 g_gameExtrasFlags;
 extern S32 g_mon; // month
@@ -740,7 +745,8 @@ void NPARMgmt::UserDataSet(void** param_1)
     user_data = param_1;
 }
 
-void NPARParmVisSplash::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos, const xVec3* vel) const
+void NPARParmVisSplash::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos,
+                                  const xVec3* vel) const
 {
     F32 fac_rand = xurand() * 0.5f + 0.5f;
     F32 samecalc = tym_lifespan * fac_rand;
@@ -766,7 +772,8 @@ void NPARParmVisSplash::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* 
     par->nparmode = pmod;
 }
 
-void NPARParmDogBreath::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos, const xVec3* vel) const
+void NPARParmDogBreath::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos,
+                                  const xVec3* vel) const
 {
     F32 fac_rand = xurand() * 0.5f + 0.5f;
     F32 samecalc = tym_lifespan * fac_rand;
@@ -793,8 +800,8 @@ void NPARParmDogBreath::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* 
 
 void NPAR_EmitFireworks(en_nparmode pmod, const xVec3* pos, const xVec3* vel)
 {
-    NPARData *pNVar1;
-    NPARMgmt *mgmt = NPAR_FindParty(NPAR_TYP_FIREWORKS);
+    NPARData* pNVar1;
+    NPARMgmt* mgmt = NPAR_FindParty(NPAR_TYP_FIREWORKS);
     if ((mgmt != NULL) && (pNVar1 = mgmt->NextAvail(), pNVar1 != NULL))
     {
         g_parm_fahrwerkz[pmod].ConfigPar(pNVar1, pmod, pos, vel);
@@ -806,7 +813,6 @@ void NPAR_EmitFWExhaust(const xVec3* pos, const xVec3* vel)
     NPAR_EmitFireworks(NPAR_MODE_FWEXHAUST, pos, vel);
 }
 
-
 void NPAR_EmitVisSplash(en_nparmode pmod, const xVec3* vel, const xVec3* pos)
 {
     NPARData* par;
@@ -816,7 +822,6 @@ void NPAR_EmitVisSplash(en_nparmode pmod, const xVec3* vel, const xVec3* pos)
         g_parm_vissplash[pmod].ConfigPar(par, pmod, vel, pos);
     }
 }
-
 
 void NPAR_EmitOilBubble(en_nparmode pmod, const xVec3* pos, const xVec3* vel)
 {
@@ -828,7 +833,6 @@ void NPAR_EmitOilBubble(en_nparmode pmod, const xVec3* pos, const xVec3* vel)
     }
 }
 
-
 // Equivalent: weird unnecessary use of mulli to index into g_parm_tubespiral.
 void NPAR_EmitTubeSpiral(const xVec3* pos, const xVec3* vel, F32 dt)
 {
@@ -839,7 +843,6 @@ void NPAR_EmitTubeSpiral(const xVec3* pos, const xVec3* vel, F32 dt)
         g_parm_tubespiral[1].ConfigPar(par, NPAR_MODE_SPIRALNORM, pos, vel, dt);
     }
 }
-
 
 void NPAR_EmitTubeConfetti(const xVec3* pos, const xVec3* vel)
 {
@@ -862,24 +865,25 @@ void NPAR_EmitTubeSparklies(const xVec3* pos, const xVec3* vel)
 }
 
 // Equivalent: operands of single fmuls instruction swapped.
-void NPARParmTubeConfetti::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos, const xVec3* vel) const
+void NPARParmTubeConfetti::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos,
+                                     const xVec3* vel) const
 {
     F32 fac_rand = 0.5f * xurand() + 0.5f;
 
     par->fac_abuse = fac_rand;
     par->tmr_remain = tym_lifespan * fac_rand;
-    par->tym_exist  = tym_lifespan * fac_rand;
+    par->tym_exist = tym_lifespan * fac_rand;
     par->pos = *pos;
     par->vel = *vel;
     par->xy_size[0] = siz_base[0];
     par->xy_size[1] = siz_base[0];
     par->color = colr_base;
-    
+
     if (pmod == 0)
     {
-        par->color.red   = xurand() * 95.0f + 160.0f;
+        par->color.red = xurand() * 95.0f + 160.0f;
         par->color.green = xurand() * 95.0f + 160.0f;
-        par->color.blue  = xurand() * 95.0f + 160.0f;
+        par->color.blue = xurand() * 95.0f + 160.0f;
         par->color.alpha = colr_base.alpha;
 
         par->flg_popts |= 4;
@@ -896,7 +900,7 @@ void NPARParmTubeConfetti::ConfigPar(NPARData* par, en_nparmode pmod, const xVec
 
     if (pmod == 0)
     {
-        F32 samecalc = 2.0f * (justTheRand - 0.5f );
+        F32 samecalc = 2.0f * (justTheRand - 0.5f);
         par->uv_tl[0] = ((int)(samecalc * num_uvcell[1])) * du; // Multiplication operands swapped
         par->uv_tl[1] = (row_uvstart + (int)(samecalc * num_uvcell[0])) * dv;
         par->uv_br[0] = par->uv_tl[0] + du;
@@ -918,19 +922,20 @@ void NPARParmTubeConfetti::ConfigPar(NPARData* par, en_nparmode pmod, const xVec
 }
 
 // Equivalent: operands of single fmuls instruction swapped.
-void NPARParmFahrwerkz::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos, const xVec3* vel) const
+void NPARParmFahrwerkz::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos,
+                                  const xVec3* vel) const
 {
     F32 fac_rand = 0.5f * xurand() + 0.5f;
-    
+
     par->fac_abuse = fac_rand;
     par->tmr_remain = tym_lifespan * fac_rand;
-    par->tym_exist  = tym_lifespan * fac_rand;
+    par->tym_exist = tym_lifespan * fac_rand;
     par->pos = *pos;
     par->vel = *vel;
     par->xy_size[0] = siz_base[0];
     par->xy_size[1] = siz_base[0];
     par->color = colr_base;
-    
+
     F32 justTheRand = fac_rand;
 
     F32 du = 1.0f / num_uvcell[0];
@@ -938,7 +943,7 @@ void NPARParmFahrwerkz::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* 
 
     if (pmod == 0)
     {
-        F32 samecalc = 2.0f * (justTheRand - 0.5f );
+        F32 samecalc = 2.0f * (justTheRand - 0.5f);
         par->uv_tl[0] = ((int)(samecalc * num_uvcell[1])) * du; // Multiplication operands swapped
         par->uv_tl[1] = (row_uvstart + (int)(samecalc * num_uvcell[0])) * dv;
         par->uv_br[0] = par->uv_tl[0] + du;
@@ -960,13 +965,14 @@ void NPARParmFahrwerkz::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* 
 }
 
 // Equivalent: operands of single fmuls instruction swapped.
-void NPARParmTarTarGunk::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos, const xVec3* vel) const
+void NPARParmTarTarGunk::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos,
+                                   const xVec3* vel) const
 {
     F32 fac_rand = 0.5f * xurand() + 0.5f;
 
     par->fac_abuse = fac_rand;
     par->tmr_remain = tym_lifespan * fac_rand;
-    par->tym_exist  = tym_lifespan * fac_rand;
+    par->tym_exist = tym_lifespan * fac_rand;
     par->pos = *pos;
     par->vel = *vel;
     par->xy_size[0] = siz_base[0];
@@ -980,7 +986,7 @@ void NPARParmTarTarGunk::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3*
 
     if (pmod == 0)
     {
-        F32 samecalc = 2.0f * (justTheRand - 0.5f );
+        F32 samecalc = 2.0f * (justTheRand - 0.5f);
         par->uv_tl[0] = ((int)(samecalc * num_uvcell[1])) * du; // Multiplication operands swapped
         par->uv_tl[1] = (row_uvstart + (int)(samecalc * num_uvcell[0])) * dv;
         par->uv_br[0] = par->uv_tl[0] + du;
@@ -1002,13 +1008,14 @@ void NPARParmTarTarGunk::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3*
 }
 
 // Equivalent: operands of single fmuls instruction swapped.
-void NPARParmSleepyZeez::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos, const xVec3* vel) const
+void NPARParmSleepyZeez::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos,
+                                   const xVec3* vel) const
 {
     F32 fac_rand = 0.5f * xurand() + 0.5f;
 
     par->fac_abuse = fac_rand;
     par->tmr_remain = tym_lifespan * fac_rand;
-    par->tym_exist  = tym_lifespan * fac_rand;
+    par->tym_exist = tym_lifespan * fac_rand;
     par->pos = *pos;
     par->vel = *vel;
     par->xy_size[0] = siz_base[0];
@@ -1022,7 +1029,7 @@ void NPARParmSleepyZeez::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3*
 
     if (pmod == 0)
     {
-        F32 samecalc = 2.0f * (justTheRand - 0.5f );
+        F32 samecalc = 2.0f * (justTheRand - 0.5f);
         par->uv_tl[0] = ((int)(samecalc * num_uvcell[1])) * du; // Multiplication operands swapped
         par->uv_tl[1] = (row_uvstart + (int)(samecalc * num_uvcell[0])) * dv;
         par->uv_br[0] = par->uv_tl[0] + du;
@@ -1043,7 +1050,8 @@ void NPARParmSleepyZeez::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3*
     par->nparmode = pmod;
 }
 
-void NPARParmChuckSplash::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos, const xVec3* vel) const
+void NPARParmChuckSplash::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos,
+                                    const xVec3* vel) const
 {
     F32 fac_rand = xurand() * 0.5f + 0.5f;
     F32 samecalc = tym_lifespan * fac_rand;
@@ -1068,7 +1076,7 @@ void NPARParmChuckSplash::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3
         par->uv_br[1] = 1.0f;
         par->flg_popts |= 2;
     }
-    else if ((pmod == NPAR_MODE_ALT_C) ||(pmod == NPAR_MODE_ALT_A) ||(pmod == NPAR_MODE_ALT_B))
+    else if ((pmod == NPAR_MODE_ALT_C) || (pmod == NPAR_MODE_ALT_A) || (pmod == NPAR_MODE_ALT_B))
     {
         par->uv_tl[0] = 0.0f;
         par->uv_tl[1] = 0.0f;
@@ -1099,8 +1107,8 @@ void NPARParmChuckSplash::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3
 //todo
 void NPAR_EmitDroplets(en_nparmode pmod, const xVec3* pos, const xVec3* vel)
 {
-    NPARData *pNVar1;
-    NPARMgmt *mgmt = (NPARMgmt *)NPAR_FindParty(NPAR_TYP_CHUCKSPLASH);
+    NPARData* pNVar1;
+    NPARMgmt* mgmt = (NPARMgmt*)NPAR_FindParty(NPAR_TYP_CHUCKSPLASH);
     if ((mgmt != NULL) && (pNVar1 = mgmt->NextAvail(), pNVar1 != NULL))
     {
         g_parm_chucksplash[pmod].ConfigPar(pNVar1, pmod, pos, vel);
@@ -1129,8 +1137,8 @@ void NPAR_EmitOilSplash(const xVec3* pos, const xVec3* vel)
 
 void NPAR_EmitTarTarGunk(en_nparmode pmod, const xVec3* pos, const xVec3* vel)
 {
-    NPARData *pNVar1;
-    NPARMgmt *mgmt = (NPARMgmt *)NPAR_FindParty(NPAR_TYP_TARTARGUNK);
+    NPARData* pNVar1;
+    NPARMgmt* mgmt = (NPARMgmt*)NPAR_FindParty(NPAR_TYP_TARTARGUNK);
     if ((mgmt != NULL) && (pNVar1 = mgmt->NextAvail(), pNVar1 != NULL))
     {
         g_parm_tartargunk[pmod].ConfigPar(pNVar1, pmod, pos, vel);
@@ -1139,8 +1147,8 @@ void NPAR_EmitTarTarGunk(en_nparmode pmod, const xVec3* pos, const xVec3* vel)
 
 void NPAR_EmitGloveDust(const xVec3* pos, const xVec3* vel)
 {
-    NPARData *pNVar1;
-    NPARMgmt *mgmt = (NPARMgmt *)NPAR_FindParty(NPAR_TYP_GLOVEDUST);
+    NPARData* pNVar1;
+    NPARMgmt* mgmt = (NPARMgmt*)NPAR_FindParty(NPAR_TYP_GLOVEDUST);
     if ((mgmt != NULL) && (pNVar1 = mgmt->NextAvail(), pNVar1 != NULL))
     {
         g_parm_tartargunk[0].ConfigPar(pNVar1, NPAR_MODE_STD, pos, vel);
@@ -1149,8 +1157,8 @@ void NPAR_EmitGloveDust(const xVec3* pos, const xVec3* vel)
 
 void NPAR_EmitSleepyZeez(const xVec3* pos, const xVec3* vel)
 {
-    NPARData *pNVar1;
-    NPARMgmt *mgmt = (NPARMgmt *)NPAR_FindParty(NPAR_TYP_SLEEPYZEEZ);
+    NPARData* pNVar1;
+    NPARMgmt* mgmt = (NPARMgmt*)NPAR_FindParty(NPAR_TYP_SLEEPYZEEZ);
     if ((mgmt != NULL) && (pNVar1 = mgmt->NextAvail(), pNVar1 != NULL))
     {
         g_parm_tartargunk[0].ConfigPar(pNVar1, NPAR_MODE_STD, pos, vel);
@@ -1189,11 +1197,11 @@ void NPAR_EmitVSSpray(const xVec3* pos, const xVec3* vel)
 
 void NPAR_EmitDoggyBreath(en_nparmode pmod, const xVec3* pos, const xVec3* vel)
 {
-    NPARData *pNVar1;
-    NPARMgmt *mgmt = (NPARMgmt *)NPAR_FindParty(NPAR_TYP_DOGBREATH);
+    NPARData* pNVar1;
+    NPARMgmt* mgmt = (NPARMgmt*)NPAR_FindParty(NPAR_TYP_DOGBREATH);
     if ((mgmt != NULL) && (pNVar1 = mgmt->NextAvail(), pNVar1 != NULL))
     {
-        g_parm_dogbreath[pmod].ConfigPar(pNVar1,pmod,pos,vel);
+        g_parm_dogbreath[pmod].ConfigPar(pNVar1, pmod, pos, vel);
     }
 }
 
@@ -1207,7 +1215,8 @@ void NPAR_EmitDoggyAttack(const xVec3* pos, const xVec3* vel)
     NPAR_EmitDoggyBreath(NPAR_MODE_ALT_B, pos, vel);
 }
 
-void NPARParmGloveDust::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos, const xVec3* vel) const
+void NPARParmGloveDust::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos,
+                                  const xVec3* vel) const
 {
     F32 fac_rand = xurand() * 0.5f + 0.5f;
     F32 samecalc = tym_lifespan * fac_rand;
@@ -1232,7 +1241,8 @@ void NPARParmGloveDust::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* 
     par->nparmode = pmod;
 }
 
-void NPARParmTubeSpiral::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos, const xVec3* vel, F32 dt) const
+void NPARParmTubeSpiral::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos,
+                                   const xVec3* vel, F32 dt) const
 {
     par->fac_abuse = (xurand() * 0.5f + 0.5f);
     par->tmr_remain = dt;
@@ -1260,13 +1270,14 @@ void NPAR_EmitTubeSpiralCin(const xVec3* pos, const xVec3* vel, float dt)
     }
 }
 
-void NPARParmOilBub::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos, const xVec3* vel) const
+void NPARParmOilBub::ConfigPar(NPARData* par, en_nparmode pmod, const xVec3* pos,
+                               const xVec3* vel) const
 {
     F32 fac_rand = (xurand() * 0.5f + 0.5f);
     F32 samecalc = tym_lifespan * fac_rand;
-    par->fac_abuse  = fac_rand;
+    par->fac_abuse = fac_rand;
     par->tmr_remain = samecalc;
-    par->tym_exist  = samecalc;
+    par->tym_exist = samecalc;
     par->pos = *pos;
     par->vel = (vel != NULL) ? *vel : g_O3;
     F32 uVar2 = siz_base[0];
@@ -1297,7 +1308,7 @@ void NPAR_EmitH2OSpray(const xVec3* pos, const xVec3* vel)
 
 void NPAR_EmitH2OTrail(const xVec3* pos)
 {
-    NPAR_EmitDroplets(NPAR_MODE_TRAIL, pos, (xVec3 *)&g_O3);
+    NPAR_EmitDroplets(NPAR_MODE_TRAIL, pos, (xVec3*)&g_O3);
 }
 
 static void NPCC_ShadowCacheReset()

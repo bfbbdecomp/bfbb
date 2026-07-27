@@ -1,19 +1,20 @@
-#include <types.h>
-#include <string.h>
+#include "zGameExtras.h"
+
+#include "zEntPlayer.h"
+#include "zGame.h"
+#include "zGlobals.h"
+#include "zScene.h"
+
+#include "xCounter.h"
+#include "xEnt.h"
+#include "xSnd.h"
+#include "xString.h"
+#include "xUtil.h"
 
 #include "iTime.h"
 
-#include "xString.h"
-#include "xSnd.h"
-#include "xEnt.h"
-#include "xCounter.h"
-#include "xUtil.h"
-
-#include "zGameExtras.h"
-#include "zEntPlayer.h"
-#include "zGlobals.h"
-#include "zGame.h"
-#include "zScene.h"
+#include <string.h>
+#include <types.h>
 
 static S32 g_enableGameExtras;
 static S32 g_currDay;

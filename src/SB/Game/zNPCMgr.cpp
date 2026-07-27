@@ -1,22 +1,23 @@
 #include "zNPCMgr.h"
-#include "xLightKit.h"
-#include "xRMemData.h"
-#include "zNPCTypeCommon.h"
-#include "zNPCTypeRobot.h"
-#include "zNPCTypeVillager.h"
-#include "zNPCTypeSubBoss.h"
-#include "zNPCTypeBoss.h"
-#include "zNPCTypeDuplotron.h"
-#include "zNPCTypes.h"
-#include "zNPCSpawner.h"
-#include "zNPCMessenger.h"
-#include "zNPCGoals.h"
-#include "zNPCTypeTiki.h"
+
 #include "zGlobals.h"
-#include "xFactory.h"
+#include "zNPCGoals.h"
+#include "zNPCMessenger.h"
+#include "zNPCSpawner.h"
+#include "zNPCTypeBoss.h"
+#include "zNPCTypeCommon.h"
+#include "zNPCTypeDuplotron.h"
+#include "zNPCTypeRobot.h"
+#include "zNPCTypeSubBoss.h"
+#include "zNPCTypeTiki.h"
+#include "zNPCTypeVillager.h"
+#include "zNPCTypes.h"
 #include "zRenderState.h"
 
 #include "xBehaveMgr.h"
+#include "xFactory.h"
+#include "xLightKit.h"
+#include "xRMemData.h"
 #include "xstransvc.h"
 
 #include <types.h>
@@ -26,6 +27,7 @@ static zNPCMgr* g_npcmgr;
 
 static S32 g_firstFrameUpdateAllNPC;
 
+// clang-format off
 struct NPCBrainTableEntry
 {
     char* name;
@@ -355,6 +357,7 @@ static struct NPCMTypeTable
     { NPC_TYPE_FISH_MALE,         "fish_j_snow_bind03",        0 },
     { NPC_TYPE_FISH,              "fish_h_fried_bind",         0 }
 };
+// clang-format on
 
 zNPCMgr* zNPCMgrSelf()
 {

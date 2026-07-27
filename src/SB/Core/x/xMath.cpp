@@ -1,9 +1,9 @@
 #include "xMath.h"
 
-#include <types.h>
-#include <PowerPC_EABI_Support\MSL_C\MSL_Common\stdlib.h>
-
 #include "xMathInlines.h"
+
+#include <PowerPC_EABI_Support/MSL_C/MSL_Common/stdlib.h>
+#include <types.h>
 
 S32 xmath_inited;
 S32 xmath_exited;

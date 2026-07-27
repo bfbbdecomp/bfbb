@@ -1,6 +1,7 @@
 #include "xSkyDome.h"
 
 #include "xEvent.h"
+
 #include "iModel.h"
 
 struct SkyDomeInfo

@@ -1,8 +1,9 @@
 #ifndef XSHADOWSIMPLE_H
 #define XSHADOWSIMPLE_H
 
-#include "types.h"
 #include "xEnt.h"
+
+#include <types.h>
 
 struct xShadowSimpleQueue
 {
@@ -45,7 +46,8 @@ struct xShadowSimpleCache
     xVec3 corner[4];
 };
 
-struct zSimpleShadowTableHeader {
+struct zSimpleShadowTableHeader
+{
     // total size: 0x4
     U32 num;
 };

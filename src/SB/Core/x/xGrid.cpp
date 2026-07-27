@@ -1,10 +1,10 @@
 #include "xGrid.h"
 
-#include "string.h"
-
+#include "xEnt.h"
 #include "xMath.h"
 #include "xMemMgr.h"
-#include "xEnt.h"
+
+#include "string.h"
 
 volatile S32 gGridIterActive = 0;
 

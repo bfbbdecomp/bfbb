@@ -1,18 +1,19 @@
 #ifndef ITRC_H
 #define ITRC_H
 
-#include <types.h>
-#include <dolphin/types.h>
+#include "xPad.h"
+
+#include <dolphin/dvd.h>
+#include <dolphin/gx/GXGet.h>
+#include <dolphin/gx/GXStruct.h>
 #include <dolphin/os.h>
 #include <dolphin/os/OSAlloc.h>
 #include <dolphin/os/OSFont.h>
 #include <dolphin/os/OSReset.h>
-#include <dolphin/gx/GXStruct.h>
-#include <dolphin/gx/GXGet.h>
-#include <dolphin/dvd.h>
 #include <dolphin/pad.h>
+#include <dolphin/types.h>
 
-#include "xPad.h"
+#include <types.h>
 
 struct _tagiTRCPadInfo
 {

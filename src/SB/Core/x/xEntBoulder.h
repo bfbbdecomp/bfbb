@@ -1,7 +1,6 @@
 #ifndef XENTBOULDER_H
 #define XENTBOULDER_H
 
-#include "xEnt.h"
 #include "xDynAsset.h"
 #include "xShadowSimple.h"
 

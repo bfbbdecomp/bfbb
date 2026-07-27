@@ -1,11 +1,13 @@
 #include "xSpline.h"
 
-#include <types.h>
+#include "xMathInlines.h"
+#include "xMemMgr.h"
+#include "xVec3.h"
+
 #include <rwplcore.h>
-#include <xMathInlines.h>
-#include <xMemMgr.h>
-#include <mem.h>
-#include <xVec3.h>
+
+#include <string.h>
+#include <types.h>
 
 static F32 sBasisUniformBspline[4][4];
 static F32 sBasisBezier[4][4];

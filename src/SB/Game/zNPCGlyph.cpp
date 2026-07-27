@@ -1,10 +1,12 @@
 #include "zNPCGlyph.h"
-#include "zNPCSupport.h"
+
 #include "zGlobals.h"
+#include "zNPCSupport.h"
 #include "zRenderState.h"
+
 #include "xMath.h"
-#include "xMathInlines.h"
 #include "xMath3.h"
+#include "xMathInlines.h"
 #include "xstransvc.h"
 
 #include <types.h>

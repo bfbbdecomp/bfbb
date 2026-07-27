@@ -1,16 +1,16 @@
 #ifndef ZSHRAPNEL_H
 #define ZSHRAPNEL_H
 
+#include "zLightning.h"
+#include "zParEmitter.h"
+
+#include "xCollide.h"
+#include "xCurveAsset.h"
 #include "xModel.h"
 #include "xParEmitter.h"
-#include "xCurveAsset.h"
-#include "xCollide.h"
 
-#include "zParEmitter.h"
-#include "zLightning.h"
-
-#include <rwcore.h>
 #include <rpworld.h>
+#include <rwcore.h>
 
 typedef struct zFrag;
 typedef struct zShrapnelAsset;
@@ -217,7 +217,7 @@ struct zShrapnelAsset
 struct zShrapnelInitTable
 {
     char* name;
-    void (*initCB)(zShrapnelAsset*, xModelInstance*, xVec3*, void(*)(zFrag*, zFragAsset*));
+    void (*initCB)(zShrapnelAsset*, xModelInstance*, xVec3*, void (*)(zFrag*, zFragAsset*));
     U32 ID;
 };
 
@@ -238,7 +238,8 @@ void zShrapnel_SetShrapnelAssetInitCB(zShrapnelAsset* sasset);
 void zShrapnel_Update(F32 dt);
 void zShrapnel_Reset();
 void zShrapnel_Render();
-void zShrapnel_CinematicInit(zShrapnelAsset* shrap, RpAtomic* cinModel, RwMatrixTag* animMat, xVec3* initVel, void(*cb)(zFrag*, zFragAsset*));
+void zShrapnel_CinematicInit(zShrapnelAsset* shrap, RpAtomic* cinModel, RwMatrixTag* animMat,
+                             xVec3* initVel, void (*cb)(zFrag*, zFragAsset*));
 void zFragLoc_Setup(zFragLocation* loc, xModelInstance* parent);
 void zFragLoc_InitDir(zFragLocation* loc, xVec3* vec, xModelInstance* parent);
 void zFrag_DefaultInit(zFrag* frag, zFragAsset* fasset);
@@ -256,7 +257,8 @@ void zFrag_ProjectileRenderer();
 void zShrapnel_SceneInit(zScene*);
 void zFragLoc_InitMat(zFragLocation*, xMat4x3*, xModelInstance*);
 void zFragLoc_InitVec(zFragLocation*, xVec3*, xModelInstance*);
-void zShrapnel_DefaultInit(zShrapnelAsset* shrap, xModelInstance* parent, xVec3* initVel, void(*cb)(zFrag*, zFragAsset*));
+void zShrapnel_DefaultInit(zShrapnelAsset* shrap, xModelInstance* parent, xVec3* initVel,
+                           void (*cb)(zFrag*, zFragAsset*));
 void zFrag_ProjectileSetupPath(zFrag* frag, zFragProjectileAsset* passet);
 void zFrag_DefaultProjectileUpdate(zFrag* frag, F32 param_2);
 

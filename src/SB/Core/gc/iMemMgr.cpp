@@ -1,10 +1,13 @@
 #include "iMemMgr.h"
+
 #include "iSystem.h"
+
 #include "xMemMgr.h"
 
-#include <types.h>
-#include <PowerPC_EABI_Support/MSL_C/MSL_Common/stdlib.h>
 #include <dolphin.h>
+
+#include <PowerPC_EABI_Support/MSL_C/MSL_Common/stdlib.h>
+#include <types.h>
 
 U32 mem_top_alloc;
 U32 mem_base_alloc;

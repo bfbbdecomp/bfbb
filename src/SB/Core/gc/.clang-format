@@ -1,0 +1,26 @@
+---
+BasedOnStyle: InheritParentConfig
+IncludeBlocks: Regroup
+SortIncludes: CaseSensitive
+IncludeCategories:
+  # Hardware-specific core code
+  - Regex: '^"i'
+    Priority: 1
+  # Core code
+  - Regex: '^"(x|containers)'
+    Priority: 2
+  # Game code
+  - Regex: '^"z'
+    Priority: 3
+  # RenderWare
+  - Regex: "^<(rw|rt|rp|world)"
+    Priority: 4
+  # Dolphin SDK
+  - Regex: "^<dolphin"
+    Priority: 5
+  # Other includes
+  - Regex: "^<"
+    Priority: 6
+  - Regex: ".*"
+    Priority: 6
+...

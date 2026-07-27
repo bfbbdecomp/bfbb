@@ -1,13 +1,14 @@
 #ifndef ZTALKBOX_H
 #define ZTALKBOX_H
 
-#include "zTextBox.h"
-#include "zNPCTypeCommon.h"
-#include "xIni.h"
-#include "containers.h"
-#include "xScene.h"
-#include "xCamera.h"
 #include "zCutsceneMgr.h"
+#include "zNPCTypeCommon.h"
+#include "zTextBox.h"
+
+#include "containers.h"
+#include "xCamera.h"
+#include "xIni.h"
+#include "xScene.h"
 #include "xSnd.h"
 
 struct ztalkbox : xBase

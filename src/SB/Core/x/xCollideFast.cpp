@@ -1,6 +1,8 @@
 #include "xCollideFast.h"
-#include "iCollideFast.h"
+
 #include "xMath.h"
+
+#include "iCollideFast.h"
 
 #include <types.h>
 

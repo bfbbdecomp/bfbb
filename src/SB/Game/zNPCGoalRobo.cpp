@@ -1,27 +1,31 @@
+#include "zNPCGoalRobo.h"
+
+#include "zGameExtras.h"
+#include "zGlobals.h"
+#include "zNPCGoalCommon.h"
+#include "zNPCGoalStd.h"
+#include "zNPCGoals.h"
+#include "zNPCHazard.h"
+#include "zNPCSndLists.h"
+#include "zNPCSupplement.h"
+#include "zNPCSupport.h"
+#include "zNPCTypeCommon.h"
+#include "zNPCTypeRobot.h"
+
 #include "xColor.h"
 #include "xCounter.h"
 #include "xDraw.h"
 #include "xEnt.h"
 #include "xFX.h"
-#include "xModel.h"
-#include "xScrFx.h"
-#include "xVec3.h"
 #include "xMath.h"
 #include "xMath3.h"
 #include "xMathInlines.h"
-#include "zNPCGoalRobo.h"
-#include "zNPCGoals.h"
-#include "zNPCGoalStd.h"
-#include "zNPCHazard.h"
-#include "zNPCSndLists.h"
-#include "zNPCSupport.h"
-#include "zNPCTypeCommon.h"
-#include "zNPCTypeRobot.h"
-#include "zGlobals.h"
-#include "zNPCGoalCommon.h"
-#include "zGameExtras.h"
-#include "zNPCSupplement.h"
+#include "xModel.h"
+#include "xScrFx.h"
+#include "xVec3.h"
+
 #include <stdlib.h>
+#include <string.h>
 
 enum en_copcntr
 {

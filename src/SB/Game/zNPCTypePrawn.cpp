@@ -1,12 +1,14 @@
 #include "zNPCTypePrawn.h"
 
-#include "rwcore.h"
-#include "xDebug.h"
-
-#include "xMemMgr.h"
 #include "zEntCruiseBubble.h"
 #include "zNPCTypeCommon.h"
 #include "zRenderState.h"
+
+#include "xDebug.h"
+#include "xMemMgr.h"
+
+#include "rwcore.h"
+#include <string.h>
 #include <types.h>
 
 #define f1052 1.0f
@@ -297,7 +299,6 @@ namespace
         }
     }
 
-
     void television::render_static()
     {
     }
@@ -583,12 +584,12 @@ xAnimTable* ZNPC_AnimTable_Prawn()
         ANIM_Fidget02,
         ANIM_Taunt01,
         ANIM_AttackWindup01,
-        ANIM_AttackLoop01,        
+        ANIM_AttackLoop01,
         ANIM_AttackLoop01,
         ANIM_AttackEnd01,
         ANIM_Damage01,
         ANIM_Damage02,
-        
+
     };
     // clang-format on
     xAnimTable* table = xAnimTableNew("zNPCPrawn", NULL, 0);

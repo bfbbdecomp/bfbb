@@ -1,11 +1,12 @@
 #include "xSFX.h"
 
-#include "xSnd.h"
 #include "xEvent.h"
+#include "xSnd.h"
 #include "xpkrsvc.h"
 #include "xstransvc.h"
-#include "zScene.h"
+
 #include "zEntPlayer.h"
+#include "zScene.h"
 
 #include <string.h>
 #include <types.h>
@@ -39,7 +40,7 @@ void xSFXUpdateEnvironmentalStreamSounds(xSFX* pSFXList, U32 numSounds)
         {
             continue;
         }
-        
+
         xVec3 playPos;
         xSndProcessSoundPos(&pSFXList[j].asset->pos, &playPos);
 
@@ -54,8 +55,8 @@ void xSFXUpdateEnvironmentalStreamSounds(xSFX* pSFXList, U32 numSounds)
         if (bestSFX == NULL)
         {
             *bestSFX = &pSFXList[j];
-            *bestDist2 = dist;  
-        } 
+            *bestDist2 = dist;
+        }
         else if ((*bestSFX)->asset->priority < pSFXList[j].asset->priority)
         {
             *bestSFX = &pSFXList[j];
@@ -141,7 +142,7 @@ void xSFXInit(xSFX* t, xSFXAsset* asset)
         asset->flagsSFX = asset->flagsSFX | 0x800;
     }
     t->sndID = 0;
-    t->asset->flagsSFX &= (U16) ~0x1000;
+    t->asset->flagsSFX &= (U16)~0x1000;
     t->cachedOuterDistSquared = t->asset->outerRadius * t->asset->outerRadius;
 }
 
@@ -163,18 +164,18 @@ void xSFXReset(xSFX* sfx)
 U32 xSFXConvertFlags(U32 flagsSFX)
 {
     U32 flags = 0;
-    
-    if (flagsSFX & 4) {
+
+    if (flagsSFX & 4)
+    {
         flags |= 0x8000;
     }
-    
+
     return flags;
 }
 
 static void xSFXUpdate(xSFX* t)
 {
-    if ((t->asset->flagsSFX & 0x800) && (t->sndID) &&
-        (!xSndIDIsPlaying(t->sndID)))
+    if ((t->asset->flagsSFX & 0x800) && (t->sndID) && (!xSndIDIsPlaying(t->sndID)))
     {
         t->sndID = 0;
         t->asset->flagsSFX = t->asset->flagsSFX & 0xefff;
@@ -245,10 +246,11 @@ static void xSFXPlay(xSFX* t)
 
             if (ainfo.typeref->typetag == 'MRKR')
             {
-                t->sndID = xSndPlay3D(t->asset->soundAssetID, 0.77f * ((F32)t->asset->volume / 100.0f),
-                                      t->asset->freq * t->asset->freqm, (U32)t->asset->priority, converted_flags,
-                                      (const xVec3*)ainfo.mempos, t->asset->innerRadius,
-                                      t->asset->outerRadius, SND_CAT_GAME, 0.0f);
+                t->sndID =
+                    xSndPlay3D(t->asset->soundAssetID, 0.77f * ((F32)t->asset->volume / 100.0f),
+                               t->asset->freq * t->asset->freqm, (U32)t->asset->priority,
+                               converted_flags, (const xVec3*)ainfo.mempos, t->asset->innerRadius,
+                               t->asset->outerRadius, SND_CAT_GAME, 0.0f);
             }
             else
             {
@@ -260,17 +262,20 @@ static void xSFXPlay(xSFX* t)
                 }
                 else if (attach->model != NULL)
                 {
-                    t->sndID = xSndPlay3D(t->asset->soundAssetID, 0.77f * ((F32)t->asset->volume / 100.0f),
-                                        t->asset->freq * t->asset->freqm, (U32)t->asset->priority, converted_flags,
-                                        attach, t->asset->innerRadius,
-                                        t->asset->outerRadius, SND_CAT_GAME, 0.0f);
+                    t->sndID =
+                        xSndPlay3D(t->asset->soundAssetID, 0.77f * ((F32)t->asset->volume / 100.0f),
+                                   t->asset->freq * t->asset->freqm, (U32)t->asset->priority,
+                                   converted_flags, attach, t->asset->innerRadius,
+                                   t->asset->outerRadius, SND_CAT_GAME, 0.0f);
                 }
                 else
                 {
-                    t->sndID = xSndPlay3D(t->asset->soundAssetID, 0.77f * ((F32)t->asset->volume / 100.0f),
-                                        t->asset->freq * t->asset->freqm, (U32)t->asset->priority, converted_flags,
-                                        (const xVec3*)&t->asset->pos, t->asset->innerRadius,
-                                        t->asset->outerRadius, SND_CAT_GAME, 0.0f);
+                    t->sndID =
+                        xSndPlay3D(t->asset->soundAssetID, 0.77f * ((F32)t->asset->volume / 100.0f),
+                                   t->asset->freq * t->asset->freqm, (U32)t->asset->priority,
+                                   converted_flags, (const xVec3*)&t->asset->pos,
+                                   t->asset->innerRadius, t->asset->outerRadius, SND_CAT_GAME,
+                                   0.0f);
                     return;
                 }
             }
@@ -278,16 +283,16 @@ static void xSFXPlay(xSFX* t)
         else
         {
             t->sndID = xSndPlay3D(t->asset->soundAssetID, 0.77f * ((F32)t->asset->volume / 100.0f),
-                                  t->asset->freq * t->asset->freqm, (U32)t->asset->priority, converted_flags,
-                                  (const xVec3*)&t->asset->pos, t->asset->innerRadius,
-                                  t->asset->outerRadius, SND_CAT_GAME, 0.0f);
+                                  t->asset->freq * t->asset->freqm, (U32)t->asset->priority,
+                                  converted_flags, (const xVec3*)&t->asset->pos,
+                                  t->asset->innerRadius, t->asset->outerRadius, SND_CAT_GAME, 0.0f);
         }
     }
     else
     {
-        t->sndID =
-            xSndPlay(t->asset->soundAssetID, 0.77f * (t->asset->volume / 100.0f), t->asset->freq * t->asset->freqm,
-                     (U32)t->asset->priority, converted_flags, 0x0, SND_CAT_GAME, 0.0f);
+        t->sndID = xSndPlay(t->asset->soundAssetID, 0.77f * (t->asset->volume / 100.0f),
+                            t->asset->freq * t->asset->freqm, (U32)t->asset->priority,
+                            converted_flags, 0x0, SND_CAT_GAME, 0.0f);
 
         if ((t->asset->flagsSFX & 0x400) && t->sndID != 0)
         {

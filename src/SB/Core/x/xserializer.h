@@ -1,9 +1,10 @@
 #ifndef XSERIALIZER_H
 #define XSERIALIZER_H
 
-#include <types.h>
-#include "xsavegame.h"
 #include "xordarray.h"
+#include "xsavegame.h"
+
+#include <types.h>
 
 struct st_SERIAL_CLIENTINFO
 {

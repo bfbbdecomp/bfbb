@@ -1,12 +1,12 @@
 #include "zTaskBox.h"
 
-#include "xEvent.h"
-#include "xGroup.h"
-#include "xstransvc.h"
-
 #include "zBase.h"
 #include "zScene.h"
 #include "zTalkBox.h"
+
+#include "xEvent.h"
+#include "xGroup.h"
+#include "xstransvc.h"
 
 #include <types.h>
 
@@ -228,35 +228,35 @@ void ztaskbox::set_state(state_enum stage)
 
     switch (stage)
     {
-        case STATE_BEGIN:
-            if (!exists(stage))
-            {
-                set_state(STATE_DESCRIPTION);
-            }
-            break;
-        case STATE_DESCRIPTION:
-            if (!exists(stage))
-            {
-                set_state(STATE_REMINDER);
-            }
-            break;
-        case STATE_REMINDER:
-        case STATE_SUCCESS:
-        case STATE_FAILURE:
-            if (!exists(stage))
-            {
-                set_state(STATE_END);
-            }
-            break;
-        case STATE_END:
-            if (!exists(stage))
-            {
-                set_state(STATE_INVALID);
-            }
-            break;
-        default:
-            complete();
-            break;
+    case STATE_BEGIN:
+        if (!exists(stage))
+        {
+            set_state(STATE_DESCRIPTION);
+        }
+        break;
+    case STATE_DESCRIPTION:
+        if (!exists(stage))
+        {
+            set_state(STATE_REMINDER);
+        }
+        break;
+    case STATE_REMINDER:
+    case STATE_SUCCESS:
+    case STATE_FAILURE:
+        if (!exists(stage))
+        {
+            set_state(STATE_END);
+        }
+        break;
+    case STATE_END:
+        if (!exists(stage))
+        {
+            set_state(STATE_INVALID);
+        }
+        break;
+    default:
+        complete();
+        break;
     }
 }
 

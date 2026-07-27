@@ -1,8 +1,9 @@
 #ifndef CONTAINERS_H
 #define CONTAINERS_H
 
-#include <types.h>
 #include "xMemMgr.h"
+
+#include <types.h>
 
 struct tier_queue_allocator
 {

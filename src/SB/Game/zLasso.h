@@ -1,10 +1,11 @@
 #ifndef ZLASSO_H
 #define ZLASSO_H
 
+#include "zEnt.h"
+
 #include "xMath3.h"
 #include "xModel.h"
 #include "xString.h"
-#include "zEnt.h"
 
 struct zLasso
 {

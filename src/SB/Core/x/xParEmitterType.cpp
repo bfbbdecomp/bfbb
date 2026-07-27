@@ -1,9 +1,11 @@
 #include "xParEmitterType.h"
 
+#include "xMath.h"
+#include "xParEmitter.h"
+
+#include "iModel.h"
+
 #include <types.h>
-#include <xMath.h>
-#include <xParEmitter.h>
-#include <iModel.h>
 
 void xParEmitterEmitPoint(xPar* p, xParEmitterAsset* a, F32 dt)
 {

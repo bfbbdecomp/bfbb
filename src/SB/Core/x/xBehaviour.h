@@ -1,9 +1,8 @@
 #ifndef XBEHAVIOUR_H
 #define XBEHAVIOUR_H
 
-#include "xBase.h"
-#include "xListItem.h"
 #include "xFactory.h"
+#include "xListItem.h"
 #include "xScene.h"
 
 enum en_GOALSTATE

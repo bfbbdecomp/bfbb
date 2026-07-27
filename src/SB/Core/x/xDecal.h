@@ -1,14 +1,16 @@
 #ifndef XDECAL_H
 #define XDECAL_H
 
+#include "containers.h"
 #include "xMath2.h"
 #include "xMath3.h"
-#include "containers.h"
-#include "iColor.h"
 #include "xPtankPool.h"
 
-#include <types.h>
+#include "iColor.h"
+
 #include <rwcore.h>
+
+#include <types.h>
 
 struct xDecalEmitter
 {
@@ -81,7 +83,8 @@ struct xDecalEmitter
     void emit(const xMat4x3& mat, const xVec3& scale, S32 texture_index);
     void update(F32 dt);
     void update_frac(xDecalEmitter::unit_data& unit);
-    void get_render_data(const xDecalEmitter::unit_data& unit, F32 scale, iColor_tag& color, xMat4x3& mat, xVec2& uv0, xVec2& uv1);
+    void get_render_data(const xDecalEmitter::unit_data& unit, F32 scale, iColor_tag& color,
+                         xMat4x3& mat, xVec2& uv0, xVec2& uv1);
     S32 select_texture_unit();
 
     bool need_update() const

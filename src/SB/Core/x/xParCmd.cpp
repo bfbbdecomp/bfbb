@@ -1,9 +1,9 @@
 #include "xParCmd.h"
 
-#include "xParGroup.h"
-#include "xVec3Inlines.h"
 #include "xMath.h"
 #include "xMathInlines.h"
+#include "xParGroup.h"
+#include "xVec3Inlines.h"
 
 struct xCmdInfo
 {

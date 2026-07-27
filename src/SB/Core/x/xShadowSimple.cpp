@@ -1,16 +1,16 @@
-#include "rwcore.h"
-#include "rwplcore.h"
+#include "xShadowSimple.h"
+
+#include "xMath3.h"
+#include "xQuickCull.h"
 #include "xString.h"
 #include "xVec3.h"
 #include "xstransvc.h"
-#include <string.h>
-#include <types.h>
-
-#include "xShadowSimple.h"
 
 #include "rpcollis.h"
-#include "xMath3.h"
-#include "xQuickCull.h"
+#include "rwcore.h"
+#include "rwplcore.h"
+#include <string.h>
+#include <types.h>
 
 static xShadowSimpleQueue sCollQueue[2];
 static RxObjSpace3DVertex sShadVert[384];
@@ -94,30 +94,30 @@ void xShadowSimple_Init()
 
     for (u32 i = 0; i < 64; i++)
     {
-        sShadVert[i*6+1].u = 1.0f;
-        sShadVert[i*6+2].v = 1.0f;
-        sShadVert[i*6+3].u = 1.0f;
-        sShadVert[i*6+4].v = 1.0f;
-        sShadVert[i*6+5].u = 1.0f;
-        sShadVert[i*6+5].v = 1.0f;
-        sShadVert[i*6+0].nx = 0.0f;
-        sShadVert[i*6+0].ny = 1.0f;
-        sShadVert[i*6+0].nz = 0.0f;
-        sShadVert[i*6+1].nx = 0.0f;
-        sShadVert[i*6+1].ny = 1.0f;
-        sShadVert[i*6+1].nz = 0.0f;
-        sShadVert[i*6+2].nx = 0.0f;
-        sShadVert[i*6+2].ny = 1.0f;
-        sShadVert[i*6+2].nz = 0.0f;
-        sShadVert[i*6+3].nx = 0.0f;
-        sShadVert[i*6+3].ny = 1.0f;
-        sShadVert[i*6+3].nz = 0.0f;
-        sShadVert[i*6+4].nx = 0.0f;
-        sShadVert[i*6+4].ny = 1.0f;
-        sShadVert[i*6+4].nz = 0.0f;
-        sShadVert[i*6+5].nx = 0.0f;
-        sShadVert[i*6+5].ny = 1.0f;
-        sShadVert[i*6+5].nz = 0.0f;
+        sShadVert[i * 6 + 1].u = 1.0f;
+        sShadVert[i * 6 + 2].v = 1.0f;
+        sShadVert[i * 6 + 3].u = 1.0f;
+        sShadVert[i * 6 + 4].v = 1.0f;
+        sShadVert[i * 6 + 5].u = 1.0f;
+        sShadVert[i * 6 + 5].v = 1.0f;
+        sShadVert[i * 6 + 0].nx = 0.0f;
+        sShadVert[i * 6 + 0].ny = 1.0f;
+        sShadVert[i * 6 + 0].nz = 0.0f;
+        sShadVert[i * 6 + 1].nx = 0.0f;
+        sShadVert[i * 6 + 1].ny = 1.0f;
+        sShadVert[i * 6 + 1].nz = 0.0f;
+        sShadVert[i * 6 + 2].nx = 0.0f;
+        sShadVert[i * 6 + 2].ny = 1.0f;
+        sShadVert[i * 6 + 2].nz = 0.0f;
+        sShadVert[i * 6 + 3].nx = 0.0f;
+        sShadVert[i * 6 + 3].ny = 1.0f;
+        sShadVert[i * 6 + 3].nz = 0.0f;
+        sShadVert[i * 6 + 4].nx = 0.0f;
+        sShadVert[i * 6 + 4].ny = 1.0f;
+        sShadVert[i * 6 + 4].nz = 0.0f;
+        sShadVert[i * 6 + 5].nx = 0.0f;
+        sShadVert[i * 6 + 5].ny = 1.0f;
+        sShadVert[i * 6 + 5].nz = 0.0f;
     }
 }
 

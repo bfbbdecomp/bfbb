@@ -1,10 +1,7 @@
 #include "zParPTank.h"
 
-#include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
-#include <rpptank.h>
-#include <types.h>
-
-#include "iColor.h"
+#include "zGame.h"
+#include "zGlobals.h"
 
 #include "xClimate.h"
 #include "xMath.h"
@@ -12,12 +9,16 @@
 #include "xMemMgr.h"
 #include "xParEmitter.h"
 #include "xPtankPool.h"
-#include "xstransvc.h"
 #include "xString.h"
 #include "xVec3.h"
+#include "xstransvc.h"
 
-#include "zGame.h"
-#include "zGlobals.h"
+#include "iColor.h"
+
+#include <rpptank.h>
+
+#include <PowerPC_EABI_Support/MSL_C/MSL_Common/cmath>
+#include <types.h>
 
 // NOTE (Square)
 // There's something slightly off in this file. Functions appear to be equivalent but it's hard to

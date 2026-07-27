@@ -1,11 +1,13 @@
 #include "xHudText.h"
-#include "xstransvc.h"
+
 #include "xTextAsset.h"
+#include "xstransvc.h"
+
 #include "zScene.h"
 #include "zTextBox.h"
 
-#include <PowerPC_EABI_Support\MSL_C\MSL_Common\cstring>
 #include <PowerPC_EABI_Support/MSL_C++/MSL_Common/Include/new.h>
+#include <PowerPC_EABI_Support/MSL_C/MSL_Common/cstring>
 #include <types.h>
 
 void xhud::text_widget::load(xBase& data, xDynAsset& asset, size_t)

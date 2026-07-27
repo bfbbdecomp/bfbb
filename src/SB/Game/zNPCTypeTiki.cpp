@@ -1,20 +1,21 @@
-#include "iAnim.h"
-#include "iCollide.h"
+#include "zNPCTypeTiki.h"
+
+#include "zEntButton.h"
+#include "zGlobals.h"
+#include "zGoo.h"
+#include "zNPCGoalTiki.h"
+#include "zNPCGoals.h"
+#include "zNPCHazard.h"
+#include "zNPCSupplement.h"
+#include "zSurface.h"
 
 #include "xDebug.h"
 #include "xScrFx.h"
 #include "xVec3.h"
 #include "xutil.h"
 
-#include "zEntButton.h"
-#include "zGlobals.h"
-#include "zGoo.h"
-#include "zNPCGoals.h"
-#include "zNPCGoalTiki.h"
-#include "zNPCHazard.h"
-#include "zNPCSupplement.h"
-#include "zNPCTypeTiki.h"
-#include "zSurface.h"
+#include "iAnim.h"
+#include "iCollide.h"
 
 #define ANIM_COUNT 2
 #define NUM_PARENTS 4

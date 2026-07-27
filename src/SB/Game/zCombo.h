@@ -1,10 +1,12 @@
 #ifndef ZCOMBO_H
 #define ZCOMBO_H
 
-#include <types.h>
+#include "zEntPickup.h"
+
 #include "xFont.h"
 #include "xHud.h"
-#include "zEntPickup.h"
+
+#include <types.h>
 
 void zCombo_Setup();
 void zCombo_Add(int);

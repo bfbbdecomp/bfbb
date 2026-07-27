@@ -1,17 +1,19 @@
 #include "xHudUnitMeter.h"
-#include "xString.h"
-#include "xMathInlines.h"
+
 #include "xDebug.h"
+#include "xMathInlines.h"
+#include "xString.h"
 
 #include <PowerPC_EABI_Support/MSL_C++/MSL_Common/Include/new.h>
 #include <types.h>
 
 namespace xhud
 {
-    namespace {
+    namespace
+    {
         F32 tweak_anim_time_delta = 0.1;
     }
-}
+} // namespace xhud
 
 void xhud::unit_meter_widget::load(xBase& data, xDynAsset& asset, size_t arg2)
 {
@@ -25,8 +27,8 @@ xhud::unit_meter_widget::unit_meter_widget(const xhud::unit_meter_asset& a) : me
     S32 i, j;
     // for (i = 0; i < 18; i++)
     // {
-        res.id = a.id;
-        res.baseType = a.baseType;
+    res.id = a.id;
+    res.baseType = a.baseType;
     // }
 
     anim_time = 0.0f;
@@ -43,7 +45,8 @@ xhud::unit_meter_widget::unit_meter_widget(const xhud::unit_meter_asset& a) : me
     if (!registered)
     {
         registered = true;
-        xDebugAddTweak("Temp|HUD Unit Anim Delta", &tweak_anim_time_delta, 0.0f, 10.0f, NULL, NULL, 0);
+        xDebugAddTweak("Temp|HUD Unit Anim Delta", &tweak_anim_time_delta, 0.0f, 10.0f, NULL, NULL,
+                       0);
     }
 }
 
@@ -68,7 +71,7 @@ bool xhud::unit_meter_widget::is(U32 id) const
     bool isType = false;
     if (unit_meter_widget::type() == id || meter_widget::is(id))
     {
-       isType = true;
+        isType = true;
     }
 
     return isType;
@@ -96,19 +99,21 @@ void xhud::unit_meter_widget::update(F32 dt)
         units = 6;
     }
 
-    for (S32 i = 0; i < units; i++) {
+    for (S32 i = 0; i < units; i++)
+    {
         S32 which = 0;
         if ((res.fill_forward && value >= i + 1) || (!res.fill_forward && value >= units - i))
         {
             which = 1;
         }
-        
+
         xModelInstance* m = model[i][which];
         if (m != NULL && m->Anim != NULL && !(m->Anim->Single->State->Data->Duration <= 0.0f))
         {
             // TODO: Float ops aren't quite right
             F32 duration = i * 0.1f + anim_time;
-            if (duration > m->Anim->Single->State->Data->Duration) {
+            if (duration > m->Anim->Single->State->Data->Duration)
+            {
                 duration = xfmod(duration, m->Anim->Single->State->Data->Duration);
             }
 
@@ -121,7 +126,7 @@ void xhud::unit_meter_widget::update(F32 dt)
 void xhud::unit_meter_widget::render()
 {
     render_context unitrc = this->rc;
-    
+
     S32 units = 0.5f + max_value;
     if (units > 6)
     {

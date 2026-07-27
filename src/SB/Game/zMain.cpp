@@ -1,33 +1,38 @@
-#include "zEntPlayer.h"
-#include "zGlobals.h"
 #include "zMain.h"
 
-#include <PowerPC_EABI_Support/MSL_C/MSL_Common/printf.h>
-#include <types.h>
-
-#include "iSystem.h"
-#include "xMemMgr.h"
-#include "zVar.h"
 #include "zAssetTypes.h"
-#include "xTRC.h"
-#include "iTime.h"
-#include "zDispatcher.h"
-#include "xserializer.h"
-#include "xScrFX.h"
-#include "xFX.h"
-#include "xParMgr.h"
-#include "zParCmd.h"
-#include "zCameraTweak.h"
-#include "zShrapnel.h"
-#include "zNPCMgr.h"
-#include "xCamera.h"
 #include "zCamera.h"
+#include "zCameraTweak.h"
 #include "zCutsceneMgr.h"
+#include "zDispatcher.h"
+#include "zEntPickup.h"
+#include "zEntPlayer.h"
 #include "zEntPlayerBungeeState.h"
 #include "zEntPlayerOOBState.h"
+#include "zGlobals.h"
 #include "zMenu.h"
-#include "iTime.h"
+#include "zNPCMgr.h"
+#include "zParCmd.h"
+#include "zShrapnel.h"
+#include "zVar.h"
+
+#include "xCamera.h"
+#include "xDebug.h"
+#include "xFX.h"
+#include "xMemMgr.h"
+#include "xParMgr.h"
+#include "xScrFX.h"
+#include "xTRC.h"
+#include "xserializer.h"
 #include "xstransvc.h"
+#include "xutil.h"
+
+#include "iSystem.h"
+#include "iTime.h"
+
+#include <PowerPC_EABI_Support/MSL_C/MSL_Common/printf.h>
+#include <string.h>
+#include <types.h>
 
 zGlobals globals;
 xGlobals* xglobals;

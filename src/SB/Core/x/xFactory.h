@@ -1,10 +1,9 @@
 #ifndef XFACTORY_H
 #define XFACTORY_H
 
-#include <types.h>
-
 #include "xRMemData.h"
-#include "xordarray.h"
+
+#include <types.h>
 
 struct xFactoryInst : RyzMemData
 {

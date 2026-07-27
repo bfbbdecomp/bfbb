@@ -1,12 +1,14 @@
 #include "zEGenerator.h"
 
-#include "xDraw.h"
-#include "xEntBoulder.h"
-#include "xMovePoint.h"
 #include "zCollGeom.h"
 #include "zGlobals.h"
 #include "zThrown.h"
 
+#include "xDraw.h"
+#include "xEntBoulder.h"
+#include "xMovePoint.h"
+
+#include <string.h>
 #include <types.h>
 
 void zEGenerator_Init(void* egen, void* asset)
@@ -203,7 +205,8 @@ void zEGenerator_TurnOn(zEGenerator* egen)
                 }
                 if ((b->baseFlags & 0x20) != 0)
                 {
-                    xMat4x3Toworld(&egen->dst_pos, (xMat4x3*)((xEnt*)b)->model->Mat, &egen->dst_off);
+                    xMat4x3Toworld(&egen->dst_pos, (xMat4x3*)((xEnt*)b)->model->Mat,
+                                   &egen->dst_off);
                     egen->dst = b;
                     break;
                 }

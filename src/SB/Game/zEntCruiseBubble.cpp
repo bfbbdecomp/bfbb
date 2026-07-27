@@ -1,12 +1,8 @@
-#include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
-#include <rpskin.h>
-#include <stdio.h>
-#include <string.h>
+#include "zEntCruiseBubble.h"
 
 #include "zCamera.h"
 #include "zEnt.h"
 #include "zEntButton.h"
-#include "zEntCruiseBubble.h"
 #include "zEntDestructObj.h"
 #include "zEntPlayer.h"
 #include "zEntTrigger.h"
@@ -19,8 +15,6 @@
 #include "zRenderState.h"
 #include "zTalkBox.h"
 
-#include "iMath.h"
-
 #include "xColor.h"
 #include "xDecal.h"
 #include "xFX.h"
@@ -30,9 +24,18 @@
 #include "xMathInlines.h"
 #include "xModel.h"
 #include "xSnd.h"
-#include "xstransvc.h"
 #include "xString.h"
 #include "xVec3.h"
+#include "xstransvc.h"
+
+#include "iDraw.h"
+#include "iMath.h"
+
+#include <rpskin.h>
+
+#include <PowerPC_EABI_Support/MSL_C/MSL_Common/cmath>
+#include <stdio.h>
+#include <string.h>
 
 basic_rect<F32> screen_bounds = { 0.0f, 0.0f, 1.0f, 1.0f };
 basic_rect<F32> default_adjust = { 0.0f, 0.0f, 1.0f, 1.0f };

@@ -1,9 +1,12 @@
 #include "iParMgr.h"
+
+#include "xstransvc.h"
+
 #include "zGlobals.h"
 
-#include <types.h>
-#include <xstransvc.h>
 #include <rwplcore.h>
+
+#include <types.h>
 
 tagiRenderArrays gRenderArr;
 tagiRenderInput gRenderBuffer;
@@ -22,7 +25,7 @@ void iParMgrRender()
 void iRenderInit()
 {
     gRenderBuffer.m_mode = 0;
-    gRenderBuffer.m_indexCount  = 0;
+    gRenderBuffer.m_indexCount = 0;
     gRenderBuffer.m_vertexCount = 0;
     gRenderBuffer.m_vertexTypeSize = 0x24;
     gRenderBuffer.m_index = &gRenderArr.m_index[0];
@@ -34,7 +37,7 @@ void iRenderSetCameraViewMatrix(xMat4x3* m)
 {
     if ((m == NULL) && (globals.camera.lo_cam != NULL))
     {
-        gRenderBuffer.m_camViewMatrix = *(xMat4x3 *)(*(int *)(*(int*)RwEngineInstance + 4) + 0x10);
+        gRenderBuffer.m_camViewMatrix = *(xMat4x3*)(*(int*)(*(int*)RwEngineInstance + 4) + 0x10);
     }
     else
     {
@@ -48,16 +51,19 @@ void iRenderFlush()
 {
     if (gRenderBuffer.m_vertexCount > 0)
     {
-        iRenderTrianglesImmediate(gRenderBuffer.m_vertexType, gRenderBuffer.m_vertexTypeSize, gRenderBuffer.m_vertex, gRenderBuffer.m_vertexCount, gRenderBuffer.m_index, gRenderBuffer.m_indexCount);
+        iRenderTrianglesImmediate(gRenderBuffer.m_vertexType, gRenderBuffer.m_vertexTypeSize,
+                                  gRenderBuffer.m_vertex, gRenderBuffer.m_vertexCount,
+                                  gRenderBuffer.m_index, gRenderBuffer.m_indexCount);
     }
 
-    gRenderBuffer.m_indexCount  = 0;
+    gRenderBuffer.m_indexCount = 0;
     gRenderBuffer.m_vertexCount = 0;
 }
 
-void iRenderTrianglesImmediate(S32 vertType, S32 vertTypeSize, void* data, S32 dataSize, U16* index, S32 indexSize)
+void iRenderTrianglesImmediate(S32 vertType, S32 vertTypeSize, void* data, S32 dataSize, U16* index,
+                               S32 indexSize)
 {
-    if (RwIm3DTransform((RwIm3DVertex *)data, dataSize, NULL, 1) != NULL)
+    if (RwIm3DTransform((RwIm3DVertex*)data, dataSize, NULL, 1) != NULL)
     {
         if (indexSize != 0)
         {
@@ -69,7 +75,6 @@ void iRenderTrianglesImmediate(S32 vertType, S32 vertTypeSize, void* data, S32 d
         }
         RwIm3DEnd();
     }
-
 }
 
 static void iRenderPushFlat(xPar* p, xParCmdTex* tex);
@@ -78,7 +83,7 @@ void iParMgrRenderParSys_QuadStreak(void* data, xParGroup* ps)
 {
     xPar* idx = ps->m_root;
     iRenderSetCameraViewMatrix(NULL);
-    RwTexture* texture = (RwTexture *)xSTFindAsset(*(U32 *)(*(S32 *)((S32)data + 0x10) + 0x10), NULL);
+    RwTexture* texture = (RwTexture*)xSTFindAsset(*(U32*)(*(S32*)((S32)data + 0x10) + 0x10), NULL);
     if (texture != NULL)
     {
         RwRaster* raster = texture->raster;
@@ -94,18 +99,20 @@ void iParMgrRenderParSys_QuadStreak(void* data, xParGroup* ps)
 
     for (; idx != NULL; idx = idx->m_next)
     {
-        iRenderPushFlat(idx, *(xParCmdTex **)((S32)ps + 0x20));
+        iRenderPushFlat(idx, *(xParCmdTex**)((S32)ps + 0x20));
     }
     iRenderFlush();
 }
 
-void iParMgrRenderParSys_Static(void*, xParGroup*) { }
+void iParMgrRenderParSys_Static(void*, xParGroup*)
+{
+}
 
 void iParMgrRenderParSys_Flat(void* data, xParGroup* ps)
 {
     xPar* idx = ps->m_root;
     iRenderSetCameraViewMatrix(NULL);
-    RwTexture* texture = (RwTexture *)xSTFindAsset(*(U32 *)(*(S32 *)((S32)data + 0x10) + 0x10), NULL);
+    RwTexture* texture = (RwTexture*)xSTFindAsset(*(U32*)(*(S32*)((S32)data + 0x10) + 0x10), NULL);
     if (texture != NULL)
     {
         RwRaster* raster = texture->raster;
@@ -116,7 +123,7 @@ void iParMgrRenderParSys_Flat(void* data, xParGroup* ps)
     }
     for (; idx != NULL; idx = idx->m_next)
     {
-        iRenderPushFlat(idx, *(xParCmdTex **)((S32)ps + 0x20));
+        iRenderPushFlat(idx, *(xParCmdTex**)((S32)ps + 0x20));
     }
     iRenderFlush();
 }

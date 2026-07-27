@@ -1,8 +1,9 @@
 #include "xFactory.h"
+
 #include "xMemMgr.h"
 
-#include <types.h>
 #include <string.h>
+#include <types.h>
 
 xFactory::xFactory(S32 maxTypes)
 {

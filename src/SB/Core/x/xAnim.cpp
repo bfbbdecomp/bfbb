@@ -1,21 +1,21 @@
 #include "xAnim.h"
 
-#include "iAnim.h"
-#include "iModel.h"
-
-#include "xMemMgr.h"
 #include "xMath.h"
+#include "xMemMgr.h"
 #include "xModel.h"
 #include "xMorph.h"
 #include "xString.h"
 
-#include <types.h>
-#include <string.h>
-#include <stdlib.h>
-#include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
+#include "iAnim.h"
+#include "iModel.h"
 
 #include <dolphin.h>
+
+#include <PowerPC_EABI_Support/MSL_C/MSL_Common/cmath>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <types.h>
 
 static xMemPool sxAnimTempTranPool;
 
@@ -2093,7 +2093,7 @@ void xAnimPoolCB(xMemPool* pool, void* data)
     clone->Pool = pool;
 }
 
-#define ADD_4_BITS(x) (((x)&1) + (((x) >> 1) & 1) + (((x) >> 2) & 1) + (((x) >> 3) & 1))
+#define ADD_4_BITS(x) (((x) & 1) + (((x) >> 1) & 1) + (((x) >> 2) & 1) + (((x) >> 3) & 1))
 void xAnimPoolInit(xMemPool* pool, U32 count, U32 singles, U32 blendFlags, U32 effectMax)
 {
     effectMax += effectMax & 1;

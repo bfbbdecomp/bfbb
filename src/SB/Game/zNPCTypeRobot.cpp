@@ -1,17 +1,18 @@
 #include "zNPCTypeRobot.h"
+
+#include "zGlobals.h"
+#include "zNPCGoalRobo.h"
+#include "zNPCGoalStd.h"
+#include "zNPCGoals.h"
+#include "zNPCSndLists.h"
 #include "zNPCSupplement.h"
 #include "zNPCSupport.h"
-#include "zNPCSndLists.h"
-#include "zNPCGoalRobo.h"
 #include "zNPCTypes.h"
-#include "zNPCGoalStd.h"
-#include "zGlobals.h"
-#include "zNPCGoals.h"
 
-#include "xFactory.h"
-#include "xMath.h"
 #include "xAnim.h"
 #include "xBehaviour.h"
+#include "xFactory.h"
+#include "xMath.h"
 
 #include <string.h>
 

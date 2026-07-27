@@ -1,6 +1,6 @@
 #include "iMath.h"
 
-#include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
+#include <PowerPC_EABI_Support/MSL_C/MSL_Common/cmath>
 
 F32 isin(F32 x)
 {

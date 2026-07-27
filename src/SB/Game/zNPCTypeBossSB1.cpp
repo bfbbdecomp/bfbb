@@ -1,18 +1,19 @@
-#include <types.h>
-#include <string.h>
-#include <xDebug.h>
+#include "zNPCTypeBossSB1.h"
+
+#include "zGlobals.h"
+#include "zGrid.h"
+#include "zNPCGoals.h"
+#include "zThrown.h"
+
+#include "xDebug.h"
+#include "xDraw.h"
+#include "xMathInlines.h"
 
 #include "iMath.h"
 #include "iModel.h"
 
-#include "xDraw.h"
-#include "xMathInlines.h"
-
-#include "zGrid.h"
-#include "zNPCGoals.h"
-#include "zNPCTypeBossSB1.h"
-#include "zThrown.h"
-#include "zGlobals.h"
+#include <string.h>
+#include <types.h>
 
 static xVec3 BossArmTags[8] = { //
     { 11.507f, 4.523f, 2.53f },

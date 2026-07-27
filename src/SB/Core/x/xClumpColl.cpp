@@ -817,73 +817,73 @@ xClumpCollBSPTree* xClumpColl_ForAllIntersections(xClumpCollBSPTree* tree,
 
     switch (intersection->type)
     {
-        case rpINTERSECTPOINT:
-            return NULL;
-        case rpINTERSECTLINE:
-        {
-            PolyLineTestParam isData;
-            RwLine* line = &intersection->t.line;
-            F32 recip;
+    case rpINTERSECTPOINT:
+        return NULL;
+    case rpINTERSECTLINE:
+    {
+        PolyLineTestParam isData;
+        RwLine* line = &intersection->t.line;
+        F32 recip;
 
-            isData.start = line->start;
-            RwV3dSubMacro(&isData.delta, &line->end, &line->start);
-            isData.cbParam = &cbParam;
-            isData.line = *line;
+        isData.start = line->start;
+        RwV3dSubMacro(&isData.delta, &line->end, &line->start);
+        isData.cbParam = &cbParam;
+        isData.line = *line;
 
-            recip = (isData.delta.x != 0.0f) ? (1.0f / isData.delta.x) : 0.0f;
-            isData.grad.dydx = isData.delta.y * recip;
-            isData.grad.dzdx = isData.delta.z * recip;
+        recip = (isData.delta.x != 0.0f) ? (1.0f / isData.delta.x) : 0.0f;
+        isData.grad.dydx = isData.delta.y * recip;
+        isData.grad.dzdx = isData.delta.z * recip;
 
-            recip = (isData.delta.y != 0.0f) ? (1.0f / isData.delta.y) : 0.0f;
-            isData.grad.dxdy = isData.delta.x * recip;
-            isData.grad.dzdy = isData.delta.z * recip;
+        recip = (isData.delta.y != 0.0f) ? (1.0f / isData.delta.y) : 0.0f;
+        isData.grad.dxdy = isData.delta.x * recip;
+        isData.grad.dzdy = isData.delta.z * recip;
 
-            recip = (isData.delta.z != 0.0f) ? (1.0f / isData.delta.z) : 0.0f;
-            isData.grad.dxdz = isData.delta.x * recip;
-            isData.grad.dydz = isData.delta.y * recip;
+        recip = (isData.delta.z != 0.0f) ? (1.0f / isData.delta.z) : 0.0f;
+        isData.grad.dxdz = isData.delta.x * recip;
+        isData.grad.dydz = isData.delta.y * recip;
 
-            xClumpColl_ForAllLineLeafNodeIntersections(tree, line, &isData.grad,
-                                                    LeafNodeLinePolyIntersect, &isData);
+        xClumpColl_ForAllLineLeafNodeIntersections(tree, line, &isData.grad,
+                                                   LeafNodeLinePolyIntersect, &isData);
 
-            return tree;
-        }
-        case rpINTERSECTSPHERE:
-        {
-            PolyTestParam isData;
-            TestSphere testSphere;
+        return tree;
+    }
+    case rpINTERSECTSPHERE:
+    {
+        PolyTestParam isData;
+        TestSphere testSphere;
 
-            isData.bbox.inf = isData.bbox.sup = intersection->t.sphere.center;
-            isData.bbox.inf.x -= intersection->t.sphere.radius;
-            isData.bbox.inf.y -= intersection->t.sphere.radius;
-            isData.bbox.inf.z -= intersection->t.sphere.radius;
-            isData.bbox.sup.x += intersection->t.sphere.radius;
-            isData.bbox.sup.y += intersection->t.sphere.radius;
-            isData.bbox.sup.z += intersection->t.sphere.radius;
+        isData.bbox.inf = isData.bbox.sup = intersection->t.sphere.center;
+        isData.bbox.inf.x -= intersection->t.sphere.radius;
+        isData.bbox.inf.y -= intersection->t.sphere.radius;
+        isData.bbox.inf.z -= intersection->t.sphere.radius;
+        isData.bbox.sup.x += intersection->t.sphere.radius;
+        isData.bbox.sup.y += intersection->t.sphere.radius;
+        isData.bbox.sup.z += intersection->t.sphere.radius;
 
-            testSphere.sphere = &intersection->t.sphere;
+        testSphere.sphere = &intersection->t.sphere;
 
-            isData.leafTestData = &testSphere;
-            isData.cbParam = &cbParam;
+        isData.leafTestData = &testSphere;
+        isData.cbParam = &cbParam;
 
-            testSphere.recipRadius = 1.0f / testSphere.sphere->radius;
+        testSphere.recipRadius = 1.0f / testSphere.sphere->radius;
 
-            xClumpColl_ForAllBoxLeafNodeIntersections(tree, &isData.bbox, LeafNodeSpherePolyIntersect,
-                                                    &isData);
+        xClumpColl_ForAllBoxLeafNodeIntersections(tree, &isData.bbox, LeafNodeSpherePolyIntersect,
+                                                  &isData);
 
-            return tree;
-        }
-        case rpINTERSECTBOX:
-        {
-            PolyTestParam isData;
+        return tree;
+    }
+    case rpINTERSECTBOX:
+    {
+        PolyTestParam isData;
 
-            isData.bbox = intersection->t.box;
-            isData.cbParam = &cbParam;
+        isData.bbox = intersection->t.box;
+        isData.cbParam = &cbParam;
 
-            xClumpColl_ForAllBoxLeafNodeIntersections(tree, &isData.bbox, LeafNodeBoxPolyIntersect,
-                                                    &isData);
+        xClumpColl_ForAllBoxLeafNodeIntersections(tree, &isData.bbox, LeafNodeBoxPolyIntersect,
+                                                  &isData);
 
-            return tree;
-        }
+        return tree;
+    }
     }
 
     return NULL;

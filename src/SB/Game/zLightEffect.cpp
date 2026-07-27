@@ -2,8 +2,8 @@
 
 #include "xMath.h"
 
-#include <types.h>
 #include <stdlib.h>
+#include <types.h>
 
 static F32 leGetRandom()
 {
@@ -189,5 +189,5 @@ void zLightEffectCauldron(_zLight* zlight, F32 seconds)
     l->color.g = leBlendToCol(l->color.g, reg[2], amount);
     l->color.b = leBlendToCol(l->color.b, reg[3], amount);
 
-    iLightSetColor(l,  &l->color);
+    iLightSetColor(l, &l->color);
 }

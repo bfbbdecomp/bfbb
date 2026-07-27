@@ -1,11 +1,12 @@
 #include "xMemMgr.h"
 
-#include <types.h>
-#include <string.h>
+#include "iMemMgr.h"
+#include "iSystem.h"
+
 #include <rwplcore.h>
 
-#include "iSystem.h"
-#include "iMemMgr.h"
+#include <string.h>
+#include <types.h>
 
 xMemInfo_tag gMemInfo;
 xMemHeap_tag gxHeap[3];

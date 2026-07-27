@@ -1,7 +1,7 @@
 #include "iAnimSKB.h"
 
-#include <rwcore.h>
 #include <rtslerp.h>
+#include <rwcore.h>
 
 #include <limits.h>
 

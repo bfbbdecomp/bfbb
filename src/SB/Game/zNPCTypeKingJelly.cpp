@@ -1,9 +1,11 @@
 #include "zNPCTypeKingJelly.h"
 
-#include "xColor.h"
 #include "zNPCGoalCommon.h"
-#include <types.h>
+
+#include "xColor.h"
+
 #include "string.h"
+#include <types.h>
 
 #define f1868 1.0f
 #define f1869 0.0f

@@ -1,9 +1,13 @@
 #include "zCameraTweak.h"
+
+#include "zCamera.h"
+
 #include "xEvent.h"
 #include "xMath.h"
 #include "xMathInlines.h"
+
 #include "iMath.h"
-#include "zCamera.h"
+
 #include <types.h>
 
 static S32 sCamTweakCount;

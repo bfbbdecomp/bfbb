@@ -1,10 +1,13 @@
 #include "xScrFx.h"
 
-#include "zGame.h"
-#include "zMenu.h"
 #include "xDebug.h"
-#include "zGlobals.h"
 #include "xstransvc.h"
+
+#include "zGame.h"
+#include "zGlobals.h"
+#include "zMenu.h"
+
+#include <string.h>
 
 struct _xFadeData
 {
@@ -14,7 +17,7 @@ struct _xFadeData
     iColor_tag dest;
     F32 time_passed;
     F32 time_total;
-    void(*cb)();
+    void (*cb)();
 };
 
 bool g_debugRenderSafeArea = false;
@@ -133,8 +136,10 @@ S32 xScrFxIsFading()
 
 void xScrFxUpdateFade(RwCamera*, F32 seconds)
 {
-    if (zGameIsPaused()) return;
-    if (!mFade.active) return;
+    if (zGameIsPaused())
+        return;
+    if (!mFade.active)
+        return;
 
     F32 t;
     if (mFade.hold == 2)
@@ -180,7 +185,7 @@ void xScrFxUpdateFade(RwCamera*, F32 seconds)
     c.g = InterpCol(t, mFade.src.g, mFade.dest.g);
     c.b = InterpCol(t, mFade.src.b, mFade.dest.b);
     c.a = InterpCol(t, mFade.src.a, mFade.dest.a);
-    
+
     RwVideoMode video_mode;
     RwEngineGetVideoModeInfo(&video_mode, RwEngineGetCurrentVideoMode());
     iScrFxDrawBox(0.0f, 0.0f, video_mode.width, video_mode.height, c.r, c.g, c.b, c.a);
@@ -254,9 +259,9 @@ void xScrFxUpdateLetterBox(RwCamera*, F32 seconds)
         RwVideoMode video_mode;
         RwEngineGetVideoModeInfo(&video_mode, RwEngineGetCurrentVideoMode());
         iScrFxDrawBox(0.0f, 0.0f, video_mode.width, o, 0, 0, 0, sLetterBoxAlpha);
-        iScrFxDrawBox(0.0f, video_mode.height - o, video_mode.width, video_mode.height, 0, 0, 0, sLetterBoxAlpha);
+        iScrFxDrawBox(0.0f, video_mode.height - o, video_mode.width, video_mode.height, 0, 0, 0,
+                      sLetterBoxAlpha);
     }
-    
 }
 
 S32 xScrFxIsLetterbox()
@@ -344,7 +349,8 @@ void xScrFXGlareReset()
     xScrFXGlareInit();
 }
 
-S32 xScrFXGlareAdd(xVec3* pos, F32 life, F32 intensity, F32 size, F32 r, F32 g, F32 b, F32 a, RwRaster* raster)
+S32 xScrFXGlareAdd(xVec3* pos, F32 life, F32 intensity, F32 size, F32 r, F32 g, F32 b, F32 a,
+                   RwRaster* raster)
 {
     for (S32 i = 0; i < 10; i++)
     {
@@ -363,7 +369,8 @@ S32 xScrFXGlareAdd(xVec3* pos, F32 life, F32 intensity, F32 size, F32 r, F32 g, 
 
             if (!raster)
             {
-                RwTexture* texturePtr = (RwTexture*)xSTFindAsset(xStrHash("fx_radialgradient"), NULL);
+                RwTexture* texturePtr =
+                    (RwTexture*)xSTFindAsset(xStrHash("fx_radialgradient"), NULL);
                 if (texturePtr)
                 {
                     sGlare[i].raster = RwTextureGetRaster(texturePtr);
@@ -417,7 +424,7 @@ void xScrFXFullScreenGlareRender()
 
     xVec3 glareDir;
     xVec3Normalize(&glareDir, &sFullScreenGlareDir);
-    
+
     F32 dp = glareDir.dot(v);
 
     F32 d = dp;
@@ -447,7 +454,8 @@ void xScrFXFullScreenGlareRender()
     }
     if (sFullScreenGlareTexturePtr)
     {
-        RwRenderStateSet(rwRENDERSTATETEXTURERASTER, (void*)RwTextureGetRaster(sFullScreenGlareTexturePtr));
+        RwRenderStateSet(rwRENDERSTATETEXTURERASTER,
+                         (void*)RwTextureGetRaster(sFullScreenGlareTexturePtr));
     }
     else
     {
@@ -457,7 +465,8 @@ void xScrFXFullScreenGlareRender()
     RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
     RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDONE);
 
-    xScrFxDrawBox(0.0f, 0.0f, 640.0f, 480.0f, color.red, color.green, color.blue, color.alpha, dp, 0.0f);
+    xScrFxDrawBox(0.0f, 0.0f, 640.0f, 480.0f, color.red, color.green, color.blue, color.alpha, dp,
+                  0.0f);
 }
 
 void xScrFXGlareRender(xCamera* cam)
@@ -506,25 +515,34 @@ void xScrFXGlareRender(xCamera* cam)
             static RwIm3DVertex sStripVert[4];
 
             RwIm3DVertex* vert = &sStripVert[0];
-            RwIm3DVertexSetPos(vert, g->pos.x - w.x - h.x, g->pos.y - w.y - h.y, g->pos.z - w.z - h.z);
+            RwIm3DVertexSetPos(vert, g->pos.x - w.x - h.x, g->pos.y - w.y - h.y,
+                               g->pos.z - w.z - h.z);
             RwIm3DVertexSetUV(vert, 0.0f, 0.0f);
-            RwIm3DVertexSetRGBA(vert, 255.0f * g->col.red, 255.0f * g->col.green, 255.0f * g->col.blue, 255.0f * g->col.alpha * val);
+            RwIm3DVertexSetRGBA(vert, 255.0f * g->col.red, 255.0f * g->col.green,
+                                255.0f * g->col.blue, 255.0f * g->col.alpha * val);
             vert++;
-            RwIm3DVertexSetPos(vert, g->pos.x - w.x + h.x, g->pos.y - w.y + h.y, g->pos.z - w.z + h.z);
+            RwIm3DVertexSetPos(vert, g->pos.x - w.x + h.x, g->pos.y - w.y + h.y,
+                               g->pos.z - w.z + h.z);
             RwIm3DVertexSetUV(vert, 0.0f, 1.0f);
-            RwIm3DVertexSetRGBA(vert, 255.0f * g->col.red, 255.0f * g->col.green, 255.0f * g->col.blue, 255.0f * g->col.alpha * val);
+            RwIm3DVertexSetRGBA(vert, 255.0f * g->col.red, 255.0f * g->col.green,
+                                255.0f * g->col.blue, 255.0f * g->col.alpha * val);
             vert++;
-            RwIm3DVertexSetPos(vert, g->pos.x + w.x - h.x, g->pos.y + w.y - h.y, g->pos.z + w.z - h.z);
+            RwIm3DVertexSetPos(vert, g->pos.x + w.x - h.x, g->pos.y + w.y - h.y,
+                               g->pos.z + w.z - h.z);
             RwIm3DVertexSetUV(vert, 1.0f, 0.0f);
-            RwIm3DVertexSetRGBA(vert, 255.0f * g->col.red, 255.0f * g->col.green, 255.0f * g->col.blue, 255.0f * g->col.alpha * val);
+            RwIm3DVertexSetRGBA(vert, 255.0f * g->col.red, 255.0f * g->col.green,
+                                255.0f * g->col.blue, 255.0f * g->col.alpha * val);
             vert++;
-            RwIm3DVertexSetPos(vert, g->pos.x + w.x + h.x, g->pos.y + w.y + h.y, g->pos.z + w.z + h.z);
+            RwIm3DVertexSetPos(vert, g->pos.x + w.x + h.x, g->pos.y + w.y + h.y,
+                               g->pos.z + w.z + h.z);
             RwIm3DVertexSetUV(vert, 1.0f, 1.0f);
-            RwIm3DVertexSetRGBA(vert, 255.0f * g->col.red, 255.0f * g->col.green, 255.0f * g->col.blue, 255.0f * g->col.alpha * val);
+            RwIm3DVertexSetRGBA(vert, 255.0f * g->col.red, 255.0f * g->col.green,
+                                255.0f * g->col.blue, 255.0f * g->col.alpha * val);
 
             RwRenderStateSet(rwRENDERSTATETEXTURERASTER, (void*)g->raster);
-            
-            if (RwIm3DTransform(sStripVert, 4, NULL, rwIM3D_VERTEXXYZ | rwIM3D_VERTEXUV | rwIM3D_VERTEXRGBA))
+
+            if (RwIm3DTransform(sStripVert, 4, NULL,
+                                rwIM3D_VERTEXXYZ | rwIM3D_VERTEXUV | rwIM3D_VERTEXRGBA))
             {
                 RwIm3DRenderPrimitive(rwPRIMTYPETRISTRIP);
                 RwIm3DEnd();
@@ -533,7 +551,8 @@ void xScrFXGlareRender(xCamera* cam)
     }
 }
 
-void xScrFxDrawBox(F32 x1, F32 y1, F32 x2, F32 y2, U8 red, U8 green, U8 blue, U8 alpha, F32 ushift, F32 vshift)
+void xScrFxDrawBox(F32 x1, F32 y1, F32 x2, F32 y2, U8 red, U8 green, U8 blue, U8 alpha, F32 ushift,
+                   F32 vshift)
 {
     F32 oocameraNearClipPlane = RwIm2DGetNearScreenZ();
 
@@ -541,10 +560,10 @@ void xScrFxDrawBox(F32 x1, F32 y1, F32 x2, F32 y2, U8 red, U8 green, U8 blue, U8
     {
         return;
     }
-    
+
     static RwImVertexIndex indices[4] = { 0, 1, 2, 3 };
     static RwIm2DVertex v[4];
-    
+
     RwIm2DVertexSetScreenX(&v[0], x1);
     RwIm2DVertexSetScreenY(&v[0], y1);
     RwIm2DVertexSetScreenX(&v[1], x2);

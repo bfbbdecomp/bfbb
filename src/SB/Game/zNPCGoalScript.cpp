@@ -1,7 +1,7 @@
 #include "zNPCGoalScript.h"
 
-#include "zNPCGoals.h"
 #include "zNPCGoalStd.h"
+#include "zNPCGoals.h"
 
 #include "xEvent.h"
 
@@ -71,7 +71,7 @@ S32 zNPCGoalScript::Exit(F32 dt, void* updCtxt)
 }
 
 S32 zNPCGoalScript::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
-                               xBase* toParamWidget, S32* handled)
+                             xBase* toParamWidget, S32* handled)
 {
     return xGoal::SysEvent(from, to, toEvent, toParam, toParamWidget, handled);
 }

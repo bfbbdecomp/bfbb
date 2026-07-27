@@ -1,8 +1,9 @@
 #ifndef ZDISPATCHER_H
 #define ZDISPATCHER_H
 
-#include "xBase.h"
 #include "zScene.h"
+
+#include "xBase.h"
 
 struct st_ZDISPATCH_DATA : xBase
 {

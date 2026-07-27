@@ -1,27 +1,28 @@
-#include <types.h>
-#include "string.h"
+#include "zNPCTypeBossPatrick.h"
 
-#include "iModel.h"
+#include "zCamera.h"
+#include "zEntDestructObj.h"
+#include "zEntSimpleObj.h"
+#include "zGlobals.h"
+#include "zGrid.h"
+#include "zLightning.h"
+#include "zNPCGoals.h"
+#include "zNPCTypeRobot.h"
+#include "zRenderState.h"
 
 #include "xCollide.h"
 #include "xDebug.h"
 #include "xMath.h"
 #include "xMath3.h"
-#include "xstransvc.h"
+#include "xMathInlines.h"
 #include "xSnd.h"
 #include "xVec3.h"
+#include "xstransvc.h"
 
-#include "zCamera.h"
-#include "zEntSimpleObj.h"
-#include "zEntDestructObj.h"
-#include "zGlobals.h"
-#include "zGrid.h"
-#include "zNPCTypeBossPatrick.h"
-#include "zRenderState.h"
-#include "zNPCGoals.h"
-#include "zLightning.h"
-#include "zNPCTypeRobot.h"
-#include <xMathInlines.h>
+#include "iModel.h"
+
+#include "string.h"
+#include <types.h>
 
 #define f831 1.0f
 #define f832 0.0f

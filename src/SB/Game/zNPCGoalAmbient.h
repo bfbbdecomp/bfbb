@@ -1,13 +1,12 @@
 #ifndef ZNPCGOALAMBIENT_H
 #define ZNPCGOALAMBIENT_H
 
-#include "zNPCGoalAmbient.h"
+#include "zLightning.h"
 #include "zNPCGoalCommon.h"
 #include "zNPCGoalStd.h"
 #include "zNPCSndTable.h"
-#include "zNPCTypeAmbient.h"
 #include "zNPCSupport.h"
-#include "zLightning.h"
+#include "zNPCTypeAmbient.h"
 
 xFactoryInst* GOALCreate_Ambient(S32 who, RyzMemGrow* grow, void*);
 

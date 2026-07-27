@@ -1,10 +1,10 @@
 #ifndef ICOLLIDE_H
 #define ICOLLIDE_H
 
+#include "xCollide.h"
+#include "xEnv.h"
 #include "xMath3.h"
 #include "xModel.h"
-#include "xEnv.h"
-#include "xCollide.h"
 
 void iBoxForModelLocal(xBox* o, const xModelInstance* m);
 void iBoxForModel(xBox* o, const xModelInstance* m);

@@ -1,8 +1,6 @@
 #ifndef XCOLLIDEFAST_H
 #define XCOLLIDEFAST_H
 
-#include "xMath3.h"
-#include "xRay3.h"
 #include "xScene.h"
 
 void xCollideFastInit(xScene* sc);

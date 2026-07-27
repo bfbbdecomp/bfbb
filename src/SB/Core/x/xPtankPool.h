@@ -1,14 +1,16 @@
 #ifndef XPTANKPOOL_H
 #define XPTANKPOOL_H
 
-#include <types.h>
-#include <rwplcore.h>
-#include <rwcore.h>
-#include <rpworld.h>
-#include <rpptank.h>
-
 #include "xMath3.h"
+
 #include "iColor.h"
+
+#include <rpptank.h>
+#include <rpworld.h>
+#include <rwcore.h>
+#include <rwplcore.h>
+
+#include <types.h>
 
 struct xVec2;
 struct xVec3;
@@ -77,7 +79,8 @@ struct ptank_pool
     void lock_block();
 };
 
-struct ptank_pool__color_mat_uv2 : ptank_pool {
+struct ptank_pool__color_mat_uv2 : ptank_pool
+{
     iColor_tag* color;
     xMat4x3* mat;
     xVec2* uv;
@@ -165,10 +168,10 @@ struct ptank_pool__pos_color_size_uv2 : ptank_pool
         }
         else
         {
-            pos = (xVec3*)((char*)pos +  stride);
-            color = (iColor_tag*)((char*)color +  stride);
-            size = (xVec2*)((char*)size +  stride);
-            uv = (xVec2*)((char*)uv +  stride);
+            pos = (xVec3*)((char*)pos + stride);
+            color = (iColor_tag*)((char*)color + stride);
+            size = (xVec2*)((char*)size + stride);
+            uv = (xVec2*)((char*)uv + stride);
         }
 
         used += 1;
@@ -197,7 +200,7 @@ struct ptank_pool__pos_color_size_uv2 : ptank_pool
     {
         hide.data = (U8*)size + stride;
         hide.stride = stride;
-        hide.size = 4; 
+        hide.size = 4;
         ptank_pool::flush();
     }
 };

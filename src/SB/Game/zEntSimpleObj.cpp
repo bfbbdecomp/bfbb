@@ -1,5 +1,6 @@
 #include "zEntSimpleObj.h"
 
+#include <string.h>
 #include <types.h>
 
 static xSphere* sMgrList;

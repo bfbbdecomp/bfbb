@@ -1,17 +1,17 @@
-#include <types.h>
-
-#include "xstransvc.h"
-#include "xEvent.h"
-#include "xString.h"
-#include "xEnt.h"
-
 #include "zBusStop.h"
+
+#include "zEntCruiseBubble.h"
+#include "zEntPlayer.h"
 #include "zGame.h"
 #include "zGlobals.h"
 #include "zScene.h"
 
-#include "zEntPlayer.h"
-#include "zEntCruiseBubble.h"
+#include "xEnt.h"
+#include "xEvent.h"
+#include "xString.h"
+#include "xstransvc.h"
+
+#include <types.h>
 
 U32 gBusStopIsRunning;
 static xEnt* sBusStopUI;
@@ -145,11 +145,9 @@ void zBusStop_Update(xBase* to, xScene* scene, F32 dt)
             zEntEvent("mnu4 busstop", eEventUIFocusOff_Unselect);
             zEntPlayerControlOff(CONTROL_OWNER_BUS_STOP);
             zEntEvent(bstop->basset->cameraID, eEventStartConversation);
-            zEntEvent(bstop->basset->cameraID, eEventSwitch, 0.5f,
-                      0.0f, 0.0f, 0.0f);
+            zEntEvent(bstop->basset->cameraID, eEventSwitch, 0.5f, 0.0f, 0.0f, 0.0f);
             zEntEvent(bstop->basset->busID, eEventVisible);
-            zEntEvent(bstop->basset->busID, eEventAnimPlay, 2.0f, 0.0f,
-                      0.0f, 0.0f);
+            zEntEvent(bstop->basset->busID, eEventAnimPlay, 2.0f, 0.0f, 0.0f, 0.0f);
             bstop->switchTimer = bstop->basset->delay;
             gBusStopIsRunning = 1;
             break;

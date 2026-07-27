@@ -1,8 +1,9 @@
 #ifndef IFILE_H
 #define IFILE_H
 
-#include <types.h>
 #include <dolphin.h>
+
+#include <types.h>
 
 enum IFILE_READSECTOR_STATUS
 {
@@ -57,7 +58,7 @@ U32 iFileOpen(const char* name, S32 flags, tag_xFile* file);
 S32 iFileSeek(tag_xFile* file, S32 offset, S32 whence);
 U32 iFileRead(tag_xFile* file, void* buf, U32 size);
 S32 iFileReadAsync(tag_xFile* file, void* buf, U32 aSize, void (*callback)(tag_xFile*),
-                     S32 priority);
+                   S32 priority);
 IFILE_READSECTOR_STATUS iFileReadAsyncStatus(S32 key, S32* amtToFar);
 U32 iFileClose(tag_xFile* file);
 U32 iFileGetSize(tag_xFile* file);

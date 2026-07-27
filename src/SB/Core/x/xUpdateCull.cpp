@@ -1,6 +1,10 @@
-#include "zGlobals.h"
 #include "xUpdateCull.h"
+
 #include "xGroup.h"
+
+#include "zGlobals.h"
+
+#include <string.h>
 
 static void xUpdateCull_Swap(xUpdateCullMgr* mgr, U32 a, U32 b)
 {

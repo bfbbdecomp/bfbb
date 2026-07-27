@@ -1,6 +1,7 @@
 #include "xQuickCull.h"
-#include "xRay3.h"
+
 #include "xBound.h"
+#include "xRay3.h"
 
 #include <types.h>
 

@@ -1,16 +1,17 @@
 #include "zEntTeleportBox.h"
 
-#include "zUIFont.h"
-#include "zGlobals.h"
 #include "zEntCruiseBubble.h"
-#include "zRumble.h"
 #include "zEntPickup.h"
 #include "zFX.h"
+#include "zGlobals.h"
+#include "zRumble.h"
+#include "zUIFont.h"
 
 #include "xEvent.h"
 #include "xMath.h"
 #include "xSnd.h"
 #include "xString.h"
+
 #include "iScrFX.h"
 
 #define STATUS_OPEN 0

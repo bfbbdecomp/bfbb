@@ -1,13 +1,14 @@
 #include "xMath3.h"
-#include "iMath3.h"
 
-#include <types.h>
-#include <intrin.h>
+#include "xClimate.h" // xMat3x3Identity
+#include "xMath.h" // icos and isin
+#include "xMathInlines.h" // xasin, xatan2
 
 #include "iMath.h"
-#include "xMath.h" // icos and isin
-#include "xClimate.h" // xMat3x3Identity
-#include "xMathInlines.h" // xasin, xatan2
+#include "iMath3.h"
+
+#include <intrin.h>
+#include <types.h>
 //#include "xVec3Inlines.h" // xVec3Init, imported, realized xClimate has a declaration as well though.
 
 const xVec3 g_O3 = { 0, 0, 0 };

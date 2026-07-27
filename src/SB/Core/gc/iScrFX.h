@@ -1,8 +1,9 @@
 #ifndef ISCRFX_H
 #define ISCRFX_H
 
-#include <types.h>
 #include <rwcore.h>
+
+#include <types.h>
 
 struct _iMotionBlurData
 {

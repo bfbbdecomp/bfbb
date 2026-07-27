@@ -1,11 +1,13 @@
 #include "xVec3.h"
-#include "xCollide.h"
-#include "xMathInlines.h"
-#include "iMath.h"
-#include "xMath.h"
 
-#include <types.h>
+#include "xCollide.h"
+#include "xMath.h"
+#include "xMathInlines.h"
+
+#include "iMath.h"
+
 #include <fastmath.h>
+#include <types.h>
 
 const xVec3 xVec3::m_Null = { 0.0f, 0.0f, 0.0f };
 const xVec3 xVec3::m_UnitAxisX = { 1.0f, 0.0f, 0.0f };

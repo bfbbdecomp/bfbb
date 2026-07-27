@@ -2,6 +2,7 @@
 
 #include "xMath.h"
 #include "xMemMgr.h"
+
 #include "zScene.h"
 
 #include <types.h>
@@ -21,8 +22,8 @@ void xGroupInit(xBase* b, xGroupAsset* asset)
     if (b->linkCount)
     {
         // Seek to then end of the xGroupAsset header and then seek to the end of the subsequent array of IDs
-        b->link = (xLinkAsset*)((U8*)(t->asset) + sizeof(xGroupAsset) +
-                                asset->itemCount * sizeof(U32));
+        b->link =
+            (xLinkAsset*)((U8*)(t->asset) + sizeof(xGroupAsset) + asset->itemCount * sizeof(U32));
     }
     else
     {
@@ -77,8 +78,7 @@ void xGroupReset(xGroup* ent)
     ent->last_index = 0;
 }
 
-S32 xGroupEventCB(xBase* to, xBase* from, U32 toEvent, const F32* toParam,
-                    xBase* toParamWidget)
+S32 xGroupEventCB(xBase* to, xBase* from, U32 toEvent, const F32* toParam, xBase* toParamWidget)
 {
     xGroup* g = (xGroup*)from;
     switch (toEvent)

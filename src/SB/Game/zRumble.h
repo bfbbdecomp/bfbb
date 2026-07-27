@@ -1,9 +1,10 @@
 #ifndef ZRUMBLE_H
 #define ZRUMBLE_H
 
-#include <types.h>
 #include "xEnt.h"
 #include "xPad.h"
+
+#include <types.h>
 
 enum _tagSDRumbleType
 {

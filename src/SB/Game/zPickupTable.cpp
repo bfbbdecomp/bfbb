@@ -1,6 +1,7 @@
 #include "zPickupTable.h"
 
 #include "zGlobals.h"
+
 #include "xString.h"
 
 struct PickupTranslEntry

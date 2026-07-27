@@ -1,11 +1,11 @@
 #include "zUI.h"
 
 #include "zAnimList.h"
-#include "zGlobals.h"
-#include "zUIFont.h"
-#include "zRenderState.h"
 #include "zGame.h"
 #include "zGameState.h"
+#include "zGlobals.h"
+#include "zRenderState.h"
+#include "zUIFont.h"
 
 #include "xCounter.h"
 #include "xDebug.h"
@@ -14,15 +14,15 @@
 #include "xMath2.h"
 #include "xScrFx.h"
 #include "xSnd.h"
-#include "xstransvc.h"
 #include "xString.h"
 #include "xTRC.h"
+#include "xstransvc.h"
 
 #include "iMath.h"
 
-#include <PowerPC_EABI_Support\MSL_C\MSL_Common\stdlib.h>
-#include <string.h>
+#include <PowerPC_EABI_Support/MSL_C/MSL_Common/stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #define TASK_COUNT 8
 #define TASK_COUNT_BOSS 2
@@ -1060,11 +1060,11 @@ S32 zUIEventCB(xBase*, xBase* to, U32 toEvent, const F32* toParam, xBase*)
 /**************************    PAUSE MENU   *********************************
  * This array defines the angle and character that the player will start with
  * for each "task" in the game.
- * 
+ *
  * Each entry has the following format:
- * 
+ *
  *   ang, player
- * 
+ *
  * ang - the starting angle in degrees
  * player - the starting character, can be one of the following values:
  *   eCurrentPlayerSpongeBob (SpongeBob)

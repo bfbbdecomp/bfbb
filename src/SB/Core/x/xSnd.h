@@ -1,11 +1,13 @@
 #ifndef XSND_H
 #define XSND_H
 
-#include <types.h>
-#include "xVec3.h"
-#include "xMath3.h"
-#include "iSnd.h"
 #include "xEnt.h"
+#include "xMath3.h"
+#include "xVec3.h"
+
+#include "iSnd.h"
+
+#include <types.h>
 
 enum sound_category
 {

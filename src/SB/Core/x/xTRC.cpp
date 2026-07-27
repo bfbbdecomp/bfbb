@@ -1,10 +1,11 @@
 #include "xTRC.h"
+
+#include "xFont.h"
+#include "xMath2.h"
 #include "xSnd.h"
 
 #include "zGame.h"
 #include "zGlobals.h"
-#include "xMath2.h"
-#include "xFont.h"
 #include "zVar.h"
 
 #include <string.h>
@@ -82,7 +83,7 @@ void xTRCReset()
 }
 
 void xTRCPad(S32, _tagTRCState)
-{   
+{
 }
 
 // SDA relocation shenanigans
@@ -128,12 +129,12 @@ void RenderText(const char* text, bool enabled)
         xtextbox::create(xfont::create(1, NSCREENX(19.0f), NSCREENY(22.0f), 0.0f,
                                        xColorFromRGBA(0xFF, 0xE6, 0x00, 0xFF), screen_bounds),
                          screen_bounds, 0x2, 0.0f, 0.0f, 0.0f, 0.0f);
-    
+
     tb.set_text(enabled ? text : "");
     tb.bounds = screen_bounds;
     tb.bounds.contract(0.1f);
     tb.bounds.h = tb.yextent(true);
-    tb.bounds.y = -(0.5f * tb.bounds.h - 0.5f);        
+    tb.bounds.y = -(0.5f * tb.bounds.h - 0.5f);
     tb.render(true);
 
     if (!enabled)

@@ -1,13 +1,13 @@
 #include "xJSP.h"
+
 #include "zGlobals.h"
 
-#include <types.h>
 #include <string.h>
+#include <types.h>
 
 static RwV3d* sCurrVert;
 static S32 sAtomicStartCount;
 static RwV3d** sAtomicStartVert;
-
 
 static RpAtomic* CountAtomicCB(RpAtomic* atomic, void* data)
 {
@@ -19,7 +19,8 @@ static RpAtomic* CountAtomicCB(RpAtomic* atomic, void* data)
 static RpMesh* AddMeshCB(RpMesh* mesh, RpMeshHeader*, void* pData)
 {
     RwV3d** stripVert = (RwV3d**)pData;
-    for (U32 i = 0; i < mesh->numIndices; i++) {
+    for (U32 i = 0; i < mesh->numIndices; i++)
+    {
         **stripVert = sCurrVert[mesh->indices[i]];
         (*stripVert)++;
     }

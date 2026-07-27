@@ -1,15 +1,17 @@
-#include "xstransvc.h"
 #include "zTalkBox.h"
-#include "xDebug.h"
+
+#include "zBase.h"
 #include "zEntPlayer.h"
 #include "zGame.h"
 #include "zGlobals.h"
 #include "zMusic.h"
-#include <types.h>
-#include "zGame.h"
-#include "xSnd.h"
+
+#include "xDebug.h"
 #include "xEvent.h"
-#include "zBase.h"
+#include "xSnd.h"
+#include "xstransvc.h"
+
+#include <types.h>
 
 U32 xGroupGetCount(xGroup* g);
 xBase* xGroupGetItemPtr(xGroup* g, U32 index);

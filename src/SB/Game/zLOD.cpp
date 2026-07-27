@@ -1,13 +1,14 @@
 #include "zLOD.h"
 
-#include "xModel.h"
-#include <types.h>
+#include "zBase.h"
+#include "zEntDestructObj.h"
 
 #include "xEnt.h"
 #include "xMathInlines.h"
+#include "xModel.h"
 
-#include "zBase.h"
-#include "zEntDestructObj.h"
+#include <string.h>
+#include <types.h>
 
 static U32 sTableCount;
 static zLODTable* sTableList;

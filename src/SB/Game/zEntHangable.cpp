@@ -1,12 +1,13 @@
+#include "zEntHangable.h"
+
+#include "zGlobals.h"
+#include "zParEmitter.h"
+
 #include "xBase.h"
 #include "xEnt.h"
 #include "xEntMotion.h"
 #include "xLinkAsset.h"
 #include "xString.h"
-
-#include "zEntHangable.h"
-#include "zGlobals.h"
-#include "zParEmitter.h"
 
 #include <types.h>
 
@@ -30,7 +31,7 @@ void zEntHangable_SetupFX()
 
 static void HangableSetup(zEntHangable* ent, xEntAsset* asset)
 {
-    xEntHangableAsset* hangAsset = (xEntHangableAsset *)(&asset[1]);
+    xEntHangableAsset* hangAsset = (xEntHangableAsset*)(&asset[1]);
     xVec3* center;
     xMat3x3 hackMat;
 
@@ -92,6 +93,7 @@ void zEntHangable_Init(zEntHangable* ent, xEntAsset* asset)
 static void zEntHangable_UpdateFX(zEntHangable* ent)
 {
     // Points of a (wobbly) circle in 3D space.
+    // clang-format off
     xVec3 offset_rlii0006[8] =
     {
         { 0.0, 0.561, 0.613 },
@@ -103,6 +105,7 @@ static void zEntHangable_UpdateFX(zEntHangable* ent)
         { -0.613, 0.543, 0.0 },
         { -0.43345639, 0.48, 0.43345639 }
     };
+    // clang-format on
 
     xVec3* local_offset;
     xParEmitterCustomSettings info;
@@ -240,58 +243,58 @@ S32 zEntHangableEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
 
     switch ((S32)toEvent)
     {
-        case eEventVisible:
-        case eEventFastVisible:
-            xEntShow(ent);
-            break;
-        case eEventInvisible:
-        case eEventFastInvisible:
-            xEntHide(ent);
-            break;
-        case eEventCollisionOn:
-            ent->enabled = 1;
-            break;
-        case eEventMount:
-            zEntHangableMountFX(ent);
-            if ((ent->asset->modelInfoID == sChandelierHash) && (ent->candle_state == 0))
+    case eEventVisible:
+    case eEventFastVisible:
+        xEntShow(ent);
+        break;
+    case eEventInvisible:
+    case eEventFastInvisible:
+        xEntHide(ent);
+        break;
+    case eEventCollisionOn:
+        ent->enabled = 1;
+        break;
+    case eEventMount:
+        zEntHangableMountFX(ent);
+        if ((ent->asset->modelInfoID == sChandelierHash) && (ent->candle_state == 0))
+        {
+            ent->candle_timer = 3.0f;
+        }
+        break;
+    case eEventDismount:
+        ent->enabled = -2;
+        break;
+    case eEventCollisionOff:
+        ent->enabled = 0;
+        break;
+    case eEventCollision_Visible_On:
+        xEntShow(ent);
+        ent->enabled = 1;
+        break;
+    case eEventCollision_Visible_Off:
+        xEntHide(ent);
+        ent->enabled = 0;
+        break;
+    case eEventReset:
+        zEntHangable_Reset(ent);
+        break;
+    case eEventSwingerFollow:
+        zEntHangable_SetFollow(ent, follow);
+        break;
+    case eEventSetUpdateDistance:
+        if (globals.updateMgr != NULL)
+        {
+            if (*toParam <= 0.0f)
             {
-                ent->candle_timer = 3.0f;
+                xUpdateCull_SetCB(globals.updateMgr, ent, xUpdateCull_AlwaysTrueCB, NULL);
             }
-            break;
-        case eEventDismount:
-            ent->enabled = -2;
-            break;
-        case eEventCollisionOff:
-            ent->enabled = 0;
-            break;
-        case eEventCollision_Visible_On:
-            xEntShow(ent);
-            ent->enabled = 1;
-            break;
-        case eEventCollision_Visible_Off:
-            xEntHide(ent);
-            ent->enabled = 0;
-            break;
-        case eEventReset:
-            zEntHangable_Reset(ent);
-            break;
-        case eEventSwingerFollow:
-            zEntHangable_SetFollow(ent, follow);
-            break;
-        case eEventSetUpdateDistance:
-            if (globals.updateMgr != NULL)
+            else
             {
-                if (*toParam <= 0.0f)
-                {
-                    xUpdateCull_SetCB(globals.updateMgr, ent, xUpdateCull_AlwaysTrueCB, NULL);
-                }
-                else
-                {
-                    dist.f = *toParam * *toParam;
-                    xUpdateCull_SetCB(globals.updateMgr, ent, xUpdateCull_DistanceSquaredCB, dist.v);
-                }
+                dist.f = *toParam * *toParam;
+                xUpdateCull_SetCB(globals.updateMgr, ent, xUpdateCull_DistanceSquaredCB, dist.v);
             }
-            break;
+        }
+        break;
     }
     if ((wasVisible == 0) && (xEntIsVisible(ent) != 0))
     {
@@ -356,19 +359,16 @@ void zEntHangable_SetMatrix(zEntHangable* ent, F32 dt)
 
     opos = &ent->frame->oldmat.pos;
     orot = &ent->frame->oldrot.axis;
-    pos = (xVec3 *)&ent->model->Mat->pos;
+    pos = (xVec3*)&ent->model->Mat->pos;
     xMat3x3GetEuler((xMat3x3*)ent->model->Mat, &rot);
 
-    if
-    (
-    (opos->x != pos->x) || (opos->y != pos->y) || (opos->z != pos->z) ||
-    (orot->x != rot.x)  || (orot->y != rot.y)  || (orot->z != rot.z)
-    )
+    if ((opos->x != pos->x) || (opos->y != pos->y) || (opos->z != pos->z) || (orot->x != rot.x) ||
+        (orot->y != rot.y) || (orot->z != rot.z))
     {
         moving = 1;
         if (ent->moving != 1)
         {
-            zEntEvent((xBase *)ent, eEventStartMoving);
+            zEntEvent((xBase*)ent, eEventStartMoving);
         }
     }
     else
@@ -376,7 +376,7 @@ void zEntHangable_SetMatrix(zEntHangable* ent, F32 dt)
         moving = 0;
         if (ent->moving != 0)
         {
-            zEntEvent((xBase *)ent, eEventStopMoving);
+            zEntEvent((xBase*)ent, eEventStopMoving);
         }
     }
 
@@ -457,7 +457,7 @@ void zEntHangable_SetShaggy(zEntHangable* ent, zEnt* shaggy)
             shaggy->frame->vel.z = 0.0f;
             shaggy->frame->mat.pos.x = ent->model->Mat->pos.x;
             shaggy->frame->mat.pos.z = ent->model->Mat->pos.z;
-            *shaggy->model->Mat = *(RwMatrixTag *)(&shaggy->frame->mat);
+            *shaggy->model->Mat = *(RwMatrixTag*)(&shaggy->frame->mat);
         }
     }
     else if (ent->shaggy != NULL)
@@ -477,7 +477,7 @@ void zEntHangable_FollowUpdate(zEntHangable* ent)
         return;
     }
 
-    xEntHangableAsset* hang = (xEntHangableAsset *)(&ent->asset[1]);
+    xEntHangableAsset* hang = (xEntHangableAsset*)(&ent->asset[1]);
 
     center = (xVec3*)(&ent->follow->model->Mat->pos);
     pivot.x = center->x;

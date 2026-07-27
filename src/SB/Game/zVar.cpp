@@ -1,24 +1,24 @@
 #include "zVar.h"
 
-#include <stdio.h>
-#include <string.h>
-#include <types.h>
-#include <PowerPC_EABI_Support\MSL_C\MSL_Common\stdlib.h>
-
-#include "iTime.h"
-
-#include "xFont.h"
-#include "xString.h"
-#include "xsavegame.h"
-#include "xSnd.h"
-#include "xutil.h"
-
 #include "zEntPlayer.h"
 #include "zGlobals.h"
 #include "zMenu.h"
 #include "zSaveLoad.h"
 #include "zScene.h"
 #include "zUI.h"
+
+#include "xFont.h"
+#include "xSnd.h"
+#include "xString.h"
+#include "xsavegame.h"
+#include "xutil.h"
+
+#include "iTime.h"
+
+#include <PowerPC_EABI_Support/MSL_C/MSL_Common/stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <types.h>
 
 /*
 vars = {
@@ -176,24 +176,21 @@ namespace
     char* var_text_CurrentLevelCollectable()
     {
         static char buffer[0x0C];
-        sprintf(buffer, "%d",
-                globals.player.Inv_LevelPickups_CurrentLevel);
+        sprintf(buffer, "%d", globals.player.Inv_LevelPickups_CurrentLevel);
         return buffer;
     }
 
     char* var_text_CurrentLevelPatsSocks()
     {
         static char buffer[0x0C];
-        sprintf(buffer, "%d",
-                globals.player.Inv_PatsSock_CurrentLevel);
+        sprintf(buffer, "%d", globals.player.Inv_PatsSock_CurrentLevel);
         return buffer;
     }
 
     char* var_text_CurrentScene()
     {
         static char buffer[0x20];
-        sprintf(buffer, "%s",
-                xUtil_idtag2string(globals.sceneCur->sceneID, 0));
+        sprintf(buffer, "%s", xUtil_idtag2string(globals.sceneCur->sceneID, 0));
         return buffer;
     }
 
@@ -203,9 +200,9 @@ namespace
         iGetCurrFormattedTime(buffer);
         return buffer;
     }
-}
+} // namespace
 
-const basic_rect<F32> screen_bounds  = { 0.0f, 0.0f, 1.0f, 1.0f };
+const basic_rect<F32> screen_bounds = { 0.0f, 0.0f, 1.0f, 1.0f };
 const basic_rect<F32> default_adjust = { 0.0f, 0.0f, 1.0f, 1.0f };
 
 namespace
@@ -228,8 +225,7 @@ namespace
         date[0x20 - 1] = '\0';
 
         // Get the hour
-        sprintf(time, "%c%c", zSaveLoadGameTable[i].date[0xB],
-                zSaveLoadGameTable[i].date[0xC]);
+        sprintf(time, "%c%c", zSaveLoadGameTable[i].date[0xB], zSaveLoadGameTable[i].date[0xC]);
 
         // Get the AM/PM
         hour = atoi(time);
@@ -319,6 +315,7 @@ namespace
 
     char* var_text_MCAccessType()
     {
+        // clang-format off
         static char* state_text[4] =
         {
             "Accessing",
@@ -326,6 +323,7 @@ namespace
             "Saving data",
             "Formatting memory card"
         };
+        // clang-format on
         return state_text[zSaveLoad_getMCAccessType()];
     }
 
@@ -368,23 +366,27 @@ namespace
 
     char* var_text_PlayerHeShe()
     {
+        // clang-format off
         static char* text[3] =
         {
             "{i:text_player_he}",
             "{i:text_player_he}",
             "{i:text_player_she}"
         };
+        // clang-format on
         return text[gCurrentPlayer];
     }
 
     char* var_text_PlayerName()
     {
+        // clang-format off
         static char* text[3] =
         {
             "{i:text_spongebob_name}",
             "{i:text_patrick_name}",
             "{i:text_sandy_name}"
         };
+        // clang-format on
         return text[gCurrentPlayer];
     }
 
@@ -392,8 +394,8 @@ namespace
     {
         static char buffer[0x30];
         xEntFrame* frame = globals.player.ent.frame;
-        sprintf(buffer, "%d,%d,%d", S32(frame->mat.pos.x),
-                S32(frame->mat.pos.y), S32(frame->mat.pos.z));
+        sprintf(buffer, "%d,%d,%d", S32(frame->mat.pos.x), S32(frame->mat.pos.y),
+                S32(frame->mat.pos.z));
         return buffer;
     }
 
@@ -422,8 +424,7 @@ namespace
         }
         else
         {
-            sprintf(buffer, "%d {i:text_shinies}",
-                    globals.player.Inv_Shiny);
+            sprintf(buffer, "%d {i:text_shinies}", globals.player.Inv_Shiny);
         }
         return buffer;
     }
@@ -495,6 +496,7 @@ namespace
         return buffer;
     }
 
+    // clang-format off
     static var_type vars[0x27] =
     {
         { "ActivePad",               0x09, &var_text_ActivePad },
@@ -537,6 +539,7 @@ namespace
         { "SpaceNeeded",             0x0B, &var_text_SpaceNeeded },
         { "TotalPatsSocks",          0x0E, &var_text_TotalPatsSocks }
     };
+    // clang-format on
 
     var_type* find_var(const substr& str)
     {
@@ -779,6 +782,7 @@ U32 zVarEntryCB_IsVisible(void* arg)
     return xEntIsVisible((xEnt*)arg) != 0;
 }
 
+// clang-format off
 zVarEntry zVarEntryTable[19] =
 {
     { 0x00, 0x00, "Sound mode",                zVarEntryCB_SndMode },
@@ -801,3 +805,4 @@ zVarEntry zVarEntryTable[19] =
     { 0x11, 0x00, "Is Visible (0=No, 1=Yes)",  zVarEntryCB_IsVisible },
     { 0x00, 0x00, NULL, NULL }
 };
+// clang-format on

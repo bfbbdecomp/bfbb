@@ -1,11 +1,11 @@
 #include "zGameState.h"
 
-#include "..\Core\x\xSnd.h"
-#include "..\Core\x\xEvent.h"
-#include "..\Core\x\xserializer.h"
-
-#include "zGlobals.h"
 #include "zGame.h"
+#include "zGlobals.h"
+
+#include "..\Core\x\xEvent.h"
+#include "..\Core\x\xSnd.h"
+#include "..\Core\x\xserializer.h"
 
 S32 gGameState = eGameState_Dead;
 eGameMode gGameMode;
@@ -138,7 +138,7 @@ void zGameSetOstrich(_GameOstrich value)
 }
 
 S32 zGameStateFindEvent(U32* eventList, S32 eventCount, S32 targetMode, S32 targetEvent,
-                          S32* new_mode, S32* new_state)
+                        S32* new_mode, S32* new_state)
 {
     for (S32 i = 0; i < eventCount; ++i)
     {

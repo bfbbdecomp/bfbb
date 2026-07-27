@@ -1,8 +1,9 @@
 #ifndef XPAD_H
 #define XPAD_H
 
-#include "xRumble.h"
 #include "xMath2.h"
+#include "xRumble.h"
+
 #include "iPad.h"
 
 enum _tagPadState

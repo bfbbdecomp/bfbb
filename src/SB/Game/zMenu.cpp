@@ -1,25 +1,5 @@
 #include "zMenu.h"
 
-#include <string.h>
-
-#include "iColor.h"
-#include "iSystem.h"
-#include "iTime.h"
-#include "iTRC.h"
-
-#include "xCutscene.h"
-#include "xDebug.h"
-#include "xEvent.h"
-#include "xMath.h"
-#include "xPad.h"
-#include "xsavegame.h"
-#include "xScrFx.h"
-#include "xSFX.h"
-#include "xSnd.h"
-#include "xSkyDome.h"
-#include "xString.h"
-#include "xTRC.h"
-
 #include "zCamera.h"
 #include "zFMV.h"
 #include "zGame.h"
@@ -28,6 +8,26 @@
 #include "zGlobals.h"
 #include "zMusic.h"
 #include "zSaveLoad.h"
+
+#include "xCutscene.h"
+#include "xDebug.h"
+#include "xEvent.h"
+#include "xMath.h"
+#include "xPad.h"
+#include "xSFX.h"
+#include "xScrFx.h"
+#include "xSkyDome.h"
+#include "xSnd.h"
+#include "xString.h"
+#include "xTRC.h"
+#include "xsavegame.h"
+
+#include "iColor.h"
+#include "iSystem.h"
+#include "iTRC.h"
+#include "iTime.h"
+
+#include <string.h>
 
 bool menu_fmv_played;
 

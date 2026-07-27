@@ -344,54 +344,39 @@
 
 #define RAD_ALIGN_ADD_TYPE(var) RAD_ALIGN_TYPE var##align = RAD_ALIGN_DEF
 
-// Each commented out line is required for our build
-
-// #define S8 signed char
-// #define U8 unsigned char
-// #define U32 unsigned long
-// #define S32 signed long
-// #define F32 float
-// #define F64 double
-
-#if defined(__MWERKS__) || defined(__MRC__) || defined(GEKKO)
-// #define U64 unsigned long long
-// #define S64 signed long long
-// #else
-// #define U64 unsigned __int64
-// #define S64 signed __int64
-#endif
-
 #ifdef __RAD32__
 #define PTR4
-#define U16 unsigned short
-#define S16 signed short
 #else
 #define PTR4 __far
-#define U16 unsigned int
-#define S16 signed int
 #endif
+
+// RAD SDK Type Definitions (using typedef instead of #define to avoid macro collisions)
+typedef signed char S8;
+typedef unsigned char U8;
+typedef signed short S16;
+typedef unsigned short U16;
+typedef signed int S32;
+typedef unsigned int U32;
+typedef signed long long S64;
+typedef unsigned long long U64;
+typedef float F32;
+typedef double F64;
 
 #ifndef RAD_NO_LOWERCASE_TYPES
-
 #ifdef __RADNGC__
-
 #include <dolphin/types.h>
-
 #else
-
-#define u8 U8
-#define s8 S8
-#define u16 U16
-#define s16 S16
-#define u32 U32
-#define s32 S32
-#define u64 U64
-#define s64 S64
-#define f32 F32
-#define f64 F64
-
+typedef U8 u8;
+typedef S8 s8;
+typedef U16 u16;
+typedef S16 s16;
+typedef U32 u32;
+typedef S32 s32;
+typedef U64 u64;
+typedef S64 s64;
+typedef F32 f32;
+typedef F64 f64;
 #endif
-
 #endif
 
 #endif

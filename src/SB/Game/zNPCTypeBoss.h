@@ -1,8 +1,8 @@
 #ifndef ZNPCTYPEBOSS_H
 #define ZNPCTYPEBOSS_H
 
-#include "zNPCTypeCommon.h"
 #include "zNPCSupport.h"
+#include "zNPCTypeCommon.h"
 
 struct zNPCBoss : zNPCCommon
 {

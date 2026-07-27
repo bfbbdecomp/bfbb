@@ -1,22 +1,24 @@
 #include "zNPCSupport.h"
 
-#include <types.h>
-#include <xstransvc.h>
+#include "zGlobals.h"
+#include "zNPCFXCinematic.h"
+#include "zNPCGlyph.h"
+#include "zNPCHazard.h"
+#include "zNPCMgr.h"
+#include "zNPCSupplement.h"
+#include "zNPCTypeRobot.h"
+
+#include "xCollide.h"
+#include "xMath3.h"
+#include "xMathInlines.h"
+#include "xQuickCull.h"
+#include "xUtil.h"
+#include "xstransvc.h"
+
 #include <rtslerp.h>
 
-#include "zGlobals.h"
-#include "zNPCHazard.h"
-#include "zNPCGlyph.h"
-#include "zNPCSupplement.h"
-#include "zNPCMgr.h"
-#include "zNPCTypeRobot.h"
-#include "zNPCFXCinematic.h"
-
-#include "xMathInlines.h"
-#include "xMath3.h"
-#include "xUtil.h"
-#include "xQuickCull.h"
-#include "xCollide.h"
+#include <string.h>
+#include <types.h>
 
 #define MAX_FIREWORK 32
 

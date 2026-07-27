@@ -1,5 +1,6 @@
 #include "xEntDrive.h"
 
+#include "xEnt.h"
 #include "xMath.h"
 #include "xMathInlines.h"
 

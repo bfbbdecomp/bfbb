@@ -1,8 +1,8 @@
 #ifndef ZNPCTYPEBOSSSB1_H
 #define ZNPCTYPEBOSSSB1_H
 
-#include "zNPCTypeBoss.h"
 #include "zNPCGoalCommon.h"
+#include "zNPCTypeBoss.h"
 
 #include "xFX.h"
 

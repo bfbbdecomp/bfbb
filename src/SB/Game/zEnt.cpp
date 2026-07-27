@@ -1,22 +1,24 @@
 #include "zEnt.h"
 
-#include <types.h>
-
-#include "zGlobals.h"
 #include "zAnimList.h"
+#include "zGlobals.h"
 #include "zNPCTypeCommon.h"
-#include "xNPCBasic.h"
-#include "xstransvc.h"
-#include "xString.h"
-#include "xMath.h"
-#include "xutil.h"
-#include "iModel.h"
-#include "xSnd.h"
-#include "xCollide.h"
 #include "zNPCTypes.h"
-#include <PowerPC_EABI_Support\MSL_C\MSL_Common\cstring>
+
+#include "xCollide.h"
+#include "xMath.h"
+#include "xNPCBasic.h"
+#include "xSnd.h"
+#include "xString.h"
+#include "xstransvc.h"
+#include "xutil.h"
+
+#include "iModel.h"
+
+#include <PowerPC_EABI_Support/MSL_C/MSL_Common/cstring>
+#include <PowerPC_EABI_Support/MSL_C/MSL_Common/stdlib.h>
 #include <stdio.h>
-#include <PowerPC_EABI_Support\MSL_C\MSL_Common\stdlib.h>
+#include <types.h>
 
 void zEntInit(zEnt* ent, xEntAsset* asset, U32 type)
 {

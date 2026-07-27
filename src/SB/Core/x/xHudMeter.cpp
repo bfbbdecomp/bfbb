@@ -1,10 +1,10 @@
 #include "xHudMeter.h"
 
-#include <types.h>
-
-#include "xString.h"
 #include "xMathInlines.h"
-#include "PowerPC_EABI_Support\MSL_C\MSL_Common\printf.h"
+#include "xString.h"
+
+#include <stdio.h>
+#include <types.h>
 
 namespace xhud
 {

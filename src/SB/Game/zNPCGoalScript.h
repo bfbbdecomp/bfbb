@@ -15,7 +15,7 @@ struct zNPCGoalScript : zNPCGoalCommon
     virtual S32 Enter(F32 dt, void* updCtxt);
     virtual S32 Exit(F32 dt, void* updCtxt);
     virtual S32 SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
-                           xBase* toParamWidget, S32* handled);
+                         xBase* toParamWidget, S32* handled);
     virtual S32 NPCMessage(NPCMsg* mail);
 };
 
