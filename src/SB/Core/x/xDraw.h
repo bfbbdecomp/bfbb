@@ -5,6 +5,7 @@
 #include "xMath3.h"
 
 void xDrawSetColor(iColor_tag);
+void xDrawSetColor(U8 r, U8 g, U8 b, u8 a);
 inline void xDrawLine(const xVec3* a, const xVec3* b)
 {
 }
