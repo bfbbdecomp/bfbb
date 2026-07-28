@@ -1,8 +1,10 @@
 #include "zNPCTypeKingJelly.h"
 
+#include <types.h>
+#include "xMathInlines.h"
 #include "xColor.h"
 #include "zNPCGoalCommon.h"
-#include <types.h>
+#include "zCamera.h"
 #include "string.h"
 
 #define f1868 1.0f
@@ -319,6 +321,105 @@ namespace
      
         sound.delayed = TRUE;
         sound.time = 0.0f;
+    }
+
+    void sound_update(F32 dt)
+    {
+        for (S32 i = 0; i < 11; i++)
+        {
+            sound_data_type& sound = sound_data[i];
+
+            if (sound.delayed == FALSE)
+            {
+                continue;
+            }
+
+            sound.time += dt;
+
+            if (sound.time >= tweak.sound[i].delay)
+            {
+                play_sound_immediate(i, sound.loc);
+            }
+        }
+    }
+
+    S32 set_ring_segments(const xVec3& center, F32 radius, F32 segment_length)
+    {
+        static F32 sin_lookup[9];
+        static F32 cos_lookup[9];
+        static U8 sclookup_inited = FALSE;
+
+        if (!sclookup_inited)
+        {
+            sclookup_inited = TRUE;
+
+            F32 angle = 0.0f;
+            for (S32 i = 0; i < 9; i++)
+            {
+                sin_lookup[i] = isin(angle);
+                cos_lookup[i] = icos(angle);
+
+                const F32 angle_step = PI / 32.0f;
+                angle += angle_step;
+            }
+        }
+
+        S32 size = 0.5f + ((2.0f * radius * PI) / segment_length);
+        size = (size + 7) & ~7;
+
+        if (size > 64)
+        {
+            size = 64;
+        }
+        if (size <= 0)
+        {
+            return 0;
+        }
+
+        for (S32 i = 0; i < size; i++)
+        {
+            // TODO: what is here
+        }
+
+        return size;
+    }
+
+    void updown_ring_update(lightning_ring& ring, F32 dt)
+    {
+        ring.current.time += ring.current.accel * dt;
+        ring.current.time = xfmod(ring.current.time, ring.delay);
+
+        const F32 t = ring.current.time / ring.delay;
+        const F32 range = ring.max_height - ring.min_height;
+        const F32 wave = 1.0f + isin(PI * t);
+
+        ring.current.height = ring.min_height + (0.5f * (range * wave));
+    }
+
+    void expand_ring_update(lightning_ring& ring, F32 dt)
+    {
+        ring.current.vel += ring.current.accel * dt;
+        if (ring.current.vel > ring.max_vel)
+        {
+            ring.current.vel = ring.max_vel;
+        }
+
+        ring.current.radius += ring.current.vel * dt;
+        if (ring.current.radius > ring.max_height)
+        {
+            ring.current.time += dt;
+
+            const F32 t = ring.current.time / ring.delay;
+            const F32 frac = 1.0f - t;
+            if (frac < 0.0f)
+            {
+                ring.property.color.a = 0;
+            }
+            else
+            {
+                ring.property.color.a = 255.0f * frac + 0.5f;
+            }
+        }
     }
     
     S32 kill_sound(int)

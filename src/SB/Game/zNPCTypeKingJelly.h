@@ -81,6 +81,7 @@ struct lightning_ring
     void create();
     void destroy();
     static void destroy(S32);
+    void refresh();
 };
 
 struct zNPCKingJelly : zNPCSubBoss
