@@ -1421,6 +1421,14 @@ xAnimTable* ZNPC_AnimTable_KingJelly()
     return table;
 }
 
+zNPCKingJelly::zNPCKingJelly(S32 myType) : zNPCSubBoss(myType)
+{
+    this->show_vertex = -1;
+    this->enabled = TRUE;
+    memset(&this->tentacle_lightning, 0, 7 * sizeof(zLightning*));
+    init_sound();
+}
+
 void zNPCKingJelly::Init(xEntAsset* asset)
 {
     zNPCCommon::Init(asset);
