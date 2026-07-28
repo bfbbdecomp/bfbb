@@ -188,6 +188,8 @@ struct zNPCKingJelly : zNPCSubBoss
     void start_fight();
     void spawn_children(int, int);
     S32 max_strikes();
+    void update_camera(F32 dt);
+    void set_life(S32 life);
     void load_model();
     void load_curtain_model();
     void show_shower_model();

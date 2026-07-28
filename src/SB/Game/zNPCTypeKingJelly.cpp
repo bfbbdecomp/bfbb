@@ -1537,6 +1537,43 @@ S32 zNPCKingJelly::max_strikes() const
     return round + 1;
 }
 
+void zNPCKingJelly::update_camera(F32 dt)
+{
+    zCameraDisableTracking(CO_BOSS);
+    if(!(zCameraIsTrackingDisabled() & ~0x8))
+    {
+        boss_cam.update(dt);
+    }
+}
+
+void zNPCKingJelly::set_life(S32 life)
+{
+    S32 oldlife = this->life;
+    
+    this->life = range_limit<S32>(life, 0, tweak.max_life);
+    S32 state = this->psy_instinct->GIDOfActive();
+    if (!(state == 'NGM6') && !(state == 'NGM7') && !(this->life >= oldlife))
+    {
+        this->psy_instinct->GoalSet('NGM6', GOAL_STAT_PROCESS);
+        start_blink();
+
+        for (S32 i = this->life; i < oldlife; i++)
+        {
+            zEntEvent(this, this, eEventNPCHPDecremented);
+        }
+
+        if (this->life <= 0)
+        {
+            zEntEvent(this, this, eEventDeath);
+        }
+    } 
+    else
+    {
+        update_round();
+    }
+
+}
+
 void zNPCKingJelly::init_child(zNPCKingJelly::child_data& child, zNPCCommon& npc, int wave)
 {
     child.npc = &npc;
