@@ -603,36 +603,33 @@ void zFXGooFreeze(RpAtomic* atomic, const xVec3* center, xVec3* ref_parPosVec)
     zFXGooInstance* goo = zFXGooInstances;
     S32 freezeGroup = -1;
 
-    for (i = 0; i < 24; i++)
+    for (i = 0; i < 24; i++, goo++)
     {
         if ((goo->state == 0) && (goo->atomic == atomic))
         {
             freezeGroup = goo->freezeGroup;
             break;
         }
-        goo++;
     }
 
     if (freezeGroup != -1)
     {
-        xSndPlay3D(0x7bc0c0ce, 10.0f, 0.0f, 0x80, 0, center, 0.0f, 0.0f, SND_CAT_GAME, 0.0f);
-        xSndPlay3D(0xb9b1d325, 10.0f, 0.0f, 0x80, 0, center, 0.0f, 0.0f, SND_CAT_GAME, 0.0f);
+        xSndPlay3D(0x7bc0c0ce, 10.0f, 0.0f, 0x80, 0, center, 0.0f, SND_CAT_GAME, 0.0f);
+        xSndPlay3D(0xb9b1d325, 10.0f, 0.0f, 0x80, 0, center, 0.0f, SND_CAT_GAME, 0.0f);
         xClimateSetSnow(1.0f);
 
-        for (i = 0; i < 24; i++)
+        goo = zFXGooInstances;
+        for (i = 0; i < 24; i++, goo++)
         {
             if (goo->freezeGroup == freezeGroup)
             {
                 goo->state = zFXGooStateFreezing;
                 goo->time = 0.0f;
+                goo->timer = goo->time + goo->state_time[goo->state];
 
-                // goo->timer = goo->time + (goo->center * 4) + 0x30;
-
-                *goo->orig_verts = *center;
-
+                goo->center = *center;
                 goo->min = 3.0f;
                 goo->max = 4.0f;
-
                 goo->ref_parentPos = ref_parPosVec;
 
                 if (ref_parPosVec != NULL)
@@ -644,7 +641,6 @@ void zFXGooFreeze(RpAtomic* atomic, const xVec3* center, xVec3* ref_parPosVec)
                     goo->pos_parentOnFreeze = g_O3;
                 }
             }
-            goo++;
         }
     }
 }
@@ -652,23 +648,207 @@ void zFXGooFreeze(RpAtomic* atomic, const xVec3* center, xVec3* ref_parPosVec)
 S32 zFXGooIs(xEnt* obj, F32& depth, U32 playerCheck)
 {
     S32 i;
-    zFXGooInstance* goo;
-    xVec3* pos;
+    zFXGooInstance* goo = zFXGooInstances;
 
-    return 0;
+    for (i = 0; i < 24; i++, goo++)
+    {
+        if (goo->state == zFXGooStateInactive)
+        {
+            continue;
+        }
+        if (goo->atomic == obj->model->Data)
+        {
+            break;
+        }
+    }
+
+    if (i == 24)
+    {
+        return TRUE;
+    }
+
+    if (goo->state == zFXGooStateNormal)
+    {
+        return TRUE;
+    }
+
+    xVec3 pos;
+    xVec3Sub(&pos, (xVec3*)&globals.player.ent.model->Mat->pos, &goo->center);
+
+    if (xVec3Dot(&pos, &pos) > goo->max)
+    {
+        return TRUE;
+    }
+    depth = 0.0f;
+    if (playerCheck)
+    {
+        globals.player.ForceSlipperyFriction = 0.2f;
+        globals.player.ForceSlipperyTimer = 0.1f;
+    }
+
+    return FALSE;
 }
 
 void zFXGooEventSetWarb(xEnt* ent, const F32* warb)
 {
     S32 i;
-    zFXGooInstance* goo;
+    zFXGooInstance* goo = zFXGooInstances;
+    for (i = 0; i < 24; i++, goo++)
+    {
+        if (goo->state == zFXGooStateInactive)
+        {
+            continue;
+        }
+        if (goo->atomic == ent->model->Data)
+        {
+            break;
+        }
+    }
+
+    if (i == 24)
+    {
+        return;
+    }
+
+    memcpy(goo->warbc, warb, sizeof(goo->warbc));
+    goo->w0 = goo->warbc[0];
+    goo->w2 = goo->warbc[2];
+}
+
+void zFXGooEventSetFreezeDuration(xEnt* ent, F32 duration)
+{
+    S32 i;
+    zFXGooInstance* goo = zFXGooInstances;
+    S32 freezeGroup = -1;
+    for (i = 0; i < 24; i++, goo++)
+    {
+        if (goo->state == zFXGooStateInactive)
+        {
+            continue;
+        }
+        if (goo->atomic == ent->model->Data)
+        {
+            freezeGroup = goo->freezeGroup;
+            break;
+        }
+    }
+
+    if (freezeGroup == -1)
+    {
+        return;
+    }
+
+    goo = zFXGooInstances;
+    for (i = 0; i < 24; i++, goo++)
+    {
+        if (goo->freezeGroup == freezeGroup)
+        {
+            goo->state_time[zFXGooStateFrozen] = duration;
+        }
+    }
+}
+
+void zFXGooEventMelt(xEnt* ent)
+{
+    S32 i;
+    zFXGooInstance* goo = zFXGooInstances;
+    S32 freezeGroup = -1;
+    for (i = 0; i < 24; i++, goo++)
+    {
+        if (goo->state != zFXGooStateFrozen)
+        {
+            continue;
+        }
+        if (goo->atomic == ent->model->Data)
+        {
+            freezeGroup = goo->freezeGroup;
+            break;
+        }
+    }
+
+    if (freezeGroup == -1)
+    {
+        return;
+    }
+
+    goo = zFXGooInstances;
+    for (i = 0; i < 24; i++, goo++)
+    {
+        if (goo->freezeGroup == freezeGroup)
+        {
+            goo->timer = 0.0f;
+        }
+    }
+}
+
+F32 zFXGooFreezeTimeLeft()
+{
+    zFXGooInstance* goo = zFXGooInstances;
+    zFXGooInstance* end = goo + 24;
+    F32 maxTime = 0.0f;
+    for (; goo != end; goo++)
+    {
+        F32 time = 0.0f;
+        switch (goo->state)
+        {
+        case zFXGooStateFreezing:
+        {
+            time += goo->state_time[zFXGooStateFrozen];
+        }
+        case zFXGooStateFrozen:
+        {
+            time += goo->state_time[zFXGooStateMelting];
+        }
+        case zFXGooStateMelting:
+        {
+            time += (goo->timer - goo->time);
+            break;
+        }
+        }
+
+        if (maxTime < time)
+        {
+            maxTime = time;
+        }
+    }
+    return maxTime;
+}
+
+void zFX_SpawnBubbleHit(const xVec3* pos, U32 num, const xVec3* pos_rnd,
+                        const xVec3* vel_rnd, float vel_scale);
+void zFX_SpawnBubbleTrail(const xVec3* pos, U32 num, const xVec3* pos_rnd,
+                          const xVec3* vel_rnd);
+
+void zFX_SpawnBubbleHit(const xVec3* pos, U32 num)
+{
+    zFX_SpawnBubbleHit(pos, num, &bubblehit_pos_rnd, &bubblehit_vel_rnd, bubblehit_vel_scale);
+}
+
+void zFX_SpawnBubbleHit(const xVec3* pos, U32 num, const xVec3* pos_rnd, const xVec3* vel_rnd,
+                        float vel_scale)
+{
+}
+
+void zFX_SpawnBubbleTrail(const xVec3* pos, U32 num)
+{
+    zFX_SpawnBubbleTrail(pos, num, &bubblehit_pos_rnd, &bubblehit_vel_rnd);
 }
 
 namespace
 {
+    bool model_is_preinstanced(RpAtomic* atomic) {
+        RpGeometry* geom = RpAtomicGetGeometryMacro(atomic);
+        if(geom == NULL) {
+            return TRUE;
+        }
+
+        return !(geom->morphTarget != NULL && geom->morphTarget->verts != NULL);
+    }
+
     void add_popper_tweaks()
     {
     }
+
     void add_entrail_tweaks()
     {
     }
@@ -765,21 +945,6 @@ void reset_entrails()
     {
         pData->reset();
     }
-}
-
-void zFX_SpawnBubbleHit(const xVec3* pos, unsigned int num, xVec3* pos_rnd, xVec3* vel_rnd,
-                        float vel_scale);
-void zFX_SpawnBubbleTrail(const xVec3* pos, unsigned int num, const xVec3* pos_rnd,
-                          const xVec3* vel_rnd);
-
-void zFX_SpawnBubbleHit(const xVec3* pos, U32 num)
-{
-    zFX_SpawnBubbleHit(pos, num, &bubblehit_pos_rnd, &bubblehit_vel_rnd, bubblehit_vel_scale);
-}
-
-void zFX_SpawnBubbleTrail(const xVec3* pos, U32 num)
-{
-    zFX_SpawnBubbleTrail(pos, num, &bubblehit_pos_rnd, &bubblehit_vel_rnd);
 }
 
 void init_poppers()
