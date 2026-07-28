@@ -182,6 +182,7 @@ struct zNPCKingJelly : zNPCSubBoss
     void RenderExtra();
     void ParseINI();
     void SelfSetup();
+    void Damage(en_NPC_DAMAGE_TYPE damtype, xBase*, const xVec3*);
     S32 max_strikes() const;
     void init_child(zNPCKingJelly::child_data&, zNPCCommon&, int);
     void disable_child(zNPCKingJelly::child_data&);

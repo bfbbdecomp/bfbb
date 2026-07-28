@@ -1641,6 +1641,37 @@ void zNPCKingJelly::SelfSetup()
     psy->SetSafety(NPC_GOAL_KJIDLE);
 }
 
+void zNPCKingJelly::Damage(en_NPC_DAMAGE_TYPE damtype, xBase*, const xVec3*)
+{
+    if (!this->flag.fighting || this->flag.died)
+    {
+        return;
+    }
+
+    S32 state = this->psy_instinct->GIDOfActive();
+    switch (damtype)
+    {
+    case DMGTYP_SIDE:
+    case DMGTYP_BOULDER:
+    case DMGTYP_BUBBOWL:
+        if (state == 'NGM5' &&
+            (this->shockstate == SS_RELEASE 
+            || this->shockstate == SS_COOL_DOWN 
+            || this->shockstate == SS_STOP))
+        {
+            set_life(this->life - 1);
+        }
+        break;
+    
+    case DMGTYP_CRUISEBUBBLE:
+        if (!(state == 'NGM6') && !(state == 'NGM7') )
+        {
+            set_life(this->life - 1);
+        }
+        break;
+    }
+}
+
 S32 zNPCKingJelly::max_strikes() const
 {
     return round + 1;
