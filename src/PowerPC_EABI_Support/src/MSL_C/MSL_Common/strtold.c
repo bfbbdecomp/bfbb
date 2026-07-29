@@ -7,6 +7,7 @@
 #include "ctype.h"
 #include "math.h"
 #include "mem.h"
+#include "float.h"
 #include "limits.h"
 
 #define TARGET_FLOAT_BITS 64
@@ -63,6 +64,16 @@ enum hex_scan_states
 #define fetch() (count++, (*ReadProc)(ReadProcArg, 0, __GetAChar))
 #define unfetch(c) (*ReadProc)(ReadProcArg, c, __UngetAChar)
 
+extern int __double_min[];
+
+typedef struct
+{
+    double value;
+} ZeroHolder;
+
+static const ZeroHolder gCommonZero;
+static const ZeroHolder gHexZero;
+
 long double __strtold(int max_width, int (*ReadProc)(void*, int, int), void* ReadProcArg,
                       int* chars_scanned, int* overflow)
 {
@@ -101,7 +112,7 @@ long double __strtold(int max_width, int (*ReadProc)(void*, int, int), void* Rea
         switch (scan_state)
         {
         case start:
-            if (isspace(c))
+            if (_isspace(c))
             {
                 c = fetch();
                 count--;
@@ -109,7 +120,7 @@ long double __strtold(int max_width, int (*ReadProc)(void*, int, int), void* Rea
                 break;
             }
 
-            switch (toupper(c))
+            switch (_toupper(c))
             {
             case '-':
                 sig_negative = 1;
@@ -139,7 +150,7 @@ long double __strtold(int max_width, int (*ReadProc)(void*, int, int), void* Rea
             int i = 1;
             char model[] = "INFINITY";
 
-            while ((i < 8) && (toupper(c) == model[i]))
+            while ((i < 8) && (_toupper(c) == model[i]))
             {
                 i++;
                 c = fetch();
@@ -172,7 +183,7 @@ long double __strtold(int max_width, int (*ReadProc)(void*, int, int), void* Rea
             int i = 1, j = 0;
             char model[] = "NAN(";
             char nan_arg[32] = "";
-            while ((i < 4) && (toupper(c) == model[i]))
+            while ((i < 4) && (_toupper(c) == model[i]))
             {
                 i++;
                 c = fetch();
@@ -182,7 +193,7 @@ long double __strtold(int max_width, int (*ReadProc)(void*, int, int), void* Rea
             {
                 if (i == 4)
                 {
-                    while ((j < 32) && (isdigit(c) || isalpha(c)))
+                    while ((j < 32) && (_isdigit(c) || _isalpha(c)))
                     {
                         nan_arg[j++] = c;
                         c = fetch();
@@ -226,7 +237,7 @@ long double __strtold(int max_width, int (*ReadProc)(void*, int, int), void* Rea
                 c = fetch();
                 break;
             }
-            if (!isdigit(c))
+            if (!_isdigit(c))
             {
                 scan_state = failure;
                 break;
@@ -235,7 +246,7 @@ long double __strtold(int max_width, int (*ReadProc)(void*, int, int), void* Rea
             if (c == '0')
             {
                 c = fetch();
-                if (toupper(c) == 'X')
+                if (_toupper(c) == 'X')
                 {
                     scan_state = hex_state;
                     hex_scan_state = hex_start;
@@ -261,7 +272,7 @@ long double __strtold(int max_width, int (*ReadProc)(void*, int, int), void* Rea
             break;
 
         case int_digit_loop:
-            if (!isdigit(c))
+            if (!_isdigit(c))
             {
                 if (c == dot)
                 {
@@ -287,7 +298,7 @@ long double __strtold(int max_width, int (*ReadProc)(void*, int, int), void* Rea
             break;
 
         case frac_start:
-            if (!isdigit(c))
+            if (!_isdigit(c))
             {
                 scan_state = failure;
                 break;
@@ -297,7 +308,7 @@ long double __strtold(int max_width, int (*ReadProc)(void*, int, int), void* Rea
             break;
 
         case frac_digit_loop:
-            if (!isdigit(c))
+            if (!_isdigit(c))
             {
                 scan_state = sig_end;
                 break;
@@ -316,7 +327,7 @@ long double __strtold(int max_width, int (*ReadProc)(void*, int, int), void* Rea
             break;
 
         case sig_end:
-            if (toupper(c) == 'E')
+            if (_toupper(c) == 'E')
             {
                 scan_state = exp_start;
                 c = fetch();
@@ -340,7 +351,7 @@ long double __strtold(int max_width, int (*ReadProc)(void*, int, int), void* Rea
             break;
 
         case leading_exp_digit:
-            if (!isdigit(c))
+            if (!_isdigit(c))
             {
                 scan_state = failure;
                 break;
@@ -367,7 +378,7 @@ long double __strtold(int max_width, int (*ReadProc)(void*, int, int), void* Rea
             break;
 
         case exp_digit_loop:
-            if (!isdigit(c))
+            if (!_isdigit(c))
             {
                 scan_state = finished;
                 break;
@@ -407,7 +418,7 @@ long double __strtold(int max_width, int (*ReadProc)(void*, int, int), void* Rea
                 break;
 
             case hex_int_digit_loop:
-                if (!isxdigit(c))
+                if (!_isxdigit(c))
                 {
                     if (c == dot)
                     {
@@ -425,7 +436,7 @@ long double __strtold(int max_width, int (*ReadProc)(void*, int, int), void* Rea
                 {
                     intdigits++;
                     uch = *(chptr + NibbleIndex / 2);
-                    ui = toupper(c);
+                    ui = _toupper(c);
 
                     if (ui >= 'A')
                     {
@@ -459,7 +470,7 @@ long double __strtold(int max_width, int (*ReadProc)(void*, int, int), void* Rea
                 break;
 
             case hex_frac_digit_loop:
-                if (!isxdigit(c))
+                if (!_isxdigit(c))
                 {
                     hex_scan_state = hex_sig_end;
                     break;
@@ -468,7 +479,7 @@ long double __strtold(int max_width, int (*ReadProc)(void*, int, int), void* Rea
                 if (NibbleIndex < 17)
                 {
                     uch = *(chptr + NibbleIndex / 2);
-                    ui = toupper(c);
+                    ui = _toupper(c);
 
                     if (ui >= 'A')
                     {
@@ -500,7 +511,7 @@ long double __strtold(int max_width, int (*ReadProc)(void*, int, int), void* Rea
                 break;
 
             case hex_sig_end:
-                if (toupper(c) == 'P')
+                if (_toupper(c) == 'P')
                 {
                     hex_scan_state = hex_exp_start;
                     exp_digits++;
@@ -530,7 +541,7 @@ long double __strtold(int max_width, int (*ReadProc)(void*, int, int), void* Rea
                 break;
 
             case hex_leading_exp_digit:
-                if (!isdigit(c))
+                if (!_isdigit(c))
                 {
                     scan_state = failure;
                     break;
@@ -547,7 +558,7 @@ long double __strtold(int max_width, int (*ReadProc)(void*, int, int), void* Rea
                 hex_scan_state = hex_exp_digit_loop;
                 break;
             case hex_exp_digit_loop:
-                if (!isdigit(c))
+                if (!_isdigit(c))
                 {
                     scan_state = finished;
                     break;
@@ -618,7 +629,7 @@ long double __strtold(int max_width, int (*ReadProc)(void*, int, int), void* Rea
         {
             if (exp_negative)
             {
-                return 0.0;
+                return gCommonZero.value;
             }
             else
             {
@@ -630,7 +641,7 @@ long double __strtold(int max_width, int (*ReadProc)(void*, int, int), void* Rea
 
         result = __dec2num(&d);
 
-        if (result != 0.0 && result < LDBL_MIN)
+        if (gCommonZero.value != result && result < LDBL_MIN)
         {
             *overflow = 1;
         }
@@ -651,7 +662,7 @@ long double __strtold(int max_width, int (*ReadProc)(void*, int, int), void* Rea
     {
         unsigned long long* uptr = (unsigned long long*)&result;
 
-        if (result)
+        if (result != gHexZero.value)
         {
             if (expsign)
             {
@@ -669,10 +680,10 @@ long double __strtold(int max_width, int (*ReadProc)(void*, int, int), void* Rea
             *(short*)(&result) |= ((exponent + 1023) << 4);
 
             *chars_scanned = spaces + sign_detected + NibbleIndex + 1 + exp_digits;
-            if (result != 0.0 && result < LDBL_MIN)
+            if (gCommonZero.value != result && result < LDBL_MIN)
             {
                 *overflow = 1;
-                result = 0.0;
+                result = gCommonZero.value;
             }
             else if (result > LDBL_MAX)
             {
@@ -686,18 +697,33 @@ long double __strtold(int max_width, int (*ReadProc)(void*, int, int), void* Rea
         }
         else
         {
-            result = 0.0;
+            result = gCommonZero.value;
         }
         return result;
     }
 }
 
-void strtold(void)
+double atof(const char* str)
 {
-    // UNUSED FUNCTION
+    double value, abs_value;
+    int overflow, count;
+
+    __InStrCtrl isc;
+    isc.NextChar = (char*)str;
+    isc.NullCharDetected = 0;
+
+    value = __strtold(INT_MAX, &__StringRead, (void*)&isc, &count, &overflow);
+    abs_value = fabs(value);
+
+    if (overflow ||
+        (gCommonZero.value != value &&
+         (abs_value < *(double*)__double_min || abs_value > *(double*)__double_max)))
+    {
+        errno = ERANGE;
+    }
+
+    return value;
 }
 
-void strtod(void)
-{
-    // UNUSED FUNCTION
-}
+static const ZeroHolder gCommonZero = { 0.0 };
+static const ZeroHolder gHexZero = { 0.0 };

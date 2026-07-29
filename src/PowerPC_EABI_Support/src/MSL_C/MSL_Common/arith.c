@@ -1,11 +1,14 @@
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/arith.h"
+#include "types.h"
 
-long abs(long x)
+typedef struct
 {
-    if (x < 0)
-        return -x;
-    else
-        return x;
+    int quot;
+    int rem;
+} div_t;
+
+int abs(int n)
+{
+    return ((n >> 31) ^ n) - (n >> 31);
 }
 
 long labs(long x)

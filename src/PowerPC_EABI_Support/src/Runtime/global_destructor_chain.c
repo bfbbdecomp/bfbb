@@ -1,6 +1,10 @@
 #include "PowerPC_EABI_Support/Runtime/global_destructor_chain.h"
 #include "PowerPC_EABI_Support/Runtime/MWCPlusPlusLib.h"
 
+#ifdef __MWERKS__
+#undef __declspec
+#endif
+
 DestructorChain* __global_destructor_chain;
 
 void __destroy_global_chain(void)
