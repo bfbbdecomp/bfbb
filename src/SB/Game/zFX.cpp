@@ -1,13 +1,23 @@
+#include "zFX.h"
+
+#include "rpworld.h"
+#include "rwplcore.h"
+#include "xDebug.h"
+#include "xDraw.h"
 #include "xEnt.h"
 #include "xFX.h"
 #include "xMath.h"
 #include "xMath3.h"
+#include "xMathInlines.h"
 
-#include "zHud.h"
-#include "zFX.h"
+#include "xSnd.h"
+#include "zEnt.h"
+#include "zGlobals.h"
+#include "zGoo.h"
 #include "zScene.h"
 #include "zTextBox.h"
 
+#include <stdio.h>
 #include <types.h>
 #include <string.h>
 #include <stdlib.h>
@@ -27,7 +37,7 @@ const xFXRing sPatrickStunRing[3] = { { 0x741b0566,
                                         32,
                                         3,
                                         1,
-                                        { NULL } },
+                                        NULL },
                                       { 0x741b0566,
                                         1.5f,
                                         { 0.0f, 0.0f, 0.0f },
@@ -42,7 +52,7 @@ const xFXRing sPatrickStunRing[3] = { { 0x741b0566,
                                         32,
                                         2,
                                         1,
-                                        { NULL } },
+                                        NULL },
                                       { 0x741b0566,
                                         2.0f,
                                         { 0.0f, 0.0f, 0.0f },
@@ -57,7 +67,7 @@ const xFXRing sPatrickStunRing[3] = { { 0x741b0566,
                                         32,
                                         1,
                                         1,
-                                        { NULL } } };
+                                        NULL } };
 const xFXRing sHammerRing[1] = {
     0x741b0566, 0.75f, { 0.0f, 0.0f, 0.0f },   0.0f, 0.4f, 2.4f, PI / 2.0f, PI / -2.0f,
     0.6f,       -0.6f, { 255, 255, 255, 127 }, 32,   2,    1,    NULL
@@ -77,7 +87,7 @@ const xFXRing sPorterRing[2] = {
       16,
       2,
       1,
-      { NULL } },
+      NULL },
     { 0x741b0566,
       0.5f,
       { 0.0f, 0.25f, 0.0f },
@@ -92,21 +102,18 @@ const xFXRing sPorterRing[2] = {
       8,
       2,
       1,
-      { NULL } },
+      NULL },
 };
 const xFXRing sMuscleArmRing[1] = {
     0x741b0566, 3.0f,  { 0.0f, 0.0f, 0.0f },   0.0f, 0.0f, 90.0f, PI / 2.0f, 0.0f,
     0.6f,       30.0f, { 255, 255, 255, 160 }, 48,   1,    1,     NULL
 };
 
+static const float defaultGooTimes[4] = {};
+static const float defaultGooWarbc[4] = {};
+
 zFXGooInstance zFXGooInstances[24];
-
-extern char zFX_strings[];
-extern ztextbox* goo_timer_textbox;
-
-xVec3 bubblehit_pos_rnd;
-xVec3 bubblehit_vel_rnd;
-float bubblehit_vel_scale;
+U32 gFXSurfaceFlags = 0;
 
 void xDrawSphere2(const xVec3*, F32, U32)
 {
@@ -116,6 +123,28 @@ void on_spawn_bubble_wall(const tweak_info& tweak)
 {
     zFX_SpawnBubbleWall();
 }
+
+static void init_poppers();
+static void setup_entrails(zScene&);
+void zFX_SceneEnter(RpWorld* world)
+{
+    xFXanimUV2PSetTexture(NULL);
+    xFX_SceneEnter(world);
+    zFXGoo_SceneEnter();
+    init_poppers();
+    setup_entrails(*globals.sceneCur);
+
+    static tweak_callback cb_spawn_bubble_wall =
+        tweak_callback::create_change(on_spawn_bubble_wall);
+    xDebugAddTweak("FX|Spawn Bubble Wall", "Go!", &cb_spawn_bubble_wall, NULL, 0);
+}
+
+xVec3 bubblehit_pos_rnd = { 0.25f, 0.25f, 0.25f };
+xVec3 bubblehit_vel_rnd = { 6.0f, 6.0f, 6.0f };
+xVec3 bubbletrail_pos_rnd = { 0.25f, 0.25f, 0.25f };
+xVec3 bubbletrail_vel_rnd = { 0.25f, 0.25f, 0.25f };
+
+F32 bubblehit_vel_scale = 1.0f;
 
 void zFX_SceneExit(RpWorld* world)
 {
@@ -154,6 +183,109 @@ xFXRing* zFXMuscleArmWave(const xVec3* pos)
     return xFXRingCreate(pos, &sMuscleArmRing[0]);
 }
 
+static ztextbox* goo_timer_textbox = NULL;
+static void* g_txtr_gooFrozen = NULL;
+// WIP
+void zFXGooEnable(RpAtomic* atomic, S32 freezeGroup)
+{
+    S32 i;
+    zFXGooInstance* goo = zFXGooInstances;
+    g_txtr_gooFrozen = NULL;
+    for (i = 0; i < 24; i++, goo++)
+    {
+        if (goo->state == zFXGooStateInactive)
+        {
+            break;
+        }
+        if (goo->atomic == atomic)
+        {
+            return;
+        }
+    }
+    if (i == 24)
+    {
+        return;
+    }
+
+    goo->freezeGroup = freezeGroup;
+    RpGeometry* geom = RpAtomicGetGeometry(atomic);
+    S32 numVertices = geom->numVertices;
+    S32 numTriangles = geom->numTriangles;
+    if (geom->preLitLum == NULL)
+    {
+        RpGeometry* new_geom = RpGeometryCreate(numVertices, numTriangles, 0x7E);
+        RwV3d* verts = geom->morphTarget->verts;
+        RwV3d* normals = geom->morphTarget->normals;
+        RwTexCoords* texCoords = geom->texCoords[0];
+        RwV3d* new_verts = new_geom->morphTarget->verts;
+        RwV3d* new_normals = new_geom->morphTarget->normals;
+        RwRGBA* new_preLitLum = new_geom->preLitLum;
+        RwTexCoords* new_texCoords = new_geom->texCoords[0];
+        for (i = 0; i < numVertices; i++, verts++, new_verts++, normals++, new_normals++,
+            new_preLitLum++, texCoords++, new_texCoords++)
+        {
+            new_verts[0] = verts[0];
+            new_normals[0] = normals[0];
+
+            new_preLitLum[0].red = 0xff;
+            new_preLitLum[0].green = 0xff;
+            new_preLitLum[0].blue = 0xff;
+            new_preLitLum[0].alpha = 0xff;
+
+            new_texCoords[0] = texCoords[0];
+        }
+
+        RpTriangle* orig_triangles = geom->triangles;
+        RpTriangle* triangles = new_geom->triangles;
+        for (i = 0; i < numTriangles; i++, orig_triangles++, triangles++)
+        {
+            RwUInt16 vert1, vert2, vert3;
+            RpGeometryTriangleGetVertexIndices(geom, orig_triangles, &vert1, &vert2, &vert3);
+            RpGeometryTriangleSetVertexIndices(new_geom, triangles, vert1, vert2, vert3);
+
+            RpMaterial* orig_material = RpGeometryTriangleGetMaterial(geom, orig_triangles);
+            RpGeometryTriangleSetMaterial(new_geom, triangles, orig_material);
+        }
+
+        RwSphere boundingSphere;
+        RpMorphTargetCalcBoundingSphere(new_geom->morphTarget, &boundingSphere);
+        new_geom->morphTarget->boundingSphere = boundingSphere;
+        RpGeometryUnlock(new_geom);
+        RpAtomicSetGeometry(atomic, new_geom, 0);
+        geom = new_geom;
+    }
+
+    xVec3* orig_verts = (xVec3*)xMemAllocSize(sizeof(xVec3) * numVertices);
+    RwRGBA* orig_colors = (RwRGBA*)xMemAllocSize(sizeof(RwRGBA) * numVertices);
+    RwTexCoords* orig_uvs = (RwTexCoords*)xMemAllocSize(sizeof(RwTexCoords) * numVertices);
+    memcpy(orig_verts, geom->morphTarget->verts, sizeof(xVec3) * numVertices);
+    memcpy(orig_colors, geom->preLitLum, sizeof(RwRGBA) * numVertices);
+    memcpy(orig_uvs, geom->texCoords[0], sizeof(RwTexCoords) * numVertices);
+    RpAtomicSetRenderCallBack(atomic, &zFXGooRenderAtomic);
+    goo->atomic = atomic;
+    goo->orig_verts = orig_verts;
+    goo->orig_colors = orig_colors;
+    goo->orig_uvs = orig_uvs;
+    memcpy(goo->warbc, defaultGooWarbc, sizeof(defaultGooWarbc));
+    goo->w0 = goo->warbc[0];
+    goo->w2 = goo->warbc[2];
+    memcpy(goo->state_time, defaultGooTimes, sizeof(defaultGooTimes));
+
+    goo->state = zFXGooStateNormal;
+    goo->time = 0.0f;
+    goo->min = 3.0f;
+    goo->max = 4.0f;
+    goo->ref_parentPos = NULL;
+
+    if (gCurEnv != NULL)
+    {
+        gCurEnv->easset->climateFlags = 2;
+        gCurEnv->easset->climateStrengthMin = 0.0f;
+        gCurEnv->easset->climateStrengthMax = 0.0f;
+        xClimateInitAsset(&gClimate, gCurEnv->easset);
+    }
+}
+
 void zFXGoo_SceneEnter()
 {
     S32 i;
@@ -164,7 +296,7 @@ void zFXGoo_SceneEnter()
         goo->state = zFXGooStateInactive;
         goo++;
     }
-    U32 gameID = xStrHash(zFX_strings + 0x19); // "FREEZY_TIMER_TEXTBOX"
+    U32 gameID = xStrHash("FREEZY_TIMER_TEXTBOX");
     goo_timer_textbox = (ztextbox*)zSceneFindObject(gameID);
 }
 
@@ -190,10 +322,271 @@ void zFXGoo_SceneExit()
     zFXGooInstance* goo = zFXGooInstances;
     for (i = 0; i < 0x18; i++)
     {
-        memset(goo, 0, 4);
+        memset(&goo->atomic, 0, sizeof(RpAtomic*));
         goo->state = zFXGooStateInactive;
         goo++;
     }
+}
+
+// Regalloc
+void zFXGooUpdateInstance(zFXGooInstance* goo, F32 dt)
+{
+    zFXGooState old_state = goo->state;
+    if (goo->state != zFXGooStateNormal)
+    {
+        goo->time += dt;
+        if (goo->time >= goo->timer)
+        {
+            goo->state = (zFXGooState)(((S32)goo->state + 1) & 0x3);
+            goo->timer = (goo->time + goo->state_time[goo->state]) - (goo->time - goo->timer);
+        }
+    }
+
+    if (xabs(goo->state_time[goo->state] < 1e-5f))
+    {
+        goo->state_time[goo->state] = 1e-5f;
+    }
+    goo->alpha = 1.0f - ((goo->timer - goo->time) / goo->state_time[goo->state]);
+    goo->alpha = CLAMP(goo->alpha, 0.0f, 1.0f);
+
+    switch (goo->state)
+    {
+    case zFXGooStateNormal:
+    {
+        if (old_state == zFXGooStateMelting)
+        {
+            zGooMeltFinished(goo->atomic);
+        }
+        goo->alpha = 0.0f;
+        break;
+    }
+    case zFXGooStateFreezing:
+    {
+        F32 rate = xpow(1.1f, 60.0f * dt);
+        goo->min *= rate;
+        goo->max *= rate;
+        break;
+    }
+    case zFXGooStateFrozen:
+    {
+        goo->alpha = 1.0f;
+        if (goo->timer - goo->time <= 2.5f)
+        {
+            xClimateSetSnow(0.0f);
+            if (!xSndIsPlaying(0x7bc0c0ce))
+            {
+                xSndPlay3D(0x7bc0c0ce, 10.0f, 0.0f, 0x80, 0x10000, &goo->center, 0.0f, SND_CAT_GAME,
+                           0.0f);
+            }
+        }
+        break;
+    }
+    case zFXGooStateMelting:
+    {
+        goo->alpha = 1.0f - goo->alpha;
+        F32 rate = xpow(0.9090909f, 60.0f * dt);
+        goo->min *= rate;
+        goo->max *= rate;
+        break;
+    }
+    }
+
+    goo->warbc[0] = goo->w0 * (1.0f - goo->alpha);
+    goo->warbc[2] = goo->w2 * (1.0f - goo->alpha);
+    F32 tmp = xpow(1.0f - goo->alpha, 1.5f);
+    goo->warb_time += tmp * dt;
+
+    if (goo->alpha < 1.0f && goo->atomic != NULL)
+    {
+        RpGeometry* geom = RpAtomicGetGeometry(goo->atomic);
+        if (geom != NULL && RpGeometryLock(geom, 2))
+        {
+            F32 warb_time = goo->warb_time;
+            xVec3* verts = goo->orig_verts;
+            RwV3d* morphVerts = geom->morphTarget->verts;
+            for (S32 s = 0; s < geom->numVertices; s++, verts++, morphVerts++)
+            {
+                F32 a = xfmod(goo->warbc[1] * (verts->x + warb_time), 2 * PI);
+                F32 b = xfmod(goo->warbc[3] * (verts->z + warb_time), 2 * PI);
+                F32 c = isin(a);
+
+                a = goo->warbc[0] * c + verts->y;
+
+                F32 d = isin(b);
+
+                morphVerts->y = goo->warbc[2] * d + a;
+            }
+
+            RpGeometryUnlock(geom);
+        }
+    }
+
+    if (goo_timer_textbox != NULL)
+    {
+        F32 freeze_time = zFXGooFreezeTimeLeft();
+
+        if (freeze_time > 0.0f)
+        {
+            S32 len = freeze_time;
+            if (len > 0x63)
+            {
+                len = 0x63;
+            }
+
+            static char counter_text[] = "##:##";
+            sprintf(counter_text, "%02d", len);
+            goo_timer_textbox->set_text(counter_text);
+            goo_timer_textbox->activate();
+        }
+        else
+        {
+            goo_timer_textbox->deactivate();
+        }
+    }
+}
+
+void zFXGooUpdate(F32 dt)
+{
+    S32 i;
+    zFXGooInstance* pGoo = &zFXGooInstances[0];
+
+    for (i = 0; i < 24; i++)
+    {
+        if (pGoo->state != zFXGooStateInactive)
+        {
+            zFXGooUpdateInstance(pGoo, dt);
+        }
+        pGoo++;
+    }
+}
+
+RpAtomic* zFXGooRenderAtomic(class RpAtomic* atomic)
+{
+    if (g_txtr_gooFrozen == NULL)
+    {
+        g_txtr_gooFrozen = xSTFindAsset(0x13401f, NULL);
+        gAtomicRenderCallBack(atomic);
+    }
+
+    S32 i;
+    zFXGooInstance* goo = zFXGooInstances;
+    for (i = 0; i < 24; i++, goo++)
+    {
+        if (goo->state == zFXGooStateInactive)
+        {
+            continue;
+        }
+        if (goo->atomic == atomic)
+        {
+            break;
+        }
+    }
+
+    xDrawSetColor(0xff, 0x80, 0, 0xff);
+
+    xVec3 refPos;
+    if (goo->ref_parentPos != NULL)
+    {
+        refPos = *goo->ref_parentPos;
+    }
+    else
+    {
+        refPos = g_O3;
+    }
+
+    if (i != 24 && goo->state != zFXGooStateInactive && goo->state != zFXGooStateNormal)
+    {
+        RwIm3DVertex* vertexBuffer = gRenderBuffer.m_vertex;
+        U32 numVerts = 0;
+        if (g_txtr_gooFrozen != NULL)
+        {
+            RwRenderStateSet(rwRENDERSTATETEXTURERASTER, ((RwRaster*)g_txtr_gooFrozen)->parent);
+        }
+        else
+        {
+            RwRenderStateSet(rwRENDERSTATETEXTURERASTER, NULL);
+        }
+        RwRenderStateSet(rwRENDERSTATEVERTEXALPHAENABLE, (void*)TRUE);
+
+        RpGeometry* geom = RpAtomicGetGeometry(atomic);
+        RwRGBA* preLitLum = geom->preLitLum;
+        RwV3d* verts = geom->morphTarget->verts;
+        if (xabs(goo->max - goo->min) < 1e-5f)
+        {
+            goo->max += 1e-5f;
+        }
+
+        F32 a = (-255.0f * goo->alpha) / (goo->max - goo->min);
+        F32 b = (255.0f * goo->alpha * goo->min) / (goo->max - goo->min);
+
+        U8* bytes = (U8*)xMemPushTemp(geom->numVertices);
+
+        for (i = 0; i < geom->numVertices; i++)
+        {
+            xVec3 tmp;
+            xVec3Sub(&tmp, (xVec3*)&verts[i], &goo->center);
+            F32 c = a * xVec3Length2(&tmp) + b;
+            c = CLAMP(c, 0.0f, 255.0f);
+            bytes[i] = (U8)c;
+        }
+
+        RpTriangle* tri = geom->triangles;
+        for (i = 0; i < geom->numTriangles; i++, tri++)
+        {
+            if (numVerts > 0x1dd)
+            {
+                if (RwIm3DTransform(vertexBuffer, numVerts, NULL, 0x19) != NULL)
+                {
+                    RwIm3DRenderPrimitive(rwPRIMTYPETRILIST);
+                    RwIm3DEnd();
+                }
+                numVerts = 0;
+            }
+
+            RwIm3DVertex* currentVertBuf = &vertexBuffer[numVerts];
+            xVec3 a = *(xVec3*)&verts[tri->vertIndex[0]];
+            xVec3 b = *(xVec3*)&verts[tri->vertIndex[1]];
+            xVec3 c = *(xVec3*)&verts[tri->vertIndex[2]];
+
+            a += refPos;
+            b += refPos;
+            c += refPos;
+            numVerts += 3;
+
+            // This part needs to be rewritten somehow, I think it's correct logic though.
+            RwIm3DVertexSetPos(&currentVertBuf[0], a.x, 0.02f + a.y, a.z);
+            RwIm3DVertexSetPos(&currentVertBuf[1], b.x, 0.02f + b.y, b.z);
+            RwIm3DVertexSetPos(&currentVertBuf[2], c.x, 0.02f + c.y, c.z);
+
+            RwRGBA* a_color = &preLitLum[tri->vertIndex[0]];
+            RwIm3DVertexSetRGBA(&currentVertBuf[0], a_color->red, a_color->blue, a_color->red,
+                                bytes[tri->vertIndex[0]]);
+
+            RwRGBA* b_color = &preLitLum[tri->vertIndex[1]];
+            RwIm3DVertexSetRGBA(&currentVertBuf[1], b_color->red, b_color->blue, b_color->red,
+                                bytes[tri->vertIndex[1]]);
+
+            RwRGBA* c_color = &preLitLum[tri->vertIndex[2]];
+            RwIm3DVertexSetRGBA(&currentVertBuf[2], c_color->red, c_color->blue, c_color->red,
+                                bytes[tri->vertIndex[2]]);
+
+            currentVertBuf[0].u = goo->orig_uvs[tri->vertIndex[0]].u;
+            currentVertBuf[1].u = goo->orig_uvs[tri->vertIndex[1]].u;
+            currentVertBuf[2].u = goo->orig_uvs[tri->vertIndex[2]].u;
+            currentVertBuf[0].v = goo->orig_uvs[tri->vertIndex[0]].v;
+            currentVertBuf[1].v = goo->orig_uvs[tri->vertIndex[1]].v;
+            currentVertBuf[2].v = goo->orig_uvs[tri->vertIndex[2]].v;
+        }
+
+        if (RwIm3DTransform(vertexBuffer, numVerts, NULL, 0x19) != NULL)
+        {
+            RwIm3DRenderPrimitive(rwPRIMTYPETRILIST);
+            RwIm3DEnd();
+        }
+        xMemPopTemp(bytes);
+    }
+
+    return atomic;
 }
 
 void zFXUpdate(F32 dt)
@@ -204,11 +597,258 @@ void zFXUpdate(F32 dt)
     xFXUpdate(dt);
 }
 
+void zFXGooFreeze(RpAtomic* atomic, const xVec3* center, xVec3* ref_parPosVec)
+{
+    S32 i;
+    zFXGooInstance* goo = zFXGooInstances;
+    S32 freezeGroup = -1;
+
+    for (i = 0; i < 24; i++, goo++)
+    {
+        if ((goo->state == 0) && (goo->atomic == atomic))
+        {
+            freezeGroup = goo->freezeGroup;
+            break;
+        }
+    }
+
+    if (freezeGroup != -1)
+    {
+        xSndPlay3D(0x7bc0c0ce, 10.0f, 0.0f, 0x80, 0, center, 0.0f, SND_CAT_GAME, 0.0f);
+        xSndPlay3D(0xb9b1d325, 10.0f, 0.0f, 0x80, 0, center, 0.0f, SND_CAT_GAME, 0.0f);
+        xClimateSetSnow(1.0f);
+
+        goo = zFXGooInstances;
+        for (i = 0; i < 24; i++, goo++)
+        {
+            if (goo->freezeGroup == freezeGroup)
+            {
+                goo->state = zFXGooStateFreezing;
+                goo->time = 0.0f;
+                goo->timer = goo->time + goo->state_time[goo->state];
+
+                goo->center = *center;
+                goo->min = 3.0f;
+                goo->max = 4.0f;
+                goo->ref_parentPos = ref_parPosVec;
+
+                if (ref_parPosVec != NULL)
+                {
+                    goo->pos_parentOnFreeze = *ref_parPosVec;
+                }
+                else
+                {
+                    goo->pos_parentOnFreeze = g_O3;
+                }
+            }
+        }
+    }
+}
+
+S32 zFXGooIs(xEnt* obj, F32& depth, U32 playerCheck)
+{
+    S32 i;
+    zFXGooInstance* goo = zFXGooInstances;
+
+    for (i = 0; i < 24; i++, goo++)
+    {
+        if (goo->state == zFXGooStateInactive)
+        {
+            continue;
+        }
+        if (goo->atomic == obj->model->Data)
+        {
+            break;
+        }
+    }
+
+    if (i == 24)
+    {
+        return TRUE;
+    }
+
+    if (goo->state == zFXGooStateNormal)
+    {
+        return TRUE;
+    }
+
+    xVec3 pos;
+    xVec3Sub(&pos, (xVec3*)&globals.player.ent.model->Mat->pos, &goo->center);
+
+    if (xVec3Dot(&pos, &pos) > goo->max)
+    {
+        return TRUE;
+    }
+    depth = 0.0f;
+    if (playerCheck)
+    {
+        globals.player.ForceSlipperyFriction = 0.2f;
+        globals.player.ForceSlipperyTimer = 0.1f;
+    }
+
+    return FALSE;
+}
+
+void zFXGooEventSetWarb(xEnt* ent, const F32* warb)
+{
+    S32 i;
+    zFXGooInstance* goo = zFXGooInstances;
+    for (i = 0; i < 24; i++, goo++)
+    {
+        if (goo->state == zFXGooStateInactive)
+        {
+            continue;
+        }
+        if (goo->atomic == ent->model->Data)
+        {
+            break;
+        }
+    }
+
+    if (i == 24)
+    {
+        return;
+    }
+
+    memcpy(goo->warbc, warb, sizeof(goo->warbc));
+    goo->w0 = goo->warbc[0];
+    goo->w2 = goo->warbc[2];
+}
+
+void zFXGooEventSetFreezeDuration(xEnt* ent, F32 duration)
+{
+    S32 i;
+    zFXGooInstance* goo = zFXGooInstances;
+    S32 freezeGroup = -1;
+    for (i = 0; i < 24; i++, goo++)
+    {
+        if (goo->state == zFXGooStateInactive)
+        {
+            continue;
+        }
+        if (goo->atomic == ent->model->Data)
+        {
+            freezeGroup = goo->freezeGroup;
+            break;
+        }
+    }
+
+    if (freezeGroup == -1)
+    {
+        return;
+    }
+
+    goo = zFXGooInstances;
+    for (i = 0; i < 24; i++, goo++)
+    {
+        if (goo->freezeGroup == freezeGroup)
+        {
+            goo->state_time[zFXGooStateFrozen] = duration;
+        }
+    }
+}
+
+void zFXGooEventMelt(xEnt* ent)
+{
+    S32 i;
+    zFXGooInstance* goo = zFXGooInstances;
+    S32 freezeGroup = -1;
+    for (i = 0; i < 24; i++, goo++)
+    {
+        if (goo->state != zFXGooStateFrozen)
+        {
+            continue;
+        }
+        if (goo->atomic == ent->model->Data)
+        {
+            freezeGroup = goo->freezeGroup;
+            break;
+        }
+    }
+
+    if (freezeGroup == -1)
+    {
+        return;
+    }
+
+    goo = zFXGooInstances;
+    for (i = 0; i < 24; i++, goo++)
+    {
+        if (goo->freezeGroup == freezeGroup)
+        {
+            goo->timer = 0.0f;
+        }
+    }
+}
+
+F32 zFXGooFreezeTimeLeft()
+{
+    zFXGooInstance* goo = zFXGooInstances;
+    zFXGooInstance* end = goo + 24;
+    F32 maxTime = 0.0f;
+    for (; goo != end; goo++)
+    {
+        F32 time = 0.0f;
+        switch (goo->state)
+        {
+        case zFXGooStateFreezing:
+        {
+            time += goo->state_time[zFXGooStateFrozen];
+        }
+        case zFXGooStateFrozen:
+        {
+            time += goo->state_time[zFXGooStateMelting];
+        }
+        case zFXGooStateMelting:
+        {
+            time += (goo->timer - goo->time);
+            break;
+        }
+        }
+
+        if (maxTime < time)
+        {
+            maxTime = time;
+        }
+    }
+    return maxTime;
+}
+
+void zFX_SpawnBubbleHit(const xVec3* pos, U32 num, const xVec3* pos_rnd,
+                        const xVec3* vel_rnd, float vel_scale);
+void zFX_SpawnBubbleTrail(const xVec3* pos, U32 num, const xVec3* pos_rnd,
+                          const xVec3* vel_rnd);
+
+void zFX_SpawnBubbleHit(const xVec3* pos, U32 num)
+{
+    zFX_SpawnBubbleHit(pos, num, &bubblehit_pos_rnd, &bubblehit_vel_rnd, bubblehit_vel_scale);
+}
+
+void zFX_SpawnBubbleHit(const xVec3* pos, U32 num, const xVec3* pos_rnd, const xVec3* vel_rnd,
+                        float vel_scale)
+{
+}
+
+void zFX_SpawnBubbleTrail(const xVec3* pos, U32 num)
+{
+    zFX_SpawnBubbleTrail(pos, num, &bubblehit_pos_rnd, &bubblehit_vel_rnd);
+}
+
 namespace
 {
+    bool model_is_preinstanced(RpAtomic* atomic) {
+        RpGeometry* geom = RpAtomicGetGeometryMacro(atomic);
+        if(geom == NULL) {
+            return TRUE;
+        }
+
+        return !(geom->morphTarget != NULL && geom->morphTarget->verts != NULL);
+    }
+
     void add_popper_tweaks()
     {
     }
+
     void add_entrail_tweaks()
     {
     }
@@ -307,21 +947,6 @@ void reset_entrails()
     }
 }
 
-void zFX_SpawnBubbleHit(const xVec3* pos, unsigned int num, xVec3* pos_rnd, xVec3* vel_rnd,
-                        float vel_scale);
-void zFX_SpawnBubbleTrail(const xVec3* pos, unsigned int num, const xVec3* pos_rnd,
-                          const xVec3* vel_rnd);
-
-void zFX_SpawnBubbleHit(const xVec3* pos, U32 num)
-{
-    zFX_SpawnBubbleHit(pos, num, &bubblehit_pos_rnd, &bubblehit_vel_rnd, bubblehit_vel_scale);
-}
-
-void zFX_SpawnBubbleTrail(const xVec3* pos, U32 num)
-{
-    zFX_SpawnBubbleTrail(pos, num, &bubblehit_pos_rnd, &bubblehit_vel_rnd);
-}
-
 void init_poppers()
 {
     reset_poppers();
@@ -340,21 +965,6 @@ void reset_poppers()
 }
 
 void zFXGooUpdateInstance(zFXGooInstance*, F32);
-
-void zFXGooUpdate(F32 dt)
-{
-    int i;
-    zFXGooInstance* pGoo = &zFXGooInstances[0];
-
-    for (i = 0; i < 0x18; i++)
-    {
-        if (pGoo->state != zFXGooStateInactive)
-        {
-            zFXGooUpdateInstance(pGoo, dt);
-        }
-        pGoo++;
-    }
-}
 
 xVec3& xVec3::up_normalize()
 {

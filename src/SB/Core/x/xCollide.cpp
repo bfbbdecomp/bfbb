@@ -34,20 +34,7 @@ extern U8 xClumpColl_FilterFlags;
 
 #define rwInvSqrtMacro(_recip, _input) (*(_recip) = _rwInvSqrt(_input))
 
-#define RpGeometryGetTriangles(_geometry) RpGeometryGetTrianglesMacro(_geometry) // bageomet.h
-
-#define RpGeometryGetTrianglesMacro(_geometry) ((_geometry)->triangles) // bageomet.h
-
-#define RpMorphTargetGetVertices(_mt) RpMorphTargetGetVerticesMacro(_mt) // bageomet.h
-
-#define RpMorphTargetGetVerticesMacro(_mt) ((_mt)->verts) // bageomet.h
-
-#define RpGeometryGetMorphTarget(_geometry, _index)                                                \
-    RpGeometryGetMorphTargetMacro(_geometry, _index) // bageomet.h
-
-#define RpGeometryGetMorphTargetMacro(_geometry, _index)                                           \
-    (&((_geometry)->morphTarget[(_index)])) // bageomet.h
-
+#include <world/bageomet.h>
 
 _xCollsIdx xCollideGetCollsIdx(const xCollis* coll, const xVec3* tohit, const xMat3x3* mat)
 {

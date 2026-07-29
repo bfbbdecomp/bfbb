@@ -500,13 +500,13 @@ struct RwMemoryFunctions
 
 struct RwFreeList
 {
-    RwUInt32 entrySize;
-    RwUInt32 entriesPerBlock;
-    RwUInt32 heapSize;
-    RwUInt32 alignment;
-    RwLinkList blockList;
-    RwUInt32 flags;
-    RwLLLink link;
+    RwUInt32 entrySize; // 0x0
+    RwUInt32 entriesPerBlock; // 0x4
+    RwUInt32 heapSize; // 0x8
+    RwUInt32 alignment; // 0xC
+    RwLinkList blockList; // 0x10
+    RwUInt32 flags; // 0x18
+    RwLLLink link; // 0x1C
 };
 
 typedef void (*RwFreeListCallBack)(void* pMem, void* pData);
@@ -1131,20 +1131,20 @@ typedef RwBool (*RwIm3DRenderIndexedPrimitiveFunction)(RwPrimitiveType primtype,
 
 struct RwDevice
 {
-    RwReal gammaCorrection;
-    RwSystemFunc fpSystem;
-    RwReal zBufferNear;
-    RwReal zBufferFar;
-    RwRenderStateSetFunction fpRenderStateSet;
-    RwRenderStateGetFunction fpRenderStateGet;
-    RwIm2DRenderLineFunction fpIm2DRenderLine;
-    RwIm2DRenderTriangleFunction fpIm2DRenderTriangle;
-    RwIm2DRenderPrimitiveFunction fpIm2DRenderPrimitive;
-    RwIm2DRenderIndexedPrimitiveFunction fpIm2DRenderIndexedPrimitive;
-    RwIm3DRenderLineFunction fpIm3DRenderLine;
-    RwIm3DRenderTriangleFunction fpIm3DRenderTriangle;
-    RwIm3DRenderPrimitiveFunction fpIm3DRenderPrimitive;
-    RwIm3DRenderIndexedPrimitiveFunction fpIm3DRenderIndexedPrimitive;
+    RwReal gammaCorrection; // 0x0
+    RwSystemFunc fpSystem; // 0x4
+    RwReal zBufferNear; // 0x8
+    RwReal zBufferFar; // 0xC
+    RwRenderStateSetFunction fpRenderStateSet; // 0x10
+    RwRenderStateGetFunction fpRenderStateGet; // 0x14
+    RwIm2DRenderLineFunction fpIm2DRenderLine; // 0x18
+    RwIm2DRenderTriangleFunction fpIm2DRenderTriangle; // 0x1C
+    RwIm2DRenderPrimitiveFunction fpIm2DRenderPrimitive; // 0x20
+    RwIm2DRenderIndexedPrimitiveFunction fpIm2DRenderIndexedPrimitive; // 0x24
+    RwIm3DRenderLineFunction fpIm3DRenderLine; // 0x28
+    RwIm3DRenderTriangleFunction fpIm3DRenderTriangle; // 0x2C
+    RwIm3DRenderPrimitiveFunction fpIm3DRenderPrimitive; // 0x30
+    RwIm3DRenderIndexedPrimitiveFunction fpIm3DRenderIndexedPrimitive; // 0x34
 };
 
 struct RwMetrics
@@ -1202,22 +1202,22 @@ enum RwEngineStatus
 
 struct RwGlobals
 {
-    void* curCamera;
-    void* curWorld;
-    RwUInt16 renderFrame;
-    RwUInt16 lightFrame;
-    RwUInt16 pad[2];
-    RwDevice dOpenDevice;
-    RwStandardFunc stdFunc[29];
-    RwLinkList dirtyFrameList;
-    RwFileFunctions fileFuncs;
-    RwStringFunctions stringFuncs;
-    RwMemoryFunctions memoryFuncs;
-    RwMemoryAllocFn memoryAlloc;
-    RwMemoryFreeFn memoryFree;
-    RwMetrics* metrics;
-    RwEngineStatus engineStatus;
-    RwUInt32 resArenaInitSize;
+    void* curCamera; // 0x0
+    void* curWorld; // 0x4
+    RwUInt16 renderFrame; // 0x8
+    RwUInt16 lightFrame; // 0xA
+    RwUInt16 pad[2]; // 0xC
+    RwDevice dOpenDevice; // 0x10
+    RwStandardFunc stdFunc[29]; // 0x48
+    RwLinkList dirtyFrameList; // 0xBC
+    RwFileFunctions fileFuncs; // 0xC4
+    RwStringFunctions stringFuncs; // 0xF0
+    RwMemoryFunctions memoryFuncs; // 0x134
+    RwMemoryAllocFn memoryAlloc; // 0x144
+    RwMemoryFreeFn memoryFree; // 0x148
+    RwMetrics* metrics; // 0x14C
+    RwEngineStatus engineStatus; // 0x150
+    RwUInt32 resArenaInitSize; // 0x154
 };
 
 typedef struct RwResEntry;

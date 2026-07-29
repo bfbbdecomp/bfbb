@@ -86,6 +86,8 @@ struct tweak_callback
     void (*on_update)(tweak_info&);
     void (*convert_mem_to_tweak)(tweak_info&, void*);
     void (*convert_tweak_to_mem)(tweak_info&, void*);
+
+    static tweak_callback create_change(void (*)(const tweak_info&));
 };
 
 void xprintf(const char* msg, ...);

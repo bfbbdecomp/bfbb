@@ -9,36 +9,21 @@
 #include "zNPCTypeAmbient.h"
 #include "zNPCTypes.h"
 #include <xutil.h>
+#include "macros.h"
+#include "xMathInlines.h"
 #include "zNPCGoals.h"
 #include "zGrid.h"
 
-extern char* g_strz_ambianim[12];
-extern S32 g_hash_ambianim[12];
+U32 g_hash_ambianim[12] = { 0 };
+char* g_strz_ambianim[12] = {
+    "Unknown",  "Idle01", "Idle02",   "Idle03",  "Fidget01", "Fidget02",
+    "Fidget03", "Move01", "Bumped01", "Dance01", "Pray01",   "Attack01",
+};
 extern zGlobals globals;
 extern F32 zNPCTypeAmbientx40600000;
 extern F32 zNPCTypeAmbientx405f66f3;
 extern F32 zNPCTypeAmbientx3f400000;
 extern F32 zNPCTypeAmbientx3edf66f3;
-extern F32 _882;
-extern F32 _883;
-
-// Taken from zNPCTypeAmbient.s.
-// Defining these here makes the stringBase0 offsets match in the later functions.
-static char* str1 = "Unknown";
-static char* str2 = "Idle01";
-static char* str3 = "Idle02";
-static char* str4 = "Idle03";
-static char* str5 = "Fidget01";
-static char* str6 = "Fidget02";
-static char* str7 = "Fidget03";
-static char* str8 = "Move01";
-static char* str9 = "Bumped01";
-static char* str10 = "Dance01";
-static char* str11 = "Pray01";
-static char* str12 = "Attack01";
-static char* str13 = "zNPCAmbient";
-static char* str14 = "zNPCJelly";
-static char* str15 = "zNPCNeptune";
 
 void ZNPC_Ambient_Startup()
 {
@@ -55,7 +40,6 @@ void ZNPC_Ambient_Shutdown()
 {
 }
 
-// FIXME: new calls aren't working
 xFactoryInst* ZNPC_Create_Ambient(S32 who, RyzMemGrow* grow, void*)
 {
     zNPCAmbient* inst = NULL;
@@ -64,28 +48,28 @@ xFactoryInst* ZNPC_Create_Ambient(S32 who, RyzMemGrow* grow, void*)
     {
     case NPC_TYPE_AMBIENT:
     {
-        // inst = new (who, grow) zNPCAmbient(who);
+        inst = new (who, grow) zNPCAmbient(who);
         break;
     }
     case NPC_TYPE_JELLYPINK:
     case NPC_TYPE_JELLYBLUE:
     {
-        // inst = new (who, grow) zNPCJelly(who);
+        inst = new (who, grow) zNPCJelly(who);
         break;
     }
     case NPC_TYPE_KINGNEPTUNE:
     {
-        // inst = new (who, grow) zNPCNeptune(who);
+        inst = new (who, grow) zNPCNeptune(who);
         break;
     }
     case NPC_TYPE_MIMEFISH:
     {
-        // inst = new (who, grow) zNPCMimeFish(who);
+        inst = new (who, grow) zNPCMimeFish(who);
         break;
     }
     case NPC_TYPE_COW:
     {
-        // inst = new (who, grow) zNPCMimeFish(who);
+        inst = new (who, grow) zNPCMimeFish(who);
         break;
     }
     }
@@ -101,7 +85,7 @@ void ZNPC_Destroy_Ambient(xFactoryInst* inst)
 xAnimTable* ZNPC_AnimTable_Ambient()
 {
     xAnimTable* table = (xAnimTable*)xAnimTableNew("zNPCAmbient", NULL, 0);
-    xAnimTableNewState(table, g_strz_ambianim[1], 0x110, 1, _882, NULL, NULL, _883, NULL, NULL,
+    xAnimTableNewState(table, g_strz_ambianim[1], 0x110, 1, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
                        xAnimDefaultBeforeEnter, NULL, NULL);
     return table;
 }
@@ -167,16 +151,14 @@ xAnimTable* ZNPC_AnimTable_Neptune()
     return table;
 }
 
-/* This should be 100% matching but it causes a vtable duplication error for some reason
 void zNPCAmbient::Init(xEntAsset* asset)
 {
     zNPCCommon::Init(asset);
-    if (cfg_npc->dst_castShadow < 0.00000000)
+    if (cfg_npc->dst_castShadow < 0.0f)
     {
-        cfg_npc->dst_castShadow = 0x3f800000;
+        cfg_npc->dst_castShadow = 1.0f;
     }
 }
-*/
 
 void zNPCAmbient::Reset()
 {
@@ -208,6 +190,43 @@ void zNPCAmbient::SelfSetup()
     psy->AddGoal(NPC_GOAL_IDLE, NULL);
     psy->BrainEnd();
     psy->SetSafety(NPC_GOAL_IDLE);
+}
+
+U32 zNPCAmbient::AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal)
+{
+    S32 idx;
+    U32 anim = 0;
+
+    switch (gid)
+    {
+    case 'NGN0':
+    case 'NGN6':
+    case 'NGN7':
+        idx = 1;
+        break;
+    default:
+        idx = 1;
+        break;
+    }
+
+    if (idx >= 0)
+    {
+        anim = g_hash_ambianim[idx];
+    }
+
+    return anim;
+}
+
+S32 zNPCAmbient::NPCMessage(NPCMsg* mail)
+{
+    xPsyche* psy = psy_instinct;
+    if (psy != NULL)
+    {
+        if (psy->GetCurGoal() != NULL)
+        {
+        }
+    }
+    return 0;
 }
 
 void zNPCJelly::Init(xEntAsset* asset)
@@ -298,7 +317,6 @@ void zNPCJelly::JellyKill()
     }
 }
 
-// Really close to matching, but the switch cases aren't quite right
 U32 zNPCJelly::AnimPick(S32 animID, en_NPC_GOAL_SPOT gspot, xGoal* goal)
 {
     U32 r8 = 0;
@@ -316,6 +334,7 @@ U32 zNPCJelly::AnimPick(S32 animID, en_NPC_GOAL_SPOT gspot, xGoal* goal)
         r31 = 4;
         break;
     }
+    case 'NGN1': // 9c
     case 'NGN2': // 9c
     {
         r31 = 7;
@@ -341,8 +360,7 @@ U32 zNPCJelly::AnimPick(S32 animID, en_NPC_GOAL_SPOT gspot, xGoal* goal)
         r31 = 11;
         break;
     }
-    case 'NGN4': // c4
-    case 'NGJ3': // c4
+    default: // c4
     {
         r8 = this->zNPCAmbient::AnimPick(animID, gspot, goal);
         break;
@@ -361,7 +379,7 @@ U32 zNPCJelly::AnimPick(S32 animID, en_NPC_GOAL_SPOT gspot, xGoal* goal)
 void zNPCJelly::BUpdate(xVec3*)
 {
     xVec3 pos_bnd;
-    static xVec3 vec_offset;
+    static const xVec3 vec_offset = { 0.0f, 0.0f, 0.0f };
 
     xVec3* pos = (xVec3*)this->zNPCCommon::BonePos(2);
 
@@ -378,7 +396,7 @@ void zNPCJelly::BUpdate(xVec3*)
 
     pos_bnd += vec_offset;
 
-    xMat3x3LMulVec(&pos_bnd, (xMat3x3*)this->zNPCCommon::BoneMat(0), pos);
+    xMat3x3RMulVec(&pos_bnd, (xMat3x3*)this->zNPCCommon::BoneMat(0), pos);
 
     pos_bnd += *((xVec3*)this->zNPCCommon::BonePos(0));
     this->bound.sph.center = pos_bnd;
@@ -389,7 +407,30 @@ void zNPCJelly::BUpdate(xVec3*)
     zGridUpdateEnt(this);
 }
 
-/* FIXME: This should be 100% matching but it causes a vtable duplication error for some reason */
+void zNPCJelly::ActLikeOctopus()
+{
+    if ((int)this->model->Data->geometry->numVertices >= 1)
+    {
+        S32 supertemp = (this->model->Data->geometry->numVertices >> 4);
+        int tempvar;
+        if (supertemp >= 0)
+        {
+            tempvar = supertemp;
+        }
+
+        for (U32 i = 0; this->model->Data->geometry->numVertices > i; i = i + tempvar)
+        {
+            iModelVertEval(model->Data, i, 1, model->Mat, NULL, NULL);
+            zFX_SpawnBubbleTrail(&this->bound.sph.center, 4);
+        }
+    }
+}
+
+U32 zNPCNeptune::AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal)
+{
+    return 0;
+}
+
 void zNPCNeptune::ParseINI()
 {
     zNPCAmbient::ParseINI();
@@ -481,6 +522,10 @@ S32 zNPCJelly::AmbiHandleMail(NPCMsg* msg)
     return handled;
 }
 
+void zNPCJelly::PlayWithAlpha(F32 dt)
+{
+}
+
 void zNPCJelly::SetAlpha(F32 alpha)
 {
     xModelInstance* model = this->model;
@@ -510,6 +555,60 @@ void zNPCJelly::PlayWithAnimSpd()
             break;
         }
     }
+}
+
+void zNPCJelly::PumpFaster()
+{
+    F32 spd = 4.0f;
+
+    F32 temp3;
+    F32 temp4;
+
+    if (cfg_npc->spd_moveMax > spd)
+    {
+        spd = cfg_npc->spd_moveMax;
+    }
+    temp3 = this->spd_throttle / spd;
+    temp4 = CLAMP(temp3, 0.0f, 1.0f);
+    temp4 = SMOOTH(temp4, 1.0f, 2.5f);
+
+    AnimCurSingle();
+}
+
+void zNPCJelly::JellyBoneWorldPos(xVec3* pos, S32 idx_request) const
+{
+    S32 idx;
+    xVec3 pos_place;
+}
+
+void zNPCJelly::PlayWithLightnin()
+{
+}
+
+U32 zNPCMimeFish::AnimPick(S32 gid, en_NPC_GOAL_SPOT gspot, xGoal* rawgoal)
+{
+    S32 idx;
+    U32 anim = 0;
+
+    switch (gid)
+    {
+    case 'NGN0':
+        idx = 1;
+        break;
+    case 'NGN3':
+        idx = 1;
+        break;
+    default:
+        idx = 1;
+        break;
+    }
+
+    if (idx >= 0)
+    {
+        anim = g_hash_ambianim[idx];
+    }
+
+    return anim;
 }
 
 void zNPCMimeFish::Process(xScene* xscn, F32 dt)

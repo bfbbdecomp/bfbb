@@ -53,7 +53,7 @@ char* g_strz_flotanim[2] = { "Unknown", "Wiggle01" };
 U32 g_hash_flotanim[2];
 U32 g_hash_nytlytanim[2];
 U32 g_hash_ttsanim[2];
-U32 g_hash_cloudanim[3];
+U32 g_hash_cloudanim[3] = { 0, 0, 0 };
 U32 g_hash_shieldanim[2];
 
 char* g_strz_cloudanim[3];

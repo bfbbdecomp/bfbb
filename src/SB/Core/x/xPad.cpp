@@ -281,3 +281,61 @@ void xPadDestroyRumbleChain(S32 idx)
 {
     xPadDestroyRumbleChain(mPad + idx);
 }
+
+S32 xPadAddRumble(S32 idx, _tagRumbleType type, F32 time, S32 replace, U32 fxflags)
+{
+    S32 appended;
+    _tagxRumble* r;
+    _tagxRumble* last_r;
+    _tagxPad* pad;
+
+    pad = mPad + (idx * 0x148);
+    if (!(pad->flags & 4))
+    {
+        return 0;
+    }
+    if (!(pad->flags & 8))
+    {
+        return 0;
+    }
+
+    if (replace != 0)
+    {
+        xPadDestroyRumbleChain(pad);
+    }
+    else
+    {
+        appended = 1;
+    }
+
+    r = &pad->rumble_head;
+    last_r = r;
+    if (pad->rumble_head.next == NULL)
+    {
+        appended = 0;
+    }
+
+    while (r != NULL)
+    {
+        last_r = r;
+        r = r->next;
+    }
+
+    r = xPadGetRumbleSlot();
+    if (r == NULL)
+    {
+        return 0;
+    }
+
+    r->type = type;
+    r->seconds = time;
+    r->active = 1;
+    r->fxflags = (U16)fxflags;
+    last_r->next = r;
+    last_r->next->next = NULL;
+    if (appended == 0)
+    {
+        iPadStartRumble(pad, r);
+    }
+    return 1;
+}

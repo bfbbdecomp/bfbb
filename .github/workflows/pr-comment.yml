@@ -1,0 +1,50 @@
+name: PR Comment
+
+on:
+  workflow_run:
+    workflows: ["Build"]
+    types:
+      - completed
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.event == 'pull_request'
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Download PR number
+        uses: actions/download-artifact@v4
+        with:
+          name: pr_number.txt
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download PR comment
+        uses: actions/download-artifact@v4
+        with:
+          name: pr_comment.txt
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Read PR number
+        uses: actions/github-script@v9
+        id: pr_number
+        with:
+          result-encoding: string
+          script: |
+            try {
+              const fs = require('fs')
+              const pr_number_txt = fs.readFileSync('./pr_number.txt')
+              const pr_number = Number(pr_number_txt)
+              core.setOutput('pr_number', pr_number)
+            } catch (error) {
+              core.setFailed(error.message)
+            }
+      
+      - name: PR comment with file
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          pr-number: ${{ steps.pr_number.outputs.pr_number }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          file-path: pr_comment.txt
