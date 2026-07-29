@@ -1,8 +1,10 @@
 #include "zNPCTypeKingJelly.h"
 
+#include <types.h>
+#include "xMathInlines.h"
 #include "xColor.h"
 #include "zNPCGoalCommon.h"
-#include <types.h>
+#include "zCamera.h"
 #include "string.h"
 
 #define f1868 1.0f
@@ -45,41 +47,6 @@
 
 namespace
 {
-    S32 boss_cam()
-    {
-        return 0; //todo
-    }
-
-    S32 play_sound(int, const xVec3*)
-    {
-        return 0; //todo
-    }
-
-    S32 kill_sound(int)
-    {
-        return 0; //to do
-    }
-
-    void kill_sounds()
-    {
-        for (S32 i = 0; i < 11; i++)
-        {
-            kill_sound(i);
-        }
-    }
-
-    void reset_model_color(xModelInstance* submodel) //25% matching. will need rewritten
-    {
-        while (submodel != NULL)
-        {
-            submodel = submodel->Next;
-        }
-    }
-
-    void tweak()
-    {
-    }
-
     struct tweak_group
     {
         void* context;
@@ -194,6 +161,287 @@ namespace
         void load(xModelAssetParam* ap, U32 apsize);
         void register_tweaks(bool init, xModelAssetParam* ap, U32 apsize, const char*);
     };
+
+    struct sound_data_type 
+    {
+        U32 id[2]; // offset 0x0, size 0x8
+        U8 delayed; // offset 0x8, size 0x1
+        S8 amount; // offset 0x9, size 0x1
+        S8 playing; // offset 0xA, size 0x1
+        F32 time; // offset 0xC, size 0x4
+        U32 handle; // offset 0x10, size 0x4
+        xVec3 * loc; // offset 0x14, size 0x4
+    };
+
+    static tweak_group tweak;
+    static sound_data_type sound_data[11];
+    static zParEmitter* spawn_emitter;
+    static xParEmitterCustomSettings spawn_emitter_settings;
+    static zParEmitter* zap_emitter;
+    static xParEmitterCustomSettings zap_emitter_settings;
+    static zParEmitter* shock_ring_emitter;
+    static xParEmitterCustomSettings shock_ring_emitter_settings;
+    static zParEmitter* thump_ring_emitter;
+    static xParEmitterCustomSettings thump_ring_emitter_settings;
+    static xVec3 ring_segments[64];
+    
+    // TODO: fix this up
+    static char* sound_name[11][3] = {
+        {
+            "KJ_pulseupdown",
+            NULL,
+            NULL
+        },
+        {
+            "KJ_grunt",
+            NULL,
+            NULL
+        },
+        {
+            "KJ_Charge",
+            NULL,
+            NULL
+        },
+        {
+            "KJ_Cheer",
+            NULL,
+            NULL
+        },
+        {
+            "KJ_Land1",
+            NULL,
+            NULL
+        },
+        {
+            "KJ_Land2",
+            NULL,
+            NULL
+        },
+        {
+            "KJ_Mov",
+            NULL,
+            NULL
+        },
+        {
+            "KJ_Osc",
+            NULL,
+            NULL
+        },
+        {
+            "KJ_rise",
+            NULL,
+            NULL
+        },
+        {
+            "KJ_Taunt",
+            NULL,
+            NULL
+        },
+        {
+            "KJ_Pulse",
+            NULL,
+            NULL
+        },
+    };
+
+    static const U8 sound_flags[11] = { 0x1, 0x0, 0x0, 0x0, 0x0,
+                                        0x0, 0x1, 0x1, 0x0, 0x0, 0x0};
+
+    // TODO: Match the data
+    static xBinaryCamera boss_cam = {};
+}
+
+namespace
+{
+    void init_sound()
+    {
+        memset(sound_data, NULL, sizeof(sound_data));
+
+        for (S32 i = 0; i < 11; i++)
+        {
+            for (S32 j = 0; j < 2; j++)
+            {
+                if (sound_name[i][j] == NULL)
+                {
+                    break;
+                }
+
+                sound_data[i].id[j] = xStrHash(sound_name[i][j]);
+                sound_data[i].amount++;
+            }
+            
+            sound_data[i].playing = -1;
+        }
+    }
+
+    void play_sound_immediate(S32 sound_index, const xVec3* pos)
+    {
+        sound_data_type& sound = sound_data[sound_index];
+
+        if (sound.handle != 0 && sound_flags[sound_index] & 0x1)
+        {
+            return;
+        }
+
+        sound.playing = 0;
+        sound.delayed = FALSE;
+
+        if (sound.amount > 1)
+        {
+            sound.playing = (xrand() >> 13) % sound.amount;
+        }
+
+        sound.handle = xSndPlay3D(
+            sound.playing,
+            tweak.sound[sound_index].volume,
+            1.0f,
+            tweak.sound[sound_index].priority,
+            0x0,
+            pos,
+            tweak.sound[sound_index].radius_inner,
+            tweak.sound[sound_index].radius_outer,
+            SND_CAT_GAME,
+            0.0f
+        );
+    }
+
+    void play_sound(S32 sound_index, const xVec3* pos)
+    {
+        if (tweak.sound[sound_index].delay <= 0.0f)
+        {
+            play_sound_immediate(sound_index, pos);
+            return;
+        }
+
+        sound_data_type& sound = sound_data[sound_index];
+        if (sound.handle != 0 && sound_flags[sound_index] & 0x1)
+        {
+            return;
+        }
+     
+        sound.delayed = TRUE;
+        sound.time = 0.0f;
+    }
+
+    void sound_update(F32 dt)
+    {
+        for (S32 i = 0; i < 11; i++)
+        {
+            sound_data_type& sound = sound_data[i];
+
+            if (sound.delayed == FALSE)
+            {
+                continue;
+            }
+
+            sound.time += dt;
+
+            if (sound.time >= tweak.sound[i].delay)
+            {
+                play_sound_immediate(i, sound.loc);
+            }
+        }
+    }
+
+    S32 set_ring_segments(const xVec3& center, F32 radius, F32 segment_length)
+    {
+        static F32 sin_lookup[9];
+        static F32 cos_lookup[9];
+        static U8 sclookup_inited = FALSE;
+
+        if (!sclookup_inited)
+        {
+            sclookup_inited = TRUE;
+
+            F32 angle = 0.0f;
+            for (S32 i = 0; i < 9; i++)
+            {
+                sin_lookup[i] = isin(angle);
+                cos_lookup[i] = icos(angle);
+
+                const F32 angle_step = PI / 32.0f;
+                angle += angle_step;
+            }
+        }
+
+        S32 size = 0.5f + ((2.0f * radius * PI) / segment_length);
+        size = (size + 7) & ~7;
+
+        if (size > 64)
+        {
+            size = 64;
+        }
+        if (size <= 0)
+        {
+            return 0;
+        }
+
+        for (S32 i = 0; i < size; i++)
+        {
+            // TODO: what is here
+        }
+
+        return size;
+    }
+
+    void updown_ring_update(lightning_ring& ring, F32 dt)
+    {
+        ring.current.time += ring.current.accel * dt;
+        ring.current.time = xfmod(ring.current.time, ring.delay);
+
+        const F32 t = ring.current.time / ring.delay;
+        const F32 range = ring.max_height - ring.min_height;
+        const F32 wave = 1.0f + isin(PI * t);
+
+        ring.current.height = ring.min_height + (0.5f * (range * wave));
+    }
+
+    void expand_ring_update(lightning_ring& ring, F32 dt)
+    {
+        ring.current.vel += ring.current.accel * dt;
+        if (ring.current.vel > ring.max_vel)
+        {
+            ring.current.vel = ring.max_vel;
+        }
+
+        ring.current.radius += ring.current.vel * dt;
+        if (ring.current.radius > ring.max_height)
+        {
+            ring.current.time += dt;
+
+            const F32 t = ring.current.time / ring.delay;
+            const F32 frac = 1.0f - t;
+            if (frac < 0.0f)
+            {
+                ring.property.color.a = 0;
+            }
+            else
+            {
+                ring.property.color.a = 255.0f * frac + 0.5f;
+            }
+        }
+    }
+    
+    S32 kill_sound(int)
+    {
+        return 0; //to do
+    }
+
+    void kill_sounds()
+    {
+        for (S32 i = 0; i < 11; i++)
+        {
+            kill_sound(i);
+        }
+    }
+
+    void reset_model_color(xModelInstance* submodel) //25% matching. will need rewritten
+    {
+        while (submodel != NULL)
+        {
+            submodel = submodel->Next;
+        }
+    }
 
     void tweak_group::load(xModelAssetParam* ap, U32 apsize)
     {
@@ -1274,6 +1522,14 @@ xAnimTable* ZNPC_AnimTable_KingJelly()
     return table;
 }
 
+zNPCKingJelly::zNPCKingJelly(S32 myType) : zNPCSubBoss(myType)
+{
+    this->show_vertex = -1;
+    this->enabled = TRUE;
+    memset(&this->tentacle_lightning, 0, 7 * sizeof(zLightning*));
+    init_sound();
+}
+
 void zNPCKingJelly::Init(xEntAsset* asset)
 {
     zNPCCommon::Init(asset);
@@ -1385,9 +1641,77 @@ void zNPCKingJelly::SelfSetup()
     psy->SetSafety(NPC_GOAL_KJIDLE);
 }
 
+void zNPCKingJelly::Damage(en_NPC_DAMAGE_TYPE damtype, xBase*, const xVec3*)
+{
+    if (!this->flag.fighting || this->flag.died)
+    {
+        return;
+    }
+
+    S32 state = this->psy_instinct->GIDOfActive();
+    switch (damtype)
+    {
+    case DMGTYP_SIDE:
+    case DMGTYP_BOULDER:
+    case DMGTYP_BUBBOWL:
+        if (state == 'NGM5' &&
+            (this->shockstate == SS_RELEASE 
+            || this->shockstate == SS_COOL_DOWN 
+            || this->shockstate == SS_STOP))
+        {
+            set_life(this->life - 1);
+        }
+        break;
+    
+    case DMGTYP_CRUISEBUBBLE:
+        if (!(state == 'NGM6') && !(state == 'NGM7') )
+        {
+            set_life(this->life - 1);
+        }
+        break;
+    }
+}
+
 S32 zNPCKingJelly::max_strikes() const
 {
     return round + 1;
+}
+
+void zNPCKingJelly::update_camera(F32 dt)
+{
+    zCameraDisableTracking(CO_BOSS);
+    if(!(zCameraIsTrackingDisabled() & ~0x8))
+    {
+        boss_cam.update(dt);
+    }
+}
+
+void zNPCKingJelly::set_life(S32 life)
+{
+    S32 oldlife = this->life;
+    
+    this->life = range_limit<S32>(life, 0, tweak.max_life);
+    S32 state = this->psy_instinct->GIDOfActive();
+    if (!(state == 'NGM6') && !(state == 'NGM7') && !(this->life >= oldlife))
+    {
+        this->psy_instinct->GoalSet('NGM6', GOAL_STAT_PROCESS);
+        start_blink();
+
+        for (S32 i = this->life; i < oldlife; i++)
+        {
+            zEntEvent(this, this, eEventNPCHPDecremented);
+        }
+
+        if (this->life <= 0)
+        {
+            zEntEvent(this, this, eEventDeath);
+        }
+    } 
+    else
+    {
+        update_round();
+    }
+
 }
 
 void zNPCKingJelly::init_child(zNPCKingJelly::child_data& child, zNPCCommon& npc, int wave)

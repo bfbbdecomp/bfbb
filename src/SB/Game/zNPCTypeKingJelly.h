@@ -81,6 +81,7 @@ struct lightning_ring
     void create();
     void destroy();
     static void destroy(S32);
+    void refresh();
 };
 
 struct zNPCKingJelly : zNPCSubBoss
@@ -181,6 +182,7 @@ struct zNPCKingJelly : zNPCSubBoss
     void RenderExtra();
     void ParseINI();
     void SelfSetup();
+    void Damage(en_NPC_DAMAGE_TYPE damtype, xBase*, const xVec3*);
     S32 max_strikes() const;
     void init_child(zNPCKingJelly::child_data&, zNPCCommon&, int);
     void disable_child(zNPCKingJelly::child_data&);
@@ -188,6 +190,8 @@ struct zNPCKingJelly : zNPCSubBoss
     void start_fight();
     void spawn_children(int, int);
     S32 max_strikes();
+    void update_camera(F32 dt);
+    void set_life(S32 life);
     void load_model();
     void load_curtain_model();
     void show_shower_model();
