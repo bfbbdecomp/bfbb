@@ -21,17 +21,17 @@ void RwGameCubeGetXFBs(void*, void*);
 }
 
 // .bss
-static U32 Bink_surface_type[5];
+static u32 Bink_surface_type[RAD3DSURFACECOUNT];
 
 // .sbss
 static S32 frame_num;
-U32 fuckingSurfaceType;
+u32 Rad_surface_type;
 static HBINK Bink;
 static HRAD3DIMAGE Image;
 static S32 Paused;
 static void* pixels;
 static volatile F32 vol;
-S32 ip;
+S32 track_id;
 s32 oof;
 void* iFMV::mXFBs[2];
 void* iFMV::mCurrentFrameBuffer;
@@ -70,33 +70,31 @@ U32 iFMVPlay(char* filename, U32 buttons, F32 time, bool skippable, bool lockCon
 
 static void Setup_surface_array()
 {
-    Bink_surface_type[0] = BINKSURFACE32;
-    Bink_surface_type[1] = BINKSURFACE32A;
-    Bink_surface_type[2] = BINKSURFACE565;
-    Bink_surface_type[3] = BINKSURFACE4444;
-    Bink_surface_type[4] = BINKSURFACEYUY2;
+    Bink_surface_type[RAD3DSURFACE32] = BINKSURFACE32;
+    Bink_surface_type[RAD3DSURFACE32A] = BINKSURFACE32A;
+    Bink_surface_type[RAD3DSURFACE565] = BINKSURFACE565;
+    Bink_surface_type[RAD3DSURFACE4444] = BINKSURFACE4444;
+    Bink_surface_type[RAD3DSURFACEYUY2] = BINKSURFACEYUY2;
 }
 
-// WIP.
 void Decompress_frame(HBINK bnk, HRAD3DIMAGE rad_image, long flags)
 {
-    struct Result
+    struct RAD3DLockInfo
     {
-        S32 unk_0;
-        S32 unk_4;
-        U32 unk_8;
-        U32 unk_c;
+        S32 copy_status;
+        S32 do_frame_status;
+        u32 surface_type;
+        u32 buffer_pitch;
     };
-    Result result;
-    result.unk_4 = BinkDoFrame(bnk);
-    if (Lock_RAD_3D_image(rad_image, &pixels, &result.unk_c, &result.unk_8) != 0)
+    RAD3DLockInfo lock_info;
+
+    lock_info.do_frame_status = BinkDoFrame(bnk);
+    if (Lock_RAD_3D_image(rad_image, &pixels, &lock_info.buffer_pitch, &lock_info.surface_type) != 0)
     {
-        S32 mask = flags * -1;
-        mask = mask | flags;
-        mask = mask >> 0x1f;
-        mask = mask & 0x80000000;
-        mask |= Bink_surface_type[result.unk_8];
-        result.unk_0 = BinkCopyToBuffer(bnk, pixels, result.unk_c, bnk->Height, NULL, NULL, mask);
+        u32 copy_flags =
+            Bink_surface_type[lock_info.surface_type] | (flags != 0 ? BINKCOPYALL : 0);
+        lock_info.copy_status =
+            BinkCopyToBuffer(bnk, pixels, lock_info.buffer_pitch, bnk->Height, NULL, NULL, copy_flags);
         Unlock_RAD_3D_image(rad_image);
     }
 }
@@ -241,18 +239,18 @@ static void PlayFMV(char* fname, size_t buttons, F32 time)
 
     if (Bink != NULL)
     {
-        if (Bink->Width != 0)
+        if (Bink->NumTracks != 0)
         {
-            for (ip = 0; ip <= Bink->Width; ++ip)
+            for (track_id = 0; track_id <= Bink->NumTracks; ++track_id)
             {
                 vol = gSnd.categoryVolFader[SND_CAT_CUTSCENE];
                 vol = vol * vol;
                 vol = vol * 32768.0f;
-                BinkSetVolume(Bink, ip, vol);
+                BinkSetVolume(Bink, track_id, vol);
             }
         }
 
-        Image = Open_RAD_3D_image(NULL, Bink->Width, Bink->Height, fuckingSurfaceType);
+        Image = Open_RAD_3D_image(NULL, Bink->Width, Bink->Height, Rad_surface_type);
         if (Image != NULL)
         {
             if (frame_num != 0)

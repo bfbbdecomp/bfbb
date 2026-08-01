@@ -286,7 +286,7 @@ cflags_bink = [
     "-D__GEKKO__",
     "-I src/bink/include",
     "-I src/PowerPC_EABI_Support/include",
-    "-G4",
+    "-G8",
 ]
 
 # Renderware library flags
@@ -641,17 +641,17 @@ config.libs = [
         "progress_category": "bink",
         "objects": [
             Object(NonMatching, "bink/src/sdk/decode/ngc/binkngc.c"),
-            Object(NonMatching, "bink/src/sdk/decode/ngc/ngcsnd.c"),
+            Object(NonMatching, "bink/src/sdk/decode/ngc/ngcsnd.c", extra_cflags=["-G0"]),
             Object(NonMatching, "bink/src/sdk/decode/binkread.c"),
             Object(NonMatching, "bink/src/sdk/decode/ngc/ngcfile.c"),
             Object(NonMatching, "bink/src/sdk/decode/yuv.cpp"),
             Object(NonMatching, "bink/src/sdk/decode/binkacd.c"),
-            Object(NonMatching, "bink/shared/time/radcb.c"),
+            Object(Matching, "bink/shared/time/radcb.c"),
             Object(NonMatching, "bink/src/sdk/decode/expand.c"),
-            Object(NonMatching, "bink/src/sdk/popmal.c"),
+            Object(Matching, "bink/src/sdk/popmal.c"),
             Object(NonMatching, "bink/src/sdk/decode/ngc/ngcrgb.c"),
             Object(NonMatching, "bink/src/sdk/decode/ngc/ngcyuy2.c"),
-            Object(NonMatching, "bink/src/sdk/varbits.c"),
+            Object(Matching, "bink/src/sdk/varbits.c"),
             Object(NonMatching, "bink/src/sdk/fft.c"),
             Object(NonMatching, "bink/src/sdk/dct.c"),
             Object(NonMatching, "bink/src/sdk/bitplane.c"),
