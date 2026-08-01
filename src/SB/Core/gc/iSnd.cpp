@@ -613,16 +613,20 @@ bool iSndIsPlaying(U32 assetID)
     {
         if (gSnd.voice[i].assetID == assetID)
         {
-            if(streams[i].vinf.flags & 0xC000 && (streams[i].vinf.flags & 0x82) == 0) {
+            if (streams[i].vinf.flags & 0xC000 && (streams[i].vinf.flags & 0x82) == 0)
+            {
                 return true;
             }
             return false;
         }
     }
 
-    for(S32 i = 0; i < 0x3a; i++) {
-        if(gSnd.voice[i+6].assetID == assetID) {
-            if(voices[i].flags & 0x4 && (voices[i].flags & 0x8) == 0) {
+    for (S32 i = 0; i < 0x3a; i++)
+    {
+        if (gSnd.voice[i + 6].assetID == assetID)
+        {
+            if (voices[i].flags & 0x4 && (voices[i].flags & 0x8) == 0)
+            {
                 return true;
             }
             return false;
@@ -633,10 +637,12 @@ bool iSndIsPlaying(U32 assetID)
 
 bool iSndIsPlaying(U32 assetID, U32 parid)
 {
-    for(U32 i = 0; i < 0x40; i++) {
-        if((assetID == 0 || gSnd.voice[i].assetID == assetID) && gSnd.voice[i].parentID == parid)
+    for (U32 i = 0; i < 0x40; i++)
+    {
+        if ((assetID == 0 || gSnd.voice[i].assetID == assetID) && gSnd.voice[i].parentID == parid)
         {
-            if(iSndIsPlaying(gSnd.voice[i].assetID)) {
+            if (iSndIsPlaying(gSnd.voice[i].assetID))
+            {
                 return true;
             };
         }
@@ -646,7 +652,6 @@ bool iSndIsPlaying(U32 assetID, U32 parid)
 
 bool iSndIsPlayingByHandle(U32 handle)
 {
-
     if (handle == 0)
     {
         return false;
@@ -656,17 +661,18 @@ bool iSndIsPlayingByHandle(U32 handle)
     {
         if (gSnd.voice[i].sndID == handle)
         {
-            return (streams[i].vinf.flags & 0xC000  && (streams[i].vinf.flags & 0x82) == 0);
+            return (streams[i].vinf.flags & 0xC000 && (streams[i].vinf.flags & 0x82) == 0);
         }
     }
 
-    for(S32 i = 0; i < 0x3a; i++) {
-        if(gSnd.voice[i+6].sndID == handle) {
+    for (S32 i = 0; i < 0x3a; i++)
+    {
+        if (gSnd.voice[i + 6].sndID == handle)
+        {
             return (voices[i].flags & 0x4 && (voices[i].flags & 0x8) == 0);
         }
     }
     return false;
-    
 }
 
 U32 iVolFromX(F32 param1)
@@ -684,6 +690,18 @@ U32 iVolFromX(F32 param1)
     {
         return MIN(i, 0);
     }
+}
+
+void iSndCalcVol(xSndVoiceInfo* vp, vinfo* info)
+{
+    S32 vol = iVolFromX(vp->vol * gSnd.categoryVolFader[vp->category]);
+
+    info->x10 = vol;
+    info->x14 = vol;
+    info->x18 = 0x40;
+    info->x1c = 0x40;
+    MIXAdjustFader(info->voice, vol - MIXGetFader(info->voice));
+    MIXAdjustPan(info->voice, 0x40 - MIXGetPan(info->voice));
 }
 
 void iSndVolUpdate(xSndVoiceInfo* info, vinfo* vinfo)
@@ -714,6 +732,42 @@ void iSndUpdateSounds()
             iSndVolUpdate(&gSnd.voice[i + 6], &voices[i]);
         }
     }
+}
+
+S32 iSndPlay(xSndVoiceInfo* vp)
+{
+    U32 ret;
+
+    S32 offset = (S32)vp - (S32)gSnd.voice;
+    S32 div = offset / 100;
+
+    xSTAssetName(vp->assetID);
+
+    if ((div < 0) || (div >= 64))
+    {
+        ret = 0;
+    }
+    else if (div < 6)
+    {
+        ret = iSndPrepStream(vp);
+        if (ret < 0x3a)
+        {
+            if (vp->flags & 0x200)
+            {
+                ret = iSndPlayMemStream(vp);
+            }
+            else
+            {
+                ret = iSndPlayStream(vp);
+            }
+        }
+    }
+    else
+    {
+        ret = iSndPlaySound(vp);
+    }
+
+    return ret;
 }
 
 void iSndStartStereo(U32 id1, U32 id2, F32 pitch)
@@ -779,6 +833,44 @@ void sndloadcb(tag_xFile* tag)
     SoundFlags = 0;
 }
 
+void iSndDIEDIEDIE()
+{
+    if (!soundInited)
+    {
+        return;
+    }
+
+    OSDisableInterrupts();
+    soundInited = 0;
+
+    for (S32 i = 0; i < (S32)(sizeof(streams) / (sizeof(UNK_STREAM))); i++)
+    {
+        UNK_STREAM* pv = &streams[i];
+
+        if (pv->vinf.voice != NULL)
+        {
+            MIXReleaseChannel(pv->vinf.voice);
+            AXSetVoiceState(pv->vinf.voice, 0);
+            iSndMyAXFree(&pv->vinf.voice);
+        }
+        pv++;
+    }
+
+    for (S32 i = 0; i < (S32)(sizeof(voices) / (sizeof(vinfo))); i++)
+    {
+        vinfo* v = &voices[i];
+
+        if ((v->voice != NULL))
+        {
+            MIXReleaseChannel(v->voice);
+            AXSetVoiceState(v->voice, 0);
+            iSndMyAXFree(&v->voice);
+        }
+    }
+
+    AXQuit();
+}
+
 void iSndSetExternalCallback(iSndExternalCallback callback)
 {
 }
@@ -790,4 +882,79 @@ void iSndMyAXFree(_AXVPB** param1)
         AXFreeVoice(*param1);
         *param1 = NULL;
     }
+}
+
+void iSndSuspend()
+{
+    AXRegisterCallback(0);
+
+    for (S32 i = 0; i < (S32)(sizeof(streams) / (sizeof(UNK_STREAM))); i++)
+    {
+        UNK_STREAM* pv = &streams[i];
+
+        if (pv->vinf.voice != NULL)
+        {
+            AXSetVoiceState(pv->vinf.voice, 0);
+        }
+        pv++;
+    }
+
+    for (S32 i = 0; i < (S32)(sizeof(voices) / (sizeof(vinfo))); i++)
+    {
+        vinfo* v = &voices[i];
+
+        if ((v->voice != NULL))
+        {
+            AXSetVoiceState(v->voice, 0);
+        }
+    }
+}
+
+void iSndResume()
+{
+    for (S32 i = 0; i < (S32)(sizeof(streams) / (sizeof(UNK_STREAM))); i++)
+    {
+        UNK_STREAM* pv = &streams[i];
+
+        if ((pv->vinf.voice != NULL) && !(pv->vinf.flags & 2))
+        {
+            AXSetVoiceState(pv->vinf.voice, 1);
+        }
+        pv++;
+    }
+
+    for (S32 i = 0; i < (S32)(sizeof(voices) / (sizeof(vinfo))); i++)
+    {
+        vinfo* v = &voices[i];
+
+        if ((v->voice != NULL) && !(v->flags & 8))
+        {
+            AXSetVoiceState(v->voice, 1);
+        }
+    }
+
+    AXRegisterCallback(fcb);
+}
+
+F32 iSndGetVol(U32 snd)
+{
+    xSndVoiceInfo* vp = &gSnd.voice[0];
+
+    for (int i = 0; i < 0x40; i++)
+    {
+        if (vp->flags & 1)
+        {
+            if (vp->sndID == snd)
+            {
+                if (gSnd.categoryVolFader[vp->category] <= 0.0f)
+                {
+                    return 0.0f;
+                }
+                return (vp->vol / gSnd.categoryVolFader[vp->category]);
+            }
+        }
+        vp++;
+    }
+
+    return 0.0f;
 }
