@@ -736,8 +736,6 @@ void iSndUpdateSounds()
 
 S32 iSndPlay(xSndVoiceInfo* vp)
 {
-    U32 ret;
-
     S32 offset = (S32)vp - (S32)gSnd.voice;
     S32 div = offset / 100;
 
@@ -745,29 +743,66 @@ S32 iSndPlay(xSndVoiceInfo* vp)
 
     if ((div < 0) || (div >= 64))
     {
-        ret = 0;
+        return 0;
     }
     else if (div < 6)
     {
-        ret = iSndPrepStream(vp);
+        U32 ret = iSndPrepStream(vp);
         if (ret < 0x3a)
         {
             if (vp->flags & 0x200)
             {
-                ret = iSndPlayMemStream(vp);
+                return iSndPlayMemStream(vp);
             }
             else
             {
-                ret = iSndPlayStream(vp);
+                return iSndPlayStream(vp);
             }
         }
+        return ret;
     }
     else
     {
-        ret = iSndPlaySound(vp);
+        return iSndPlaySound(vp);
+    }
+}
+
+void iSndSetVol(U32 snd, F32 vol)
+{
+    xSndVoiceInfo* vp = &gSnd.voice[0];
+
+    S32 i = 0;
+    for (; i < 64;)
+    {
+        if (vp->sndID == snd)
+            break;
+        i++;
+        vp++;
     }
 
-    return ret;
+    if (i != 64)
+    {
+        vp->vol = vol;
+        S32 adj = iVolFromX(vol * gSnd.categoryVolFader[vp->category]);
+        vinfo* info;
+        if (i < 6)
+        {
+            info = &streams[i].vinf;
+        }
+        else
+        {
+            info = &voices[i - 6];
+        }
+        if (info->voice != 0)
+        {
+            info->x10 = adj;
+            info->x14 = adj;
+            info->x18 = 0x40;
+            info->x1c = 0x40;
+            MIXAdjustFader(info->voice, adj - MIXGetFader(info->voice));
+            MIXAdjustPan(info->voice, 0x40 - MIXGetPan(info->voice));
+        }
+    }
 }
 
 void iSndStartStereo(U32 id1, U32 id2, F32 pitch)
