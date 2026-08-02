@@ -772,12 +772,10 @@ void iSndSetVol(U32 snd, F32 vol)
     xSndVoiceInfo* vp = &gSnd.voice[0];
 
     S32 i = 0;
-    for (; i < 64;)
+    for (; i < 64; i++, vp++)
     {
         if (vp->sndID == snd)
             break;
-        i++;
-        vp++;
     }
 
     if (i != 64)
