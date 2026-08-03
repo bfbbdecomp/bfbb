@@ -856,7 +856,7 @@ config.libs = [
     ),
     mslLib(
         "MSL_C.PPCEABI.H",
-        ["-str pool", "-opt level=0, peephole, schedule, nospace", "-inline off", "-sym on"],
+        ["-str pool", "-opt level=4, peephole, schedule, nospace", "-inline auto,deferred", "-sym on"],
         [
             Object(NonMatching, "MSL_C/PPC_EABI/abort_exit.c"),
             Object(NonMatching, "MSL_C/MSL_Common/alloc.c"),
@@ -880,7 +880,7 @@ config.libs = [
             Object(NonMatching, "MSL_C/MSL_Common/qsort.c"),
             Object(NonMatching, "MSL_C/MSL_Common/rand.c"),
             Object(NonMatching, "MSL_C/MSL_Common/scanf.c"),
-            Object(NonMatching, "MSL_C/MSL_Common/signal.c"),
+            Object(Matching, "MSL_C/MSL_Common/signal.c"),
             Object(NonMatching, "MSL_C/MSL_Common/string.c"),
             Object(NonMatching, "MSL_C/MSL_Common/strtold.c"),
             Object(NonMatching, "MSL_C/MSL_Common/strtoul.c"),
