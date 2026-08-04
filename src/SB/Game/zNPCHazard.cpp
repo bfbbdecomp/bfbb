@@ -1947,8 +1947,7 @@ void UVAModelInfo::Hemorrage()
     uv = 0;
 }
 
-// Need to figure out what is wrong with the final return statement, and the b and blr swaps.
-S32 UVAModelInfo::GetUV(RwTexCoords*& coords, S32& numVertices, RpAtomic* model)
+S32 UVAModelInfo::GetUV(RwTexCoords*& coords, S32& numVertices, RpAtomic* model) const
 {
     coords = NULL;
     numVertices = 0;
