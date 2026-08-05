@@ -1078,7 +1078,7 @@ void zFX_SpawnBubbleWall()
 
     void* parent = camera->object.object.parent;
     // FIXME: Figure out the renderware voodoo happening here
-    RwMatrix* mat = (RwMatrix*)(((U8*)parent) + 0x30);
+    RwMatrix* mat = (RwMatrix*)(((U8*)parent) + 0x10);
     xVec3 pos[100];
     xVec3 vel[100];
     xVec3* pp = pos;
@@ -1093,11 +1093,11 @@ void zFX_SpawnBubbleWall()
     F32 velscale_z = bubblewall_velscale.z;
     for (U32 i = 0; i < 50; i++, pp++, vp++)
     {
-        pp->x = (scale_x * (xurand() - 0.5f)) + (xurand() - 0.5f + mat->up.x);
-        pp->y = (scale_y * (xurand() - 0.5f)) + (xurand() - 0.5f + mat->up.y);
-        pp->z = (scale_z * (xurand() - 0.5f)) + (xurand() - 0.5f + mat->up.z);
+        pp->x = (scale_x * (xurand() - 0.5f)) + (xurand() - 0.5f + mat->pos.x);
+        pp->y = (scale_y * (xurand() - 0.5f)) + (xurand() - 0.5f + mat->pos.y);
+        pp->z = (scale_z * (xurand() - 0.5f)) + (xurand() - 0.5f + mat->pos.z);
         xVec3 scaled;
-        xVec3ScaleC(&scaled, (xVec3*)&mat->right, 1.2f, 1.2f, 1.2f);
+        xVec3ScaleC(&scaled, (xVec3*)&mat->at, 1.2f, 1.2f, 1.2f);
         xVec3Add(pp, pp, &scaled);
 
         vp->x = velscale_x * (xurand() - 0.5f);
