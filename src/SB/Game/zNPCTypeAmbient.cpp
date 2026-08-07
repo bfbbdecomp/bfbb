@@ -649,7 +649,7 @@ U8 zNPCAmbient::ColPenByFlags() const
     return 0x18;
 }
 
-U8 zNPCAmbient::PhysicsFlags()
+U8 zNPCAmbient::PhysicsFlags() const
 {
     return 3;
 }

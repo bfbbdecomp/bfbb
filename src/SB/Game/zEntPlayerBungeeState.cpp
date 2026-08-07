@@ -1460,6 +1460,31 @@ namespace bungee_state
         xCameraDoCollisions(1, CO_BUNGEE);
         shared.flags = 0x3;
     }
+
+    void reset()
+    {
+        if ((shared.flags & 0x3) == 3)
+        {
+            stop();
+            fade_hook_reset();
+            iCameraSetBlurriness(0.0);
+            zCameraEnableTracking(CO_BUNGEE);
+            xCameraDoCollisions(1, CO_BUNGEE);
+            shared.flags = 0x3;
+        }
+    }
+
+    bool active() {
+        return shared.state;
+    }
+
+    bool landed() {
+        bool ret = false;
+        if (shared.state == 0 && shared.dismount_delay <= 0.0f) {
+            ret = true;
+        }
+        return ret;
+    }
 } // namespace bungee_state
 
 void bungee_state::insert_animations(xAnimTable& at)

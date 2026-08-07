@@ -41,7 +41,7 @@ namespace xhud
         xfont xf; // 0x128
 
         static void load(xBase& data, xDynAsset& asset, size_t);
-        font_meter_widget(xhud::font_meter_asset& init);
+        font_meter_widget(const xhud::font_meter_asset& init);
         void destruct();
         void destroy();
         U32 type();

@@ -13,7 +13,7 @@ void xhud::font_meter_widget::load(xBase& data, xDynAsset& asset, u32 size_t)
     //     xhud::font_meter_widget(*(xhud::font_meter_asset*)&data); // TODO: proper size value
 }
 
-xhud::font_meter_widget::font_meter_widget(xhud::font_meter_asset& init) : meter_widget(init)
+xhud::font_meter_widget::font_meter_widget(const xhud::font_meter_asset& init) : meter_widget(init)
 {
     basic_rect<F32> screen_bounds;
 
