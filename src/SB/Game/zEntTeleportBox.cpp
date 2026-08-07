@@ -8,6 +8,7 @@
 #include "zFX.h"
 
 #include "xEvent.h"
+#include "xMarkerAsset.h"
 #include "xMath.h"
 #include "xSnd.h"
 #include "xString.h"
@@ -181,7 +182,149 @@ void zEntTeleportBox_Init(xBase& data, xDynAsset& asset, size_t)
     zEntTeleportBox_Init((_zEntTeleportBox*)&data, (teleport_asset*)&asset);
 }
 
-void zEntTeleportBox_Init(_zEntTeleportBox* ent, teleport_asset* asset);
+void zEntTeleportBox_Init(_zEntTeleportBox* ent, teleport_asset* asset)
+{
+    U32 size;
+    xEntAsset* easset = (xEntAsset*)xMemAllocSize(sizeof(xEntAsset));
+    easset->id = asset->id;
+    easset->baseType = eBaseTypeTeleportBox;
+    easset->linkCount = 0;
+    easset->baseFlags = asset->baseFlags;
+    easset->baseFlags |= 0x22;
+    easset->flags = XENT_IS_VISIBLE;
+    easset->moreFlags |= XENT_MORE_FLAGS_ANIM_COLL;
+    easset->pflags = 0;
+    easset->ang = 0.0f;
+    easset->scale.x = 1.0f;
+    easset->scale.y = 1.0f;
+    easset->scale.z = 1.0f;
+    easset->redMult = 1.0f;
+    easset->greenMult = 1.0f;
+    easset->blueMult = 1.0f;
+    easset->modelInfoID = xStrHash("teleportation_box_bind");
+    easset->animListID = 0;
+
+    xMarkerAsset* marker = (xMarkerAsset*)xSTFindAsset(asset->marker, &size);
+    if (marker != NULL && size == sizeof(xMarkerAsset))
+    {
+        easset->pos.x = marker->pos.x;
+        easset->pos.y = marker->pos.y;
+        easset->pos.z = marker->pos.z;
+        zEntInit(ent, easset, 'TBOX');
+        ent->tasset = asset;
+        ent->penby |= XENT_COLLTYPE_PLYR;
+        ent->chkby |= XENT_COLLTYPE_PLYR | XENT_COLLTYPE_NPC;
+        ent->move = NULL;
+        ent->eventFunc = zEntTeleportBoxEventCB;
+        ent->update = zEntTeleportBox_Update;
+
+        if (ent->linkCount != 0)
+        {
+            ent->link = (xLinkAsset*)((U8*)ent->asset + sizeof(xEntAsset) + sizeof(teleport_asset));
+        }
+        else
+        {
+            ent->link = NULL;
+        }
+
+        ent->eventFunc = zEntTeleportBoxEventCB;
+        xEntReset(ent);
+        xAnimTable* table = xAnimTableNew("TBox", NULL, 0);
+        xAnimTableNewState(table, "Closed", 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                           xAnimDefaultBeforeEnter, NULL, NULL);
+        xAnimTableNewState(table, "Open", 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                           xAnimDefaultBeforeEnter, NULL, NULL);
+        xAnimTableNewState(table, "JumpIn", 0x0, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                           xAnimDefaultBeforeEnter, NULL, NULL);
+        xAnimTableNewState(table, "Teleport", 0x0, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                           xAnimDefaultBeforeEnter, NULL, NULL);
+        xAnimTableNewState(table, "JumpOut", 0x0, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                           xAnimDefaultBeforeEnter, NULL, NULL);
+        xAnimTableNewState(table, "Closed2Open", 0x0, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL,
+                           xAnimDefaultBeforeEnter, NULL, NULL);
+
+        xAnimTableNewTransition(table, "Closed", "Closed2Open", OpenCheck, NULL, 0, 0, 0.0f, 0.0f,
+                                1, 0, 0.2f, NULL);
+        xAnimTableNewTransition(table, "Closed", "JumpOut", JumpOutCheck, JumpOutCB, 0, 0, 0.0f,
+                                0.0f, 1, 0, 0.1f, NULL);
+        xAnimTableNewTransition(table, "Open", "JumpOut", JumpOutCheck, JumpOutCB, 0, 0, 0.0f, 0.0f,
+                                1, 0, 0.1f, NULL);
+        xAnimTableNewTransition(table, "Closed2Open", "JumpOut", JumpOutCheck, JumpOutCB, 0, 0,
+                                0.0f, 0.0f, 1, 0, 0.1f, NULL);
+        xAnimTableNewTransition(table, "Closed2Open", "JumpIn", JumpInCheck, JumpInCB, 0, 0, 0.0f,
+                                0.0f, 10, 0, 0.1f, NULL);
+        xAnimTableNewTransition(table, "Open", "JumpIn", JumpInCheck, JumpInCB, 0, 0, 0.0f, 0.0f,
+                                10, 0, 0.1f, NULL);
+        xAnimTableNewTransition(table, "JumpIn", "Open", JItoOCheck, JItoOCB, 0, 0, 0.0f, 0.0f, 1,
+                                0, 0.1f, NULL);
+        xAnimTableNewTransition(table, "JumpOut", "Open", JOtoOCheck, JOtoOCB, 0, 0, 0.0f, 0.0f, 1,
+                                0, 0.1f, NULL);
+        xAnimTableNewTransition(table, "Closed", "Closed2Open", CtoOCheck, CtoOCB, 0, 0, 0.0f, 0.0f,
+                                1, 0, 0.1f, NULL);
+
+        xAnimState* state = xAnimTableGetState(table, "JumpIn");
+        xAnimStateNewEffect(state, 1, 0.4f, 0.0f, JumpInEffectPlrInvisibleCB, 0);
+        xAnimStateNewEffect(state, 1, 0.5f, 0.0f, JumpInEffectPlrTeleportCB, 0);
+        xAnimStateNewEffect(state, 1, 1.2f, 0.0f, JumpInEffectJIAnimCB, 0);
+
+        state = xAnimTableGetState(table, "JumpOut");
+        xAnimStateNewEffect(state, 1, 0.4f, 0.0f, JumpOutEffectPlrVisibleCB, 0);
+        xAnimStateNewEffect(state, 1, 0.9f, 0.0f, JumpOutEffectPlrEjectCB, 0);
+        xAnimStateNewEffect(state, 1, 1.2f, 0.0f, JumpOutEffectJOAnimCB, 0);
+
+        state = xAnimTableGetState(table, "Closed2Open");
+        xAnimStateNewEffect(state, 1, 0.5f, 0.0f, CtoOEffectTboxEnableCB, 0);
+
+        xAnimFile* afile = 
+            (xAnimFile*)xSTFindAsset(xStrHash("teleportation_box_closed.anm"), &size);
+        if (afile != NULL)
+        {
+            afile = xAnimFileNew(afile, "", 0, NULL);
+            xAnimTableAddFile(table, afile, "Closed");
+            xAnimPoolAlloc(&globals.sceneCur->mempool, ent, table, ent->model);
+        }
+
+        afile = (xAnimFile*)xSTFindAsset(xStrHash("teleportation_box_jumpin_teleport.anm"), &size);
+        if (afile != NULL)
+        {
+            afile = xAnimFileNew(afile, "", 0, NULL);
+            xAnimTableAddFile(table, afile, "JumpIn");
+            xAnimPoolAlloc(&globals.sceneCur->mempool, ent, table, ent->model);
+        }
+
+        afile = (xAnimFile*)xSTFindAsset(xStrHash("teleportation_box_open.anm"), &size);
+        if (afile != NULL)
+        {
+            afile = xAnimFileNew(afile, "", 0, NULL);
+            xAnimTableAddFile(table, afile, "Open");
+            xAnimPoolAlloc(&globals.sceneCur->mempool, ent, table, ent->model);
+        }
+
+        afile = (xAnimFile*)xSTFindAsset(xStrHash("teleportation_box_teleport_jumpout.anm"), &size);
+        if (afile != NULL)
+        {
+            afile = xAnimFileNew(afile, "", 0, NULL);
+            xAnimTableAddFile(table, afile, "JumpOut");
+            xAnimPoolAlloc(&globals.sceneCur->mempool, ent, table, ent->model);
+        }
+
+        afile = (xAnimFile*)xSTFindAsset(xStrHash("teleportation_box_teleport.anm"), &size);
+        if (afile != NULL)
+        {
+            afile = xAnimFileNew(afile, "", 0, NULL);
+            xAnimTableAddFile(table, afile, "Teleport");
+            xAnimPoolAlloc(&globals.sceneCur->mempool, ent, table, ent->model);
+        }
+
+        afile = (xAnimFile*)xSTFindAsset(xStrHash("teleportation_box_closedtoopen.anm"), &size);
+        if (afile != NULL)
+        {
+            afile = xAnimFileNew(afile, "", 0, NULL);
+            xAnimTableAddFile(table, afile, "Closed2Open");
+            xAnimPoolAlloc(&globals.sceneCur->mempool, ent, table, ent->model);
+        }
+    }
+}
 
 void zEntTeleportBox_InitAll()
 {
