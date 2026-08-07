@@ -3,8 +3,10 @@
 #include "rpworld.h"
 
 #include "xMath.h"
+#include "iCollide.h"
 #include "iModel.h"
 #include "zGlobals.h"
+#include "zGrid.h"
 
 #include <types.h>
 
