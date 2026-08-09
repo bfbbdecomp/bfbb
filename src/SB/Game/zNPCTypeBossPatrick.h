@@ -82,7 +82,7 @@ struct zNPCBPatrick : zNPCBoss
     xEnt* fudgeHandle; // offset 0x1584, size 0x4
     zParEmitter* fudgeEmitter; // offset 0x1588, size 0x4
     zParEmitter* steamEmitter; // offset 0x158C, size 0x4
-    bossPatBox box[4][6]; // offset 0x1590, size 0x1E0
+    bossPatBox box[8][3]; // offset 0x1590, size 0x1E0
     bossPatBox backBox; // offset 0x1770, size 0x14
     zShrapnelAsset* boxBreak; // offset 0x1784, size 0x4
     zShrapnelAsset* boxSplash; // offset 0x1788, size 0x4
