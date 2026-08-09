@@ -231,10 +231,6 @@ static newsfishSound sNFComment[37] = {
 
 static U32 sCurrNFSound;
 
-void test(S32)
-{
-}
-
 xAnimTable* ZNPC_AnimTable_BossPatrick()
 {
     // clang-format off
@@ -1763,59 +1759,78 @@ void zNPCBPatrick::gotoRound(S32 num)
     }
 }
 
-// I think xPlatformAsset type might not be correct
-// WIP
 F32 zNPCBPatrick::ConveyorTimeLeft(zPlatform* platform, xVec3* vec_unk)
 {
-    xVec3 output;
+    xVec3 disp;
+    F32 edge;
 
-    F32 fVar1;
-
-    if (platform->passet->pad > f832)
+    if (platform->passet->cb.speed < f832)
     {
-        fVar1 = platform->bound.box.center.x;
+        edge = platform->bound.box.box.lower.x;
     }
     else
     {
-        fVar1 = platform->bound.box.center.y;
+        edge = platform->bound.box.box.upper.x;
     }
 
-    xVec3Sub(&output, vec_unk, &platform->bound.box.center);
-    F32 dVar3 = xVec3Dot(&output, &platform->bound.box.center);
-    F32 dVar4 = xVec3Length2(&platform->bound.box.center);
+    xVec3Sub(&disp, vec_unk, &platform->bound.mat->pos);
 
-    return fVar1 - dVar3 / dVar4 / platform->passet->pad;
+    F32 dispX = xVec3Dot(&disp, (xVec3*)&platform->bound.mat->right);
+
+    dispX /= xVec3Length2((xVec3*)&platform->bound.mat->right);
+
+    return (edge - dispX) / platform->passet->cb.speed;
 }
 
 void zNPCBPatrick::ParabolaHitsConveyors(xParabola* path, xCollis* colls)
 {
-    /*
-        signed int i; // r13
-        signed int j; // r12
-        class xMat4x3 * mat; // r11
-        class xVec3 * lower; // r10
-        class xVec3 * upper; // r9
-        float a; // r10
-        float b; // r9
-        float det; // r4
-        float t[2]; // r29+0x18
-        float dispX; // r11
-        float dispZ; // r8
-    */
-
+    xVec3 pos;
+    xVec3 disp;
     F32 t[2];
 
     for (S32 i = 0; i < 7; i++)
     {
-        // This code is a mess, don't feel like working on this fn right now.
-        zPlatform* pzVar4 = this->conveyorBelt[i];
-        xVec3* pxVar3 = &pzVar4->bound.box.center;
-        F32 dVar7 = f1046 - path->gravity;
-        F32 dVar8 = path->initVel.y;
-        test(dVar8);
+        S32 j;
 
-        for (S32 j = 0; j < 2; j++)
+        xMat4x3* mat = this->conveyorBelt[i]->bound.mat;
+        xVec3* lower = &this->conveyorBelt[i]->bound.box.box.lower;
+        xVec3* upper = &this->conveyorBelt[i]->bound.box.box.upper;
+
+        F32 a = f1046 * -path->gravity;
+        F32 b = path->initVel.y;
+        F32 det = b * b - f1670 * a * (path->initPos.y - (mat->up.y * upper->y + mat->pos.y));
+
+        if (det < f832)
         {
+            continue;
+        }
+
+        det = xsqrt(det);
+
+        t[0] = (-b + det) / (f891 * a);
+        t[1] = (-b - det) / (f891 * a);
+
+        for (j = 0; j < 2; j++)
+        {
+            if (t[j] >= path->minTime && t[j] < path->maxTime && t[j] < colls->dist)
+            {
+                xParabolaEvalPos(path, &pos, t[j]);
+                xVec3Sub(&disp, &pos, &mat->pos);
+
+                F32 dispX = xVec3Length2((xVec3*)&mat->right);
+                F32 dispZ = xVec3Length2((xVec3*)&mat->at);
+
+                dispX = xVec3Dot(&disp, (xVec3*)&mat->right) / dispX;
+                dispZ = xVec3Dot(&disp, (xVec3*)&mat->at) / dispZ;
+
+                if (dispX > lower->x && dispX < upper->x && dispZ > lower->z && dispZ < upper->z)
+                {
+                    colls->flags |= 1;
+                    xVec3Copy(&colls->tohit, &pos);
+                    colls->dist = t[j];
+                    colls->optr = this->conveyorBelt[i];
+                }
+            }
         }
     }
 }
@@ -2685,13 +2700,15 @@ S32 zNPCGoalBossPatSmack::Process(en_trantype* trantype, F32 dt, void* updCtxt, 
         signed int numGlobs; // r17
         class xCollis colls; // r29+0xB0
     */
+    S32 i;
+    zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
+    S32 playSmack;
     xVec3 offset;
     xVec3 cone;
+    S32 numGlobs;
     xCollis colls;
 
-    zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
-
-    S32 playSmack = 0;
+    playSmack = 0;
 
     if (this->timeInGoal <= f1675)
     {
@@ -2705,7 +2722,7 @@ S32 zNPCGoalBossPatSmack::Process(en_trantype* trantype, F32 dt, void* updCtxt, 
     if ((this->timeInGoal > f1675) && this->timeInGoal < f831)
     {
         xVec3Init(&offset, f832, f832, f832);
-        GetBonePos(&cone, (xMat4x3*)pat->model->Mat, sBone[9], &offset);
+        GetBonePos(&cone, (xMat4x3*)pat->model->Mat, sBone[3], &offset);
 
         if (playSmack)
         {
@@ -2713,54 +2730,38 @@ S32 zNPCGoalBossPatSmack::Process(en_trantype* trantype, F32 dt, void* updCtxt, 
                        SND_CAT_GAME, f832);
         }
 
-        S32 numGlobs = 0x4330;
-        // F32 rand = xurand();
-
-        // lines 114-170 (objdiff) are super confusing for me
-        F32 f1 = xurand();
-        F32 f0 = f1046;
-        F32 f2 = f1056;
-
-        f1 = f0 + f1;
-
-        f0 = this->globNum;
-        f1 = f2 * f1;
-        f0 = dt * f1 + f0;
-        this->globNum = f0;
-        // A * C + B
-
-        f2 = this->globNum;
-        f1 = f875;
+        this->globNum += dt * (f1056 * (f1046 + xurand()));
 
         numGlobs = this->globNum;
 
-        // this->globNum = f1056 * (f1046 * xurand()) + this->globNum;
+        this->globNum -= numGlobs;
 
-        for (S32 i = 0; i < numGlobs; i++)
+        for (i = 0; i < numGlobs; i++)
         {
             bossPatGlob* glob = pat->getNextFreeGlob();
+
             glob->t = f832;
-            glob->path.gravity = f832;
+            glob->path.minTime = f832;
             glob->path.maxTime = f1678 * xurand() + f831;
             glob->path.gravity = f1055;
 
             xVec3Copy(&glob->path.initPos, &cone);
             xVec3Copy(&glob->lastPos, &glob->path.initPos);
-            xVec3Copy(&glob->path.initPos, (xVec3*)&pat->model->Mat->at);
+            xVec3Copy(&glob->path.initVel, (xVec3*)&pat->model->Mat->at);
 
-            xVec3AddScaled(&glob->path.initPos, (xVec3*)&pat->model->Mat->right,
-                           f1676 * xurand() - f1046);
+            xVec3AddScaled(&glob->path.initVel, (xVec3*)&pat->model->Mat->right,
+                           f1676 * (xurand() - f1046));
 
-            glob->path.initPos.x *= f1049 * (xurand() + f891);
-            glob->path.initPos.y *= f1670 * (xurand() + f891);
-            glob->path.initPos.z *= f1049 * (xurand() + f891);
+            glob->path.initVel.x *= f1049 * xurand() + f891;
+            glob->path.initVel.y += f1670 * xurand() + f1051;
+            glob->path.initVel.z *= f1049 * xurand() + f891;
 
             xParabolaHitsEnv(&glob->path, globals.sceneCur->env, &colls);
 
             if (colls.flags & 1)
             {
                 glob->path.maxTime = colls.dist;
-                xVec3Copy(&glob->norm, &cone);
+                xVec3Copy(&glob->norm, &colls.norm);
                 glob->flags |= 2;
             }
 
@@ -3471,6 +3472,308 @@ S32 zNPCGoalBossPatFudge::Enter(F32 dt, void* updCtxt)
     pat->numMissesInARow++;
 
     return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBossPatFudge::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
+
+    F32 anim;
+    S32 i;
+    S32 numGlobs;
+    xVec3 dir;
+    xVec3 offset;
+    xVec3 lipL;
+    xVec3 lipU;
+    xCollis colls;
+
+    this->timeInGoal += dt;
+
+    switch (this->stage)
+    {
+    case 0:
+    {
+        S32 turning = Pat_FaceTarget(pat, &pat->fudgePos, f1140, dt);
+
+        if (turning == 0)
+        {
+            this->stage = 1;
+            this->DoAutoAnim(NPC_GSPOT_START, 0);
+            this->timeInGoal = f832;
+
+            if (this->lerp > f831)
+            {
+                this->lerp -= f1050 * dt;
+
+                if (this->lerp < f831)
+                {
+                    this->lerp = f831;
+                }
+            }
+            else
+            {
+                this->lerp += f1050 * dt;
+
+                if (this->lerp > f831)
+                {
+                    this->lerp = f831;
+                }
+            }
+        }
+        else if (turning == -1)
+        {
+            this->lerp -= f1050 * dt;
+
+            if (this->lerp < f1046)
+            {
+                this->lerp = f1046;
+            }
+        }
+        else
+        {
+            this->lerp += f1050 * dt;
+
+            if (this->lerp > f2426)
+            {
+                this->lerp = f2426;
+            }
+        }
+
+        break;
+    }
+    case 1:
+    {
+        xVec3Sub(&dir, &pat->fudgePos, &pat->frame->mat.pos);
+
+        F32 dist = xVec3Length(&dir);
+
+        if (dist < f1141 * dt)
+        {
+            xVec3Copy(&pat->frame->mat.pos, &pat->fudgePos);
+
+            this->stage = 2;
+            this->DoAutoAnim(NPC_GSPOT_START, 0);
+            this->timeInGoal = f832;
+        }
+        else
+        {
+            xVec3AddScaled(&pat->frame->mat.pos, &dir, f1141 * dt / dist);
+
+            if (this->lerp > f831)
+            {
+                this->lerp -= f1050 * dt;
+
+                if (this->lerp < f831)
+                {
+                    this->lerp = f831;
+                }
+            }
+            else
+            {
+                this->lerp += f1050 * dt;
+
+                if (this->lerp > f831)
+                {
+                    this->lerp = f831;
+                }
+            }
+        }
+
+        break;
+    }
+    case 2:
+    {
+        S32 turning = Pat_FaceTarget(pat, &pat->fudgeFace, f1140, dt);
+
+        if (turning == 0)
+        {
+            this->stage = 3;
+            this->DoAutoAnim(NPC_GSPOT_START, 0);
+            this->timeInGoal = f832;
+
+            anim = f891;
+            zEntEvent(pat->fudgeHandle, eEventAnimPlay, &anim);
+
+            if (pat->round != 2 || pat->hitPoints != 3)
+            {
+                xSndPlay3D(xStrHash("b201_rp_fudge_filling"), f1671, f832, 0, 0, pat->fudgeHandle,
+                           f1142, f1659, SND_CAT_GAME, f1046);
+                xSndPlay3D(xStrHash("b201_rp_fudge_pull"), f1671, f832, 0, 0, pat->fudgeHandle,
+                           f1142, f1659, SND_CAT_GAME, f1046);
+                xSndPlay3D(xStrHash("b201_rp_fudge_dismount"), f1671, f832, 0, 0, pat->fudgeHandle,
+                           f1142, f1659, SND_CAT_GAME, f1050);
+            }
+            else
+            {
+                pat->gooLevel++;
+
+                if (pat->gooLevel > 3)
+                {
+                    pat->gooLevel = 3;
+                }
+            }
+        }
+        else if (turning == -1)
+        {
+            this->lerp -= f1050 * dt;
+
+            if (this->lerp < f1046)
+            {
+                this->lerp = f1046;
+            }
+        }
+        else
+        {
+            this->lerp += f1050 * dt;
+
+            if (this->lerp > f2426)
+            {
+                this->lerp = f2426;
+            }
+        }
+
+        break;
+    }
+    case 3:
+    {
+        if (this->timeInGoal > f831)
+        {
+            this->stage = 4;
+
+            pat->gooLevel++;
+
+            if (pat->gooLevel > 3)
+            {
+                pat->gooLevel = 3;
+            }
+        }
+
+        break;
+    }
+    case 4:
+    {
+        if (pat->AnimTimeRemain(NULL) < f2280 * dt)
+        {
+            this->stage = 5;
+
+            this->vomitSndID =
+                xSndPlay3D(xStrHash("b201_rp_fudge_vomit_loop"), f1658, f832, 0, 0, pat, f1141,
+                           f1659, SND_CAT_GAME, f832);
+
+            this->DoAutoAnim(NPC_GSPOT_START, 0);
+            this->timeInGoal = f832;
+            this->globNum = f832;
+
+            if (pat->hitPoints == 4)
+            {
+                pat->newsfish->SpeakStart(sNFComment[NF_ONE_MORE_DOUSE_WITH_THAT_STUFF].soundID, 0,
+                                          -1);
+            }
+            else if (pat->hitPoints == 5)
+            {
+                if (!(pat->nfFlags & 0x40) || !xrand())
+                {
+                    pat->newsfish->SpeakStart(sNFComment[NF_HOT_GOO_COULD_MELT_ANYTHING].soundID, 0,
+                                              -1);
+                    pat->nfFlags |= 0x40;
+                }
+            }
+        }
+
+        break;
+    }
+    case 5:
+    {
+        this->globNum += dt * (f2597 * (f1046 + xurand()));
+
+        numGlobs = this->globNum;
+
+        this->globNum -= numGlobs;
+
+        for (i = 0; i < numGlobs; i++)
+        {
+            bossPatGlob* glob = pat->getNextFreeGlob();
+
+            glob->t = f832;
+            glob->path.minTime = f832;
+            glob->path.maxTime = f1678 * xurand() + f831;
+            glob->path.gravity = f1055;
+
+            xVec3Init(&offset, f832, f832, f832);
+            GetBonePos(&lipL, (xMat4x3*)pat->model->Mat, sBone[2], &offset);
+            GetBonePos(&lipU, (xMat4x3*)pat->model->Mat, sBone[1], &offset);
+
+            xVec3Add(&glob->path.initPos, &lipL, &lipU);
+            xVec3SMulBy(&glob->path.initPos, f1046);
+
+            glob->path.initPos.y += xurand() - f1046;
+
+            xVec3AddScaled(&glob->path.initPos, (xVec3*)&pat->model->Mat->right,
+                           xurand() - f1046);
+
+            xVec3Copy(&glob->lastPos, &glob->path.initPos);
+            xVec3Copy(&glob->path.initVel, (xVec3*)&pat->model->Mat->at);
+            xVec3AddScaled(&glob->path.initVel, (xVec3*)&pat->model->Mat->right,
+                           f1664 * (xurand() - f1046));
+
+            glob->path.initVel.x *= f1049 * xurand() + f1142;
+            glob->path.initVel.y += f1048 * xurand();
+            glob->path.initVel.z *= f1049 * xurand() + f1142;
+
+            xParabolaHitsEnv(&glob->path, globals.sceneCur->env, &colls);
+
+            if (colls.flags & 1)
+            {
+                glob->path.maxTime = colls.dist;
+                xVec3Copy(&glob->norm, &colls.norm);
+                glob->flags |= 2;
+            }
+
+            colls.flags &= 0xfffffffe;
+
+            pat->ParabolaHitsConveyors(&glob->path, &colls);
+
+            if (colls.flags & 1)
+            {
+                glob->path.maxTime = colls.dist;
+                glob->flags |= 2;
+
+                if (colls.tohit.x < f1679 && colls.tohit.x > f1680 && colls.tohit.z > f1681)
+                {
+                    glob->flags |= 8;
+                    xVec3Init(&glob->norm, f832, f831, f832);
+                    glob->conv = (zPlatform*)colls.optr;
+
+                    xVec3SMul(&glob->convVel, (xVec3*)&glob->conv->bound.mat->right,
+                              glob->conv->passet->cb.speed);
+                }
+                else
+                {
+                    xVec3Init(&glob->norm, f832, f870, f832);
+                }
+            }
+        }
+
+        Pat_FaceTarget(pat, (xVec3*)&globals.player.ent.model->Mat->pos, f1046, dt);
+
+        if (this->timeInGoal > f2994 || (pat->bossFlags & 2))
+        {
+            this->stage = 6;
+
+            xSndStop(this->vomitSndID);
+
+            this->DoAutoAnim(NPC_GSPOT_START, 0);
+            this->timeInGoal = f832;
+        }
+
+        break;
+    }
+    }
+
+    pat->model->Anim->Single->BilinearLerp[0] = this->lerp;
+    pat->model->Anim->Single->Blend->BilinearLerp[0] = this->lerp;
+
+    return xGoal::Process(trantype, dt, updCtxt, xscn);
 }
 
 WEAK void xDebugAddTweak(const char*, U32*, U32, U32, const tweak_callback*, void*, U32)
