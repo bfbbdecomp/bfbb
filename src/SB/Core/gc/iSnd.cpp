@@ -675,6 +675,56 @@ bool iSndIsPlayingByHandle(U32 handle)
     return false;
 }
 
+void iSndStop(U32 snd)
+{
+    if (snd == 0)
+    {
+        return;
+    }
+
+    U32 enabled = OSDisableInterrupts();
+    S32 i;
+
+    for (i = 0; i < 64; i++)
+    {
+        if (gSnd.voice[i].sndID == snd)
+        {
+            gSnd.voice[i].sndID = 0;
+            gSnd.voice[i].flags = 0;
+            break;
+        }
+    }
+
+    if (i < 6)
+    {
+        if (streams[i].vinf.voice != NULL)
+        {
+            DVDCancel(&streams[i].fileInfo.cb);
+            ARQRemoveRequest(&streams[i].request);
+            AXSetVoiceState(streams[i].vinf.voice, 0);
+            MIXReleaseChannel(streams[i].vinf.voice);
+            iSndMyAXFree(&streams[i].vinf.voice);
+            streams[i].vinf.flags = 0x40000;
+            streams[i].vinf.aid = 0;
+            streams[i].vinf.flags = 0x40000;
+        }
+    }
+    else if (i < 64)
+    {
+        i -= 6;
+        if (voices[i].voice != NULL)
+        {
+            AXSetVoiceState(voices[i].voice, 0);
+            MIXReleaseChannel(voices[i].voice);
+            iSndMyAXFree(&voices[i].voice);
+            voices[i].flags = 0;
+            voices[i].aid = 0;
+        }
+    }
+    
+    OSRestoreInterrupts(enabled);
+}
+
 U32 iVolFromX(F32 param1)
 {
     float f = MAX(param1, 1e-20f);
@@ -865,7 +915,7 @@ void sndloadcb(tag_xFile* tag)
 {
     SoundFlags = 0;
 }
-/* Matching
+
 void iSndDIEDIEDIE()
 {
     if (!soundInited)
@@ -903,7 +953,7 @@ void iSndDIEDIEDIE()
 
     AXQuit();
 }
-*/
+
 void iSndSetExternalCallback(iSndExternalCallback callback)
 {
 }
