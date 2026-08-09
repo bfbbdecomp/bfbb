@@ -1,6 +1,7 @@
 
 #include "zNPCTypeBossSB2.h"
 #include "PowerPC_EABI_Support/MSL_C++/MSL_Common/Include/new.h"
+#include "rwplcore.h"
 #include "xLightKit.h"
 #include "zNPCGoalCommon.h"
 #include <types.h>
@@ -1174,6 +1175,23 @@ void zNPCB_SB2::Init(xEntAsset* asset)
     this->init_slugs();
 }
 
+namespace
+{
+
+    void response_curve::init(U64, const void*, U64, const char*, const char**, const tweak_callback*,
+                     void*)
+    {
+        
+    }
+
+}
+
+void zNPCB_SB2::ParseINI()
+{
+    zNPCCommon::ParseINI();
+    tweak.load(parmdata, pdatsize);
+}
+
 void zNPCB_SB2::Setup()
 {
     xEnt* ent; 
@@ -1353,15 +1371,13 @@ void zNPCB_SB2::decompose()
 
 void zNPCB_SB2::show_nodes() 
 {
-    // Haven't found 0x74
     S32 i;
     for (i = 0; i < 9; i++)
     {
-        if (nodes->ent != 0){
-        xEntShow(nodes->ent);
+        if (nodes[i].ent != 0){
+            xEntShow(nodes[i].ent);
         }
     }
-
 }
 
 void zNPCB_SB2::ouchie()
@@ -1409,32 +1425,56 @@ void zNPCB_SB2::reset_speed()
 
 S32 zNPCB_SB2::player_platform()
 {
-    if (((globals.player.ent.collis->colls->flags & 1) != 0))
+    if (((globals.player.ent.collis->colls->flags & 1) == 0) 
+    || (globals.player.ent.collis->colls->optr == 0) 
+    || (((xEnt*)globals.player.ent.collis->colls->optr)->baseType != 6))
     {
-        return 1;
+        return 0;
     }
+
+    // &platforms offset 0x92C, size 0x5C0
 
     return NULL;
 }
 
-void zNPCB_SB2::activate_hand(zNPCB_SB2::hand_enum hand, bool)
+void zNPCB_SB2::activate_hand(zNPCB_SB2::hand_enum hand, bool active)
 {
-   hands[0].hurt_player = 1;
-   hands[0].hit_platforms = 0x10;
-   hands[0].ent->penby = 0x10;
+   this->hands[hand].hurt_player = 1;
+   this->hands[hand].hit_platforms = active;
+   this->hands[hand].ent->penby = 0x10;
 }
 
 void zNPCB_SB2::deactivate_hand(zNPCB_SB2::hand_enum hand)
 {
-   hands[0].hit_platforms = 0;
-   hands[0].hurt_player = 0x10;
-   hands[0].ent->penby = 0;
+   this->hands[hand].hit_platforms = 0;
+   this->hands[hand].hurt_player = 0;
+   this->hands[hand].ent->penby = 0x10;
 }
 
 S32 zNPCB_SB2::player_on_ground() const
 {
-    return 0;
-    // TODO
+    RwMatrix* mat = globals.player.ent.model->Mat;
+
+    if (globals.player.Health == 0)
+    {
+        return FALSE;
+    }
+
+    if (mat->pos.y >= tweak.ground_y + tweak.ground_zone_height)
+    {
+        return FALSE;
+    }
+
+    const xVec3& home = get_home();
+
+    F32 dx = mat->pos.x - home.x;
+    F32 dz = mat->pos.z - home.z;
+
+    xVec2 pos = {};
+    pos.x = dx;
+    pos.y = dz;
+
+    return pos.length2() < tweak.ground_radius * tweak.ground_radius;
 }
 
 void zNPCB_SB2::emit_slug(zNPCB_SB2::slug_enum which)
@@ -1455,6 +1495,28 @@ void zNPCB_SB2::emit_slug(zNPCB_SB2::slug_enum which)
         xMat4x3Mul((xMat4x3*)model->Mat, 0 , 0);
         xMat3x3RMulVec(&tweak.karate.emit_offset, 0, 0);
     }
+}
+
+S32 zNPCB_SB2::slugs_ready() const {
+    const slug_data* slug = &slugs[0];
+    const slug_data* end = &slug[3];
+    for (; slug != end; slug++) {
+        if (slug->stage != SLUG_AIM || (slug->stage_delay > 0.0f)) {
+            return FALSE;
+        }
+    }
+    return TRUE;
+}
+
+S32 zNPCB_SB2::slugs_inactive() const {
+    const slug_data* slug = &slugs[0];
+    const slug_data* end = &slug[3];
+    for (; slug != end; slug++) {
+        if (slug->stage != SLUG_INACTIVE) {
+            return FALSE;
+        }
+    }
+    return TRUE;
 }
 
 void zNPCB_SB2::fire_slug(zNPCB_SB2::slug_enum which, zNPCB_SB2::platform_data& target)
@@ -1480,6 +1542,11 @@ void zNPCB_SB2::reset_stage()
 {
     stage = -1;
     stage_delay = 0;
+}
+
+void zNPCB_SB2::set_vulnerable(bool vulnerable)
+{
+    
 }
 
 void zNPCB_SB2::destroy_glow_light()
@@ -1708,6 +1775,19 @@ S32 zNPCGoalBossSB2Chop::Exit(F32 dt, void* updCtxt)
     return xGoal::Exit(dt, updCtxt);
 }
 
+S32 zNPCGoalBossSB2Chop::can_start() const
+{
+    if (owner.player_platform() == 0)
+    {
+        return 0;
+    } else
+    {
+        
+    }
+
+    return 0;
+}
+
 xFactoryInst* zNPCGoalBossSB2Karate::create(S32 who, RyzMemGrow* grow, void* info)
 {
     return new (who, grow) zNPCGoalBossSB2Karate(who, (zNPCB_SB2&)*info);
@@ -1715,6 +1795,17 @@ xFactoryInst* zNPCGoalBossSB2Karate::create(S32 who, RyzMemGrow* grow, void* inf
 
 S32 zNPCGoalBossSB2Karate::Enter(F32 dt, void* updCtxt)
 {
+    U8* it = this->emitted;
+    U8* end = it + sizeof(this->emitted);
+
+    this->started = 0;
+    this->owner.flag.face_player = 1;
+
+    while (it != end)
+    {
+        *it++ = 0;
+    }
+
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
 
