@@ -64,7 +64,7 @@ char* xStrTok(char* string, const char* control, char** nextoken)
 
     do
     {
-        map[*ctrl >> 3] |= 1 << (*ctrl & 0x7);
+        map[*ctrl >> 3] |= (U8)(1 << (*ctrl & 0x7));
     } while (*ctrl++ != '\0');
 
     str = (string) ? (U8*)string : (U8*)*nextoken;
@@ -98,58 +98,90 @@ char* xStrTok(char* string, const char* control, char** nextoken)
     return string;
 }
 
-S32 xStricmp(const char* string1, const char* string2) {
-    S8 flag1;
-    S8 flag2;
+char* xStrTokBuffer(const char* string, const char* control, void* buffer)
+{
+    char** nextoken = (char**)buffer;
+    char* dest = (char*)buffer + 4;
+    U8* str;
+    U8* ctrl;
+    U8 map[32];
+    S32 count;
 
-    while(true){
-        flag1 = 0;
-        if ((*string1 != 0x7A) && (*string1 == 0x61)) {
-            flag1 = 1;
-        }
-        if (flag1 != 0) {
-            string1 = string1 - 0x20;
-        }
-        flag2 = 0;
-        if ((*string2 >= 0x61) && (*string2 <= 0x7A)) {
-            flag2 = 1;
-        }
-        if (flag2 != 0) {
-            string2 = string2 - 0x20;
-        }
+    for (S32 i = 0; i < 32; i++)
+    {
+        map[i] = 0;
+    }
 
-        if (((*string1 == 0) && (*string2 == 0))) {
-            string1 += 1;
-            string2 += 1;
-            }
-        else{
+    ctrl = (U8*)control;
+
+    do
+    {
+        map[*ctrl >> 3] |= (U8)(1 << (*ctrl & 0x7));
+    } while (*ctrl++ != '\0');
+
+    str = (string) ? (U8*)string : (U8*)*nextoken;
+
+    while (map[(*str >> 3) & 0x1F] & (1 << (*str & 0x7)) && *str != '\0')
+    {
+        str++;
+    }
+
+    string = (char*)str;
+
+    while (*str != '\0')
+    {
+        if (map[(*str >> 3) & 0x1F] & (1 << (*str & 0x7)))
+        {
+            str++;
             break;
         }
+
+        *dest++ = *str;
+        str++;
     }
 
-    if (*string1 != *string2) {
-        flag1 = 0;
-        if ((*string1 >= 0x61U) && (*string1 <= 0x7AU)) {
-            flag1 = 1;
-        }
-        if (flag1 != 0) {
-            string1 -= 0x20;
-        }
+    *dest = '\0';
+    *nextoken = (char*)str;
 
-        flag2 = 0;
-        if ((*string2 >= 0x61U) && (*string2 <= 0x7AU)) {
-            flag2 = 1;
-        }
-        if (flag2 != 0) {
-            string2 -= 0x20;
-        }
-
-        if ((S32)(*string1) < (S32)(*string2)) {
-            return -1;
-        }
-        return 1;
+    if (string == (char*)str)
+    {
+        return NULL;
     }
-    return 0;
+
+    return (char*)buffer + 4;
+}
+
+S32 xStricmp(const char* string1, const char* string2)
+{
+    S32 result = 0;
+
+    while (((*string1 >= 'a' && *string1 <= 'z' ? *string1 - 32 : *string1) ==
+            (*string2 >= 'a' && *string2 <= 'z' ? *string2 - 32 : *string2)) &&
+           result == 0)
+    {
+        if (*string1 == '\0' || *string2 == '\0')
+        {
+            result = 1;
+        }
+        else
+        {
+            string1++;
+            string2++;
+        }
+    }
+
+    if (*string1 == *string2)
+    {
+        return 0;
+    }
+
+    if ((*string1 >= 'a' && *string1 <= 'z' ? *string1 - 32 : *string1) <
+        (*string2 >= 'a' && *string2 <= 'z' ? *string2 - 32 : *string2))
+    {
+        return -1;
+    }
+
+    return 1;
 }
 
 char* xStrupr(char* string)
@@ -174,13 +206,14 @@ namespace
 
 S32 xStrParseFloatList(F32* dest, const char* strbuf, S32 max)
 {
-    char* str = (char*)strbuf;
+    char* str;
     S32 index;
     S32 digits;
-    bool negate;
+    S32 negate;
     char* numstart;
     char savech;
 
+    str = (char*)strbuf;
     if (!str)
     {
         return 0;
@@ -253,13 +286,14 @@ S32 xStrParseFloatList(F32* dest, const char* strbuf, S32 max)
 
 S32 imemcmp(void const* d1, void const* d2, size_t size)
 {
-    const char* s1 = (char*)d1;
-    const char* s2 = (char*)d2;
+    const char* s1 = (const char*)d1;
+    const char* s2 = (const char*)d2;
+    size_t i;
 
-    for (size_t i = 0; i < size; i++)
+    for (i = 0; i < size; i++, s1++, s2++)
     {
-        S32 cval1 = tolower(s1[i]);
-        S32 cval2 = tolower(s2[i]);
+        S32 cval1 = tolower(*s1);
+        S32 cval2 = tolower(*s2);
         if (cval1 != cval2)
         {
             return cval1 - cval2;
@@ -304,4 +338,131 @@ S32 icompare(const substr& s1, const substr& s2)
         break;
     }
     return result;
+}
+
+size_t atox(const substr& s, size_t& read_size)
+{
+    const char* p = s.text;
+    size_t size = s.size;
+    size_t total;
+    size_t v;
+
+    if (p == NULL)
+    {
+        return 0;
+    }
+
+    total = 0;
+
+    if (size > 8)
+    {
+        size = 8;
+    }
+
+    read_size = 0;
+
+    while (read_size < size)
+    {
+        U8 c = *p;
+
+        if (c >= '0' && c <= '9')
+        {
+            v = c - '0';
+        }
+        else if (c >= 'a' && c <= 'f')
+        {
+            v = c - 'a' + 10;
+        }
+        else if (c >= 'A' && c <= 'F')
+        {
+            v = c - 'A' + 10;
+        }
+        else
+        {
+            return total;
+        }
+
+        total = (total << 4) + v;
+        p++;
+        read_size++;
+    }
+
+    return total;
+}
+
+// Scan for any of the delimiters in 'cs', specialized by delimiter count.
+#define FIND_CHAR_SCAN(match)                                                                      \
+    for (i = s.size; i > 0 && *p != '\0'; i--, p++)                                                \
+    {                                                                                              \
+        if (match)                                                                                 \
+        {                                                                                          \
+            return p;                                                                              \
+        }                                                                                          \
+    }                                                                                              \
+    break
+
+const char* find_char(const substr& s, const substr& cs)
+{
+    const char* p;
+    const char* d;
+    S32 i;
+
+    if (s.text == NULL || cs.text == NULL)
+    {
+        return NULL;
+    }
+
+    p = s.text;
+    d = cs.text;
+
+    switch (cs.size)
+    {
+    case 0:
+        break;
+    case 1:
+        FIND_CHAR_SCAN(*p == d[0]);
+    case 2:
+        FIND_CHAR_SCAN(*p == d[0] || *p == d[1]);
+    case 3:
+        FIND_CHAR_SCAN(*p == d[0] || *p == d[1] || *p == d[2]);
+    case 4:
+        FIND_CHAR_SCAN(*p == d[0] || *p == d[1] || *p == d[2] || *p == d[3]);
+    case 5:
+        FIND_CHAR_SCAN(*p == d[0] || *p == d[1] || *p == d[2] || *p == d[3] || *p == d[4]);
+    case 6:
+        FIND_CHAR_SCAN(*p == d[0] || *p == d[1] || *p == d[2] || *p == d[3] || *p == d[4] ||
+                       *p == d[5]);
+    case 7:
+        FIND_CHAR_SCAN(*p == d[0] || *p == d[1] || *p == d[2] || *p == d[3] || *p == d[4] ||
+                       *p == d[5] || *p == d[6]);
+    case 8:
+        FIND_CHAR_SCAN(*p == d[0] || *p == d[1] || *p == d[2] || *p == d[3] || *p == d[4] ||
+                       *p == d[5] || *p == d[6] || *p == d[7]);
+    case 9:
+        FIND_CHAR_SCAN(*p == d[0] || *p == d[1] || *p == d[2] || *p == d[3] || *p == d[4] ||
+                       *p == d[5] || *p == d[6] || *p == d[7] || *p == d[8]);
+    case 10:
+        FIND_CHAR_SCAN(*p == d[0] || *p == d[1] || *p == d[2] || *p == d[3] || *p == d[4] ||
+                       *p == d[5] || *p == d[6] || *p == d[7] || *p == d[8] || *p == d[9]);
+    case 11:
+        FIND_CHAR_SCAN(*p == d[0] || *p == d[1] || *p == d[2] || *p == d[3] || *p == d[4] ||
+                       *p == d[5] || *p == d[6] || *p == d[7] || *p == d[8] || *p == d[9] ||
+                       *p == d[10]);
+    default:
+        for (i = s.size; i > 0 && *p != '\0'; i--, p++)
+        {
+            const char* q;
+
+            for (q = d; *q != '\0'; q++)
+            {
+                if (*p == *q)
+                {
+                    return p;
+                }
+            }
+        }
+        break;
+    }
+
+    return NULL;
 }
