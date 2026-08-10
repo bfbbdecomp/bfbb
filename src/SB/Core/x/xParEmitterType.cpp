@@ -105,7 +105,8 @@ void xParEmitterEmitCircle(xPar* p, xParEmitterAsset* a, F32 dt)
     xVec2 vec2 = { 0.0f, 1.0f };
 
     rr = xurand();
-    vec2.y = (1.0f - (rr * rr)) * a->e_circle.radius;
+    rr = 1.0f - (rr * rr);
+    vec2.y = rr * a->e_circle.radius;
 
     dot_ret_x = xVec2Dot(&rot_mat.right, &vec2);
     dot_ret_z = xVec2Dot(&rot_mat.up, &vec2);
@@ -434,8 +435,11 @@ namespace
 
 void xParEmitterEmitOCircle(xPar* p, xParEmitterAsset* a, F32 dt)
 {
-    F32 temp_rand = xurand();
-    ocircle_emit(*p, *a, dt, (1.0f - (temp_rand * temp_rand)) * a->e_circle.radius);
+    F32 rr = xurand();
+    F32 radius = 1.0f - (rr * rr);
+
+    radius *= a->e_circle.radius;
+    ocircle_emit(*p, *a, dt, radius);
 }
 
 xMat4x3* xParEmitterTransformEntBone(xVec3& loc, xVec3& vel, const xParEmitterAsset& a,
@@ -712,8 +716,8 @@ namespace
         {
             xVec3 dir;
             U32 r = xrand() >> 0xD;
-            F32 sign = (r & 0x4) ? 1.0f : -1.0f;
             U32 axis = r % 3;
+            F32 sign = (r & 0x4) ? 1.0f : -1.0f;
 
             if (axis == 0)
             {
@@ -735,8 +739,8 @@ namespace
         {
             xVec3 dir;
             U32 r = xrand() >> 0xD;
-            F32 sign = (r & 0x4) ? 1.0f : -1.0f;
             U32 axis = r % 3;
+            F32 sign = (r & 0x4) ? 1.0f : -1.0f;
 
             if (axis == 0)
             {
