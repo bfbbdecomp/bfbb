@@ -3454,6 +3454,12 @@ S32 zNPCGoalBossPatSpin::Enter(F32 dt, void* updCtxt)
     xVec3 center;
     xVec3 cone;
     xVec3 unk;
+    F32 param1;
+    F32 param2;
+    F32 det;
+    S32 i;
+    F32 a;
+    F32 b;
 
     zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
 
@@ -3491,43 +3497,42 @@ S32 zNPCGoalBossPatSpin::Enter(F32 dt, void* updCtxt)
     back.y = f832;
     xVec3Normalize(&back, &back);
 
-    F32 dVar9 = back.x * back.x + back.z * back.z;
-    F32 dVar8 = f891 * (cone.x * back.x + cone.z * back.z);
-    F32 dVar5 = f832;
-    F32 fVar1 = (dVar8 * dVar8 - ((f1670 * dVar9) * ((cone.x * cone.x + cone.z * cone.z) - f2697)));
-    dVar7 = dVar5;
+    a = back.x * back.x + back.z * back.z;
+    b = f891 * (cone.x * back.x + cone.z * back.z);
+    det = b * b - f1670 * a * ((cone.x * cone.x + cone.z * cone.z) - f2697);
 
-    if (dVar5 >= fVar1)
+    if (det >= f832)
     {
-        dVar7 = xsqrt(fVar1);
-        dVar5 = (-dVar8 - dVar7) / (f891 * dVar9);
-        dVar7 = (-dVar8 + dVar7) / (f891 * dVar9);
+        det = xsqrt(det);
+
+        param1 = (-b + det) / (f891 * a);
+        param2 = (-b - det) / (f891 * a);
     }
     else
     {
-        dVar7 = dVar5;
+        param1 = f832;
+        param2 = f832;
     }
 
-    if (dVar7 > dVar5)
+    if (param2 > param1)
     {
-        dVar7 = dVar5;
+        param1 = param2;
     }
 
     xVec3Copy(&this->pole[0], &cone);
-    xVec3AddScaled(&this->pole[0], &back, dVar7);
+    xVec3AddScaled(&this->pole[0], &back, param1);
 
     this->pole[0].y = f832;
+
     xVec3Init(&unk, this->pole[0].z, f832, -this->pole[0].x);
 
-    U32 uVar3 = 1;
-    for (S32 i = 0; i < 4; i++)
+    for (i = 1; i < 4; i++)
     {
-        fVar1 = f1666 * uVar3++ * 1664;
-        dVar5 = fVar1;
-        dVar7 = icos(fVar1);
-        xVec3SMul(&this->pole[i], &this->pole[i], dVar7);
-        dVar7 = isin(dVar5);
-        xVec3AddScaled(&this->pole[i], &unk, dVar7);
+        det = f1666 * i;
+        det *= f1664;
+
+        xVec3SMul(&this->pole[i], &this->pole[0], icos(det));
+        xVec3AddScaled(&this->pole[i], &unk, isin(det));
     }
 
     this->currPole = 0;
@@ -3538,28 +3543,16 @@ S32 zNPCGoalBossPatSpin::Enter(F32 dt, void* updCtxt)
 
 S32 zNPCGoalBossPatSpin::Process(en_trantype* trantype, F32 dt, void* ctxt, xScene* scene)
 {
-    /*
-        class zNPCBPatrick * pat; // r16
-        class xVec3 awayFromPlayer; // r29+0x190
-        class xVec3 offset; // r29+0x180
-        class xVec3 center; // r29+0x170
-        class xVec3 cone; // r29+0x160
-        class xVec3 back; // r29+0x150
-        float passedPole; // r23
-        float ang; // r29+0x1A0
-        class xMat3x3 rotMat; // r29+0x120
-        class xCollis colls; // r29+0xD0
-        signed int turning; // r18
-        unsigned int picker; // r2
-    */
-    xVec3 awayFromPlayer; // r29+0x190
-    xVec3 offset; // r29+0x180
-    xVec3 center; // r29+0x170
-    xVec3 cone; // r29+0x160
-    xVec3 back; // r29+0x150
-    F32 ang; // r29+0x1A0
-    xMat3x3 rotMat; // r29+0x120
-    xCollis colls; // r29+0xD0
+    xVec3 awayFromPlayer;
+    xVec3 offset;
+    xVec3 center;
+    xVec3 cone;
+    xVec3 back;
+    xVec3 toPole;
+    xVec3 polePos;
+    xVec3 alongVel;
+    xMat3x3 rotMat;
+    xCollis colls;
 
     zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
 
@@ -3577,9 +3570,13 @@ S32 zNPCGoalBossPatSpin::Process(en_trantype* trantype, F32 dt, void* ctxt, xSce
                                          f1142, f1659, SND_CAT_GAME, f832);
             this->globSndID = xSndPlay3D(xStrHash("b201_rp_spin_spurt_loop"), f2610, f832, 0, 0,
                                          pat, f1142, f1659, SND_CAT_GAME, f832);
+
             pat->bossFlags |= 1;
+
             this->DoAutoAnim(NPC_GSPOT_START, 0);
+
             this->timeInGoal = f832;
+
             if (!(pat->nfFlags & 0x1000))
             {
                 pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
@@ -3590,10 +3587,14 @@ S32 zNPCGoalBossPatSpin::Process(en_trantype* trantype, F32 dt, void* ctxt, xSce
                 pat->newsfish->SpeakStart(sNFComment[NF_DOSIDO_AROUND_YOU_GO].soundID, 0, -1);
             }
         }
+
         break;
     }
     case 1:
     {
+        F32 passedPole;
+        F32 ang;
+
         if (pat->round != 3)
         {
             xVec3Sub(&awayFromPlayer, (xVec3*)&pat->model->Mat->pos,
@@ -3604,104 +3605,181 @@ S32 zNPCGoalBossPatSpin::Process(en_trantype* trantype, F32 dt, void* ctxt, xSce
         }
 
         xVec3Init(&offset, f832, f832, f832);
-        GetBonePos(&center, (xMat4x3*)&pat->model->Mat, sBone[0], &offset);
-        GetBonePos(&cone, (xMat4x3*)&pat->model->Mat, sBone[1], &offset);
+
+        GetBonePos(&center, (xMat4x3*)pat->model->Mat, sBone[0], &offset);
+        GetBonePos(&cone, (xMat4x3*)pat->model->Mat, sBone[3], &offset);
+
         offset.z = f870;
-        GetBonePos(&back, (xMat4x3*)&pat->model->Mat, sBone[2], &offset);
+
+        GetBonePos(&back, (xMat4x3*)pat->model->Mat, sBone[0], &offset);
         xVec3SubFrom(&back, &center);
+
         back.y = f832;
+
         xVec3Normalize(&back, &back);
 
-        /*
-        F32 fVar1 = f1664 * this->timeInGoal;
-        if (f1666 < fVar1)
-        {
-            fVar1 = ang - fVar1;
-        }
-        xMat3x3RotY(&rotMat, fVar1);
-        */
+        ang = f1664 * this->timeInGoal;
 
-        xVec3AddScaled((xVec3*)&pat->frame->mat.pos.y, &this->vel, dt);
-
-        if (pat->arenaExtent.x < pat->frame->mat.pos.x && f832 < this->vel.x)
+        if (ang > f1666)
         {
-            this->vel.x = (-this->vel.x + xurand()) - f1046;
-            this->vel.z = (-this->vel.z + xurand()) - f1046;
+            ang -= f1666 * (S32)(ang / f1666);
         }
 
-        if (pat->arenaExtent.z < pat->frame->mat.pos.z && f832 < this->vel.z)
+        xMat3x3RotY(&rotMat, ang);
+
+        do
+        {
+            xMat3x3RMulVec(&polePos, &rotMat, &this->pole[this->currPole]);
+            xVec3Sub(&toPole, &polePos, &cone);
+
+            passedPole = back.x * toPole.z - back.z * toPole.x;
+
+            if (passedPole > f832)
+            {
+                bossPatGlob* glob = pat->getNextFreeGlob();
+
+                glob->t = f832;
+                glob->path.minTime = f832;
+                glob->path.maxTime = f1678 * xurand() + f831;
+                glob->path.gravity = f1055;
+
+                xVec3Copy(&glob->path.initPos, &cone);
+                xVec3Copy(&glob->lastPos, &glob->path.initPos);
+                xVec3Copy(&glob->path.initVel, &toPole);
+                xVec3Normalize(&glob->path.initVel, &glob->path.initVel);
+                xVec3SMul(&alongVel, &glob->path.initVel,
+                          xVec3Dot(&glob->path.initVel, &this->vel));
+
+                glob->path.initVel.x *= f1142;
+                glob->path.initVel.y += f1049;
+                glob->path.initVel.z *= f1142;
+
+                xVec3AddScaled(&glob->path.initVel, &alongVel, f1664);
+                xParabolaHitsEnv(&glob->path, globals.sceneCur->env, &colls);
+
+                if (colls.flags & 1)
+                {
+                    glob->path.maxTime = colls.dist;
+                    xVec3Copy(&glob->norm, &colls.norm);
+                    glob->flags |= 2;
+                }
+
+                colls.flags &= 0xfffffffe;
+
+                pat->ParabolaHitsConveyors(&glob->path, &colls);
+
+                if (colls.flags & 1)
+                {
+                    glob->path.maxTime = colls.dist;
+                    glob->flags |= 2;
+
+                    if (colls.tohit.x < f1679 && colls.tohit.x > f1680 && colls.tohit.z > f1681)
+                    {
+                        glob->flags |= 8;
+
+                        xVec3Init(&glob->norm, f832, f831, f832);
+
+                        glob->conv = (zPlatform*)colls.optr;
+
+                        xVec3SMul(&glob->convVel, (xVec3*)&glob->conv->bound.mat->right,
+                                  glob->conv->passet->cb.speed);
+                    }
+                    else
+                    {
+                        xVec3Init(&glob->norm, f832, f870, f832);
+                    }
+                }
+
+                this->currPole++;
+
+                if (this->currPole >= 4)
+                {
+                    this->currPole = 0;
+                }
+            }
+        } while (passedPole > f832);
+
+        xVec3AddScaled(&pat->frame->mat.pos, &this->vel, dt);
+
+        if (pat->frame->mat.pos.x > pat->arenaExtent.x && this->vel.x > f832)
+        {
+            this->vel.x = (-this->vel.x + xurand()) - f1046;
+            this->vel.z = (this->vel.z + xurand()) - f1046;
+        }
+
+        if (pat->frame->mat.pos.z > pat->arenaExtent.z && this->vel.z > f832)
         {
             this->vel.z = (-this->vel.z + xurand()) - f1046;
-            this->vel.x = (-this->vel.x + xurand()) - f1046;
+            this->vel.x = (this->vel.x + xurand()) - f1046;
         }
 
         if (pat->frame->mat.pos.x < -pat->arenaExtent.x && this->vel.x < f832)
         {
             this->vel.x = (-this->vel.x + xurand()) - f1046;
-            this->vel.z = (-this->vel.z + xurand()) - f1046;
+            this->vel.z = (this->vel.z + xurand()) - f1046;
         }
 
         if (pat->frame->mat.pos.z < -pat->arenaExtent.z && this->vel.z < f832)
         {
             this->vel.z = (-this->vel.z + xurand()) - f1046;
-            this->vel.x = (-this->vel.x + xurand()) - f1046;
+            this->vel.x = (this->vel.x + xurand()) - f1046;
         }
 
         if (pat->AnimTimeRemain(NULL) < f2280 * dt)
         {
-            if (!(pat->bossFlags & 2))
-            {
-                if ((pat->round != 1 && pat->round != 2) || this->timeInGoal < f1055)
-                {
-                    if (pat->round == 3 && f1055 < this->timeInGoal)
-                    {
-                        F32 dVar7 =
-                            xVec3Dot((xVec3*)&pat->frame->mat.pos, (xVec3*)&pat->model->Mat->at);
-                        F32 fVar1 = pat->arenaExtent.x;
-                        F32 fVar2 = pat->frame->mat.pos.x;
-
-                        if ((fVar2 <= f2424 * fVar1) && (f2424 * -fVar1 <= fVar2))
-                        {
-                            fVar1 = pat->arenaExtent.z;
-                            fVar2 = pat->frame->mat.pos.z;
-
-                            if ((fVar2 <= f2424 * fVar1) && (f2424 * -fVar1 <= fVar2))
-                            {
-                                break;
-                            }
-                        }
-
-                        if (dVar7 < f832)
-                        {
-                            this->stage = 2;
-                            xSndStop(this->spinSndID);
-                            xSndStop(this->globSndID);
-                            pat->bossFlags |= 0x40;
-                            this->DoAutoAnim(NPC_GSPOT_START, 0);
-                            this->timeInGoal = f832;
-                        }
-                    }
-                }
-                else
-                {
-                    this->stage = 2;
-                    xSndStop(this->spinSndID);
-                    xSndStop(this->globSndID);
-                    pat->bossFlags |= 0x40;
-                    this->DoAutoAnim(NPC_GSPOT_START, 0);
-                    this->timeInGoal = f832;
-                }
-            }
-            else
+            if (pat->bossFlags & 2)
             {
                 this->stage = 2;
+
                 xSndStop(this->spinSndID);
                 xSndStop(this->globSndID);
+
                 pat->bossFlags |= 0x40;
+
                 this->DoAutoAnim(NPC_GSPOT_START, 0);
+
                 this->timeInGoal = f832;
             }
+            else if ((pat->round == 1 || pat->round == 2) && this->timeInGoal > f1055)
+            {
+                this->stage = 2;
+
+                xSndStop(this->spinSndID);
+                xSndStop(this->globSndID);
+
+                pat->bossFlags |= 0x40;
+
+                this->DoAutoAnim(NPC_GSPOT_START, 0);
+
+                this->timeInGoal = f832;
+            }
+            else if (pat->round == 3 && this->timeInGoal > f1055)
+            {
+                F32 facing =
+                    xVec3Dot((xVec3*)&pat->frame->mat.pos, (xVec3*)&pat->model->Mat->at);
+
+                if (pat->frame->mat.pos.x > f2424 * pat->arenaExtent.x ||
+                    pat->frame->mat.pos.x < f2424 * -pat->arenaExtent.x ||
+                    pat->frame->mat.pos.z > f2424 * pat->arenaExtent.z ||
+                    pat->frame->mat.pos.z < f2424 * -pat->arenaExtent.z)
+                {
+                    if (facing < f832)
+                    {
+                        this->stage = 2;
+
+                        xSndStop(this->spinSndID);
+                        xSndStop(this->globSndID);
+
+                        pat->bossFlags |= 0x40;
+
+                        this->DoAutoAnim(NPC_GSPOT_START, 0);
+
+                        this->timeInGoal = f832;
+                    }
+                }
+            }
         }
+
         break;
     }
     case 2:
@@ -3709,18 +3787,24 @@ S32 zNPCGoalBossPatSpin::Process(en_trantype* trantype, F32 dt, void* ctxt, xSce
         if (!(pat->bossFlags & 2) && pat->AnimTimeRemain(NULL) < f2280 * dt)
         {
             this->stage = 3;
+
             xSndPlay3D(xStrHash("b201_rp_spin_dizzy"), f2610, f832, 0, 0, pat, f1142, f1659,
                        SND_CAT_GAME, f832);
+
             this->DoAutoAnim(NPC_GSPOT_START, 0);
+
             this->timeInGoal = f832;
+
             pat->bossFlags &= 0xfffffff6;
             pat->bossFlags |= 4;
         }
+
         break;
     }
     case 3:
     {
         S32 turning = 0;
+
         if (pat->round == 3)
         {
             turning = Pat_FaceTarget(pat, &g_O3, f1673, dt);
@@ -3729,9 +3813,12 @@ S32 zNPCGoalBossPatSpin::Process(en_trantype* trantype, F32 dt, void* ctxt, xSce
         if (pat->AnimTimeRemain(NULL) < f2280 * dt && !turning)
         {
             this->stage = 4;
+
             xSndPlay3D(xStrHash("b201_rp_spin_fall"), f2610, f832, 0, 0, pat, f1142, f1659,
                        SND_CAT_GAME, f1675);
+
             this->DoAutoAnim(NPC_GSPOT_START, 0);
+
             this->timeInGoal = f832;
 
             if (pat->nfFlags & 1)
@@ -3742,129 +3829,134 @@ S32 zNPCGoalBossPatSpin::Process(en_trantype* trantype, F32 dt, void* ctxt, xSce
                 {
                     if (pat->hitPoints == 9)
                     {
-                        U32 uVar5 = pat->nfFlags;
-                        if ((uVar5 & 8) == 0)
+                        U32 said = pat->nfFlags;
+
+                        if (!(said & 8))
                         {
-                            pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0,
+                            pat->newsfish->SpeakStart(sNFComment[NF_SB_HAS_OPPORTUNITY].soundID, 0,
                                                       -1);
-                            pat->nfFlags = pat->nfFlags | 8;
+                            pat->nfFlags |= 8;
                         }
-                        else if ((uVar5 & 0x10) == 0)
+                        else if (!(said & 0x10))
                         {
-                            pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0,
-                                                      -1);
-                            pat->nfFlags = pat->nfFlags | 0x10;
+                            pat->newsfish->SpeakStart(
+                                sNFComment[NF_ANOTHER_OPPORTUNITY_FOR_SB].soundID, 0, -1);
+                            pat->nfFlags |= 0x10;
                         }
-                        else if ((uVar5 & 0x20) == 0)
+                        else if (!(said & 0x20))
                         {
-                            pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0,
-                                                      -1);
-                            pat->nfFlags = pat->nfFlags | 0x20;
+                            pat->newsfish->SpeakStart(
+                                sNFComment[NF_NOTE_ON_ROBOT_BACK_MEANS_SOMETHING].soundID, 0, -1);
+                            pat->nfFlags |= 0x20;
                         }
-                        else if ((picker & 0x100) == 0)
+                        else if (picker & 0x100)
                         {
-                            pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0,
-                                                      -1);
+                            pat->newsfish->SpeakStart(
+                                sNFComment[NF_NOTE_ON_ROBOT_BACK_MEANS_SOMETHING].soundID, 0, -1);
                         }
                         else
                         {
-                            pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0,
-                                                      -1);
+                            pat->newsfish->SpeakStart(
+                                sNFComment[NF_ANOTHER_OPPORTUNITY_FOR_SB].soundID, 0, -1);
                         }
                     }
-                    else if ((picker & 0x1f) < 0xb)
+                    else if ((picker & 0x1f) <= 0xa)
                     {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
+                        pat->newsfish->SpeakStart(sNFComment[NF_AND_ROBOT_IS_DOWN_A].soundID, 0,
+                                                  -1);
                     }
-                    else if ((picker & 0x1f) < 0x15)
+                    else if ((picker & 0x1f) <= 0x14)
                     {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
+                        pat->newsfish->SpeakStart(sNFComment[NF_AND_ROBOT_IS_DOWN_B].soundID, 0,
+                                                  -1);
                     }
                     else
                     {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
+                        pat->newsfish->SpeakStart(sNFComment[NF_OOH_ROBOT_IS_DOWN].soundID, 0, -1);
                     }
                 }
                 else if (pat->round == 2)
                 {
-                    if ((picker & 0x300) != 0)
+                    if (picker & 0x300)
                     {
-                        if ((picker & 0x1f) < 0xb)
+                        if ((picker & 0x1f) <= 0xa)
                         {
-                            pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0,
+                            pat->newsfish->SpeakStart(sNFComment[NF_AND_ROBOT_IS_DOWN_A].soundID, 0,
                                                       -1);
                         }
-                        else if ((picker & 0x1f) < 0x15)
+                        else if ((picker & 0x1f) <= 0x14)
                         {
-                            pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0,
+                            pat->newsfish->SpeakStart(sNFComment[NF_AND_ROBOT_IS_DOWN_B].soundID, 0,
                                                       -1);
                         }
                         else
                         {
-                            pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0,
+                            pat->newsfish->SpeakStart(sNFComment[NF_OOH_ROBOT_IS_DOWN].soundID, 0,
                                                       -1);
                         }
                     }
                 }
                 else if (pat->hitPoints == 3)
                 {
-                    U32 uVar5 = pat->nfFlags;
-                    if ((uVar5 & 0x80) == 0)
+                    U32 said = pat->nfFlags;
+
+                    if (!(said & 0x80))
                     {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
-                        pat->nfFlags = pat->nfFlags | 0x80;
+                        pat->newsfish->SpeakStart(sNFComment[NF_SB_HAS_OPPORTUNITY].soundID, 0, -1);
+                        pat->nfFlags |= 0x80;
                     }
-                    else if ((uVar5 & 0x100) == 0)
+                    else if (!(said & 0x100))
                     {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
-                        pat->nfFlags = pat->nfFlags | 0x100;
+                        pat->newsfish->SpeakStart(sNFComment[NF_ANOTHER_OPPORTUNITY_FOR_SB].soundID,
+                                                  0, -1);
+                        pat->nfFlags |= 0x100;
                     }
-                    else if ((uVar5 & 0x200) == 0)
+                    else if (!(said & 0x200))
                     {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
-                        pat->nfFlags = pat->nfFlags | 0x200;
+                        pat->newsfish->SpeakStart(sNFComment[NF_PRIME_BOWLING_MOMENT].soundID, 0,
+                                                  -1);
+                        pat->nfFlags |= 0x200;
                     }
-                    else if ((picker & 0x100) == 0)
+                    else if (picker & 0x100)
                     {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
+                        pat->newsfish->SpeakStart(sNFComment[NF_PRIME_BOWLING_MOMENT].soundID, 0,
+                                                  -1);
                     }
                     else
                     {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
+                        pat->newsfish->SpeakStart(sNFComment[NF_ANOTHER_OPPORTUNITY_FOR_SB].soundID,
+                                                  0, -1);
                     }
+                }
+                else if ((picker & 0x3f) <= 0xa)
+                {
+                    pat->newsfish->SpeakStart(sNFComment[NF_AND_ROBOT_IS_DOWN_A].soundID, 0, -1);
+                }
+                else if ((picker & 0x3f) <= 0x15)
+                {
+                    pat->newsfish->SpeakStart(sNFComment[NF_AND_ROBOT_IS_DOWN_B].soundID, 0, -1);
+                }
+                else if ((picker & 0x3f) <= 0x1f)
+                {
+                    pat->newsfish->SpeakStart(sNFComment[NF_OOH_ROBOT_IS_DOWN].soundID, 0, -1);
+                }
+                else if ((picker & 0x3f) <= 0x2a)
+                {
+                    pat->newsfish->SpeakStart(sNFComment[NF_SB_HAS_OPPORTUNITY].soundID, 0, -1);
+                }
+                else if ((picker & 0x3f) <= 0x34)
+                {
+                    pat->newsfish->SpeakStart(sNFComment[NF_ANOTHER_OPPORTUNITY_FOR_SB].soundID, 0,
+                                              -1);
                 }
                 else
                 {
-                    picker = picker & 0x3f;
-                    if (picker < 0xb)
-                    {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
-                    }
-                    else if (picker < 0x16)
-                    {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
-                    }
-                    else if (picker < 0x20)
-                    {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
-                    }
-                    else if (picker < 0x2b)
-                    {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
-                    }
-                    else if (picker < 0x35)
-                    {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
-                    }
-                    else
-                    {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
-                    }
+                    pat->newsfish->SpeakStart(sNFComment[NF_PRIME_BOWLING_MOMENT].soundID, 0, -1);
                 }
             }
             else
             {
-                pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
+                pat->newsfish->SpeakStart(sNFComment[NF_ROBOT_MADE_HIMSELF_DIZZY].soundID, 0, -1);
                 pat->nfFlags |= 1;
             }
         }
@@ -3873,13 +3965,15 @@ S32 zNPCGoalBossPatSpin::Process(en_trantype* trantype, F32 dt, void* ctxt, xSce
     }
     case 4:
     {
-        F32 dvar10 = pat->AnimTimeRemain(NULL);
-        if (dvar10 < f2280 * dt)
+        if (pat->AnimTimeRemain(NULL) < f2280 * dt)
         {
             this->stage = 5;
+
             this->DoAutoAnim(NPC_GSPOT_START, 0);
+
             this->timeInGoal = f832;
         }
+
         break;
     }
     case 5:
@@ -3889,8 +3983,11 @@ S32 zNPCGoalBossPatSpin::Process(en_trantype* trantype, F32 dt, void* ctxt, xSce
             (pat->round == 3 && this->timeInGoal > f2597))
         {
             this->stage = 6;
+
             pat->bossFlags &= 0xffffffbf;
+
             this->DoAutoAnim(NPC_GSPOT_START, 0);
+
             this->timeInGoal = f832;
         }
         else if (pat->round == 3 && !(pat->nfFlags & 0x200) && this->timeInGoal > f2885)
@@ -3898,6 +3995,11 @@ S32 zNPCGoalBossPatSpin::Process(en_trantype* trantype, F32 dt, void* ctxt, xSce
             pat->newsfish->SpeakStart(sNFComment[NF_PRIME_BOWLING_MOMENT].soundID, 0, -1);
             pat->nfFlags |= 0x200;
         }
+
+        break;
+    }
+    case 6:
+    {
         break;
     }
     }
