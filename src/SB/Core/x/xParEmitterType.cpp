@@ -12,8 +12,8 @@ namespace
     void ocircle_emit(xPar& p, xParEmitterAsset& a, F32 dt, F32 radius);
     void transform_ent_bone(xVec3& loc, xVec3& vel, const xParEmitterAsset& a,
                             const xMat4x3& mat);
-    xVec3 get_random_offset(const xPEEntBone& b, const xMat4x3& mat);
-    xVec3 get_random_offset(const xBound& b, F32 expand, U32 flags);
+    xVec3 get_random_offset(const xPEEntBone& region, const xMat4x3& mat);
+    xVec3 get_random_offset(const xBound& b, F32 expand, U32 type);
 } // namespace
 
 void xParEmitterEmitPoint(xPar* p, xParEmitterAsset* a, F32 dt)
@@ -46,9 +46,9 @@ void xParEmitterEmitCircleEdge(xPar* p, xParEmitterAsset* a, F32 dt)
     F32 dt_radius;
     F32 rot_amount;
     F32 temp_icos;
-    F32 dot_ret_z;
-    F32 temp_isin;
     F32 dot_ret_x;
+    F32 temp_isin;
+    F32 dot_ret_z;
 
     p->m_vel = a->vel;
     xVec3SMulBy(&p->m_vel, dt);
@@ -64,8 +64,10 @@ void xParEmitterEmitCircleEdge(xPar* p, xParEmitterAsset* a, F32 dt)
 
     xVec2 vec2 = { 0.0f, 1.0f };
 
-    dot_ret_x = xVec2Dot(&rot_mat.right, &vec2) * a->e_circle.radius;
-    dot_ret_z = xVec2Dot(&rot_mat.up, &vec2) * a->e_circle.radius;
+    dot_ret_x = xVec2Dot(&rot_mat.right, &vec2);
+    dot_ret_x *= a->e_circle.radius;
+    dot_ret_z = xVec2Dot(&rot_mat.up, &vec2);
+    dot_ret_z *= a->e_circle.radius;
 
     p->m_pos.x += dot_ret_x;
     p->m_pos.z += dot_ret_z;
@@ -205,7 +207,9 @@ void xParEmitterEmitLine(xPar* p, xParEmitterAsset* a, F32 dt)
         dir.z = rr * cos_pitch;
 
         F32 temp_random = xurand();
-        p->m_pos += dir * (a->e_line.radius * (1.0f - (temp_random * (temp_random * temp_random))));
+
+        temp_random = 1.0f - (temp_random * (temp_random * temp_random));
+        p->m_pos += dir * (a->e_line.radius * temp_random);
     }
 
     xParEmitterAngleVariation(p, a);
@@ -254,16 +258,16 @@ void xParEmitterEmitSphereEdge(xPar* p, xParEmitterAsset* a, F32 dt, S32 subtype
 
     switch (subtype)
     {
-    case 7:
+    case eParEmitterSphereEdge1:
         random_angle_71 = 6.2831855f * xurand();
         random_angle_72 = 6.2831855f * xurand();
         xMat3x3Euler(&mat_rot, 6.2831855f * xurand(), random_angle_72, random_angle_71);
         break;
-    case 10:
+    case eParEmitterSphereEdge2:
         random_angle_10 = (3.1415927f * xurand()) + 3.1415927f;
         xMat3x3Euler(&mat_rot, 6.2831855f * xurand(), random_angle_10, 0.0f);
         break;
-    case 11:
+    case eParEmitterSphereEdge3:
         random_angle_11 = 3.1415927f * xurand();
         xMat3x3Euler(&mat_rot, 6.2831855f * xurand(), random_angle_11, 0.0f);
         break;
@@ -287,7 +291,7 @@ void xParEmitterEmitVolume(xPar* p, xParEmitterAsset* a, F32 dt, xVolume* vol)
     if (vol != NULL)
     {
         b = vol->GetBound();
-        if (b->type == 2)
+        if (b->type == XBOUND_TYPE_BOX)
         {
             xVec3Sub(&size, &b->box.box.upper, &b->box.box.lower);
             size.x *= xurand();
@@ -553,6 +557,7 @@ namespace
             F32 s = xsqrt(1.0f - (z * z));
             F32 t = xurand();
             F32 radius = 1.0f - (t * (t * t));
+
             radius *= region.radius;
             F32 rs = radius * s;
 
@@ -680,6 +685,7 @@ namespace
             F32 s = xsqrt(1.0f - (z * z));
             F32 t = xurand();
             F32 radius = 1.0f - (t * (t * t));
+
             radius *= (b.sph.r + expand);
             F32 rs = radius * s;
 
