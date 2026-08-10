@@ -63,8 +63,8 @@ vinfo voices[58];
 U32* ua_stream_buffer = NULL; //unaligned stream buffer
 U32* stream_buffer = 0;
 u32 silence_buffer = 0;
-volatile u32 zero_point = 0;
-volatile u32 zero_end = 0;
+volatile U32 zero_point = 0;
+volatile U32 zero_end = 0;
 volatile U32 SoundFlags = 0;
 volatile S32 fc = 0;
 static char soundInited = 0;
@@ -276,34 +276,46 @@ static void iSndMyAXFree(AXVPB**);
 
 static void fcb()
 {
+    S32 i;
+    S32 need_update;
+    U32 orig_flags;
+    U32 length;
+    U32 source;
+    U32 flags_bit_12;
+    U32 flags_bit_10;
+    U32 flags_bit_13;
+    U32 flags_bit_9;
+    U32 dest;
+    u32 addr;
+    xSndVoiceInfo* gsnd_voice;
+
     if (!soundInited && iTRCDisk::IsDiskIDed())
     {
         return;
     }
 
     fc++;
-    S32 i;
-    S32 need_update = TRUE;
+    need_update = FALSE;
     for (i = 0; i < 6; i++)
     {
-        xSndVoiceInfo* gsnd_voice = &gSnd.voice[i];
-        U32 orig_flags = streams[i].vinf.flags;
+        orig_flags = streams[i].vinf.flags;
+        gsnd_voice = &gSnd.voice[i];
         if (streams[i].vinf.voice == NULL)
         {
             continue;
         }
 
-        u16 addrHi = streams[i].vinf.voice->pb.addr.currentAddressHi;
+        U32 addrHi = streams[i].vinf.voice->pb.addr.currentAddressHi;
         if (orig_flags & 0xe0006)
         {
             continue;
         }
-        u32 addr = addrHi << 16;
+        addr = (addrHi << 16);
         addr += streams[i].vinf.voice->pb.addr.currentAddressLo;
-        U32 dest = streams[i].dest_b;
+        dest = streams[i].dest_b;
         dump_flags(orig_flags);
 
-        if (dest * 2 < addr && (orig_flags & 0x4000) == 0 && (orig_flags & 0x8) == 0)
+        if ((addr < dest * 2) && (orig_flags & 0x4000) == 0 && (orig_flags & 0x8) == 0)
         {
             streams[i].vinf.flags |= 0x4000;
             streams[i].vinf.flags &= ~0x8000;
@@ -315,7 +327,7 @@ static void fcb()
             streams[i].x94 = streams[i].x90;
             orig_flags = streams[i].vinf.flags;
         }
-        else if (dest * 2 >= addr && (orig_flags & 0x8000) == 0)
+        else if ((addr >= dest * 2) && (orig_flags & 0x8000) == 0)
         {
             streams[i].vinf.flags |= 0x8000;
             streams[i].vinf.flags &= ~0x4000;
@@ -330,8 +342,9 @@ static void fcb()
         if ((orig_flags & 0x20) && (orig_flags & 0x4000))
         {
             streams[i].vinf.flags &= ~0x20;
-            dest = streams[i].dest_a * 2;
-            dest += streams[i].x24 & 0xFFFF;
+            U32 dest = streams[i].dest_a;
+            dest <<= 1;
+            dest += (streams[i].x24 & 0xFFFF);
             AXSetVoiceLoopAddr(streams[i].vinf.voice, zero_point);
             AXSetVoiceEndAddr(streams[i].vinf.voice, dest - 1);
             AXSetVoiceLoop(streams[i].vinf.voice, 0);
@@ -350,7 +363,7 @@ static void fcb()
             continue;
         }
 
-        if (dest >= zero_point && dest < zero_end && (orig_flags & 0x40))
+        if (addr >= zero_point && addr < zero_end && (orig_flags & 0x40))
         {
             streams[i].vinf.flags &= ~0x40;
             DVDCancelAsync(&streams[i].fileInfo.cb, NULL);
@@ -360,14 +373,14 @@ static void fcb()
 
             if (streams[i].vinf.flags & 0x10000)
             {
-                u32 priority = gsnd_voice->priority;
+                U32 priority = gsnd_voice->priority;
                 if (priority > 0xff)
                 {
                     priority = 0xff;
                 }
 
                 iSndMyAXFree(&streams[i].vinf.voice);
-                streams[i].vinf.voice = AXAcquireVoice(priority, dv_callback, i);
+                streams[i].vinf.voice = AXAcquireVoice(priority >> 3, dv_callback, i);
                 if (streams[i].vinf.voice == NULL)
                 {
                     streams[i].vinf.voice = NULL;
@@ -423,8 +436,6 @@ static void fcb()
         }
         if ((orig_flags & 0x800) || (orig_flags & 0x4000000))
         {
-            U32 length;
-            U32 source;
             if (orig_flags & 0x800)
             {
                 length = 0x4000;
@@ -440,10 +451,6 @@ static void fcb()
                 source = streams[i].source_b;
             }
 
-            U32 flags_bit_12;
-            U32 flags_bit_10;
-            U32 flags_bit_13;
-            U32 flags_bit_9;
             flags_bit_9 = orig_flags & 0x200;
             flags_bit_12 = orig_flags & 0x1000;
             flags_bit_10 = orig_flags & 0x400;
@@ -453,13 +460,13 @@ static void fcb()
             if (flags_bit_12 && (orig_flags & 0x4000) && !flags_bit_10 && !flags_bit_13)
             {
                 streams[i].vinf.flags |= 0x400;
-                ARQPostRequest(&streams[i].request, (u32)streams[i].vinf.voice, 0, 1, source,
+                ARQPostRequest(&streams[i].request, (u32)&streams[i], 0, 1, source,
                                streams[i].dest_b, length, arqcb);
             }
             else if (flags_bit_13 && (orig_flags & 0x8000) && !flags_bit_9 && !flags_bit_12)
             {
                 streams[i].vinf.flags |= 0x200;
-                ARQPostRequest(&streams[i].request, (u32)streams[i].vinf.voice, 0, 1, source,
+                ARQPostRequest(&streams[i].request, (u32)&streams[i], 0, 1, source,
                                streams[i].dest_a, length, arqcb);
             }
         }
@@ -478,7 +485,7 @@ static void fcb()
         need_update = TRUE;
     }
 
-    for (i = 0; i < 58; i++)
+    for (S32 i = 0; i < 58; i++)
     {
         if (voices[i].voice == NULL || (voices[i].flags & 0x1))
         {
@@ -493,8 +500,9 @@ static void fcb()
         }
         else
         {
-            U32 addr = (voices[i].voice->pb.addr.currentAddressHi << 16) +
-                       voices[i].voice->pb.addr.currentAddressLo;
+            addr = voices[i].voice->pb.addr.currentAddressHi;
+            addr <<= 16;
+            addr += voices[i].voice->pb.addr.currentAddressLo;
             if (voices[i].flags & 0x4 && !voices[i].voice->pb.addr.loopFlag && addr >= zero_point &&
                 addr < zero_end)
             {
@@ -721,7 +729,7 @@ void iSndStop(U32 snd)
             voices[i].aid = 0;
         }
     }
-    
+
     OSRestoreInterrupts(enabled);
 }
 
