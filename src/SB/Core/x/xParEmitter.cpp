@@ -726,7 +726,8 @@ xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
                                                 break;
 
                                             case eParEmitterOffsetPoint:
-                                                xParEmitterEmitOffsetPoint(pe, p, pea, attach_ent);
+                                                xParEmitterEmitOffsetPoint(pe, p, pea, par_dt,
+                                                                           attach_ent);
                                                 break;
                                             case eParEmitterVCylEdge:
                                                 xParEmitterEmitVCylEdge(p, pea, par_dt);

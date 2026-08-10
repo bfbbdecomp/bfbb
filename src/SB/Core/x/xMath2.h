@@ -81,6 +81,12 @@ struct xVec2
     xVec2 operator-(const xVec2&) const;
 };
 
+struct _xMat2x2
+{
+    xVec2 right;
+    xVec2 up;
+};
+
 F32 xVec2Dist(F32 x1, F32 y1, F32 x2, F32 y2);
 F32 xVec2Dot(const xVec2* a, const xVec2* b);
 void xVec2Init(xVec2* v, F32 _x, F32 _y);

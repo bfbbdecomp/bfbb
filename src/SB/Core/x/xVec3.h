@@ -29,6 +29,28 @@ struct xVec3
     xVec3 operator-() const;
     xVec3 operator*(F32) const;
     xVec3 operator/(F32) const;
+
+    xVec3 operator*(const xVec3& v) const
+    {
+        xVec3 product = *this;
+        return product *= v;
+    }
+
+    xVec3& operator*=(const xVec3& v)
+    {
+        this->x *= v.x;
+        this->y *= v.y;
+        this->z *= v.z;
+
+        return *this;
+    }
+
+    xVec3 operator+(F32 f) const
+    {
+        xVec3 sum = *this;
+        return sum += f;
+    }
+
     xVec3& operator+=(const xVec3&);
     xVec3& operator+=(F32 f)
     {
