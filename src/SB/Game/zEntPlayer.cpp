@@ -7,6 +7,7 @@
 
 #include "iAnim.h"
 #include "iAnimSKB.h"
+#include "iCollide.h"
 #include "iMath.h"
 #include "iSnd.h"
 #include "iTRC.h"
@@ -20,6 +21,7 @@
 #include "xMathInlines.h"
 #include "xMemMgr.h"
 #include "xRay3.h"
+#include "xScrFx.h"
 #include "xSnd.h"
 #include "xstransvc.h"
 #include "xTRC.h"
@@ -32,6 +34,7 @@
 #include "zEntButton.h"
 #include "zEntCruiseBubble.h"
 #include "zEntDestructObj.h"
+#include "zEntPickup.h"
 #include "zEntPlayer.h"
 #include "zEntPlayerBungeeState.h"
 #include "zEntPlayerOOBState.h"
@@ -271,42 +274,19 @@ static void PlayerSwingUpdate(xEnt* ent, F32 mag, F32 angle, F32 dt);
 static S32 CheckObjectAgainstMeleeBound(xEnt* ent, void* data);
 static void zEntPlayer_PredictionUpdate(xEnt* ent, F32 dt);
 static void zEntPlayerEGenUpdate(xEnt* ent, xScene* sc, F32 dt);
-void zEntPlayer_SNDPlayDelayed(F32 seconds);
 static void zEntPlayer_UpdateVelocityBlur();
 static void speak_update(F32 dt);
 static void zEntPlayer_SpringboardFX(xEnt* ent, F32 dt);
-void zEntPlayer_SNDPlay(_tagePlayerSnd player_snd, F32 delay);
-void zEntPlayer_SNDStop(_tagePlayerSnd player_snd);
-void zEntPickup_CheckAllPickupsAgainstPlayer(xScene* sc, F32 dt);
 static xEnt* GetPatrickTarget(xEnt* ent);
 static xEnt* zEntPlayer_FindGrabEnt(xEnt* ent, zScene* zsc, S32* failed);
 static U8 StunBubbleTrail(xAnimSingle* anim);
-void zFXPatrickStun(const xVec3* pos);
 extern zParEmitter* gEmitBFX;
 static S32 MeleeAttackBoundCollide(xEnt* ent, zScene* zscn, xBound* meleeB);
 static U8 BubbleBashContrails(xAnimSingle* anim);
 static U8 BubbleBounceContrails(xAnimSingle* anim);
-void zEntPlayer_setBoulderMode(U32 mode);
-void xScrFxFade(iColor_tag* base, iColor_tag* dest, F32 seconds, void (*callback)(), S32 hold);
-S32 xScrFxIsFading();
 static void DoWallJumpCheck();
-U32 iRayHitsEnv(const xRay3* r, const xEnv* env, xCollis* coll);
-void zGustUpdateEnt(xEnt*, xScene*, F32, void*);
-void zEntPlayerCollide(xEnt* ent, xScene* sc, F32 dt);
-void zEntPlayer_CheckCritterContact(xEnt* ent, F32 dt);
-void xEntBoulder_ApplyForces(xEntCollis* collis);
-xSurface* zSurfaceGetSurface(const xCollis* coll);
-S32 zSurfaceGetStep(const xSurface* surf);
-void xEntBoulder_AddForce(xEntBoulder* boulder, xVec3* force);
-void PlayerLedgeUpdate(xEnt* ent, xScene* sc, F32 dt);
 static S32 zEntPlayerKnockToSafety(xEnt* ent);
-void zEntPlayerFloorUpdate(xEnt* ent, xScene* sc, F32 dt);
-void PlayerTeeterCheck(xEnt* ent, xScene* sc, F32 dt);
-void zEntPlayerSurfDamageUpdate(xEnt* ent, xScene* sc, F32 dt);
-void zEntPlayerDriveUpdate(xEnt* ent, xScene* sc, F32 dt);
-void zEntPlayerJumpUpdate(xEnt* ent, xScene* sc, F32 dt);
-void zEntPlayerTSlideUpdate(xEnt* ent, xScene* sc, F32 dt);
-void zEntPlayerVelUpdate(xEnt* ent, xScene* sc, F32 dt);
+
 namespace oob_state
 {
     void force_start();
@@ -3514,7 +3494,7 @@ static void zEntPlayer_Update(xEnt* ent, xScene* sc, F32 dt)
             {
                 ent->frame->mat.pos.x += thirteenSubstepDt * globals.player.floor_norm.x;
                 F32 mag = xsqrt(globals.player.floor_norm.x * globals.player.floor_norm.x +
-                                 globals.player.floor_norm.z * globals.player.floor_norm.z);
+                                globals.player.floor_norm.z * globals.player.floor_norm.z);
                 ent->frame->mat.pos.y -= thirteenSubstepDt * mag;
                 ent->frame->mat.pos.z += thirteenSubstepDt * globals.player.floor_norm.z;
             }

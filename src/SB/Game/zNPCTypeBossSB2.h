@@ -23,8 +23,6 @@ struct response_curve
     U32 nodes; // offset 0x8,
     U32 active_node; // offset 0xC,
 
-    // static void init(U32, const void*, U32, const char*, const char**, const tweak_callback*,
-    //  void*);
     static void init(U64, const void*, U64, const char*, const char**, const tweak_callback*,
                      void*);
     static void end_t();

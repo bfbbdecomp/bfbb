@@ -1133,12 +1133,12 @@ void zNPCBPlankton::Reset()
 
     if (mode == MODE_BUDDY)
     {
-        psy_instinct->GoalSet(0x4e47424b, 1); // 'NGBK'
+        psy_instinct->GoalSet('NGBK', 1);
     }
     else
     {
         vanish();
-        psy_instinct->GoalSet(0x4e47424d, 1); // 'NGBM'
+        psy_instinct->GoalSet('NGBM', 1);
     }
 }
 
@@ -1184,7 +1184,7 @@ void zNPCBPlankton::Process(xScene* xscn, F32 dt)
     this->update_move(dt);
     this->update_animation(dt);
 
-    if (this->check_player_damage() & 0xFF)
+    if (this->check_player_damage())
     {
         zEntPlayer_Damage((xBase*)this, 1);
     }
