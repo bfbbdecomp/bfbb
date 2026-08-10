@@ -133,16 +133,14 @@ void xParEmitterInit(void* b, void* tasset);
 void xParEmitterInit(xBase* b, xParEmitterAsset* pea);
 void xParEmitterSetup(xParEmitter* t);
 void xParEmitterReset(xParEmitter* t);
-S32 xParEmitterEventCB(xBase* to, xBase* from, U32 toEvent, F32* toParam, xBase* toParamWidget);
+S32 xParEmitterEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
+                       xBase* toParamWidget);
 xPar* xParEmitterEmitCustom(xParEmitter* p, F32 dt, xParEmitterCustomSettings* info);
-U32 xParEmitterCull(xParEmitter* t, xPar* p);
 F32 xParInterpCompute(S32 interp_mode, xParInterp* r, F32 time, S32 time_has_elapsed, F32 lastVal);
-xPar* xParEmitterEmitSetTexIdxs(xPar* p, xParSys* ps);
+xPar* xParEmitterEmitSetTexIdxs(xPar* p, const xParSys* ps);
 xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt);
 void xParEmitterUpdate(xBase* to, xScene*, F32 dt);
 void xParEmitterDestroy();
-void xParEmitterEmit(xParEmitter* pe, F32 dt);
+xPar* xParEmitterEmit(xParEmitter* pe, F32 dt);
 
-void sSaveEmmiterSettings(xParEmitterAsset* a, xParEmitterAsset* b, F32 c);
-void sSaveEmmiterPropSettings(xParEmitterPropsAsset* a, xParEmitterPropsAsset* b, F32 c);
 #endif
