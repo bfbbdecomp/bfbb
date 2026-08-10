@@ -18,6 +18,8 @@
 #include <stdio.h>
 #include <types.h>
 
+#include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
+
 u32 aram_array[40];
 
 // Size: 0x20
@@ -857,6 +859,37 @@ void iSndSetVol(U32 snd, F32 vol)
             info->x1c = 0x40;
             MIXAdjustFader(info->voice, adj - MIXGetFader(info->voice));
             MIXAdjustPan(info->voice, 0x40 - MIXGetPan(info->voice));
+        }
+    }
+}
+
+void iSndSetPitch(U32 snd, F32 pitch)
+{
+    xSndVoiceInfo* vp = &gSnd.voice[0];
+
+    S32 i = 0;
+    for (; i < 64; i++, vp++)
+    {
+        if (vp->sndID == snd)
+            break;
+    }
+
+    if (i != 64)
+    {
+        vinfo* info;
+        if (i < 6)
+        {
+            info = &streams[i].vinf;
+        }
+        else
+        {
+            info = &voices[i - 6];
+        }
+        if (info->voice != 0)
+        {
+            // todo: define std::powf
+            AXSetVoiceSrcRatio(info->voice, ((1.0f / 32000) * vp->sample_rate) *
+                                                std::powf(2.0f, (pitch / 12.0f)));
         }
     }
 }
