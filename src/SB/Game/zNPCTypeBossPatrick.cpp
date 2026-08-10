@@ -1614,7 +1614,7 @@ void zNPCBPatrick::Process(xScene* xscn, F32 dt)
                 doDamage = 1;
                 touchDamage = 1;
                 this->bossFlags &= 0xfffffffe;
-                goto damage;
+                goto damage; // TODO: Fix goto
             }
         }
     }
@@ -1637,7 +1637,7 @@ void zNPCBPatrick::Process(xScene* xscn, F32 dt)
                 this->playSplat(&this->glob[i].lastPos);
 
                 this->bossFlags &= 0xfffffffe;
-                goto damage;
+                goto damage; // TODO: fix goto
             }
         }
     }
@@ -1669,7 +1669,7 @@ void zNPCBPatrick::Process(xScene* xscn, F32 dt)
         }
     }
 
-damage:
+damage: // TODO: fix goto
     if (doDamage && zEntPlayer_Damage(NULL, 1, &knockback))
     {
         U32 picker = xrand();
