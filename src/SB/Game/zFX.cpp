@@ -1,6 +1,7 @@
 #include "zFX.h"
 
 #include "rpworld.h"
+#include "rwcore.h"
 #include "rwplcore.h"
 #include "xDebug.h"
 #include "xDraw.h"
@@ -14,6 +15,7 @@
 #include "zEnt.h"
 #include "zGlobals.h"
 #include "zGoo.h"
+#include "zParPTank.h"
 #include "zScene.h"
 #include "zTextBox.h"
 
@@ -109,8 +111,10 @@ const xFXRing sMuscleArmRing[1] = {
     0.6f,       30.0f, { 255, 255, 255, 160 }, 48,   1,    1,     NULL
 };
 
-static const float defaultGooTimes[4] = {};
-static const float defaultGooWarbc[4] = {};
+static const F32 defaultGooTimes[4] = { 0.00001f, 2.0f, 15.0f, 2.0f };
+static const F32 defaultGooWarbc[4] = { 0.25f, 2.0f, 0.25f, 1.2f };
+static const xVec3 bubblewall_scale = { 2.4f, 2.4f, 2.4f };
+static const xVec3 bubblewall_velscale = { 1.0f, 0.5f, 0.5f };
 
 zFXGooInstance zFXGooInstances[24];
 U32 gFXSurfaceFlags = 0;
@@ -814,10 +818,9 @@ F32 zFXGooFreezeTimeLeft()
     return maxTime;
 }
 
-void zFX_SpawnBubbleHit(const xVec3* pos, U32 num, const xVec3* pos_rnd,
-                        const xVec3* vel_rnd, float vel_scale);
-void zFX_SpawnBubbleTrail(const xVec3* pos, U32 num, const xVec3* pos_rnd,
-                          const xVec3* vel_rnd);
+void zFX_SpawnBubbleHit(const xVec3* pos, U32 num, const xVec3* pos_rnd, const xVec3* vel_rnd,
+                        float vel_scale);
+void zFX_SpawnBubbleTrail(const xVec3* pos, U32 num, const xVec3* pos_rnd, const xVec3* vel_rnd);
 
 void zFX_SpawnBubbleHit(const xVec3* pos, U32 num)
 {
@@ -827,18 +830,290 @@ void zFX_SpawnBubbleHit(const xVec3* pos, U32 num)
 void zFX_SpawnBubbleHit(const xVec3* pos, U32 num, const xVec3* pos_rnd, const xVec3* vel_rnd,
                         float vel_scale)
 {
+    if (num == 0)
+    {
+        return;
+    }
+
+    if (pos_rnd == NULL)
+    {
+        pos_rnd = &bubblehit_pos_rnd;
+    }
+    if (vel_rnd == NULL)
+    {
+        vel_rnd = &bubblehit_vel_rnd;
+    }
+
+    xVec3* posbuf = (xVec3*)xMemPushTemp(num * 2 * sizeof(xVec3));
+    xVec3* velbuf = posbuf + num;
+    if (posbuf == NULL)
+    {
+        return;
+    }
+
+    xVec3* pp = posbuf;
+    xVec3* vp = velbuf;
+    for (S32 j = 0; j < num; j++, pp++, vp++)
+    {
+        *pp = *pos;
+        pp->x += pos_rnd->x * (xurand() - 0.5f);
+        pp->y += pos_rnd->y * (xurand() - 0.5f);
+        pp->z += pos_rnd->z * (xurand() - 0.5f);
+        vp->x = xurand() - 0.5f;
+        vp->y = xurand() - 0.5f;
+        vp->z = xurand() - 0.5f;
+        xVec3NormalizeFast(vp, vp);
+        xVec3ScaleC(vp, vp, vel_scale, vel_scale, vel_scale);
+        vp->x += vel_rnd->x * (xurand() - 0.5f);
+        vp->y += vel_rnd->y * (xurand() - 0.5f);
+        vp->z += vel_rnd->z * (xurand() - 0.5f);
+    }
+
+    zParPTankSpawnBubbles(posbuf, velbuf, num, 1.0f);
+    xMemPopTemp(posbuf);
 }
 
 void zFX_SpawnBubbleTrail(const xVec3* pos, U32 num)
 {
-    zFX_SpawnBubbleTrail(pos, num, &bubblehit_pos_rnd, &bubblehit_vel_rnd);
+    zFX_SpawnBubbleTrail(pos, num, &bubbletrail_pos_rnd, &bubbletrail_vel_rnd);
+}
+
+void zFX_SpawnBubbleTrail(const xVec3* pos, U32 num, const xVec3* pos_rnd, const xVec3* vel_rnd)
+{
+    if (num < 1)
+    {
+        return;
+    }
+
+    if (pos_rnd == NULL)
+    {
+        pos_rnd = &bubbletrail_pos_rnd;
+    }
+    if (vel_rnd == NULL)
+    {
+        vel_rnd = &bubbletrail_vel_rnd;
+    }
+
+    xVec3* posbuf = (xVec3*)xMemPushTemp(num * 2 * sizeof(xVec3));
+    xVec3* velbuf = posbuf + num;
+    if (posbuf == NULL)
+    {
+        return;
+    }
+
+    xVec3* pp = posbuf;
+    xVec3* vp = velbuf;
+    for (S32 j = 0; j < num; j++, pp++, vp++)
+    {
+        *pp = *pos;
+        pp->x += pos_rnd->x * (xurand() - 0.5f);
+        pp->y += pos_rnd->y * (xurand() - 0.5f);
+        pp->z += pos_rnd->z * (xurand() - 0.5f);
+        vp->x = vel_rnd->x * (xurand() - 0.5f);
+        vp->y = vel_rnd->y * (xurand() - 0.5f);
+        vp->z = vel_rnd->z * (xurand() - 0.5f);
+    }
+
+    zParPTankSpawnBubbles(posbuf, velbuf, num, 1.0f);
+    xMemPopTemp(posbuf);
+}
+
+void zFX_SpawnBubbleTrailNoNegRandVel(const xVec3* pos, U32 num, const xVec3* pos_rnd,
+                                      const xVec3* vel_rnd)
+{
+    if (pos_rnd == NULL)
+    {
+        pos_rnd = &bubbletrail_pos_rnd;
+    }
+    if (vel_rnd == NULL)
+    {
+        vel_rnd = &bubbletrail_vel_rnd;
+    }
+
+    xVec3* posbuf = (xVec3*)xMemPushTemp(num * 2 * sizeof(xVec3));
+    xVec3* velbuf = posbuf + num;
+    if (posbuf == NULL)
+    {
+        return;
+    }
+
+    xVec3* pp = posbuf;
+    xVec3* vp = velbuf;
+    for (S32 j = 0; j < num; j++, pp++, vp++)
+    {
+        *pp = *pos;
+        pp->x += pos_rnd->x * (xurand() - 0.5f);
+        pp->y += pos_rnd->y * (xurand() - 0.5f);
+        pp->z += pos_rnd->z * (xurand() - 0.5f);
+        vp->x = vel_rnd->x * xurand();
+        vp->y = vel_rnd->y * xurand();
+        vp->z = vel_rnd->z * xurand();
+    }
+
+    zParPTankSpawnBubbles(posbuf, velbuf, num, 1.0f);
+    xMemPopTemp(posbuf);
+}
+
+void zFX_SpawnBubbleTrail(const xVec3* p1, const xVec3* p2, U32 num, const xVec3* pos_rnd,
+                          const xVec3* vel_rnd)
+{
+    if (pos_rnd == NULL)
+    {
+        pos_rnd = &bubbletrail_pos_rnd;
+    }
+    if (vel_rnd == NULL)
+    {
+        vel_rnd = &bubbletrail_vel_rnd;
+    }
+
+    xVec3* posbuf = (xVec3*)xMemPushTemp(num * 2 * sizeof(xVec3));
+    xVec3* velbuf = posbuf + num;
+    if (posbuf == NULL)
+    {
+        return;
+    }
+
+    xVec3 offset = *p2 - *p1;
+    xVec3* pp = posbuf;
+    xVec3* vp = velbuf;
+    for (S32 j = 0; j < num; j++, pp++, vp++)
+    {
+        *pp = *p1 + (offset * xurand());
+
+        pp->x += pos_rnd->x * (xurand() - 0.5f);
+        pp->y += pos_rnd->y * (xurand() - 0.5f);
+        pp->z += pos_rnd->z * (xurand() - 0.5f);
+        vp->x = vel_rnd->x * (xurand() - 0.5f);
+        vp->y = vel_rnd->y * (xurand() - 0.5f);
+        vp->z = vel_rnd->z * (xurand() - 0.5f);
+    }
+
+    zParPTankSpawnBubbles(posbuf, velbuf, num, 1.0f);
+    xMemPopTemp(posbuf);
+}
+
+void zFX_SpawnBubbleTrail(const xVec3* p1, const xVec3* p2, const xVec3* vel1, const xVec3* vel2,
+                          U32 num, const xVec3* pos_rnd, const xVec3* vel_rnd, F32 scale)
+{
+    if (pos_rnd == NULL)
+    {
+        pos_rnd = &bubbletrail_pos_rnd;
+    }
+    if (vel_rnd == NULL)
+    {
+        vel_rnd = &bubbletrail_vel_rnd;
+    }
+
+    xVec3* posbuf = (xVec3*)xMemPushTemp(num * 2 * sizeof(xVec3));
+    xVec3* velbuf = posbuf + num;
+    if (posbuf == NULL)
+    {
+        return;
+    }
+
+    xVec3 offset = *p2 - *p1;
+    xVec3 vel_offset = *vel2 - *vel1;
+    xVec3* pp = posbuf;
+    xVec3* vp = velbuf;
+    for (S32 j = 0; j < num; j++, pp++, vp++)
+    {
+        F32 t = xurand();
+        *pp = *p1 + (offset * t);
+        *vp = *vel1 + (vel_offset * t);
+
+        pp->x += pos_rnd->x * (xurand() - 0.5f);
+        pp->y += pos_rnd->y * (xurand() - 0.5f);
+        pp->z += pos_rnd->z * (xurand() - 0.5f);
+        vp->x += vel_rnd->x * (xurand() - 0.5f);
+        vp->y += vel_rnd->y * (xurand() - 0.5f);
+        vp->z += vel_rnd->z * (xurand() - 0.5f);
+    }
+
+    zParPTankSpawnBubbles(posbuf, velbuf, num, scale);
+    xMemPopTemp(posbuf);
+}
+
+void zFX_SpawnBubbleMenuTrail(const xVec3* pos, U32 num, const xVec3* pos_rnd, const xVec3* vel_rnd)
+{
+    if (pos_rnd == NULL)
+    {
+        pos_rnd = &bubbletrail_pos_rnd;
+    }
+    if (vel_rnd == NULL)
+    {
+        vel_rnd = &bubbletrail_vel_rnd;
+    }
+
+    xVec3* posbuf = (xVec3*)xMemPushTemp(num * 2 * sizeof(xVec3));
+    xVec3* velbuf = posbuf + num;
+    if (posbuf == NULL)
+    {
+        return;
+    }
+
+    xVec3* pp = posbuf;
+    xVec3* vp = velbuf;
+    for (S32 j = 0; j < num; j++, pp++, vp++)
+    {
+        *pp = *pos;
+        pp->x += pos_rnd->x * (xurand() - 0.5f);
+        pp->y += pos_rnd->y * (xurand() - 0.5f);
+        pp->z += pos_rnd->z * (xurand() - 0.5f);
+        vp->x = vel_rnd->x * (xurand() - 0.5f);
+        vp->y = vel_rnd->y * (xurand() - 0.5f);
+        vp->z = vel_rnd->z * (xurand() - 0.5f);
+    }
+
+    zParPTankSpawnMenuBubbles(posbuf, velbuf, num);
+    xMemPopTemp(posbuf);
+}
+
+void zFX_SpawnBubbleWall()
+{
+    RwCamera* camera = RwCameraGetCurrentCamera();
+    if (camera == NULL)
+    {
+        return;
+    }
+
+    void* parent = camera->object.object.parent;
+    // FIXME: Figure out the renderware voodoo happening here
+    RwMatrix* mat = (RwMatrix*)(((U8*)parent) + 0x10);
+    xVec3 pos[100];
+    xVec3 vel[100];
+    xVec3* pp = pos;
+    xVec3* vp = vel;
+
+    // possible compiler problem. Using these vars in the loop does not lift the memory reads out
+    F32 scale_x = bubblewall_scale.x;
+    F32 scale_y = bubblewall_scale.y;
+    F32 scale_z = bubblewall_scale.z;
+    F32 velscale_x = bubblewall_velscale.x;
+    F32 velscale_y = bubblewall_velscale.y;
+    F32 velscale_z = bubblewall_velscale.z;
+    for (U32 i = 0; i < 50; i++, pp++, vp++)
+    {
+        pp->x = (scale_x * (xurand() - 0.5f)) + (xurand() - 0.5f + mat->pos.x);
+        pp->y = (scale_y * (xurand() - 0.5f)) + (xurand() - 0.5f + mat->pos.y);
+        pp->z = (scale_z * (xurand() - 0.5f)) + (xurand() - 0.5f + mat->pos.z);
+        xVec3 scaled;
+        xVec3ScaleC(&scaled, (xVec3*)&mat->at, 1.2f, 1.2f, 1.2f);
+        xVec3Add(pp, pp, &scaled);
+
+        vp->x = velscale_x * (xurand() - 0.5f);
+        vp->y = velscale_y * (xurand() - 0.5f);
+        vp->z = velscale_z * (xurand() - 0.5f);
+    }
+    zParPTankSpawnBubbles(pos, vel, 50, 1.0f);
 }
 
 namespace
 {
-    bool model_is_preinstanced(RpAtomic* atomic) {
+    bool model_is_preinstanced(RpAtomic* atomic)
+    {
         RpGeometry* geom = RpAtomicGetGeometryMacro(atomic);
-        if(geom == NULL) {
+        if (geom == NULL)
+        {
             return TRUE;
         }
 
