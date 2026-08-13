@@ -60,25 +60,14 @@ struct ztalkbox : xBase
 
     struct callback
     {
-        callback()
-        {
-        }
+        callback();
+        virtual void on_signal(U32);
 
-        virtual void on_signal(U32)
-        {
-        }
+        virtual void on_start();
 
-        virtual void on_start()
-        {
-        }
+        virtual void on_stop();
 
-        virtual void on_stop()
-        {
-        }
-
-        virtual void on_answer(answer_enum answer)
-        {
-        }
+        virtual void on_answer(answer_enum answer);
     };
 
     struct
@@ -159,6 +148,7 @@ namespace
         state_enum type;
 
         state_type(state_enum t);
+
         virtual void start();
         virtual void stop();
         virtual state_enum update(xScene& scn, F32 dt) = 0;
@@ -166,7 +156,8 @@ namespace
 
     struct start_state_type : state_type
     {
-        start_state_type();
+        start_state_type(); // declaration only
+
         virtual void start();
         virtual void stop();
         virtual state_enum update(xScene& scn, F32 dt);
@@ -408,18 +399,25 @@ namespace
     };
 
 } // namespace
-struct location_asset : xDynAsset
-{
-    xVec3 loc; // offset 0x10, size 0xC
-    static const char* type_name();
-};
 struct pointer_asset : xDynAsset
 {
-    xVec3 loc; // offset 0x10, size 0xC
-    float yaw; // offset 0x1C, size 0x4
-    float pitch; // offset 0x20, size 0x4
-    float roll; // offset 0x24, size 0x4
-    static const char* type_name();
+    xVec3 loc;
+    float yaw;
+    float pitch;
+    float roll;
+    static const char* type_name()
+    {
+        return "pointer";
+    }
+};
+
+struct location_asset : xDynAsset
+{
+    xVec3 loc;
+    static const char* type_name()
+    {
+        return "location";
+    }
 };
 
 #endif
