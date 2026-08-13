@@ -17,7 +17,6 @@ struct tagiRenderArrays
 struct tagiRenderInput
 {
     // total size: 0x80
-    public:
     U16* m_index; // offset 0x0, size 0x4
     RxObjSpace3DVertex* m_vertex; // offset 0x4, size 0x4
     F32* m_vertexTZ; // offset 0x8, size 0x4

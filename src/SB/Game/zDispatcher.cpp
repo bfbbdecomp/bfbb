@@ -17,8 +17,13 @@
 #include "xMath.h"
 #include "string.h"
 
-extern st_ZDISPATCH_CONTEXT lbl_80254E00;
-extern char lbl_80254E10[512];
+static void ZDSP_instInit(st_ZDISPATCH_DATA* dspdata, xBaseAsset* bass);
+static void ZDSP_instInitDep(st_ZDISPATCH_DATA* dspdata, zScene* scene);
+static void ZDSP_readAsset(st_ZDISPATCH_DATA* dspdata);
+static S32 ZDSP_doCommand(st_ZDISPATCH_DATA* dspdata, st_ZDISPATCH_CONTEXT* cmdCtxt);
+static S32 ZDSP_elcb_event(xBase*, xBase* xb, U32 toEvent, const F32* toParam, xBase* toParamWidget);
+static void WRAP_xsnd_setMusicVolume(S32 i);
+static void WRAP_xsnd_setSFXVolume(S32 i);
 
 S32 g_zdsp_init;
 S32 oldVibrationOption;
@@ -59,7 +64,6 @@ void zDispatcher_sceneFinish()
     }
 }
 
-// Compiler is optimizng the size calcuation and moving parameters for memset differently.
 st_ZDISPATCH_DATA* zDispatcher_memPool(S32 cnt)
 {
     st_ZDISPATCH_DATA* pool;
@@ -103,7 +107,7 @@ void zDispatcher_Load(st_ZDISPATCH_DATA* dspdata, xSerial* s)
     xBaseLoad(dspdata, s);
 }
 
-void ZDSP_instInit(st_ZDISPATCH_DATA* dspdata, xBaseAsset* bass)
+static void ZDSP_instInit(st_ZDISPATCH_DATA* dspdata, xBaseAsset* bass)
 {
     xBaseInit(dspdata, bass);
     dspdata->rawass = bass;
@@ -120,12 +124,12 @@ void ZDSP_instInit(st_ZDISPATCH_DATA* dspdata, xBaseAsset* bass)
     xSceneID2Name(globals.sceneCur, dspdata->id);
 }
 
-void ZDSP_instInitDep(st_ZDISPATCH_DATA* dspdata, zScene* scene)
+static void ZDSP_instInitDep(st_ZDISPATCH_DATA* dspdata, zScene* scene)
 {
     xSceneID2Name(globals.sceneCur, dspdata->id);
 }
 
-void ZDSP_instReset(st_ZDISPATCH_DATA* dspdata, zScene* scene)
+static void ZDSP_instReset(st_ZDISPATCH_DATA* dspdata, zScene* scene)
 {
     xBaseAsset* ass = dspdata->rawass;
     xBaseReset(dspdata, ass);
@@ -134,7 +138,7 @@ void ZDSP_instReset(st_ZDISPATCH_DATA* dspdata, zScene* scene)
     ZDSP_instInitDep(dspdata, scene);
 }
 
-void ZDSP_readAsset(st_ZDISPATCH_DATA* dspdata)
+static void ZDSP_readAsset(st_ZDISPATCH_DATA* dspdata)
 {
 }
 
@@ -153,7 +157,7 @@ void ZDSP_injectCmd(st_ZDISPATCH_DATA* dspdata, en_DISPATCH_COMMAND cmd, S32 i)
 void ZDSP_injectCmd(st_ZDISPATCH_DATA* dspdata, en_DISPATCH_COMMAND cmd, void* indata, void* inxtra,
                     void* result)
 {
-    st_ZDISPATCH_CONTEXT ctx = lbl_80254E00;
+    st_ZDISPATCH_CONTEXT ctx = { ZDSP_CMD_INITDFLT, NULL, NULL, NULL };
     ctx.cmd = cmd;
     ctx.indata = indata;
     ctx.inxtra = inxtra;
@@ -161,14 +165,14 @@ void ZDSP_injectCmd(st_ZDISPATCH_DATA* dspdata, en_DISPATCH_COMMAND cmd, void* i
     ZDSP_doCommand(dspdata, &ctx);
 }
 
-S32 ZDSP_doCommand(st_ZDISPATCH_DATA* dspdata, st_ZDISPATCH_CONTEXT* cmdCtxt)
+static S32 ZDSP_doCommand(st_ZDISPATCH_DATA* dspdata, st_ZDISPATCH_CONTEXT* cmdCtxt)
 {
     S32 iv;
     en_DISPATCH_COMMAND cmd = cmdCtxt->cmd;
     void* indata = cmdCtxt->indata;
     void* result = cmdCtxt->result;
     static S32 warned;
-    static signed char init;
+    static S8 init;
 
     if ((S32)init == 0)
     {
@@ -352,194 +356,178 @@ void zDispatcherRestoreOptions()
     WRAP_xsnd_setSFXVolume(oldSFXVolume);
 }
 
-// WIP
-// FIXME: This switch is a mess, good luck.
-S32 ZDSP_elcb_event(xBase*, xBase* xb, U32 toEvent, const F32* toParam, xBase* toParamWidget)
+// FIXME: Code segments are all in the right order, just need to figure out
+//        correct cases. Lots of Dispatcher events that are not referenced here that
+//        are likely candidates for fallthroughs
+static S32 ZDSP_elcb_event(xBase*, xBase* xb, U32 toEvent, const F32* toParam, xBase* toParamWidget)
 {
     st_ZDISPATCH_DATA* dspdata = (st_ZDISPATCH_DATA*)xb;
     switch (toEvent)
     {
-    case 10:
+    case eEventReset:
         ZDSP_instReset(dspdata, globals.sceneCur);
         break;
-    case 0x129:
+    case eEventPlayMusic:
         zMusicNotifyEvent(toParam, toParamWidget);
         break;
-    case 0x60:
+    case eEventDispatcher_PadCfg_PresetA:
         ZDSP_injectCmd(dspdata, ZDSP_CMD_CTRL_CFGSET, 0);
         break;
-    case 0x61:
+    case eEventDispatcher_PadCfg_PresetB:
         ZDSP_injectCmd(dspdata, ZDSP_CMD_CTRL_CFGSET, 1);
         break;
-    case 0x62:
+    case eEventDispatcher_PadCfg_PresetC:
         ZDSP_injectCmd(dspdata, ZDSP_CMD_CTRL_CFGSET, 2);
         break;
-    case 0x63:
+    case eEventDispatcher_PadCfg_PresetD:
         ZDSP_injectCmd(dspdata, ZDSP_CMD_CTRL_CFGSET, 3);
         break;
-    case 0x64:
+    case eEventDispatcher_PadVibrateOn:
         ZDSP_injectCmd(dspdata, ZDSP_CMD_CTRL_VIBESET, 1);
         break;
-    case 0x65:
+    case eEventDispatcher_PadVibrateOff:
         ZDSP_injectCmd(dspdata, ZDSP_CMD_CTRL_VIBESET, 0);
         break;
-    case 0x66:
+    case eEventDispatcher_SoundMono:
         ZDSP_injectCmd(dspdata, ZDSP_CMD_SNDMOD_SET, 0);
         break;
-    case 0x67:
+    case eEventDispatcher_SoundStereo:
         ZDSP_injectCmd(dspdata, ZDSP_CMD_SNDMOD_SET, 1);
         break;
 
-    case 0x68:
+    case eEventDispatcher_SoundMasterIncrease:
         ZDSP_injectCmd(dspdata, ZDSP_CMD_SNDVOL_INCR);
         break;
-    case 0x69:
+    case eEventDispatcher_SoundMasterDecrease:
         ZDSP_injectCmd(dspdata, ZDSP_CMD_SNDVOL_DECR);
         break;
-    case 0x6a:
+    case eEventDispatcher_SoundMusicIncrease:
         ZDSP_injectCmd(dspdata, ZDSP_CMD_MUSVOL_INCR);
         break;
-    case 0x6b:
+    case eEventDispatcher_SoundMusicDecrease:
         ZDSP_injectCmd(dspdata, ZDSP_CMD_MUSVOL_DECR);
         break;
-
-    case 0x6c:
+    case eEventDispatcher_SoundSFXIncrease:
         ZDSP_injectCmd(dspdata, ZDSP_CMD_SFXVOL_INCR);
         break;
-    case 0x6d:
+    case eEventDispatcher_SoundSFXDecrease:
         ZDSP_injectCmd(dspdata, ZDSP_CMD_SFXVOL_DECR);
         break;
-    case 0xa9:
+    case eEventDispatcher_GameState_SceneSwitch:
         zGameStateSwitchEvent(toEvent);
         break;
-    case 0x9e:
-        globals.currentActivePad = 0;
-        zGameStateSwitchEvent(0x9e);
+    case eEventDispatcher_SetGameState_FirstTime:
+        globals.autoSaveFeature = FALSE;
+        zGameStateSwitchEvent(toEvent);
         break;
-    case 0xa7:
+    case eEventLobMasterShootFromWidget:
         break;
-    case 0xa8:
+    case eEventDispatcher_SLBack:
+    case eEventDispatcher_SLCancel:
+    case eEventDispatcher_SLRetry:
+    case eEventDispatcher_SLSelectCard:
+    case eEventDispatcher_SLSelectSlot:
+    case eEventDispatcher_SLOkay:
         zSaveLoad_DispatchCB(toEvent, toParam);
         break;
 
-    case 0xc2:
-        zEntPlayer_SNDPlay(ePlayerSnd_CheckPoint, 1.0f);
-        F32 fVar2;
-        if (*toParam != 1.0f)
+    case eEventDispatcher_StoreCheckPoint:
+        zEntPlayer_SNDPlay(ePlayerSnd_CheckPoint, 0.0f);
+        F32 rotAngle;
+        if (*toParam)
         {
-            fVar2 = 0.017453292f * *toParam;
+            rotAngle = 0.017453292f * *toParam;
         }
         else
         {
-            fVar2 = globals.player.ent.frame->rot.angle;
+            rotAngle = globals.player.ent.frame->rot.angle;
         }
-        zEntPlayer_StoreCheckPoint((xVec3*)toParamWidget, fVar2, globals.camera.id);
+        zEntPlayer_StoreCheckPoint((xVec3*)toParamWidget, rotAngle, globals.camera.id);
         break;
-    case 0x11e:
+    case eEventDispatcher_ShowHud:
         zhud::show();
         break;
-    case 0x11f:
+    case eEventDispatcher_HideHud:
         zhud::hide();
         break;
-    case 0x120:
+    case eEventDispatcher_FadeOut:
         iColor_tag black = { 0x00, 0x00, 0x00, 0xFF };
         iColor_tag clear = { 0x00, 0x00, 0x00, 0x00 };
-        xScrFxFade(&clear, &black, *toParam, 0, 1);
+        xScrFxFade(&clear, &black, *toParam, NULL, 1);
         break;
-    case 0x126:
+    case eEventPlayMovie:
         menu_fmv_played = 1;
-        zFMVPlay(zFMVFileGetName((eFMVFile)(U32)*toParam), 0x10001, 0.01f, 1, 0);
+        zFMVPlay(zFMVFileGetName((eFMVFile)(U32)*toParam), 0x10001, 0.1f, 1, 0);
         break;
-    case 0x130:
+    case eEventDispatcherScreenAdjustON:
         zSceneEnableScreenAdj(1);
         zSceneSetOldScreenAdj();
         break;
-    case 0x131:
+    case eEventDispatcherScreenAdjustOFF:
         zSceneEnableScreenAdj(0);
         break;
-    case 0x101:
+    case eEventGivePowerUp:
         globals.player.g.PowerUp[(int)*toParam] = 1;
         break;
 
-    case 0x1fd:
-        xCameraFXShake(*toParam, toParam[1], toParam[2], toParam[3], 1.0f, NULL, NULL);
+    case eEventCameraFXShake:
+        xCameraFXShake(*toParam, toParam[1], toParam[2], toParam[3], 0.0f, NULL, NULL);
         break;
-    case 0x210:
+    case eEventCreditsStart:
         xCMstart((xCreditsData*)toParamWidget, *toParam, xb);
         break;
 
-    case 0x211:
+    case eEventCreditsStop:
         xCMstop();
         break;
 
-    case 0x217:
-        char events[512];
+    case eEventDispatcherAssert:
+        char events[512] = { };
+        char log[512];
         U32 c;
         U32 len;
         U32 i;
-        char log[512];
-
-        for (i = 0; i < 512; i++)
-        {
-            events[i] = lbl_80254E10[i];
-        }
 
         c = 0;
         for (i = 0; i < 8; i += len)
         {
             c += 1;
-            len = strlen((char*)&ringlist[i]);
+            len = strlen((char*)&zEventLogBuf[i]);
         }
 
-        strcpy(lbl_80254E10, zEventLogBuf[c + 1]);
+        strcpy((char*) events, (char*) zEventLogBuf[c + 1]);
         for (i = c + 2; i < 0x13; i++)
         {
             strcat(log, zEventLogBuf[i]);
         }
         strncpy(events, log, 0x200);
         break;
-    case 0x21b:
+    case eEventStoreOptions:
         zDispatcherStoreOptions();
         break;
 
-    case 0x21c:
+    case eEventRestoreOptions:
         zDispatcherRestoreOptions();
         break;
     }
     return 1;
 }
 
-void WRAP_xsnd_setMusicVolume(S32 i)
+static void WRAP_xsnd_setMusicVolume(S32 i)
 {
-    float f1 = 0.01f * i;
-    float f2 = MIN(f1, 1.0f);
+    F32 musicVol = 0.1f * i;
+    F32 clampedVolume = CLAMP(musicVol, 0.00f, 1.0f);
 
-    if (f1 < 1.0f)
-    {
-        f2 = f1;
-    }
-    else
-    {
-        f2 = 1.0f;
-    }
-    xSndSetCategoryVol(SND_CAT_MUSIC, f2);
+    xSndSetCategoryVol(SND_CAT_MUSIC, clampedVolume);
     zMusicRefreshVolume();
 }
 
-void WRAP_xsnd_setSFXVolume(S32 i)
+static void WRAP_xsnd_setSFXVolume(S32 i)
 {
-    F32 fcmp = 0.01f * i;
-    F32 f = MIN(fcmp, 1.0f); //1.0f < fcmp ? fcmp : 1.0f;
+    F32 sfxVol = 0.1f * i;
+    F32 clampedVolume = CLAMP(sfxVol, 0.0f, 1.0f);
 
-    if (f > 1.0f)
-    {
-        f = 1.0f;
-    }
-    else
-    {
-        f = fcmp < 1.0f ? fcmp : 1.0f;
-    }
-    xSndSetCategoryVol(SND_CAT_GAME, f);
-    xSndSetCategoryVol(SND_CAT_DIALOG, f);
-    xSndSetCategoryVol(SND_CAT_UI, f);
+    xSndSetCategoryVol(SND_CAT_GAME, clampedVolume);
+    xSndSetCategoryVol(SND_CAT_DIALOG, clampedVolume);
+    xSndSetCategoryVol(SND_CAT_UI, clampedVolume);
 }

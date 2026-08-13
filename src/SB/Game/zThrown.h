@@ -69,6 +69,7 @@ void zThrownCollide_DestructObj(zThrownStruct* thrown, xEntCollis* collis, F32* 
 void zThrownCollide_BSandyHead(zThrownStruct* thrown, xEntCollis* collis, F32* bounce,
                                F32* friction);
 void zThrownCollide_Tiki(zThrownStruct* thrown, xEntCollis* collis, F32* bounce, F32* friction);
+void zThrownCollide_StoneTiki(class zThrownStruct *, class xEntCollis *, float *, float *);
 void zThrown_AddFruit(xEnt* ent);
 S32 zThrown_IsFruit(xEnt* ent, F32* stackHeight);
 S32 zThrown_IsStacked(xEnt* ent);

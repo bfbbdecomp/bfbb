@@ -1,10 +1,15 @@
 #include "iModel.h"
 
+#include <stdio.h>
 #include <types.h>
 #include <rpskin.h>
 #include <rpmatfx.h>
+#include <rpusrdat.h>
+#include <string.h>
+#include <world/bageomet.h>
 
-#include "zAssetTypes.h"
+#include "iCamera.h"
+#include "iAnim.h"
 #include "xMathInlines.h"
 
 #define MAX2(a, b) ((a) >= (b) ? (a) : (b))
@@ -24,9 +29,6 @@ static RpLight* sEmptyAmbientLight;
 static RwRGBA sMaterialColor[IMODEL_MAX_MATERIALS];
 static RwTexture* sMaterialTexture[IMODEL_MAX_MATERIALS];
 static U8 sMaterialAlpha[IMODEL_MAX_MATERIALS];
-static U32 sMaterialIdx;
-static U32 sMaterialFlags;
-static RpAtomic* sLastMaterial;
 
 RwFrame* GetChildFrameHierarchy(RwFrame* frame, void* data)
 {
@@ -91,15 +93,17 @@ RpAtomic* FindAndInstanceAtomicCallback(RpAtomic* model, void* data)
     }
     if (gLastAtomicCount < 0x100)
     {
+        // sda scheduling
         gLastAtomicList[gLastAtomicCount] = model;
         gLastAtomicCount++;
     }
 
     RwFrame* root = RwFrameGetRoot((RwFrame*)(model->object).object.parent);
     RpMaterialList* matList = &geom->matList;
-    int numMats = matList->numMaterials;
+    S32 i = 0;
+    S32 numMats = matList->numMaterials;
 
-    for (int i = 0; i < numMats; i++)
+    for (; i < numMats; i++)
     {
         RpMaterial* pRVar4 = (RpMaterial*)_rpMaterialListGetMaterial(matList, i);
         if ((pRVar4 != NULL) && (RpMatFXMaterialGetEffects(pRVar4) != 0))
@@ -117,11 +121,99 @@ RpAtomic* FindAndInstanceAtomicCallback(RpAtomic* model, void* data)
 
     if (gLastAtomicCount < 0x100)
     {
+        // sda scheduling
         gLastAtomicList[gLastAtomicCount] = model;
         gLastAtomicCount++;
     }
 
     return model;
+}
+
+static RpAtomic* iModelStreamRead(RwStream* stream)
+{
+    RpClump* clump;
+    U32 i;
+    U32 maxIndex;
+    F32 maxRadius;
+    F32 testRadius;
+
+    static int num_models = 0;
+
+    if (stream == NULL)
+    {
+        return NULL;
+    }
+
+    if (RwStreamFindChunk(stream, 0x10, 0, 0) == 0)
+    {
+        RwStreamClose(stream, 0);
+        return NULL;
+    }
+
+    clump = RpClumpStreamRead(stream);
+    RwStreamClose(stream, 0);
+
+    if (clump == NULL)
+    {
+        return NULL;
+    }
+
+    RwBBox bbox = { { 1000.0f, 1000.0f, 1000.0f }, { -1000.0f, -1000.0f, -1000.0f } };
+
+    instance_world = RpWorldCreate(&bbox);
+    instance_camera = (RwCamera*)iCameraCreate(0x280, 0x1e0, 0);
+    RpWorldAddCamera(instance_world, instance_camera);
+
+    gLastAtomicCount = 0;
+    RpClumpForAllAtomics(clump, FindAndInstanceAtomicCallback, 0);
+
+    RpWorldRemoveCamera(instance_world, instance_camera);
+    iCameraDestroy(instance_camera);
+    RpWorldDestroy(instance_world);
+
+    if (gLastAtomicCount > 1)
+    {
+        maxRadius = -1.0f;
+        maxIndex = 0;
+
+        for (i = 0; i < gLastAtomicCount; i++)
+        {
+            if (gLastAtomicList[i]->boundingSphere.radius > maxRadius)
+            {
+                maxRadius = gLastAtomicList[i]->boundingSphere.radius;
+                maxIndex = i;
+            }
+        }
+
+        for (i = 0; i < gLastAtomicCount; i++)
+        {
+            if (i != maxIndex)
+            {
+                testRadius = xVec3Dist((xVec3*)&gLastAtomicList[i]->boundingSphere.center,
+                                       (xVec3*)&gLastAtomicList[maxIndex]->boundingSphere.center);
+                testRadius += gLastAtomicList[i]->boundingSphere.radius; // FPR swap???
+                if (testRadius > maxRadius)
+                {
+                    maxRadius = testRadius;
+                }
+            }
+        }
+
+        maxRadius *= 1.05f;
+
+        for (i = 0; i < gLastAtomicCount; i++)
+        {
+            if (i != maxIndex)
+            {
+                gLastAtomicList[i]->boundingSphere.center =
+                    gLastAtomicList[maxIndex]->boundingSphere.center;
+            }
+            gLastAtomicList[i]->boundingSphere.radius = maxRadius;
+            gLastAtomicList[i]->interpolator.flags &= 0xfffffffd;
+        }
+    }
+
+    return gLastAtomicList[0];
 }
 
 RpAtomic* iModelFileNew(void* buffer, U32 size)
@@ -194,6 +286,134 @@ U32 iModelNumBones(RpAtomic* model)
     return obj != 0 ? (U32)obj->numNodes : 0;
 }
 
+void iModelQuatToMat(xQuat* q, xVec3* a, RwMatrixTag* t)
+{
+    q->s = -q->s;
+    xQuatToMat(q, (xMat3x3*)t);
+    q->s = -q->s;
+    t->pos.x = a->x;
+    t->pos.y = a->y;
+    t->pos.z = a->z;
+}
+
+F32 __deadstripped_sdata2_hack()
+{
+    F32 a = 0.0f;
+    return a;
+}
+
+void iModelAnimMatrices(RpAtomic* model, xQuat* quat, xVec3* tran, RwMatrixTag* mat)
+{
+    RwMatrixTag* pMatrixArray;
+    RpHAnimNodeInfo* iVar1;
+    RwMatrixTag matrixStack[33];
+    U32 pCurrentFrameFlags;
+    RpHAnimNodeInfo* pCurrentFrame;
+    S32 numFrames;
+    RwMatrixTag* pMatrixStackTop;
+
+    pCurrentFrame = (RpHAnimNodeInfo*)GetHierarchy(model);
+
+    if (pCurrentFrame != NULL)
+    {
+        // float/sda scheduling
+        pMatrixStackTop = &matrixStack[0];
+        pMatrixStackTop->at.z = 1.0f;
+
+        matrixStack[0].up.y = 1.0f;
+        matrixStack[0].right.x = 1.0f;
+        matrixStack[0].up.x = 0.0f;
+        matrixStack[0].right.z = 0.0f;
+        matrixStack[0].right.y = 0.0f;
+        matrixStack[0].at.y = 0.0f;
+        matrixStack[0].at.x = 0.0f;
+        matrixStack[0].up.z = 0.0f;
+        matrixStack[0].pos.z = 0.0f;
+        matrixStack[0].pos.y = 0.0f;
+        matrixStack[0].pos.x = 0.0f;
+        matrixStack[0].flags |= 0x20003;
+
+        // non-volatile registers are acting up and their instructions
+        // are being scheduled weirdly
+        matrixStack[1] = matrixStack[0];
+        numFrames = pCurrentFrame->nodeIndex;
+        pMatrixArray = (&matrixStack[1]);
+        iVar1 = (RpHAnimNodeInfo*)pCurrentFrame[1].nodeID;
+
+        pMatrixArray++;
+        for (S32 i = 0; i < numFrames; i++)
+        {
+            pCurrentFrameFlags = iVar1->flags;
+            if ((pCurrentFrameFlags & 2) != 0)
+            {
+                *pMatrixArray++ = matrixStack[0];
+            }
+
+            RwMatrixTag afStack_8e8;
+            iModelQuatToMat(quat, tran, &afStack_8e8);
+
+            RwMatrixTag auStack_8a8;
+            xMat4x3Mul((xMat4x3*)&auStack_8a8, (xMat4x3*)&afStack_8e8, (xMat4x3*)&matrixStack[0]);
+
+            *mat = auStack_8a8;
+            if ((pCurrentFrameFlags & 1) != 0)
+            {
+                pMatrixArray = &pMatrixArray[-1];
+                pMatrixStackTop = pMatrixArray;
+            }
+            else
+            {
+                pMatrixStackTop = (RwMatrixTag*)&auStack_8a8;
+            }
+            matrixStack[0] = *pMatrixStackTop;
+            mat++;
+            quat++;
+            tran++;
+            iVar1++;
+            // r27 and r28 swap
+        }
+    }
+}
+
+RpAtomic* iModelCacheAtomic(RpAtomic* model)
+{
+    return model;
+}
+
+void iModelRender(RpAtomic* model, RwMatrixTag* mat)
+{
+    RpHAnimHierarchy* hierarchy;
+    RpGeometry* geom;
+    RwMatrixTag* pAnimOldMatrix;
+    RwFrame* frame;
+
+    hierarchy = (RpHAnimHierarchy*)GetHierarchy(model);
+
+    static S32 draw_all = 1;
+
+    if (hierarchy != NULL)
+    {
+        pAnimOldMatrix = hierarchy->pMatrixArray;
+        hierarchy->pMatrixArray = mat + 1;
+    }
+    frame = (RwFrame*)model->object.object.parent;
+    frame->ltm = *mat;
+    RwMatrixUpdate(&frame->ltm);
+    if (iModelHack_DisablePrelight != 0)
+    {
+        model->geometry->flags &= 0xfffffff7;
+    }
+    iModelCacheAtomic(model)->renderCallBack(iModelCacheAtomic(model));
+    if ((iModelHack_DisablePrelight != 0) && (model->geometry->preLitLum != NULL))
+    {
+        model->geometry->flags |= 8;
+    }
+    if (hierarchy != NULL)
+    {
+        hierarchy->pMatrixArray = pAnimOldMatrix;
+    }
+}
+
 S32 iModelCull(RpAtomic* model, RwMatrix* mat)
 {
     RwCamera* cam = RwCameraGetCurrentCamera();
@@ -201,10 +421,12 @@ S32 iModelCull(RpAtomic* model, RwMatrix* mat)
 
     RwV3dTransformPoints(&sph.center, &model->boundingSphere.center, 1, mat);
 
-    RwReal f1 = RwV3dDotProductMacro(&mat->right, &mat->right);
+    // FPR hell
     RwReal f3 = RwV3dDotProductMacro(&mat->up, &mat->up);
     RwReal f4 = RwV3dDotProductMacro(&mat->at, &mat->at);
+    RwReal f1 = RwV3dDotProductMacro(&mat->right, &mat->right);
 
+    // cror???
     sph.radius = model->boundingSphere.radius * xsqrt(MAX(f1, MAX(f3, f4)));
 
     model->worldBoundingSphere = sph;
@@ -224,7 +446,6 @@ S32 iModelSphereCull(xSphere* sphere)
     return (result == rwSPHEREOUTSIDE);
 }
 
-// Very nonmatching
 S32 iModelCullPlusShadow(RpAtomic* model, RwMatrix* mat, xVec3* shadowVec, S32* shadowOutside)
 {
     F32 xScale2, yScale2, zScale2;
@@ -304,131 +525,6 @@ S32 iModelCullPlusShadow(RpAtomic* model, RwMatrix* mat, xVec3* shadowVec, S32* 
     return 0;
 }
 
-void iModelQuatToMat(xQuat* q, xVec3* a, RwMatrixTag* t)
-{
-    q->s = -q->s;
-    xQuatToMat(q, (xMat3x3*)t);
-    q->s = -q->s;
-    t->pos.x = a->x;
-    t->pos.y = a->y;
-    t->pos.z = a->z;
-}
-
-// WIP
-void iModelAnimMatrices(RpAtomic* model, xQuat* quat, xVec3* tran, RwMatrixTag* mat)
-{
-    RwMatrixTag* pMatrixArray;
-    RpHAnimNodeInfo* iVar1;
-    RwMatrixTag matrixStack[33];
-    U32 pCurrentFrameFlags;
-    RpHAnimNodeInfo* pCurrentFrame;
-    int numFrames;
-    RwMatrixTag* pMatrixStackTop;
-
-    pCurrentFrame = (RpHAnimNodeInfo*)GetHierarchy(model);
-
-    if (pCurrentFrame != NULL)
-    {
-        pMatrixStackTop = &matrixStack[0];
-        pMatrixStackTop->at.z = 1.0;
-
-        matrixStack[0].up.y = 1.0;
-        matrixStack[0].right.x = 1.0;
-        matrixStack[0].up.x = 0.0;
-        matrixStack[0].right.z = 0.0;
-        matrixStack[0].right.y = 0.0;
-        matrixStack[0].at.y = 0.0;
-        matrixStack[0].at.x = 0.0;
-        matrixStack[0].up.z = 0.0;
-        matrixStack[0].pos.z = 0.0;
-        matrixStack[0].pos.y = 0.0;
-        matrixStack[0].pos.x = 0.0;
-        matrixStack[0].flags |= 0x20003;
-
-        matrixStack[1] = matrixStack[0];
-        numFrames = pCurrentFrame->nodeIndex;
-        pMatrixArray = (&matrixStack[1]);
-        iVar1 = (RpHAnimNodeInfo*)pCurrentFrame[1].nodeID;
-
-        pMatrixArray++;
-        for (int i = 0; i < numFrames; i++)
-        {
-            pCurrentFrameFlags = iVar1->flags;
-            if ((pCurrentFrameFlags & 2) != 0)
-            {
-                *pMatrixArray++ = matrixStack[0];
-            }
-
-            RwMatrixTag afStack_8e8;
-            iModelQuatToMat(quat, tran, &afStack_8e8);
-
-            RwMatrixTag auStack_8a8;
-            xMat4x3Mul((xMat4x3*)&auStack_8a8, (xMat4x3*)&afStack_8e8, (xMat4x3*)&matrixStack[0]);
-
-            *mat = auStack_8a8;
-            if ((pCurrentFrameFlags & 1) != 0)
-            {
-                pMatrixArray = &pMatrixArray[-1];
-                pMatrixStackTop = pMatrixArray;
-            }
-            else
-            {
-                pMatrixStackTop = (RwMatrixTag*)&auStack_8a8;
-            }
-            matrixStack[0] = *pMatrixStackTop;
-            mat++;
-            quat++;
-            tran++;
-            iVar1++;
-        }
-    }
-}
-
-RpAtomic* iModelCacheAtomic(RpAtomic* model)
-{
-    return model;
-}
-
-void iModelRender(RpAtomic* model, RwMatrixTag* mat)
-{
-    RpHAnimHierarchy* hierarchy;
-    RpGeometry* geom;
-    RwMatrixTag* pAnimOldMatrix;
-    RwFrame* frame;
-
-    hierarchy = (RpHAnimHierarchy*)GetHierarchy(model);
-
-    static S32 draw_all = 1;
-
-    if (hierarchy != NULL)
-    {
-        pAnimOldMatrix = hierarchy->pMatrixArray;
-        hierarchy->pMatrixArray = mat + 1;
-    }
-    frame = (RwFrame*)model->object.object.parent;
-    frame->ltm = *mat;
-    RwMatrixUpdate(&frame->ltm);
-    if (iModelHack_DisablePrelight != 0)
-    {
-        model->geometry->flags &= 0xfffffff7;
-    }
-    iModelCacheAtomic(model)->renderCallBack(iModelCacheAtomic(model));
-    if ((iModelHack_DisablePrelight != 0) && (model->geometry->preLitLum != NULL))
-    {
-        model->geometry->flags |= 8;
-    }
-    if (hierarchy != NULL)
-    {
-        hierarchy->pMatrixArray = pAnimOldMatrix;
-    }
-}
-
-S32 iModelSphereCull(const xSphere* sphere)
-{
-    return RwCameraFrustumTestSphere((const RwCamera*)RwEngineInstance->curCamera,
-                                     (const RwSphere*)sphere) == 0;
-}
-
 U32 iModelVertCount(RpAtomic* model)
 {
     return model->geometry->numVertices;
@@ -496,40 +592,37 @@ static inline void SkinXform(xVec3* dest, const xVec3* vert, RwMatrix* mat, cons
     }
 }
 
-// TODO: uncomment all code after RW gets implemented
-
 U32 iModelVertEval(RpAtomic* model, U32 index, U32 count, RwMatrix* mat, xVec3* vert, xVec3* dest)
 {
-    // RpGeometry* geom = RpAtomicGetGeometry(model);
+    RpGeometry* geom = RpAtomicGetGeometry(model);
 
-    // if (!vert)
-    // {
-    //     U32 numV = RpGeometryGetNumVertices(geom);
-    //     if (index >= numV || count == 0)
-    //     {
-    //         return 0;
-    //     }
-    //     count = xmin(count, numV - index);
-    //     vert = (xVec3*)RpMorphTargetGetVertices(RpGeometryGetMorphTarget(geom, 0));
-    //     vert += index;
-    // }
+    if (vert == NULL)
+    {
+        U32 numVerts = geom->numVertices;
+        if ((index >= numVerts) || (count == 0))
+        {
+            return 0;
+        }
+        count = (count < numVerts - index) ? count : (numVerts - index);
+        RpMorphTarget* mt = geom->morphTarget;
+        vert = (xVec3*)((RwV3d*)mt->verts + index);
+    }
 
-    // RpSkin* skin = RpSkinGeometryGetSkin(RpAtomicGetGeometry(model));
-    // if (skin)
-    // {
-    //     SkinXform(dest, vert, mat, RpSkinGetSkinToBoneMatrices(skin),
-    //               (F32*)(RpSkinGetVertexBoneWeights(skin) + index),
-    //               RpSkinGetVertexBoneIndices(skin) + index, count);
-    // }
-    // else
-    // {
-    //     RwV3dTransformPoints((RwV3d*)dest, (const RwV3d*)vert, count, mat);
-    // }
-
-    // return count;
-    return 0;
+    RpSkin* skin = RpSkinGeometryGetSkin(geom);
+    if (skin)
+    {
+        SkinXform(dest, vert, mat, RpSkinGetSkinToBoneMatrices(skin),
+                  (F32*)(RpSkinGetVertexBoneWeights(skin) + index),
+                  RpSkinGetVertexBoneIndices(skin) + index, count);
+    }
+    else
+    {
+        RwV3dTransformPoints((RwV3d*)dest, (const RwV3d*)vert, count, mat);
+    }
+    return count;
 }
 
+// register scheduling
 static inline void SkinNormals(xVec3* dest, const xVec3* normal, const RwMatrix* mat,
                                const RwMatrix* skinmat, const F32* wt, const U32* idx, U32 count)
 {
@@ -605,185 +698,177 @@ static inline void SkinNormals(xVec3* dest, const xVec3* normal, const RwMatrix*
     }
 }
 
-// TODO: Fix the below 3 functions after RW gets implemented
-
-U32 iModelNormalEval(xVec3* out, const RpAtomic& m, const RwMatrix* mat, size_t index, S32 size,
+U32 iModelNormalEval(xVec3* out, const RpAtomic& m, const RwMatrixTag* mat, size_t index, S32 size,
                      const xVec3* in)
 {
-    // RpGeometry* geom = RpAtomicGetGeometry(&m);
+    RpGeometry* geom = RpAtomicGetGeometry(&m);
 
-    // if (!in)
-    // {
-    //     S32 numV = RpGeometryGetNumVertices(geom);
-    //     S32 max_size = numV - index;
-    //     if (size < 0 || size > max_size)
-    //     {
-    //         size = max_size;
-    //     }
-    //     in = (const xVec3*)RpMorphTargetGetVertexNormals(RpGeometryGetMorphTarget(geom, 0));
-    // }
+    if (!in)
+    {
+        S32 numV = RpGeometryGetNumVertices(geom);
+        S32 max_size = numV - index;
+        if (size < 0 || size > max_size)
+        {
+            size = max_size;
+        }
+        in = (const xVec3*)RpMorphTargetGetVertexNormals(RpGeometryGetMorphTarget(geom, 0));
+    }
 
-    // if (size <= 0)
-    //     return 0;
+    if (size <= 0)
+        return 0;
 
-    // in += index;
+    in += index;
 
-    // RpSkin* skin = RpSkinGeometryGetSkin(geom);
-    // if (skin)
-    // {
-    //     const RwMatrix* skin_mats = RpSkinGetSkinToBoneMatrices(skin);
-    //     const F32* bone_weights = (F32*)RpSkinGetVertexBoneWeights(skin) + index;
-    //     const U32* bone_indices = RpSkinGetVertexBoneIndices(skin) + index;
-    //     SkinNormals(out, in, mat, skin_mats, bone_weights, bone_indices, size);
-    // }
-    // else
-    // {
-    //     xMat4x3 nmat;
-    //     xMat3x3Normalize(
-    //         &nmat, (xMat3x3*)&mat); // BUG: mat is already a pointer, nmat will have garbage data!!!
-    //     nmat.pos.assign(0.0f, 0.0f, 0.0f);
-    //     RwV3dTransformPoints((RwV3d*)out, (RwV3d*)in, size, (RwMatrix*)&nmat);
-    // }
+    RpSkin* skin = RpSkinGeometryGetSkin(geom);
+    if (skin)
+    {
+        const RwMatrix* skin_mats = RpSkinGetSkinToBoneMatrices(skin);
+        const F32* bone_weights = (F32*)RpSkinGetVertexBoneWeights(skin) + index;
+        const U32* bone_indices = RpSkinGetVertexBoneIndices(skin) + index;
+        SkinNormals(out, in, mat, skin_mats, bone_weights, bone_indices, size);
+    }
+    else
+    {
+        xMat4x3 nmat;
+        xMat3x3Normalize(&nmat, (xMat3x3*)&mat);
+        nmat.pos.assign(0.0f, 0.0f, 0.0f);
+        RwV3dTransformPoints((RwV3d*)out, (RwV3d*)in, size, (RwMatrix*)&nmat);
+    }
 
-    // return size;
-    return 0;
+    return size;
 }
 
 static U32 iModelTagUserData(xModelTag* tag, RpAtomic* model, F32 x, F32 y, F32 z, S32 closeV)
 {
-    // S32 i, count;
-    // RpUserDataArray *array, *testarray;
-    // F32 distSqr, closeDistSqr;
-    // S32 numTags, t;
-    // xModelTag* tagList;
+    S32 i, count;
+    RpUserDataArray *array, *testarray;
+    F32 distSqr, closeDistSqr;
+    S32 numTags, t;
+    xModelTag* tagList;
 
-    // count = RpGeometryGetUserDataArrayCount(model->geometry);
-    // array = NULL;
+    count = RpGeometryGetUserDataArrayCount(model->geometry);
+    array = NULL;
 
-    // for (i = 0; i < count; i++)
-    // {
-    //     testarray = RpGeometryGetUserDataArray(model->geometry, i);
-    //     if (strcmp(testarray->name, "HI_Tags") == 0)
-    //     {
-    //         array = testarray;
-    //         break;
-    //     }
-    // }
+    for (i = 0; i < count; i++)
+    {
+        testarray = RpGeometryGetUserDataArray(model->geometry, i);
+        if (strcmp(testarray->name, "HI_Tags") == 0)
+        {
+            array = testarray;
+            break;
+        }
+    }
 
-    // if (!array)
-    // {
-    //     memset(tag, 0, sizeof(xModelTag));
-    //     return 0;
-    // }
+    if (!array)
+    {
+        memset(tag, 0, sizeof(xModelTag));
+        return 0;
+    }
 
-    // numTags = *(S32*)array->data;
-    // closeDistSqr = 1.0e9f;
-    // tagList = (xModelTag*)((S32*)array->data + 1);
+    numTags = *(S32*)array->data;
+    closeDistSqr = 1.0e9f;
+    tagList = (xModelTag*)((S32*)array->data + 1);
 
-    // if (closeV < 0 || closeV > numTags)
-    // {
-    //     closeV = 0;
-    //     for (t = 0; t < numTags; t++)
-    //     {
-    //         distSqr =
-    //             xsqr(tagList[t].v.x - x) + xsqr(tagList[t].v.y - y) + xsqr(tagList[t].v.z - z);
-    //         if (distSqr < closeDistSqr)
-    //         {
-    //             closeV = t;
-    //             closeDistSqr = distSqr;
-    //         }
-    //     }
-    //     if (tag)
-    //     {
-    //         *tag = tagList[closeV];
-    //     }
-    // }
-    // else
-    // {
-    //     if (tag)
-    //     {
-    //         *tag = tagList[closeV];
-    //     }
-    // }
+    if (closeV < 0 || closeV > numTags)
+    {
+        closeV = 0;
+        for (t = 0; t < numTags; t++)
+        {
+            distSqr = SQR(tagList[t].v.x - x) + SQR(tagList[t].v.y - y) + SQR(tagList[t].v.z - z);
+            if (distSqr < closeDistSqr)
+            {
+                closeV = t;
+                closeDistSqr = distSqr;
+            }
+        }
+        if (tag)
+        {
+            *tag = tagList[closeV];
+        }
+    }
+    else
+    {
+        if (tag)
+        {
+            *tag = tagList[closeV];
+        }
+    }
 
-    // return closeV;
-    return 0;
+    return closeV;
 }
 
 static U32 iModelTagInternal(xModelTag* tag, RpAtomic* model, F32 x, F32 y, F32 z, S32 closeV)
-
 {
-    // RpGeometry* geom;
-    // RwV3d* vert;
-    // S32 v, numV;
-    // F32 distSqr, closeDistSqr;
-    // RpSkin* skin;
-    // const RwMatrixWeights* wt;
+    RpGeometry* geom;
+    RwV3d* vert;
+    S32 v, numV;
+    F32 distSqr, closeDistSqr;
+    RpSkin* skin;
+    const RwMatrixWeights* wt;
 
-    // geom = RpAtomicGetGeometry(model);
-    // vert = RpMorphTargetGetVertices(RpGeometryGetMorphTarget(geom, 0));
+    geom = RpAtomicGetGeometry(model);
+    vert = RpMorphTargetGetVertices(RpGeometryGetMorphTarget(geom, 0));
 
-    // if (!vert)
-    // {
-    //     return iModelTagUserData(tag, model, x, y, z, closeV);
-    // }
+    if (!vert)
+    {
+        return iModelTagUserData(tag, model, x, y, z, closeV);
+    }
 
-    // numV = RpGeometryGetNumVertices(geom);
-    // closeDistSqr = 1.0e9f;
+    numV = RpGeometryGetNumVertices(geom);
+    closeDistSqr = 1.0e9f;
 
-    // if (closeV < 0 || closeV > numV)
-    // {
-    //     closeV = 0;
-    //     for (v = 0; v < numV; v++)
-    //     {
-    //         distSqr = xsqr(vert[v].x - x) + xsqr(vert[v].y - y) + xsqr(vert[v].z - z);
-    //         if (distSqr < closeDistSqr)
-    //         {
-    //             closeV = v;
-    //             closeDistSqr = distSqr;
-    //         }
-    //     }
-    //     if (tag)
-    //     {
-    //         tag->v.x = x;
-    //         tag->v.y = y;
-    //         tag->v.z = z;
-    //     }
-    // }
-    // else
-    // {
-    //     if (tag)
-    //     {
-    //         tag->v.x = vert[closeV].x;
-    //         tag->v.y = vert[closeV].y;
-    //         tag->v.z = vert[closeV].z;
-    //     }
-    // }
+    if (closeV < 0 || closeV > numV)
+    {
+        closeV = 0;
+        for (v = 0; v < numV; v++)
+        {
+            distSqr = SQR(vert[v].x - x) + SQR(vert[v].y - y) + SQR(vert[v].z - z);
+            if (distSqr < closeDistSqr)
+            {
+                closeV = v;
+                closeDistSqr = distSqr;
+            }
+        }
+        if (tag)
+        {
+            tag->v.x = x;
+            tag->v.y = y;
+            tag->v.z = z;
+        }
+    }
+    else
+    {
+        if (tag)
+        {
+            tag->v.x = vert[closeV].x;
+            tag->v.y = vert[closeV].y;
+            tag->v.z = vert[closeV].z;
+        }
+    }
 
-    // if (tag)
-    // {
-    //     skin = RpSkinGeometryGetSkin(RpAtomicGetGeometry(model));
-    //     if (skin)
-    //     {
-    //         wt = RpSkinGetVertexBoneWeights(skin) + closeV;
-    //         tag->matidx = RpSkinGetVertexBoneIndices(skin)[closeV];
-    //         tag->wt[0] = wt->w0;
-    //         tag->wt[1] = wt->w1;
-    //         tag->wt[2] = wt->w2;
-    //         tag->wt[3] = wt->w3;
-    //     }
-    //     else
-    //     {
-    //         tag->matidx = 0;
-    //         tag->wt[0] = 0.0f;
-    //         tag->wt[1] = 0.0f;
-    //         tag->wt[2] = 0.0f;
-    //         tag->wt[3] = 0.0f;
-    //     }
-    // }
+    if (tag)
+    {
+        skin = RpSkinGeometryGetSkin(RpAtomicGetGeometry(model));
+        if (skin)
+        {
+            wt = RpSkinGetVertexBoneWeights(skin) + closeV;
+            tag->matidx = RpSkinGetVertexBoneIndices(skin)[closeV];
+            tag->wt[0] = wt->w0;
+            tag->wt[1] = wt->w1;
+            tag->wt[2] = wt->w2;
+            tag->wt[3] = wt->w3;
+        }
+        else
+        {
+            tag->matidx = 0;
+            tag->wt[0] = 0.0f;
+            tag->wt[1] = 0.0f;
+            tag->wt[2] = 0.0f;
+            tag->wt[3] = 0.0f;
+        }
+    }
 
-    // return closeV;
-    return 0;
+    return closeV;
 }
 
 U32 iModelTagSetup(xModelTag* tag, RpAtomic* model, F32 x, F32 y, F32 z)
@@ -831,6 +916,11 @@ void iModelTagEval(RpAtomic* model, const xModelTagWithNormal* tag, RwMatrix* ma
     }
 }
 
+// needs to be after static vars in previous functions
+static U32 sMaterialIdx;
+static U32 sMaterialFlags;
+static RpAtomic* sLastMaterial;
+
 static RpMaterial* iModelSetMaterialAlphaCB(RpMaterial* material, void* data)
 {
     const RwRGBA* col = RpMaterialGetColor(material);
@@ -844,26 +934,27 @@ static RpMaterial* iModelSetMaterialAlphaCB(RpMaterial* material, void* data)
     return material;
 }
 
-//  TODO: another thing that needs fixed after RW gets implemented
+// sda scheduling
 void iModelSetMaterialAlpha(RpAtomic* model, U8 alpha)
 {
-    // RpGeometry* geom = RpAtomicGetGeometry(model);
+    RpGeometry* geom = RpAtomicGetGeometry(model);
 
-    // if (model != sLastMaterial)
-    // {
-    //     sMaterialFlags = 0;
-    // }
+    if (model != sLastMaterial)
+    {
+        sMaterialFlags = 0;
+    }
 
-    // RpGeometrySetFlags(geom, RpGeometryGetFlags(geom) | rpGEOMETRYMODULATEMATERIALCOLOR);
+    geom->flags |= rpGEOMETRYMODULATEMATERIALCOLOR;
 
-    // sMaterialIdx = 0;
+    sMaterialIdx = 0;
 
-    // RpGeometryForAllMaterials(geom, iModelSetMaterialAlphaCB, &alpha);
+    RpGeometryForAllMaterials(geom, iModelSetMaterialAlphaCB, &alpha);
 
-    // sMaterialFlags |= 0x1;
-    // sLastMaterial = model;
+    sLastMaterial = model;
+    sMaterialFlags |= 0x1;
 }
 
+// sda scheduling
 static RpMaterial* iModelResetMaterialCB(RpMaterial* material, void* data)
 {
     if ((sMaterialFlags & 0x3) == 0x3)
@@ -899,8 +990,8 @@ static RpMaterial* iModelResetMaterialCB(RpMaterial* material, void* data)
 
 void iModelResetMaterial(RpAtomic* model)
 {
-    RpAtomic* material = sLastMaterial; // r2
-    RpGeometry* geom; // r21
+    RpAtomic* material = sLastMaterial;
+    RpGeometry* geom;
 
     if (model != material)
     {
@@ -934,6 +1025,7 @@ void iModelSetMaterialTexture(RpAtomic* model, void* texture)
     geom = model->geometry;
     sMaterialIdx = 0;
     RpGeometryForAllMaterials(geom, iModelSetMaterialTextureCB, texture);
+    // sda scheduling
     sMaterialFlags |= 4;
     sLastMaterial = model;
 }
@@ -957,6 +1049,7 @@ static RpMaterial* iModelMaterialMulCB(RpMaterial* material, void* data)
     F32 tmp;
     F32* mods = (F32*)data;
 
+    // sda scheduling
     tmp = col.red * mods[0];
     U8_COLOR_CLAMP(col.red, tmp);
 
@@ -971,25 +1064,27 @@ static RpMaterial* iModelMaterialMulCB(RpMaterial* material, void* data)
     return material;
 }
 
-// TODO: once again, fix after RW implementation
 void iModelMaterialMul(RpAtomic* model, F32 rm, F32 gm, F32 bm)
 {
-    // RpGeometry* geom = RpAtomicGetGeometry(model);
+    RpGeometry* geom = RpAtomicGetGeometry(model);
 
-    // if (model != sLastMaterial)
-    // {
-    //     sMaterialFlags = 0;
-    // }
+    if (model != sLastMaterial)
+    {
+        sMaterialFlags = 0;
+    }
 
-    // RpGeometrySetFlags(geom, RpGeometryGetFlags(geom) | rpGEOMETRYMODULATEMATERIALCOLOR);
+    geom->flags |= rpGEOMETRYMODULATEMATERIALCOLOR;
 
-    // F32 cols[3];
-    // cols[0] = rm;
-    // cols[1] = gm;
-    // cols[2] = bm;
+    F32 cols[3];
+    cols[0] = rm;
+    cols[1] = gm;
+    cols[2] = bm;
 
-    // RpGeometryForAllMaterials(geom, iModelMaterialMulCB, cols);
+    sMaterialIdx = 0;
 
-    // sLastMaterial = model;
-    // sMaterialFlags |= 0x2;
+    RpGeometryForAllMaterials(geom, iModelMaterialMulCB, cols);
+
+    // sda scheduling
+    sMaterialFlags |= 0x2;
+    sLastMaterial = model;
 }

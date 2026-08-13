@@ -806,10 +806,6 @@ static void RenderRotatedBillboard(xVec3* pos, _xFXAuraAngle* rot, U32 count, F3
 
 void xFXAuraRender()
 {
-    // TODO: Fix function
-    // Honestly the closest I can get this function.
-    // fogstate is in the dwarf but currently isn't used in the function.
-
     S32 fogstate;
     _xFXAura* ap;
     _xFXAuraAngle* auraAng;
@@ -822,7 +818,7 @@ void xFXAuraRender()
         RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)0x2);
         RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)0x1);
         RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)0x0);
-        RwRenderStateGet(rwRENDERSTATEFOGTYPE, (void*)0x1);
+        RwRenderStateGet(rwRENDERSTATEFOGENABLE, &fogstate);
         RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)0x0);
 
         ap = sAura;
@@ -832,18 +828,18 @@ void xFXAuraRender()
             if (ap->frame == gFrameCount)
             {
                 auraAng = &sAuraAngle[0];
-                RenderRotatedBillboard(&ap->pos, auraAng, 1, 0, 0, ap->color, 0);
+                RenderRotatedBillboard(&ap->pos, auraAng, 1, ap->size, ap->size, ap->color, 0);
                 auraAng = &sAuraAngle[1];
-                RenderRotatedBillboard(&ap->pos, auraAng, 1, 0, 0, ap->color, 1);
+                RenderRotatedBillboard(&ap->pos, auraAng, 1, ap->size, ap->size, ap->color, 1);
             }
-            ap = (_xFXAura*)ap->dangle;
+            ap++;
         }
 
         RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)0x5);
         RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)0x6);
         RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)0x1);
         RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)0x1);
-        RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)0x10);
+        RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)fogstate);
 
         ap = sAura;
 
@@ -853,7 +849,7 @@ void xFXAuraRender()
             {
                 zEntPickup_RenderOne((xEnt*)ap->parent);
             }
-            ap = (_xFXAura*)ap->dangle;
+            ap++;
         }
     }
 }

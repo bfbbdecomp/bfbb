@@ -44,7 +44,7 @@ struct zNPCGoalCommon : xGoal
         return 0;
     }
 
-    virtual U8 CollReview(void*)
+    virtual S32 CollReview(void*)
     {
         return 0;
     }

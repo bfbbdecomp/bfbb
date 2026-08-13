@@ -159,7 +159,7 @@ if not config.non_matching:
 config.binutils_tag = "2.42-1"
 config.compilers_tag = "20250812"
 config.dtk_tag = "v1.7.0"
-config.objdiff_tag = "v3.4.1"
+config.objdiff_tag = "v3.7.1"
 config.sjiswrap_tag = "v1.2.2"
 config.wibo_tag = "1.0.0-beta.5"
 
@@ -312,7 +312,7 @@ cflags_rel = [
 # Game-specific flags
 cflags_bfbb = [
     *cflags_base,
-    "-lang=C++",
+    "-lang=c++",
     "-common on",
     "-char unsigned",
     "-str reuse,pool,readonly",
@@ -409,8 +409,8 @@ config.libs = [
         "progress_category": "game",
         "objects": [
             Object(NonMatching, "SB/Core/x/xAnim.cpp", extra_cflags=["-sym on"]),
-            Object(Matching, "SB/Core/x/xBase.cpp"),
-            Object(Matching, "SB/Core/x/xbinio.cpp"),
+            Object(Matching, "SB/Core/x/xBase.cpp", extra_cflags=["-sym on"]),
+            Object(Matching, "SB/Core/x/xbinio.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Core/x/xBound.cpp"),
             Object(NonMatching, "SB/Core/x/xCamera.cpp"),
             Object(NonMatching, "SB/Core/x/xClimate.cpp"),
@@ -489,7 +489,7 @@ config.libs = [
             Object(Matching, "SB/Game/zEvent.cpp"),
             Object(Matching, "SB/Game/zFeet.cpp"),
             Object(Matching, "SB/Game/zFMV.cpp"),
-            Object(NonMatching, "SB/Game/zFX.cpp"),
+            Object(NonMatching, "SB/Game/zFX.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zGame.cpp"),
             Object(Equivalent, "SB/Game/zGameExtras.cpp"),
             Object(Equivalent, "SB/Game/zGameState.cpp"),
@@ -502,7 +502,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zLOD.cpp"),
             Object(NonMatching, "SB/Game/zMain.cpp"),
             Object(Equivalent, "SB/Game/zMenu.cpp"),
-            Object(Matching, "SB/Game/zMovePoint.cpp"),
+            Object(Matching, "SB/Game/zMovePoint.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zMusic.cpp"),
             Object(Equivalent, "SB/Game/zParCmd.cpp"),
             Object(Matching, "SB/Game/zParEmitter.cpp"),
@@ -536,14 +536,14 @@ config.libs = [
             Object(NonMatching, "SB/Core/gc/iMath3.cpp"),
             Object(NonMatching, "SB/Core/gc/iMemMgr.cpp"),
             Object(Matching, "SB/Core/gc/iMix.c"),
-            Object(NonMatching, "SB/Core/gc/iModel.cpp"),
+            Object(NonMatching, "SB/Core/gc/iModel.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Core/gc/iMorph.cpp"),
             Object(Equivalent, "SB/Core/gc/iPad.cpp"),
             Object(NonMatching, "SB/Core/gc/iParMgr.cpp"),
             Object(NonMatching, "SB/Core/gc/isavegame.cpp"),
             Object(NonMatching, "SB/Core/gc/iScrFX.cpp"),
             Object(NonMatching, "SB/Core/gc/iSnd.cpp"),
-            Object(NonMatching, "SB/Core/gc/iSystem.cpp"),
+            Object(NonMatching, "SB/Core/gc/iSystem.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/gc/iTime.cpp"),
             Object(NonMatching, "SB/Core/gc/ngcrad3d.c"),
             Object(Matching, "SB/Game/zNPCGoals.cpp"),
@@ -552,12 +552,12 @@ config.libs = [
             Object(NonMatching, "SB/Game/zNPCGoalRobo.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zNPCGoalTiki.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zNPCMessenger.cpp", extra_cflags=["-sym on"]),
-            Object(NonMatching, "SB/Game/zNPCMgr.cpp", extra_cflags=["-sym on"]),
+            Object(Matching, "SB/Game/zNPCMgr.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zNPCTypes.cpp"),
             Object(NonMatching, "SB/Game/zNPCTypeCommon.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zNPCTypeRobot.cpp"),
-            Object(NonMatching, "SB/Game/zNPCTypeVillager.cpp"),
-            Object(NonMatching, "SB/Game/zNPCTypeAmbient.cpp"),
+            Object(NonMatching, "SB/Game/zNPCTypeVillager.cpp", extra_cflags=["-sym on"]),
+            Object(NonMatching, "SB/Game/zNPCTypeAmbient.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Game/zNPCTypeTiki.cpp", extra_cflags=["-sym on"]),
             Object(NonMatching, "SB/Core/x/xBehaveMgr.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Core/x/xBehaviour.cpp", extra_cflags=["-sym on"]),
@@ -583,7 +583,7 @@ config.libs = [
             Object(NonMatching, "SB/Game/zGoo.cpp"),
             Object(NonMatching, "SB/Game/zGrid.cpp"),
             Object(Matching, "SB/Game/zNPCGoalScript.cpp", extra_cflags=["-sym on"]),
-            Object(NonMatching, "SB/Game/zNPCSndTable.cpp"),
+            Object(NonMatching, "SB/Game/zNPCSndTable.cpp", extra_cflags=["-sym on"]),
             Object(Matching, "SB/Game/zNPCSndLists.cpp"),
             Object(NonMatching, "SB/Game/zNPCTypeDuplotron.cpp"),
             Object(Equivalent, "SB/Core/x/xModelBucket.cpp"),

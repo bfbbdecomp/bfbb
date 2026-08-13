@@ -20,7 +20,14 @@ struct tag_xFile
     void* user_data;
 };
 
-void xFileSetUserData(tag_xFile* file, void* userdata);
-XFILE_READSECTOR_STATUS xFileReadAsyncStatus(S32 key, S32* amtToFar);
+inline void xFileSetUserData(tag_xFile* file, void* userdata)
+{
+    file->user_data = userdata;
+}
+
+inline XFILE_READSECTOR_STATUS xFileReadAsyncStatus(S32 key, S32* amtToFar)
+{
+    return (XFILE_READSECTOR_STATUS)iFileReadAsyncStatus(key, amtToFar);
+}
 
 #endif

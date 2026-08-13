@@ -9,6 +9,9 @@
 #include "xCamera.h"
 #include "zCutsceneMgr.h"
 #include "xSnd.h"
+#include "xCamera.h"
+#include "zCutsceneMgr.h"
+#include "xSnd.h"
 
 struct ztalkbox : xBase
 {
@@ -103,12 +106,17 @@ struct ztalkbox : xBase
 
     void MasterTellSlaves(int event);
     void MasterLoveSlave(xBase*, int);
+    void start_talk(const char* text, callback* cb, zNPCCommon* npc);
+
+    void MasterTellSlaves(int event);
+    void MasterLoveSlave(xBase*, int);
 
     void load(const asset_type& tasset);
     void reset();
     void set_text(const char* text);
     void set_text(U32 textID);
     void add_text(U32 textID);
+    void add_text(const char* text);
     void add_text(const char* text);
     void clear_text();
     void stop_talk();
@@ -119,6 +127,12 @@ struct ztalkbox : xBase
 
 namespace
 {
+    enum trigger_pads_enum
+    {
+        TP_NEVER,
+        TP_TRAPPED,
+        TP_ACTIVE,
+    };
     enum trigger_pads_enum
     {
         TP_NEVER,
@@ -152,6 +166,7 @@ namespace
         virtual void start();
         virtual void stop();
         virtual state_enum update(xScene& scn, F32 dt) = 0;
+        virtual state_enum update(xScene& scn, F32 dt) = 0;
     };
 
     struct start_state_type : state_type
@@ -173,7 +188,7 @@ namespace
         virtual state_enum update(xScene& scn, F32 dt);
     };
 
-    struct wait_state_type : state_type
+    struct wait_state_type : state_type struct wait_state_type : state_type
     {
         U8 answer_yes; // offset 0x8, size 0x1
 
@@ -181,9 +196,19 @@ namespace
         virtual void start();
         virtual void stop();
         virtual state_enum update(xScene& scn, F32 dt);
+        U8 answer_yes; // offset 0x8, size 0x1
+
+        wait_state_type();
+        virtual void start();
+        virtual void stop();
+        virtual state_enum update(xScene& scn, F32 dt);
     };
-    struct stop_state_type : state_type
+    struct stop_state_type : state_type struct stop_state_type : state_type
     {
+        stop_state_type();
+        virtual void start();
+        virtual void stop();
+        virtual state_enum update(xScene& scn, F32 dt);
         stop_state_type();
         virtual void start();
         virtual void stop();
@@ -271,6 +296,7 @@ namespace
         U16 dynamics[64]; // 0x8474
         U32 dynamics_size; // 0x84F4
         //refresh(d.tb, false)
+        //refresh(d.tb, false)
     };
 
     struct wait_context
@@ -313,7 +339,9 @@ namespace
         U32 wait_event_mask; // 0x8548
         F32 prompt_delay; // 0x854C
         F32 quit_delay; // 0x8550
+        F32 quit_delay; // 0x8550
         U8 prompt_ready; // 0x8554, size 0x1
+        U8 quit_ready; // 0x8555, size 0x1
         U8 quit_ready; // 0x8555, size 0x1
         U8 stream_locked[2]; // 0x8556
         S32 next_stream; // 0x8558
@@ -321,6 +349,7 @@ namespace
         U8 allow_quit; // 0x8578
         U8 quitting; // 0x8579
         U8 delay_events; // 0x857A
+        ztalkbox::callback* cb; // 0x857C
         ztalkbox::callback* cb; // 0x857C
         fixed_queue<trigger_pair, 32> triggered; // 0x8580
         F32 volume; // 0x8690
@@ -361,8 +390,43 @@ namespace
             } volume; // offset 0x8, size 0x8
             U32 target; // offset 0x8, size 0x4
             xVec3 origin; // offset 0x8, size 0xC
+            U32 target; // offset 0x8, size 0x4
+            xVec3 origin; // offset 0x8, size 0xC
         };
         U32 speaker; // offset 0x14, size 0x4
+    };
+
+    struct teleport_context
+    {
+        // total size: 0x14
+        U8 use_loc; // offset 0x0, size 0x1
+        U8 use_yaw; // offset 0x1, size 0x1
+        xVec3 loc; // offset 0x4, size 0xC
+        float yaw; // offset 0x10, size 0x4
+    };
+    struct tag_entry
+    {
+        // total size: 0x14
+        substr name; // offset 0x0, size 0x8
+        char op; // offset 0x8, size 0x1
+        substr* args; // offset 0xC, size 0x4
+        U32 args_size; // offset 0x10, size 0x4
+    };
+    struct tag_entry_list
+    {
+        // total size: 0x8
+        tag_entry* entries; // offset 0x0, size 0x4
+        U32 size; // offset 0x4, size 0x4
+    };
+    struct xTextAsset
+    {
+        U32 len; // offset 0x0, size 0x4
+    };
+
+    struct signal_context
+    {
+        // total size: 0x4
+        U32 flags; // offset 0x0, size 0x4
     };
 
     struct teleport_context

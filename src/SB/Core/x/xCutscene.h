@@ -110,6 +110,7 @@ struct xCutscene
     U32 SndHandle[2];
     XCSNNosey* cb_nosey;
     void NoseySet(XCSNNosey* nosey);
+    void NoseyClear();
 };
 
 struct CutsceneShadowModel

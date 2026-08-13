@@ -2,7 +2,7 @@ name: Build
 
 on:
   push:
-  pull_request_target:
+  pull_request:
 
 jobs:
   build:
@@ -28,7 +28,7 @@ jobs:
 
       # Checkout the repository (PR from forked repo)
       - name: Checkout
-        if: ${{ github.event_name == 'pull_request_target'}}
+        if: ${{ github.event_name == 'pull_request'}}
         uses: actions/checkout@v4
         with:
           submodules: recursive
@@ -92,7 +92,7 @@ jobs:
 
       # Checkout the repository (PR from forked repo)
       - name: Checkout
-        if: ${{ github.event_name == 'pull_request_target'}}
+        if: ${{ github.event_name == 'pull_request'}}
         uses: actions/checkout@v4
         with:
           submodules: recursive
@@ -134,6 +134,7 @@ jobs:
         with:
           fetch-depth: 2
           submodules: recursive
+          ref: main
 
       # Set Git config
       - name: Git config
@@ -143,17 +144,12 @@ jobs:
       - name: Prepare
         run: cp -R /orig .
 
-      # Checkout the commit to generate OK bot report used for website build
+      # If we pushed to main, we need to go back one commit
+      # to generate OK bot report used for website build
       - name: Checkout previous report repo state
         if: ${{ github.event_name == 'push' }}
         run: |
           git checkout HEAD^
-
-      # Checkout the commit to generate CI progress report for PR comment report
-      - name: Checkout previous report repo state
-        if: ${{ github.event_name == 'pull_request_target' }}
-        run: |
-          git checkout main
 
       # Generate report for previous repo state
       - name: Generate previous report
@@ -176,7 +172,7 @@ jobs:
     needs:
       - build
       - build-previous
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && github.event_name != 'pull_request_target'
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     steps:
       - name: Checkout website code
         uses: actions/checkout@v4
@@ -234,7 +230,7 @@ jobs:
     needs:
       - build
       - build-previous
-    if: github.event_name == 'pull_request_target'
+    if: github.event_name == 'pull_request'
     permissions:
       pull-requests: write
     steps:
@@ -262,14 +258,14 @@ jobs:
         id: ok-command
         run: |
           ./objdiff report changes artifacts/previous.json artifacts/progress.json -o artifacts/changes.json
-          ./ok --changes artifacts/changes.json pr > pr.txt
-          cat pr.txt
+          ./ok --changes artifacts/changes.json pr > pr_comment.txt
+          cat pr_comment.txt
 
       - name: Verify OK Bot Comment is Not Empty
         id: comment_file_check
         run: |
-          FILE_PATH="pr.txt"
-          echo "===== pr.txt contents (debug) ====="
+          FILE_PATH="pr_comment.txt"
+          echo "===== pr_comment.txt contents (debug) ====="
           sed -n '1,200p' "$FILE_PATH" || true
           echo "===== end debug ====="
           # Consider the file empty if it has zero bytes OR only whitespace/newlines.
@@ -279,9 +275,22 @@ jobs:
             echo "file_empty=true" >> $GITHUB_OUTPUT
           fi
 
-      - name: PR comment with file
-        if: ${{ steps.comment_file_check.outputs.file_empty == 'false' }}
-        uses: thollander/actions-comment-pull-request@v3
+      # This workflow doesn't have permissions to post a comment.
+      # Upload the comment and it will be picked up by the pr-comment.yml workflow
+      - name: Upload comment
+        uses: actions/upload-artifact@v4
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          file-path: pr.txt
+          name: pr_comment.txt
+          path: pr_comment.txt
+
+      - name: Save PR number
+        env:
+          PR_NUM: ${{ github.event.number }}
+        run: |
+          echo $PR_NUM > pr_number.txt
+
+      - name: Upload PR number
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr_number.txt
+          path: pr_number.txt

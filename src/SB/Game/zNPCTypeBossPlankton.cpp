@@ -1752,6 +1752,7 @@ void zNPCBPlankton::enable_emitter(xParEmitter& p1) const
 
 void zNPCBPlankton::disable_emitter(xParEmitter& p1) const
 {
+    p1.emit_flags &= 0xFE;
 }
 
 U8 zNPCBPlankton::ColChkFlags() const

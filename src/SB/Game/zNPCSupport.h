@@ -72,7 +72,10 @@ struct NPCTarget
     S32 IsDead();
     S32 FindNearest(S32 flg_consider, xBase* skipme, xVec3* from, F32 dst_max);
     S32 InCylinder(xVec3* from, F32 rad, F32 hyt, F32 off);
-    U32 HaveTarget();
+    S32 HaveTarget()
+    {
+        return (*(S32*)this != 0);
+    }
 };
 
 struct NPCBlinker

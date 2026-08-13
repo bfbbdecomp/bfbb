@@ -1636,10 +1636,6 @@ namespace
     {
     }
 
-    // // start_state_type::start_state_type() : state_type((state_enum)1)
-    // // {
-    // // }
-
 } // namespace
 
 void ztalkbox::load(xBase& data, xDynAsset& asset, u32)

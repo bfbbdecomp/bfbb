@@ -53,7 +53,7 @@ char* g_strz_flotanim[2] = { "Unknown", "Wiggle01" };
 U32 g_hash_flotanim[2];
 U32 g_hash_nytlytanim[2];
 U32 g_hash_ttsanim[2];
-U32 g_hash_cloudanim[3];
+U32 g_hash_cloudanim[3] = { 0, 0, 0 };
 U32 g_hash_shieldanim[2];
 
 char* g_strz_cloudanim[3];
@@ -72,7 +72,7 @@ void zNPCSleepy_Timestep(F32 dt)
         tmr_cycle = 0.0f;
     }
 
-    F32 dVar1 = NPCC_TmrCycle(&tmr_cycle, 0.01666667f, 2.63f);
+    F32 dVar1 = NPCC_TmrCycle(&tmr_cycle, 0.016666667f, 2.63f);
     zNPCSleepy::hyt_NightLightCurrent = 4.0f;
     zNPCSleepy::hyt_NightLightCurrent += (0.35f * isin(PI * dVar1));
 }
