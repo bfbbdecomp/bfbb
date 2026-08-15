@@ -60,14 +60,24 @@ struct ztalkbox : xBase
 
     struct callback
     {
-        callback();
-        virtual void on_signal(U32);
+        callback()
+        {
+        }
+        virtual void on_signal(U32)
+        {
+        }
 
-        virtual void on_start();
+        virtual void on_start()
+        {
+        }
 
-        virtual void on_stop();
+        virtual void on_stop()
+        {
+        }
 
-        virtual void on_answer(answer_enum answer);
+        virtual void on_answer(answer_enum answer)
+        {
+        }
     };
 
     struct
