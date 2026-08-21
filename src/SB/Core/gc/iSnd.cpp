@@ -794,6 +794,65 @@ void iSndUpdateSounds()
     }
 }
 
+void iSndUpdate()
+{
+    bool active;
+    _AXVPB* v;
+    U32 flags;
+    xSndVoiceInfo* vp;
+    S32 testBuffer;
+
+    if (!soundInited)
+    {
+        return;
+    }
+
+    S32 enabled = OSDisableInterrupts();
+    iSndUpdateStreams();
+    iSndUpdateSounds();
+    MIXUpdateSettings();
+    OSRestoreInterrupts(enabled);
+
+    for (S32 i = 0; i < 0x40; i++)
+    {
+        vp = &gSnd.voice[i];
+
+        if (i < 6)
+        {
+            active = (streams[i].vinf.flags & 0xc07f);
+        }
+        else
+        {
+            v = voices[i - 6].voice;
+            testBuffer = 0;
+            if (v != NULL)
+            {
+                testBuffer = v->pb.addr.currentAddressHi;
+                testBuffer <<= 16;
+                testBuffer += v->pb.addr.currentAddressLo;
+            }
+            flags = voices[i - 6].flags;
+            active = 0;
+            if ((flags & 4) && !(flags & 8))
+            {
+                if ((testBuffer >= zero_point) && (testBuffer < zero_end))
+                {
+                    active = 1;
+                }
+            }
+            active |= (bool)v;
+        }
+        if (active)
+        {
+            vp->flags |= 1;
+        }
+        else
+        {
+            vp->flags &= 0xfffffffe;
+        }
+    }
+}
+
 S32 iSndPlay(xSndVoiceInfo* vp)
 {
     S32 offset = (S32)vp - (S32)gSnd.voice;

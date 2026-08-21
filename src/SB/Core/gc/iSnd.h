@@ -75,6 +75,7 @@ iSndFileInfo* iSndLookup(U32 id);
 void iSndPause(U32 snd, U32 pause);
 void iSndStop(U32 snd);
 void iSndUpdate();
+void iSndUpdateStreams();
 
 void iSndFindFreeVoice(U32 priority, U32 flags, U32 owner);
 
