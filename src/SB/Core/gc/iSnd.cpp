@@ -685,6 +685,61 @@ bool iSndIsPlayingByHandle(U32 handle)
     return false;
 }
 
+void iSndPause(U32 snd, U32 pause)
+{
+    if (!soundInited)
+    {
+        return;
+    }
+
+    S32 i;
+    for (i = 0; i < 64; i++)
+    {
+        if (gSnd.voice[i].sndID == snd)
+        {
+            break;
+        }
+    }
+
+    if (i < 6)
+    {
+        if (streams[i].vinf.voice != NULL)
+        {
+            if (pause != 0)
+            {
+                AXSetVoiceState(streams[i].vinf.voice, 0);
+                streams[i].vinf.flags |= 2;
+            }
+            else
+            {
+                AXSetVoiceState(streams[i].vinf.voice, 1);
+                streams[i].vinf.flags &= 0xFFFFFFFD;
+            }
+        }
+    }
+    else if (i >= 64)
+    {
+        return;
+    }
+    else
+    {
+        S32 iv = i - 6;
+        if (voices[iv].voice != NULL)
+        {
+            if (pause != 0)
+            {
+                AXSetVoiceState(voices[iv].voice, 0);
+                voices[iv].flags |= 8;
+            }
+            else
+            {
+                AXSetVoiceState(voices[iv].voice, 1);
+                voices[iv].flags &= 0xFFFFFFF7;
+            }
+        }
+    }
+}
+
 void iSndStop(U32 snd)
 {
     if (snd == 0)
