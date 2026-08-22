@@ -1619,14 +1619,14 @@ void ztalkbox::init()
 }
 namespace
 {
-    stop_state_type::stop_state_type() : state_type((state_enum)4)
+    stop_state_type::stop_state_type() : state_type(STATE_STOP)
     {
     }
     state_type::state_type(state_enum t)
     {
         type = t;
     }
-    wait_state_type::wait_state_type() : state_type((state_enum)3)
+    wait_state_type::wait_state_type() : state_type(STATE_WAIT)
     {
     }
     next_state_type::next_state_type() : state_type(STATE_NEXT)
@@ -1662,7 +1662,7 @@ void ztalkbox::update_all(xScene& s, F32 dt)
 
         shared.state->stop();
 
-        if (newtype == (state_enum)-1)
+        if (newtype == (STATE_INVALID))
         {
             stop();
             break;
@@ -1788,7 +1788,7 @@ namespace
 
     state_enum start_state_type::update(xScene& scn, F32 dt)
     {
-        return (state_enum)2;
+        return (STATE_NEXT);
     }
     void next_state_type::start()
     {
@@ -1861,9 +1861,9 @@ namespace
     {
         if (shared.begin_jot == shared.page_end_jot)
         {
-            return (state_enum)4;
+            return (STATE_STOP);
         }
-        return (state_enum)3;
+        return (STATE_WAIT);
     }
     void wait_state_type::start()
     {
@@ -1915,7 +1915,7 @@ namespace
         {
             if (shared.allow_quit && !shared.wait.need)
             {
-                return (state_enum)2;
+                return (STATE_NEXT);
             }
             shared.quitting = false;
         }
@@ -1925,7 +1925,7 @@ namespace
             shared.wait.delay -= dt;
             if (shared.wait.delay <= 0.0f)
             {
-                return (state_enum)2;
+                return (STATE_NEXT);
             }
         }
 
@@ -1938,12 +1938,12 @@ namespace
                 {
                     *pressed &= ~0x10000;
                     this->answer_yes = true;
-                    return (state_enum)2;
+                    return (STATE_NEXT);
                 }
                 if (*pressed & 0x40000)
                 {
                     *pressed &= ~0x40000;
-                    return (state_enum)2;
+                    return (STATE_NEXT);
                 }
                 break;
             case Q_SKIP:
@@ -1951,7 +1951,7 @@ namespace
                 if (*pressed & 0x10000)
                 {
                     *pressed &= ~0x10000;
-                    return (state_enum)2;
+                    return (STATE_NEXT);
                 }
                 break;
             }
@@ -1961,14 +1961,14 @@ namespace
         {
             shared.quitting = true;
             *pressed &= ~0x80000;
-            return (state_enum)2;
+            return (STATE_NEXT);
         }
 
         if (shared.wait.type.sound)
         {
             if (!shared.sounds.playing(-1, true))
             {
-                return (state_enum)2;
+                return (STATE_NEXT);
             }
         }
 
@@ -1977,11 +1977,11 @@ namespace
             if (shared.wait_event_mask & shared.wait.event_mask)
             {
                 shared.wait_event_mask &= ~shared.wait.event_mask;
-                return (state_enum)2;
+                return (STATE_NEXT);
             }
         }
 
-        return (state_enum)3;
+        return (STATE_WAIT);
     }
     void stop_state_type::start()
     {
@@ -1992,7 +1992,7 @@ namespace
 
     state_enum stop_state_type::update(xScene& scn, F32 dt)
     {
-        return (state_enum)-1;
+        return (STATE_INVALID);
     }
 
 } // namespace
