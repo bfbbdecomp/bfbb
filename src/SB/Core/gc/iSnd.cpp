@@ -819,6 +819,44 @@ void iSndCalcVol(xSndVoiceInfo* vp, vinfo* info)
     MIXAdjustPan(info->voice, 0x40 - MIXGetPan(info->voice));
 }
 
+void iSndCalcVol3d(xSndVoiceInfo* vp, vinfo* vi)
+{
+    xVec3 pos;
+    xVec3Sub(&pos, &vp->playPos, &gSnd.pos);
+    F32 dist = xVec3Length2(&pos);
+    xVec3Normalize(&pos, &pos);
+    F32 right = xVec3Dot(&pos, &gSnd.right);
+    if (dist > vp->outerRadius2)
+    {
+        dist = 0.0f;
+    }
+    else if (dist <= vp->innerRadius2)
+    {
+        dist = 1.0f;
+    }
+    else
+    {
+        F32 range = vp->outerRadius2 - vp->innerRadius2;
+        dist = std::sqrtf((range - (dist - vp->innerRadius2)) / range);
+    }
+    S32 pan = (S32)(right * 64.0f) + 0x40;
+    S32 vol = iVolFromX(dist * (vp->vol * gSnd.categoryVolFader[vp->category]));
+    if (pan < 0)
+    {
+        pan = 0;
+    }
+    else if (pan > 0x7F)
+    {
+        pan = 0x7F;
+    }
+    vi->x10 = vol;
+    vi->x14 = vol;
+    vi->x18 = pan;
+    vi->x1c = pan;
+    MIXAdjustFader(vi->voice, vol - MIXGetFader(vi->voice));
+    MIXAdjustPan(vi->voice, pan - MIXGetPan(vi->voice));
+}
+
 void iSndVolUpdate(xSndVoiceInfo* info, vinfo* vinfo)
 {
     MIXUnMute(vinfo->voice);
