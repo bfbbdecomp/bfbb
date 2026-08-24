@@ -450,9 +450,9 @@ void zGameSetup()
 
 void zGameLoop()
 {
-    S32 ostrich_delay; // r19
-    S32 cheats; // r2
-    class xMat4x3 playerMat; // r29+0x50
+    S32 ostrich_delay;
+    S32 cheats;
+    xMat4x3 playerMat;
 
     gGameWhereAmI = eGameWhere_LoopStart;
     zGameStateSwitch(eGameState_Play);
@@ -484,12 +484,8 @@ void zGameLoop()
 
         sTimeLast = sTimeCurrent;
         iTimeGet();
-        //gloop_time += 1;
-        //gloop_ct += 1;
         iTimeDiffSec(0);
-        //gloop_net_time = 0;
         iTimeDiffSec(0);
-        //gloop_net_time_secs = 0;
         gGameWhereAmI = eGameWhere_LoopPadUpdate;
         xPadUpdate(0, sTimeElapsed);
 
@@ -515,7 +511,6 @@ void zGameLoop()
         zSceneUpdate(sTimeElapsed);
         gGameWhereAmI = eGameWhere_LoopPlayerUpdate;
         xEntGetFrame(&globals.player.ent);
-        //gGameWhereAmI = eGameWhere_LoopSoundUpdate;
         xSndSetListenerData(SND_LISTENER_CAMERA, 0);
         xSndSetListenerData(SND_LISTENER_PLAYER, 0);
         xSndUpdate();
@@ -524,12 +519,7 @@ void zGameLoop()
         gGameWhereAmI = eGameWhere_LoopHUDUpdate;
         zhud::update(sTimeElapsed);
         gGameWhereAmI = eGameWhere_LoopCameraUpdate;
-
-        if (1)
-        {
-            zCameraUpdate(&globals.camera, sTimeElapsed);
-        }
-
+        zCameraUpdate(&globals.camera, sTimeElapsed);
         gGameWhereAmI = eGameWhere_LoopCameraFXUpdate;
         xCameraFXBegin(&globals.camera);
         xCameraFXUpdate(&globals.camera, sTimeElapsed);
@@ -539,9 +529,7 @@ void zGameLoop()
         iTimeGet();
         xCameraBegin(&globals.camera, 0x1);
         iTimeGet();
-
         w1 = 0x1;
-        //gwait_time += 1;
         gwait_time_secs = iTimeDiffSec(gwait_time) / 4503601774854144.0;
         zVolume_OccludePrecalc(&globals.camera.mat.pos);
         gGameWhereAmI = eGameWhere_LoopSceneRender;
@@ -550,9 +538,7 @@ void zGameLoop()
         gGameWhereAmI = eGameWhere_LoopCameraEnd;
         xCameraEnd(&globals.camera, sTimeElapsed, 0x1);
         iEnvEndRenderFX(0);
-
         RwGameCubeSetMinRetraceCount(0);
-
         gGameWhereAmI = eGameWhere_LoopCameraShowRaster;
         xCameraShowRaster(&globals.camera);
         gGameWhereAmI = eGameWhere_LoopCameraFXEnd;
@@ -688,7 +674,55 @@ void zGameStall()
     }
 }
 
-static void zGame_HackDrawCard(F32 x, F32 y, F32 w, F32 h, RwRaster* rast);
+static void zGame_HackDrawCard(F32 x, F32 y, F32 w, F32 h, RwRaster* rast)
+{
+    RwIm2DVertex quad[4];
+    F32 screenZ = RwIm2DGetNearScreenZ();
+
+    quad[0].x = x;
+    quad[0].y = y;
+    quad[0].z = screenZ;
+    quad[0].emissiveColor.red = 0xff;
+    quad[0].emissiveColor.green = 0xff;
+    quad[0].emissiveColor.blue = 0xff;
+    quad[0].emissiveColor.alpha = 0xff;
+    quad[0].u = 0.0f;
+    quad[0].v = 0.0f;
+    quad[1].x = x;
+    quad[1].y = y + h;
+    quad[1].z = screenZ;
+    quad[1].emissiveColor.red = 0xff;
+    quad[1].emissiveColor.green = 0xff;
+    quad[1].emissiveColor.blue = 0xff;
+    quad[1].emissiveColor.alpha = 0xff;
+    quad[1].u = 0.0f;
+    quad[1].v = 1.0f;
+    quad[2].x = x + w;
+    quad[2].y = y;
+    quad[2].z = screenZ;
+    quad[2].emissiveColor.red = 0xff;
+    quad[2].emissiveColor.green = 0xff;
+    quad[2].emissiveColor.blue = 0xff;
+    quad[2].emissiveColor.alpha = 0xff;
+    quad[2].u = 1.0f;
+    quad[2].v = 0.0f;
+    quad[3].x = x + w;
+    quad[3].y = y + h;
+    quad[3].z = screenZ;
+    quad[3].emissiveColor.red = 0xff;
+    quad[3].emissiveColor.green = 0xff;
+    quad[3].emissiveColor.blue = 0xff;
+    quad[3].emissiveColor.alpha = 0xff;
+    quad[3].u = 1.0f;
+    quad[3].v = 1.0f;
+
+    RwRenderStateSet(rwRENDERSTATESHADEMODE, (void*)0x1);
+    RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
+    RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDINVSRCALPHA);
+    RwRenderStateSet(rwRENDERSTATETEXTURERASTER, rast);
+    RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)0);
+    RwIm2DRenderPrimitive(rwPRIMTYPETRISTRIP, &quad[0], 4);
+}
 
 // Equivalent; scheduling.
 static void zGame_HackPostPortalAutoSaveDraw()
