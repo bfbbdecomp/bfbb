@@ -9,6 +9,7 @@
 #include "xSnd.h"
 #include "xstransvc.h"
 #include "xMath.h"
+#include "iCutscene.h"
 
 #include <dolphin/ar.h>
 #include <dolphin/ax.h>
@@ -55,7 +56,7 @@ struct UNK_STREAM
     U32 source_b;
     U32 xe4;
     ARQRequest request;
-    U8 pad2[0x4];
+    U32 x10c;
 };
 
 UNK_STREAM streams[6];
@@ -73,6 +74,8 @@ static char soundInited = 0;
 U32 houston_we_have_a_problem = 0;
 
 ARQRequest* last_ar;
+
+S32 staticibuf;
 
 static void dv_callback(void* userdata)
 {
@@ -868,6 +871,72 @@ void iSndVolUpdate(xSndVoiceInfo* info, vinfo* vinfo)
     else
     {
         iSndCalcVol(info, vinfo);
+    }
+}
+
+void iSndUpdateStreams()
+{
+    UNK_STREAM* stream;
+
+    if (!soundInited)
+    {
+        return;
+    }
+
+    for (S32 i = 0; i < 6; i++)
+    {
+        stream = &streams[i];
+        if (stream->vinf.voice == NULL)
+        {
+            continue;
+        }
+        U32 flags = stream->vinf.flags;
+        if (flags & 0x40000)
+        {
+            stream->vinf.flags = 0x80000;
+        }
+        else if (flags & 0x80000)
+        {
+            stream->vinf.flags = 0x100000;
+        }
+        else if (flags & 0x20000)
+        {
+            stream->vinf.flags = flags & 0xfffdffff;
+            if (!(stream->vinf.flags & 2))
+            {
+                AXSetVoiceState(stream->vinf.voice, 1);
+            }
+        }
+        else
+        {
+            xSndVoiceInfo* vp = &gSnd.voice[i];
+            iSndVolUpdate(vp, &stream->vinf);
+            if ((stream->vinf.flags & 0x1000000) && (stream->vinf.flags & 0x2000000))
+            {
+                void* data = iCSSoundGetData(vp, &stream->xe4);
+                stream->source_b = (U32)data;
+                if (data != NULL)
+                {
+                    U32 enabled = OSDisableInterrupts();
+                    if (stream->vinf.flags & 4)
+                    {
+                        stream->vinf.flags |= 0x200;
+                        stream->vinf.flags |= 0x400;
+                        ARQPostRequest(&stream->request, (U32)stream, 0, 1, stream->source_b,
+                                       stream->dest_a, 0x8000, arqcb);
+                        stream->x10c = 0;
+                    }
+                    else
+                    {
+                        stream->x10c++;
+                    }
+                    stream->vinf.flags &= 0xfdffffff;
+                    stream->vinf.flags |= 0x4000000;
+                    staticibuf = stream->source_b;
+                    OSRestoreInterrupts(enabled);
+                }
+            }
+        }
     }
 }
 
