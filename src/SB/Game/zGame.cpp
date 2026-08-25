@@ -70,7 +70,6 @@ void zCutsceneMgrFinishExit(xBase* to);
 static S32 zGameLoopContinue();
 static void zGameUpdateMode();
 void RwGameCubeSetMinRetraceCount(RwChar);
-void __cvt_dbl_usll();
 
 char* soaklevels_gameorder[] =
 {
@@ -456,7 +455,6 @@ void zGameLoop()
 
     gGameWhereAmI = eGameWhere_LoopStart;
     zGameStateSwitch(eGameState_Play);
-    __cvt_dbl_usll();
     sTimeLast = iTimeGet();
     gGameWhereAmI = eGameWhere_CutsceneFinish;
 
