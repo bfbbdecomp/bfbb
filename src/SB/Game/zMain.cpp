@@ -736,11 +736,11 @@ void zMainReadINI()
     U32 size;
     xIniFile* ini;
 
-    str = (char*)iFileLoad("SB.INI", 0, &size);
+    buf = iFileLoad("SB.INI", 0, &size);
 
-    if (str)
+    if (buf)
     {
-        ini = xIniParse(str, size);
+        ini = xIniParse((char*)buf, size);
 
         str = xIniGetString(ini, "PATH", 0);
         if (str)
@@ -788,7 +788,7 @@ void zMainReadINI()
 
     iTimeDiffSec(iTimeGet());
     iTimeGet();
-    RwFree(str);
+    RwFree(buf);
 }
 
 void zMainFirstScreen(S32 mode)
