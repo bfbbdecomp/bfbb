@@ -28,6 +28,7 @@
 #include "zMenu.h"
 #include "iTime.h"
 #include "xstransvc.h"
+#include "zUI.h"
 
 zGlobals globals;
 xGlobals* xglobals;
@@ -37,6 +38,7 @@ _tagxPad* gDebugPad;
 static S32 sShowMenuOnBoot;
 S32 gGameSfxReport;
 static st_SERIAL_PERCID_SIZE* g_xser_sizeinfo;
+U32 gSoak;
 
 static void zLedgeAdjust(zLedgeGrabParams* params);
 void zMainMemCardRenderText(const char*, bool);
@@ -733,16 +735,63 @@ void zMainReadINI()
     void* buf;
     U32 size;
     xIniFile* ini;
-    U32 local_18[2];
 
-    str = (char*)iFileLoad("SB.INI", 0, (U32*)local_18);
-    if (str = NULL)
+    buf = iFileLoad("SB.INI", 0, &size);
+
+    if (buf)
     {
-        xIniGetString(xIniParse(0, 0), "patrick.MoveSpeed", 0);
+        ini = xIniParse((char*)buf, size);
+
+        str = xIniGetString(ini, "PATH", 0);
+        if (str)
+        {
+            iFileSetPath(str);
+        }
+
+        str = xIniGetString(ini, "BOOT", 0);
+        if (str)
+        {
+            strcpy(globals.sceneStart, "BOOT");
+
+            if (strlen(str) == 4)
+            {
+                strcpy(globals.sceneStart, str);
+
+                if (xStricmp(str, "soak") == 0)
+                {
+                    gSoak = 1;
+                    strcpy(globals.sceneStart, "mnu3");
+                }
+            }
+        }
+
+        globals.profile = xIniGetInt(ini, "Profile", 0);
+        strncpy(&globals.profFunc[0][0], xIniGetString(ini, "ProfFuncTriangle", ""), 0x80);
+        globals.profFunc[0][127] = 0;
+        strncpy(&globals.profFunc[1][0], xIniGetString(ini, "ProfFuncSquare", ""), 0x80);
+        globals.profFunc[1][127] = 0;
+        strncpy(&globals.profFunc[2][0], xIniGetString(ini, "ProfFuncLeft", ""), 0x80);
+        globals.profFunc[2][127] = 0;
+        strncpy(&globals.profFunc[3][0], xIniGetString(ini, "ProfFuncRight", ""), 0x80);
+        globals.profFunc[3][127] = 0;
+        strncpy(&globals.profFunc[4][0], xIniGetString(ini, "ProfFuncUp", ""), 0x80);
+        globals.profFunc[4][127] = 0;
+        strncpy(&globals.profFunc[5][0], xIniGetString(ini, "ProfFuncDown", ""), 0x80);
+        globals.profFunc[5][127] = 0;
+
+        globals.useHIPHOP = xIniGetInt(ini, "EnableHipHopLoading", 0);
+        globals.NoMusic = (xIniGetInt(ini, "NoMusic", 0) != 0);
+        zMainParseINIGlobals(ini);
+        zUI_ParseINI(ini);
+        xIniDestroy(ini);
     }
+
+    iTimeDiffSec(iTimeGet());
+    iTimeGet();
+    RwFree(buf);
 }
 
-void zMainFirstScreen(int)
+void zMainFirstScreen(S32 mode)
 {
 }
 
