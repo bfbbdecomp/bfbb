@@ -30,7 +30,7 @@ struct vinfo
     _AXVPB* voice;
     U32 flags;
     U32 aid;
-    U32 xc;
+    F32 xc;
     S32 x10;
     S32 x14;
     S32 x18;
@@ -1013,6 +1013,108 @@ void iSndUpdate()
             vp->flags &= 0xfffffffe;
         }
     }
+}
+
+struct
+{
+    U32 a; // 0x00
+    U32 b; // 0x04
+    U32 c; // 0x08
+    AXPBADDR addr; // 0x0C
+    AXPBADPCM adpcm; // 0x1C
+    AXPBADPCMLOOP adpcmLoop; // 0x44
+    char pad[22]; // 0x4A
+    U32 id;
+} snd;
+
+S32 sound_stream;
+
+S32 iSndPlaySound(xSndVoiceInfo* vp)
+{
+    vinfo* vi;
+    S32 vp_i;
+    U32 priority;
+    S32 i;
+    
+    if ((snd.id != vp->assetID) && (iSndLookup(vp->assetID), snd.id != vp->assetID))
+    {
+        return 0;
+    }
+
+    if (sound_stream != 0)
+    {
+        sound_stream = 0;
+    }
+
+    vp_i = ((S32)vp - (S32)&gSnd.voice) / (S32)sizeof(xSndVoiceInfo);
+
+    priority = vp->priority;
+    if (priority >= 0xFF)
+    {
+        priority = 0xFF;
+    }
+    priority >>= 3;
+
+    i = vp_i - 6;
+    vi = &voices[i];
+    if (vi->voice == NULL)
+    {
+        voices[i].aid = vp->assetID;
+        voices[i].xc = ((F32)snd.a * 1000.0f) / (F32)snd.c;
+
+        AXPBADDR addr;
+        memcpy(&addr, &snd.addr, 0x10);
+
+        if (snd.addr.loopFlag == 0)
+        {
+            U32 zero = zero_point;
+            addr.loopAddressHi = (U16)(zero >> 16);
+            addr.loopAddressLo = (U16)zero;
+        }
+
+        if (priority == 0)
+        {
+            priority = 1;
+        }
+
+        vi->voice = AXAcquireVoice(priority, dv_callback, vp_i);
+        if (vi->voice == NULL)
+        {
+            return 0;
+        }
+        else
+        {
+            S32 enabled = OSDisableInterrupts();
+            AXSetVoiceAddr(vi->voice, &addr);
+            AXSetVoiceType(vi->voice, NULL);
+            AXSetVoiceAdpcm(vi->voice, &snd.adpcm);
+            AXSetVoiceSrcType(vi->voice, 1);
+            MIXInitChannel(vi->voice, 4, 0, 0xFFFFFC78, 0xFFFFFC78, 0x40, 0x7F, 0xFFFFFC78);
+            iSndVolUpdate(vp, vi);
+            F32 scale = std::powf(2.0f, vp->pitch / 12.0f);
+            F32 ratio = (snd.c * scale) / 32000.0f;
+            vi->voice->pb.src.ratioHi = ratio;
+            vi->voice->pb.src.ratioLo = ratio * 65536.0;
+            if (snd.addr.loopFlag)
+            {
+                AXSetVoiceAdpcmLoop(vi->voice, &snd.adpcmLoop);
+            }
+            vi->voice->sync |= 0x80000000;
+            MIXUnMute(vi->voice);
+            MIXUpdateSettings();
+            AXSetVoiceState(vi->voice, 1);
+            OSRestoreInterrupts(enabled);
+            voices[i].flags &= 0xFFFFFFFE;
+            voices[i].flags |= 4;
+            return vp->sndID;
+        }
+    }
+    else
+    {
+        return 0;
+    }
+
+    return vp_i;
 }
 
 S32 iSndPlay(xSndVoiceInfo* vp)
