@@ -42,9 +42,12 @@ struct vinfo
 struct UNK_STREAM
 {
     vinfo vinf;
-    U8 pad5[0x4];
+    U32 x20;
     U32 x24;
-    U8 pad4[0x60];
+    U32 x28;
+    U16 x2c;
+    U16 x2e;
+    U8 pad4[0x58];
     U32 offset;
     U32 x8c;
     U32 x90;
@@ -1035,6 +1038,7 @@ void iSndUpdate()
     }
 }
 
+// Size: 0x180
 struct
 {
     U32 a; // 0x00
@@ -1043,9 +1047,36 @@ struct
     AXPBADDR addr; // 0x0C
     AXPBADPCM adpcm; // 0x1C
     AXPBADPCMLOOP adpcmLoop; // 0x44
-    char pad[22]; // 0x4A
-    U32 id;
+    char pad[0x16]; // 0x4A
+    U32 id; // 0x60
+    char pad2[0xAC];
+    void* ptr; // 0x110
 } snd;
+
+S32 iSndPrepStream(xSndVoiceInfo* vp)
+{
+    int vp_i = ((S32)vp - (S32)&gSnd.voice) / (S32)sizeof(xSndVoiceInfo);
+    UNK_STREAM* stream = &streams[vp_i];
+
+    if ((snd.id != vp->assetID) && (iSndLookup(vp->assetID), snd.id != vp->assetID))
+    {
+        return 0x40;
+    }
+
+    memcpy(&stream->x20, (void*)&snd, 100);
+    memcpy(&stream->fileInfo, &snd.ptr, 0x3C);
+    stream->fileInfo.cb.userData = (void*)stream;
+    stream->x8c = (stream->x24 + 1 >> 1) + 0x1f & 0xFFFFFFE0;
+    stream->vinf.flags |= 1;
+    stream->vinf.aid = snd.id;
+
+    if ((stream->x2c != 0) || (vp->flags & 0x8000))
+    {
+        stream->vinf.flags |= 0x10000;
+    }
+
+    return vp_i;
+}
 
 S32 sound_stream;
 
@@ -1080,7 +1111,8 @@ S32 iSndPlaySound(xSndVoiceInfo* vp)
     if (vi->voice == NULL)
     {
         voices[i].aid = vp->assetID;
-        voices[i].xc = ((F32)snd.a * 1000.0f) / (F32)snd.c;
+        voices[i].xc = ((F32)snd.a * 1000.0f);
+        voices[i].xc /= (F32)snd.c;
 
         AXPBADDR addr;
         memcpy(&addr, &snd.addr, 0x10);
