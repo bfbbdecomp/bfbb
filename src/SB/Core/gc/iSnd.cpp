@@ -1038,6 +1038,90 @@ void iSndUpdate()
     }
 }
 
+S32 iSndFindFreeVoice(U32 priority, U32 flags, U32 owner)
+{
+    _AXVPB* v;
+    S32 i;
+    xSndVoiceInfo* end;
+    xSndVoiceInfo* begin;
+    xSndVoiceInfo* vp;
+
+    if (priority > 0xFF)
+    {
+        priority = 0xFF;
+    }
+
+    if (flags & 4)
+    {
+        if (owner != 0)
+        {
+            begin = &gSnd.voice[0];
+            end = &begin[6];
+            for (vp = begin; vp != end; vp++)
+            {
+                i = ((S32)vp - (S32)&gSnd.voice) / (S32)sizeof(xSndVoiceInfo);
+                if ((vp->lock_owner != 0) && (vp->lock_owner == owner))
+                {
+                    if ((vp->flags & 0x41) == 1)
+                    {
+                        iSndStop(vp->sndID);
+                    }
+                    S32 enabled = OSDisableInterrupts();
+                    v = AXAcquireVoice(priority >> 3, dv_callback, i);
+                    if (v != NULL)
+                    {
+                        AXSetVoiceState(v, 0);
+                        MIXInitChannel(v, 0xC, 0, 0xFFFFFC7C, 0xFFFFFC7C, 0x40, 0x7F, 0xFFFFFC7C);
+
+                        streams[i].vinf.voice = v;
+                        streams[i].vinf.flags = 0;
+                        streams[i].vinf.flags |= 4;
+
+                        OSRestoreInterrupts(enabled);
+                        return i;
+                    }
+                    OSRestoreInterrupts(enabled);
+                    return -1;
+                }
+            }
+        }
+
+        for (i = 0; i < 6; i++)
+        {
+            if ((gSnd.voice[i].lock_owner == 0) && (streams[i].vinf.voice == NULL))
+            {
+                S32 enabled = OSDisableInterrupts();
+                v = AXAcquireVoice(priority >> 3, dv_callback, i);
+                if (v != 0)
+                {
+                    AXSetVoiceState(v, 0);
+                    MIXInitChannel(v, 0xC, 0, 0xFFFFFC7C, 0xFFFFFC7C, 0x40, 0x7F, 0xFFFFFC7C);
+                    streams[i].vinf.voice = v;
+                    streams[i].vinf.flags = 0;
+                    streams[i].vinf.flags |= 4;
+                    OSRestoreInterrupts(enabled);
+                    return i;
+                }
+                OSRestoreInterrupts(enabled);
+                return -1;
+            }
+        }
+    }
+    else
+    {
+        for (S32 i = 0; i < 58; i++)
+        {
+            if (voices[i].voice == NULL)
+            {
+                voices[i].flags = 0;
+                voices[i].flags |= 1;
+                return i + 6;
+            }
+        }
+    }
+    return -1;
+}
+
 // Size: 0x180
 struct
 {
@@ -1063,10 +1147,10 @@ S32 iSndPrepStream(xSndVoiceInfo* vp)
         return 0x40;
     }
 
-    memcpy(&stream->x20, (void*)&snd, 100);
+    memcpy(&stream->x20, (void*)&snd, 0x64);
     memcpy(&stream->fileInfo, &snd.ptr, 0x3C);
     stream->fileInfo.cb.userData = (void*)stream;
-    stream->x8c = (stream->x24 + 1 >> 1) + 0x1f & 0xFFFFFFE0;
+    stream->x8c = (stream->x24 + 1 >> 1) + 0x1F & 0xFFFFFFE0;
     stream->vinf.flags |= 1;
     stream->vinf.aid = snd.id;
 
