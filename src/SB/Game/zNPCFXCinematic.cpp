@@ -760,6 +760,28 @@ void NCIN_HookRecoil_Upd(const zCutsceneMgr* mgr, NCINEntry* e, S32 i)
     }
 }
 
+void NCIN_LightninBone_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic* a, RwMatrixTag* animMat, U32 animIndex, U32)
+{
+    xVec3 pnt1;
+    xVec3 pnt2;
+    S32 boneIndex;
+
+    if (a->object.object.type == animIndex)
+    {
+        fxrec->tym_beg = 0.0f;
+
+        xMat3x3RMulVec(0, 0, 0);
+        xVec3AddTo(0, 0);
+        if (1)
+        {
+            xVec3AddTo(0, 0);
+        }
+        xMat3x3RMulVec(0, 0, 0);
+        xVec3AddTo(0, 0);
+        zLightningModifyEndpoints(0, 0, 0);
+    }
+}
+
 void NCIN_SpatGlow_Upd(const zCutsceneMgr* mgr, NCINEntry* e, S32 i)
 {
     if (i != 0)
@@ -770,6 +792,23 @@ void NCIN_SpatGlow_Upd(const zCutsceneMgr* mgr, NCINEntry* e, S32 i)
 
 void clamp_bone_index(NCINEntry*, RpAtomic*)
 {
+}
+
+void NCIN_BubbleTrail_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 killit)
+{
+    if (killit)
+    {
+        fxrec->flg_stat |= 0x4;
+        return;
+    }
+
+    if (!(fxrec->flg_stat & 0x2))
+    {
+        return;
+    }
+
+    fxrec->fxdata.lampdata.pos_robo.y = 0.0f;
+    fxrec->fxdata.lampdata.pos_robo.x = 0.0f;
 }
 
 void xCutscene::NoseyClear()
@@ -813,4 +852,8 @@ void NPCCone::RadiusSet(F32 conefloat)
 void NPARMgmt::KillAll()
 {
     this->cnt_active = 0;
+}
+
+void zNPCB_SB2::singleton()
+{
 }
