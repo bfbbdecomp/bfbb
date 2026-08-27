@@ -63,10 +63,22 @@ template <class T> struct static_queue
             return this;
         }
 
+        iterator operator-=(S32 value)
+        {
+            return *(*this += -value);
+        }
+
         iterator* operator++()
         {
             *this += 1;
             return this;
+        }
+
+        iterator operator-(S32 value) const
+        {
+            iterator it = *this;
+            it -= value;
+            return it;
         }
     };
 
@@ -82,16 +94,18 @@ template <class T> struct static_queue
 
     void init(u32 size)
     {
-        U32 unk_r3 = 0;
+        U32 shift = 0;
+
+        size += 1;
         while (size > 1)
         {
             size /= 2;
-            unk_r3++;
+            shift++;
         }
 
-        _max_size = unk_r3;
-        _max_size_mask = 1 << _max_size;
-        _buffer = (T*)xMemAlloc(gActiveHeap, sizeof(T) * (size), 0);
+        _max_size = 1 << shift;
+        _max_size_mask = _max_size - 1;
+        _buffer = (T*)xMemAlloc(gActiveHeap, sizeof(T) * _max_size, 0);
         clear();
     }
 
@@ -107,9 +121,20 @@ template <class T> struct static_queue
         return *it;
     }
 
+    T& back()
+    {
+        iterator it = end() - 1;
+        return *it;
+    }
+
     iterator begin() const
     {
         return create_iterator(_first);
+    }
+
+    iterator end() const
+    {
+        return create_iterator(mod_max_size(_first + _size));
     }
 
     iterator create_iterator(u32 initial_size) const
@@ -153,6 +178,7 @@ template <class T> struct static_queue
         {
             U32 orig_size = _size;
             U32 orig_first = _first;
+
             _first = other._it;
             _size = mod_max_size((orig_first + orig_size) - _first);
         }
@@ -160,12 +186,6 @@ template <class T> struct static_queue
         {
             _size -= mod_max_size(other._it - it._it);
         }
-    }
-
-    iterator end() const
-    {
-        iterator it;
-        return create_iterator(mod_max_size(_first + _size));
     }
 };
 

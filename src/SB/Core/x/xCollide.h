@@ -140,6 +140,12 @@ bool xSphereHitsOBB(const xSphere&, const xBox&, const xMat4x3&);
 bool xSphereHitsSphere(const xVec3&, F32, const xVec3&, F32);
 bool xSphereHitsVCylinder(const xVec3& sc, F32 sr, const xVec3& cc, F32 cr, F32 ch);
 bool xSphereHitsVCircle(const xSphere& s, const xVec3& c, F32 r);
+bool xSphereHitsCapsule(const xVec3& sc, F32 sr, const xVec3& c1, const xVec3& c2, F32 cr);
+
+inline bool xSphereHitsCapsule(const xSphere& s, const xVec3& c1, const xVec3& c2, F32 cr)
+{
+    return xSphereHitsCapsule(s.center, s.r, c1, c2, cr);
+}
 bool xSphereHitsVCircle(const xVec3& sc, F32 sr, const xVec3& cc, F32 cr);
 U32 xSphereHitsModel(const xSphere* b, const xModelInstance* m, xCollis* coll);
 

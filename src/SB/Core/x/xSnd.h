@@ -205,6 +205,9 @@ U32 xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, xEnt* parent
                F32 outerRadius, sound_category category, F32 delay);
 U32 xSndPlay3D(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, const xVec3* pos,
                F32 innerRadius, F32 outerRadius, sound_category category, F32 delay);
+U32 xSndPlay3DFade(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, const xVec3* pos,
+                   F32 innerRadius, F32 outerRadius, sound_category category, F32 fadeTime,
+                   F32 delay);
 U32 xSndPlayInternal(U32 id, F32 vol, F32 pitch, U32 priority, U32 flags, U32 parentID,
                      xEnt* parentEnt, const xVec3* pos, F32 innerRadius, F32 outerRadius,
                      sound_category category, F32 delay);

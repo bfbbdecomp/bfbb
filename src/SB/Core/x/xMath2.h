@@ -48,6 +48,16 @@ struct xVec2
     F32 x;
     F32 y;
 
+    static xVec2 create(F32 x, F32 y)
+    {
+        xVec2 v = { 0.0f, 0.0f };
+
+        v.x = x;
+        v.y = y;
+
+        return v;
+    }
+
     xVec2& assign(F32 xy)
     {
         return assign(xy, xy);
@@ -75,6 +85,13 @@ struct xVec2
     xVec2& operator=(F32);
     xVec2 operator*(F32) const;
     xVec2 operator/=(F32);
+    xVec2 operator+(const xVec2& v) const
+    {
+        xVec2 sum = *this;
+        sum += v;
+        return sum;
+    }
+
     xVec2& operator+=(const xVec2&);
     xVec2& operator*=(F32);
     xVec2& operator-=(const xVec2&);

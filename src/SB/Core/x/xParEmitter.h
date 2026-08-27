@@ -36,7 +36,13 @@ struct xParInterp
     F32 oofreq;
 
     void set(F32, F32, F32, U32);
-    void set(F32); // Used in zNPCDutchman
+    void set(F32 v)
+    {
+        val[1] = v;
+        val[0] = v;
+        interp = 0;
+        freq = oofreq = 1.0f;
+    }
     void order();
     void operator=(const xParInterp& p);
 };
