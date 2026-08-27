@@ -140,10 +140,30 @@ static void arq_callback(u32)
 
 static const char* dump_flags(U32 flags)
 {
-    static char str[0x40];
-    memset(str, 0, sizeof(str));
+    char* ps;
+    char* pps;
 
-    // TODO:
+    static char str[0x40];
+    memset(str, 0, 0x40);
+
+    char blah[5] = "-01X";
+
+    ps = &str[0];
+
+    ps[0] = 'L';
+    ps[1] = blah[(flags & 0x200) ? 1 : (flags & 0x400) ? 2 : 0];
+    ps[2] = 'D';
+
+    pps = &ps[3]; // This doesn't work?
+
+    pps[0] = blah[(flags & 0x1000) ? 1 : (flags & 0x2000) ? 2 : 0];
+    pps[1] = 'P';
+    pps[2] = blah[(flags & 0x4000) ? 1 : (flags & 0x8000) ? 2 : 0];
+    pps[3] = (flags & 0x400000) ? 'F' : '-';
+    pps[4] = 'R';
+    pps[5] = (flags & 0x100) ? 'X' : '-';
+    pps[6] = 'D';
+    pps[7] = (flags & 0x800) ? 'X' : '-';
 
     return str;
 }
@@ -1035,7 +1055,7 @@ S32 iSndPlaySound(xSndVoiceInfo* vp)
     S32 vp_i;
     U32 priority;
     S32 i;
-    
+
     if ((snd.id != vp->assetID) && (iSndLookup(vp->assetID), snd.id != vp->assetID))
     {
         return 0;
