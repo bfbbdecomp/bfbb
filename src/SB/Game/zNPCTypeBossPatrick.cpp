@@ -21,86 +21,9 @@
 #include "zNPCGoals.h"
 #include "zLightning.h"
 #include "zNPCTypeRobot.h"
+#include "zParPTank.h"
+#include "zEntPlayer.h"
 #include <xMathInlines.h>
-
-#define f831 1.0f
-#define f832 0.0f
-#define f833 0.2f
-#define f870 -1.0f
-#define f875 (double)4503601774854144 // wtf?
-#define f891 2.0f
-#define f892 -0.4f
-#define f1045 0.125f
-#define f1046 0.5f
-#define f1047 0.7f
-#define f1048 8.0f
-#define f1049 5.0f
-#define f1050 2.5f
-#define f1051 3.0f
-#define f1052 4.2f
-#define f1053 12.0f
-#define f1054 6.0f
-#define f1055 10.0f
-#define f1056 50.0f
-#define f1137 5.5f
-#define f1138 6.5f
-#define f1139 0.365f
-#define f1140 3.1415927f
-#define f1141 20.0f
-#define f1142 15.0f
-#define f1143 -1000000000.0f
-#define f1144 1000000000.0f
-#define f1656 0.0001f
-#define f1657 400.0f
-#define f1658 0.5775f
-#define f1659 40.0f
-#define f1660 -2.01f
-#define f1661 0.175f
-#define f1662 0.025f
-#define f1663 1.25f
-#define f1664 0.25f
-#define f1665 80.0f
-#define f1666 6.2831855f
-#define f1667 3.15f
-#define f1668 0.00001f
-#define f1669 0.1f
-#define f1670 4.0f
-#define f1671 0.77f
-#define f1672 0.3f
-#define f1673 1.5707964f
-#define f1674 0.15f
-#define f1675 0.65f
-#define f1676 0.75f
-#define f1677 0.01f
-#define f1678 0.33f
-#define f1679 18.5f
-#define f1680 -18.5f
-#define f1681 -20.0f
-#define f1682 7.0f
-#define f2006 100.0f
-#define f2077 5.95f
-#define f2078 0.539f
-#define f2215 8.5f
-#define f2256 0.50049996f
-#define f2257 0.45f
-#define f2280 1.7f
-#define f2405 -3.1415927f
-#define f2423 0.4f
-#define f2424 0.8f
-#define f2425 1.2f
-#define f2426 1.5f
-#define f2427 1.8f
-#define f2428 2.1f
-#define f2512 0.35f
-#define f2596 -0.08f
-#define f2597 25.0f
-#define f2610 0.6545f
-#define f2629 0.7853982f
-#define f2630 1.75f
-#define f2696 -4.0f
-#define f2697 300.0f
-#define f2885 12.5f
-#define f2994 7.5f
 
 #define ANIM_IDLE01 1
 #define ANIM_IDLE02 2
@@ -126,29 +49,26 @@
 #define ANIM_DIZZYSIT01 40
 #define ANIM_UNKNOWN 0
 
-static unsigned char sUseBossCam;
-static unsigned char sWasUsingBossCam;
+static unsigned char sUseBossCam = 1;
 static unsigned char sOthersHaventBeenAdded;
 static zNPCBPatrick* sPat_Ptr;
 static xVec3* sCamSubTarget;
-static F32 sSecsSincePatWasCarryingHead;
-static xVec3 sCamSubTargetFixed;
 static F32 sCurrYaw;
 static F32 sCurrHeight;
 static F32 sCurrRadius;
 static F32 sCurrPitch;
-static F32 sCurrYawOffset;
-static F32 sCurrCamInterp;
 static F32 minYVel;
 static F32 varYVel;
 static F32 minHMul;
 static F32 varHMul;
 static F32 minT;
 static F32 varT;
-static S32 sBone[10];
-static S32 sBoundBone[4];
-static F32 sBoundRadius[4];
-static xVec3 sBoneOffset[4];
+static S32 sBone[10] = { 4, 0x13, 0x17, 0x2a, 0x20, 0x22, 0x27, 0x28, 0x2d, 0x2e };
+static S32 sBoundBone[4] = { 6, 7, 8, 9 };
+static F32 sBoundRadius[4] = { 1.0f, 0.9f, 1.0f, 0.5f };
+static xVec3 sBoneOffset[4] = {
+    { -0.2f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.5f }, { 0.2f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }
+};
 
 static newsfishSound sNFComment[37] = {
     { "FAB1036" }, // 0 Look at that! The robot's made himself dizzy!
@@ -231,9 +151,7 @@ static newsfishSound sNFComment[37] = {
 
 static U32 sCurrNFSound;
 
-void test(S32)
-{
-}
+U8 zEntPlayerDyingInGoo();
 
 xAnimTable* ZNPC_AnimTable_BossPatrick()
 {
@@ -267,58 +185,61 @@ xAnimTable* ZNPC_AnimTable_BossPatrick()
 
     xAnimTable* table = xAnimTableNew("zNPCBPatrick", NULL, 0);
 
-    xAnimTableNewState(table, g_strz_bossanim[ANIM_IDLE01], 0x10, 0, f831, NULL, NULL, f832, NULL,
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_IDLE01], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[ANIM_IDLE02], 0x10, 0, f831, NULL, NULL, f832, NULL,
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_IDLE02], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[ANIM_TAUNT01], 0x10, 0, f831, NULL, NULL, f832, NULL,
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_TAUNT01], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[ANIM_RUN01], 0x10, 0x40, f831, NULL, NULL, f832, NULL,
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_RUN01], 0x10, 0x40, 1.0f, NULL, NULL, 0.0f, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[ANIM_MELEE01], 0x10, 0, f831, NULL, NULL, f832, NULL,
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_MELEE01], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[ANIM_HIT01], 0x10, 0, f831, NULL, NULL, f832, NULL,
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_HIT01], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[ANIM_HIT02], 0x10, 0, f831, NULL, NULL, f832, NULL,
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_HIT02], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[ANIM_GETUP01], 0x10, 0, f831, NULL, NULL, f832, NULL,
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_GETUP01], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[ANIM_FREEZE01], 0x10, 0, f831, NULL, NULL, f832, NULL,
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_FREEZE01], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[ANIM_FUDGEJUMP01], 0x10, 0, f831, NULL, NULL, f832,
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_FUDGEJUMP01], 0x10, 0, 1.0f, NULL, NULL, 0.0f,
                        NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[ANIM_FUDGEBLOW01], 0x10, 0, f831, NULL, NULL, f832,
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_FUDGEBLOW01], 0x10, 0, 1.0f, NULL, NULL, 0.0f,
                        NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[ANIM_FUDGEDONE01], 0x10, 0, f831, NULL, NULL, f832,
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_FUDGEDONE01], 0x10, 0, 1.0f, NULL, NULL, 0.0f,
                        NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[ANIM_LICK01], 0x10, 0, f831, NULL, NULL, f832, NULL,
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_LICK01], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[ANIM_SPIT01], 0x10, 0, f831, NULL, NULL, f832, NULL,
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_SPIT01], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[ANIM_SPIT02], 0x10, 0, f831, NULL, NULL, f832, NULL,
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_SPIT02], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[ANIM_SPAWN01], 0x10, 0, f831, NULL, NULL, f832, NULL,
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_SPAWN01], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[ANIM_SPINBEGIN01], 0x10, 0, f831, NULL, NULL, f832,
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_SPINBEGIN01], 0x10, 0, 1.0f, NULL, NULL, 0.0f,
                        NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[ANIM_SPINNING01], 0x10, 0, f831, NULL, NULL, f832,
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_SPINNING01], 0x10, 0, 1.0f, NULL, NULL, 0.0f,
                        NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[ANIM_SPINSTOP01], 0x10, 0, f831, NULL, NULL, f832,
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_SPINSTOP01], 0x10, 0, 1.0f, NULL, NULL, 0.0f,
                        NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[ANIM_DIZZY01], 0x10, 0, f831, NULL, NULL, f832, NULL,
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_DIZZY01], 0x10, 0, 1.0f, NULL, NULL, 0.0f, NULL,
                        NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[ANIM_DIZZYFALL01], 0x10, 0, f831, NULL, NULL, f832,
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_DIZZYFALL01], 0x10, 0, 1.0f, NULL, NULL, 0.0f,
                        NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
-    xAnimTableNewState(table, g_strz_bossanim[ANIM_DIZZYSIT01], 0x10, 0, f831, NULL, NULL, f832,
+    xAnimTableNewState(table, g_strz_bossanim[ANIM_DIZZYSIT01], 0x10, 0, 1.0f, NULL, NULL, 0.0f,
                        NULL, NULL, xAnimDefaultBeforeEnter, NULL, NULL);
 
-    NPCC_BuildStandardAnimTran(table, g_strz_bossanim, ourAnims, 1, f833);
+    NPCC_BuildStandardAnimTran(table, g_strz_bossanim, ourAnims, 1, 0.2f);
 
     return table;
 }
 
-static const tweak_callback newsfish_cb = {};
-static const tweak_callback recenter_cb = {};
+void on_change_newsfish(const tweak_info&);
+void on_change_recenter(const tweak_info&);
+
+static const tweak_callback newsfish_cb = { (void (*)(tweak_info&))on_change_newsfish };
+static const tweak_callback recenter_cb = { (void (*)(tweak_info&))on_change_recenter };
 
 static void UpdatePatrickBossCam(zNPCBPatrick* pat, F32 dt)
 {
@@ -337,25 +258,25 @@ static void UpdatePatrickBossCam(zNPCBPatrick* pat, F32 dt)
     }
 
     pat->bossCam.set_targets((xVec3&)globals.player.ent.model->Mat->pos,
-                             (xVec3&)pat->model->Mat->pos, f891);
+                             (xVec3&)pat->model->Mat->pos, 2.0f);
 
     if (pat->bossFlags & 0x200)
     {
-        pat->bossCam.cfg.margin_angle = f870;
+        pat->bossCam.cfg.margin_angle = -1.0f;
         pat->bossFlags &= 0xfffffdff;
     }
 
     if (pat->bossFlags & 0x80)
     {
-        pat->bossCam.cfg.margin_angle = f870;
+        pat->bossCam.cfg.margin_angle = -1.0f;
     }
     else
     {
         pat->bossCam.cfg.margin_angle += dt;
 
-        if (pat->bossCam.cfg.margin_angle > f892)
+        if (pat->bossCam.cfg.margin_angle > -0.4f)
         {
-            pat->bossCam.cfg.margin_angle = f892;
+            pat->bossCam.cfg.margin_angle = -0.4f;
         }
     }
 
@@ -508,14 +429,14 @@ void zNPCBPatrick::Setup()
     //
 
     strcpy(objName, "SWINGHOOK 00");
-    this->origSwingerHeight = f832;
+    this->origSwingerHeight = 0.0f;
 
     for (S32 i = 0; i < 8; i++)
     {
         objName[11]++;
         this->swinger[i] = (xEnt*)zSceneFindObject(xStrHash(objName));
         this->origSwingerHeight =
-            this->swinger[i]->model->Mat->pos.y * f1045 + this->origSwingerHeight;
+            this->swinger[i]->model->Mat->pos.y * 0.125f + this->origSwingerHeight;
     }
 
     for (S32 i = 0; i < 8; i++)
@@ -544,7 +465,7 @@ void zNPCBPatrick::Setup()
     }
 
     this->backBox.box = (xEnt*)zSceneFindObject(xStrHash("WOODEN_PLAT_BACK"));
-    this->backBox.minY = f1046;
+    this->backBox.minY = 0.5f;
 
     // must be being cast to some other data type to dereference 0xd8
     // zEntDestructObj?
@@ -569,7 +490,7 @@ void zNPCBPatrick::Setup()
     tempIModel = (RpAtomic*)xSTFindAsset(xStrHash("b2_SB_frozen_ice"), NULL);
     this->frozenSBIce = NULL;
     this->frozenSBIce = (xModelInstance*)xModelInstanceAlloc(tempIModel, NULL, 0, 0, NULL);
-    this->frozenSBIce->Alpha = f1047;
+    this->frozenSBIce->Alpha = 0.7f;
 
     this->round1Csn = (zCutsceneMgr*)zSceneFindObject(xStrHash("CSNMGR_ROUND1"));
     this->round2Csn = (zCutsceneMgr*)zSceneFindObject(xStrHash("CSNMGR_ROUND2"));
@@ -578,7 +499,7 @@ void zNPCBPatrick::Setup()
     this->safeGroundPortal = (_zPortal*)zSceneFindObject(xStrHash("SAFEGROUND_PORTAL"));
     xVec3Copy(&this->arenaExtent, (xVec3*)xSTFindAsset(xStrHash("MK ARENA EXTENT"), NULL));
     xVec3Copy(&this->fudgePos, (xVec3*)xSTFindAsset(xStrHash("FUDGE_POS"), NULL));
-    xVec3Init(&this->fudgeFace, f832, f832, f831);
+    xVec3Init(&this->fudgeFace, 0.0f, 0.0f, 1.0f);
     xVec3AddTo(&this->fudgeFace, &this->fudgePos);
 
     //
@@ -623,21 +544,21 @@ void zNPCBPatrick::Setup()
     this->conveyorBelt[5] = (zPlatform*)zSceneFindObject(xStrHash("CONVEYOR BELT 09"));
     this->conveyorBelt[6] = (zPlatform*)zSceneFindObject(xStrHash("CONVEYOR BELT 10"));
 
-    this->bossCam.cfg.zone_rest.distance = f1048;
-    this->bossCam.cfg.zone_rest.height = f1049;
-    this->bossCam.cfg.zone_rest.height_focus = f1050;
-    this->bossCam.cfg.zone_above.distance = f1051;
-    this->bossCam.cfg.zone_above.height = f1052;
-    this->bossCam.cfg.zone_above.height_focus = f870;
-    this->bossCam.cfg.zone_below.distance = f1053;
-    this->bossCam.cfg.zone_below.height = f1051;
-    this->bossCam.cfg.zone_below.height_focus = f1054;
-    this->bossCam.cfg.move_speed = f1055;
-    this->bossCam.cfg.turn_speed = f1055;
-    this->bossCam.cfg.stick_speed = f1055;
-    this->bossCam.cfg.stick_yaw_vel = f1055;
-    this->bossCam.cfg.max_yaw_vel = f1056;
-    this->bossCam.cfg.margin_angle = f870;
+    this->bossCam.cfg.zone_rest.distance = 8.0f;
+    this->bossCam.cfg.zone_rest.height = 5.0f;
+    this->bossCam.cfg.zone_rest.height_focus = 2.5f;
+    this->bossCam.cfg.zone_above.distance = 3.0f;
+    this->bossCam.cfg.zone_above.height = 4.2f;
+    this->bossCam.cfg.zone_above.height_focus = -1.0f;
+    this->bossCam.cfg.zone_below.distance = 12.0f;
+    this->bossCam.cfg.zone_below.height = 3.0f;
+    this->bossCam.cfg.zone_below.height_focus = 6.0f;
+    this->bossCam.cfg.move_speed = 10.0f;
+    this->bossCam.cfg.turn_speed = 10.0f;
+    this->bossCam.cfg.stick_speed = 10.0f;
+    this->bossCam.cfg.stick_yaw_vel = 10.0f;
+    this->bossCam.cfg.max_yaw_vel = 50.0f;
+    this->bossCam.cfg.margin_angle = -1.0f;
 
     this->bossCam.init();
     this->bossCam.add_tweaks("NPC|zNPCBPatrick|Boss Cam|");
@@ -730,10 +651,10 @@ void zNPCBPatrick::Reset()
     }
 
     sUseBossCam = 1;
-    sCurrHeight = f1137;
-    sCurrRadius = f1138;
-    sCurrPitch = f1139;
-    sCurrYaw = f1140;
+    sCurrHeight = 5.5f;
+    sCurrRadius = 6.5f;
+    sCurrPitch = 0.365f;
+    sCurrYaw = 3.1415927f;
     zCameraDisableTracking(CO_BOSS);
     sCamSubTarget = (xVec3*)&this->model->Mat->pos;
 
@@ -757,33 +678,33 @@ void zNPCBPatrick::Reset()
     */
 
     this->currGlob = 0;
-    this->splatTimer = f832;
+    this->splatTimer = 0.0f;
 
     for (i = 0; i < 6; i++)
     {
         bossPatBox* box = &this->box[0][i];
 
-        box->velocity = f832;
+        box->velocity = 0.0f;
         box->flags = 0;
-        box->pos = f1141 + this->box[0][i].minY;
+        box->pos = 20.0f + this->box[0][i].minY;
     }
 
-    this->backBox.velocity = f832;
+    this->backBox.velocity = 0.0f;
     this->backBox.flags = 0;
-    this->backBox.pos = f1141 + (this->backBox.minY);
+    this->backBox.pos = 20.0f + (this->backBox.minY);
 
     this->chuckFlags[0] = 1;
     this->chuckFlags[1] = 1;
     this->chuckFlags[2] = 1;
 
-    this->frozenTimer = f870;
+    this->frozenTimer = -1.0f;
 
     zEntPlayerControlOn(CONTROL_OWNER_FROZEN);
 
-    this->csnTimer = f832;
+    this->csnTimer = 0.0f;
     this->nfFlags = 0;
 
-    this->badHitTimer = f832;
+    this->badHitTimer = 0.0f;
     this->numPCHitsInARow = 0;
     this->numMissesInARow = 0;
 
@@ -794,25 +715,25 @@ void zNPCBPatrick::Reset()
         this->psy_instinct->GoalSet(NPC_GOAL_BOSSPATIDLE, 0);
     }
 
-    minHMul = f1142;
-    minT = f1049;
-    minYVel = f1049;
-    varHMul = f832;
-    varT = f1049;
-    varYVel = f832;
+    minHMul = 15.0f;
+    minT = 5.0f;
+    minYVel = 5.0f;
+    varHMul = 0.0f;
+    varT = 5.0f;
+    varYVel = 0.0f;
 
-    xDebugAddTweak("NPC|zNPCBPatrick|globs|minYVel", &minYVel, f1143, f1144, (tweak_callback*)0x0,
-                   NULL, 0);
-    xDebugAddTweak("NPC|zNPCBPatrick|globs|varYVel", &varYVel, f1143, f1144, (tweak_callback*)0x0,
-                   NULL, 0);
-    xDebugAddTweak("NPC|zNPCBPatrick|globs|minHMul", (float*)&minHMul, f1143, f1144,
+    xDebugAddTweak("NPC|zNPCBPatrick|globs|minYVel", &minYVel, -1000000000.0f, 1000000000.0f,
                    (tweak_callback*)0x0, NULL, 0);
-    xDebugAddTweak("NPC|zNPCBPatrick|globs|varHMul", &varHMul, f1143, f1144, (tweak_callback*)0x0,
-                   NULL, 0);
-    xDebugAddTweak("NPC|zNPCBPatrick|globs|minT", (float*)&minT, f1143, f1144, (tweak_callback*)0x0,
-                   NULL, 0);
-    xDebugAddTweak("NPC|zNPCBPatrick|globs|varT", (float*)&varT, f1143, f1144, (tweak_callback*)0x0,
-                   NULL, 0);
+    xDebugAddTweak("NPC|zNPCBPatrick|globs|varYVel", &varYVel, -1000000000.0f, 1000000000.0f,
+                   (tweak_callback*)0x0, NULL, 0);
+    xDebugAddTweak("NPC|zNPCBPatrick|globs|minHMul", (float*)&minHMul, -1000000000.0f,
+                   1000000000.0f, (tweak_callback*)0x0, NULL, 0);
+    xDebugAddTweak("NPC|zNPCBPatrick|globs|varHMul", &varHMul, -1000000000.0f, 1000000000.0f,
+                   (tweak_callback*)0x0, NULL, 0);
+    xDebugAddTweak("NPC|zNPCBPatrick|globs|minT", (float*)&minT, -1000000000.0f, 1000000000.0f,
+                   (tweak_callback*)0x0, NULL, 0);
+    xDebugAddTweak("NPC|zNPCBPatrick|globs|varT", (float*)&varT, -1000000000.0f, 1000000000.0f,
+                   (tweak_callback*)0x0, NULL, 0);
     xDebugAddTweak("NPC|zNPCBPatrick|Newsfish", "Speak", (tweak_callback*)&newsfish_cb, NULL, 0);
     xDebugAddTweak("NPC|zNPCBPatrick|NewsfishComment", &sCurrNFSound, 0, 0x24, (tweak_callback*)0x0,
                    NULL, 0);
@@ -951,43 +872,20 @@ U32 zNPCBPatrick::AnimPick(S32 rawgoal, en_NPC_GOAL_SPOT gspot, xGoal* goal)
 
 void zNPCBPatrick::Process(xScene* xscn, F32 dt)
 {
-    /*
-        signed int i; // r5
-        signed int j; // r21
-        signed int csn; // r17
-        float fudgeRate; // r1
-        float * swingY; // r4
-        signed int shouldPlayIt; // r3
-        float finalHeight; // r2
-        class xModelInstance * tempModel; // r19
-        float maxDist; // r28
-        float numSnowflakes; // r27
-        float currSize; // r26
-        class xVec3 snowDir; // r29+0x170
-        class xVec3 snowPos; // r29+0x160
-        signed int numSamples; // r20
-        float interp; // r25
-        signed int numToEmit; // r19
-        float theta; // r21
-        float moveSplat; // r20
-        float timeTillEnd; // r1
-        class xCollis colls; // r29+0xF0
-        unsigned int doDamage; // r20
-        class xVec3 knockback; // r29+0x150
-        signed int touchDamage; // r19
-        class xCollis * coll; // r6
-        class xCollis * cend; // r5
-        class xVec3 bubbleVel; // r29+0x140
-        unsigned int picker; // r2
-        signed int num; // r17
-    */
-    xVec3 snowDir; // r29+0x170
-    xVec3 snowPos; // r29+0x160
-    xVec3 knockback; // r29+0x150
-    xVec3 bubbleVel; // r29+0x140
-    xCollis colls; // r29+0xF0
+    xVec3 parDir;
+    xVec3 toPar;
+    xVec3 breathPos;
+    xVec3 toBreath;
+    xVec3 snowDir;
+    xVec3 snowPos;
+    xVec3 splatMove;
+    xVec3 knockback;
+    xVec3 bubbleVel;
+    xCollis colls;
 
-    bool bVar1 = false;
+    S32 i;
+    S32 j;
+    S32 csn = 0;
 
     if (this->firstUpdate)
     {
@@ -1005,6 +903,7 @@ void zNPCBPatrick::Process(xScene* xscn, F32 dt)
             {
                 zEntEvent(this->round1Csn, eEventPreload);
             }
+
             break;
         }
         case 2:
@@ -1020,48 +919,48 @@ void zNPCBPatrick::Process(xScene* xscn, F32 dt)
         }
     }
 
-    if (this->csnTimer)
+    if (globals.cmgr && globals.cmgr->csn->Ready)
     {
-        bVar1 = true;
+        csn = 1;
     }
 
-    if (bVar1)
+    if (csn)
     {
         if (this->bossFlags & 0x100)
         {
             this->csnTimer += dt;
 
-            if (this->csnTimer > f1656)
+            if (this->csnTimer >= 0.0001f)
             {
                 this->hiddenByCutscene();
                 this->bossFlags &= 0xfffffeff;
             }
-
-            this->bossFlags |= 0x80;
         }
+
+        this->bossFlags |= 0x80;
     }
     else
     {
-        this->csnTimer = f832;
+        this->csnTimer = 0.0f;
+
         if (this->bossFlags & 0x80)
         {
             if (this->round == 1)
             {
-                // TODO: fix index
-                this->newsfish->SpeakStart(sNFComment[NF_SB_WONT_WIN_THAT_WAY].soundID, 0, -1);
+                this->newsfish->SpeakStart(sNFComment[NF_SB_IN_FOR_ROUGH_RIDE].soundID, 0, -1);
             }
             else if (this->round == 2)
             {
-                // TODO: fix index
-                this->newsfish->SpeakStart(sNFComment[NF_SB_WONT_WIN_THAT_WAY].soundID, 0, -1);
+                this->newsfish->SpeakStart(sNFComment[NF_SANDY_GET_SB_UNFROZEN].soundID, 0, -1);
             }
             else if (this->round == 3)
             {
-                // TODO: fix index
-                this->newsfish->SpeakStart(sNFComment[NF_SB_WONT_WIN_THAT_WAY].soundID, 0, -1);
+                this->newsfish->SpeakStart(sNFComment[NF_SB_BACK_IN_FIGHT].soundID, 0, -1);
             }
+
             this->bossFlags |= 0x200;
         }
+
         this->bossFlags &= 0xffffff7f;
     }
 
@@ -1079,23 +978,22 @@ void zNPCBPatrick::Process(xScene* xscn, F32 dt)
         zCameraEnableTracking(CO_BOSS);
     }
 
-    F32 fVar3 = f1657 * -this->fudgeHandle->model->Mat->up.y;
+    F32 fudgeRate = 400.0f * -this->fudgeHandle->model->Mat[2].at.y;
 
-    if (fVar3 < f832)
+    if (fudgeRate < 0.0f)
     {
-        fVar3 = f832;
+        fudgeRate = 0.0f;
     }
 
-    // TODO: certainly not right
-    this->fudgeEmitter->rate = fVar3;
+    this->fudgeEmitter->prop->rate.val[0] = fudgeRate;
 
     if (globals.player.lassoInfo.swingTarget)
     {
         if (this->notSwingingLastFrame)
         {
-            this->swingTimer = f832;
+            this->swingTimer = 0.0f;
 
-            for (S32 i = 0; i < 8; i++)
+            for (i = 0; i < 8; i++)
             {
                 if (globals.player.lassoInfo.swingTarget == this->swinger[i])
                 {
@@ -1105,54 +1003,58 @@ void zNPCBPatrick::Process(xScene* xscn, F32 dt)
             }
         }
 
-        bool bVar1 = this->swingTimer <= f1046;
+        S32 shouldPlayIt = 0;
+
+        if (this->swingTimer <= 0.5f)
+        {
+            shouldPlayIt = 1;
+        }
+
         this->swingTimer += dt;
         this->notSwingingLastFrame = 0;
 
-        if (f1046 < this->swingTimer)
+        if (this->swingTimer > 0.5f)
         {
-            fVar3 = this->origSwingerHeight - f1046;
-            F32 dVar21 = fVar3;
+            F32 finalHeight = this->origSwingerHeight - 0.5f;
             F32* swingY = &this->swinger[this->currSwinger]->model->Mat->pos.y;
 
-            if (dVar21 < *swingY)
+            if (*swingY > finalHeight)
             {
-                *swingY = -(f1051 * dt - *swingY);
+                *swingY -= 3.0f * dt;
 
-                if (*swingY < dVar21)
+                if (*swingY < finalHeight)
                 {
-                    *swingY = fVar3;
+                    *swingY = finalHeight;
                 }
             }
 
-            if (bVar1)
+            if (shouldPlayIt)
             {
-                xSndPlay3D(xStrHash("b201_lasso_activation"), f1658, f832, 0, 0,
-                           (xVec3*)&this->swinger[this->currSwinger]->model->Mat->pos, f891, f1659,
-                           SND_CAT_GAME, f832);
+                xSndPlay3D(xStrHash("b201_lasso_activation"), 0.5775f, 0.0f, 0, 0,
+                           (xVec3*)&this->swinger[this->currSwinger]->model->Mat->pos, 2.0f, 40.0f,
+                           SND_CAT_GAME, 0.0f);
 
-                for (S32 i = 0; i < 4; i++)
+                for (i = 0; i < 8; i++)
                 {
-                    for (S32 j = 0; j < 6; j++)
+                    if (globals.player.lassoInfo.swingTarget == this->swinger[i])
                     {
-                        if (globals.player.lassoInfo.swingTarget ==
-                            this->swinger[this->currSwinger])
+                        for (j = 0; j < 3; j++)
                         {
                             this->box[i][j].flags |= 1;
-                            // not sure if other flag updates were compiler expanded or actually written
                         }
+
+                        break;
                     }
                 }
 
                 if (this->bossFlags & 0x40)
                 {
                     this->backBox.flags |= 1;
+
                     xVec3Copy((xVec3*)&this->backBox.box->model->Mat->pos,
                               (xVec3*)&this->model->Mat->pos);
                     xVec3AddScaled((xVec3*)&this->backBox.box->model->Mat->pos,
-                                   (xVec3*)&this->model->Mat->up, f1660
-
-                    );
+                                   (xVec3*)&this->model->Mat->at, -2.01f);
                 }
             }
         }
@@ -1163,17 +1065,17 @@ void zNPCBPatrick::Process(xScene* xscn, F32 dt)
         this->currSwinger = -1;
     }
 
-    F32 dVar21 = f1051;
-    for (S32 i = 0; i < 8; i++)
+    for (i = 0; i < 8; i++)
     {
-        if (this->currSwinger != i)
+        if (i != this->currSwinger)
         {
             RwMatrix* mat = this->swinger[i]->model->Mat;
+
             if (mat->pos.y < this->origSwingerHeight)
             {
-                mat->pos.y += f1051 * dt;
+                mat->pos.y += 3.0f * dt;
 
-                if (this->origSwingerHeight < mat->pos.y)
+                if (mat->pos.y > this->origSwingerHeight)
                 {
                     mat->pos.y = this->origSwingerHeight;
                 }
@@ -1181,28 +1083,27 @@ void zNPCBPatrick::Process(xScene* xscn, F32 dt)
         }
     }
 
-    F32 finalHeight = this->gooLevel - f1046;
-    if (finalHeight < this->gooHeight)
+    if (this->gooHeight > this->gooLevel - 0.5f)
     {
-        this->gooHeight = -(f1046 * dt - this->gooHeight);
-        if (this->gooHeight < finalHeight)
+        this->gooHeight -= 0.5f * dt;
+
+        if (this->gooHeight < this->gooLevel - 0.5f)
         {
-            this->gooHeight = finalHeight;
+            this->gooHeight = this->gooLevel - 0.5f;
         }
     }
 
-    // IDK why this code is written twice, almost identical to block above
-    finalHeight = this->gooLevel - f1046;
-    if (finalHeight < this->gooHeight)
+    if (this->gooHeight < this->gooLevel - 0.5f)
     {
-        this->gooHeight = (f1046 * dt - this->gooHeight);
-        if (this->gooHeight < finalHeight)
+        this->gooHeight += 0.5f * dt;
+
+        if (this->gooHeight > this->gooLevel - 0.5f)
         {
-            this->gooHeight = finalHeight;
+            this->gooHeight = this->gooLevel - 0.5f;
         }
     }
 
-    if (this->gooHeight > f832)
+    if (this->gooHeight > 0.0f)
     {
         this->steamEmitter->emit_flags &= 0xfe;
     }
@@ -1212,7 +1113,8 @@ void zNPCBPatrick::Process(xScene* xscn, F32 dt)
     }
 
     this->gooObj->model->Mat->pos.y = this->gooHeight;
-    this->gooObj->bound.box.center.y = this->gooHeight; // might not be right bound float
+    this->gooObj->bound.box.center.y = this->gooHeight;
+
     xQuickCullForBound(&this->gooObj->bound.qcd, &this->gooObj->bound);
     zGridUpdateEnt(this->gooObj);
 
@@ -1222,31 +1124,34 @@ void zNPCBPatrick::Process(xScene* xscn, F32 dt)
 
         if (globals.pad0->pressed & XPAD_BUTTON_X)
         {
-            this->frozenTimer -= f1661;
-            this->shakeAmp = f1662;
+            this->frozenTimer -= 0.175f;
+            this->shakeAmp = 0.025f;
         }
 
-        if (this->frozenTimer <= f832)
+        if (this->frozenTimer <= 0.0f || globals.player.DamageTimer > 0.0f)
         {
             zEntPlayerControlOn(CONTROL_OWNER_FROZEN);
+
             this->bossFlags &= 0xffffffef;
-            xEntShow(NULL);
-            xSndPlay(xStrHash("b201_ice_shatter"), f1658, f832, 0, 0, 0, SND_CAT_GAME, f832);
+
+            xEntShow(&globals.player.ent);
+            xSndPlay(xStrHash("b201_ice_shatter"), 0.5775f, 0.0f, 0, 0, 0, SND_CAT_GAME, 0.0f);
 
             xModelInstance* tempModel = xModelInstanceAlloc(this->shardModel, NULL, 0, 0, NULL);
 
             if (tempModel && this->iceBreak && this->iceBreak->initCB)
             {
-                for (S32 i = 0; i < 10; i++)
+                for (i = 0; i < 10; i++)
                 {
-                    if (this->shard[i].size > f832)
+                    if (this->shard[i].size > 0.0f)
                     {
-                        xMat3x3Rot((xMat3x3*)&tempModel->Mat, &this->shard[i].rotVec,
+                        xMat3x3Rot((xMat3x3*)tempModel->Mat, &this->shard[i].rotVec,
                                    this->shard[i].ang);
                         xVec3Copy((xVec3*)&tempModel->Mat->pos,
                                   (xVec3*)&globals.player.ent.model->Mat->pos);
-                        xMat3x3SMul((xMat3x3*)&tempModel->Mat, (xMat3x3*)&tempModel->Mat,
+                        xMat3x3SMul((xMat3x3*)tempModel->Mat, (xMat3x3*)tempModel->Mat,
                                     this->shard[i].size);
+
                         this->iceBreak->initCB(this->iceBreak, tempModel, NULL, NULL);
                     }
                 }
@@ -1258,62 +1163,529 @@ void zNPCBPatrick::Process(xScene* xscn, F32 dt)
         {
             this->flg_xtrarend |= 1;
 
-            for (S32 i = 0; i < 10; i++)
+            for (i = 0; i < 10; i++)
             {
-                F32 currSize = this->shard[i].size;
-                this->shard[i].size = dt * (this->shard[i].maxSize - currSize) + currSize;
+                this->shard[i].size += dt * (this->shard[i].maxSize - this->shard[i].size);
             }
 
-            this->iceScale = (f1663 - this->iceScale) * dt + this->iceScale;
-            this->shakeAmp = f1664 * dt - this->shakeAmp;
-            if (this->shakeAmp < f832)
+            this->iceScale += (1.25f - this->iceScale) * dt;
+
+            this->shakeAmp -= 0.25f * dt;
+
+            if (this->shakeAmp < 0.0f)
             {
-                this->shakeAmp = f832;
+                this->shakeAmp = 0.0f;
             }
-            this->shakePhase = f1665 * dt - this->shakePhase;
-            if (f1666 < this->shakePhase)
+
+            this->shakePhase += 80.0f * dt;
+
+            if (this->shakePhase > 6.2831855f)
             {
-                this->shakePhase -= f1666;
+                this->shakePhase -= 6.2831855f;
             }
         }
     }
 
     this->particleTimer += dt;
-    if (this->particleTimer < f1667)
+
+    if (this->particleTimer < 3.15f)
     {
         this->flg_xtrarend |= 1;
 
-        F32 rand = xurand();
-
-        for (S32 i = 0; i < this->numParticles - 1; i++)
+        if (globals.player.DamageTimer <= 0.0f)
         {
-            xVec3Sub(&bubbleVel, &this->parList[i]->m_pos, &this->parList[i]->m_pos);
-            F32 dVar20 = xVec3Length(&bubbleVel);
+            F32 emitAccum = xurand();
 
-            if (f1668 <= dVar20)
+            xVec3Init(&snowDir, 0.0f, -1.0f, 0.0f);
+
+            for (i = 0; i < this->numParticles - 1; i++)
             {
-                xVec3SMulBy(&bubbleVel, f831 / dVar20);
-                // TODO: Fix me
-                xVec3Sub(&knockback, NULL, &this->parList[i]->m_pos);
-                F32 dVar18 = xVec3Dot(&bubbleVel, &knockback);
+                xVec3Sub(&parDir, &this->parList[i + 1]->m_pos, &this->parList[i]->m_pos);
 
-                if (dVar20 > dVar18)
+                F32 maxDist = xVec3Length(&parDir);
+
+                if (maxDist < 0.00001f)
                 {
-                    xVec3Copy(&snowPos, &this->parList[i]->m_pos);
-                    dVar18 =
-                        f1664 * this->parList[i]->totalLifespan; // TODO: figure out par 0x1c offset
+                    continue;
+                }
+
+                xVec3SMulBy(&parDir, 1.0f / maxDist);
+                xVec3Sub(&toPar, &globals.player.ent.bound.sph.center, &this->parList[i]->m_pos);
+
+                F32 currSize = xVec3Dot(&parDir, &toPar);
+
+                if (currSize < 0.0f)
+                {
+                    xVec3Copy(&breathPos, &this->parList[i]->m_pos);
+                    currSize = 0.25f * this->parList[i]->m_size;
+                }
+                else if (currSize > maxDist)
+                {
+                    xVec3Copy(&breathPos, &this->parList[i + 1]->m_pos);
+                    currSize = 0.25f * this->parList[i + 1]->m_size;
                 }
                 else
                 {
-                    xVec3Copy(&snowPos, &this->parList[i]->m_pos);
-                    xVec3AddScaled(&snowPos, &bubbleVel, dVar18);
-                    dVar18 = f1664 * (dVar18 / dVar20); // * ??? wtf todo
+                    xVec3Copy(&breathPos, &this->parList[i]->m_pos);
+                    xVec3AddScaled(&breathPos, &parDir, currSize);
+
+                    currSize = 0.25f * ((currSize / maxDist) * (this->parList[i + 1]->m_size -
+                                                            this->parList[i]->m_size) +
+                                        this->parList[i]->m_size);
+                }
+
+                S32 numSamples = maxDist / 0.1f;
+
+                for (j = 0; j < numSamples; j++)
+                {
+                    F32 numSnowflakes;
+                    F32 interp = ((j + xurand()) - 0.5f) / numSamples;
+
+                    numSnowflakes = this->parList[i]->m_size * (1.0f - interp);
+                    numSnowflakes += this->parList[i + 1]->m_size * interp;
+
+                    emitAccum += dt * (numSnowflakes * (0.5f + xurand()));
+
+                    S32 numToEmit = emitAccum;
+
+                    emitAccum -= numToEmit;
+
+                    if (numToEmit > 0)
+                    {
+                        xVec3SMul(&snowPos, &this->parList[i]->m_pos, 1.0f - interp);
+                        xVec3AddScaled(&snowPos, &this->parList[i + 1]->m_pos, interp);
+
+                        snowDir.x = 0.2f * xurand();
+                        snowDir.z = 0.2f * xurand();
+
+                        zParPTankSpawnSnow(&snowPos, &snowDir, numToEmit);
+                    }
+                }
+
+                xVec3Sub(&toBreath, &globals.player.ent.bound.sph.center, &breathPos);
+
+                if (xVec3Length2(&toBreath) <
+                    currSize * currSize + globals.player.ent.bound.sph.r)
+                {
+                    this->frozenTimer = 4.0f;
+
+                    if (this->bossFlags & 0x10)
+                    {
+                        continue;
+                    }
+
+                    zEntPlayerControlOff(CONTROL_OWNER_FROZEN);
+
+                    globals.player.ControlOffTimer = 0.0f;
+                    this->bossFlags |= 0x10;
+
+                    xSndPlay(xStrHash("b201_rp_freeze"), 0.77f, 0.0f, 0, 0, 0, SND_CAT_GAME, 0.0f);
+                    xEntHide(&globals.player.ent);
+
+                    for (j = 0; j < 10; j++)
+                    {
+                        this->shard[j].size = 0.25f - xurand();
+                        this->shard[j].maxSize = 0.3f * xurand() + 0.7f;
+
+                        F32 theta = 6.2831855f * xurand();
+
+                        this->shard[j].rotVec.x = isin(theta);
+                        this->shard[j].rotVec.y = 0.0f;
+                        this->shard[j].rotVec.z = icos(theta);
+                        this->shard[j].ang = 1.5707964f * (0.65f * xurand() + 0.15f);
+
+                        if (j & 1)
+                        {
+                            if (this->shard[j].rotVec.x < 0.0f)
+                            {
+                                this->shard[j].rotVec.x = -this->shard[j].rotVec.x;
+                            }
+                        }
+                        else
+                        {
+                            if (this->shard[j].rotVec.x > 0.0f)
+                            {
+                                this->shard[j].rotVec.x = -this->shard[j].rotVec.x;
+                            }
+                        }
+
+                        if (j & 2)
+                        {
+                            if (this->shard[j].rotVec.z < 0.0f)
+                            {
+                                this->shard[j].rotVec.z = -this->shard[j].rotVec.z;
+                            }
+                        }
+                        else
+                        {
+                            if (this->shard[j].rotVec.z > 0.0f)
+                            {
+                                this->shard[j].rotVec.z = -this->shard[j].rotVec.z;
+                            }
+                        }
+                    }
+
+                    this->iceScale = 1.0f;
+                    this->shakeAmp = 0.0f;
+                    this->shakePhase = 0.0f;
+
+                    if (this->nfFlags & 2)
+                    {
+                        if (xrand() & 0x80)
+                        {
+                            this->newsfish->SpeakStart(
+                                sNFComment[NF_SB_HAS_BEEN_ICE_CREAMED].soundID, 0, -1);
+                        }
+                        else
+                        {
+                            this->newsfish->SpeakStart(
+                                sNFComment[NF_SB_STAY_FAR_AWAY_FROM_CLUTCHES].soundID, 0, -1);
+                        }
+                    }
+                    else
+                    {
+                        this->newsfish->SpeakStart(
+                            sNFComment[NF_SB_FRIGID_RECEPTION].soundID, 0, -1);
+                        this->nfFlags |= 2;
+                    }
                 }
             }
         }
-
-        xStrHash("b201_rp_freeze");
     }
+
+    for (i = 0; i < 8; i++)
+    {
+        for (j = 0; j < 3; j++)
+        {
+            this->bossPatBoxCheckCollide(&this->box[i][j]);
+        }
+    }
+
+    this->bossPatBoxCheckCollide(&this->backBox);
+
+    this->boxLandSndTimer += dt;
+    this->boxSplashSndTimer += dt;
+    this->splatTimer += dt;
+
+    for (i = 0; i < 50; i++)
+    {
+        if (!(this->glob[i].flags & 1))
+        {
+            continue;
+        }
+
+        this->flg_xtrarend |= 1;
+
+        if (this->glob[i].flags & 4)
+        {
+            this->glob[i].t += dt;
+
+            if (this->glob[i].t > 1.0f)
+            {
+                this->glob[i].flags = 0;
+            }
+            else if (this->glob[i].flags & 8)
+            {
+                xVec3AddScaled(&this->glob[i].path.initPos, &this->glob[i].convVel, dt);
+            }
+        }
+        else
+        {
+            this->glob[i].t += dt;
+
+            if (this->glob[i].t > 2.0f)
+            {
+                this->glob[i].flags = 0;
+            }
+            else if (this->glob[i].t > this->glob[i].path.maxTime)
+            {
+                if (this->glob[i].flags & 2)
+                {
+                    if (this->glob[i].norm.y > 0.75f)
+                    {
+                        this->glob[i].flags |= 4;
+
+                        F32 moveSplat = 2.0f * this->splatModel->boundingSphere.radius;
+
+                        xParabolaRecenter(&this->glob[i].path, this->glob[i].path.maxTime);
+
+                        this->glob[i].t = 0.0f;
+
+                        splatMove.x = this->glob[i].path.initVel.x;
+                        splatMove.y = 0.0f;
+                        splatMove.z = this->glob[i].path.initVel.z;
+
+                        F32 len = xVec3Length(&splatMove);
+
+                        if (len > 0.00001f)
+                        {
+                            xVec3SMulBy(&splatMove, moveSplat / len);
+                        }
+
+                        if (this->glob[i].path.initPos.x > this->arenaExtent.x ||
+                            this->glob[i].path.initPos.z > this->arenaExtent.z ||
+                            this->glob[i].path.initPos.x < -this->arenaExtent.x ||
+                            this->glob[i].path.initPos.z < -this->arenaExtent.z)
+                        {
+                            xVec3AddTo(&this->glob[i].path.initPos, &splatMove);
+                        }
+
+                        this->playSplat(&this->glob[i].path.initPos);
+
+                        if (this->glob[i].flags & 8)
+                        {
+                            F32 timeTillEnd =
+                                2.0f - this->ConveyorTimeLeft(this->glob[i].conv,
+                                                              &this->glob[i].path.initPos);
+
+                            if (this->glob[i].t < timeTillEnd)
+                            {
+                                this->glob[i].t = timeTillEnd;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        this->glob[i].flags = 0;
+                        this->playSplat(&this->glob[i].lastPos);
+                    }
+                }
+                else
+                {
+                    this->glob[i].path.minTime = this->glob[i].path.maxTime - 0.01f;
+                    this->glob[i].path.maxTime += 0.33f * xurand() + 1.0f;
+
+                    xParabolaHitsEnv(&this->glob[i].path, globals.sceneCur->env, &colls);
+
+                    if (colls.flags & 1)
+                    {
+                        this->glob[i].path.maxTime = colls.dist;
+                        xVec3Copy(&this->glob[i].norm, &colls.norm);
+                        this->glob[i].flags |= 2;
+                    }
+
+                    colls.flags &= 0xfffffffe;
+
+                    this->ParabolaHitsConveyors(&this->glob->path, &colls);
+
+                    // BFBB bug? Everything before ParabolaHitsConveyors uses this->glob[i],
+                    // but everything after is written as this->glob->
+                    if (colls.flags & 1)
+                    {
+                        this->glob->path.maxTime = colls.dist;
+                        this->glob->flags |= 2;
+
+                        if (colls.tohit.x < 18.5f && colls.tohit.x > -18.5f &&
+                            colls.tohit.z > -20.0f)
+                        {
+                            this->glob->flags |= 8;
+
+                            xVec3Init(&this->glob->norm, 0.0f, 1.0f, 0.0f);
+
+                            this->glob->conv = (zPlatform*)colls.optr;
+
+                            xVec3SMul(&this->glob->convVel,
+                                      (xVec3*)&this->glob->conv->bound.mat->right,
+                                      this->glob->conv->passet->cb.speed);
+                        }
+                        else
+                        {
+                            xVec3Init(&this->glob->norm, 0.0f, -1.0f, 0.0f);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    for (i = 0; i < 8; i++)
+    {
+        for (j = 0; j < 3; j++)
+        {
+            this->bossPatBoxUpdate(&this->box[i][j], dt);
+        }
+    }
+
+    this->bossPatBoxUpdate(&this->backBox, dt);
+
+    U32 doDamage = 0;
+
+    xVec3Init(&knockback, 0.0f, 7.0f, 0.0f);
+
+    S32 touchDamage = 0;
+
+    if (this->bossFlags & 1)
+    {
+        xCollis* coll = globals.player.ent.collis->colls;
+        xCollis* cend = coll + globals.player.ent.collis->idx;
+
+        for (; coll < cend; coll++)
+        {
+            if (!(coll->flags & 1))
+            {
+                continue;
+            }
+
+            xEnt* hit = (xEnt*)coll->optr;
+
+            if ((hit && hit->baseType == eBaseTypeDynamic && hit->driver == (xEnt*)this) ||
+                hit == (xEnt*)this)
+            {
+                this->bossFlags |= 2;
+                doDamage = 1;
+                touchDamage = 1;
+                this->bossFlags &= 0xfffffffe;
+                goto damage; // TODO: Fix goto
+            }
+        }
+    }
+
+    if (globals.player.JumpState == 0)
+    {
+        for (i = 0; i < 50; i++)
+        {
+            if (!(this->glob[i].flags & 1) || !(this->glob[i].flags & 4))
+            {
+                continue;
+            }
+
+            if (xVec3Dist2(&this->glob[i].lastPos, &globals.player.ent.bound.sph.center) < 1.0f)
+            {
+                this->bossFlags |= 2;
+                this->glob[i].flags = 0;
+                doDamage = 1;
+
+                this->playSplat(&this->glob[i].lastPos);
+
+                this->bossFlags &= 0xfffffffe;
+                goto damage; // TODO: fix goto
+            }
+        }
+    }
+
+    xVec3Init(&bubbleVel, 0.0f, 1.0f, 0.0f);
+
+    for (i = 0; i < 50; i++)
+    {
+        if (!(this->glob[i].flags & 1) || (this->glob[i].flags & 4))
+        {
+            continue;
+        }
+
+        if (xrand() & 0x200)
+        {
+            zParPTankSpawnBubbles(&this->glob[i].lastPos, &bubbleVel, 1, 1.0f);
+        }
+
+        if (xVec3Dist2(&this->glob[i].lastPos, &globals.player.ent.bound.sph.center) < 1.0f)
+        {
+            this->bossFlags |= 2;
+            this->glob[i].flags = 0;
+            doDamage = 1;
+
+            this->playSplat(&this->glob[i].lastPos);
+
+            this->bossFlags &= 0xfffffffe;
+            break;
+        }
+    }
+
+damage: // TODO: fix goto
+    if (doDamage && zEntPlayer_Damage(NULL, 1, &knockback))
+    {
+        U32 picker = xrand();
+
+        if (globals.player.Health == 1 && this->round == 2)
+        {
+            this->newsfish->SpeakStart(sNFComment[NF_SANDY_BECOME_BANANA_SPLIT].soundID, 0, -1);
+        }
+        else if (touchDamage && !(picker & 0x3000))
+        {
+            this->newsfish->SpeakStart(sNFComment[NF_CLOSE_ENCOUNTERS_PAINFUL_KIND].soundID, 0,
+                                       -1);
+        }
+        else if ((picker & 0x1f) <= 0xa)
+        {
+            this->newsfish->SpeakStart(sNFComment[NF_THAT_WAS_A_DOOZY].soundID, 0, -1);
+        }
+        else if ((picker & 0x1f) <= 0x14)
+        {
+            this->newsfish->SpeakStart(sNFComment[NF_THATS_GOTTA_STING].soundID, 0, -1);
+        }
+    }
+
+    S32 num = this->round;
+
+    if (!globals.player.ControlOff)
+    {
+        if (this->round == 1)
+        {
+            if (this->hitPoints <= 6)
+            {
+                num = 2;
+            }
+        }
+        else if (this->round == 2)
+        {
+            if (this->gooLevel >= 3)
+            {
+                num = 3;
+            }
+        }
+        else if (this->round == 3)
+        {
+            if (this->hitPoints <= 0)
+            {
+                num = 4;
+            }
+        }
+    }
+
+    if (num != this->round && (this->bossFlags & 0x20) && !globals.player.ControlOff &&
+        globals.player.Health && !zEntPlayerDyingInGoo())
+    {
+        this->bossFlags |= 0x100;
+
+        this->gotoRound(num);
+
+        switch (num)
+        {
+        case 1:
+        {
+            zEntEvent(this->round1Csn, eEventPreload);
+            break;
+        }
+        case 2:
+        {
+            zEntEvent(this->round2Csn, eEventPreload);
+            break;
+        }
+        case 3:
+        {
+            zEntEvent(this->round3Csn, eEventPreload);
+            break;
+        }
+        }
+    }
+
+    this->badHitTimer -= dt;
+
+    if (globals.player.DamageTimer != 0.0f)
+    {
+        if (!(this->nfFlags & 0x400))
+        {
+            this->numPCHitsInARow++;
+            this->numMissesInARow = 0;
+        }
+
+        this->nfFlags |= 0x400;
+    }
+    else
+    {
+        this->nfFlags &= 0xfffffbff;
+    }
+
+    zNPCCommon::Process(xscn, dt);
 }
 
 void zNPCBPatrick::DuploNotice(en_SM_NOTICES note, void* data)
@@ -1350,17 +1722,17 @@ void zNPCBPatrick::Damage(en_NPC_DAMAGE_TYPE dmg_type, xBase* who, const xVec3* 
                          (xVec3*)&globals.player.ent.model->Mat->pos);
             }
 
-            toHit.y = f832;
+            toHit.y = 0.0f;
 
             xVec3Normalize(&toHit, &toHit);
 
-            if (xVec3Dot(&toHit, (xVec3*)&this->model->Mat->at) > f832)
+            if (xVec3Dot(&toHit, (xVec3*)&this->model->Mat->at) > 0.0f)
             {
                 this->bossFlags |= 8;
-                this->badHitTimer = f1054;
+                this->badHitTimer = 6.0f;
             }
         }
-        else if (this->badHitTimer < f832)
+        else if (this->badHitTimer < 0.0f)
         {
             if (this->nfFlags & 4)
             {
@@ -1388,7 +1760,7 @@ void zNPCBPatrick::Damage(en_NPC_DAMAGE_TYPE dmg_type, xBase* who, const xVec3* 
 
                 this->nfFlags |= 4;
             }
-            this->badHitTimer = f1054;
+            this->badHitTimer = 6.0f;
         }
     }
 }
@@ -1413,10 +1785,10 @@ void zNPCBPatrick::RenderGlobs()
     S32 i;
 
     iModelSetMaterialAlpha(this->spitModel, 215);
-    iModelMaterialMul(this->spitModel, f832, f831, f832);
+    iModelMaterialMul(this->spitModel, 0.0f, 1.0f, 0.0f);
 
     iModelSetMaterialAlpha(this->splatModel, 215);
-    iModelMaterialMul(this->splatModel, f832, f831, f832);
+    iModelMaterialMul(this->splatModel, 0.0f, 1.0f, 0.0f);
 
     for (i = 0; i < 50; i++)
     {
@@ -1427,20 +1799,20 @@ void zNPCBPatrick::RenderGlobs()
             {
                 xVec3Copy(&globMat.pos, &glob->path.initPos);
                 xVec3Copy(&glob->lastPos, &globMat.pos);
-                xVec3Init(&globMat.up, f832, f831, f832);
+                xVec3Init(&globMat.up, 0.0f, 1.0f, 0.0f);
                 globMat.at.x = -glob->path.initVel.x;
-                globMat.at.y = f832;
+                globMat.at.y = 0.0f;
                 globMat.at.z = -glob->path.initVel.z;
 
                 F32 dVar4 = xVec3Length(&globMat.at);
 
-                if (dVar4 > f1668)
+                if (dVar4 > 0.00001f)
                 {
-                    xVec3SMulBy(&globMat.at, f831 / dVar4);
+                    xVec3SMulBy(&globMat.at, 1.0f / dVar4);
                 }
 
                 xVec3Cross(&globMat.right, &globMat.up, &globMat.at);
-                xMat3x3SMul(&globMat, &globMat, f891);
+                xMat3x3SMul(&globMat, &globMat, 2.0f);
 
                 if (!iModelCull(this->splatModel, (RwMatrix*)&globMat))
                 {
@@ -1463,22 +1835,22 @@ void zNPCBPatrick::RenderGlobs()
 
                     F32 dVar4 = xVec3Length(&globMat.at);
 
-                    if (dVar4 > f1668)
+                    if (dVar4 > 0.00001f)
                     {
-                        xVec3Init(&globMat.at, f832, f870, f832);
-                        xVec3Init(&globMat.right, f831, f832, f832);
+                        xVec3Init(&globMat.at, 0.0f, -1.0f, 0.0f);
+                        xVec3Init(&globMat.right, 1.0f, 0.0f, 0.0f);
                     }
                     else
                     {
-                        xVec3SMulBy(&globMat.at, f831 / dVar4);
+                        xVec3SMulBy(&globMat.at, 1.0f / dVar4);
                         globMat.right.x = globMat.at.z;
                         globMat.right.z = -globMat.at.x;
-                        globMat.right.y = f832;
+                        globMat.right.y = 0.0f;
                         xVec3Normalize(&globMat.right, &globMat.right);
                     }
 
                     xVec3Cross(&globMat.up, &globMat.at, &globMat.right);
-                    xMat3x3SMul(&globMat, &globMat, f891);
+                    xMat3x3SMul(&globMat, &globMat, 2.0f);
 
                     if (!iModelCull(this->spitModel, (RwMatrix*)&globMat))
                     {
@@ -1505,14 +1877,14 @@ void zNPCBPatrick::RenderFrozenPlayer()
 
     for (S32 i = 0; i < 10; i++)
     {
-        if (this->shard[i].size > f832)
+        if (this->shard[i].size > 0.0f)
         {
             xMat3x3Rot(&globMat, &this->shard[i].rotVec, this->shard[i].ang);
             xVec3Copy(&globMat.pos, &player_pos);
             xMat3x3SMul(&globMat, &globMat, this->shard[i].size);
             if (!iModelCull(this->shardModel, (RwMatrixTag*)&globMat))
             {
-                F32 ivar1 = f2006 * ((f831 - this->shard[i].maxSize) + this->shard[i].size);
+                F32 ivar1 = 100.0f * ((1.0f - this->shard[i].maxSize) + this->shard[i].size);
                 iModelSetMaterialAlpha(this->shardModel, ivar1);
                 iModelRender(this->shardModel, (RwMatrix*)&globMat);
             }
@@ -1570,7 +1942,7 @@ void zNPCBPatrick::NewTime(xScene* xscn, F32 dt)
 
     for (S32 i = 0; i < 4; i++)
     {
-        if (sBoundRadius[i] > f832)
+        if (sBoundRadius[i] > 0.0f)
         {
             GetBonePos(&this->boundList[i]->bound.box.center, (xMat4x3*)&this->model->Mat,
                        sBone[sBoundBone[i]], &sBoneOffset[i]);
@@ -1633,41 +2005,41 @@ bossPatGlob* zNPCBPatrick::getNextFreeGlob()
 // Should fix itself when strings are all correct.
 void zNPCBPatrick::playSplat(xVec3* pos)
 {
-    if (this->splatTimer > f1664)
+    if (this->splatTimer > 0.25f)
     {
-        this->splatTimer = f832;
+        this->splatTimer = 0.0f;
 
-        F32 picker = xurand() * f2077;
+        F32 picker = xurand() * 5.95f;
 
-        if (picker < f831)
+        if (picker < 1.0f)
         {
-            xSndPlay3D(xStrHash("b201_rp_spin_spurt1"), f2078, f832, 0, 0, pos, f891, f1659,
-                       SND_CAT_GAME, f832);
+            xSndPlay3D(xStrHash("b201_rp_spin_spurt1"), 0.539f, 0.0f, 0, 0, pos, 2.0f, 40.0f,
+                       SND_CAT_GAME, 0.0f);
         }
-        else if (picker < f891)
+        else if (picker < 2.0f)
         {
-            xSndPlay3D(xStrHash("b201_rp_spin_spurt2"), f2078, f832, 0, 0, pos, f891, f1659,
-                       SND_CAT_GAME, f832);
+            xSndPlay3D(xStrHash("b201_rp_spin_spurt2"), 0.539f, 0.0f, 0, 0, pos, 2.0f, 40.0f,
+                       SND_CAT_GAME, 0.0f);
         }
-        else if (picker < f1051)
+        else if (picker < 3.0f)
         {
-            xSndPlay3D(xStrHash("b201_rp_spin_spurt3"), f2078, f832, 0, 0, pos, f891, f1659,
-                       SND_CAT_GAME, f832);
+            xSndPlay3D(xStrHash("b201_rp_spin_spurt3"), 0.539f, 0.0f, 0, 0, pos, 2.0f, 40.0f,
+                       SND_CAT_GAME, 0.0f);
         }
-        else if (picker < f1670)
+        else if (picker < 4.0f)
         {
-            xSndPlay3D(xStrHash("b201_rp_spin_spurt4"), f2078, f832, 0, 0, pos, f891, f1659,
-                       SND_CAT_GAME, f832);
+            xSndPlay3D(xStrHash("b201_rp_spin_spurt4"), 0.539f, 0.0f, 0, 0, pos, 2.0f, 40.0f,
+                       SND_CAT_GAME, 0.0f);
         }
-        else if (picker < f1049)
+        else if (picker < 5.0f)
         {
-            xSndPlay3D(xStrHash("b201_rp_spin_spurt5"), f2078, f832, 0, 0, pos, f891, f1659,
-                       SND_CAT_GAME, f832);
+            xSndPlay3D(xStrHash("b201_rp_spin_spurt5"), 0.539f, 0.0f, 0, 0, pos, 2.0f, 40.0f,
+                       SND_CAT_GAME, 0.0f);
         }
         else
         {
-            xSndPlay3D(xStrHash("b201_rp_spin_spurt6"), f2078, f832, 0, 0, pos, f891, f1659,
-                       SND_CAT_GAME, f832);
+            xSndPlay3D(xStrHash("b201_rp_spin_spurt6"), 0.539f, 0.0f, 0, 0, pos, 2.0f, 40.0f,
+                       SND_CAT_GAME, 0.0f);
         }
     }
 }
@@ -1712,7 +2084,7 @@ void zNPCBPatrick::gotoRound(S32 num)
         this->currTask = 0;
         this->hitPoints = 9;
         this->gooLevel = 0;
-        this->gooHeight = this->gooLevel - f1046;
+        this->gooHeight = this->gooLevel - 0.5f;
         break;
     }
     case 2:
@@ -1729,7 +2101,7 @@ void zNPCBPatrick::gotoRound(S32 num)
         this->currTask = 0;
         this->hitPoints = 6;
         this->gooLevel = 0;
-        this->gooHeight = this->gooLevel - f1046;
+        this->gooHeight = this->gooLevel - 0.5f;
         break;
     }
     case 3:
@@ -1763,59 +2135,78 @@ void zNPCBPatrick::gotoRound(S32 num)
     }
 }
 
-// I think xPlatformAsset type might not be correct
-// WIP
 F32 zNPCBPatrick::ConveyorTimeLeft(zPlatform* platform, xVec3* vec_unk)
 {
-    xVec3 output;
+    xVec3 disp;
+    F32 edge;
 
-    F32 fVar1;
-
-    if (platform->passet->pad > f832)
+    if (platform->passet->cb.speed < 0.0f)
     {
-        fVar1 = platform->bound.box.center.x;
+        edge = platform->bound.box.box.lower.x;
     }
     else
     {
-        fVar1 = platform->bound.box.center.y;
+        edge = platform->bound.box.box.upper.x;
     }
 
-    xVec3Sub(&output, vec_unk, &platform->bound.box.center);
-    F32 dVar3 = xVec3Dot(&output, &platform->bound.box.center);
-    F32 dVar4 = xVec3Length2(&platform->bound.box.center);
+    xVec3Sub(&disp, vec_unk, &platform->bound.mat->pos);
 
-    return fVar1 - dVar3 / dVar4 / platform->passet->pad;
+    F32 dispX = xVec3Dot(&disp, (xVec3*)&platform->bound.mat->right);
+
+    dispX /= xVec3Length2((xVec3*)&platform->bound.mat->right);
+
+    return (edge - dispX) / platform->passet->cb.speed;
 }
 
 void zNPCBPatrick::ParabolaHitsConveyors(xParabola* path, xCollis* colls)
 {
-    /*
-        signed int i; // r13
-        signed int j; // r12
-        class xMat4x3 * mat; // r11
-        class xVec3 * lower; // r10
-        class xVec3 * upper; // r9
-        float a; // r10
-        float b; // r9
-        float det; // r4
-        float t[2]; // r29+0x18
-        float dispX; // r11
-        float dispZ; // r8
-    */
-
+    xVec3 pos;
+    xVec3 disp;
     F32 t[2];
 
     for (S32 i = 0; i < 7; i++)
     {
-        // This code is a mess, don't feel like working on this fn right now.
-        zPlatform* pzVar4 = this->conveyorBelt[i];
-        xVec3* pxVar3 = &pzVar4->bound.box.center;
-        F32 dVar7 = f1046 - path->gravity;
-        F32 dVar8 = path->initVel.y;
-        test(dVar8);
+        S32 j;
 
-        for (S32 j = 0; j < 2; j++)
+        xMat4x3* mat = this->conveyorBelt[i]->bound.mat;
+        xVec3* lower = &this->conveyorBelt[i]->bound.box.box.lower;
+        xVec3* upper = &this->conveyorBelt[i]->bound.box.box.upper;
+
+        F32 a = 0.5f * -path->gravity;
+        F32 b = path->initVel.y;
+        F32 det = b * b - 4.0f * a * (path->initPos.y - (mat->up.y * upper->y + mat->pos.y));
+
+        if (det < 0.0f)
         {
+            continue;
+        }
+
+        det = xsqrt(det);
+
+        t[0] = (-b + det) / (2.0f * a);
+        t[1] = (-b - det) / (2.0f * a);
+
+        for (j = 0; j < 2; j++)
+        {
+            if (t[j] >= path->minTime && t[j] < path->maxTime && t[j] < colls->dist)
+            {
+                xParabolaEvalPos(path, &pos, t[j]);
+                xVec3Sub(&disp, &pos, &mat->pos);
+
+                F32 dispX = xVec3Length2((xVec3*)&mat->right);
+                F32 dispZ = xVec3Length2((xVec3*)&mat->at);
+
+                dispX = xVec3Dot(&disp, (xVec3*)&mat->right) / dispX;
+                dispZ = xVec3Dot(&disp, (xVec3*)&mat->at) / dispZ;
+
+                if (dispX > lower->x && dispX < upper->x && dispZ > lower->z && dispZ < upper->z)
+                {
+                    colls->flags |= 1;
+                    xVec3Copy(&colls->tohit, &pos);
+                    colls->dist = t[j];
+                    colls->optr = this->conveyorBelt[i];
+                }
+            }
         }
     }
 }
@@ -1823,12 +2214,12 @@ void zNPCBPatrick::ParabolaHitsConveyors(xParabola* path, xCollis* colls)
 // not in PS2 dwarf
 void zNPCBPatrick::bossPatBoxCheckCollide(bossPatBox* box)
 {
-    if (box->flags & 1 && box->pos < f2215)
+    if (box->flags & 1 && box->pos < 8.5f)
     {
         F32 z = this->model->Mat->pos.z - box->box->model->Mat->pos.z;
         F32 x = this->model->Mat->pos.x - box->box->model->Mat->pos.x;
 
-        if (x * x + z * z < f1670)
+        if (x * x + z * z < 4.0f)
         {
             zShrapnelAsset* shrap = this->boxBreak;
 
@@ -1837,9 +2228,9 @@ void zNPCBPatrick::bossPatBoxCheckCollide(bossPatBox* box)
                 shrap->initCB(shrap, box->box->model, NULL, NULL);
             }
 
-            box->velocity = f832;
+            box->velocity = 0.0f;
             box->flags = 0;
-            box->pos = f1141 + box->minY;
+            box->pos = 20.0f + box->minY;
         }
     }
 }
@@ -1849,13 +2240,13 @@ void zNPCBPatrick::bossPatBoxUpdate(bossPatBox* bx, F32 dt)
 {
     if (bx->flags & 1)
     {
-        bx->velocity = -(f1055 * dt - bx->velocity);
+        bx->velocity = -(10.0f * dt - bx->velocity);
         bx->pos = bx->velocity * dt + bx->pos;
 
         if (bx->pos < this->gooHeight)
         {
             bx->pos = this->gooHeight;
-            bx->velocity = f832;
+            bx->velocity = 0.0f;
 
             if (!(bx->flags & 2))
             {
@@ -1866,12 +2257,12 @@ void zNPCBPatrick::bossPatBoxUpdate(bossPatBox* bx, F32 dt)
                     this->boxSplash->initCB(this->boxSplash, bx->box->model, NULL, NULL);
                 }
 
-                if (this->boxSplashSndTimer > f1046)
+                if (this->boxSplashSndTimer > 0.5f)
                 {
-                    xSndPlay3D(xStrHash("b201_box_splash"), f2256, f832, 0, 0,
-                               (xVec3*)&bx->box->model->Mat->pos, f891, f1659, SND_CAT_GAME, f832);
+                    xSndPlay3D(xStrHash("b201_box_splash"), 0.50049996f, 0.0f, 0, 0,
+                               (xVec3*)&bx->box->model->Mat->pos, 2.0f, 40.0f, SND_CAT_GAME, 0.0f);
 
-                    this->boxSplashSndTimer = f832;
+                    this->boxSplashSndTimer = 0.0f;
                 }
             }
         }
@@ -1883,14 +2274,14 @@ void zNPCBPatrick::bossPatBoxUpdate(bossPatBox* bx, F32 dt)
                 {
                     bx->flags |= 2;
 
-                    if (bx->minY > f2257 + this->gooHeight)
+                    if (bx->minY > 0.45f + this->gooHeight)
                     {
-                        if (this->boxLandSndTimer > f1046)
+                        if (this->boxLandSndTimer > 0.5f)
                         {
-                            xSndPlay3D(xStrHash("b201_box_splash"), f2256, f832, 0, 0,
-                                       (xVec3*)&bx->box->model->Mat->pos, f891, f1659, SND_CAT_GAME,
-                                       f832);
-                            this->boxLandSndTimer = f832;
+                            xSndPlay3D(xStrHash("b201_box_splash"), 0.50049996f, 0.0f, 0, 0,
+                                       (xVec3*)&bx->box->model->Mat->pos, 2.0f, 40.0f, SND_CAT_GAME,
+                                       0.0f);
+                            this->boxLandSndTimer = 0.0f;
                         }
 
                         if (this->boxSplash && this->boxSplash->initCB)
@@ -1898,18 +2289,18 @@ void zNPCBPatrick::bossPatBoxUpdate(bossPatBox* bx, F32 dt)
                             this->boxSplash->initCB(this->boxSplash, bx->box->model, NULL, NULL);
                         }
 
-                        if (this->boxSplashSndTimer > f1046)
+                        if (this->boxSplashSndTimer > 0.5f)
                         {
-                            xSndPlay3D(xStrHash("b201_box_landing"), f2256, f832, 0, 0,
-                                       (xVec3*)&bx->box->model->Mat->pos, f891, f1659, SND_CAT_GAME,
-                                       f832);
-                            this->boxSplashSndTimer = f832;
+                            xSndPlay3D(xStrHash("b201_box_landing"), 0.50049996f, 0.0f, 0, 0,
+                                       (xVec3*)&bx->box->model->Mat->pos, 2.0f, 40.0f, SND_CAT_GAME,
+                                       0.0f);
+                            this->boxSplashSndTimer = 0.0f;
                         }
                     }
                 }
 
                 bx->pos = bx->minY;
-                bx->velocity = f832;
+                bx->velocity = 0.0f;
             }
         }
 
@@ -1944,7 +2335,7 @@ static S32 idleCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
         *trantype = GOAL_TRAN_SET;
         nextgoal = NPC_GOAL_BOSSPATTAUNT;
     }
-    else if (idle->timeInGoal > f1676 && idle->timeInGoal > f891)
+    else if (idle->timeInGoal > 0.75f && idle->timeInGoal > 2.0f)
     {
         nextgoal = pat->nextGoal();
         *trantype = GOAL_TRAN_SET;
@@ -1965,7 +2356,7 @@ static S32 tauntCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
         return NPC_GOAL_BOSSPATIDLE;
     }
 
-    if (pat->AnimTimeRemain(NULL) < f2280 * dt)
+    if (pat->AnimTimeRemain(NULL) < 1.7f * dt)
     {
         pat->bossFlags &= 0xfffffffd;
         nextgoal = pat->nextGoal();
@@ -1987,7 +2378,7 @@ static S32 hitCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
         return NPC_GOAL_BOSSPATIDLE;
     }
 
-    if (pat->AnimTimeRemain(NULL) < f2280 * dt)
+    if (pat->AnimTimeRemain(NULL) < 1.7f * dt)
     {
         if (pat->round == 2)
         {
@@ -2016,7 +2407,7 @@ static S32 spitCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
         return NPC_GOAL_BOSSPATIDLE;
     }
 
-    if ((spit->stage == 1 || spit->stage == 2) && pat->AnimTimeRemain(NULL) < f2280 * dt)
+    if ((spit->stage == 1 || spit->stage == 2) && pat->AnimTimeRemain(NULL) < 1.7f * dt)
     {
         nextgoal = pat->nextGoal();
         *trantype = GOAL_TRAN_SET;
@@ -2036,7 +2427,7 @@ static S32 runCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
         return NPC_GOAL_BOSSPATIDLE;
     }
 
-    if (pat->AnimTimeRemain(NULL) < f2280 * dt)
+    if (pat->AnimTimeRemain(NULL) < 1.7f * dt)
     {
         nextgoal = pat->nextGoal();
         *trantype = GOAL_TRAN_SET;
@@ -2056,7 +2447,7 @@ static S32 smackCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
         return NPC_GOAL_BOSSPATIDLE;
     }
 
-    if (pat->AnimTimeRemain(NULL) < f2280 * dt)
+    if (pat->AnimTimeRemain(NULL) < 1.7f * dt)
     {
         nextgoal = pat->nextGoal();
         *trantype = GOAL_TRAN_SET;
@@ -2076,7 +2467,7 @@ static S32 freezeCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
         return NPC_GOAL_BOSSPATIDLE;
     }
 
-    if (pat->AnimTimeRemain(NULL) < f2280 * dt)
+    if (pat->AnimTimeRemain(NULL) < 1.7f * dt)
     {
         nextgoal = pat->nextGoal();
         *trantype = GOAL_TRAN_SET;
@@ -2097,7 +2488,7 @@ static S32 spawnCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
         return NPC_GOAL_BOSSPATIDLE;
     }
 
-    if (spawn->stage == 3 && pat->AnimTimeRemain(NULL) < f2280 * dt)
+    if (spawn->stage == 3 && pat->AnimTimeRemain(NULL) < 1.7f * dt)
     {
         nextgoal = pat->nextGoal();
         *trantype = GOAL_TRAN_SET;
@@ -2121,7 +2512,7 @@ static S32 spinCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
 
     if (spin->stage == 6)
     {
-        if (pat->AnimTimeRemain(NULL) < f2280 * dt)
+        if (pat->AnimTimeRemain(NULL) < 1.7f * dt)
         {
             nextgoal = pat->nextGoal();
             *trantype = GOAL_TRAN_SET;
@@ -2129,7 +2520,7 @@ static S32 spinCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
     }
     else if (spin->stage == 2 && pat->bossFlags & 2)
     {
-        if (pat->AnimTimeRemain(NULL) < f2280 * dt)
+        if (pat->AnimTimeRemain(NULL) < 1.7f * dt)
         {
             nextgoal = NPC_GOAL_BOSSPATTAUNT;
             *trantype = GOAL_TRAN_SET;
@@ -2196,7 +2587,7 @@ static S32 fudgeCB(xGoal* rawgoal, void*, en_trantype* trantype, F32 dt, void*)
         return NPC_GOAL_BOSSPATIDLE;
     }
 
-    if (fudge->stage == 6 && pat->AnimTimeRemain(NULL) < f2280 * dt)
+    if (fudge->stage == 6 && pat->AnimTimeRemain(NULL) < 1.7f * dt)
     {
         nextgoal = pat->nextGoal();
         *trantype = GOAL_TRAN_SET;
@@ -2212,7 +2603,7 @@ static S32 Pat_FaceTarget(zNPCBPatrick* pat, const xVec3* target, F32 turn_rate,
 
     xVec3Sub(&newAt, target, (xVec3*)&pat->model->Mat->pos);
 
-    newAt.y = f832;
+    newAt.y = 0.0f;
     F32 a = xVec3Normalize(&newAt, &newAt);
 
     F32 currRot = xatan2(pat->model->Mat->at.x, pat->model->Mat->at.z);
@@ -2220,14 +2611,14 @@ static S32 Pat_FaceTarget(zNPCBPatrick* pat, const xVec3* target, F32 turn_rate,
 
     F32 diffRot = desireRot - currRot;
 
-    if (diffRot > f1140)
+    if (diffRot > 3.1415927f)
     {
-        diffRot -= f1666;
+        diffRot -= 6.2831855f;
     }
 
-    if (diffRot < f2405)
+    if (diffRot < -3.1415927f)
     {
-        diffRot += f1666;
+        diffRot += 6.2831855f;
     }
 
     F32 deltaRot = turn_rate * dt;
@@ -2239,7 +2630,7 @@ static S32 Pat_FaceTarget(zNPCBPatrick* pat, const xVec3* target, F32 turn_rate,
     }
     else
     {
-        if (diffRot < f832)
+        if (diffRot < 0.0f)
         {
             deltaRot = -deltaRot;
             retval = 1;
@@ -2248,7 +2639,7 @@ static S32 Pat_FaceTarget(zNPCBPatrick* pat, const xVec3* target, F32 turn_rate,
         desireRot = currRot + deltaRot;
         deltaRot = isin(currRot + deltaRot);
         pat->frame->mat.at.x = deltaRot;
-        pat->frame->mat.at.y = f832;
+        pat->frame->mat.at.y = 0.0f;
         deltaRot = icos(desireRot);
         pat->frame->mat.at.z = deltaRot;
     }
@@ -2274,7 +2665,7 @@ void zNPCBPatrick::hiddenByCutscene()
     {
         this->underwear[i]->state = this->underwear[i]->state & ~0x3F | 1;
         zEntEvent(this->underwear[i], eEventCollision_Visible_On);
-        this->underwear[i]->timer = f832;
+        this->underwear[i]->timer = 0.0f;
     }
 
     switch (this->round)
@@ -2290,15 +2681,15 @@ void zNPCBPatrick::hiddenByCutscene()
             for (S32 j = 0; j < 6; j++)
             {
                 bossPatBox* bx = &this->box[i][j];
-                bx->velocity = f832;
+                bx->velocity = 0.0f;
                 bx->flags = 0;
-                bx->pos = f1141 + bx->minY;
+                bx->pos = 20.0f + bx->minY;
             }
         }
 
-        this->backBox.velocity = f832;
+        this->backBox.velocity = 0.0f;
         this->backBox.flags = 0;
-        this->backBox.pos = f1141 + this->backBox.minY;
+        this->backBox.pos = 20.0f + this->backBox.minY;
 
         break;
     }
@@ -2321,15 +2712,15 @@ void zNPCBPatrick::hiddenByCutscene()
             for (S32 j = 0; j < 6; j++)
             {
                 bossPatBox* bx = &this->box[i][j];
-                bx->velocity = f832;
+                bx->velocity = 0.0f;
                 bx->flags = 0;
-                bx->pos = f1141 + bx->minY;
+                bx->pos = 20.0f + bx->minY;
             }
         }
 
-        this->backBox.velocity = f832;
+        this->backBox.velocity = 0.0f;
         this->backBox.flags = 0;
-        this->backBox.pos = f1141 + this->backBox.minY;
+        this->backBox.pos = 20.0f + this->backBox.minY;
 
         xEntHide(this->fudgeHandle);
 
@@ -2383,9 +2774,9 @@ void zNPCBPatrick_AddBoundEntsToGrid(zScene* scn)
 S32 zNPCGoalBossPatIdle::Enter(F32 dt, void* unk)
 {
     zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
-    this->timeInGoal = f832;
+    this->timeInGoal = 0.0f;
     pat->bossFlags |= 0x20;
-    xVec3Init(&pat->frame->vel, f832, f832, f832);
+    xVec3Init(&pat->frame->vel, 0.0f, 0.0f, 0.0f);
     return zNPCGoalCommon::Enter(dt, unk);
 }
 
@@ -2393,7 +2784,7 @@ S32 zNPCGoalBossPatIdle::Process(en_trantype* trantype, F32 dt, void* ctxt, xSce
 {
     zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
     this->timeInGoal += dt;
-    Pat_FaceTarget(pat, (xVec3*)&globals.player.ent.model->Mat->pos, f1673, dt);
+    Pat_FaceTarget(pat, (xVec3*)&globals.player.ent.model->Mat->pos, 1.5707964f, dt);
     return xGoal::Process(trantype, dt, ctxt, scene);
 }
 
@@ -2402,21 +2793,21 @@ S32 zNPCGoalBossPatTaunt::Enter(F32 dt, void* updCtxt)
     zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
 
     pat->bossFlags &= 0xfffffffd;
-    this->timeInGoal = f832;
+    this->timeInGoal = 0.0f;
     pat->bossFlags |= 0x20;
 
-    xSndPlay3D(xStrHash("b201_rp_chestbang1"), f1671, f832, 0, 0, pat, f1142, f1659, SND_CAT_GAME,
-               f2423);
-    xSndPlay3D(xStrHash("b201_rp_chestbang2"), f1671, f832, 0, 0, pat, f1142, f1659, SND_CAT_GAME,
-               f2424);
-    xSndPlay3D(xStrHash("b201_rp_chestbang3"), f1671, f832, 0, 0, pat, f1142, f1659, SND_CAT_GAME,
-               f2425);
-    xSndPlay3D(xStrHash("b201_rp_chestbang4"), f1671, f832, 0, 0, pat, f1142, f1659, SND_CAT_GAME,
-               f2426);
-    xSndPlay3D(xStrHash("b201_rp_chestbang5"), f1671, f832, 0, 0, pat, f1142, f1659, SND_CAT_GAME,
-               f2427);
-    xSndPlay3D(xStrHash("b201_rp_chestbang6"), f1671, f832, 0, 0, pat, f1142, f1659, SND_CAT_GAME,
-               f2428);
+    xSndPlay3D(xStrHash("b201_rp_chestbang1"), 0.77f, 0.0f, 0, 0, pat, 15.0f, 40.0f, SND_CAT_GAME,
+               0.4f);
+    xSndPlay3D(xStrHash("b201_rp_chestbang2"), 0.77f, 0.0f, 0, 0, pat, 15.0f, 40.0f, SND_CAT_GAME,
+               0.8f);
+    xSndPlay3D(xStrHash("b201_rp_chestbang3"), 0.77f, 0.0f, 0, 0, pat, 15.0f, 40.0f, SND_CAT_GAME,
+               1.2f);
+    xSndPlay3D(xStrHash("b201_rp_chestbang4"), 0.77f, 0.0f, 0, 0, pat, 15.0f, 40.0f, SND_CAT_GAME,
+               1.5f);
+    xSndPlay3D(xStrHash("b201_rp_chestbang5"), 0.77f, 0.0f, 0, 0, pat, 15.0f, 40.0f, SND_CAT_GAME,
+               1.8f);
+    xSndPlay3D(xStrHash("b201_rp_chestbang6"), 0.77f, 0.0f, 0, 0, pat, 15.0f, 40.0f, SND_CAT_GAME,
+               2.1f);
 
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
@@ -2425,7 +2816,7 @@ S32 zNPCGoalBossPatTaunt::Process(en_trantype* trantype, F32 dt, void* ctxt, xSc
 {
     zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
     this->timeInGoal += dt;
-    Pat_FaceTarget(pat, (xVec3*)&globals.player.ent.model->Mat->pos, f1673, dt);
+    Pat_FaceTarget(pat, (xVec3*)&globals.player.ent.model->Mat->pos, 1.5707964f, dt);
     return xGoal::Process(trantype, dt, ctxt, scene);
 }
 
@@ -2440,20 +2831,20 @@ S32 zNPCGoalBossPatHit::Enter(F32 dt, void* updCtxt)
     sPat_Ptr->boundList[2]->chkby &= 0xef;
     sPat_Ptr->boundList[3]->chkby &= 0xef;
 
-    this->timeInGoal = f832;
+    this->timeInGoal = 0.0f;
 
-    xSndPlay3D(xStrHash("b201_rp_hurt_jump"), f1671, f832, 0, 0, pat, f1142, f1659, SND_CAT_GAME,
-               f832);
+    xSndPlay3D(xStrHash("b201_rp_hurt_jump"), 0.77f, 0.0f, 0, 0, pat, 15.0f, 40.0f, SND_CAT_GAME,
+               0.0f);
 
     if (xrand() & 0x20000)
     {
-        xSndPlay3D(xStrHash("b201_rp_hurt_talk"), f1671, f832, 0, 0, pat, f1142, f1659,
-                   SND_CAT_GAME, f832);
+        xSndPlay3D(xStrHash("b201_rp_hurt_talk"), 0.77f, 0.0f, 0, 0, pat, 15.0f, 40.0f,
+                   SND_CAT_GAME, 0.0f);
     }
     else
     {
-        xSndPlay3D(xStrHash("b201_rp_hurt_talk_alt"), f1671, f832, 0, 0, pat, f1142, f1659,
-                   SND_CAT_GAME, f832);
+        xSndPlay3D(xStrHash("b201_rp_hurt_talk_alt"), 0.77f, 0.0f, 0, 0, pat, 15.0f, 40.0f,
+                   SND_CAT_GAME, 0.0f);
     }
 
     return zNPCGoalCommon::Enter(dt, updCtxt);
@@ -2463,7 +2854,7 @@ S32 zNPCGoalBossPatHit::Process(en_trantype* trantype, F32 dt, void* ctxt, xScen
 {
     zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
     this->timeInGoal += dt;
-    Pat_FaceTarget(pat, (xVec3*)&globals.player.ent.model->Mat->pos, f1673, dt);
+    Pat_FaceTarget(pat, (xVec3*)&globals.player.ent.model->Mat->pos, 1.5707964f, dt);
     return xGoal::Process(trantype, dt, ctxt, scene);
 }
 
@@ -2483,8 +2874,8 @@ S32 zNPCGoalBossPatSpit::Enter(F32 dt, void* updCtxt)
 {
     zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
 
-    this->timeInGoal = f832;
-    this->timeLeftToSpit = f831;
+    this->timeInGoal = 0.0f;
+    this->timeLeftToSpit = 1.0f;
     this->stage = 0;
 
     pat->bossFlags |= 0x20;
@@ -2505,22 +2896,22 @@ S32 zNPCGoalBossPatSpit::Process(en_trantype* trantype, F32 dt, void* updCtxt, x
     zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
     this->timeInGoal += dt;
 
-    S32 bVar5 = (this->timeLeftToSpit < f832) ? 0 : 1;
+    S32 bVar5 = (this->timeLeftToSpit < 0.0f) ? 0 : 1;
 
-    F32 leadTime = f831;
+    F32 leadTime = 1.0f;
 
     switch (this->stage)
     {
     case 0:
     {
-        leadTime += f2512 + pat->AnimTimeRemain(NULL);
+        leadTime += 0.35f + pat->AnimTimeRemain(NULL);
 
-        if (pat->AnimTimeRemain(NULL) < f2280 * dt)
+        if (pat->AnimTimeRemain(NULL) < 1.7f * dt)
         {
             this->stage = 1;
-            this->timeLeftToSpit = f2512;
+            this->timeLeftToSpit = 0.35f;
             this->DoAutoAnim(NPC_GSPOT_START, 0);
-            this->timeInGoal = f832;
+            this->timeInGoal = 0.0f;
         }
 
         break;
@@ -2529,7 +2920,7 @@ S32 zNPCGoalBossPatSpit::Process(en_trantype* trantype, F32 dt, void* updCtxt, x
     {
         this->timeLeftToSpit -= dt;
 
-        if (this->timeLeftToSpit >= f832)
+        if (this->timeLeftToSpit >= 0.0f)
         {
             leadTime += this->timeLeftToSpit;
         }
@@ -2540,7 +2931,7 @@ S32 zNPCGoalBossPatSpit::Process(en_trantype* trantype, F32 dt, void* updCtxt, x
     {
         this->timeLeftToSpit -= dt;
 
-        if (this->timeLeftToSpit >= f832)
+        if (this->timeLeftToSpit >= 0.0f)
         {
             leadTime += this->timeLeftToSpit;
         }
@@ -2549,36 +2940,36 @@ S32 zNPCGoalBossPatSpit::Process(en_trantype* trantype, F32 dt, void* updCtxt, x
     }
     }
 
-    zEntPlayer_PredictPos(&futurePos, leadTime, f831, true);
-    Pat_FaceTarget(pat, &futurePos, f1673, dt);
+    zEntPlayer_PredictPos(&futurePos, leadTime, 1.0f, true);
+    Pat_FaceTarget(pat, &futurePos, 1.5707964f, dt);
 
-    if (bVar5 && this->timeLeftToSpit < f832)
+    if (bVar5 && this->timeLeftToSpit < 0.0f)
     {
         bossPatGlob* glob = pat->getNextFreeGlob();
-        glob->t = f832;
-        glob->path.minTime = f832;
+        glob->t = 0.0f;
+        glob->path.minTime = 0.0f;
         leadTime = xurand();
-        glob->path.maxTime = f1678 * leadTime + f831;
-        glob->path.gravity = f1055;
+        glob->path.maxTime = 0.33f * leadTime + 1.0f;
+        glob->path.gravity = 10.0f;
 
-        xVec3Init(&offset, f832, f832, f832);
+        xVec3Init(&offset, 0.0f, 0.0f, 0.0f);
         GetBonePos(&upperLip, (xMat4x3*)pat->model->Mat, sBone[1], &offset);
         GetBonePos(&lowerLip, (xMat4x3*)pat->model->Mat, sBone[2], &offset);
 
-        xVec3Init(&offset, f831, f832, f832);
+        xVec3Init(&offset, 1.0f, 0.0f, 0.0f);
         GetBonePos(&lowerLipRight, (xMat4x3*)pat->model->Mat, sBone[2], &offset);
         xVec3SubFrom(&lowerLipRight, &lowerLip);
         xVec3Normalize(&lowerLipRight, &lowerLipRight);
-        xVec3SMul(&glob->path.initPos, &upperLip, f1046);
+        xVec3SMul(&glob->path.initPos, &upperLip, 0.5f);
         xVec3Copy(&glob->lastPos, &glob->path.initPos);
-        xVec3AddScaled(&glob->path.initPos, &lowerLip, f1046);
+        xVec3AddScaled(&glob->path.initPos, &lowerLip, 0.5f);
 
-        F32 t = f831;
+        F32 t = 1.0f;
 
         glob->path.initVel.x = t * (futurePos.x - glob->path.initPos.x);
         glob->path.initVel.z = t * (futurePos.z - glob->path.initPos.z);
         glob->path.initVel.y =
-            f1046 * glob->path.gravity + t * (futurePos.y - glob->path.initPos.y);
+            0.5f * glob->path.gravity + t * (futurePos.y - glob->path.initPos.y);
 
         leadTime = xVec3Dot(&lowerLipRight, &glob->path.initVel);
         xVec3AddScaled(&glob->path.initVel, &lowerLipRight, -leadTime);
@@ -2600,29 +2991,29 @@ S32 zNPCGoalBossPatSpit::Process(en_trantype* trantype, F32 dt, void* updCtxt, x
             glob->path.maxTime = colls.dist;
             glob->flags |= 2;
 
-            if (colls.tohit.x < f1679 && colls.tohit.x > f1680 && colls.tohit.z > f1681)
+            if (colls.tohit.x < 18.5f && colls.tohit.x > -18.5f && colls.tohit.z > -20.0f)
             {
                 glob->flags |= 8;
-                xVec3Init(&glob->norm, f832, f831, f832);
+                xVec3Init(&glob->norm, 0.0f, 1.0f, 0.0f);
                 glob->conv = (zPlatform*)colls.optr;
                 xVec3SMul(&glob->convVel, &glob->conv->bound.mat->right,
                           glob->conv->passet->cb.speed);
             }
             else
             {
-                xVec3Init(&glob->norm, f832, f870, f832);
+                xVec3Init(&glob->norm, 0.0f, -1.0f, 0.0f);
             }
         }
 
         if (xrand() & 0x20000)
         {
-            xSndPlay3D(xStrHash("b201_rp_spit"), f1671, f832, 0, 0, &glob->path.initPos, f1142,
-                       f1659, SND_CAT_GAME, f832);
+            xSndPlay3D(xStrHash("b201_rp_spit"), 0.77f, 0.0f, 0, 0, &glob->path.initPos, 15.0f,
+                       40.0f, SND_CAT_GAME, 0.0f);
         }
         else
         {
-            xSndPlay3D(xStrHash("b201_rp_spitalt"), f1671, f832, 0, 0, &glob->path.initPos, f1142,
-                       f1659, SND_CAT_GAME, f832);
+            xSndPlay3D(xStrHash("b201_rp_spitalt"), 0.77f, 0.0f, 0, 0, &glob->path.initPos, 15.0f,
+                       40.0f, SND_CAT_GAME, 0.0f);
         }
     }
 
@@ -2633,12 +3024,12 @@ S32 zNPCGoalBossPatRun::Enter(F32 dt, void* unk)
 {
     zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
 
-    this->timeInGoal = f832;
+    this->timeInGoal = 0.0f;
 
     U32 hash = xStrHash("b201_rp_run_loop");
 
     this->runSndID =
-        xSndPlay3D(hash, f1671, f832, (U32)0, (U32)0, pat, f891, f1659, SND_CAT_GAME, f832);
+        xSndPlay3D(hash, 0.77f, 0.0f, (U32)0, (U32)0, pat, 2.0f, 40.0f, SND_CAT_GAME, 0.0f);
 
     pat->bossFlags |= 0x20;
 
@@ -2665,8 +3056,8 @@ S32 zNPCGoalBossPatSmack::Enter(F32 dt, void* unk)
 {
     zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
 
-    this->timeInGoal = f832;
-    this->globNum = f832;
+    this->timeInGoal = 0.0f;
+    this->globNum = 0.0f;
 
     pat->bossFlags |= 0x20;
     pat->numMissesInARow++;
@@ -2685,82 +3076,68 @@ S32 zNPCGoalBossPatSmack::Process(en_trantype* trantype, F32 dt, void* updCtxt, 
         signed int numGlobs; // r17
         class xCollis colls; // r29+0xB0
     */
+    S32 i;
+    zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
+    S32 playSmack;
     xVec3 offset;
     xVec3 cone;
+    S32 numGlobs;
     xCollis colls;
 
-    zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
+    playSmack = 0;
 
-    S32 playSmack = 0;
-
-    if (this->timeInGoal <= f1675)
+    if (this->timeInGoal <= 0.65f)
     {
         playSmack = 1;
     }
 
     this->timeInGoal += dt;
 
-    Pat_FaceTarget(pat, (xVec3*)&globals.player.ent.model->Mat->pos, f1673, dt);
+    Pat_FaceTarget(pat, (xVec3*)&globals.player.ent.model->Mat->pos, 1.5707964f, dt);
 
-    if ((this->timeInGoal > f1675) && this->timeInGoal < f831)
+    if ((this->timeInGoal > 0.65f) && this->timeInGoal < 1.0f)
     {
-        xVec3Init(&offset, f832, f832, f832);
-        GetBonePos(&cone, (xMat4x3*)pat->model->Mat, sBone[9], &offset);
+        xVec3Init(&offset, 0.0f, 0.0f, 0.0f);
+        GetBonePos(&cone, (xMat4x3*)pat->model->Mat, sBone[3], &offset);
 
         if (playSmack)
         {
-            xSndPlay3D(xStrHash("b201_rp_smack"), f1671, f832, 0, 0, &cone, f1142, f1659,
-                       SND_CAT_GAME, f832);
+            xSndPlay3D(xStrHash("b201_rp_smack"), 0.77f, 0.0f, 0, 0, &cone, 15.0f, 40.0f,
+                       SND_CAT_GAME, 0.0f);
         }
 
-        S32 numGlobs = 0x4330;
-        // F32 rand = xurand();
-
-        // lines 114-170 (objdiff) are super confusing for me
-        F32 f1 = xurand();
-        F32 f0 = f1046;
-        F32 f2 = f1056;
-
-        f1 = f0 + f1;
-
-        f0 = this->globNum;
-        f1 = f2 * f1;
-        f0 = dt * f1 + f0;
-        this->globNum = f0;
-        // A * C + B
-
-        f2 = this->globNum;
-        f1 = f875;
+        this->globNum += dt * (50.0f * (0.5f + xurand()));
 
         numGlobs = this->globNum;
 
-        // this->globNum = f1056 * (f1046 * xurand()) + this->globNum;
+        this->globNum -= numGlobs;
 
-        for (S32 i = 0; i < numGlobs; i++)
+        for (i = 0; i < numGlobs; i++)
         {
             bossPatGlob* glob = pat->getNextFreeGlob();
-            glob->t = f832;
-            glob->path.gravity = f832;
-            glob->path.maxTime = f1678 * xurand() + f831;
-            glob->path.gravity = f1055;
+
+            glob->t = 0.0f;
+            glob->path.minTime = 0.0f;
+            glob->path.maxTime = 0.33f * xurand() + 1.0f;
+            glob->path.gravity = 10.0f;
 
             xVec3Copy(&glob->path.initPos, &cone);
             xVec3Copy(&glob->lastPos, &glob->path.initPos);
-            xVec3Copy(&glob->path.initPos, (xVec3*)&pat->model->Mat->at);
+            xVec3Copy(&glob->path.initVel, (xVec3*)&pat->model->Mat->at);
 
-            xVec3AddScaled(&glob->path.initPos, (xVec3*)&pat->model->Mat->right,
-                           f1676 * xurand() - f1046);
+            xVec3AddScaled(&glob->path.initVel, (xVec3*)&pat->model->Mat->right,
+                           0.75f * (xurand() - 0.5f));
 
-            glob->path.initPos.x *= f1049 * (xurand() + f891);
-            glob->path.initPos.y *= f1670 * (xurand() + f891);
-            glob->path.initPos.z *= f1049 * (xurand() + f891);
+            glob->path.initVel.x *= 5.0f * xurand() + 2.0f;
+            glob->path.initVel.y += 4.0f * xurand() + 3.0f;
+            glob->path.initVel.z *= 5.0f * xurand() + 2.0f;
 
             xParabolaHitsEnv(&glob->path, globals.sceneCur->env, &colls);
 
             if (colls.flags & 1)
             {
                 glob->path.maxTime = colls.dist;
-                xVec3Copy(&glob->norm, &cone);
+                xVec3Copy(&glob->norm, &colls.norm);
                 glob->flags |= 2;
             }
 
@@ -2773,10 +3150,10 @@ S32 zNPCGoalBossPatSmack::Process(en_trantype* trantype, F32 dt, void* updCtxt, 
                 glob->path.maxTime = colls.dist;
                 glob->flags |= 2;
 
-                if (colls.tohit.x < f1679 && colls.tohit.x > f1680 && colls.tohit.z > f1681)
+                if (colls.tohit.x < 18.5f && colls.tohit.x > -18.5f && colls.tohit.z > -20.0f)
                 {
                     glob->flags |= 8;
-                    xVec3Init(&glob->norm, f832, f831, f832);
+                    xVec3Init(&glob->norm, 0.0f, 1.0f, 0.0f);
                     glob->conv = (zPlatform*)colls.optr;
 
                     xVec3SMul(&glob->convVel, (xVec3*)&glob->conv->bound.mat->right,
@@ -2784,7 +3161,7 @@ S32 zNPCGoalBossPatSmack::Process(en_trantype* trantype, F32 dt, void* updCtxt, 
                 }
                 else
                 {
-                    xVec3Init(&glob->norm, f832, f870, f832);
+                    xVec3Init(&glob->norm, 0.0f, -1.0f, 0.0f);
                 }
             }
         }
@@ -2803,7 +3180,7 @@ void StartFreezeBreath()
     pat->parList[3] = NULL;
 
     pat->numParticles = 0;
-    pat->particleTimer = f832;
+    pat->particleTimer = 0.0f;
 }
 
 void EmitFreezeBreath(xVec3* pos, xVec3* vel, F32 dt, F32 elapsed, F32 total)
@@ -2816,15 +3193,15 @@ void EmitFreezeBreath(xVec3* pos, xVec3* vel, F32 dt, F32 elapsed, F32 total)
     F32 x = pat->freezeBreathSetting.vel.x;
     F32 z = pat->freezeBreathSetting.vel.z;
     F32 dVar6 = xsqrt(x * x + z * z);
-    pat->freezeBreathSetting.vel.y = f2596 * dVar6;
+    pat->freezeBreathSetting.vel.y = -0.08f * dVar6;
 
     dVar6 = xVec3Length(&pat->freezeBreathSetting.vel);
-    xVec3SMulBy(&pat->freezeBreathSetting.vel, f2597 / dVar6);
+    xVec3SMulBy(&pat->freezeBreathSetting.vel, 25.0f / dVar6);
 
     pat->lastEmitted =
         xParEmitterEmitCustom(pat->freezeBreathEmitter, dt, &pat->freezeBreathSetting);
 
-    if (pat->numParticles < 4 && (elapsed / total) > pat->numParticles / f1051 && pat->lastEmitted)
+    if (pat->numParticles < 4 && (elapsed / total) > pat->numParticles / 3.0f && pat->lastEmitted)
     {
         pat->parList[pat->numParticles] = pat->lastEmitted;
         pat->numParticles++;
@@ -2848,14 +3225,14 @@ S32 zNPCGoalBossPatFreeze::Enter(F32 dt, void* updCtxt)
 {
     zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
 
-    this->timeInGoal = f832;
+    this->timeInGoal = 0.0f;
 
     StartFreezeBreath();
 
     pat->bossFlags |= 0x20;
 
-    xSndPlay3D(xStrHash("b201_rp_inhale"), f2610, f832, 0, 0, pat, f1142, f1659, SND_CAT_GAME,
-               f832);
+    xSndPlay3D(xStrHash("b201_rp_inhale"), 0.6545f, 0.0f, 0, 0, pat, 15.0f, 40.0f, SND_CAT_GAME,
+               0.0f);
 
     return zNPCGoalCommon::Enter(dt, updCtxt);
 }
@@ -2871,34 +3248,34 @@ S32 zNPCGoalBossPatFreeze::Process(en_trantype* trantype, F32 dt, void* updCtxt,
 
     S32 playFreeze = 0;
 
-    if (this->timeInGoal < f1663)
+    if (this->timeInGoal < 1.25f)
     {
         playFreeze = 1;
     }
 
     this->timeInGoal += dt;
 
-    Pat_FaceTarget(pat, (xVec3*)&globals.player.ent.model->Mat->pos, f2629, dt);
+    Pat_FaceTarget(pat, (xVec3*)&globals.player.ent.model->Mat->pos, 0.7853982f, dt);
 
-    if (!(this->timeInGoal < f1663))
+    if (!(this->timeInGoal < 1.25f))
     {
-        if (this->timeInGoal < f2630)
+        if (this->timeInGoal < 1.75f)
         {
             if (playFreeze)
             {
-                xSndPlay3D(xStrHash("b201_rp_exhale"), f1671, f832, 0, 0, pat, f1142, f1659,
-                           SND_CAT_GAME, f832);
+                xSndPlay3D(xStrHash("b201_rp_exhale"), 0.77f, 0.0f, 0, 0, pat, 15.0f, 40.0f,
+                           SND_CAT_GAME, 0.0f);
             }
 
-            xVec3Init(&offset, f832, f832, f832);
+            xVec3Init(&offset, 0.0f, 0.0f, 0.0f);
             GetBonePos(&pos, (xMat4x3*)pat->model->Mat, sBone[2], &offset);
             GetBonePos(&lip, (xMat4x3*)pat->model->Mat, sBone[1], &offset);
             xVec3AddTo(&pos, &lip);
-            xVec3SMulBy(&pos, f1046);
-            xVec3Init(&offset, f832, f832, f831);
+            xVec3SMulBy(&pos, 0.5f);
+            xVec3Init(&offset, 0.0f, 0.0f, 1.0f);
             GetBonePos(&vel, (xMat4x3*)pat->model->Mat, sBone[1], &offset);
             xVec3SubFrom(&vel, &pos);
-            EmitFreezeBreath(&pos, &vel, dt, this->timeInGoal - f1663, f1046);
+            EmitFreezeBreath(&pos, &vel, dt, this->timeInGoal - 1.25f, 0.5f);
         }
         else
         {
@@ -2916,7 +3293,7 @@ S32 zNPCGoalBossPatSpawn::Enter(F32 dt, void* updCtxt)
 {
     zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
 
-    this->timeInGoal = f832;
+    this->timeInGoal = 0.0f;
     this->stage = 1;
     pat->bossFlags |= 0x20;
 
@@ -2932,11 +3309,11 @@ S32 zNPCGoalBossPatSpawn::Process(en_trantype* trantype, F32 dt, void* updCtxt, 
 
     this->timeInGoal += dt;
 
-    Pat_FaceTarget(pat, (xVec3*)&globals.player.ent.model->Mat->pos, f2629, dt);
+    Pat_FaceTarget(pat, (xVec3*)&globals.player.ent.model->Mat->pos, 0.7853982f, dt);
 
     F32 animTime = pat->model->Anim->Single->Time;
 
-    if (this->stage == 2 && animTime < f2630)
+    if (this->stage == 2 && animTime < 1.75f)
     {
         this->stage = 1;
     }
@@ -2956,7 +3333,7 @@ S32 zNPCGoalBossPatSpawn::Process(en_trantype* trantype, F32 dt, void* updCtxt, 
         }
 
         pat->chuckFlags[i] &= 0xfffffffe;
-        xVec3Init(&offset, f832, f832, f832);
+        xVec3Init(&offset, 0.0f, 0.0f, 0.0f);
         GetBonePos(&spawnPos, (xMat4x3*)pat->model->Mat, sBone[9], &offset);
         pat->chuckList[i]->Respawn(&spawnPos, pat->chuckMovePoint[i], NULL);
 
@@ -2998,80 +3375,85 @@ S32 zNPCGoalBossPatSpin::Enter(F32 dt, void* updCtxt)
     xVec3 center;
     xVec3 cone;
     xVec3 unk;
+    F32 param1;
+    F32 param2;
+    F32 det;
+    S32 i;
+    F32 a;
+    F32 b;
 
     zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
 
     this->stage = 0;
 
-    xSndPlay3D(xStrHash("b201_rp_spin_start"), f1671, f832, 0, 0, pat, f1142, f1659, SND_CAT_GAME,
-               f832);
+    xSndPlay3D(xStrHash("b201_rp_spin_start"), 0.77f, 0.0f, 0, 0, pat, 15.0f, 40.0f, SND_CAT_GAME,
+               0.0f);
 
     pat->bossFlags &= 0xfffffffd;
 
-    xVec3SMul(&this->vel, (xVec3*)&pat->model->Mat->right, f1053);
-    this->vel.y = f832;
+    xVec3SMul(&this->vel, (xVec3*)&pat->model->Mat->right, 12.0f);
+    this->vel.y = 0.0f;
 
-    if (this->vel.x<f1670&& this->vel.x> f2696)
+    if (this->vel.x<4.0f&& this->vel.x> -4.0f)
     {
-        this->vel.x = f1670;
+        this->vel.x = 4.0f;
     }
-    if (this->vel.z<f1670&& this->vel.z> f2696)
+    if (this->vel.z<4.0f&& this->vel.z> -4.0f)
     {
-        this->vel.z = f1670;
+        this->vel.z = 4.0f;
     }
 
     F32 dVar7 = xVec3Length(&this->vel);
-    xVec3SMulBy(&this->vel, f1053 / dVar7);
+    xVec3SMulBy(&this->vel, 12.0f / dVar7);
 
-    this->timeInGoal = f832;
+    this->timeInGoal = 0.0f;
     pat->bossFlags &= 0xffffffdf;
 
-    xVec3Init(&offset, f832, f832, f832);
+    xVec3Init(&offset, 0.0f, 0.0f, 0.0f);
     GetBonePos(&center, (xMat4x3*)pat->model->Mat, sBone[0], &offset);
     GetBonePos(&cone, (xMat4x3*)pat->model->Mat, sBone[3], &offset);
-    offset.z = f870;
+    offset.z = -1.0f;
     GetBonePos(&back, (xMat4x3*)pat->model->Mat, sBone[0], &offset);
     xVec3SubFrom(&back, &center);
-    back.y = f832;
+    back.y = 0.0f;
     xVec3Normalize(&back, &back);
 
-    F32 dVar9 = back.x * back.x + back.z * back.z;
-    F32 dVar8 = f891 * (cone.x * back.x + cone.z * back.z);
-    F32 dVar5 = f832;
-    F32 fVar1 = (dVar8 * dVar8 - ((f1670 * dVar9) * ((cone.x * cone.x + cone.z * cone.z) - f2697)));
-    dVar7 = dVar5;
+    a = back.x * back.x + back.z * back.z;
+    b = 2.0f * (cone.x * back.x + cone.z * back.z);
+    det = b * b - 4.0f * a * ((cone.x * cone.x + cone.z * cone.z) - 300.0f);
 
-    if (dVar5 >= fVar1)
+    if (det >= 0.0f)
     {
-        dVar7 = xsqrt(fVar1);
-        dVar5 = (-dVar8 - dVar7) / (f891 * dVar9);
-        dVar7 = (-dVar8 + dVar7) / (f891 * dVar9);
+        det = xsqrt(det);
+
+        param1 = (-b + det) / (2.0f * a);
+        param2 = (-b - det) / (2.0f * a);
     }
     else
     {
-        dVar7 = dVar5;
+        param1 = 0.0f;
+        param2 = 0.0f;
     }
 
-    if (dVar7 > dVar5)
+    if (param2 > param1)
     {
-        dVar7 = dVar5;
+        param1 = param2;
     }
 
     xVec3Copy(&this->pole[0], &cone);
-    xVec3AddScaled(&this->pole[0], &back, dVar7);
+    xVec3AddScaled(&this->pole[0], &back, param1);
 
-    this->pole[0].y = f832;
-    xVec3Init(&unk, this->pole[0].z, f832, -this->pole[0].x);
+    this->pole[0].y = 0.0f;
 
-    U32 uVar3 = 1;
-    for (S32 i = 0; i < 4; i++)
+    xVec3Init(&unk, this->pole[0].z, 0.0f, -this->pole[0].x);
+
+    for (i = 1; i < 4; i++)
     {
-        fVar1 = f1666 * uVar3++ * 1664;
-        dVar5 = fVar1;
-        dVar7 = icos(fVar1);
-        xVec3SMul(&this->pole[i], &this->pole[i], dVar7);
-        dVar7 = isin(dVar5);
-        xVec3AddScaled(&this->pole[i], &unk, dVar7);
+        det = 6.2831855f * i;
+        det *= 0.25f;
+
+        xVec3SMul(&this->pole[i], &this->pole[0], icos(det));
+        xVec3AddScaled(&this->pole[i], &unk, isin(det));
     }
 
     this->currPole = 0;
@@ -3082,28 +3464,16 @@ S32 zNPCGoalBossPatSpin::Enter(F32 dt, void* updCtxt)
 
 S32 zNPCGoalBossPatSpin::Process(en_trantype* trantype, F32 dt, void* ctxt, xScene* scene)
 {
-    /*
-        class zNPCBPatrick * pat; // r16
-        class xVec3 awayFromPlayer; // r29+0x190
-        class xVec3 offset; // r29+0x180
-        class xVec3 center; // r29+0x170
-        class xVec3 cone; // r29+0x160
-        class xVec3 back; // r29+0x150
-        float passedPole; // r23
-        float ang; // r29+0x1A0
-        class xMat3x3 rotMat; // r29+0x120
-        class xCollis colls; // r29+0xD0
-        signed int turning; // r18
-        unsigned int picker; // r2
-    */
-    xVec3 awayFromPlayer; // r29+0x190
-    xVec3 offset; // r29+0x180
-    xVec3 center; // r29+0x170
-    xVec3 cone; // r29+0x160
-    xVec3 back; // r29+0x150
-    F32 ang; // r29+0x1A0
-    xMat3x3 rotMat; // r29+0x120
-    xCollis colls; // r29+0xD0
+    xVec3 awayFromPlayer;
+    xVec3 offset;
+    xVec3 center;
+    xVec3 cone;
+    xVec3 back;
+    xVec3 toPole;
+    xVec3 polePos;
+    xVec3 alongVel;
+    xMat3x3 rotMat;
+    xCollis colls;
 
     zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
 
@@ -3113,17 +3483,21 @@ S32 zNPCGoalBossPatSpin::Process(en_trantype* trantype, F32 dt, void* ctxt, xSce
     {
     case 0:
     {
-        if (pat->AnimTimeRemain(NULL) < f2280 * dt)
+        if (pat->AnimTimeRemain(NULL) < 1.7f * dt)
         {
             this->stage = 1;
 
-            this->spinSndID = xSndPlay3D(xStrHash("b201_rp_spin_loop"), f2610, f832, 0, 0, pat,
-                                         f1142, f1659, SND_CAT_GAME, f832);
-            this->globSndID = xSndPlay3D(xStrHash("b201_rp_spin_spurt_loop"), f2610, f832, 0, 0,
-                                         pat, f1142, f1659, SND_CAT_GAME, f832);
+            this->spinSndID = xSndPlay3D(xStrHash("b201_rp_spin_loop"), 0.6545f, 0.0f, 0, 0, pat,
+                                         15.0f, 40.0f, SND_CAT_GAME, 0.0f);
+            this->globSndID = xSndPlay3D(xStrHash("b201_rp_spin_spurt_loop"), 0.6545f, 0.0f, 0, 0,
+                                         pat, 15.0f, 40.0f, SND_CAT_GAME, 0.0f);
+
             pat->bossFlags |= 1;
+
             this->DoAutoAnim(NPC_GSPOT_START, 0);
-            this->timeInGoal = f832;
+
+            this->timeInGoal = 0.0f;
+
             if (!(pat->nfFlags & 0x1000))
             {
                 pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
@@ -3134,149 +3508,239 @@ S32 zNPCGoalBossPatSpin::Process(en_trantype* trantype, F32 dt, void* ctxt, xSce
                 pat->newsfish->SpeakStart(sNFComment[NF_DOSIDO_AROUND_YOU_GO].soundID, 0, -1);
             }
         }
+
         break;
     }
     case 1:
     {
+        F32 passedPole;
+        F32 ang;
+
         if (pat->round != 3)
         {
             xVec3Sub(&awayFromPlayer, (xVec3*)&pat->model->Mat->pos,
                      (xVec3*)&globals.player.ent.model->Mat->pos);
             xVec3AddTo(&awayFromPlayer, (xVec3*)&pat->model->Mat->pos);
 
-            Pat_FaceTarget(pat, &awayFromPlayer, f1673, dt);
+            Pat_FaceTarget(pat, &awayFromPlayer, 1.5707964f, dt);
         }
 
-        xVec3Init(&offset, f832, f832, f832);
-        GetBonePos(&center, (xMat4x3*)&pat->model->Mat, sBone[0], &offset);
-        GetBonePos(&cone, (xMat4x3*)&pat->model->Mat, sBone[1], &offset);
-        offset.z = f870;
-        GetBonePos(&back, (xMat4x3*)&pat->model->Mat, sBone[2], &offset);
+        xVec3Init(&offset, 0.0f, 0.0f, 0.0f);
+
+        GetBonePos(&center, (xMat4x3*)pat->model->Mat, sBone[0], &offset);
+        GetBonePos(&cone, (xMat4x3*)pat->model->Mat, sBone[3], &offset);
+
+        offset.z = -1.0f;
+
+        GetBonePos(&back, (xMat4x3*)pat->model->Mat, sBone[0], &offset);
         xVec3SubFrom(&back, &center);
-        back.y = f832;
+
+        back.y = 0.0f;
+
         xVec3Normalize(&back, &back);
 
-        /*
-        F32 fVar1 = f1664 * this->timeInGoal;
-        if (f1666 < fVar1)
-        {
-            fVar1 = ang - fVar1;
-        }
-        xMat3x3RotY(&rotMat, fVar1);
-        */
+        ang = 0.25f * this->timeInGoal;
 
-        xVec3AddScaled((xVec3*)&pat->frame->mat.pos.y, &this->vel, dt);
-
-        if (pat->arenaExtent.x < pat->frame->mat.pos.x && f832 < this->vel.x)
+        if (ang > 6.2831855f)
         {
-            this->vel.x = (-this->vel.x + xurand()) - f1046;
-            this->vel.z = (-this->vel.z + xurand()) - f1046;
+            ang -= 6.2831855f * (S32)(ang / 6.2831855f);
         }
 
-        if (pat->arenaExtent.z < pat->frame->mat.pos.z && f832 < this->vel.z)
-        {
-            this->vel.z = (-this->vel.z + xurand()) - f1046;
-            this->vel.x = (-this->vel.x + xurand()) - f1046;
-        }
+        xMat3x3RotY(&rotMat, ang);
 
-        if (pat->frame->mat.pos.x < -pat->arenaExtent.x && this->vel.x < f832)
+        do
         {
-            this->vel.x = (-this->vel.x + xurand()) - f1046;
-            this->vel.z = (-this->vel.z + xurand()) - f1046;
-        }
+            xMat3x3RMulVec(&polePos, &rotMat, &this->pole[this->currPole]);
+            xVec3Sub(&toPole, &polePos, &cone);
 
-        if (pat->frame->mat.pos.z < -pat->arenaExtent.z && this->vel.z < f832)
-        {
-            this->vel.z = (-this->vel.z + xurand()) - f1046;
-            this->vel.x = (-this->vel.x + xurand()) - f1046;
-        }
+            passedPole = back.x * toPole.z - back.z * toPole.x;
 
-        if (pat->AnimTimeRemain(NULL) < f2280 * dt)
-        {
-            if (!(pat->bossFlags & 2))
+            if (passedPole > 0.0f)
             {
-                if ((pat->round != 1 && pat->round != 2) || this->timeInGoal < f1055)
+                bossPatGlob* glob = pat->getNextFreeGlob();
+
+                glob->t = 0.0f;
+                glob->path.minTime = 0.0f;
+                glob->path.maxTime = 0.33f * xurand() + 1.0f;
+                glob->path.gravity = 10.0f;
+
+                xVec3Copy(&glob->path.initPos, &cone);
+                xVec3Copy(&glob->lastPos, &glob->path.initPos);
+                xVec3Copy(&glob->path.initVel, &toPole);
+                xVec3Normalize(&glob->path.initVel, &glob->path.initVel);
+                xVec3SMul(&alongVel, &glob->path.initVel,
+                          xVec3Dot(&glob->path.initVel, &this->vel));
+
+                glob->path.initVel.x *= 15.0f;
+                glob->path.initVel.y += 5.0f;
+                glob->path.initVel.z *= 15.0f;
+
+                xVec3AddScaled(&glob->path.initVel, &alongVel, 0.25f);
+                xParabolaHitsEnv(&glob->path, globals.sceneCur->env, &colls);
+
+                if (colls.flags & 1)
                 {
-                    if (pat->round == 3 && f1055 < this->timeInGoal)
+                    glob->path.maxTime = colls.dist;
+                    xVec3Copy(&glob->norm, &colls.norm);
+                    glob->flags |= 2;
+                }
+
+                colls.flags &= 0xfffffffe;
+
+                pat->ParabolaHitsConveyors(&glob->path, &colls);
+
+                if (colls.flags & 1)
+                {
+                    glob->path.maxTime = colls.dist;
+                    glob->flags |= 2;
+
+                    if (colls.tohit.x < 18.5f && colls.tohit.x > -18.5f && colls.tohit.z > -20.0f)
                     {
-                        F32 dVar7 =
-                            xVec3Dot((xVec3*)&pat->frame->mat.pos, (xVec3*)&pat->model->Mat->at);
-                        F32 fVar1 = pat->arenaExtent.x;
-                        F32 fVar2 = pat->frame->mat.pos.x;
+                        glob->flags |= 8;
 
-                        if ((fVar2 <= f2424 * fVar1) && (f2424 * -fVar1 <= fVar2))
-                        {
-                            fVar1 = pat->arenaExtent.z;
-                            fVar2 = pat->frame->mat.pos.z;
+                        xVec3Init(&glob->norm, 0.0f, 1.0f, 0.0f);
 
-                            if ((fVar2 <= f2424 * fVar1) && (f2424 * -fVar1 <= fVar2))
-                            {
-                                break;
-                            }
-                        }
+                        glob->conv = (zPlatform*)colls.optr;
 
-                        if (dVar7 < f832)
-                        {
-                            this->stage = 2;
-                            xSndStop(this->spinSndID);
-                            xSndStop(this->globSndID);
-                            pat->bossFlags |= 0x40;
-                            this->DoAutoAnim(NPC_GSPOT_START, 0);
-                            this->timeInGoal = f832;
-                        }
+                        xVec3SMul(&glob->convVel, (xVec3*)&glob->conv->bound.mat->right,
+                                  glob->conv->passet->cb.speed);
+                    }
+                    else
+                    {
+                        xVec3Init(&glob->norm, 0.0f, -1.0f, 0.0f);
                     }
                 }
-                else
+
+                this->currPole++;
+
+                if (this->currPole >= 4)
                 {
-                    this->stage = 2;
-                    xSndStop(this->spinSndID);
-                    xSndStop(this->globSndID);
-                    pat->bossFlags |= 0x40;
-                    this->DoAutoAnim(NPC_GSPOT_START, 0);
-                    this->timeInGoal = f832;
+                    this->currPole = 0;
                 }
             }
-            else
+        } while (passedPole > 0.0f);
+
+        xVec3AddScaled(&pat->frame->mat.pos, &this->vel, dt);
+
+        if (pat->frame->mat.pos.x > pat->arenaExtent.x && this->vel.x > 0.0f)
+        {
+            this->vel.x = (-this->vel.x + xurand()) - 0.5f;
+            this->vel.z = (this->vel.z + xurand()) - 0.5f;
+        }
+
+        if (pat->frame->mat.pos.z > pat->arenaExtent.z && this->vel.z > 0.0f)
+        {
+            this->vel.z = (-this->vel.z + xurand()) - 0.5f;
+            this->vel.x = (this->vel.x + xurand()) - 0.5f;
+        }
+
+        if (pat->frame->mat.pos.x < -pat->arenaExtent.x && this->vel.x < 0.0f)
+        {
+            this->vel.x = (-this->vel.x + xurand()) - 0.5f;
+            this->vel.z = (this->vel.z + xurand()) - 0.5f;
+        }
+
+        if (pat->frame->mat.pos.z < -pat->arenaExtent.z && this->vel.z < 0.0f)
+        {
+            this->vel.z = (-this->vel.z + xurand()) - 0.5f;
+            this->vel.x = (this->vel.x + xurand()) - 0.5f;
+        }
+
+        if (pat->AnimTimeRemain(NULL) < 1.7f * dt)
+        {
+            if (pat->bossFlags & 2)
             {
                 this->stage = 2;
+
                 xSndStop(this->spinSndID);
                 xSndStop(this->globSndID);
+
                 pat->bossFlags |= 0x40;
+
                 this->DoAutoAnim(NPC_GSPOT_START, 0);
-                this->timeInGoal = f832;
+
+                this->timeInGoal = 0.0f;
+            }
+            else if ((pat->round == 1 || pat->round == 2) && this->timeInGoal > 10.0f)
+            {
+                this->stage = 2;
+
+                xSndStop(this->spinSndID);
+                xSndStop(this->globSndID);
+
+                pat->bossFlags |= 0x40;
+
+                this->DoAutoAnim(NPC_GSPOT_START, 0);
+
+                this->timeInGoal = 0.0f;
+            }
+            else if (pat->round == 3 && this->timeInGoal > 10.0f)
+            {
+                F32 facing =
+                    xVec3Dot((xVec3*)&pat->frame->mat.pos, (xVec3*)&pat->model->Mat->at);
+
+                if (pat->frame->mat.pos.x > 0.8f * pat->arenaExtent.x ||
+                    pat->frame->mat.pos.x < 0.8f * -pat->arenaExtent.x ||
+                    pat->frame->mat.pos.z > 0.8f * pat->arenaExtent.z ||
+                    pat->frame->mat.pos.z < 0.8f * -pat->arenaExtent.z)
+                {
+                    if (facing < 0.0f)
+                    {
+                        this->stage = 2;
+
+                        xSndStop(this->spinSndID);
+                        xSndStop(this->globSndID);
+
+                        pat->bossFlags |= 0x40;
+
+                        this->DoAutoAnim(NPC_GSPOT_START, 0);
+
+                        this->timeInGoal = 0.0f;
+                    }
+                }
             }
         }
+
         break;
     }
     case 2:
     {
-        if (!(pat->bossFlags & 2) && pat->AnimTimeRemain(NULL) < f2280 * dt)
+        if (!(pat->bossFlags & 2) && pat->AnimTimeRemain(NULL) < 1.7f * dt)
         {
             this->stage = 3;
-            xSndPlay3D(xStrHash("b201_rp_spin_dizzy"), f2610, f832, 0, 0, pat, f1142, f1659,
-                       SND_CAT_GAME, f832);
+
+            xSndPlay3D(xStrHash("b201_rp_spin_dizzy"), 0.6545f, 0.0f, 0, 0, pat, 15.0f, 40.0f,
+                       SND_CAT_GAME, 0.0f);
+
             this->DoAutoAnim(NPC_GSPOT_START, 0);
-            this->timeInGoal = f832;
+
+            this->timeInGoal = 0.0f;
+
             pat->bossFlags &= 0xfffffff6;
             pat->bossFlags |= 4;
         }
+
         break;
     }
     case 3:
     {
         S32 turning = 0;
+
         if (pat->round == 3)
         {
-            turning = Pat_FaceTarget(pat, &g_O3, f1673, dt);
+            turning = Pat_FaceTarget(pat, &g_O3, 1.5707964f, dt);
         }
 
-        if (pat->AnimTimeRemain(NULL) < f2280 * dt && !turning)
+        if (pat->AnimTimeRemain(NULL) < 1.7f * dt && !turning)
         {
             this->stage = 4;
-            xSndPlay3D(xStrHash("b201_rp_spin_fall"), f2610, f832, 0, 0, pat, f1142, f1659,
-                       SND_CAT_GAME, f1675);
+
+            xSndPlay3D(xStrHash("b201_rp_spin_fall"), 0.6545f, 0.0f, 0, 0, pat, 15.0f, 40.0f,
+                       SND_CAT_GAME, 0.65f);
+
             this->DoAutoAnim(NPC_GSPOT_START, 0);
-            this->timeInGoal = f832;
+
+            this->timeInGoal = 0.0f;
 
             if (pat->nfFlags & 1)
             {
@@ -3286,129 +3750,134 @@ S32 zNPCGoalBossPatSpin::Process(en_trantype* trantype, F32 dt, void* ctxt, xSce
                 {
                     if (pat->hitPoints == 9)
                     {
-                        U32 uVar5 = pat->nfFlags;
-                        if ((uVar5 & 8) == 0)
+                        U32 said = pat->nfFlags;
+
+                        if (!(said & 8))
                         {
-                            pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0,
+                            pat->newsfish->SpeakStart(sNFComment[NF_SB_HAS_OPPORTUNITY].soundID, 0,
                                                       -1);
-                            pat->nfFlags = pat->nfFlags | 8;
+                            pat->nfFlags |= 8;
                         }
-                        else if ((uVar5 & 0x10) == 0)
+                        else if (!(said & 0x10))
                         {
-                            pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0,
-                                                      -1);
-                            pat->nfFlags = pat->nfFlags | 0x10;
+                            pat->newsfish->SpeakStart(
+                                sNFComment[NF_ANOTHER_OPPORTUNITY_FOR_SB].soundID, 0, -1);
+                            pat->nfFlags |= 0x10;
                         }
-                        else if ((uVar5 & 0x20) == 0)
+                        else if (!(said & 0x20))
                         {
-                            pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0,
-                                                      -1);
-                            pat->nfFlags = pat->nfFlags | 0x20;
+                            pat->newsfish->SpeakStart(
+                                sNFComment[NF_NOTE_ON_ROBOT_BACK_MEANS_SOMETHING].soundID, 0, -1);
+                            pat->nfFlags |= 0x20;
                         }
-                        else if ((picker & 0x100) == 0)
+                        else if (picker & 0x100)
                         {
-                            pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0,
-                                                      -1);
+                            pat->newsfish->SpeakStart(
+                                sNFComment[NF_NOTE_ON_ROBOT_BACK_MEANS_SOMETHING].soundID, 0, -1);
                         }
                         else
                         {
-                            pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0,
-                                                      -1);
+                            pat->newsfish->SpeakStart(
+                                sNFComment[NF_ANOTHER_OPPORTUNITY_FOR_SB].soundID, 0, -1);
                         }
                     }
-                    else if ((picker & 0x1f) < 0xb)
+                    else if ((picker & 0x1f) <= 0xa)
                     {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
+                        pat->newsfish->SpeakStart(sNFComment[NF_AND_ROBOT_IS_DOWN_A].soundID, 0,
+                                                  -1);
                     }
-                    else if ((picker & 0x1f) < 0x15)
+                    else if ((picker & 0x1f) <= 0x14)
                     {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
+                        pat->newsfish->SpeakStart(sNFComment[NF_AND_ROBOT_IS_DOWN_B].soundID, 0,
+                                                  -1);
                     }
                     else
                     {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
+                        pat->newsfish->SpeakStart(sNFComment[NF_OOH_ROBOT_IS_DOWN].soundID, 0, -1);
                     }
                 }
                 else if (pat->round == 2)
                 {
-                    if ((picker & 0x300) != 0)
+                    if (picker & 0x300)
                     {
-                        if ((picker & 0x1f) < 0xb)
+                        if ((picker & 0x1f) <= 0xa)
                         {
-                            pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0,
+                            pat->newsfish->SpeakStart(sNFComment[NF_AND_ROBOT_IS_DOWN_A].soundID, 0,
                                                       -1);
                         }
-                        else if ((picker & 0x1f) < 0x15)
+                        else if ((picker & 0x1f) <= 0x14)
                         {
-                            pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0,
+                            pat->newsfish->SpeakStart(sNFComment[NF_AND_ROBOT_IS_DOWN_B].soundID, 0,
                                                       -1);
                         }
                         else
                         {
-                            pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0,
+                            pat->newsfish->SpeakStart(sNFComment[NF_OOH_ROBOT_IS_DOWN].soundID, 0,
                                                       -1);
                         }
                     }
                 }
                 else if (pat->hitPoints == 3)
                 {
-                    U32 uVar5 = pat->nfFlags;
-                    if ((uVar5 & 0x80) == 0)
+                    U32 said = pat->nfFlags;
+
+                    if (!(said & 0x80))
                     {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
-                        pat->nfFlags = pat->nfFlags | 0x80;
+                        pat->newsfish->SpeakStart(sNFComment[NF_SB_HAS_OPPORTUNITY].soundID, 0, -1);
+                        pat->nfFlags |= 0x80;
                     }
-                    else if ((uVar5 & 0x100) == 0)
+                    else if (!(said & 0x100))
                     {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
-                        pat->nfFlags = pat->nfFlags | 0x100;
+                        pat->newsfish->SpeakStart(sNFComment[NF_ANOTHER_OPPORTUNITY_FOR_SB].soundID,
+                                                  0, -1);
+                        pat->nfFlags |= 0x100;
                     }
-                    else if ((uVar5 & 0x200) == 0)
+                    else if (!(said & 0x200))
                     {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
-                        pat->nfFlags = pat->nfFlags | 0x200;
+                        pat->newsfish->SpeakStart(sNFComment[NF_PRIME_BOWLING_MOMENT].soundID, 0,
+                                                  -1);
+                        pat->nfFlags |= 0x200;
                     }
-                    else if ((picker & 0x100) == 0)
+                    else if (picker & 0x100)
                     {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
+                        pat->newsfish->SpeakStart(sNFComment[NF_PRIME_BOWLING_MOMENT].soundID, 0,
+                                                  -1);
                     }
                     else
                     {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
+                        pat->newsfish->SpeakStart(sNFComment[NF_ANOTHER_OPPORTUNITY_FOR_SB].soundID,
+                                                  0, -1);
                     }
+                }
+                else if ((picker & 0x3f) <= 0xa)
+                {
+                    pat->newsfish->SpeakStart(sNFComment[NF_AND_ROBOT_IS_DOWN_A].soundID, 0, -1);
+                }
+                else if ((picker & 0x3f) <= 0x15)
+                {
+                    pat->newsfish->SpeakStart(sNFComment[NF_AND_ROBOT_IS_DOWN_B].soundID, 0, -1);
+                }
+                else if ((picker & 0x3f) <= 0x1f)
+                {
+                    pat->newsfish->SpeakStart(sNFComment[NF_OOH_ROBOT_IS_DOWN].soundID, 0, -1);
+                }
+                else if ((picker & 0x3f) <= 0x2a)
+                {
+                    pat->newsfish->SpeakStart(sNFComment[NF_SB_HAS_OPPORTUNITY].soundID, 0, -1);
+                }
+                else if ((picker & 0x3f) <= 0x34)
+                {
+                    pat->newsfish->SpeakStart(sNFComment[NF_ANOTHER_OPPORTUNITY_FOR_SB].soundID, 0,
+                                              -1);
                 }
                 else
                 {
-                    picker = picker & 0x3f;
-                    if (picker < 0xb)
-                    {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
-                    }
-                    else if (picker < 0x16)
-                    {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
-                    }
-                    else if (picker < 0x20)
-                    {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
-                    }
-                    else if (picker < 0x2b)
-                    {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
-                    }
-                    else if (picker < 0x35)
-                    {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
-                    }
-                    else
-                    {
-                        pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
-                    }
+                    pat->newsfish->SpeakStart(sNFComment[NF_PRIME_BOWLING_MOMENT].soundID, 0, -1);
                 }
             }
             else
             {
-                pat->newsfish->SpeakStart(sNFComment[NF_GREAT_BARRIER_REEF].soundID, 0, -1);
+                pat->newsfish->SpeakStart(sNFComment[NF_ROBOT_MADE_HIMSELF_DIZZY].soundID, 0, -1);
                 pat->nfFlags |= 1;
             }
         }
@@ -3417,31 +3886,41 @@ S32 zNPCGoalBossPatSpin::Process(en_trantype* trantype, F32 dt, void* ctxt, xSce
     }
     case 4:
     {
-        F32 dvar10 = pat->AnimTimeRemain(NULL);
-        if (dvar10 < f2280 * dt)
+        if (pat->AnimTimeRemain(NULL) < 1.7f * dt)
         {
             this->stage = 5;
+
             this->DoAutoAnim(NPC_GSPOT_START, 0);
-            this->timeInGoal = f832;
+
+            this->timeInGoal = 0.0f;
         }
+
         break;
     }
     case 5:
     {
-        if ((pat->round == 1 && this->timeInGoal > f1049) ||
-            (pat->round == 2 && this->timeInGoal > f1142) ||
-            (pat->round == 3 && this->timeInGoal > f2597))
+        if ((pat->round == 1 && this->timeInGoal > 5.0f) ||
+            (pat->round == 2 && this->timeInGoal > 15.0f) ||
+            (pat->round == 3 && this->timeInGoal > 25.0f))
         {
             this->stage = 6;
+
             pat->bossFlags &= 0xffffffbf;
+
             this->DoAutoAnim(NPC_GSPOT_START, 0);
-            this->timeInGoal = f832;
+
+            this->timeInGoal = 0.0f;
         }
-        else if (pat->round == 3 && !(pat->nfFlags & 0x200) && this->timeInGoal > f2885)
+        else if (pat->round == 3 && !(pat->nfFlags & 0x200) && this->timeInGoal > 12.5f)
         {
             pat->newsfish->SpeakStart(sNFComment[NF_PRIME_BOWLING_MOMENT].soundID, 0, -1);
             pat->nfFlags |= 0x200;
         }
+
+        break;
+    }
+    case 6:
+    {
         break;
     }
     }
@@ -3462,15 +3941,317 @@ S32 zNPCGoalBossPatFudge::Enter(F32 dt, void* updCtxt)
 {
     zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
 
-    this->timeInGoal = f832;
+    this->timeInGoal = 0.0f;
     this->stage = 0;
-    this->lerp = f831;
+    this->lerp = 1.0f;
     this->vomitSndID = 0;
 
     pat->bossFlags |= 0x20;
     pat->numMissesInARow++;
 
     return zNPCGoalCommon::Enter(dt, updCtxt);
+}
+
+S32 zNPCGoalBossPatFudge::Process(en_trantype* trantype, F32 dt, void* updCtxt, xScene* xscn)
+{
+    zNPCBPatrick* pat = (zNPCBPatrick*)this->GetOwner();
+
+    F32 anim;
+    S32 i;
+    S32 numGlobs;
+    xVec3 dir;
+    xVec3 offset;
+    xVec3 lipL;
+    xVec3 lipU;
+    xCollis colls;
+
+    this->timeInGoal += dt;
+
+    switch (this->stage)
+    {
+    case 0:
+    {
+        S32 turning = Pat_FaceTarget(pat, &pat->fudgePos, 3.1415927f, dt);
+
+        if (turning == 0)
+        {
+            this->stage = 1;
+            this->DoAutoAnim(NPC_GSPOT_START, 0);
+            this->timeInGoal = 0.0f;
+
+            if (this->lerp > 1.0f)
+            {
+                this->lerp -= 2.5f * dt;
+
+                if (this->lerp < 1.0f)
+                {
+                    this->lerp = 1.0f;
+                }
+            }
+            else
+            {
+                this->lerp += 2.5f * dt;
+
+                if (this->lerp > 1.0f)
+                {
+                    this->lerp = 1.0f;
+                }
+            }
+        }
+        else if (turning == -1)
+        {
+            this->lerp -= 2.5f * dt;
+
+            if (this->lerp < 0.5f)
+            {
+                this->lerp = 0.5f;
+            }
+        }
+        else
+        {
+            this->lerp += 2.5f * dt;
+
+            if (this->lerp > 1.5f)
+            {
+                this->lerp = 1.5f;
+            }
+        }
+
+        break;
+    }
+    case 1:
+    {
+        xVec3Sub(&dir, &pat->fudgePos, &pat->frame->mat.pos);
+
+        F32 dist = xVec3Length(&dir);
+
+        if (dist < 20.0f * dt)
+        {
+            xVec3Copy(&pat->frame->mat.pos, &pat->fudgePos);
+
+            this->stage = 2;
+            this->DoAutoAnim(NPC_GSPOT_START, 0);
+            this->timeInGoal = 0.0f;
+        }
+        else
+        {
+            xVec3AddScaled(&pat->frame->mat.pos, &dir, 20.0f * dt / dist);
+
+            if (this->lerp > 1.0f)
+            {
+                this->lerp -= 2.5f * dt;
+
+                if (this->lerp < 1.0f)
+                {
+                    this->lerp = 1.0f;
+                }
+            }
+            else
+            {
+                this->lerp += 2.5f * dt;
+
+                if (this->lerp > 1.0f)
+                {
+                    this->lerp = 1.0f;
+                }
+            }
+        }
+
+        break;
+    }
+    case 2:
+    {
+        S32 turning = Pat_FaceTarget(pat, &pat->fudgeFace, 3.1415927f, dt);
+
+        if (turning == 0)
+        {
+            this->stage = 3;
+            this->DoAutoAnim(NPC_GSPOT_START, 0);
+            this->timeInGoal = 0.0f;
+
+            anim = 2.0f;
+            zEntEvent(pat->fudgeHandle, eEventAnimPlay, &anim);
+
+            if (pat->round != 2 || pat->hitPoints != 3)
+            {
+                xSndPlay3D(xStrHash("b201_rp_fudge_filling"), 0.77f, 0.0f, 0, 0, pat->fudgeHandle,
+                           15.0f, 40.0f, SND_CAT_GAME, 0.5f);
+                xSndPlay3D(xStrHash("b201_rp_fudge_pull"), 0.77f, 0.0f, 0, 0, pat->fudgeHandle,
+                           15.0f, 40.0f, SND_CAT_GAME, 0.5f);
+                xSndPlay3D(xStrHash("b201_rp_fudge_dismount"), 0.77f, 0.0f, 0, 0, pat->fudgeHandle,
+                           15.0f, 40.0f, SND_CAT_GAME, 2.5f);
+            }
+            else
+            {
+                pat->gooLevel++;
+
+                if (pat->gooLevel > 3)
+                {
+                    pat->gooLevel = 3;
+                }
+            }
+        }
+        else if (turning == -1)
+        {
+            this->lerp -= 2.5f * dt;
+
+            if (this->lerp < 0.5f)
+            {
+                this->lerp = 0.5f;
+            }
+        }
+        else
+        {
+            this->lerp += 2.5f * dt;
+
+            if (this->lerp > 1.5f)
+            {
+                this->lerp = 1.5f;
+            }
+        }
+
+        break;
+    }
+    case 3:
+    {
+        if (this->timeInGoal > 1.0f)
+        {
+            this->stage = 4;
+
+            pat->gooLevel++;
+
+            if (pat->gooLevel > 3)
+            {
+                pat->gooLevel = 3;
+            }
+        }
+
+        break;
+    }
+    case 4:
+    {
+        if (pat->AnimTimeRemain(NULL) < 1.7f * dt)
+        {
+            this->stage = 5;
+
+            this->vomitSndID =
+                xSndPlay3D(xStrHash("b201_rp_fudge_vomit_loop"), 0.5775f, 0.0f, 0, 0, pat, 20.0f,
+                           40.0f, SND_CAT_GAME, 0.0f);
+
+            this->DoAutoAnim(NPC_GSPOT_START, 0);
+            this->timeInGoal = 0.0f;
+            this->globNum = 0.0f;
+
+            if (pat->hitPoints == 4)
+            {
+                pat->newsfish->SpeakStart(sNFComment[NF_ONE_MORE_DOUSE_WITH_THAT_STUFF].soundID, 0,
+                                          -1);
+            }
+            else if (pat->hitPoints == 5)
+            {
+                if (!(pat->nfFlags & 0x40) || !xrand())
+                {
+                    pat->newsfish->SpeakStart(sNFComment[NF_HOT_GOO_COULD_MELT_ANYTHING].soundID, 0,
+                                              -1);
+                    pat->nfFlags |= 0x40;
+                }
+            }
+        }
+
+        break;
+    }
+    case 5:
+    {
+        this->globNum += dt * (25.0f * (0.5f + xurand()));
+
+        numGlobs = this->globNum;
+
+        this->globNum -= numGlobs;
+
+        for (i = 0; i < numGlobs; i++)
+        {
+            bossPatGlob* glob = pat->getNextFreeGlob();
+
+            glob->t = 0.0f;
+            glob->path.minTime = 0.0f;
+            glob->path.maxTime = 0.33f * xurand() + 1.0f;
+            glob->path.gravity = 10.0f;
+
+            xVec3Init(&offset, 0.0f, 0.0f, 0.0f);
+            GetBonePos(&lipL, (xMat4x3*)pat->model->Mat, sBone[2], &offset);
+            GetBonePos(&lipU, (xMat4x3*)pat->model->Mat, sBone[1], &offset);
+
+            xVec3Add(&glob->path.initPos, &lipL, &lipU);
+            xVec3SMulBy(&glob->path.initPos, 0.5f);
+
+            glob->path.initPos.y += xurand() - 0.5f;
+
+            xVec3AddScaled(&glob->path.initPos, (xVec3*)&pat->model->Mat->right,
+                           xurand() - 0.5f);
+
+            xVec3Copy(&glob->lastPos, &glob->path.initPos);
+            xVec3Copy(&glob->path.initVel, (xVec3*)&pat->model->Mat->at);
+            xVec3AddScaled(&glob->path.initVel, (xVec3*)&pat->model->Mat->right,
+                           0.25f * (xurand() - 0.5f));
+
+            glob->path.initVel.x *= 5.0f * xurand() + 15.0f;
+            glob->path.initVel.y += 8.0f * xurand();
+            glob->path.initVel.z *= 5.0f * xurand() + 15.0f;
+
+            xParabolaHitsEnv(&glob->path, globals.sceneCur->env, &colls);
+
+            if (colls.flags & 1)
+            {
+                glob->path.maxTime = colls.dist;
+                xVec3Copy(&glob->norm, &colls.norm);
+                glob->flags |= 2;
+            }
+
+            colls.flags &= 0xfffffffe;
+
+            pat->ParabolaHitsConveyors(&glob->path, &colls);
+
+            if (colls.flags & 1)
+            {
+                glob->path.maxTime = colls.dist;
+                glob->flags |= 2;
+
+                if (colls.tohit.x < 18.5f && colls.tohit.x > -18.5f && colls.tohit.z > -20.0f)
+                {
+                    glob->flags |= 8;
+                    xVec3Init(&glob->norm, 0.0f, 1.0f, 0.0f);
+                    glob->conv = (zPlatform*)colls.optr;
+
+                    xVec3SMul(&glob->convVel, (xVec3*)&glob->conv->bound.mat->right,
+                              glob->conv->passet->cb.speed);
+                }
+                else
+                {
+                    xVec3Init(&glob->norm, 0.0f, -1.0f, 0.0f);
+                }
+            }
+        }
+
+        Pat_FaceTarget(pat, (xVec3*)&globals.player.ent.model->Mat->pos, 0.5f, dt);
+
+        if (this->timeInGoal > 7.5f || (pat->bossFlags & 2))
+        {
+            this->stage = 6;
+
+            xSndStop(this->vomitSndID);
+
+            this->DoAutoAnim(NPC_GSPOT_START, 0);
+            this->timeInGoal = 0.0f;
+        }
+
+        break;
+    }
+    }
+
+    pat->model->Anim->Single->BilinearLerp[0] = this->lerp;
+    pat->model->Anim->Single->Blend->BilinearLerp[0] = this->lerp;
+
+    return xGoal::Process(trantype, dt, updCtxt, xscn);
 }
 
 WEAK void xDebugAddTweak(const char*, U32*, U32, U32, const tweak_callback*, void*, U32)
