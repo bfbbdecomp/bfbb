@@ -64,7 +64,7 @@ struct UNK_STREAM
     U32 source_b;
     U32 xe4;
     ARQRequest request;
-    U32 x10c;
+    U32 x108;
 };
 
 UNK_STREAM streams[6];
@@ -952,11 +952,11 @@ void iSndUpdateStreams()
                         stream->vinf.flags |= 0x400;
                         ARQPostRequest(&stream->request, (U32)stream, 0, 1, stream->source_b,
                                        stream->dest_a, 0x8000, arqcb);
-                        stream->x10c = 0;
+                        stream->x108 = 0;
                     }
                     else
                     {
-                        stream->x10c++;
+                        stream->x108++;
                     }
                     stream->vinf.flags &= 0xfdffffff;
                     stream->vinf.flags |= 0x4000000;
