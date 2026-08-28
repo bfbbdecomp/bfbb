@@ -47,7 +47,12 @@ struct UNK_STREAM
     U32 x28;
     U16 x2c;
     U16 x2e;
-    U8 pad4[0x58];
+    U32 x30;
+    U32 x34;
+    U32 x38;
+    U32 x3c;
+    U8 pad4[0x44];
+    U32 x84;
     U32 offset;
     U32 x8c;
     U32 x90;
@@ -1139,8 +1144,11 @@ struct
 
 S32 iSndPrepStream(xSndVoiceInfo* vp)
 {
-    int vp_i = ((S32)vp - (S32)&gSnd.voice) / (S32)sizeof(xSndVoiceInfo);
-    UNK_STREAM* stream = &streams[vp_i];
+    int vp_i;
+    UNK_STREAM* stream;
+
+    vp_i = ((S32)vp - (S32)&gSnd.voice) / (S32)sizeof(xSndVoiceInfo);
+    stream = &streams[vp_i];
 
     if ((snd.id != vp->assetID) && (iSndLookup(vp->assetID), snd.id != vp->assetID))
     {
@@ -1163,6 +1171,125 @@ S32 iSndPrepStream(xSndVoiceInfo* vp)
 }
 
 S32 sound_stream;
+
+S32 iSndPlayMemStream(xSndVoiceInfo* vp)
+{
+    S32 vp_i = ((S32)vp - (S32)&gSnd.voice) / (S32)sizeof(xSndVoiceInfo);
+    UNK_STREAM* sp = &streams[vp_i];
+    S32 ret = 0;
+
+    if ((sp->vinf.voice != NULL) && (sp->vinf.flags & 1))
+    {
+        DVDFileInfo* fi = &sp->fileInfo;
+        S32 enabled = OSDisableInterrupts();
+        sp->vinf.flags |= 0x400000;
+        sp->vinf.flags |= 0x1000000;
+        sp->vinf.flags |= 0x2000000;
+        sp->x90 = 0;
+        AXPBADDR addr;
+        memcpy(&addr, &sp->x2c, 0x10);
+
+        U32 loop = sp->dest_a * 2 + 2;
+        U32 end = sp->dest_a * 2 + 0xFFFF;
+
+        addr.loopFlag = 1;
+        addr.format = 0;
+        addr.loopAddressLo = loop;
+        addr.loopAddressHi = loop >> 16;
+        addr.currentAddressHi = addr.loopAddressHi;
+        addr.currentAddressLo = addr.loopAddressLo;
+        addr.endAddressHi = end >> 16;
+        addr.endAddressLo = end;
+
+        AXSetVoiceAddr(sp->vinf.voice, &addr);
+        AXSetVoiceAdpcm(sp->vinf.voice, (_AXPBADPCM*)&sp->x3c);
+        AXSetVoiceSrcType(sp->vinf.voice, 1);
+        AXSetVoiceType(sp->vinf.voice, 1);
+        F32 scale = std::powf(2.0f, vp->pitch / 12.0f);
+        F32 ratio = (sp->x28 * scale) / 32000.0f;
+        sp->vinf.voice->pb.src.ratioHi = ratio;
+        sp->vinf.voice->pb.src.ratioLo = ratio * 65536.0f;
+        sp->vinf.voice->sync |= 0x80000000;
+        streams[vp_i].vinf.x14 = 0x7FFFFFFF;
+        streams[vp_i].vinf.x1c = 0x7FFFFFFF;
+        iSndVolUpdate(vp, &streams[vp_i].vinf);
+        OSRestoreInterrupts(enabled);
+        ret = vp->sndID;
+    }
+    else
+    {
+        return 0;
+    }
+
+    return ret;
+}
+
+S32 iSndPlayStream(xSndVoiceInfo* vp)
+{
+    S32 vp_i = ((S32)vp - (S32)&gSnd.voice) / (S32)sizeof(xSndVoiceInfo);
+    UNK_STREAM* sp = &streams[vp_i];
+    S32 ret = 0;
+
+    if (sp->x30 + sp->x8c >= sp->fileInfo.length)
+    {
+        xSTAssetName(vp->assetID);
+        xST_xAssetID_HIPFullPath(vp->assetID);
+        ret = 0;
+    }
+    else if ((sp->vinf.voice != NULL) && ((sp->vinf.flags & 1)))
+    {
+        sp->x84 = sp->x30;
+        sp->offset = sp->x30;
+        sp->x90 = 0;
+        DVDFileInfo* fi = &sp->fileInfo;
+        S32 enabled = OSDisableInterrupts();
+        sp->vinf.flags |= 0x400000;
+
+        U32 len = 0x4000;
+        if (sp->x8c <= 0x4000)
+        {
+            len = sp->x8c;
+        }
+
+        DVDReadAsyncPrio(fi, (void*)sp->source_a, len, sp->offset, dvdcb, 2);
+
+        AXPBADDR addr;
+        memcpy(&addr, &sp->x2c, 0x10);
+
+        U32 loop = sp->dest_a * 2 + 2;
+        U32 end = sp->dest_a * 2 + 0xFFFF;
+
+        addr.loopFlag = 1;
+        addr.format = 0;
+        addr.loopAddressLo = loop;
+        addr.loopAddressHi = loop >> 16;
+        addr.currentAddressHi = addr.loopAddressHi;
+        addr.currentAddressLo = addr.loopAddressLo;
+        addr.endAddressHi = end >> 16;
+        addr.endAddressLo = end;
+
+        AXSetVoiceAddr(sp->vinf.voice, &addr);
+        AXSetVoiceAdpcm(sp->vinf.voice, (_AXPBADPCM*)&sp->x3c);
+        AXSetVoiceSrcType(sp->vinf.voice, 1);
+        AXSetVoiceType(sp->vinf.voice, 1);
+        F32 scale = std::powf(2.0f, vp->pitch / 12.0f);
+        F32 ratio = (sp->x28 * scale) / 32000.0f;
+        sp->vinf.voice->pb.src.ratioHi = ratio;
+        sp->vinf.voice->pb.src.ratioLo = ratio * 65536.0f;
+        sp->vinf.voice->sync |= 0x80000000;
+        streams[vp_i].vinf.x14 = 0x7FFFFFFF;
+        streams[vp_i].vinf.x1c = 0x7FFFFFFF;
+        iSndVolUpdate(vp, &streams[vp_i].vinf);
+        OSRestoreInterrupts(enabled);
+        ret = vp->sndID;
+    }
+    else
+    {
+        return 0;
+    }
+
+    return ret;
+}
 
 S32 iSndPlaySound(xSndVoiceInfo* vp)
 {
