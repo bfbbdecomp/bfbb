@@ -42,12 +42,14 @@ struct xShadowSimpleCache
     xVec3 corner[4]; // offsets 0x68, 0x74, 0x80, 0x8C
 };
 
-struct zSimpleShadowTableHeader {
+struct zSimpleShadowTableHeader
+{
     // total size: 0x4
     U32 num;
 };
 
-struct shadowRayEntData {
+struct shadowRayEntData
+{
     xShadowSimpleCache* cache;
     const RwLine* line;
 };

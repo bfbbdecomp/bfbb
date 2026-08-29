@@ -30,7 +30,7 @@ extern xGrid npcs_grid;
 extern xQCControl xqc_def_ctrl;
 
 static RpCollisionTriangle* shadowRayCB(RpIntersection*, RpWorldSector*, RpCollisionTriangle* tri,
-                                 F32 dist, void* data)
+                                        F32 dist, void* data)
 {
     xVec3 xformnorm;
     xVec3* norm = NULL;
@@ -65,70 +65,85 @@ static RpCollisionTriangle* shadowRayCB(RpIntersection*, RpWorldSector*, RpColli
     return tri;
 }
 
-static RpCollisionTriangle* shadowRayModelCB(RpIntersection* isx, RpCollisionTriangle* tri, F32 dist,
-                                      void* data)
+static RpCollisionTriangle* shadowRayModelCB(RpIntersection* isx, RpCollisionTriangle* tri,
+                                             F32 dist, void* data)
 {
     return shadowRayCB(isx, NULL, tri, dist, data);
 }
 
 static S32 shadowRayEntCB(xEnt* ent, void* data)
 {
-    if (!(ent->baseFlags & 0x10)) {
+    if (!(ent->baseFlags & 0x10))
+    {
         return 1;
     }
 
-    if (((shadowRayEntData*)data)->cache->flags & 8) {
-        if (ent->baseType == 0x2b) {
+    if (((shadowRayEntData*)data)->cache->flags & 8)
+    {
+        if (ent->baseType == 0x2b)
+        {
             xNPCBasic* npc = (xNPCBasic*)ent;
-            if ((npc->SelfType() & 0xFFFFFF00) == 0x4E545400) {
+            if ((npc->SelfType() & 0xFFFFFF00) == 0x4E545400)
+            {
                 xVec3 start;
-                xVec3Init(&start, ((shadowRayEntData*)data)->line->start.x, 
-                                  ((shadowRayEntData*)data)->line->start.y, 
-                                  ((shadowRayEntData*)data)->line->start.z);
+                xVec3Init(&start, ((shadowRayEntData*)data)->line->start.x,
+                          ((shadowRayEntData*)data)->line->start.y,
+                          ((shadowRayEntData*)data)->line->start.z);
 
                 F32 end_y = ((shadowRayEntData*)data)->line->end.y;
                 F32 start_y = start.y;
                 F32 dy = end_y - start_y;
                 F32 t = (ent->bound.box.box.upper.y - start_y) / dy;
 
-                if (((shadowRayEntData*)data)->cache->shadowHeight > t && 
-                    ent->bound.box.box.upper.y > end_y) {
-                    
-                    if (start.x > ent->bound.box.box.lower.x && start.x < ent->bound.box.box.upper.x &&
-                        start.z > ent->bound.box.box.lower.z && start.z < ent->bound.box.box.upper.z) {
-                        
+                if (((shadowRayEntData*)data)->cache->shadowHeight > t &&
+                    ent->bound.box.box.upper.y > end_y)
+                {
+                    if (start.x > ent->bound.box.box.lower.x &&
+                        start.x < ent->bound.box.box.upper.x &&
+                        start.z > ent->bound.box.box.lower.z &&
+                        start.z < ent->bound.box.box.upper.z)
+                    {
                         ((shadowRayEntData*)data)->cache->shadowHeight = t;
                         xVec3 temp_vec;
 
                         temp_vec.y = ent->bound.box.box.upper.y;
                         temp_vec.z = start.z;
                         temp_vec.x = start.x + 10.0f;
-                        
+
                         xVec3SubFrom(&temp_vec, (const xVec3*)&ent->model->Mat->pos);
-                        
-                        ((shadowRayEntData*)data)->cache->poly.vert[0].x = xVec3Dot(&temp_vec, (const xVec3*)&ent->model->Mat->right);
-                        ((shadowRayEntData*)data)->cache->poly.vert[0].y = xVec3Dot(&temp_vec, (const xVec3*)&ent->model->Mat->up);
-                        ((shadowRayEntData*)data)->cache->poly.vert[0].z = xVec3Dot(&temp_vec, (const xVec3*)&ent->model->Mat->at);
+
+                        ((shadowRayEntData*)data)->cache->poly.vert[0].x =
+                            xVec3Dot(&temp_vec, (const xVec3*)&ent->model->Mat->right);
+                        ((shadowRayEntData*)data)->cache->poly.vert[0].y =
+                            xVec3Dot(&temp_vec, (const xVec3*)&ent->model->Mat->up);
+                        ((shadowRayEntData*)data)->cache->poly.vert[0].z =
+                            xVec3Dot(&temp_vec, (const xVec3*)&ent->model->Mat->at);
 
                         temp_vec.y = ent->bound.box.box.upper.y;
                         temp_vec.x = start.x - 10.0f;
                         temp_vec.z = start.z + 10.0f;
-                        
+
                         xVec3SubFrom(&temp_vec, (const xVec3*)&ent->model->Mat->pos);
-                        
-                        ((shadowRayEntData*)data)->cache->poly.vert[1].x = xVec3Dot(&temp_vec, (const xVec3*)&ent->model->Mat->right);
-                        ((shadowRayEntData*)data)->cache->poly.vert[1].y = xVec3Dot(&temp_vec, (const xVec3*)&ent->model->Mat->up);
-                        ((shadowRayEntData*)data)->cache->poly.vert[1].z = xVec3Dot(&temp_vec, (const xVec3*)&ent->model->Mat->at);
+
+                        ((shadowRayEntData*)data)->cache->poly.vert[1].x =
+                            xVec3Dot(&temp_vec, (const xVec3*)&ent->model->Mat->right);
+                        ((shadowRayEntData*)data)->cache->poly.vert[1].y =
+                            xVec3Dot(&temp_vec, (const xVec3*)&ent->model->Mat->up);
+                        ((shadowRayEntData*)data)->cache->poly.vert[1].z =
+                            xVec3Dot(&temp_vec, (const xVec3*)&ent->model->Mat->at);
 
                         temp_vec.y = ent->bound.box.box.upper.y;
                         temp_vec.x = start.x - 10.0f;
                         temp_vec.z = start.z - 10.0f;
-                        
+
                         xVec3SubFrom(&temp_vec, (const xVec3*)&ent->model->Mat->pos);
-                        
-                        ((shadowRayEntData*)data)->cache->poly.vert[2].x = xVec3Dot(&temp_vec, (const xVec3*)&ent->model->Mat->right);
-                        ((shadowRayEntData*)data)->cache->poly.vert[2].y = xVec3Dot(&temp_vec, (const xVec3*)&ent->model->Mat->up);
-                        ((shadowRayEntData*)data)->cache->poly.vert[2].z = xVec3Dot(&temp_vec, (const xVec3*)&ent->model->Mat->at);
+
+                        ((shadowRayEntData*)data)->cache->poly.vert[2].x =
+                            xVec3Dot(&temp_vec, (const xVec3*)&ent->model->Mat->right);
+                        ((shadowRayEntData*)data)->cache->poly.vert[2].y =
+                            xVec3Dot(&temp_vec, (const xVec3*)&ent->model->Mat->up);
+                        ((shadowRayEntData*)data)->cache->poly.vert[2].z =
+                            xVec3Dot(&temp_vec, (const xVec3*)&ent->model->Mat->at);
 
                         xVec3Init(&((shadowRayEntData*)data)->cache->poly.norm, 0.0f, 1.0f, 0.0f);
                         ((shadowRayEntData*)data)->cache->castOnEnt = ent;
@@ -140,7 +155,8 @@ static S32 shadowRayEntCB(xEnt* ent, void* data)
     }
 
     xModelInstance* model = ent->model;
-    if (iModelNumBones(model->Data) > 1) {
+    if (iModelNumBones(model->Data) > 1)
+    {
         return 1;
     }
 
@@ -149,11 +165,13 @@ static S32 shadowRayEntCB(xEnt* ent, void* data)
     RwFrameTransform(RpAtomicGetFrame(model->Data), model->Mat, rwCOMBINEREPLACE);
     sModelMat = model->Mat;
 
-    RpAtomicForAllIntersections(model->Data, (RpIntersection*)((shadowRayEntData*)data)->line, shadowRayModelCB, ((shadowRayEntData*)data)->cache);
+    RpAtomicForAllIntersections(model->Data, (RpIntersection*)((shadowRayEntData*)data)->line,
+                                shadowRayModelCB, ((shadowRayEntData*)data)->cache);
 
     sModelMat = NULL;
 
-    if (((shadowRayEntData*)data)->cache->shadowHeight != old_shadowHeight) {
+    if (((shadowRayEntData*)data)->cache->shadowHeight != old_shadowHeight)
+    {
         ((shadowRayEntData*)data)->cache->castOnEnt = ent;
     }
 
@@ -216,7 +234,8 @@ void xShadowSimple_SceneCollide(xShadowSimpleCache* cache, xVec3* pos, F32 depth
     return;
 }
 
-void xShadowSimple_CalcCorners(xShadowSimpleCache* cache, xEnt* ent, F32 radius, F32 ecc) {
+void xShadowSimple_CalcCorners(xShadowSimpleCache* cache, xEnt* ent, F32 radius, F32 ecc)
+{
     RwMatrixTag* mat;
     xVec3 tempnorm;
 
@@ -227,22 +246,27 @@ void xShadowSimple_CalcCorners(xShadowSimpleCache* cache, xEnt* ent, F32 radius,
     F32 temp_f4;
     F32 temp_f5;
 
-    if (cache->shadowHeight != 1e38f) {
+    if (cache->shadowHeight != 1e38f)
+    {
         mat = ent->model->Mat;
-        if (cache->castOnEnt != NULL) {
-            xMat3x3RMulVec(&tempnorm, (xMat3x3*) cache->castOnEnt->model->Mat, &cache->poly.norm);
+        if (cache->castOnEnt != NULL)
+        {
+            xMat3x3RMulVec(&tempnorm, (xMat3x3*)cache->castOnEnt->model->Mat, &cache->poly.norm);
             xVec3Normalize(&tempnorm, &tempnorm);
             cache->dydx = -tempnorm.x / tempnorm.y;
             cache->dydz = -tempnorm.z / tempnorm.y;
         }
-        if (cache->flags & 1) {
+        if (cache->flags & 1)
+        {
             temp_f0 = ecc * (mat->right.x * radius);
             temp_f1 = ecc * (mat->right.z * radius);
             temp_f3 = mat->at.z * radius;
             temp_f4 = mat->at.x * radius;
             temp_f2 = (temp_f0 * cache->dydx) + (temp_f1 * cache->dydz);
             temp_f5 = (temp_f4 * cache->dydx) + (temp_f3 * cache->dydz);
-        } else {
+        }
+        else
+        {
             temp_f0 = radius * ecc;
             temp_f1 = 0.0f;
             temp_f3 = radius;
@@ -277,30 +301,30 @@ void xShadowSimple_Init()
 
     for (u32 i = 0; i < 64; i++)
     {
-        sShadVert[i*6+1].u = 1.0f;
-        sShadVert[i*6+2].v = 1.0f;
-        sShadVert[i*6+3].u = 1.0f;
-        sShadVert[i*6+4].v = 1.0f;
-        sShadVert[i*6+5].u = 1.0f;
-        sShadVert[i*6+5].v = 1.0f;
-        sShadVert[i*6+0].nx = 0.0f;
-        sShadVert[i*6+0].ny = 1.0f;
-        sShadVert[i*6+0].nz = 0.0f;
-        sShadVert[i*6+1].nx = 0.0f;
-        sShadVert[i*6+1].ny = 1.0f;
-        sShadVert[i*6+1].nz = 0.0f;
-        sShadVert[i*6+2].nx = 0.0f;
-        sShadVert[i*6+2].ny = 1.0f;
-        sShadVert[i*6+2].nz = 0.0f;
-        sShadVert[i*6+3].nx = 0.0f;
-        sShadVert[i*6+3].ny = 1.0f;
-        sShadVert[i*6+3].nz = 0.0f;
-        sShadVert[i*6+4].nx = 0.0f;
-        sShadVert[i*6+4].ny = 1.0f;
-        sShadVert[i*6+4].nz = 0.0f;
-        sShadVert[i*6+5].nx = 0.0f;
-        sShadVert[i*6+5].ny = 1.0f;
-        sShadVert[i*6+5].nz = 0.0f;
+        sShadVert[i * 6 + 1].u = 1.0f;
+        sShadVert[i * 6 + 2].v = 1.0f;
+        sShadVert[i * 6 + 3].u = 1.0f;
+        sShadVert[i * 6 + 4].v = 1.0f;
+        sShadVert[i * 6 + 5].u = 1.0f;
+        sShadVert[i * 6 + 5].v = 1.0f;
+        sShadVert[i * 6 + 0].nx = 0.0f;
+        sShadVert[i * 6 + 0].ny = 1.0f;
+        sShadVert[i * 6 + 0].nz = 0.0f;
+        sShadVert[i * 6 + 1].nx = 0.0f;
+        sShadVert[i * 6 + 1].ny = 1.0f;
+        sShadVert[i * 6 + 1].nz = 0.0f;
+        sShadVert[i * 6 + 2].nx = 0.0f;
+        sShadVert[i * 6 + 2].ny = 1.0f;
+        sShadVert[i * 6 + 2].nz = 0.0f;
+        sShadVert[i * 6 + 3].nx = 0.0f;
+        sShadVert[i * 6 + 3].ny = 1.0f;
+        sShadVert[i * 6 + 3].nz = 0.0f;
+        sShadVert[i * 6 + 4].nx = 0.0f;
+        sShadVert[i * 6 + 4].ny = 1.0f;
+        sShadVert[i * 6 + 4].nz = 0.0f;
+        sShadVert[i * 6 + 5].nx = 0.0f;
+        sShadVert[i * 6 + 5].ny = 1.0f;
+        sShadVert[i * 6 + 5].nz = 0.0f;
     }
 }
 
