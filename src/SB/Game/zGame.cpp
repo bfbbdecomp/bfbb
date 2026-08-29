@@ -11,13 +11,16 @@
 #include "zLOD.h"
 #include "zMenu.h"
 #include "zMusic.h"
+#include "zEntPlayerOOBState.h"
 #include "zParPTank.h"
 #include "zSaveLoad.h"
+#include "zVolume.h"
 
 #include "iDraw.h"
 #include "iSystem.h"
 #include "iTRC.h"
 
+#include "xCamera.h"
 #include "xDebug.h"
 #include "xFont.h"
 #include "xMarkerAsset.h"
@@ -57,9 +60,16 @@ xPortalAsset dummyPortalAsset;
 _zPortal dummyPortal;
 U32 gSoak;
 static U32 loadMeter;
+static F32 gwait_time_secs;
+static S64 gwait_time;
+static S64 w0;
+static S64 w1;
 
 void xMemDebug_SoakLog(const char*);
 void zCutsceneMgrFinishExit(xBase* to);
+static S32 zGameLoopContinue();
+static void zGameUpdateMode();
+void RwGameCubeSetMinRetraceCount(RwChar);
 
 char* soaklevels_gameorder[] =
 {
@@ -437,6 +447,130 @@ void zGameSetup()
     gGameWhereAmI = eGameWhere_SetupEnd;
 }
 
+void zGameLoop()
+{
+    S32 ostrich_delay;
+    S32 cheats;
+    xMat4x3 playerMat;
+
+    gGameWhereAmI = eGameWhere_LoopStart;
+    zGameStateSwitch(eGameState_Play);
+    sTimeLast = iTimeGet();
+    gGameWhereAmI = eGameWhere_CutsceneFinish;
+
+    if (globals.cmgr)
+    {
+        zCutsceneMgrFinishLoad(globals.cmgr);
+    }
+
+    do {
+        gGameWhereAmI = eGameWhere_LoopCalcTime;
+        sTimeCurrent = iTimeGet();
+        sTimeElapsed = iTimeDiffSec(sTimeLast, sTimeCurrent);
+
+        if (sHackSmoothedUpdate = 0)
+        {
+            if (sTimeElapsed <= 0.1)
+            {
+                sTimeElapsed = 0.016666668f;
+            }
+        }
+        else
+        {
+            sTimeElapsed = 0;
+        }
+
+        sTimeLast = sTimeCurrent;
+        iTimeGet();
+        iTimeDiffSec(0);
+        iTimeDiffSec(0);
+        gGameWhereAmI = eGameWhere_LoopPadUpdate;
+        xPadUpdate(0, sTimeElapsed);
+
+        if ((zGameExtras_CheatFlags() & 0x1000) != 0)
+        {
+            globals.pad0->analog2.x = globals.player.g.AnalogMin;
+        }
+
+        xPadNormalizeAnalog(*globals.pad0, globals.player.g.AnalogMin, globals.player.g.AnalogMax);
+        gGameWhereAmI = eGameWhere_LoopTRCCheck;
+
+        if (iTRCDisk::CheckDVDAndResetState() != '\0')
+        {
+            zMusicNotify(0x7);
+        }
+
+        gGameWhereAmI = eGameWhere_LoopCheats;
+        zGameCheats(sTimeElapsed);
+        zGameExtras_SceneUpdate(sTimeElapsed);
+        iFileAsyncService();
+        zGameIsPaused();
+        gGameWhereAmI = eGameWhere_LoopSceneUpdate;
+        zSceneUpdate(sTimeElapsed);
+        gGameWhereAmI = eGameWhere_LoopPlayerUpdate;
+        xEntGetFrame(&globals.player.ent);
+        xSndSetListenerData(SND_LISTENER_CAMERA, 0);
+        xSndSetListenerData(SND_LISTENER_PLAYER, 0);
+        xSndUpdate();
+        gGameWhereAmI = eGameWhere_LoopSFXWidgets;
+        zSceneUpdateSFXWidgets();
+        gGameWhereAmI = eGameWhere_LoopHUDUpdate;
+        zhud::update(sTimeElapsed);
+        gGameWhereAmI = eGameWhere_LoopCameraUpdate;
+        zCameraUpdate(&globals.camera, sTimeElapsed);
+        gGameWhereAmI = eGameWhere_LoopCameraFXUpdate;
+        xCameraFXBegin(&globals.camera);
+        xCameraFXUpdate(&globals.camera, sTimeElapsed);
+        gGameWhereAmI = eGameWhere_LoopFlyToInterface;
+        zScene_UpdateFlyToInterface(sTimeElapsed);
+        gGameWhereAmI = eGameWhere_LoopCameraBegin;
+        iTimeGet();
+        xCameraBegin(&globals.camera, 0x1);
+        iTimeGet();
+        w1 = 0x1;
+        gwait_time_secs = iTimeDiffSec(gwait_time) / 4503601774854144.0;
+        zVolume_OccludePrecalc(&globals.camera.mat.pos);
+        gGameWhereAmI = eGameWhere_LoopSceneRender;
+        zSceneRender();
+        xDebugUpdate();
+        gGameWhereAmI = eGameWhere_LoopCameraEnd;
+        xCameraEnd(&globals.camera, sTimeElapsed, 0x1);
+        iEnvEndRenderFX(0);
+        RwGameCubeSetMinRetraceCount(0);
+        gGameWhereAmI = eGameWhere_LoopCameraShowRaster;
+        xCameraShowRaster(&globals.camera);
+        gGameWhereAmI = eGameWhere_LoopCameraFXEnd;
+        xCameraFXEnd(&globals.camera);
+        gGameWhereAmI = eGameWhere_LoopMusicUpdate;
+        zMusicUpdate(sTimeElapsed);
+        gGameWhereAmI = eGameWhere_LoopUpdateMode;
+        zGameUpdateMode();
+        gFrameCount += 1;
+
+        if (gTrcPad[0].state)
+        {
+            zGameSetOstrich(eGameOstrich_PlayingMovie);
+
+            if (gBusStopIsRunning && oob_state::IsPlayerInControl())
+            {
+                xTRCPad(gTrcPad[0].state, TRC_PadMissing);
+            }
+            
+            globals.dontShowPadMessageDuringLoadingOrCutScene = 0x1;
+            zSaveLoadAutoSaveUpdate();
+        }
+        else
+        {
+
+        }
+
+        gGameWhereAmI = eGameWhere_LoopContinue;
+    }
+    while (zGameLoopContinue());
+
+    gGameWhereAmI = eGameWhere_LoopEndGameLoop;
+}
+
 S32 zGameIsPaused()
 {
     if (gGameMode == 8)
@@ -538,7 +672,55 @@ void zGameStall()
     }
 }
 
-static void zGame_HackDrawCard(F32 x, F32 y, F32 w, F32 h, RwRaster* rast);
+static void zGame_HackDrawCard(F32 x, F32 y, F32 w, F32 h, RwRaster* rast)
+{
+    RwIm2DVertex quad[4];
+    F32 screenZ = RwIm2DGetNearScreenZ();
+
+    quad[0].x = x;
+    quad[0].y = y;
+    quad[0].z = screenZ;
+    quad[0].emissiveColor.red = 0xff;
+    quad[0].emissiveColor.green = 0xff;
+    quad[0].emissiveColor.blue = 0xff;
+    quad[0].emissiveColor.alpha = 0xff;
+    quad[0].u = 0.0f;
+    quad[0].v = 0.0f;
+    quad[1].x = x;
+    quad[1].y = y + h;
+    quad[1].z = screenZ;
+    quad[1].emissiveColor.red = 0xff;
+    quad[1].emissiveColor.green = 0xff;
+    quad[1].emissiveColor.blue = 0xff;
+    quad[1].emissiveColor.alpha = 0xff;
+    quad[1].u = 0.0f;
+    quad[1].v = 1.0f;
+    quad[2].x = x + w;
+    quad[2].y = y;
+    quad[2].z = screenZ;
+    quad[2].emissiveColor.red = 0xff;
+    quad[2].emissiveColor.green = 0xff;
+    quad[2].emissiveColor.blue = 0xff;
+    quad[2].emissiveColor.alpha = 0xff;
+    quad[2].u = 1.0f;
+    quad[2].v = 0.0f;
+    quad[3].x = x + w;
+    quad[3].y = y + h;
+    quad[3].z = screenZ;
+    quad[3].emissiveColor.red = 0xff;
+    quad[3].emissiveColor.green = 0xff;
+    quad[3].emissiveColor.blue = 0xff;
+    quad[3].emissiveColor.alpha = 0xff;
+    quad[3].u = 1.0f;
+    quad[3].v = 1.0f;
+
+    RwRenderStateSet(rwRENDERSTATESHADEMODE, (void*)0x1);
+    RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)rwBLENDSRCALPHA);
+    RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)rwBLENDINVSRCALPHA);
+    RwRenderStateSet(rwRENDERSTATETEXTURERASTER, rast);
+    RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)0);
+    RwIm2DRenderPrimitive(rwPRIMTYPETRISTRIP, &quad[0], 4);
+}
 
 // Equivalent; scheduling.
 static void zGame_HackPostPortalAutoSaveDraw()

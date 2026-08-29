@@ -56,6 +56,7 @@ void zGameExtras_Load(xSerial* xser);
 S32 TestCheat(U32* cheat);
 S32 EGG_check_ExtrasFlags(EGGItem* egg);
 void AddToCheatPressed(U32 param_1);
+void zGameCheats(F32 dt);
 void GEC_CheatFlagAdd(S32 bit);
 void GEC_CheatFlagToggle(S32 bit);
 void GEC_dfltSound();

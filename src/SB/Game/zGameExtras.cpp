@@ -360,7 +360,7 @@ void AddToCheatPressed(U32 button)
     sCheatPressed[15] = button;
 }
 
-void zGameCheats(float dt)
+void zGameCheats(F32 dt)
 {
     if (zGameModeGet() != eGameMode_Pause)
     {
