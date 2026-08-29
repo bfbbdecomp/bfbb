@@ -1,14 +1,19 @@
-#include "rwcore.h"
-#include "rwplcore.h"
-#include "xString.h"
-#include "xVec3.h"
-#include "xstransvc.h"
-#include <string.h>
-#include <types.h>
-
 #include "xShadowSimple.h"
 
 #include "rpcollis.h"
+#include "rwcore.h"
+#include "rwplcore.h"
+
+#include "iModel.h"
+#include "xNPCBasic.h"
+#include "xstransvc.h"
+#include "xString.h"
+#include "xVec3.h"
+#include "zGlobals.h"
+
+#include <string.h>
+#include <types.h>
+
 #include "xMath3.h"
 #include "xQuickCull.h"
 
