@@ -70,7 +70,7 @@ void iSndInitSceneLoaded();
 bool iSndIsPlaying(U32 assetID);
 bool iSndIsPlaying(U32 assetID, U32 parid);
 bool iSndIsPlayingByHandle(U32 handle);
-iSndFileInfo* iSndLookup(U32 id);
+void* iSndLookup(U32 id);
 
 void iSndPause(U32 snd, U32 pause);
 void iSndStop(U32 snd);

@@ -68,26 +68,43 @@ struct UNK_STREAM
 };
 
 // Size: 0x180
-struct
+struct snd_type
 {
-    U32 x00; // 0x00
-    U32 x04; // 0x04
-    U32 x08; // 0x08
-    AXPBADDR addr; // 0x0C
-    AXPBADPCM adpcm; // 0x1C
-    AXPBADPCMLOOP adpcmLoop; // 0x44
-    char pad[0x16]; // 0x4A
-    U32 x60; // 0x60
-    char pad2[0xAC];
+    struct head_type
+    {
+        U32 x00; // 0x00
+        U32 x04; // 0x04
+        U32 x08; // 0x08
+        AXPBADDR addr; // 0x0C
+        AXPBADPCM adpcm; // 0x1C
+        AXPBADPCMLOOP adpcmLoop; // 0x44
+        U16 x4a;
+        char pad[0x14]; // 0x4A
+        U32 x60; // 0x60
+    } head;
+
+    u32 x64; // 0x64
+    U32 x68; // 0x68
+    char pad2[0xA4];
     void* ptr; // 0x110
 } snd;
+
+struct snd_unk
+{
+    S32 count0;
+    S32 count1;
+    S32 count2;
+    S32 count3;
+    snd_type::head_type info;
+};
 
 S32 sinfo_array_max;
 
 struct sinfo
 {
-    char data[0x118];
-    sinfo* ptr;
+    snd_type x00;
+    char pad[4];
+    snd_unk* ptr;
 } sinfo_array[12];
 
 UNK_STREAM streams[6];
@@ -107,6 +124,8 @@ U32 houston_we_have_a_problem = 0;
 ARQRequest* last_ar;
 
 S32 staticibuf;
+
+S32 sound_stream;
 
 static void dv_callback(void* userdata)
 {
@@ -739,6 +758,101 @@ bool iSndIsPlayingByHandle(U32 handle)
     return false;
 }
 
+void* iSndLookup(U32 id)
+{
+    static volatile S32 strm_id = 1;
+    static volatile S32 snd_id = 0x1000;
+
+    sound_stream = 0;
+
+    if (id == 0)
+    {
+        return 0;
+    }
+
+    // register for x and sinfo_array[x] are swapped
+
+    for (S32 x = sinfo_array_max - 1; x >= 0; x--)
+    {
+        sinfo* si = &sinfo_array[x];
+        snd_unk* b = si->ptr;
+
+        if (b == 0)
+        {
+            continue;
+        }
+
+        snd_type::head_type* entries = &b->info;
+
+        S32 count = b->count0;
+        U32 y = 0;
+        for (; y < count; y++)
+        {
+            if (id == entries[y].x60)
+            {
+                memcpy(&snd, &entries[y], 0x64);
+                memcpy(&snd.x68, &sinfo_array[x], 0x114);
+
+                snd.x64 = snd_id++;
+                if (snd_id >= 0x7ffa)
+                {
+                    snd_id = 0x1000;
+                }
+                return &snd;
+            }
+        }
+
+        count = b->count2 + count;
+
+        for (; y < count; y++)
+        {
+            if (id == entries[y].x60)
+            {
+                memcpy(&snd, &entries[y], 0x64);
+                memcpy(&snd.x68, &sinfo_array[x], 0x114);
+
+                snd.x64 = strm_id++;
+                if (strm_id >= 0xffe)
+                {
+                    strm_id = 1;
+                }
+
+                if (entries[y].x4a == 0x63)
+                {
+                    snd.x64 = 0x1000;
+                    sound_stream = 0;
+                }
+                else
+                {
+                    sound_stream = 1;
+                }
+                return &snd;
+            }
+        }
+
+        count = b->count3 + count;
+
+        for (; y < count; y++)
+        {
+            if (id == entries[y].x60)
+            {
+                memcpy(&snd, &entries[y], 0x64);
+                memcpy(&snd.x68, &sinfo_array[x], 0x114);
+
+                snd.x64 = strm_id++;
+                if (strm_id >= 0xffe)
+                {
+                    strm_id = 1;
+                }
+                sound_stream = 2;
+                return &snd;
+            }
+        }
+    }
+
+    return 0;
+}
+
 void iSndPause(U32 snd, U32 pause)
 {
     if (!soundInited)
@@ -1158,7 +1272,7 @@ S32 iSndPrepStream(xSndVoiceInfo* vp)
     vp_i = ((S32)vp - (S32)&gSnd.voice) / (S32)sizeof(xSndVoiceInfo);
     stream = &streams[vp_i];
 
-    if ((snd.x60 != vp->assetID) && (iSndLookup(vp->assetID), snd.x60 != vp->assetID))
+    if ((snd.head.x60 != vp->assetID) && (iSndLookup(vp->assetID), snd.head.x60 != vp->assetID))
     {
         return 0x40;
     }
@@ -1168,7 +1282,7 @@ S32 iSndPrepStream(xSndVoiceInfo* vp)
     stream->fileInfo.cb.userData = (void*)stream;
     stream->x8c = (stream->x24 + 1 >> 1) + 0x1F & 0xFFFFFFE0;
     stream->vinf.flags |= 1;
-    stream->vinf.aid = snd.x60;
+    stream->vinf.aid = snd.head.x60;
 
     if ((stream->x2c != 0) || (vp->flags & 0x8000))
     {
@@ -1177,8 +1291,6 @@ S32 iSndPrepStream(xSndVoiceInfo* vp)
 
     return vp_i;
 }
-
-S32 sound_stream;
 
 S32 iSndPlayMemStream(xSndVoiceInfo* vp)
 {
@@ -1306,7 +1418,7 @@ S32 iSndPlaySound(xSndVoiceInfo* vp)
     U32 priority;
     S32 i;
 
-    if ((snd.x60 != vp->assetID) && (iSndLookup(vp->assetID), snd.x60 != vp->assetID))
+    if ((snd.head.x60 != vp->assetID) && (iSndLookup(vp->assetID), snd.head.x60 != vp->assetID))
     {
         return 0;
     }
@@ -1330,13 +1442,13 @@ S32 iSndPlaySound(xSndVoiceInfo* vp)
     if (vi->voice == NULL)
     {
         voices[i].aid = vp->assetID;
-        voices[i].xc = ((F32)snd.x00 * 1000.0f);
-        voices[i].xc /= (F32)snd.x08;
+        voices[i].xc = ((F32)snd.head.x00 * 1000.0f);
+        voices[i].xc /= (F32)snd.head.x08;
 
         AXPBADDR addr;
-        memcpy(&addr, &snd.addr, 0x10);
+        memcpy(&addr, &snd.head.addr, 0x10);
 
-        if (snd.addr.loopFlag == 0)
+        if (snd.head.addr.loopFlag == 0)
         {
             U32 zero = zero_point;
             addr.loopAddressHi = (U16)(zero >> 16);
@@ -1358,17 +1470,17 @@ S32 iSndPlaySound(xSndVoiceInfo* vp)
             S32 enabled = OSDisableInterrupts();
             AXSetVoiceAddr(vi->voice, &addr);
             AXSetVoiceType(vi->voice, NULL);
-            AXSetVoiceAdpcm(vi->voice, &snd.adpcm);
+            AXSetVoiceAdpcm(vi->voice, &snd.head.adpcm);
             AXSetVoiceSrcType(vi->voice, 1);
             MIXInitChannel(vi->voice, 4, 0, 0xFFFFFC78, 0xFFFFFC78, 0x40, 0x7F, 0xFFFFFC78);
             iSndVolUpdate(vp, vi);
             F32 scale = std::powf(2.0f, vp->pitch / 12.0f);
-            F32 ratio = (snd.x08 * scale) / 32000.0f;
+            F32 ratio = (snd.head.x08 * scale) / 32000.0f;
             vi->voice->pb.src.ratioHi = ratio;
             vi->voice->pb.src.ratioLo = ratio * 65536.0;
-            if (snd.addr.loopFlag)
+            if (snd.head.addr.loopFlag)
             {
-                AXSetVoiceAdpcmLoop(vi->voice, &snd.adpcmLoop);
+                AXSetVoiceAdpcmLoop(vi->voice, &snd.head.adpcmLoop);
             }
             vi->voice->sync |= 0x80000000;
             MIXUnMute(vi->voice);
