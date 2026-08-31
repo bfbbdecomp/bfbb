@@ -70,13 +70,14 @@ void iSndInitSceneLoaded();
 bool iSndIsPlaying(U32 assetID);
 bool iSndIsPlaying(U32 assetID, U32 parid);
 bool iSndIsPlayingByHandle(U32 handle);
-iSndFileInfo* iSndLookup(U32 id);
+void* iSndLookup(U32 id);
 
 void iSndPause(U32 snd, U32 pause);
 void iSndStop(U32 snd);
 void iSndUpdate();
+void iSndUpdateStreams();
 
-void iSndFindFreeVoice(U32 priority, U32 flags, U32 owner);
+S32 iSndFindFreeVoice(U32 priority, U32 flags, U32 owner);
 
 S32 iSndPlay(xSndVoiceInfo* vp);
 S32 iSndPrepStream(xSndVoiceInfo *);
