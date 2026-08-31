@@ -218,7 +218,7 @@ void zCutsceneMgrPlayStart(zCutsceneMgr* t)
 
             if (cutsceneHackTable[i].radius != 0.0f)
             {
-                RpClumpForAllAtomics((RpClump*)*((int*)(t->csn->Data[j].DataPtr) + 0xf),
+                RpClumpForAllAtomics(((RpAtomic*)t->csn->Data[j].DataPtr)->clump,
                                      HackBoundCB, &cutsceneHackTable[i].radius);
                 t->csn->Data[j].DataType = t->csn->Data[j].DataType | 0x40000000;
             }
@@ -233,17 +233,17 @@ void zCutsceneMgrPlayStart(zCutsceneMgr* t)
             if (cutsceneHackTable[i].alphaBits != 0)
             {
                 s_atomicNumber = 0;
-                RpClumpForAllAtomics((RpClump*)*((int*)(t->csn->Data[j].DataPtr) + 15), HackAlphaCB,
-                                     (void*)cutsceneHackTable[i].alphaBits);
+                RpClumpForAllAtomics(((RpAtomic*)t->csn->Data[j].DataPtr)->clump,
+                                     HackAlphaCB, (void*)cutsceneHackTable[i].alphaBits);
             }
             if (cutsceneHackTable[i].renderCB != NULL)
             {
                 typedef RpAtomic* (*cb)(RpAtomic*);
-                *(cb*)((int*)t->csn->Data[j].DataPtr + 0x12) = cutsceneHackTable[i].renderCB;
+                ((RpAtomic*)t->csn->Data[j].DataPtr)->renderCallBack = cutsceneHackTable[i].renderCB;
 
-                if (*(cb*)((int*)t->csn->Data[j].DataPtr + 0x12) == 0)
+                if (((RpAtomic*)t->csn->Data[j].DataPtr)->renderCallBack == 0)
                 {
-                    *(cb*)((int*)t->csn->Data[j].DataPtr + 0x12) = AtomicDefaultRenderCallBack;
+                    ((RpAtomic*)t->csn->Data[j].DataPtr)->renderCallBack = AtomicDefaultRenderCallBack;
                 }
             }
         }
