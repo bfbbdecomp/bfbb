@@ -6,12 +6,11 @@
 #include "xMath3.h"
 #include "xSurface.h"
 
+#define SURF_TEXANIM_ON (1 << 0)
+#define SURF_TEXANIM_ON2 (1 << 1)
 
-#define SURF_TEXANIM_ON (1<<0)
-#define SURF_TEXANIM_ON2 (1<<1)
-
-#define UVANIM_FLAG_ON (1<<0)
-#define UVANIM_FLAG_ON2 (1<<1)
+#define UVANIM_FLAG_ON (1 << 0)
+#define UVANIM_FLAG_ON2 (1 << 1)
 
 struct zSurfMatFX
 {
@@ -130,6 +129,7 @@ void zSurfaceRegisterMapper(U32 assetId);
 void zSurfaceExit();
 xSurface* zSurfaceGetSurface(U32 mat_id);
 xSurface* zSurfaceGetSurface(const xCollis* coll);
+U32 zSurfaceGetStep(const xSurface* surf);
 U32 zSurfaceGetStandOn(const xSurface* surf);
 void zSurfaceSave(xSurface* ent, xSerial* s);
 void zSurfaceLoad(xSurface* ent, xSerial* s);

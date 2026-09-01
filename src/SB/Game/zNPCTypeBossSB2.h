@@ -23,9 +23,9 @@ struct response_curve
     U32 nodes; // offset 0x8,
     U32 active_node; // offset 0xC,
 
-    static void init(U32, const void*, U32, const char*, const char**, const tweak_callback*,
+    static void init(U64, const void*, U64, const char*, const char**, const tweak_callback*,
                      void*);
-    void end_t() const;
+    static void end_t();
 };
 
 struct node
@@ -120,7 +120,7 @@ struct zNPCB_SB2 : zNPCBoss
 
     enum slug_stage
     {
-        SLUG_INACTIVE, //0x152c if is used slugs[0].stage
+        SLUG_INACTIVE,
         SLUG_AIM,
         SLUG_DELAY,
         SLUG_DYING,
@@ -131,7 +131,7 @@ struct zNPCB_SB2 : zNPCBoss
     {
         slug_stage stage;
         U8 spun;
-        U8 abandoned; //0x1531 if [0]
+        U8 abandoned;
         F32 time;
         F32 stage_delay;
         xEnt* ent;
@@ -227,6 +227,7 @@ struct zNPCB_SB2 : zNPCBoss
 
     zNPCB_SB2(S32 myType);
     void Init(xEntAsset* asset);
+    void ParseINI();
     void Setup();
     void SelfSetup();
     void Reset();
@@ -269,10 +270,11 @@ struct zNPCB_SB2 : zNPCBoss
     S32 player_on_ground() const;
     void emit_slug(zNPCB_SB2::slug_enum which);
     S32 slugs_ready() const;
+    S32 slugs_inactive() const;
     void reset_stage();
     void fire_slug(zNPCB_SB2::slug_enum which, zNPCB_SB2::platform_data& target);
     void abandon_slugs();
-    void set_vulnerable(bool);
+    void set_vulnerable(bool vulnerable);
     void say(int);
     void choose_hand();
     xVec3& location() const;
@@ -404,6 +406,7 @@ struct zNPCGoalBossSB2Chop : zNPCGoalCommon
     static xFactoryInst* create(S32 who, RyzMemGrow* grow, void* info);
     S32 Enter(F32 dt, void* updCtxt);
     S32 Exit(F32 dt, void* updCtxt);
+    S32 can_start() const;
 };
 
 struct zNPCGoalBossSB2Karate : zNPCGoalCommon

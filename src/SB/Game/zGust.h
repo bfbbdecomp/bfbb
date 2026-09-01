@@ -37,6 +37,7 @@ struct zGustData
 void zGustInit();
 void zGustSetup();
 zGust* zGustGetGust(U16 n);
+void zGustUpdateEnt(xEnt* ent, xScene* sc, float dt, void* gdata);
 void zGustSave(zGust* ent, xSerial* s);
 void zGustLoad(zGust* ent, xSerial* s);
 void zGustUpdateFX(F32 seconds);

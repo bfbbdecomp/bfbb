@@ -470,4 +470,19 @@ void zEntPlayer_PredictPos(xVec3* pos, F32 timeIntoFuture, F32 leadFactor, S32 u
 
 void zEntPlayerCollTrigger(xEnt* ent, xScene* sc);
 
+void zEntPlayer_SNDPlayDelayed(F32 seconds);
+void zEntPlayer_SNDPlay(_tagePlayerSnd player_snd, F32 delay);
+void zEntPlayer_SNDStop(_tagePlayerSnd player_snd);
+void zEntPlayer_setBoulderMode(U32 mode);
+void zEntPlayerCollide(xEnt* ent, xScene* sc, F32 dt);
+void zEntPlayer_CheckCritterContact(xEnt* ent, F32 dt);
+void PlayerLedgeUpdate(xEnt* ent, xScene* sc, F32 dt);
+void zEntPlayerFloorUpdate(xEnt* ent, xScene* sc, F32 dt);
+void PlayerTeeterCheck(xEnt* ent, xScene* sc, F32 dt);
+void zEntPlayerSurfDamageUpdate(xEnt* ent, xScene* sc, F32 dt);
+void zEntPlayerDriveUpdate(xEnt* ent, xScene* sc, F32 dt);
+void zEntPlayerJumpUpdate(xEnt* ent, xScene* sc, F32 dt);
+void zEntPlayerTSlideUpdate(xEnt* ent, xScene* sc, F32 dt);
+void zEntPlayerVelUpdate(xEnt* ent, xScene* sc, F32 dt);
+
 #endif

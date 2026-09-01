@@ -21,7 +21,7 @@ enum zFXGooState
     zFXGooStateForce32Bit = 0xffffffff
 };
 
-// Definition updated based on Rat proto data. 
+// Definition updated based on Rat proto data.
 struct zFXGooInstance
 {
     RpAtomic* atomic;
@@ -51,6 +51,7 @@ void on_spawn_bubble_wall(const tweak_info& tweak);
 void zFX_SceneEnter(RpWorld* world);
 void zFX_SceneExit(RpWorld* world);
 void zFX_SceneReset();
+void zFXPatrickStun(const xVec3* pos);
 void zFXHammer(const xVec3* pos);
 void zFXPorterWave(const xVec3* pos);
 

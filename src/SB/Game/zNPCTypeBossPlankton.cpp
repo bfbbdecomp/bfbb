@@ -1055,21 +1055,22 @@ xAnimTable* ZNPC_AnimTable_BossPlankton()
     return table;
 }
 
-void zNPCBPlankton::Init(xEntAsset* asset) //66%
-{
-    ::init_sound();
-    zNPCCommon::Init(asset);
-    flg_move = 1;
-    flg_vuln = 1;
-    xNPCBasic::RestoreColFlags();
-    territory_size = 0;
-    played_intro = 0;
-    zNPCBPlankton::init_beam();
-    xAnimPlay* play = 0;
+// Can't do this until zNPCBoss has a constructor?
+// zNPCBPlankton::zNPCBPlankton(S32 myType)
+// {
+// }
 
-    // Is being called incorrectly.
-    // play is a temp fix to get it to build
-    zNPCBPlankton::aim_gun(play, &gun_tilt, &move.dest, 0);
+void zNPCBPlankton::Init(xEntAsset* asset) // 83.97%
+{
+    init_sound();
+    zNPCCommon::Init(asset);
+    this->flg_move = 1;
+    this->flg_vuln = 1;
+    xNPCBasic::RestoreColFlags();
+    this->territory_size = 0;
+    this->played_intro = 0;
+    this->init_beam();
+    this->model->Anim->BeforeAnimMatrices = aim_gun;
 }
 
 void zNPCBPlankton::Setup()
@@ -1091,12 +1092,54 @@ void zNPCBPlankton::Reset()
 {
     if (newsfish != 0)
     {
+        newsfish->Reset();
     }
 
+    reset_sound();
     zNPCCommon::Reset();
-    zNPCBPlankton::reset_beam();
-    memset((void*)flag.updated, 0, 0x10);
-    zNPCBPlankton::face_player();
+    this->reset_beam();
+    memset(&flag, 0, 0x10);
+    this->face_player();
+    this->turn.vel = 0.0f;
+    this->move.vel = 0.0f;
+    this->move.dest = this->location();
+    this->flag.move = MOVE_ORBIT;
+    this->ambush_delay = 0.0f;
+    this->old_player_health = 0;
+    scan_cronies();
+
+    if (crony != 0)
+    {
+        this->mode = MODE_BUDDY;
+        this->stun_duration = tweak.mode_buddy.stun_duration;
+        this->newsfish = 0;
+    }
+    else
+    {
+        this->mode = MODE_HARASS;
+        this->active_territory = 0;
+        this->stun_duration = tweak.mode_harass.stun_duration;
+
+        if (this->newsfish != 0)
+        {
+            this->newsfish->TalkOnScreen(TRUE);
+        }
+    }
+
+    this->reset_speed();
+    this->refresh_orbit();
+    this->follow_player();
+    this->reset_territories();
+
+    if (mode == MODE_BUDDY)
+    {
+        psy_instinct->GoalSet('NGBK', 1);
+    }
+    else
+    {
+        vanish();
+        psy_instinct->GoalSet('NGBM', 1);
+    }
 }
 
 void zNPCBPlankton::Destroy()
@@ -1106,59 +1149,53 @@ void zNPCBPlankton::Destroy()
 
 void zNPCBPlankton::Process(xScene* xscn, F32 dt)
 {
-    // This function needs a lot of work, writing most of these comments
-    // so that i can resume where i left off when i return to it
-
-    // territory_data& t ;
-    //xCollis& coll;
-    xEnt* platform;
-    S32 i;
-
-    //xVec3& player_loc;
     xPsyche* psy = psy_instinct;
 
-    if ((flag.updated == false) && (flag.updated = 1, played_intro == false))
+    if ((this->flag.updated == false) && (this->flag.updated = 1, this->played_intro == false))
     {
-        zNPCBPlankton::say(0, 0, true);
-        played_intro = true;
+        this->say(0, 0, true);
+        this->played_intro = true;
     }
-    beam.update(dt);
-    delay = delay + dt;
-    if ((mode == 1) && (territory->fuse_detected = player_left_territory(), psy_instinct != 0))
+
+    this->beam.update(dt);
+    this->delay = this->delay + dt;
+
+    if ((this->mode == MODE_HARASS) && (this->player_left_territory() & 0xFF))
     {
-        stun_duration = 0.0f;
+        this->ambush_delay = 0.0f;
         psy_instinct->GoalSet(NPC_GOAL_BPLANKTONAMBUSH, 1);
     }
-    // uvar1 = zNPCCommon::SomethingWonderful();
-    //if ((uVar1 & 0x23) == 0)
-    // {
-    //     psy_instinct->xPsyche::Timestep(dt, 0)
-    // }
-    if (flag.face_player = false)
+
+    if ((zNPCCommon::SomethingWonderful() & 0x23) == 0)
     {
-        // iVar4 = *(int *)(DAT_803c0c5c + 0x4c);
-        // pfVar2 = (float *)location__13zNPCBPlanktonCFv(param_9);
-        // param_3 = (double)*(float *)(iVar4 + 0x30);
-        // param_2 = (double)(*(float *)(iVar4 + 0x38) - pfVar2[2]);
-        // assign__5xVec2Fff((double)(float)(param_3 - (double)*pfVar2),param_2,(float *)(param_9 + 0x460));
-        // normalize__5xVec2Fv((float *)(param_9 + 0x460));
+        psy_instinct->Timestep(dt, 0);
     }
-    update_follow(dt);
-    update_turn(dt);
-    update_move(dt);
-    update_animation(dt); //uvar5 = update anim
-    check_player_damage(); //uvar1 = check_player_damage
-    if (psy_instinct != 0) //psy_instinct isnt right, needs (uvar1 & 0xff)
+
+    if (this->flag.face_player != FALSE)
     {
-        zEntPlayer_Damage(0, 1); //needs xBase* instead of 0
+        RwMatrix* mat = globals.player.ent.model->Mat;
+        const xVec3& loc = location();
+        this->turn.dir.assign(mat->pos.x - loc.x, mat->pos.z - loc.z);
+        this->turn.dir.normalize();
     }
-    update_aim_gun(dt);
-    update_dialog(dt);
-    //bVar3 = visible__17xLaserBoltEmitterCFv(param_9 + 0x3b8);
-    //if (bVar3) {
-    //  *(uint *)(param_9 + 0x234) = *(uint *)(param_9 + 0x234) | 2;
-    //}
-    //Process__10zNPCCommonFP6xScenef(param_1,param_9,param_10);
+
+    this->update_follow(dt);
+    this->update_turn(dt);
+    this->update_move(dt);
+    this->update_animation(dt);
+
+    if (this->check_player_damage())
+    {
+        zEntPlayer_Damage((xBase*)this, 1);
+    }
+
+    this->update_aim_gun(dt);
+    this->update_dialog(dt);
+    if (this->beam.visible() & 0xFF)
+    {
+        this->flg_xtrarend = this->flg_xtrarend | 2;
+    }
+    zNPCCommon::Process(xscn, dt);
 }
 
 S32 zNPCBPlankton::SysEvent(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
@@ -1323,9 +1360,10 @@ void zNPCBPlankton::update_follow(F32 dt)
     }
 }
 
-void zNPCBPlankton::check_player_damage()
+U8 zNPCBPlankton::check_player_damage()
 {
     // TODO
+    return 0;
 }
 
 void zNPCBPlankton::init_beam()

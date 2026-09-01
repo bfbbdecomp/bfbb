@@ -44,8 +44,8 @@ struct zNPCBPlankton : zNPCBoss
 
     struct move_info
     {
-        xVec3 dest;
-        xVec3 vel;
+        xVec3 dest; // 0x474
+        xVec3 vel; // 0x480
         xVec3 accel;
         xVec3 max_vel;
     };
@@ -76,7 +76,7 @@ struct zNPCBPlankton : zNPCBoss
     mode_enum mode;
     F32 delay; //0x2c8
     xQuat gun_tilt;
-    F32 ambush_delay;
+    F32 ambush_delay; // 0x2dc
     F32 beam_duration; // 0x2e0
     F32 stun_duration; // 0x2e4
     xDecalEmitter beam_ring;
@@ -90,8 +90,8 @@ struct zNPCBPlankton : zNPCBoss
     } orbit;
     struct
     {
-        xVec2 dir;
-        F32 vel;
+        xVec2 dir; // 0x460
+        F32 vel; // 0x468
         F32 accel;
         F32 max_vel;
     } turn;
@@ -108,7 +108,7 @@ struct zNPCBPlankton : zNPCBoss
     zNPCBoss* crony;
     territory_data territory[8];
     S32 territory_size; //0x694
-    S32 active_territory;
+    S32 active_territory; // 0x698
     zNPCNewsFish* newsfish;
     U32 old_player_health; //0x6a0
     U8 played_intro; //0x6a4
@@ -129,7 +129,7 @@ struct zNPCBPlankton : zNPCBoss
     S32 next_goal();
     void update_turn(F32);
     void update_move(F32);
-    void check_player_damage();
+    U8 check_player_damage();
     void reset_territories();
     void update_animation(F32);
     void update_follow(F32);
@@ -145,15 +145,16 @@ struct zNPCBPlankton : zNPCBoss
     U32 crony_attacking() const;
     void next_territory();
     S32 have_cronies() const;
-    S32 player_left_territory();
+    S32 player_left_territory() const;
     void say(int, int, bool);
     void sickum();
-    void aim_gun(xAnimPlay*, xQuat*, xVec3*, int);
+    static void aim_gun(xAnimPlay*, xQuat*, xVec3*, int);
     void here_boy();
     void follow_player();
     void follow_camera();
     void reset_speed();
     void refresh_orbit();
+    void scan_cronies();
 
     xVec3& location() const;
     void face_player();
