@@ -279,7 +279,6 @@ struct zNPCB_SB2 : zNPCBoss
     xVec3& get_home() const;
     xVec3& start_location() const;
     xVec3& facing() const;
-    void singleton();
 };
 
 struct zNPCGoalBossSB2Intro : zNPCGoalCommon
