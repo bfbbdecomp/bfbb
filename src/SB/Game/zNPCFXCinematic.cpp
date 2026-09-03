@@ -1,6 +1,7 @@
 #include "xVec3.h"
 #include "xMath3.h"
 #include "xParEmitter.h"
+#include "xDebug.h"
 
 #include "zNPCFXCinematic.h"
 #include "zParPTank.h"
@@ -8,8 +9,10 @@
 
 #include <types.h>
 
+void xFXAuraAdd(void*, xVec3*, iColor_tag*, F32);
+
 // TODO: NEEDS REWRITEN / CORRECTED
-void NCIN_Par_BPLANK_JET_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
+static void NCIN_Par_BPLANK_JET_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
     {
@@ -48,7 +51,7 @@ void NCIN_Par_BPLANK_JET_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 }
 
 // TODO: NEEDS REWRITEN / CORRECTED
-void NCIN_Par_BPLANK_JET_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
+static void NCIN_Par_BPLANK_JET_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
     {
@@ -87,7 +90,7 @@ void NCIN_Par_BPLANK_JET_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 }
 
 // TODO: NEEDS REWRITEN / CORRECTED
-void NCIN_Par_BPLANK_SBB_FLAMES_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
+static void NCIN_Par_BPLANK_SBB_FLAMES_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
     {
@@ -126,7 +129,7 @@ void NCIN_Par_BPLANK_SBB_FLAMES_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32
 }
 
 // TODO: NEEDS REWRITEN / CORRECTED
-void NCIN_Par_BPLANK_SBB_FLAMES_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
+static void NCIN_Par_BPLANK_SBB_FLAMES_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
     {
@@ -165,7 +168,7 @@ void NCIN_Par_BPLANK_SBB_FLAMES_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32
 }
 
 // TODO: NEEDS REWRITEN / CORRECTED
-void NCIN_Par_BPLANK_SBB_JET_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
+static void NCIN_Par_BPLANK_SBB_JET_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
     {
@@ -204,7 +207,7 @@ void NCIN_Par_BPLANK_SBB_JET_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 pa
 }
 
 // TODO: NEEDS REWRITEN / CORRECTED
-void NCIN_Par_BPLANK_SBB_JET_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
+static void NCIN_Par_BPLANK_SBB_JET_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
     {
@@ -243,7 +246,7 @@ void NCIN_Par_BPLANK_SBB_JET_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 pa
 }
 
 // TODO: NEEDS REWRITEN / CORRECTED
-void NCIN_Par_BPLANK_SBB_SMOKE_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
+static void NCIN_Par_BPLANK_SBB_SMOKE_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
     {
@@ -282,7 +285,7 @@ void NCIN_Par_BPLANK_SBB_SMOKE_1_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 
 }
 
 // TODO: NEEDS REWRITEN / CORRECTED
-void NCIN_Par_BPLANK_SBB_SMOKE_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
+static void NCIN_Par_BPLANK_SBB_SMOKE_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
     {
@@ -321,7 +324,7 @@ void NCIN_Par_BPLANK_SBB_SMOKE_2_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 
 }
 
 // TODO: NEEDS REWRITEN / CORRECTED
-void NCIN_Par_CIN_BIGDUP_SMOKE_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
+static void NCIN_Par_CIN_BIGDUP_SMOKE_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
     {
@@ -360,7 +363,7 @@ void NCIN_Par_CIN_BIGDUP_SMOKE_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 pa
 }
 
 // TODO: NEEDS REWRITEN / CORRECTED
-void NCIN_Par_CIN_BIGDUP_SPAWN_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
+static void NCIN_Par_CIN_BIGDUP_SPAWN_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
     {
@@ -399,7 +402,7 @@ void NCIN_Par_CIN_BIGDUP_SPAWN_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 pa
 }
 
 // TODO: NEEDS REWRITEN / CORRECTED
-void NCIN_Par_CIN_PLATFORM_JETS_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
+static void NCIN_Par_CIN_PLATFORM_JETS_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
     {
@@ -439,10 +442,64 @@ void NCIN_Par_CIN_PLATFORM_JETS_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 p
 
 void NCINBeNosey::CanRenderNow()
 {
-    zCutsceneMgr* csnmgr;
-    NCINEntry* fxtab;
-    NCINEntry* nextrec;
-    NCINEntry* fxrec;
+    zCutsceneMgr* csnmgr = (zCutsceneMgr*)use_csnmgr;
+    NCINEntry* fxtab = use_fxtab;
+
+    if (!csnmgr)
+    {
+        return;
+    }
+
+    if (!fxtab)
+    {
+        return;
+    }
+
+    NCINEntry* nextrec = fxtab;
+
+    while (nextrec->typ_ncinfx != NCIN_FXTYP_UNKNOWN)
+    {
+        NCINEntry* fxrec = nextrec;
+        nextrec++;
+
+        if (fxrec->cb_fxrend && (fxrec->flg_stat & 0x1))
+        {
+            fxrec->cb_fxrend(csnmgr, fxrec);
+        }
+    }
+}
+
+void NCINBeNosey::UpdatedAnimated(RpAtomic* model, RwMatrixTag* animMat, U32 animIndex, U32 dataIndex)
+{
+    zCutsceneMgr* csnmgr = (zCutsceneMgr*)this->use_csnmgr;
+    NCINEntry* fxtab = this->use_fxtab;
+
+    if (!csnmgr)
+    {
+        return;
+    }
+
+    if (!fxtab)
+    {
+        return;
+    }
+
+    NCINEntry* nextrec = fxtab;
+
+    while (nextrec->typ_ncinfx != NCIN_FXTYP_UNKNOWN)
+    {
+        NCINEntry* fxrec = nextrec;
+        nextrec++;
+
+        if (fxrec->cb_fxanim && (fxrec->flg_stat & 0x1))
+        {
+            fxrec->cb_fxanim(csnmgr, fxrec, model, animMat, animIndex, dataIndex);
+        }
+    }
+}
+
+void zNPCFXStartup()
+{
 }
 
 void zNPCFXShutdown()
@@ -461,7 +518,7 @@ void NCINBeNosey::Done()
     this->use_csnmgr = 0;
 }
 
-void NCIN_Generic_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 killit)
+static void NCIN_Generic_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 killit)
 {
     if (killit != 0)
     {
@@ -470,7 +527,7 @@ void NCIN_Generic_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 killit)
 }
 
 // TODO: NEEDS REWRITEN / CORRECTED
-void NCIN_BubSlam(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
+static void NCIN_BubSlam(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
     {
@@ -496,7 +553,7 @@ void NCIN_BubSlam(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
     }
 }
 
-void NCIN_BubTrailBone_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic*, RwMatrixTag*, U32 num_1,
+static void NCIN_BubTrailBone_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic*, RwMatrixTag*, U32 num_1,
                           U32 num_2)
 {
     S32 ifx = fxrec->pos_A[1].x;
@@ -518,7 +575,7 @@ void NCIN_BubTrailBone_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic*, RwMa
     zFX_SpawnBubbleTrail(&pos, 1);
 }
 
-void NCIN_BubHit(const zCutsceneMgr*, NCINEntry* fxrec, S32 killit)
+static void NCIN_BubHit(const zCutsceneMgr*, NCINEntry* fxrec, S32 killit)
 {
     if (killit != 0)
     {
@@ -535,7 +592,7 @@ void NCIN_BubHit(const zCutsceneMgr*, NCINEntry* fxrec, S32 killit)
 }
 
 // TODO: NEEDS REWRITEN / CORRECTED
-void NCIN_Zapper(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
+static void NCIN_Zapper(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
     {
@@ -564,7 +621,7 @@ void NCIN_Zapper(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
     }
 }
 
-void NCIN_HammerShock(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
+static void NCIN_HammerShock(const zCutsceneMgr*, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
     {
@@ -600,7 +657,7 @@ static void NCIN_HammerStreak_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 kil
     }
 }
 
-void NCIN_HammerStreak_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic*, RwMatrixTag*, U32 num_1,
+static void NCIN_HammerStreak_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic*, RwMatrixTag*, U32 num_1,
                           U32 num_2)
 {
     if (num_2 != 2)
@@ -612,7 +669,7 @@ void NCIN_HammerStreak_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic*, RwMa
     U32 sid_horz = fxrec->fxdata.strkdata.sid_horz;
 }
 
-void NCIN_WaterSplash(const zCutsceneMgr*, NCINEntry* fxrec, S32 killit)
+static void NCIN_WaterSplash(const zCutsceneMgr*, NCINEntry* fxrec, S32 killit)
 {
     if (killit != 0)
     {
@@ -625,7 +682,7 @@ void NCIN_WaterSplash(const zCutsceneMgr*, NCINEntry* fxrec, S32 killit)
     }
 }
 
-void NCIN_HazProjShoot(const zCutsceneMgr* mgr, NCINEntry* fxrec, S32 param)
+static void NCIN_HazProjShoot(const zCutsceneMgr* mgr, NCINEntry* fxrec, S32 param)
 {
     if (param != 0)
     {
@@ -695,32 +752,24 @@ void NCIN_HazProjShoot(const zCutsceneMgr* mgr, NCINEntry* fxrec, S32 param)
     }
 }
 
-void NCIN_HazTTSteam_Upd(const zCutsceneMgr* manager, NCINEntry* fxrec, S32 param)
+static void NCIN_HazTTSteam_Upd(const zCutsceneMgr* manager, NCINEntry* fxrec, S32 param)
 {
 }
 
-void NCIN_HazTTSteam_AR(const zCutsceneMgr* cutsceneMgr, NCINEntry* fxrec, RpAtomic* atomic,
+static void NCIN_HazTTSteam_AR(const zCutsceneMgr* cutsceneMgr, NCINEntry* fxrec, RpAtomic* atomic,
                         RwMatrixTag* matrix, U32 num_1, U32 num_2)
 {
 }
 
-void NCIN_ArfDogBoom(const zCutsceneMgr*, NCINEntry*, S32)
+static void NCIN_ArfDogBoom(const zCutsceneMgr*, NCINEntry*, S32)
 {
 }
 
-void NCIN_ShieldPop(const zCutsceneMgr*, NCINEntry*, S32)
+static void NCIN_ShieldPop(const zCutsceneMgr*, NCINEntry*, S32)
 {
 }
 
-void NCIN_MidFish_Upd(const zCutsceneMgr* mgr, NCINEntry* e, S32 i)
-{
-    if (i != 0)
-    {
-        e->flg_stat |= 4;
-    }
-}
-
-void NCIN_BombTrail_Upd(const zCutsceneMgr* mgr, NCINEntry* e, S32 i)
+static void NCIN_MidFish_Upd(const zCutsceneMgr* mgr, NCINEntry* e, S32 i)
 {
     if (i != 0)
     {
@@ -728,7 +777,15 @@ void NCIN_BombTrail_Upd(const zCutsceneMgr* mgr, NCINEntry* e, S32 i)
     }
 }
 
-void NCIN_BombTrail_AR(const zCutsceneMgr* mgr, NCINEntry* e, RpAtomic* a, RwMatrixTag* t, U32 i1, U32 i2)
+static void NCIN_BombTrail_Upd(const zCutsceneMgr* mgr, NCINEntry* e, S32 i)
+{
+    if (i != 0)
+    {
+        e->flg_stat |= 4;
+    }
+}
+
+static void NCIN_BombTrail_AR(const zCutsceneMgr* mgr, NCINEntry* e, RpAtomic* a, RwMatrixTag* t, U32 i1, U32 i2)
 {
     if (i1 == 0x4)
     {
@@ -736,7 +793,7 @@ void NCIN_BombTrail_AR(const zCutsceneMgr* mgr, NCINEntry* e, RpAtomic* a, RwMat
     }
 }
 
-void NCIN_BoneTrail_Upd(const zCutsceneMgr* mgr, NCINEntry* e, S32 i)
+static void NCIN_BoneTrail_Upd(const zCutsceneMgr* mgr, NCINEntry* e, S32 i)
 {
     if (i != 0)
     {
@@ -744,7 +801,7 @@ void NCIN_BoneTrail_Upd(const zCutsceneMgr* mgr, NCINEntry* e, S32 i)
     }
 }
 
-void NCIN_BoneTrail_AR(const zCutsceneMgr* mgr, NCINEntry* e, RpAtomic* a, RwMatrixTag* t, U32 i1, U32 i2)
+static void NCIN_BoneTrail_AR(const zCutsceneMgr* mgr, NCINEntry* e, RpAtomic* a, RwMatrixTag* t, U32 i1, U32 i2)
 {
     if (i1 == 0x7)
     {
@@ -752,7 +809,7 @@ void NCIN_BoneTrail_AR(const zCutsceneMgr* mgr, NCINEntry* e, RpAtomic* a, RwMat
     }
 }
 
-void NCIN_HookRecoil_Upd(const zCutsceneMgr* mgr, NCINEntry* e, S32 i)
+static void NCIN_HookRecoil_Upd(const zCutsceneMgr* mgr, NCINEntry* e, S32 i)
 {
     if (i != 0)
     {
@@ -760,34 +817,145 @@ void NCIN_HookRecoil_Upd(const zCutsceneMgr* mgr, NCINEntry* e, S32 i)
     }
 }
 
-void NCIN_LightninBone_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic* a, RwMatrixTag* animMat, U32 animIndex, U32)
+static void NCIN_B201HideBelt_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 killit)
 {
-    xVec3 pnt1;
-    xVec3 pnt2;
-    S32 boneIndex;
-
-    if (a->object.object.type == animIndex)
+    if (killit)
     {
-        fxrec->tym_beg = 0.0f;
-
-        xMat3x3RMulVec(0, 0, 0);
-        xVec3AddTo(0, 0);
-        if (1)
+        for (int i = 0; i < 4; i++)
         {
-            xVec3AddTo(0, 0);
+            xEntShow(fxrec->fxdata.entdata.ent[i]);
         }
-        xMat3x3RMulVec(0, 0, 0);
-        xVec3AddTo(0, 0);
-        zLightningModifyEndpoints(0, 0, 0);
+
+        fxrec->flg_stat |= 0x4;
+    }
+    else if (fxrec->flg_stat & 0x2)
+    {
+        fxrec->fxdata.entdata.ent[0] = (xEnt*)zSceneFindObject(xStrHash("CONVEYOR BELT 03"));
+        fxrec->fxdata.entdata.ent[1] = (xEnt*)zSceneFindObject(xStrHash("ROLLER_MECH 07"));
+        fxrec->fxdata.entdata.ent[2] = (xEnt*)zSceneFindObject(xStrHash("ROLLER_MECH 08"));
+        fxrec->fxdata.entdata.ent[3] = (xEnt*)zSceneFindObject(xStrHash("ROLLER_MECH 09"));
+
+        for (int i = 0; i < 4; i++)
+        {
+            xEntHide(fxrec->fxdata.entdata.ent[i]);
+        }
     }
 }
 
-void NCIN_SpatGlow_Upd(const zCutsceneMgr* mgr, NCINEntry* e, S32 i)
+static void NCIN_GooLever_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 killit)
+{
+    zParEmitter* emitter = fxrec->fxdata.pardata.emitter;
+
+    if (killit)
+    {
+        if (emitter)
+        {
+            emitter->prop->rate.val[0] = 0.0f;
+        }
+
+        fxrec->flg_stat |= 0x4;
+    }
+    else if (fxrec->flg_stat & 0x2)
+    {
+        emitter = zParEmitterFind("FUDGE_EMIT");
+
+        if (emitter)
+        {
+            fxrec->fxdata.pardata.emitter = emitter;
+            emitter->prop->rate.val[0] = 0.0f;
+        }
+        else
+        {
+            fxrec->flg_stat |= 0x4;
+        }
+    }
+}
+
+static void NCIN_GooLever_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic*, RwMatrixTag* animMat, U32 animIndex, U32)
+{
+    S32 ifx = fxrec->pos_A[1].x;
+
+    if (animIndex != ifx)
+    {
+        return;
+    }
+
+    S32 ify = fxrec->pos_A[1].y;
+    F32 fudgeRate = -animMat[ify].at.y * 400.0f;
+
+    if (fudgeRate < 0.0f)
+    {
+        fudgeRate = 0.0f;
+    }
+
+    if (fxrec->fxdata.pardata.emitter)
+    {
+        fxrec->fxdata.pardata.emitter->prop->rate.val[0] = fudgeRate;
+    }
+}
+
+static void NCIN_PatBossShrapnel_Upd(const zCutsceneMgr*, NCINEntry* fxrec, S32 killit)
+{
+    if (killit)
+    {
+        fxrec->flg_stat |= 0x4;
+    }
+    else if (fxrec->flg_stat & 0x2)
+    {
+        zShrapnelAsset* sasset = (zShrapnelAsset*)xSTFindAsset(xStrHash("boss_pa_shrapnel"), 0);
+
+        if (!sasset)
+        {
+            fxrec->flg_stat |= 0x4;
+        }
+        else
+        {
+            fxrec->fxdata.shrapdata.shrap = sasset;
+        }
+    }
+    else
+    {
+        fxrec->flg_stat |= 4;
+    }
+}
+
+static void NCIN_PatBossShrapnel_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic* model, RwMatrixTag* animMat, U32 animIndex, U32)
+{
+    S32 ifx = fxrec->pos_A[1].x;
+
+    if (animIndex == ifx)
+    {
+        zShrapnel_CinematicInit(fxrec->fxdata.shrapdata.shrap, model, animMat, NULL, NULL);
+    }
+}
+
+static void NCIN_SpatGlow_Upd(const zCutsceneMgr* mgr, NCINEntry* e, S32 i)
 {
     if (i != 0)
     {
         e->flg_stat |= 4;
     }
+}
+
+static void NCIN_SpatGlow_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic* model, RwMatrixTag* animMat, U32 animIndex, U32 dataIndex)
+{
+    S32 ifx = fxrec->pos_A[1].x;
+    iColor_tag color;
+
+    if (animIndex != ifx)
+    {
+        return;
+    }
+
+    S32 boneIndex = fxrec->pos_A[1].y;
+    zShrapnel_CinematicInit(fxrec->fxdata.shrapdata.shrap, model, animMat, 0, 0);
+
+    color.r = (U8)fxrec->pos_B[0].x;
+    color.g = (U8)fxrec->pos_B[0].y;
+    color.b = (U8)fxrec->pos_B[0].z;
+    color.a = (U8)fxrec->pos_B[1].x;
+
+    xFXAuraAdd(fxrec, (xVec3*)&animMat[boneIndex].pos, &color, fxrec->pos_B[1].y);
 }
 
 void clamp_bone_index(NCINEntry*, RpAtomic*)
