@@ -1,76 +1,92 @@
 #include "PowerPC_EABI_Support/MetroTRK/trk.h"
 
-extern TRKEventQueue gTRKEventQueue;
-extern TRKState gTRKState;
-
-void TRKHandleRequestEvent(TRKEvent* event)
+asm void TRKNubMainLoop(void)
 {
-    TRKBuffer* buffer = TRKGetBuffer(event->msgBufID);
-    TRKDispatchMessage(buffer);
-}
+    nofralloc
+    stwu r1, -0x20(r1)
+    mflr r0
+    stw r0, 0x24(r1)
+    stw r31, 0x1c(r1)
+    li r31, 0x0
+    stw r30, 0x18(r1)
+    li r30, 0x0
+    b loop_test
 
-void TRKHandleSupportEvent(TRKEvent* event)
-{
-    TRKTargetSupportRequest();
-}
+loop_start:
+    addi r3, r1, 0x8
+    bl TRKGetNextEvent
+    cmpwi r3, 0x0
+    beq no_event
+    lbz r0, 0x8(r1)
+    li r30, 0x0
+    cmpwi r0, 0x2
+    beq request_event
+    bge ge_two
+    cmpwi r0, 0x0
+    beq event_done
+    bge shutdown_event
+    b event_done
 
-void TRKIdle()
-{
-    if (TRKTargetStopped() == FALSE)
-    {
-        TRKTargetContinue();
-    }
-}
+ge_two:
+    cmpwi r0, 0x5
+    beq support_event
+    bge event_done
+    b interrupt_event
 
-void TRKNubMainLoop(void)
-{
-    TRKEvent event;
-    BOOL isShutdownRequested;
-    BOOL isNewInput;
+request_event:
+    lwz r3, 0x10(r1)
+    bl TRKGetBuffer
+    bl TRKDispatchMessage
+    b event_done
 
-    isShutdownRequested = FALSE;
-    isNewInput = FALSE;
-    while (isShutdownRequested == FALSE)
-    {
-        if (TRKGetNextEvent(&event) != FALSE)
-        {
-            isNewInput = FALSE;
+shutdown_event:
+    li r31, 0x1
+    b event_done
 
-            switch (event.eventType)
-            {
-            case NUBEVENT_Null:
-                break;
+interrupt_event:
+    addi r3, r1, 0x8
+    bl TRKTargetInterrupt
+    b event_done
 
-            case NUBEVENT_Request:
-                TRKHandleRequestEvent(&event);
-                break;
+support_event:
+    bl TRKTargetSupportRequest
 
-            case NUBEVENT_Shutdown:
-                isShutdownRequested = TRUE;
-                break;
+event_done:
+    addi r3, r1, 0x8
+    bl TRKDestructEvent
+    b loop_test
 
-            case NUBEVENT_Breakpoint:
-            case NUBEVENT_Exception:
-                TRKTargetInterrupt(&event);
-                break;
+no_event:
+    cmpwi r30, 0x0
+    beq poll_input
+    lis r3, gTRKInputPendingPtr@ha
+    addi r3, r3, gTRKInputPendingPtr@l
+    lwz r3, 0x0(r3)
+    lbz r0, 0x0(r3)
+    cmplwi r0, 0x0
+    beq idle
 
-            case NUBEVENT_Support:
-                TRKHandleSupportEvent(&event);
-                break;
-            }
+poll_input:
+    li r30, 0x1
+    bl TRKGetInput
+    b loop_test
 
-            TRKDestructEvent(&event);
-            continue;
-        }
+idle:
+    bl TRKTargetStopped
+    cmpwi r3, 0x0
+    bne finish_idle
+    bl TRKTargetContinue
 
-        if ((isNewInput == FALSE) || (*(u8*)gTRKInputPendingPtr != '\0'))
-        {
-            isNewInput = TRUE;
-            TRKGetInput();
-            continue;
-        }
+finish_idle:
+    li r30, 0x0
 
-        TRKIdle();
-        isNewInput = FALSE;
-    }
+loop_test:
+    cmpwi r31, 0x0
+    beq loop_start
+    lwz r0, 0x24(r1)
+    lwz r31, 0x1c(r1)
+    lwz r30, 0x18(r1)
+    mtlr r0
+    addi r1, r1, 0x20
+    blr
 }

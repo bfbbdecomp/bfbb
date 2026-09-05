@@ -1,6 +1,6 @@
 #include "PowerPC_EABI_Support/MetroTRK/trk.h"
 
-static DSError TRK_mainError;
+static DSError TRK_mainError ATTRIBUTE_ALIGN(8);
 
 /*
  * --INFO--
