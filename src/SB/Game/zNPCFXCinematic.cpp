@@ -1021,7 +1021,3 @@ void NPARMgmt::KillAll()
 {
     this->cnt_active = 0;
 }
-
-void zNPCB_SB2::singleton()
-{
-}
