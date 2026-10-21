@@ -36,7 +36,7 @@ struct xShadowMgr
 void xShadowInit();
 void xShadow_ListAdd(xEnt* ent);
 void xShadowSetWorld(RpWorld* world);
-void xShadowSetLight(xVec3* param1, xVec3* param2, F32 param3);
+void xShadowSetLight(xVec3* target_pos, xVec3* in_vec, F32 param3);
 void xShadowManager_Init(S32 numEnts);
 void xShadowManager_Reset();
 void xShadowManager_Render();

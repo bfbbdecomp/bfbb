@@ -237,7 +237,8 @@ static U32 PickNextSoak()
     static S32 soakidx = 0;
     static S32 soakcnt = 0;
 
-    static enum en_SOAK_DIR {
+    static enum en_SOAK_DIR
+    {
         SOAK_FOR,
         SOAK_BACK,
         SOAK_RAND,

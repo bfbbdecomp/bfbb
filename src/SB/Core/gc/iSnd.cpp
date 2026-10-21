@@ -694,6 +694,18 @@ U32 iVolFromX(F32 param1)
     }
 }
 
+void iSndCalcVol(xSndVoiceInfo* vp, vinfo* info)
+{
+    S32 vol = iVolFromX(vp->vol * gSnd.categoryVolFader[vp->category]);
+
+    info->x10 = vol;
+    info->x14 = vol;
+    info->x18 = 0x40;
+    info->x1c = 0x40;
+    MIXAdjustFader(info->voice, vol - MIXGetFader(info->voice));
+    MIXAdjustPan(info->voice, 0x40 - MIXGetPan(info->voice));
+}
+
 void iSndVolUpdate(xSndVoiceInfo* info, vinfo* vinfo)
 {
     MIXUnMute(vinfo->voice);
@@ -720,6 +732,75 @@ void iSndUpdateSounds()
         if (voices[i].voice != NULL)
         {
             iSndVolUpdate(&gSnd.voice[i + 6], &voices[i]);
+        }
+    }
+}
+
+S32 iSndPlay(xSndVoiceInfo* vp)
+{
+    S32 offset = (S32)vp - (S32)gSnd.voice;
+    S32 div = offset / 100;
+
+    xSTAssetName(vp->assetID);
+
+    if ((div < 0) || (div >= 64))
+    {
+        return 0;
+    }
+    else if (div < 6)
+    {
+        U32 ret = iSndPrepStream(vp);
+        if (ret < 0x3a)
+        {
+            if (vp->flags & 0x200)
+            {
+                return iSndPlayMemStream(vp);
+            }
+            else
+            {
+                return iSndPlayStream(vp);
+            }
+        }
+        return ret;
+    }
+    else
+    {
+        return iSndPlaySound(vp);
+    }
+}
+
+void iSndSetVol(U32 snd, F32 vol)
+{
+    xSndVoiceInfo* vp = &gSnd.voice[0];
+
+    S32 i = 0;
+    for (; i < 64; i++, vp++)
+    {
+        if (vp->sndID == snd)
+            break;
+    }
+
+    if (i != 64)
+    {
+        vp->vol = vol;
+        S32 adj = iVolFromX(vol * gSnd.categoryVolFader[vp->category]);
+        vinfo* info;
+        if (i < 6)
+        {
+            info = &streams[i].vinf;
+        }
+        else
+        {
+            info = &voices[i - 6];
+        }
+        if (info->voice != 0)
+        {
+            info->x10 = adj;
+            info->x14 = adj;
+            info->x18 = 0x40;
+            info->x1c = 0x40;
+            MIXAdjustFader(info->voice, adj - MIXGetFader(info->voice));
+            MIXAdjustPan(info->voice, 0x40 - MIXGetPan(info->voice));
         }
     }
 }
@@ -786,7 +867,45 @@ void sndloadcb(tag_xFile* tag)
 {
     SoundFlags = 0;
 }
+/* Matching
+void iSndDIEDIEDIE()
+{
+    if (!soundInited)
+    {
+        return;
+    }
 
+    OSDisableInterrupts();
+    soundInited = 0;
+
+    for (S32 i = 0; i < (S32)(sizeof(streams) / (sizeof(UNK_STREAM))); i++)
+    {
+        UNK_STREAM* pv = &streams[i];
+
+        if (pv->vinf.voice != NULL)
+        {
+            MIXReleaseChannel(pv->vinf.voice);
+            AXSetVoiceState(pv->vinf.voice, 0);
+            iSndMyAXFree(&pv->vinf.voice);
+        }
+        pv++;
+    }
+
+    for (S32 i = 0; i < (S32)(sizeof(voices) / (sizeof(vinfo))); i++)
+    {
+        vinfo* v = &voices[i];
+
+        if ((v->voice != NULL))
+        {
+            MIXReleaseChannel(v->voice);
+            AXSetVoiceState(v->voice, 0);
+            iSndMyAXFree(&v->voice);
+        }
+    }
+
+    AXQuit();
+}
+*/
 void iSndSetExternalCallback(iSndExternalCallback callback)
 {
 }
@@ -798,4 +917,79 @@ void iSndMyAXFree(_AXVPB** param1)
         AXFreeVoice(*param1);
         *param1 = NULL;
     }
+}
+
+void iSndSuspend()
+{
+    AXRegisterCallback(0);
+
+    for (S32 i = 0; i < (S32)(sizeof(streams) / (sizeof(UNK_STREAM))); i++)
+    {
+        UNK_STREAM* pv = &streams[i];
+
+        if (pv->vinf.voice != NULL)
+        {
+            AXSetVoiceState(pv->vinf.voice, 0);
+        }
+        pv++;
+    }
+
+    for (S32 i = 0; i < (S32)(sizeof(voices) / (sizeof(vinfo))); i++)
+    {
+        vinfo* v = &voices[i];
+
+        if ((v->voice != NULL))
+        {
+            AXSetVoiceState(v->voice, 0);
+        }
+    }
+}
+
+void iSndResume()
+{
+    for (S32 i = 0; i < (S32)(sizeof(streams) / (sizeof(UNK_STREAM))); i++)
+    {
+        UNK_STREAM* pv = &streams[i];
+
+        if ((pv->vinf.voice != NULL) && !(pv->vinf.flags & 2))
+        {
+            AXSetVoiceState(pv->vinf.voice, 1);
+        }
+        pv++;
+    }
+
+    for (S32 i = 0; i < (S32)(sizeof(voices) / (sizeof(vinfo))); i++)
+    {
+        vinfo* v = &voices[i];
+
+        if ((v->voice != NULL) && !(v->flags & 8))
+        {
+            AXSetVoiceState(v->voice, 1);
+        }
+    }
+
+    AXRegisterCallback(fcb);
+}
+
+F32 iSndGetVol(U32 snd)
+{
+    xSndVoiceInfo* vp = &gSnd.voice[0];
+
+    for (int i = 0; i < 0x40; i++)
+    {
+        if (vp->flags & 1)
+        {
+            if (vp->sndID == snd)
+            {
+                if (gSnd.categoryVolFader[vp->category] <= 0.0f)
+                {
+                    return 0.0f;
+                }
+                return (vp->vol / gSnd.categoryVolFader[vp->category]);
+            }
+        }
+        vp++;
+    }
+
+    return 0.0f;
 }

@@ -228,7 +228,8 @@ xVec3 floor_safe_vec;
 xAnimTransition sandyHitTran[8];
 xAnimTransition patrickHitTran[8];
 
-static enum {
+static enum
+{
     WallJumpResult_NoJump,
     WallJumpResult_Jump,
 } sWallJumpResult;

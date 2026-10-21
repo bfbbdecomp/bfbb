@@ -312,7 +312,7 @@ cflags_rel = [
 # Game-specific flags
 cflags_bfbb = [
     *cflags_base,
-    "-lang=C++",
+    "-lang=c++",
     "-common on",
     "-char unsigned",
     "-str reuse,pool,readonly",

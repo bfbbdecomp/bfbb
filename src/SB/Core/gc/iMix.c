@@ -590,90 +590,133 @@ void MIXUpdateSettings()
         {
             switch (__MIXSoundMode)
             {
-                case 0:
-                    __MIXChannel[i].vL1 = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].f);
-                    __MIXChannel[i].vR1 = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].f);
-                    __MIXChannel[i].vS1 = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].b - 0x3c);
+            case 0:
+                __MIXChannel[i].vL1 = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].f);
+                __MIXChannel[i].vR1 = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].f);
+                __MIXChannel[i].vS1 =
+                    __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].b - 0x3c);
 
-                    if (__MIXChannel[i].mode & 1)
-                    {
-                        __MIXChannel[i].vAL1 = __MIXGetVolume(__MIXChannel[i].auxA + __MIXChannel[i].f);
-                        __MIXChannel[i].vAR1 = __MIXGetVolume(__MIXChannel[i].auxA + __MIXChannel[i].f);
-                        __MIXChannel[i].vAS1 = __MIXGetVolume(__MIXChannel[i].auxA + __MIXChannel[i].b - 0x3c);
-                    }
-                    else
-                    {
-                        __MIXChannel[i].vAL1 = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].auxA + __MIXChannel[i].f);
-                        __MIXChannel[i].vAR1 = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].auxA + __MIXChannel[i].f);
-                        __MIXChannel[i].vAS1 = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].auxA + __MIXChannel[i].b - 0x3c);
-                    }
+                if (__MIXChannel[i].mode & 1)
+                {
+                    __MIXChannel[i].vAL1 = __MIXGetVolume(__MIXChannel[i].auxA + __MIXChannel[i].f);
+                    __MIXChannel[i].vAR1 = __MIXGetVolume(__MIXChannel[i].auxA + __MIXChannel[i].f);
+                    __MIXChannel[i].vAS1 =
+                        __MIXGetVolume(__MIXChannel[i].auxA + __MIXChannel[i].b - 0x3c);
+                }
+                else
+                {
+                    __MIXChannel[i].vAL1 = __MIXGetVolume(__MIXChannel[i].fader +
+                                                          __MIXChannel[i].auxA + __MIXChannel[i].f);
+                    __MIXChannel[i].vAR1 = __MIXGetVolume(__MIXChannel[i].fader +
+                                                          __MIXChannel[i].auxA + __MIXChannel[i].f);
+                    __MIXChannel[i].vAS1 = __MIXGetVolume(
+                        __MIXChannel[i].fader + __MIXChannel[i].auxA + __MIXChannel[i].b - 0x3c);
+                }
 
-                    if (__MIXChannel[i].mode & 2)
-                    {
-                        __MIXChannel[i].vBL1 = __MIXGetVolume(__MIXChannel[i].auxB + __MIXChannel[i].f);
-                        __MIXChannel[i].vBR1 = __MIXGetVolume(__MIXChannel[i].auxB + __MIXChannel[i].f);
-                        __MIXChannel[i].vBS1 = __MIXGetVolume(__MIXChannel[i].auxB + __MIXChannel[i].b - 0x3c);
-                    }
-                    else
-                    {
-                        __MIXChannel[i].vBL1 = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].auxB + __MIXChannel[i].f);
-                        __MIXChannel[i].vBR1 = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].auxB + __MIXChannel[i].f);
-                        __MIXChannel[i].vBS1 = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].auxB + __MIXChannel[i].b - 0x3c);
-                    }
+                if (__MIXChannel[i].mode & 2)
+                {
+                    __MIXChannel[i].vBL1 = __MIXGetVolume(__MIXChannel[i].auxB + __MIXChannel[i].f);
+                    __MIXChannel[i].vBR1 = __MIXGetVolume(__MIXChannel[i].auxB + __MIXChannel[i].f);
+                    __MIXChannel[i].vBS1 =
+                        __MIXGetVolume(__MIXChannel[i].auxB + __MIXChannel[i].b - 0x3c);
+                }
+                else
+                {
+                    __MIXChannel[i].vBL1 = __MIXGetVolume(__MIXChannel[i].fader +
+                                                          __MIXChannel[i].auxB + __MIXChannel[i].f);
+                    __MIXChannel[i].vBR1 = __MIXGetVolume(__MIXChannel[i].fader +
+                                                          __MIXChannel[i].auxB + __MIXChannel[i].f);
+                    __MIXChannel[i].vBS1 = __MIXGetVolume(
+                        __MIXChannel[i].fader + __MIXChannel[i].auxB + __MIXChannel[i].b - 0x3c);
+                }
 
                 break;
-                case 1:
-                case 2:
-                    __MIXChannel[i].vL1 = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].l + __MIXChannel[i].f);
-                    __MIXChannel[i].vR1 = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].r + __MIXChannel[i].f);
-                    __MIXChannel[i].vS1 = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].b - 0x3c);
-                    if (__MIXChannel[i].mode & 1)
-                    {
-                        __MIXChannel[i].vAL1 = __MIXGetVolume(__MIXChannel[i].auxA + __MIXChannel[i].l + __MIXChannel[i].f);
-                        __MIXChannel[i].vAR1 = __MIXGetVolume(__MIXChannel[i].auxA + __MIXChannel[i].r + __MIXChannel[i].f);
-                        __MIXChannel[i].vAS1 = __MIXGetVolume(__MIXChannel[i].auxA + __MIXChannel[i].b - 0x3c);
-                    }
-                    else
-                    {
-                        __MIXChannel[i].vAL1 = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].auxA + __MIXChannel[i].l + __MIXChannel[i].f);
-                        __MIXChannel[i].vAR1 = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].auxA + __MIXChannel[i].r + __MIXChannel[i].f);
-                        __MIXChannel[i].vAS1 = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].auxA + __MIXChannel[i].b - 0x3c);
-                    }
-                    if (__MIXChannel[i].mode & 2)
-                    {
-                        __MIXChannel[i].vBL1 = __MIXGetVolume(__MIXChannel[i].auxB + __MIXChannel[i].l + __MIXChannel[i].f);
-                        __MIXChannel[i].vBR1 = __MIXGetVolume(__MIXChannel[i].auxB + __MIXChannel[i].r + __MIXChannel[i].f);
-                        __MIXChannel[i].vBS1 = __MIXGetVolume(__MIXChannel[i].auxB + __MIXChannel[i].b - 0x3c);
-                    }
-                    else
-                    {
-                        __MIXChannel[i].vBL1 = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].auxB + __MIXChannel[i].l + __MIXChannel[i].f);
-                        __MIXChannel[i].vBR1 = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].auxB + __MIXChannel[i].r + __MIXChannel[i].f);
-                        __MIXChannel[i].vBS1 = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].auxB + __MIXChannel[i].b - 0x3c);
-                    }
-                    break;
-                case 3:
-                    __MIXChannel[i].vL1  = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].l  + __MIXChannel[i].f);
-                    __MIXChannel[i].vR1  = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].r  + __MIXChannel[i].f);
-                    __MIXChannel[i].vBL1 = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].l1 + __MIXChannel[i].b);
-                    __MIXChannel[i].vBR1 = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].r1 + __MIXChannel[i].b);
-                    if (__MIXChannel[i].mode & 1)
-                    {
-                        __MIXChannel[i].vAL1 = __MIXGetVolume(__MIXChannel[i].auxA + __MIXChannel[i].l  + __MIXChannel[i].f);
-                        __MIXChannel[i].vAR1 = __MIXGetVolume(__MIXChannel[i].auxA + __MIXChannel[i].r  + __MIXChannel[i].f);
-                        __MIXChannel[i].vAS1 = __MIXGetVolume(__MIXChannel[i].auxA + __MIXChannel[i].l1 + __MIXChannel[i].b);
-                        __MIXChannel[i].vBS1 = __MIXGetVolume(__MIXChannel[i].auxA + __MIXChannel[i].r1 + __MIXChannel[i].b);
-                    }
-                    else
-                    {
-                        __MIXChannel[i].vAL1 = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].auxA + __MIXChannel[i].l  + __MIXChannel[i].f);
-                        __MIXChannel[i].vAR1 = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].auxA + __MIXChannel[i].r  + __MIXChannel[i].f);
-                        __MIXChannel[i].vAS1 = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].auxA + __MIXChannel[i].l1 + __MIXChannel[i].b);
-                        __MIXChannel[i].vBS1 = __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].auxA + __MIXChannel[i].r1 + __MIXChannel[i].b);
-                    }
-                    mixerCtrl |= 0x4000;
-                    break;
-
+            case 1:
+            case 2:
+                __MIXChannel[i].vL1 =
+                    __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].l + __MIXChannel[i].f);
+                __MIXChannel[i].vR1 =
+                    __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].r + __MIXChannel[i].f);
+                __MIXChannel[i].vS1 =
+                    __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].b - 0x3c);
+                if (__MIXChannel[i].mode & 1)
+                {
+                    __MIXChannel[i].vAL1 = __MIXGetVolume(__MIXChannel[i].auxA + __MIXChannel[i].l +
+                                                          __MIXChannel[i].f);
+                    __MIXChannel[i].vAR1 = __MIXGetVolume(__MIXChannel[i].auxA + __MIXChannel[i].r +
+                                                          __MIXChannel[i].f);
+                    __MIXChannel[i].vAS1 =
+                        __MIXGetVolume(__MIXChannel[i].auxA + __MIXChannel[i].b - 0x3c);
+                }
+                else
+                {
+                    __MIXChannel[i].vAL1 =
+                        __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].auxA +
+                                       __MIXChannel[i].l + __MIXChannel[i].f);
+                    __MIXChannel[i].vAR1 =
+                        __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].auxA +
+                                       __MIXChannel[i].r + __MIXChannel[i].f);
+                    __MIXChannel[i].vAS1 = __MIXGetVolume(
+                        __MIXChannel[i].fader + __MIXChannel[i].auxA + __MIXChannel[i].b - 0x3c);
+                }
+                if (__MIXChannel[i].mode & 2)
+                {
+                    __MIXChannel[i].vBL1 = __MIXGetVolume(__MIXChannel[i].auxB + __MIXChannel[i].l +
+                                                          __MIXChannel[i].f);
+                    __MIXChannel[i].vBR1 = __MIXGetVolume(__MIXChannel[i].auxB + __MIXChannel[i].r +
+                                                          __MIXChannel[i].f);
+                    __MIXChannel[i].vBS1 =
+                        __MIXGetVolume(__MIXChannel[i].auxB + __MIXChannel[i].b - 0x3c);
+                }
+                else
+                {
+                    __MIXChannel[i].vBL1 =
+                        __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].auxB +
+                                       __MIXChannel[i].l + __MIXChannel[i].f);
+                    __MIXChannel[i].vBR1 =
+                        __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].auxB +
+                                       __MIXChannel[i].r + __MIXChannel[i].f);
+                    __MIXChannel[i].vBS1 = __MIXGetVolume(
+                        __MIXChannel[i].fader + __MIXChannel[i].auxB + __MIXChannel[i].b - 0x3c);
+                }
+                break;
+            case 3:
+                __MIXChannel[i].vL1 =
+                    __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].l + __MIXChannel[i].f);
+                __MIXChannel[i].vR1 =
+                    __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].r + __MIXChannel[i].f);
+                __MIXChannel[i].vBL1 =
+                    __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].l1 + __MIXChannel[i].b);
+                __MIXChannel[i].vBR1 =
+                    __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].r1 + __MIXChannel[i].b);
+                if (__MIXChannel[i].mode & 1)
+                {
+                    __MIXChannel[i].vAL1 = __MIXGetVolume(__MIXChannel[i].auxA + __MIXChannel[i].l +
+                                                          __MIXChannel[i].f);
+                    __MIXChannel[i].vAR1 = __MIXGetVolume(__MIXChannel[i].auxA + __MIXChannel[i].r +
+                                                          __MIXChannel[i].f);
+                    __MIXChannel[i].vAS1 = __MIXGetVolume(__MIXChannel[i].auxA +
+                                                          __MIXChannel[i].l1 + __MIXChannel[i].b);
+                    __MIXChannel[i].vBS1 = __MIXGetVolume(__MIXChannel[i].auxA +
+                                                          __MIXChannel[i].r1 + __MIXChannel[i].b);
+                }
+                else
+                {
+                    __MIXChannel[i].vAL1 =
+                        __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].auxA +
+                                       __MIXChannel[i].l + __MIXChannel[i].f);
+                    __MIXChannel[i].vAR1 =
+                        __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].auxA +
+                                       __MIXChannel[i].r + __MIXChannel[i].f);
+                    __MIXChannel[i].vAS1 =
+                        __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].auxA +
+                                       __MIXChannel[i].l1 + __MIXChannel[i].b);
+                    __MIXChannel[i].vBS1 =
+                        __MIXGetVolume(__MIXChannel[i].fader + __MIXChannel[i].auxA +
+                                       __MIXChannel[i].r1 + __MIXChannel[i].b);
+                }
+                mixerCtrl |= 0x4000;
+                break;
             }
 
             cond1 = true;

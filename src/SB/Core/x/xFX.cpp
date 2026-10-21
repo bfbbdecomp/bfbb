@@ -76,15 +76,14 @@ void xFXInit()
 static U32 Im3DBufferPos = 0;
 static RwTexture* g_txtr_drawRing = NULL;
 
-static xFXBubbleParams defaultBFX = {
-    // pass1, pass2, pass3, padding
-    1, 1, 1, 0,
-    // pass1_alpha, pass2_alpha, pass3_alpha, pass1_fbsk
-    0, 0, 192, 0xFFFFFFFF,
-    // fresnel_map, fresnel_map_coeff
-    ID_gloss_edge, 0.75f,
-    // env_map, env_map_coeff
-    ID_rainbowfilm_smooth32, 0.5f
+static xFXBubbleParams defaultBFX = { // pass1, pass2, pass3, padding
+                                      1, 1, 1, 0,
+                                      // pass1_alpha, pass2_alpha, pass3_alpha, pass1_fbsk
+                                      0, 0, 192, 0xFFFFFFFF,
+                                      // fresnel_map, fresnel_map_coeff
+                                      ID_gloss_edge, 0.75f,
+                                      // env_map, env_map_coeff
+                                      ID_rainbowfilm_smooth32, 0.5f
 };
 
 static U32 bfx_curr = 0;
@@ -808,10 +807,6 @@ static void RenderRotatedBillboard(xVec3* pos, _xFXAuraAngle* rot, U32 count, F3
 
 void xFXAuraRender()
 {
-    // TODO: Fix function
-    // Honestly the closest I can get this function.
-    // fogstate is in the dwarf but currently isn't used in the function.
-
     S32 fogstate;
     _xFXAura* ap;
     _xFXAuraAngle* auraAng;
@@ -824,7 +819,7 @@ void xFXAuraRender()
         RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)0x2);
         RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)0x1);
         RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)0x0);
-        RwRenderStateGet(rwRENDERSTATEFOGTYPE, (void*)0x1);
+        RwRenderStateGet(rwRENDERSTATEFOGENABLE, &fogstate);
         RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)0x0);
 
         ap = sAura;
@@ -834,18 +829,18 @@ void xFXAuraRender()
             if (ap->frame == gFrameCount)
             {
                 auraAng = &sAuraAngle[0];
-                RenderRotatedBillboard(&ap->pos, auraAng, 1, 0, 0, ap->color, 0);
+                RenderRotatedBillboard(&ap->pos, auraAng, 1, ap->size, ap->size, ap->color, 0);
                 auraAng = &sAuraAngle[1];
-                RenderRotatedBillboard(&ap->pos, auraAng, 1, 0, 0, ap->color, 1);
+                RenderRotatedBillboard(&ap->pos, auraAng, 1, ap->size, ap->size, ap->color, 1);
             }
-            ap = (_xFXAura*)ap->dangle;
+            ap++;
         }
 
         RwRenderStateSet(rwRENDERSTATESRCBLEND, (void*)0x5);
         RwRenderStateSet(rwRENDERSTATEDESTBLEND, (void*)0x6);
         RwRenderStateSet(rwRENDERSTATEZTESTENABLE, (void*)0x1);
         RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)0x1);
-        RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)0x10);
+        RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)fogstate);
 
         ap = sAura;
 
@@ -855,7 +850,7 @@ void xFXAuraRender()
             {
                 zEntPickup_RenderOne((xEnt*)ap->parent);
             }
-            ap = (_xFXAura*)ap->dangle;
+            ap++;
         }
     }
 }

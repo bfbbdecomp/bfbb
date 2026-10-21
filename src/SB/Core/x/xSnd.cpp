@@ -201,14 +201,16 @@ void xSndCalculateListenerPosition()
     }
 }
 
-void xSndProcessSoundPos(const xVec3* pActual, xVec3* pProcessed) {
+void xSndProcessSoundPos(const xVec3* pActual, xVec3* pProcessed)
+{
     xVec3 playerDelta;
     xVec3 temp_f;
 
     F32 factor;
     F32 inwardShift;
 
-    switch ((S32) gSnd.pos.x) {
+    switch ((S32)gSnd.pos.x)
+    {
     case 0:
         temp_f -= *pActual;
         temp_f += temp_f;
@@ -216,7 +218,8 @@ void xSndProcessSoundPos(const xVec3* pActual, xVec3* pProcessed) {
         playerDelta += playerDelta;
         factor = xVec3Length(&temp_f);
         inwardShift = xVec3Length(&playerDelta);
-        if (inwardShift < factor) {
+        if (inwardShift < factor)
+        {
             temp_f *= (factor - ((factor - inwardShift) * 0.5f)) / factor;
             *pProcessed += temp_f;
             *pProcessed += *pProcessed;

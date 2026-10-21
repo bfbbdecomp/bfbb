@@ -274,7 +274,11 @@ struct xtextbox::layout
     F32 yextent(F32 max, S32& size, S32 begin_jot, S32 end_jot) const;
     bool changed(const xtextbox& ctb);
     size_t jots_size() const;
-    jot* jots() const;
+    jot* jots()
+        const //added definition here to get gw match in zTalkBox.cpp for xtextbox::layout::jots() const
+    {
+        return (jot*)_jots;
+    }
 };
 
 void render_fill_rect(const basic_rect<F32>& bounds, iColor_tag color);
