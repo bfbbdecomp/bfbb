@@ -1,5 +1,5 @@
 
-#include "PowerPC_EABI_Support/MetroTRK/trk.h"
+#include "MetroTRK/trk.h"
 
 inline DSError TRKWaitForACK(TRKBuffer* msg, MessageCommandID cmd)
 {

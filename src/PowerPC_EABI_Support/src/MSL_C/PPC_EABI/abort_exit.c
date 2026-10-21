@@ -1,6 +1,6 @@
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/critical_regions.h"
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/signal.h"
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/abort_exit.h"
+#include "other.h"
+#include "signal.h"
+#include "stdlib.h"
 
 void __destroy_global_chain(void);
 void _ExitProcess(void);

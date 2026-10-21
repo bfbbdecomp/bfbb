@@ -1,4 +1,4 @@
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/bsearch.h"
+#include "stdlib.h"
 
 void *bsearch(const void *key, const void *base, size_t nmemb, size_t size,
         int (*compar)(const void *, const void *))

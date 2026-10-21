@@ -1,4 +1,4 @@
-#include "PowerPC_EABI_Support/MetroTRK/trk.h"
+#include "MetroTRK/trk.h"
 #include "Dolphin/db.h"
 
 #define BUFF_LEN 4362

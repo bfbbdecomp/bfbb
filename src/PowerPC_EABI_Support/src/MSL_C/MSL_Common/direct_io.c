@@ -6,9 +6,7 @@
 
 #include "wchar.h"
 #include "stdio.h"
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/stdio_api.h"
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/misc_io.h"
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/critical_regions.h"
+#include "other.h"
 
 void fread(void)
 {

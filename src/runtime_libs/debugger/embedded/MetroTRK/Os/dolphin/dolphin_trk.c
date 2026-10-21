@@ -1,4 +1,4 @@
-#include "PowerPC_EABI_Support/MetroTRK/trk.h"
+#include "MetroTRK/trk.h"
 
 #define EXCEPTIONMASK_ADDR 0x80000044
 

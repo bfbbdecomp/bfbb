@@ -10,8 +10,6 @@
                 "${workspaceFolder}/include",
                 "${workspaceFolder}/include/bink",
                 "${workspaceFolder}/src/PowerPC_EABI_Support/include",
-                "${workspaceFolder}/src/PowerPC_EABI_Support/include/PowerPC_EABI_Support/MSL_C/MSL_Common",
-                "${workspaceFolder}/src/PowerPC_EABI_Support/include/PowerPC_EABI_Support/MSL_C++/MSL_Common/Include",
                 "${workspaceFolder}/include/inline",
                 "${workspaceFolder}/src/dolphin/include",
                 "${workspaceFolder}/src/dolphin/src",

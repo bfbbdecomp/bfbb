@@ -1,4 +1,4 @@
-#include "PowerPC_EABI_Support/MetroTRK/trk.h"
+#include "MetroTRK/trk.h"
 
 typedef struct _TRK_Msg {
 	u8 _00[8];

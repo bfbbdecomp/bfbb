@@ -1,7 +1,6 @@
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/char_io.h"
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/critical_regions.h"
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/misc_io.h"
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/wchar_io.h"
+#include "stdio.h"
+#include "other.h"
+#include "wchar.h"
 
 // int __put_char(int c, FILE* stream)
 // {

@@ -8,6 +8,7 @@ extern "C" {
 #endif
 
 typedef void (*sig_func)(int sig);
+typedef void (*__signal_func_ptr)(int);
 
 int raise(int sig);
 

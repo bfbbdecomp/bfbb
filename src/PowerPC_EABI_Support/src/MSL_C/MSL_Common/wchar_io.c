@@ -4,7 +4,7 @@
 #define _MSL_WIDE_CHAR
 #endif
 
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/ansi_files.h"
+#include "stdio.h"
 
 void putwc(void)
 {

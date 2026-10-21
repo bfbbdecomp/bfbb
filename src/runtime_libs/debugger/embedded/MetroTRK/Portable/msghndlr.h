@@ -1,7 +1,7 @@
 #ifndef METROTRK_PORTABLE_MSGHNDLR_H
 #define METROTRK_PORTABLE_MSGHNDLR_H
 
-#include "PowerPC_EABI_Support/MetroTRK/trk.h"
+#include "MetroTRK/trk.h"
 
 void SetTRKConnected(BOOL);
 BOOL GetTRKConnected(void);

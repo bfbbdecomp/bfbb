@@ -3,7 +3,7 @@
 
 #include "types.h"
 #include "Dolphin/OS/OSInterrupt.h"
-#include "PowerPC_EABI_Support/MetroTRK/trkenum.h"
+#include "MetroTRK/trkenum.h"
 
 #ifdef __cplusplus
 extern "C" {

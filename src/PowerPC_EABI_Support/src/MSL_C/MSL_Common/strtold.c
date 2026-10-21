@@ -1,12 +1,12 @@
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/strtold.h"
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/stdio_api.h"
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/ansi_fp.h"
-#include "PowerPC_EABI_Support/MSL_C/PPC_EABI/math_ppc.h"
+#include "stdlib.h"
+#include "stdio.h"
+#include "other.h"
+#include "float.h"
+#include "math.h"
 #include "errno.h"
 #include "locale.h"
 #include "ctype.h"
-#include "math.h"
-#include "mem.h"
+#include "string.h"
 #include "limits.h"
 
 #define TARGET_FLOAT_BITS 64
