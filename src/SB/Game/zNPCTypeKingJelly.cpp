@@ -6,7 +6,7 @@
 #include "xColor.h"
 #include "xMathInlines.h"
 
-#include "string.h"
+#include <string.h>
 #include <types.h>
 
 #define f1868 1.0f

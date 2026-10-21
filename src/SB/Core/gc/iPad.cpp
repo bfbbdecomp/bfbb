@@ -3,7 +3,6 @@
 #include "zGlobals.h"
 
 #include <dolphin.h>
-#include <dolphin/pad.h>
 
 #include <types.h>
 

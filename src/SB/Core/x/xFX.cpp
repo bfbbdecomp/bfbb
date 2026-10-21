@@ -17,7 +17,7 @@
 
 #include <rpmatfx.h>
 #include <rpskin.h>
-#include <rwplcore.h>
+#include <rwcore.h>
 
 #include <string.h>
 

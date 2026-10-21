@@ -1,7 +1,7 @@
 #ifndef IMEMMGR_H
 #define IMEMMGR_H
 
-#include <dolphin/os/OSAlloc.h>
+#include <dolphin.h>
 
 #include <types.h>
 

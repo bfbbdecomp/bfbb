@@ -2,7 +2,8 @@
 
 #include "xMath.h"
 
-#include "rwplcore.h"
+#include <rwcore.h>
+
 #include <types.h>
 
 U32 xStrHash(const char* str)

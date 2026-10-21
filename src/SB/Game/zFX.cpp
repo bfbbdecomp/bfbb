@@ -16,10 +16,10 @@
 #include "xMathInlines.h"
 #include "xSnd.h"
 
-#include "rpworld.h"
-#include "rwcore.h"
-#include "rwplcore.h"
-#include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
+#include <rpworld.h>
+#include <rwcore.h>
+
+#include <cmath>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

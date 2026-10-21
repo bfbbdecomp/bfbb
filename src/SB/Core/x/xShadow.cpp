@@ -8,8 +8,9 @@
 #include "zGlobals.h"
 #include "zGrid.h"
 
-#include "rpcollis.h"
-#include "rpworld.h"
+#include <rpcollis.h>
+#include <rpworld.h>
+
 #include <types.h>
 
 RwRGBAReal ShadowLightColor = { 1.0f, 1.0f, 1.0f, 1.0f };

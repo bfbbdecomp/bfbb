@@ -6,7 +6,7 @@
 #include "xVec3.h"
 #include "xstransvc.h"
 
-#include <rwplcore.h>
+#include <rwcore.h>
 
 #include <stdio.h>
 #include <types.h>

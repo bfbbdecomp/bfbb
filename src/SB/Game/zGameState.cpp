@@ -3,9 +3,9 @@
 #include "zGame.h"
 #include "zGlobals.h"
 
-#include "..\Core\x\xEvent.h"
-#include "..\Core\x\xSnd.h"
-#include "..\Core\x\xserializer.h"
+#include "xEvent.h"
+#include "xSnd.h"
+#include "xserializer.h"
 
 S32 gGameState = eGameState_Dead;
 eGameMode gGameMode;

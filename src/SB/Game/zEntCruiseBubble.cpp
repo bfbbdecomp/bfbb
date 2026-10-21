@@ -33,7 +33,7 @@
 
 #include <rpskin.h>
 
-#include <PowerPC_EABI_Support/MSL_C/MSL_Common/cmath>
+#include <cmath>
 #include <stdio.h>
 #include <string.h>
 

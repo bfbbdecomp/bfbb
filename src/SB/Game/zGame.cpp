@@ -24,7 +24,7 @@
 #include "xScrFx.h"
 #include "xSkyDome.h"
 #include "xTRC.h"
-#include "xUtil.h"
+#include "xutil.h"
 
 #include "iDraw.h"
 #include "iSystem.h"

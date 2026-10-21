@@ -1,6 +1,6 @@
-#include <runtime_libs\debugger\embedded\MetroTRK\Portable\msghndlr.h>
-#include "runtime_libs\debugger\embedded\MetroTRK\Os\dolphin\target_options.h"
-#include "runtime_libs\debugger\embedded\MetroTRK\Processor\ppc\Export\targsupp.h"
+#include <runtime_libs/debugger/embedded/MetroTRK/Portable/msghndlr.h>
+#include "runtime_libs/debugger/embedded/MetroTRK/Os/dolphin/target_options.h"
+#include "runtime_libs/debugger/embedded/MetroTRK/Processor/ppc/Export/targsupp.h"
 
 DSIOResult __read_file(u32 handle, u8* buffer, size_t* count, void* ref_con);
 DSIOResult __write_file(u32 handle, u8* buffer, size_t* count, void* ref_con);

@@ -14,7 +14,7 @@
 #include <rpcollis.h>
 #include <rpworld.h>
 
-#include <PowerPC_EABI_Support/MSL_C/MSL_Common/cmath>
+#include <cmath>
 #include <types.h>
 
 static S32 sSweptSphereHitFound;

@@ -8,7 +8,7 @@
 
 #include "xMath.h"
 #include "xMathInlines.h"
-#include "xUtil.h"
+#include "xutil.h"
 
 #include <string.h>
 #include <types.h>

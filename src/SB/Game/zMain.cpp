@@ -22,7 +22,7 @@
 #include "xFX.h"
 #include "xMemMgr.h"
 #include "xParMgr.h"
-#include "xScrFX.h"
+#include "xScrFx.h"
 #include "xTRC.h"
 #include "xserializer.h"
 #include "xstransvc.h"
@@ -31,7 +31,7 @@
 #include "iSystem.h"
 #include "iTime.h"
 
-#include <PowerPC_EABI_Support/MSL_C/MSL_Common/printf.h>
+#include <stdio.h>
 #include <string.h>
 #include <types.h>
 

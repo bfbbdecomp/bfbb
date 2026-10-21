@@ -27,7 +27,7 @@
 
 #include "iScrFX.h"
 
-#include <PowerPC_EABI_Support/MSL_C/MSL_Common/cstring>
+#include <cstring>
 #include <types.h>
 
 // FIXME: remove this when no longer needed for float data order

@@ -8,7 +8,6 @@
 #include <rpptank.h>
 #include <rpworld.h>
 #include <rwcore.h>
-#include <rwplcore.h>
 
 #include <types.h>
 

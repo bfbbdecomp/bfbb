@@ -12,6 +12,8 @@ extern "C" {
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/rand.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/strtold.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/strtoul.h"
+#include "PowerPC_EABI_Support/MSL_C/MSL_Common/abort_exit.h"
+#include "PowerPC_EABI_Support/MSL_C/MSL_Common/stdlib.h"
 
 #ifdef __cplusplus
 };

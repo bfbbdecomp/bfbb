@@ -3,7 +3,7 @@
 #include "iMemMgr.h"
 #include "iSystem.h"
 
-#include <rwplcore.h>
+#include <rwcore.h>
 
 #include <string.h>
 #include <types.h>

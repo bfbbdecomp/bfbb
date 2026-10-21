@@ -3,7 +3,7 @@
 
 #include "xCutsceneMgr.h"
 
-#include "rpworld.h"
+#include <rpworld.h>
 
 extern F32 gSkipTimeCutscene;
 

@@ -1,7 +1,7 @@
 #ifndef _MSL_STDLIB
 #define _MSL_STDLIB
 
-#include <PowerPC_EABI_Support\MSL_C\MSL_Common\size_t.h>
+#include <PowerPC_EABI_Support/MSL_C/MSL_Common/size_t.h>
 
 #ifdef __cplusplus
 extern "C" {

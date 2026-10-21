@@ -9,7 +9,7 @@
 #include "xEnt.h"
 #include "xSnd.h"
 #include "xString.h"
-#include "xUtil.h"
+#include "xutil.h"
 
 #include "iTime.h"
 

@@ -11,7 +11,7 @@
 
 #include "zGlobals.h"
 
-#include <dolphin/gx.h>
+#include <dolphin.h>
 
 // #include <dolphin.h>
 

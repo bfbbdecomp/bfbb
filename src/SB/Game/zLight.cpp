@@ -7,7 +7,7 @@
 #include "xShadow.h"
 #include "xString.h"
 
-#include <rwplcore.h>
+#include <rwcore.h>
 
 #include <string.h>
 #include <types.h>

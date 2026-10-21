@@ -12,8 +12,8 @@
 #include "zGlobals.h"
 #include "zGrid.h"
 
-#include <PowerPC_EABI_Support/MSL_C/MSL_Common/cmath>
-#include <PowerPC_EABI_Support/MSL_C/MSL_Common/cstring>
+#include <cmath>
+#include <cstring>
 
 #define CAMERAFX_ZOOM_MODE_0 0
 #define CAMERAFX_ZOOM_MODE_1 1

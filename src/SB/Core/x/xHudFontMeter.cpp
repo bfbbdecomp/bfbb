@@ -2,7 +2,7 @@
 
 #include "xMath2.h"
 
-#include <PowerPC_EABI_Support/MSL_C++/MSL_Common/Include/new.h>
+#include <new>
 #include <stdio.h>
 #include <types.h>
 

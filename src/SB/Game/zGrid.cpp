@@ -7,7 +7,7 @@
 #include "xString.h"
 #include "xVec3.h"
 
-#include <PowerPC_EABI_Support/MSL_C/MSL_Common/cmath>
+#include <cmath>
 #include <types.h>
 
 xGrid colls_grid;

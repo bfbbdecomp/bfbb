@@ -7,7 +7,8 @@
 #include "xDebug.h"
 #include "xMemMgr.h"
 
-#include "rwcore.h"
+#include <rwcore.h>
+
 #include <string.h>
 #include <types.h>
 

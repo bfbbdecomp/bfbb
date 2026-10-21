@@ -12,8 +12,8 @@
 
 #include "zScene.h"
 
-#include <PowerPC_EABI_Support/MSL_C/MSL_Common/strtoul.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 /* xtextbox flags */

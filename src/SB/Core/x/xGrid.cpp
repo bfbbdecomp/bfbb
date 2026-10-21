@@ -4,7 +4,7 @@
 #include "xMath.h"
 #include "xMemMgr.h"
 
-#include "string.h"
+#include <string.h>
 
 volatile S32 gGridIterActive = 0;
 

@@ -1,6 +1,4 @@
-#include <dolphin/ai.h>
-#include <dolphin/mix.h>
-#include <dolphin/os.h>
+#include <dolphin.h>
 
 static MIXChannel __MIXChannel[64];
 

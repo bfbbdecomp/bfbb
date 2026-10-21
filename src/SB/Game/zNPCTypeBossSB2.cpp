@@ -24,8 +24,8 @@
 
 #include "iModel.h"
 
-#include "PowerPC_EABI_Support/MSL_C++/MSL_Common/Include/new.h"
-#include "string.h"
+#include <new>
+#include <string.h>
 #include <types.h>
 
 #define ANIM_Unknown 0 //0x0

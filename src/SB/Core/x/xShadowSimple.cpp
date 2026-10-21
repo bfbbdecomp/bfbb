@@ -11,9 +11,9 @@
 
 #include "zGlobals.h"
 
-#include "rpcollis.h"
-#include "rwcore.h"
-#include "rwplcore.h"
+#include <rpcollis.h>
+#include <rwcore.h>
+
 #include <string.h>
 #include <types.h>
 

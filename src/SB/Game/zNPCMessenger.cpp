@@ -10,7 +10,7 @@
 #include "xMathInlines.h"
 #include "xordarray.h"
 
-#include "math.h"
+#include <math.h>
 #include <string.h>
 #include <types.h>
 

@@ -12,7 +12,7 @@
 #include "xVec3.h"
 #include "xutil.h"
 
-#include "macros.h"
+#include <macros.h>
 #include <types.h>
 
 U32 g_hash_ambianim[12] = { 0 };

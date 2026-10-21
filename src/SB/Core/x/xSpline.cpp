@@ -4,7 +4,7 @@
 #include "xMemMgr.h"
 #include "xVec3.h"
 
-#include <rwplcore.h>
+#include <rwcore.h>
 
 #include <string.h>
 #include <types.h>

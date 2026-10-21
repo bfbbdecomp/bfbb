@@ -12,7 +12,7 @@
 
 #include "iMath.h"
 
-#include <rwplcore.h>
+#include <rwcore.h>
 
 #include <types.h>
 

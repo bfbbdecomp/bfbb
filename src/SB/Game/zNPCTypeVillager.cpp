@@ -11,7 +11,7 @@
 #include "xDebug.h"
 #include "xJaw.h"
 #include "xMathInlines.h"
-#include "xUtil.h"
+#include "xutil.h"
 
 #include <string.h>
 

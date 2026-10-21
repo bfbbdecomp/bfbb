@@ -12,8 +12,8 @@
 #include "xMath3.h"
 #include "xMathInlines.h"
 #include "xQuickCull.h"
-#include "xUtil.h"
 #include "xstransvc.h"
+#include "xutil.h"
 
 #include <rtslerp.h>
 

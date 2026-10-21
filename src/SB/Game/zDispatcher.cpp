@@ -15,7 +15,7 @@
 #include "xMemMgr.h"
 #include "xScrFx.h"
 
-#include "string.h"
+#include <string.h>
 #include <types.h>
 
 static void ZDSP_instInit(st_ZDISPATCH_DATA* dspdata, xBaseAsset* bass);

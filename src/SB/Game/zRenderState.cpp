@@ -2,7 +2,8 @@
 
 #include "iCamera.h"
 
-#include "rwsdk/rwplcore.h"
+#include <rwcore.h>
+
 #include <types.h>
 
 volatile _SDRenderState sRS;

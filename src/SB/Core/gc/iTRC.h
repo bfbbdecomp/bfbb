@@ -3,15 +3,7 @@
 
 #include "xPad.h"
 
-#include <dolphin/dvd.h>
-#include <dolphin/gx/GXGet.h>
-#include <dolphin/gx/GXStruct.h>
-#include <dolphin/os.h>
-#include <dolphin/os/OSAlloc.h>
-#include <dolphin/os/OSFont.h>
-#include <dolphin/os/OSReset.h>
-#include <dolphin/pad.h>
-#include <dolphin/types.h>
+#include <dolphin.h>
 
 #include <types.h>
 

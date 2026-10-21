@@ -4,9 +4,9 @@
 #include "xhipio.h"
 #include "xordarray.h"
 
-#include <dolphin/os/OSTime.h>
+#include <dolphin.h>
 
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/time.h"
+#include <time.h>
 #include <types.h>
 
 struct st_PACKER_ASSETTYPE

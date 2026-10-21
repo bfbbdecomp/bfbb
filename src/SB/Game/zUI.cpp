@@ -20,8 +20,8 @@
 
 #include "iMath.h"
 
-#include <PowerPC_EABI_Support/MSL_C/MSL_Common/stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #define TASK_COUNT 8

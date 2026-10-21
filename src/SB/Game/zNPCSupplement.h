@@ -12,7 +12,6 @@
 #include "iColor.h"
 
 #include <rwcore.h>
-#include <rwplcore.h>
 
 #include <types.h>
 

@@ -7,14 +7,7 @@
 #include "xSnd.h"
 #include "xstransvc.h"
 
-#include <dolphin/ai.h>
-#include <dolphin/ar.h>
-#include <dolphin/ax.h>
-#include <dolphin/dvd/dvd.h>
-#include <dolphin/mix.h>
-#include <dolphin/os.h>
-#include <dolphin/os/OSAlloc.h>
-#include <dolphin/os/OSCache.h>
+#include <dolphin.h>
 
 #include <stdio.h>
 #include <string.h>

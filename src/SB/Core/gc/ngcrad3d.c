@@ -2,9 +2,9 @@
 
 #include "iFMV.h"
 
-#include <dolphin/gx.h>
+#include <dolphin.h>
 
-#include <bink/include/rad3d.h>
+#include <rad3d.h>
 
 static int D3D_surface_type[5];
 static unsigned int Pixel_info[5];

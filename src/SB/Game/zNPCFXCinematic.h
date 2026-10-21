@@ -10,7 +10,8 @@
 
 #include "xVec3.h"
 
-#include "rwcore.h"
+#include <rwcore.h>
+
 #include <types.h>
 
 void zNPCFXStartup();
