@@ -1,12 +1,12 @@
 #include "xSFX.h"
 
+#include "zEntPlayer.h"
+#include "zScene.h"
+
 #include "xEvent.h"
 #include "xSnd.h"
 #include "xpkrsvc.h"
 #include "xstransvc.h"
-
-#include "zEntPlayer.h"
-#include "zScene.h"
 
 #include <string.h>
 #include <types.h>

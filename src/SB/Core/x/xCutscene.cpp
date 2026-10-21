@@ -1,5 +1,8 @@
 #include "xCutscene.h"
 
+#include "zCamera.h"
+#include "zGlobals.h"
+
 #include "xAnim.h"
 #include "xDebug.h"
 #include "xModelBucket.h"
@@ -8,9 +11,6 @@
 #include "iAnim.h"
 #include "iCutscene.h"
 #include "iModel.h"
-
-#include "zCamera.h"
-#include "zGlobals.h"
 
 #include <cmath>
 #include <string.h>

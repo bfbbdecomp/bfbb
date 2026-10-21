@@ -1,13 +1,13 @@
 #include "xModelBucket.h"
 
+#include "zGlobals.h"
+
 #include "xLightKit.h"
 #include "xMathInlines.h"
 
 #include "iCamera.h"
 #include "iDraw.h"
 #include "iModel.h"
-
-#include "zGlobals.h"
 
 #include <rwcore.h>
 

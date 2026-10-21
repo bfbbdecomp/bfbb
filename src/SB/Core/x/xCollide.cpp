@@ -1,14 +1,14 @@
 #include "xCollide.h"
 
+#include "zGrid.h"
+#include "zSurface.h"
+
 #include "xCollideFast.h"
 #include "xMathInlines.h"
 #include "xScene.h"
 
 #include "iCollide.h"
 #include "iMath3.h"
-
-#include "zGrid.h"
-#include "zSurface.h"
 
 #include <rpcollbsptree.h>
 #include <rpcollis.h>

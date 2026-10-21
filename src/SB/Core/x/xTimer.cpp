@@ -1,9 +1,9 @@
 #include "xTimer.h"
 
-#include "xMath.h"
-
 #include "zGlobals.h"
 #include "zTalkBox.h"
+
+#include "xMath.h"
 
 #include <types.h>
 

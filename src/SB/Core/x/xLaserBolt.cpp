@@ -1,15 +1,15 @@
 #include "xLaserBolt.h"
 
+#include "zBase.h"
+#include "zEntDestructObj.h"
+#include "zEvent.h"
+#include "zNPCTypeCommon.h"
+
 #include "containers.h"
 #include "xString.h"
 #include "xstransvc.h"
 
 #include "iParMgr.h"
-
-#include "zBase.h"
-#include "zEntDestructObj.h"
-#include "zEvent.h"
-#include "zNPCTypeCommon.h"
 
 #include <string.h>
 #include <types.h>

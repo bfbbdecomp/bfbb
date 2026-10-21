@@ -1,12 +1,12 @@
 #include "xTRC.h"
 
-#include "xFont.h"
-#include "xMath2.h"
-#include "xSnd.h"
-
 #include "zGame.h"
 #include "zGlobals.h"
 #include "zVar.h"
+
+#include "xFont.h"
+#include "xMath2.h"
+#include "xSnd.h"
 
 #include <string.h>
 #include <types.h>

@@ -1,8 +1,8 @@
 #include "iParMgr.h"
 
-#include "xstransvc.h"
-
 #include "zGlobals.h"
+
+#include "xstransvc.h"
 
 #include <rwcore.h>
 

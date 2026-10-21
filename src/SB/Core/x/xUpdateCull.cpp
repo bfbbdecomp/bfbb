@@ -1,8 +1,8 @@
 #include "xUpdateCull.h"
 
-#include "xGroup.h"
-
 #include "zGlobals.h"
+
+#include "xGroup.h"
 
 #include <string.h>
 

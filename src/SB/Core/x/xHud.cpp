@@ -1,14 +1,14 @@
 #include "xHud.h"
 
+#include "zEnt.h"
+#include "zGlobals.h"
+
 #include "xDebug.h"
 #include "xEvent.h"
 #include "xHudText.h"
 #include "xMath.h"
 #include "xMathInlines.h"
 #include "xstransvc.h"
-
-#include "zEnt.h"
-#include "zGlobals.h"
 
 #include <new>
 #include <types.h>

@@ -1,15 +1,15 @@
 #include "iSystem.h"
 
-#include "iFMV.h"
-#include "iMemMgr.h"
-#include "iTRC.h"
-
 #include "xDebug.h"
 #include "xFX.h"
 #include "xFile.h"
 #include "xShadow.h"
 #include "xSnd.h"
 #include "xstransvc.h"
+
+#include "iFMV.h"
+#include "iMemMgr.h"
+#include "iTRC.h"
 
 #include <rpmatfx.h>
 #include <rpptank.h>

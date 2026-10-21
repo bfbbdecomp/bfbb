@@ -1,10 +1,10 @@
 #include "iCutscene.h"
 
-#include "iModel.h"
-
 #include "xMath.h"
 #include "xpkrsvc.h"
 #include "xstransvc.h"
+
+#include "iModel.h"
 
 #include <rwcore.h>
 

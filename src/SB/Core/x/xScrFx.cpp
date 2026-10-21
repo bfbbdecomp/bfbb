@@ -1,11 +1,11 @@
 #include "xScrFx.h"
 
-#include "xDebug.h"
-#include "xstransvc.h"
-
 #include "zGame.h"
 #include "zGlobals.h"
 #include "zMenu.h"
+
+#include "xDebug.h"
+#include "xstransvc.h"
 
 #include <string.h>
 

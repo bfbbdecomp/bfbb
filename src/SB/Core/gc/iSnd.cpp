@@ -1,11 +1,11 @@
 #include "iSnd.h"
 
-#include "iMemMgr.h"
-#include "iTRC.h"
-
 #include "xMath.h"
 #include "xSnd.h"
 #include "xstransvc.h"
+
+#include "iMemMgr.h"
+#include "iTRC.h"
 
 #include <dolphin.h>
 

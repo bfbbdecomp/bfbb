@@ -1,5 +1,8 @@
 #include "xScene.h"
 
+#include "zBase.h"
+#include "zGrid.h"
+
 #include "xCollideFast.h"
 #include "xMath.h"
 #include "xMathInlines.h"
@@ -7,9 +10,6 @@
 
 #include "iCollide.h"
 #include "iMath.h"
-
-#include "zBase.h"
-#include "zGrid.h"
 
 #include <rpcollis.h>
 #include <rpworld.h>

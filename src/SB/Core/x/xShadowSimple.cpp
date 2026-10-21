@@ -1,5 +1,7 @@
 #include "xShadowSimple.h"
 
+#include "zGlobals.h"
+
 #include "xMath3.h"
 #include "xNPCBasic.h"
 #include "xQuickCull.h"
@@ -8,8 +10,6 @@
 #include "xstransvc.h"
 
 #include "iModel.h"
-
-#include "zGlobals.h"
 
 #include <rpcollis.h>
 #include <rwcore.h>

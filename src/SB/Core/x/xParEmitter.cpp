@@ -1,5 +1,8 @@
 #include "xParEmitter.h"
 
+#include "zGlobals.h"
+#include "zScene.h"
+
 #include "xDebug.h"
 #include "xEvent.h"
 #include "xGroup.h"
@@ -7,9 +10,6 @@
 #include "xMathInlines.h"
 
 #include "iModel.h"
-
-#include "zGlobals.h"
-#include "zScene.h"
 
 #include <string.h>
 

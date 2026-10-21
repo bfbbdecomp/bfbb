@@ -1,5 +1,13 @@
 #include "xEnt.h"
 
+#include "zBase.h"
+#include "zCollGeom.h"
+#include "zEntDestructObj.h"
+#include "zGrid.h"
+#include "zLight.h"
+#include "zPlatform.h"
+#include "zSurface.h"
+
 #include "xEvent.h"
 #include "xFX.h"
 #include "xGroup.h"
@@ -13,14 +21,6 @@
 #include "iMath.h"
 #include "iMath3.h"
 #include "iModel.h"
-
-#include "zBase.h"
-#include "zCollGeom.h"
-#include "zEntDestructObj.h"
-#include "zGrid.h"
-#include "zLight.h"
-#include "zPlatform.h"
-#include "zSurface.h"
 
 #include <string.h>
 

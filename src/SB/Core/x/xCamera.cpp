@@ -1,5 +1,8 @@
 #include "xCamera.h"
 
+#include "zGlobals.h"
+#include "zGrid.h"
+
 #include "xCollideFast.h"
 #include "xMath.h"
 #include "xMathInlines.h"
@@ -8,9 +11,6 @@
 #include "xstransvc.h"
 
 #include "iMath.h"
-
-#include "zGlobals.h"
-#include "zGrid.h"
 
 #include <cmath>
 #include <cstring>

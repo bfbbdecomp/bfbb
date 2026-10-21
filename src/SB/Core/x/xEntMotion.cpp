@@ -1,5 +1,7 @@
 #include "xEntMotion.h"
 
+#include "zMovePoint.h"
+
 #include "xColor.h"
 #include "xDebug.h"
 #include "xDraw.h"
@@ -10,8 +12,6 @@
 #include "xPad.h"
 #include "xScene.h"
 #include "xSpline.h"
-
-#include "zMovePoint.h"
 
 #include <types.h>
 

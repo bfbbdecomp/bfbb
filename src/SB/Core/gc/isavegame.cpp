@@ -1,13 +1,13 @@
 #include "isavegame.h"
 
-#include "iFile.h"
-#include "iSystem.h"
-#include "iTRC.h"
+#include "zGlobals.h"
 
 #include "xMemMgr.h"
 #include "xSnd.h"
 
-#include "zGlobals.h"
+#include "iFile.h"
+#include "iSystem.h"
+#include "iTRC.h"
 
 #include <dolphin.h>
 

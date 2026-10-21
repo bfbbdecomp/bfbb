@@ -1,10 +1,10 @@
 #include "xDecal.h"
 
+#include "zGlobals.h"
+
 #include "containers.h"
 #include "xString.h"
 #include "xstransvc.h"
-
-#include "zGlobals.h"
 
 #include <types.h>
 

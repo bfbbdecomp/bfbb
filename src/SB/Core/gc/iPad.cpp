@@ -1,6 +1,6 @@
-#include "xTRC.h"
-
 #include "zGlobals.h"
+
+#include "xTRC.h"
 
 #include <dolphin.h>
 

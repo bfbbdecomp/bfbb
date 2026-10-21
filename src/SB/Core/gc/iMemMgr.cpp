@@ -1,8 +1,8 @@
 #include "iMemMgr.h"
 
-#include "iSystem.h"
-
 #include "xMemMgr.h"
+
+#include "iSystem.h"
 
 #include <dolphin.h>
 

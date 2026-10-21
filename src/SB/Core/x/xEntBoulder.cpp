@@ -1,5 +1,14 @@
 #include "xEntBoulder.h"
 
+#include "zEntButton.h"
+#include "zEntDestructObj.h"
+#include "zGlobals.h"
+#include "zGoo.h"
+#include "zGrid.h"
+#include "zNPCTypeCommon.h"
+#include "zPlatform.h"
+#include "zSurface.h"
+
 #include "xCollide.h"
 #include "xFX.h"
 #include "xGroup.h"
@@ -9,15 +18,6 @@
 #include "xNPCBasic.h"
 #include "xShadow.h"
 #include "xVec3.h"
-
-#include "zEntButton.h"
-#include "zEntDestructObj.h"
-#include "zGlobals.h"
-#include "zGoo.h"
-#include "zGrid.h"
-#include "zNPCTypeCommon.h"
-#include "zPlatform.h"
-#include "zSurface.h"
 
 #include <string.h>
 #include <types.h>

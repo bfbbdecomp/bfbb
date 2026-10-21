@@ -1,9 +1,9 @@
 #include "iModel.h"
 
+#include "xMathInlines.h"
+
 #include "iAnim.h"
 #include "iCamera.h"
-
-#include "xMathInlines.h"
 
 #include <rpmatfx.h>
 #include <rpskin.h>
