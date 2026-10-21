@@ -1,8 +1,10 @@
 #include "iTime.h"
+
 #include "iSystem.h"
 
-#include <types.h>
 #include <dolphin.h>
+
+#include <types.h>
 
 static iTime sStartupTime;
 static F32 sGameTime;

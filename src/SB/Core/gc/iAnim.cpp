@@ -1,10 +1,9 @@
 #include "iAnim.h"
 
 #include "iAnimSKB.h"
-#include "xMath.h"
 
-#include <rwcore.h>
 #include <rtslerp.h>
+#include <rwcore.h>
 
 static U8 scratchBuffer[9120];
 
@@ -36,9 +35,9 @@ U32 iAnimBoneCount(void* RawData)
 }
 
 // non-matching: incorrect instruction order and regalloc
-void iAnimBlend(F32 BlendFactor, F32 BlendRecip, U16* BlendTimeOffset,
-                F32* BoneTable, U32 BoneCount, xVec3* Tran1, xQuat* Quat1, xVec3* Tran2,
-                xQuat* Quat2, xVec3* TranDest, xQuat* QuatDest)
+void iAnimBlend(F32 BlendFactor, F32 BlendRecip, U16* BlendTimeOffset, F32* BoneTable,
+                U32 BoneCount, xVec3* Tran1, xQuat* Quat1, xVec3* Tran2, xQuat* Quat2,
+                xVec3* TranDest, xQuat* QuatDest)
 {
     U32 i;
     U32 invert = 0;

@@ -1,12 +1,12 @@
 #include "zNPCGoalDuplotron.h"
 
+#include "zGlobals.h"
 #include "zNPCGoals.h"
 #include "zNPCTypeDuplotron.h"
-#include "zGlobals.h"
 
+#include "xEvent.h"
 #include "xMath.h"
 #include "xMathInlines.h"
-#include "xEvent.h"
 #include "xScrFx.h"
 
 xFactoryInst* GOALCreate_Duplotron(S32 who, RyzMemGrow* grow, void*)

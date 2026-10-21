@@ -1,9 +1,9 @@
 #include "zNPCGoalBoss.h"
 
 #include "zNPCGoals.h"
-#include "zNPCTypeBossSandy.h"
-#include "zNPCTypeBossSB1.h"
 #include "zNPCTypeBossPatrick.h"
+#include "zNPCTypeBossSB1.h"
+#include "zNPCTypeBossSandy.h"
 
 xFactoryInst* GOALCreate_Boss(S32 who, RyzMemGrow* grow, void*)
 {

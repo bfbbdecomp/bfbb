@@ -1,10 +1,10 @@
-#include <types.h>
-#include <dolphin.h>
-
-#include "xTRC.h"
 #include "zGlobals.h"
 
-#include <dolphin\pad.h>
+#include "xTRC.h"
+
+#include <dolphin.h>
+
+#include <types.h>
 
 extern xGlobals* xglobals;
 extern zGlobals globals;

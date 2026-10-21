@@ -1,6 +1,7 @@
 #include "zPendulum.h"
-#include "zGlobals.h"
+
 #include "zCollGeom.h"
+#include "zGlobals.h"
 #include "zShrapnel.h"
 
 #include "xEnt.h"

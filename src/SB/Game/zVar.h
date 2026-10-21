@@ -1,9 +1,9 @@
 #ifndef ZVAR_H
 #define ZVAR_H
 
-#include <types.h>
-
 #include "xString.h"
+
+#include <types.h>
 
 struct zVarEntry
 {

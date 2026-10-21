@@ -1,13 +1,13 @@
 #include "zThrown.h"
 
-#include "zGlobals.h"
-#include <types.h>
-#include <string.h>
-
 #include "zEvent.h"
+#include "zGlobals.h"
 #include "zScene.h"
 
 #include "xMathInlines.h"
+
+#include <string.h>
+#include <types.h>
 
 static zThrownStruct zThrownList[32];
 static U32 zThrownCount;
@@ -16,10 +16,11 @@ static F32 sSNDLandTimer;
 static U32 sFruitIsFreezy;
 static U32 sDebugDepth;
 
-static LaunchStats l_normal = {10.0f, 15.0f, 0.2f};
+static LaunchStats l_normal = { 10.0f, 15.0f, 0.2f };
 static CarryableStats c_normal = {};
-static CarryableStats c_fruit = {24.0f};
+static CarryableStats c_fruit = { 24.0f };
 
+// clang-format off
 static ThrowableStats zThrowableModels[23] = {
     {"__default__", zThrownCollide_DestructObj, &c_normal, &l_normal, {}, NULL, 0.0f, 0x0, 0x0, NULL},
     {"tiki_wooden", zThrownCollide_DestructObj, &c_normal, &l_normal, {}, NULL, 0.0f, 0x0, 0x0, NULL},
@@ -45,7 +46,7 @@ static ThrowableStats zThrowableModels[23] = {
     {"boss_sa_head_bind", zThrownCollide_BSandyHead, &c_normal, &l_normal, {}, NULL, 0.0f, 0x0, 0x0, NULL},
     {},
 };
-
+// clang-format on
 
 void zThrown_Setup(zScene* sc)
 {

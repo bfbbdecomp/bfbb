@@ -1,5 +1,5 @@
-#include "PowerPC_EABI_Support/Runtime/NMWException.h"
-#include "PowerPC_EABI_Support/Runtime/MWCPlusPlusLib.h"
+#include "Runtime/NMWException.h"
+#include "Runtime/MWCPlusPlusLib.h"
 
 #pragma exceptions on
 

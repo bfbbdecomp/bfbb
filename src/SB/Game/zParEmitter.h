@@ -1,8 +1,9 @@
 #ifndef ZPAREMITTER_H
 #define ZPAREMITTER_H
 
-#include <types.h>
 #include "xParEmitter.h"
+
+#include <types.h>
 
 struct zParEmitter : xParEmitter
 {

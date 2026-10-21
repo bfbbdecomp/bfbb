@@ -1,10 +1,12 @@
 #include "zNPCSndTable.h"
 
-#include "iSnd.h"
-#include "xString.h"
-#include "xutil.h"
 #include "zGameExtras.h"
 #include "zNPCSndLists.h"
+
+#include "xString.h"
+#include "xutil.h"
+
+#include "iSnd.h"
 
 #define SND_COUNT 26
 

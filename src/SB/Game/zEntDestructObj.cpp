@@ -408,22 +408,26 @@ void zEntDestructObj_DestroyFX(zEntDestructObj* ent)
     }
 }
 
-S32 zEntDestructObjEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* toParamWidget)
+S32 zEntDestructObjEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
+                           xBase* toParamWidget)
 {
     zEntDestructObj* s = (zEntDestructObj*)to;
 
-    switch (toEvent) {
+    switch (toEvent)
+    {
     case eEventVisible:
     case eEventFastVisible:
         xEntShow(s);
-        if (toParam && (S32)(0.5f + toParam[0]) == 77) {
+        if (toParam && (S32)(0.5f + toParam[0]) == 77)
+        {
             zFXPopOn(*s, toParam[1], toParam[2]);
         }
         break;
     case eEventInvisible:
     case eEventFastInvisible:
         xEntHide(s);
-        if (toParam && (S32)(0.5f + toParam[0]) == 77) {
+        if (toParam && (S32)(0.5f + toParam[0]) == 77)
+        {
             zFXPopOff(*s, toParam[1], toParam[2]);
         }
         break;
@@ -432,20 +436,22 @@ S32 zEntDestructObjEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toPar
         s->bupdate(s, (xVec3*)&s->model->Mat->pos);
         break;
     case eEventCollisionOff:
-        s->chkby &= (U8)~(XENT_COLLTYPE_PLYR | XENT_COLLTYPE_NPC);
+        s->chkby &= (U8) ~(XENT_COLLTYPE_PLYR | XENT_COLLTYPE_NPC);
         break;
     case eEventCollision_Visible_On:
         s->chkby |= (XENT_COLLTYPE_PLYR | XENT_COLLTYPE_NPC);
         xEntShow(s);
         s->bupdate(s, (xVec3*)&s->model->Mat->pos);
-        if (toParam && (S32)(0.5f + toParam[0]) == 77) {
+        if (toParam && (S32)(0.5f + toParam[0]) == 77)
+        {
             zFXPopOn(*s, toParam[1], toParam[2]);
         }
         break;
     case eEventCollision_Visible_Off:
-        s->chkby &= (U8)~(XENT_COLLTYPE_PLYR | XENT_COLLTYPE_NPC);
+        s->chkby &= (U8) ~(XENT_COLLTYPE_PLYR | XENT_COLLTYPE_NPC);
         xEntHide(s);
-        if (toParam && (S32)(0.5f + toParam[0]) == 77) {
+        if (toParam && (S32)(0.5f + toParam[0]) == 77)
+        {
             zFXPopOff(*s, toParam[1], toParam[2]);
         }
         break;
@@ -456,21 +462,27 @@ S32 zEntDestructObjEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toPar
         zCollGeom_CamDisable(s);
         break;
     case eEventDestroy:
-        if (s->destroy_model) {
+        if (s->destroy_model)
+        {
             SwapModel(s, s->destroy_model);
-        } else {
-            s->chkby &= (U8)~(XENT_COLLTYPE_PLYR | XENT_COLLTYPE_NPC);
+        }
+        else
+        {
+            s->chkby &= (U8) ~(XENT_COLLTYPE_PLYR | XENT_COLLTYPE_NPC);
             xEntHide(s);
         }
         zEntDestructObj_DestroyFX(s);
         s->state = 2;
-        if (s->shrapnel_destroy && s->shrapnel_destroy->initCB) {
+        if (s->shrapnel_destroy && s->shrapnel_destroy->initCB)
+        {
             s->shrapnel_destroy->initCB(s->shrapnel_destroy, s->model, NULL, NULL);
         }
-        if (s->destroy_notify) {
+        if (s->destroy_notify)
+        {
             s->destroy_notify(*s, s->notify_context);
         }
-        if (s->driver) {
+        if (s->driver)
+        {
             s->driver->driving_count--;
             s->driver = NULL;
         }
@@ -489,21 +501,28 @@ S32 zEntDestructObjEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toPar
         zEntAnimEvent(s, toEvent, toParam);
         break;
     case eEventHit:
-        if (s->healthCnt) {
+        if (s->healthCnt)
+        {
             s->healthCnt--;
-            if (s->healthCnt && s->hit_model) {
+            if (s->healthCnt && s->hit_model)
+            {
                 SwapModel(s, s->hit_model);
             }
-            if (s->healthCnt == 0) {
+            if (s->healthCnt == 0)
+            {
                 zEntEvent(s, s, eEventDestroy);
             }
         }
         break;
     case eEventSetUpdateDistance:
-        if (globals.updateMgr) {
-            if (toParam[0] <= 0.0f) {
+        if (globals.updateMgr)
+        {
+            if (toParam[0] <= 0.0f)
+            {
                 xUpdateCull_SetCB(globals.updateMgr, s, xUpdateCull_AlwaysTrueCB, NULL);
-            } else {
+            }
+            else
+            {
                 FloatAndVoid dist;
                 dist.f = SQR(toParam[0]);
                 xUpdateCull_SetCB(globals.updateMgr, s, xUpdateCull_DistanceSquaredCB, dist.v);
@@ -523,9 +542,11 @@ S32 zEntDestructObjEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toPar
         zEntDestructObj_Hit(s, 0x800);
         break;
     case eEventLaunchShrapnel:
-        if (toParamWidget) {
+        if (toParamWidget)
+        {
             zShrapnelAsset* shrap = (zShrapnelAsset*)toParamWidget;
-            if (shrap->initCB) {
+            if (shrap->initCB)
+            {
                 shrap->initCB(shrap, s->model, NULL, NULL);
             }
         }

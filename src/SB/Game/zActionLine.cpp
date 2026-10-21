@@ -1,10 +1,11 @@
-#include <types.h>
+#include "zActionLine.h"
+
+#include "xString.h"
+#include "xstransvc.h"
+
 #include <rwcore.h>
 
-#include "xstransvc.h"
-#include "xString.h"
-
-#include "zActionLine.h"
+#include <types.h>
 
 static _tagActionLine* sActionLine[8];
 static RwRaster* sActionLineRaster;

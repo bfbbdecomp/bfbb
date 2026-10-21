@@ -1,12 +1,14 @@
 #include "zEntButton.h"
-#include "zEntPlayer.h"
+
 #include "zCollGeom.h"
+#include "zEntPlayer.h"
 #include "zFX.h"
-#include "zShrapnel.h"
 #include "zGlobals.h"
+#include "zShrapnel.h"
+
 #include "xMath.h"
-#include "xstransvc.h"
 #include "xString.h"
+#include "xstransvc.h"
 
 #include <types.h>
 

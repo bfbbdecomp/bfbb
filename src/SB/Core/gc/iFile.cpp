@@ -1,10 +1,10 @@
 #include "iFile.h"
 
-#include "iTRC.h"
-
 #include "xFile.h"
 #include "xMath.h"
 #include "xTRC.h"
+
+#include "iTRC.h"
 
 #include <string.h>
 

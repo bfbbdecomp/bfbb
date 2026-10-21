@@ -2,8 +2,8 @@
 
 #include "zNPCTypes.h"
 
-#include "xString.h"
 #include "xMath.h"
+#include "xString.h"
 
 #define ANIM_COUNT 11
 
@@ -76,14 +76,14 @@ xAnimTable* ZNPC_AnimTable_Test()
     {
         if (i < ANIM_COUNT - 1)
         {
-            xAnimTableNewTransition(table, names[i], names[i + 1], NULL, NULL, 0, 0, 0.0f, 0.0f,
-                                    1, 0, 0.15f, NULL);
+            xAnimTableNewTransition(table, names[i], names[i + 1], NULL, NULL, 0, 0, 0.0f, 0.0f, 1,
+                                    0, 0.15f, NULL);
         }
 
         if (i > 1)
         {
-            xAnimTableNewTransition(table, names[i], names[1], NULL, NULL, 0, 0, 0.0f, 0.0f, 1,
-                                    0, 0.15f, NULL);
+            xAnimTableNewTransition(table, names[i], names[1], NULL, NULL, 0, 0, 0.0f, 0.0f, 1, 0,
+                                    0.15f, NULL);
         }
     }
 

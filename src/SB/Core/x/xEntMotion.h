@@ -4,7 +4,6 @@
 #include "xEnt.h"
 #include "xEntMotionAsset.h"
 #include "xMovePoint.h"
-#include "xColor.h"
 
 #define XENTMOTION_TYPE_ER 0 // Extend / Retract
 #define XENTMOTION_TYPE_ORB 1 // Orbital

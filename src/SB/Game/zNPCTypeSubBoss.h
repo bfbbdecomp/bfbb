@@ -1,8 +1,8 @@
 #ifndef ZNPCTYPESUBBOSS_H
 #define ZNPCTYPESUBBOSS_H
 
-#include "zNPCTypeCommon.h"
 #include "zNPCSupport.h"
+#include "zNPCTypeCommon.h"
 
 struct zNPCSubBoss : zNPCCommon //Size of zNPCSubBoss: 0x2B4
 {

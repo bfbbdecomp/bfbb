@@ -2,13 +2,13 @@
 
 #define ZENTCRUISEBUBBLE_H
 
+#include "zNPCHazard.h"
+#include "zRumble.h"
+#include "zShrapnel.h"
+
 #include "xDebug.h"
 
-#include "zNPCHazard.h"
-#include "zShrapnel.h"
 #include <types.h>
-
-#include "zRumble.h"
 
 // I have no idea where to put this. This is only used by
 // cruise_bubble::tweak_group::register_tweaks() so far.

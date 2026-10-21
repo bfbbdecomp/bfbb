@@ -1,23 +1,25 @@
 #include "xFX.h"
 
+#include "zEntPickup.h"
+#include "zFX.h"
+#include "zGlobals.h"
+#include "zParEmitter.h"
+#include "zRumble.h"
+#include "zSurface.h"
+
+#include "xDebug.h"
+#include "xScrFx.h"
+#include "xstransvc.h"
+
+#include "iDraw.h"
 #include "iFX.h"
 #include "iMath.h"
 
-#include "xDebug.h"
-#include "xstransvc.h"
-#include "xScrFx.h"
-
-#include "zEntPickup.h"
-#include "zParEmitter.h"
-#include "zSurface.h"
-#include "zFX.h"
-#include "zGlobals.h"
-#include "zRumble.h"
+#include <rpmatfx.h>
+#include <rpskin.h>
+#include <rwcore.h>
 
 #include <string.h>
-#include <rpmatfx.h>
-#include <rwplcore.h>
-#include <rpskin.h>
 
 // no clue why this file is so out of order
 
@@ -74,15 +76,14 @@ void xFXInit()
 static U32 Im3DBufferPos = 0;
 static RwTexture* g_txtr_drawRing = NULL;
 
-static xFXBubbleParams defaultBFX = {
-    // pass1, pass2, pass3, padding
-    1, 1, 1, 0,
-    // pass1_alpha, pass2_alpha, pass3_alpha, pass1_fbsk
-    0, 0, 192, 0xFFFFFFFF,
-    // fresnel_map, fresnel_map_coeff
-    ID_gloss_edge, 0.75f,
-    // env_map, env_map_coeff
-    ID_rainbowfilm_smooth32, 0.5f
+static xFXBubbleParams defaultBFX = { // pass1, pass2, pass3, padding
+                                      1, 1, 1, 0,
+                                      // pass1_alpha, pass2_alpha, pass3_alpha, pass1_fbsk
+                                      0, 0, 192, 0xFFFFFFFF,
+                                      // fresnel_map, fresnel_map_coeff
+                                      ID_gloss_edge, 0.75f,
+                                      // env_map, env_map_coeff
+                                      ID_rainbowfilm_smooth32, 0.5f
 };
 
 static U32 bfx_curr = 0;

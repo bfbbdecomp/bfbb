@@ -1,11 +1,12 @@
-#include "xVec3.h"
+#include "zNPCFXCinematic.h"
+
+#include "zNPCTypeBossSB2.h"
+#include "zParPTank.h"
+
 #include "xMath3.h"
 #include "xParEmitter.h"
 
-#include "zNPCFXCinematic.h"
-#include "zParPTank.h"
-#include "zNPCTypeBossSB2.h"
-
+#include <string.h>
 #include <types.h>
 
 // TODO: NEEDS REWRITEN / CORRECTED
@@ -449,7 +450,8 @@ void zNPCFXShutdown()
 {
 }
 
-void NCINBeNosey::Init(const zCutsceneMgr* m, NCINEntry* e, S32 i) // TODO: investigate missing member
+void NCINBeNosey::Init(const zCutsceneMgr* m, NCINEntry* e,
+                       S32 i) // TODO: investigate missing member
 {
     this->use_fxtab = e;
     this->use_csnmgr = m;
@@ -728,7 +730,8 @@ void NCIN_BombTrail_Upd(const zCutsceneMgr* mgr, NCINEntry* e, S32 i)
     }
 }
 
-void NCIN_BombTrail_AR(const zCutsceneMgr* mgr, NCINEntry* e, RpAtomic* a, RwMatrixTag* t, U32 i1, U32 i2)
+void NCIN_BombTrail_AR(const zCutsceneMgr* mgr, NCINEntry* e, RpAtomic* a, RwMatrixTag* t, U32 i1,
+                       U32 i2)
 {
     if (i1 == 0x4)
     {
@@ -744,7 +747,8 @@ void NCIN_BoneTrail_Upd(const zCutsceneMgr* mgr, NCINEntry* e, S32 i)
     }
 }
 
-void NCIN_BoneTrail_AR(const zCutsceneMgr* mgr, NCINEntry* e, RpAtomic* a, RwMatrixTag* t, U32 i1, U32 i2)
+void NCIN_BoneTrail_AR(const zCutsceneMgr* mgr, NCINEntry* e, RpAtomic* a, RwMatrixTag* t, U32 i1,
+                       U32 i2)
 {
     if (i1 == 0x7)
     {

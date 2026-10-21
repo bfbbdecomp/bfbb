@@ -1,9 +1,13 @@
-#include <types.h>
-#include <stdio.h>
-#include "iFMV.h"
-#include "xSnd.h"
 #include "zFMV.h"
+
 #include "zGameState.h"
+
+#include "xSnd.h"
+
+#include "iFMV.h"
+
+#include <stdio.h>
+#include <types.h>
 
 zFMVFile zFMVFileTable[] = {
     { eFMVFile_PromoFOP, "FMV\\FOP" }, // Fairly Odd Parents

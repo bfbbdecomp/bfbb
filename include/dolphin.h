@@ -17,6 +17,8 @@
 #include <dolphin/pad.h>
 #include <dolphin/dtk.h>
 #include <dolphin/ai.h>
+#include <dolphin/ax.h>
+#include <dolphin/mix.h>
 #include <dolphin/demo.h>
 #include <dolphin/exi.h>
 #include <dolphin/si.h>

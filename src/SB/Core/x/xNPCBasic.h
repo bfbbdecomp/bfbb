@@ -1,10 +1,10 @@
 #ifndef XNPCBASIC_H
 #define XNPCBASIC_H
 
+#include "xColor.h"
 #include "xEnt.h"
 #include "xFactory.h"
 #include "xShadowSimple.h"
-#include "xColor.h"
 
 enum en_npcperf
 {

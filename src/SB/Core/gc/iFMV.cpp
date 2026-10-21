@@ -1,16 +1,17 @@
 #include "iFMV.h"
 
+#include "zGlobals.h"
+
+#include "xFile.h"
+#include "xPar.h"
+
 #include "iCamera.h"
 #include "iFile.h"
 #include "iPad.h"
 #include "iSystem.h"
 #include "iTRC.h"
 
-#include "xFile.h"
-#include "xPar.h"
-#include <dolphin/gx.h>
-
-#include "zGlobals.h"
+#include <dolphin.h>
 
 // #include <dolphin.h>
 

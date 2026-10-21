@@ -1,17 +1,5 @@
 #include "zFX.h"
 
-#include "rpworld.h"
-#include "rwcore.h"
-#include "rwplcore.h"
-#include "xDebug.h"
-#include "xDraw.h"
-#include "xEnt.h"
-#include "xFX.h"
-#include "xMath.h"
-#include "xMath3.h"
-#include "xMathInlines.h"
-
-#include "xSnd.h"
 #include "zEnt.h"
 #include "zGlobals.h"
 #include "zGoo.h"
@@ -19,11 +7,23 @@
 #include "zScene.h"
 #include "zTextBox.h"
 
+#include "xDebug.h"
+#include "xDraw.h"
+#include "xEnt.h"
+#include "xFX.h"
+#include "xMath.h"
+#include "xMath3.h"
+#include "xMathInlines.h"
+#include "xSnd.h"
+
+#include <rpworld.h>
+#include <rwcore.h>
+
+#include <cmath>
 #include <stdio.h>
-#include <types.h>
-#include <string.h>
 #include <stdlib.h>
-#include <PowerPC_EABI_Support\MSL_C\MSL_Common\cmath>
+#include <string.h>
+#include <types.h>
 
 const xFXRing sPatrickStunRing[3] = { { 0x741b0566,
                                         1.0f,

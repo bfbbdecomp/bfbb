@@ -1,4 +1,4 @@
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/mem_funcs.h"
+#include "string.h"
 
 #define srcCharPtr  ((unsigned char*)pSrc)
 #define destCharPtr ((unsigned char*)pDest)

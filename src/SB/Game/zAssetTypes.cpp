@@ -1,16 +1,32 @@
 #include "zAssetTypes.h"
 
+#include "zEntCruiseBubble.h"
+#include "zEntPlayerAnimationTables.h"
+#include "zNPCTypeBossPatrick.h"
+#include "zNPCTypeBossSB1.h"
+#include "zNPCTypeBossSB2.h"
+#include "zNPCTypeBossSandy.h"
+#include "zNPCTypeDuplotron.h"
+#include "zNPCTypeDutchman.h"
+#include "zNPCTypeKingJelly.h"
+#include "zNPCTypePrawn.h"
+#include "zNPCTypeRobot.h"
+#include "zNPCTypeTest.h"
+#include "zNPCTypeTiki.h"
+
 #include "xAnim.h"
-#include "xstransvc.h"
-#include "xDebug.h"
 #include "xEnv.h"
+#include "xHudModel.h"
 #include "xJSP.h"
 #include "xMorph.h"
+#include "xstransvc.h"
 
-#include <types.h>
-#include <stdio.h>
-#include <rwcore.h>
 #include <rpworld.h>
+#include <rwcore.h>
+
+#include <stdio.h>
+#include <string.h>
+#include <types.h>
 
 static void* Curve_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize);
 static void* ATBL_Read(void* param_1, U32 param_2, void* indata, U32 insize, U32* outsize);

@@ -1,12 +1,12 @@
 #ifndef XCLUMPCOLL_H
 #define XCLUMPCOLL_H
 
-#include <types.h>
-
-#include <rwcore.h>
-#include <rpworld.h>
 #include <rpcollis.h>
+#include <rpworld.h>
 #include <rtintsec.h>
+#include <rwcore.h>
+
+#include <types.h>
 
 struct xClumpCollBSPBranchNode
 {

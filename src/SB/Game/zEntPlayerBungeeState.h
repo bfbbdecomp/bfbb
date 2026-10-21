@@ -5,7 +5,6 @@
 #include "xEnt.h"
 #include "xIni.h"
 
-
 namespace bungee_state
 {
     struct hook_asset : xDynAsset

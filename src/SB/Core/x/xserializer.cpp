@@ -1,6 +1,8 @@
 #include "xserializer.h"
+
 #include "xMemMgr.h"
 #include "xutil.h"
+
 #include <string.h>
 
 static S32 g_serinit;

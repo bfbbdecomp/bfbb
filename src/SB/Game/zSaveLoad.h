@@ -1,8 +1,9 @@
 #ifndef ZSAVELOAD_H
 #define ZSAVELOAD_H
 
-#include <types.h>
 #include "xsavegame.h"
+
+#include <types.h>
 struct st_XSAVEGAME_DATA;
 
 struct zSaveLoadGame
@@ -20,7 +21,6 @@ struct zSaveLoadUI
     U32 nameID;
     char* name;
 };
-
 
 extern zSaveLoadGame zSaveLoadGameTable[3];
 
@@ -68,7 +68,7 @@ S32 zSaveLoad_CardCheckSpaceSingle(S32 cardNumber);
 S32 zSaveLoad_CardCheckGamesSingle_doCheck(st_XSAVEGAME_DATA* xsgdata, S32 cardNumber);
 S32 zSaveLoad_CardCheckGamesSingle(S32 cardNumber);
 S32 zSaveLoad_CardCheckSlotEmpty_hasGame_doCheck(st_XSAVEGAME_DATA* xsgdata, S32 cardNumber,
-                                                   S32 gameNumber);
+                                                 S32 gameNumber);
 S32 zSaveLoad_CardCheckSlotEmpty_hasGame(S32 cardNumber, S32 gameNumber);
 S32 zSaveLoad_CardCheckSlotOverwrite_Free(S32 cardNumber, S32 gameNumber);
 S32 zSaveLoad_CardCheck(S32 cardNumber, S32 mode);
@@ -96,10 +96,10 @@ S32 xSGT_SaveInfoCB(void* vp, st_XSAVEGAME_DATA* xsgdata, S32* need, S32* most);
 S32 xSGT_SaveProcCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt);
 S32 xSGT_SaveInfoPrefsCB(void* p1, st_XSAVEGAME_DATA* data, S32* i, S32* j);
 S32 xSGT_SaveProcPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_WRITECONTEXT* wctxt);
-S32 xSGT_LoadLoadCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt,
-                      U32 ui, S32 i);
-S32 xSGT_LoadPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt,
-                       U32 ui, S32 i);
+S32 xSGT_LoadLoadCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, U32 ui,
+                    S32 i);
+S32 xSGT_LoadPrefsCB(void* vp, st_XSAVEGAME_DATA* xsgdata, st_XSAVEGAME_READCONTEXT* rctxt, U32 ui,
+                     S32 i);
 U32 zSaveLoad_slotIsEmpty(U32 slot);
 
 #endif

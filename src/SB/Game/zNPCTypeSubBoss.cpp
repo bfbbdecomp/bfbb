@@ -1,9 +1,9 @@
 #include "zNPCTypeSubBoss.h"
 
-#include "zNPCTypes.h"
-#include "zNPCTypeKingJelly.h"
 #include "zNPCTypeDutchman.h"
+#include "zNPCTypeKingJelly.h"
 #include "zNPCTypePrawn.h"
+#include "zNPCTypes.h"
 
 U32 g_hash_subbanim[ANIM_COUNT] = {};
 

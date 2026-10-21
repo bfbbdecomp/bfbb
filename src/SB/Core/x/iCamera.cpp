@@ -1,11 +1,11 @@
 #include "iCamera.h"
 
+#include "zGlobals.h"
+
 #include "xShadow.h"
 
-#include "iScrFX.h"
 #include "iMath.h"
-
-#include "zGlobals.h"
+#include "iScrFX.h"
 
 #include <string.h>
 

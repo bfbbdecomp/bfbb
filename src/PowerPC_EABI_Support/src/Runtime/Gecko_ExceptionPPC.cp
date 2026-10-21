@@ -1,7 +1,7 @@
-#include "PowerPC_EABI_Support/Runtime/Gecko_ExceptionPPC.h"
-#include "PowerPC_EABI_Support/Runtime/MWCPlusPlusLib.h"
-#include "PowerPC_EABI_Support/Runtime/NMWException.h"
-#include "PowerPC_EABI_Support/Runtime/__ppc_eabi_linker.h"
+#include "Runtime/Gecko_ExceptionPPC.h"
+#include "Runtime/MWCPlusPlusLib.h"
+#include "Runtime/NMWException.h"
+#include "Runtime/__ppc_eabi_linker.h"
 
 
 #define RETURN_ADDRESS 4

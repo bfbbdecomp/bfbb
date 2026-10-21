@@ -1,9 +1,11 @@
 #include "zParEmitter.h"
 
-#include <types.h>
 #include "zBase.h"
 #include "zGlobals.h"
+
 #include "xString.h"
+
+#include <types.h>
 
 zParEmitter* zParEmitterFind(U32 asset_id)
 {

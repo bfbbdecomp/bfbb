@@ -1,16 +1,17 @@
+#include "xEntMotion.h"
+
+#include "zMovePoint.h"
+
+#include "xColor.h"
 #include "xDebug.h"
 #include "xDraw.h"
-#include "xEntMotion.h"
 #include "xEntMotionAsset.h"
 #include "xMath.h"
 #include "xMath3.h"
 #include "xMathInlines.h"
-
 #include "xPad.h"
 #include "xScene.h"
 #include "xSpline.h"
-
-#include "zMovePoint.h"
 
 #include <types.h>
 

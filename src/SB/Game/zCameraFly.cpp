@@ -1,14 +1,15 @@
-#include <types.h>
+#include "zCameraFly.h"
+
+#include "zBase.h"
+#include "zCamera.h"
+#include "zGlobals.h"
+#include "zMusic.h"
 
 #include "xBase.h"
 #include "xEvent.h"
 #include "xScene.h"
 
-#include "zBase.h"
-#include "zCameraFly.h"
-#include "zCamera.h"
-#include "zGlobals.h"
-#include "zMusic.h"
+#include <types.h>
 
 extern U32 zcam_flyasset_current;
 

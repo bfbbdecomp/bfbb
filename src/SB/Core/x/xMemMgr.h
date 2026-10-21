@@ -103,8 +103,8 @@ S32 xMemGetBase(U32 heapID);
 void xMemRegisterBaseNotifyFunc(void (*)(void));
 S32 xMemGetBase();
 void xMemPoolAddElements(xMemPool* pool, void* buffer, U32 count);
-void xMemPoolSetup(xMemPool* pool, void* buffer, U32 nextOffset, U32 flags,
-                   xMemPoolInitCB initCB, U32 size, U32 count, U32 numRealloc);
+void xMemPoolSetup(xMemPool* pool, void* buffer, U32 nextOffset, U32 flags, xMemPoolInitCB initCB,
+                   U32 size, U32 count, U32 numRealloc);
 void* xMemPoolAlloc(xMemPool* pool);
 void xMemPoolFree(xMemPool* pool, void* data);
 

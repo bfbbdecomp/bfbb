@@ -3,8 +3,8 @@
 
 #include "xEnt.h"
 
-#include <rwcore.h>
 #include <rpworld.h>
+#include <rwcore.h>
 
 void zGooInit(S32 nobj);
 void zGooExit();

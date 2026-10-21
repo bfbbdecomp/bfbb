@@ -1,9 +1,10 @@
 #ifndef ZNPCMGR_H
 #define ZNPCMGR_H
 
-#include "xFactory.h"
-#include "xBehaveMgr.h"
 #include "zNPCTypes.h"
+
+#include "xBehaveMgr.h"
+#include "xFactory.h"
 
 #include <types.h>
 

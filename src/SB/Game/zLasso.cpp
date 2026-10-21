@@ -2,9 +2,10 @@
 
 #include "xMath3.h"
 #include "xMathInlines.h"
+#include "xstransvc.h"
+
 #include "iAnim.h"
 #include "iModel.h"
-#include "xstransvc.h"
 #include "iParMgr.h"
 
 #include <types.h>
@@ -189,7 +190,7 @@ void zLasso_Update(zLasso* lasso, xEnt* ent, F32 dt)
                 xVec3AddScaled(&lasso->crCenter, &lasso->tgCenter, interp);
                 xVec3SubFrom(&lasso->crCenter, &lasso->anchor);
             }
-            
+
             if (lasso->flags & 0x4)
             {
                 fizzicalNormal(lasso, dt, &newPoint);
@@ -372,19 +373,19 @@ static void fizzicalHonda(zLasso* lasso, F32 dt, xVec3* newPoint)
     xVec3AddScaled(&lasso->honda, &lasso->crNormal, -xVec3Dot(&lasso->crNormal, &lasso->honda));
     xVec3Normalize(&lasso->honda, &lasso->honda);
     xVec3SMulBy(&lasso->honda, lasso->crRadius);
-    
+
     if ((negativeHondaX != 0) && (lasso->honda.x > 0.0f))
     {
         xSndPlay3D(xStrHash("sound_rope_windup"), 0.77f, 0.0f, 0U, 0x10000U, &lasso->anchor, 100.0f,
                    SND_CAT_GAME, 0.0f);
         negativeHondaX = 0;
     }
-    
+
     if (lasso->honda.x < 0.0f)
     {
         negativeHondaX = 1;
     }
-    
+
     xVec3AddTo(&lasso->honda, &lasso->crCenter);
 }
 
@@ -448,53 +449,63 @@ static void initVertMap(zLassoGuide* guide)
 
     S32 center = tris->vertIndex[0];
     S32 init = tris->vertIndex[0];
-    
+
     if (((init != tris->vertIndex[4] && init != tris->vertIndex[5] && init != tris->vertIndex[6]) ||
-         (init != tris->vertIndex[8] && init != tris->vertIndex[9] && init != tris->vertIndex[10])) &&
-        ((init = tris->vertIndex[1], init != tris->vertIndex[4] && init != tris->vertIndex[5] && init != tris->vertIndex[6]) ||
+         (init != tris->vertIndex[8] && init != tris->vertIndex[9] &&
+          init != tris->vertIndex[10])) &&
+        ((init = tris->vertIndex[1],
+          init != tris->vertIndex[4] && init != tris->vertIndex[5] && init != tris->vertIndex[6]) ||
          (init != tris->vertIndex[8] && init != tris->vertIndex[9] && init != tris->vertIndex[10])))
     {
         init = tris->vertIndex[2];
     }
-    
-    if (init == tris->vertIndex[0]) {
+
+    if (init == tris->vertIndex[0])
+    {
         init = tris->vertIndex[1];
     }
-    
+
     S32 vertIdx = 0;
     S32 curr = init;
     S32 currTri;
     ushort* puVar5;
-    
-    do {
+
+    do
+    {
         vertIdx = vertIdx + 1;
         guide->vertMap[vertIdx - 1] = curr;
-        
-        if (vertIdx == numTri) {
+
+        if (vertIdx == numTri)
+        {
             vertIdx = 0;
         }
-        
-        while (true) {
+
+        while (true)
+        {
             puVar5 = &tris->vertIndex[vertIdx];
             currTri = puVar5[0];
-            
-            if (curr == currTri || curr == puVar5[1] || curr == puVar5[2]) {
+
+            if (curr == currTri || curr == puVar5[1] || curr == puVar5[2])
+            {
                 break;
             }
-            
+
             vertIdx = vertIdx + 1;
-            if (vertIdx == numTri) {
+            if (vertIdx == numTri)
+            {
                 vertIdx = 0;
             }
         }
-        
-        if ((curr != currTri && center != currTri)) {
-            currTri = puVar5[1];            
-            if ((curr != currTri && center != currTri)) {
+
+        if ((curr != currTri && center != currTri))
+        {
+            currTri = puVar5[1];
+            if ((curr != currTri && center != currTri))
+            {
                 currTri = puVar5[2];
             }
         }
-        
+
         curr = currTri;
     } while (currTri != init);
 }

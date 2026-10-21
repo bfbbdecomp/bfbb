@@ -4,6 +4,7 @@
 #include "xEnv.h"
 #include "xModel.h"
 #include "xQuickCull.h"
+
 #include "iMath3.h"
 
 #define k_HIT_IT ((U32)(1 << 0))

@@ -79,10 +79,10 @@ void iSndUpdate();
 void iSndFindFreeVoice(U32 priority, U32 flags, U32 owner);
 
 S32 iSndPlay(xSndVoiceInfo* vp);
-S32 iSndPrepStream(xSndVoiceInfo *);
-S32 iSndPlayStream(xSndVoiceInfo *);
-S32 iSndPlayMemStream(xSndVoiceInfo *);
-S32 iSndPlaySound(xSndVoiceInfo *);
+S32 iSndPrepStream(xSndVoiceInfo*);
+S32 iSndPlayStream(xSndVoiceInfo*);
+S32 iSndPlayMemStream(xSndVoiceInfo*);
+S32 iSndPlaySound(xSndVoiceInfo*);
 void iSndSetVol(U32 snd, F32 vol);
 void iSndSetPitch(U32 snd, F32 pitch);
 void iSndStartStereo(U32 id1, U32 id2, F32 pitch);

@@ -1,6 +1,6 @@
 #include "dolphin/os/init/__start.h"
-#include "PowerPC_EABI_Support/Runtime/__ppc_eabi_linker.h"
-#include "PowerPC_EABI_Support/MetroTRK/dolphin_trk.h"
+#include "Runtime/__ppc_eabi_linker.h"
+#include "MetroTRK/dolphin_trk.h"
 
 void __check_pad3(void)
 {

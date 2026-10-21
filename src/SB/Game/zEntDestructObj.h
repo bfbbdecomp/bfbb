@@ -1,16 +1,18 @@
 #ifndef ZENTDESTRUCTOBJ_H
 #define ZENTDESTRUCTOBJ_H
 
-#include "zEnt.h"
-#include "xSFX.h"
-#include "zParEmitter.h"
-#include "zGlobals.h"
-#include "zRumble.h"
-#include "xVec3.h"
-#include "xString.h"
-#include "xstransvc.h"
-#include "zShrapnel.h"
 #include "zCollGeom.h"
+#include "zEnt.h"
+#include "zGlobals.h"
+#include "zParEmitter.h"
+#include "zRumble.h"
+#include "zShrapnel.h"
+
+#include "xSFX.h"
+#include "xString.h"
+#include "xVec3.h"
+#include "xstransvc.h"
+
 #include "iCollide.h"
 
 #define DOBJ_STATE_INIT 0

@@ -1,11 +1,10 @@
 #ifndef XGRID_H
 #define XGRID_H
 
-#include <types.h>
-
+#include "xBound.h"
 #include "xMath3.h"
 
-#include "xBound.h"
+#include <types.h>
 
 struct xEnt;
 struct xQCData;

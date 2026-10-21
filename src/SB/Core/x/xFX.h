@@ -1,14 +1,14 @@
 #ifndef XFX_H
 #define XFX_H
 
-#include "xMath3.h"
 #include "containers.h"
+#include "xMath3.h"
+
 #include "iColor.h"
-#include "iDraw.h"
 #include "iModel.h"
 
-#include <rwcore.h>
 #include <rpworld.h>
+#include <rwcore.h>
 
 class xModelInstance;
 

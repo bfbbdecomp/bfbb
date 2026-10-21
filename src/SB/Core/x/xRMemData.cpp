@@ -1,8 +1,9 @@
 #include "xRMemData.h"
+
 #include "xMemMgr.h"
 
-#include <types.h>
 #include <string.h>
+#include <types.h>
 
 void* RyzMemData::operator new(size_t size, S32 amt, RyzMemGrow* growCtxt)
 {

@@ -1,12 +1,14 @@
 #ifndef ICAMERA_H
 #define ICAMERA_H
 
-#include <rwcore.h>
-#include <types.h>
-
 #include "xMath3.h"
+
 #include "iEnv.h"
 #include "iTime.h"
+
+#include <rwcore.h>
+
+#include <types.h>
 
 struct iFogParams
 {

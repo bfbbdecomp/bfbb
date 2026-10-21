@@ -1,21 +1,30 @@
 #include "zNPCTypeCommon.h"
 
-#include <stdio.h>
-#include <types.h>
-#include <string.h>
-
-#include "xDebug.h"
-#include "xDraw.h"
-#include "zGameExtras.h"
-#include "xMathInlines.h"
-#include "xString.h"
-
 #include "zAssetTypes.h"
 #include "zCombo.h"
 #include "zEntButton.h"
+#include "zEntCruiseBubble.h"
 #include "zEntTeleportBox.h"
+#include "zGame.h"
+#include "zGameExtras.h"
+#include "zGlobals.h"
 #include "zGrid.h"
 #include "zNPCFXCinematic.h"
+#include "zNPCGoals.h"
+#include "zNPCSupport.h"
+#include "zRumble.h"
+
+#include "xDebug.h"
+#include "xDraw.h"
+#include "xMathInlines.h"
+#include "xString.h"
+#include "xutil.h"
+
+#include "iCollide.h"
+
+#include <stdio.h>
+#include <string.h>
+#include <types.h>
 
 #define Unknown 0
 #define LassoGuide_Grab01 1

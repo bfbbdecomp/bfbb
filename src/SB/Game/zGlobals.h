@@ -1,14 +1,12 @@
 #ifndef ZGLOBALS_H
 #define ZGLOBALS_H
 
+#include "zCutsceneMgr.h"
+#include "zEntPlayer.h"
+
+#include "xEntDrive.h"
 #include "xGlobals.h"
 #include "xShadowSimple.h"
-#include "xEntDrive.h"
-
-#include "zEnt.h"
-#include "zEntPlayer.h"
-#include "zScene.h"
-#include "zCutsceneMgr.h"
 
 struct zGlobalSettings
 {

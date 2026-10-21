@@ -1,7 +1,6 @@
 #ifndef XCUTSCENEMGR_H
 #define XCUTSCENEMGR_H
 
-#include "xBase.h"
 #include "xCutscene.h"
 
 struct xCutsceneMgrAsset : xBaseAsset

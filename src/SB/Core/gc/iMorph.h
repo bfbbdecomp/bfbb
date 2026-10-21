@@ -1,10 +1,10 @@
 #ifndef IMORPH_H
 #define IMORPH_H
 
-#include "types.h"
-
-#include <rwcore.h>
 #include <rpworld.h>
+#include <rwcore.h>
+
+#include <types.h>
 
 struct DirtyMorph // total size: 0x20
 {

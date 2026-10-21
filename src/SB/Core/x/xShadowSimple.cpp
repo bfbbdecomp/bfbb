@@ -1,21 +1,21 @@
 #include "xShadowSimple.h"
 
-#include "rpcollis.h"
-#include "rwcore.h"
-#include "rwplcore.h"
+#include "zGlobals.h"
 
-#include "iModel.h"
+#include "xMath3.h"
 #include "xNPCBasic.h"
-#include "xstransvc.h"
+#include "xQuickCull.h"
 #include "xString.h"
 #include "xVec3.h"
-#include "zGlobals.h"
+#include "xstransvc.h"
+
+#include "iModel.h"
+
+#include <rpcollis.h>
+#include <rwcore.h>
 
 #include <string.h>
 #include <types.h>
-
-#include "xMath3.h"
-#include "xQuickCull.h"
 
 static xShadowSimpleQueue sCollQueue[2];
 static RxObjSpace3DVertex sShadVert[384];

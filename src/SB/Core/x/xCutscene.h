@@ -1,9 +1,8 @@
 #ifndef XCUTSCENE_H
 #define XCUTSCENE_H
 
-#include "xFile.h"
-#include "rpworld.h"
 #include "xCamera.h"
+#include "xFile.h"
 
 #define XCUTSCENEDATA_TYPE_RW_MODEL 1
 #define XCUTSCENEDATA_TYPE_ANIMATION 2
@@ -13,7 +12,8 @@
 #define XCUTSCENEDATA_TYPE_JDELTAMODEL 6
 #define XCUTSCENEDATA_TYPE_JDELTAANIM 7
 
-struct xCutsceneAnimHdr {
+struct xCutsceneAnimHdr
+{
     U32 RootIndex;
     F32 Translate[3];
 };

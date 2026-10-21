@@ -91,7 +91,7 @@ struct tweak_callback
 };
 
 void xprintf(const char* msg, ...);
-S32 xDebugModeAdd(const char* mode, void(*debugFunc)());
+S32 xDebugModeAdd(const char* mode, void (*debugFunc)());
 void xDebugInit();
 void xDebugUpdate();
 void xDebugExit();
@@ -119,13 +119,12 @@ inline void xDebugAddTweak(const char*, const char*, const tweak_callback*, void
 {
 }
 
-
 inline void xDebugAddFlagTweak(const char*, U32*, U32, const tweak_callback*, void*, U32)
 {
 }
 
-inline void xDebugAddSelectTweak(const char*, U32*, const char**, const U32*, U32, const tweak_callback*,
-                          void*, U32)
+inline void xDebugAddSelectTweak(const char*, U32*, const char**, const U32*, U32,
+                                 const tweak_callback*, void*, U32)
 {
 }
 

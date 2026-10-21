@@ -1,9 +1,9 @@
 #include "iEnv.h"
 
-#include "iModel.h"
+#include "xMemMgr.h"
 
 #include "iCamera.h"
-#include "xMemMgr.h"
+#include "iModel.h"
 
 static S32 sBeginDrawFX;
 static RpWorld* sPipeWorld;

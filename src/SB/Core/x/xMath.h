@@ -1,9 +1,9 @@
 #ifndef XMATH_H
 #define XMATH_H
 
-#include <types.h>
-
 #include "iMath.h"
+
+#include <types.h>
 
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))
@@ -17,7 +17,7 @@
 
 #define SQR(x) ((x) * (x))
 
-#define ALIGN(x, a) ((x) + ((a)-1) & ~((a)-1))
+#define ALIGN(x, a) ((x) + ((a) - 1) & ~((a) - 1))
 
 // Override these to point to their corresponding symbols in .sdata2
 // For example:

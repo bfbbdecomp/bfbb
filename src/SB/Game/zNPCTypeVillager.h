@@ -1,12 +1,13 @@
 #ifndef ZNPCTYPEVILLAGER_H
 #define ZNPCTYPEVILLAGER_H
 
-#include "xBehaviour.h"
 #include "zNPCSndLists.h"
 #include "zNPCSupport.h"
 #include "zNPCTypeCommon.h"
-#include "zTaskBox.h"
 #include "zPlatform.h"
+#include "zTaskBox.h"
+
+#include "xBehaviour.h"
 #include "xShadow.h"
 
 struct HiThere : ztaskbox::callback

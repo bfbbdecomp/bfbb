@@ -1,4 +1,5 @@
 #include "xFog.h"
+
 #include "xEvent.h"
 
 #include "iCamera.h"

@@ -1,17 +1,18 @@
 #include "zEntTeleportBox.h"
 
-#include "zUIFont.h"
-#include "zGlobals.h"
 #include "zEntCruiseBubble.h"
-#include "zRumble.h"
 #include "zEntPickup.h"
 #include "zFX.h"
+#include "zGlobals.h"
+#include "zRumble.h"
+#include "zUIFont.h"
 
 #include "xEvent.h"
 #include "xMarkerAsset.h"
 #include "xMath.h"
 #include "xSnd.h"
 #include "xString.h"
+
 #include "iScrFX.h"
 
 #define STATUS_OPEN 0
@@ -275,7 +276,7 @@ void zEntTeleportBox_Init(_zEntTeleportBox* ent, teleport_asset* asset)
         state = xAnimTableGetState(table, "Closed2Open");
         xAnimStateNewEffect(state, 1, 0.5f, 0.0f, CtoOEffectTboxEnableCB, 0);
 
-        xAnimFile* afile = 
+        xAnimFile* afile =
             (xAnimFile*)xSTFindAsset(xStrHash("teleportation_box_closed.anm"), &size);
         if (afile != NULL)
         {

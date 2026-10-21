@@ -1,19 +1,20 @@
 #include "xFont.h"
 
-#include "xMath.h"
-#include "xstransvc.h"
-#include "xModel.h"
-#include "xColor.h"
-#include "xTimer.h"
-#include "xTextAsset.h"
-#include "xModelBucket.h"
-
-#include "iTime.h"
 #include "zScene.h"
 
-#include <string.h>
+#include "xColor.h"
+#include "xMath.h"
+#include "xModel.h"
+#include "xModelBucket.h"
+#include "xTextAsset.h"
+#include "xTimer.h"
+#include "xstransvc.h"
+
+#include "iTime.h"
+
 #include <stdio.h>
-#include <PowerPC_EABI_Support\MSL_C\MSL_Common\strtoul.h>
+#include <stdlib.h>
+#include <string.h>
 
 /* xtextbox flags */
 

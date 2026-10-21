@@ -1,11 +1,13 @@
 #ifndef ZNPCMESSENGER_H
 #define ZNPCMESSENGER_H
 
-#include <types.h>
-#include "xBase.h"
-#include "xVec3.h"
 #include "zMovePoint.h"
 #include "zNPCTypes.h"
+
+#include "xBase.h"
+#include "xVec3.h"
+
+#include <types.h>
 
 struct zNPCCommon;
 

@@ -1,8 +1,6 @@
 #ifndef XBEHAVEGOALSIMPLE_H
 #define XBEHAVEGOALSIMPLE_H
 
-#include "xFactory.h"
-#include "xRMemData.h"
 #include "xBehaviour.h"
 
 struct xGoalEmpty : xGoal

@@ -1,21 +1,21 @@
 #include "xNPCBasic.h"
 
-#include <types.h>
+#include "xCamera.h"
+#include "xColor.h"
+#include "xDraw.h"
+#include "xEntMotion.h"
+#include "xMath.h"
+#include "xModel.h"
+
+#include "iCollide.h"
+#include "iColor.h"
+
 #include <string.h>
+#include <types.h>
 
 // Weird... why does x depend on z here?
 #include "zEnt.h"
 #include "zGrid.h"
-
-#include "xMath.h"
-#include "xModel.h"
-#include "xEntMotion.h"
-#include "xCamera.h"
-#include "xDraw.h"
-
-#include "iColor.h"
-#include "xColor.h"
-#include "iCollide.h"
 
 static xEntCollis g_colrec = { 0 };
 

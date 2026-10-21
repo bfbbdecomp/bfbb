@@ -1,18 +1,18 @@
 #ifndef ZNPCTYPECOMMON_H
 #define ZNPCTYPECOMMON_H
 
-#include "xNPCBasic.h"
-#include "xDynAsset.h"
-#include "xListItem.h"
-#include "xEntDrive.h"
-#include "xBehaveMgr.h"
-#include "xEnt.h"
-#include "xSFX.h"
-
-#include "zNPCSndTable.h"
 #include "zMovePoint.h"
-#include "zShrapnel.h"
 #include "zNPCMessenger.h"
+#include "zNPCSndTable.h"
+#include "zShrapnel.h"
+
+#include "xBehaveMgr.h"
+#include "xDynAsset.h"
+#include "xEnt.h"
+#include "xEntDrive.h"
+#include "xListItem.h"
+#include "xNPCBasic.h"
+#include "xSFX.h"
 
 #define XRAY3_USE_MIN (1 << 10)
 #define XRAY3_USE_MAX (1 << 11)

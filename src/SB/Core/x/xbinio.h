@@ -1,7 +1,7 @@
 #ifndef XBINIO_H
 #define XBINIO_H
 
-#include "xFile.h"
+#include <types.h>
 
 enum en_BIO_ASYNC_ERRCODES
 {

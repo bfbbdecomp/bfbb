@@ -1,12 +1,12 @@
 #ifndef ZFX_H
 #define ZFX_H
 
-#include "xString.h"
 #include "xEnt.h"
 #include "xFX.h"
+#include "xString.h"
 
-#include <rwcore.h>
 #include <rpworld.h>
+#include <rwcore.h>
 
 struct tweak_info;
 struct tweak_callback;
@@ -21,7 +21,7 @@ enum zFXGooState
     zFXGooStateForce32Bit = 0xffffffff
 };
 
-// Definition updated based on Rat proto data. 
+// Definition updated based on Rat proto data.
 struct zFXGooInstance
 {
     RpAtomic* atomic;

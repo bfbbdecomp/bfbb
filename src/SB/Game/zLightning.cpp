@@ -1,12 +1,14 @@
 #include "zLightning.h"
 
-#include "xDebug.h"
 #include "zGlobals.h"
-#include "xstransvc.h"
+
+#include "xDebug.h"
 #include "xParEmitter.h"
+#include "xstransvc.h"
+
+#include <rwcore.h>
 
 #include <types.h>
-#include <rwcore.h>
 
 #define NUM_LIGHTNING 48
 
@@ -106,10 +108,16 @@ void zLightningInit()
     sLFuncY[9].next = NULL;
     sLFuncZ[9].next = NULL;
 
-    for (S32 i = 0; i < 10; i++) {
-        xVec3Init(&sLFuncVal[i], 2.0f * (xurand() - 0.5f), 2.0f * (xurand() - 0.5f), 2.0f * (xurand() - 0.5f));
-        xVec3Init(&sLFuncSlope[i][0], sLFuncSlopeRange * (2.0f * (xurand() - 0.5f)), sLFuncSlopeRange * (2.0f * (xurand() - 0.5f)), sLFuncSlopeRange * (2.0f * (xurand() - 0.5f)));
-        xVec3Init(&sLFuncSlope[i][1], sLFuncSlopeRange * (2.0f * (xurand() - 0.5f)), sLFuncSlopeRange * (2.0f * (xurand() - 0.5f)), sLFuncSlopeRange * (2.0f * (xurand() - 0.5f)));
+    for (S32 i = 0; i < 10; i++)
+    {
+        xVec3Init(&sLFuncVal[i], 2.0f * (xurand() - 0.5f), 2.0f * (xurand() - 0.5f),
+                  2.0f * (xurand() - 0.5f));
+        xVec3Init(&sLFuncSlope[i][0], sLFuncSlopeRange * (2.0f * (xurand() - 0.5f)),
+                  sLFuncSlopeRange * (2.0f * (xurand() - 0.5f)),
+                  sLFuncSlopeRange * (2.0f * (xurand() - 0.5f)));
+        xVec3Init(&sLFuncSlope[i][1], sLFuncSlopeRange * (2.0f * (xurand() - 0.5f)),
+                  sLFuncSlopeRange * (2.0f * (xurand() - 0.5f)),
+                  sLFuncSlopeRange * (2.0f * (xurand() - 0.5f)));
 
         sLFuncEnd[i] = 0.25f * (xurand() - 0.5f) + (i + 1);
     }
@@ -162,45 +170,73 @@ void zLightningInit()
     sLightningChangeCB.on_change = &lightningTweakChangeType;
 
     xDebugAddTweak("Lightning|\01\01Go", "Start Lightning", &sLightningStartCB, NULL, 0x2);
-    xDebugAddTweak("Lightning|\01Globals|\01\01JerkFrequency", &sLFuncJerkFreq, 0.0f, 1000000000.0f, NULL, NULL, 0x2);
-    xDebugAddTweak("Lightning|\01Globals|\01\01ShiftSpeed", &sLFuncShift, 0.0f, 1000000000.0f, NULL, NULL, 0x2);
-    xDebugAddTweak("Lightning|\01Globals|\01\02MinPStep", &sLFuncMinPStep, 0.0f, 1000000000.0f, NULL, NULL, 0x2);
-    xDebugAddTweak("Lightning|\01Globals|\01\03MaxPStep", &sLFuncMaxPStep, 0.0f, 1000000000.0f, NULL, NULL, 0x2);
-    xDebugAddTweak("Lightning|\01Globals|\01\03MinScale", &sLFuncMinScale, 0.0f, 1000000000.0f, NULL, NULL, 0x2);
-    xDebugAddTweak("Lightning|\01Globals|\02\01MaxScale", &sLFuncMaxScale, 0.0f, 1000000000.0f, NULL, NULL, 0x2);
-    xDebugAddTweak("Lightning|\01Globals|\02\01ScalePerLength", &sLFuncScalePerLength, 0.0f, 1000000000.0f, NULL, NULL, 0x2);
-    xDebugAddTweak("Lightning|\01Globals|\02\02MinSpan", &sLFuncMinSpan, 0.0f, 1000000000.0f, NULL, NULL, 0x2);
-    xDebugAddTweak("Lightning|\01Globals|\02\02SpanPerLength", &sLFuncSpanPerLength, 0.0f, 1000000000.0f, NULL, NULL, 0x2);
-    xDebugAddTweak("Lightning|\01Globals|\02\03SlopeRange", &sLFuncSlopeRange, 0.0f, 1000000000.0f, NULL, NULL, 0x2);
-    xDebugAddTweak("Lightning|\01Globals|\02\03UVSpeed", &sLFuncUVSpeed, -1000000000.0f, 1000000000.0f, NULL, NULL, 0x2);
-    xDebugAddTweak("Lightning|\01Time", &gLightningTweakAddInfo.time, 0.0f, 1000000000.0f, NULL, NULL, 0x2);
-    xDebugAddTweak("Lightning|\01Total Points", &gLightningTweakAddInfo.total_points, 2, 16, NULL, NULL, 0x2);
-    
-    xDebugAddSelectTweak("Lightning|\01Type", &gLightningTweakAddInfo.type, lightning_type_names, NULL, 4, &sLightningChangeCB, NULL, 0x2);
-    
+    xDebugAddTweak("Lightning|\01Globals|\01\01JerkFrequency", &sLFuncJerkFreq, 0.0f, 1000000000.0f,
+                   NULL, NULL, 0x2);
+    xDebugAddTweak("Lightning|\01Globals|\01\01ShiftSpeed", &sLFuncShift, 0.0f, 1000000000.0f, NULL,
+                   NULL, 0x2);
+    xDebugAddTweak("Lightning|\01Globals|\01\02MinPStep", &sLFuncMinPStep, 0.0f, 1000000000.0f,
+                   NULL, NULL, 0x2);
+    xDebugAddTweak("Lightning|\01Globals|\01\03MaxPStep", &sLFuncMaxPStep, 0.0f, 1000000000.0f,
+                   NULL, NULL, 0x2);
+    xDebugAddTweak("Lightning|\01Globals|\01\03MinScale", &sLFuncMinScale, 0.0f, 1000000000.0f,
+                   NULL, NULL, 0x2);
+    xDebugAddTweak("Lightning|\01Globals|\02\01MaxScale", &sLFuncMaxScale, 0.0f, 1000000000.0f,
+                   NULL, NULL, 0x2);
+    xDebugAddTweak("Lightning|\01Globals|\02\01ScalePerLength", &sLFuncScalePerLength, 0.0f,
+                   1000000000.0f, NULL, NULL, 0x2);
+    xDebugAddTweak("Lightning|\01Globals|\02\02MinSpan", &sLFuncMinSpan, 0.0f, 1000000000.0f, NULL,
+                   NULL, 0x2);
+    xDebugAddTweak("Lightning|\01Globals|\02\02SpanPerLength", &sLFuncSpanPerLength, 0.0f,
+                   1000000000.0f, NULL, NULL, 0x2);
+    xDebugAddTweak("Lightning|\01Globals|\02\03SlopeRange", &sLFuncSlopeRange, 0.0f, 1000000000.0f,
+                   NULL, NULL, 0x2);
+    xDebugAddTweak("Lightning|\01Globals|\02\03UVSpeed", &sLFuncUVSpeed, -1000000000.0f,
+                   1000000000.0f, NULL, NULL, 0x2);
+    xDebugAddTweak("Lightning|\01Time", &gLightningTweakAddInfo.time, 0.0f, 1000000000.0f, NULL,
+                   NULL, 0x2);
+    xDebugAddTweak("Lightning|\01Total Points", &gLightningTweakAddInfo.total_points, 2, 16, NULL,
+                   NULL, 0x2);
+
+    xDebugAddSelectTweak("Lightning|\01Type", &gLightningTweakAddInfo.type, lightning_type_names,
+                         NULL, 4, &sLightningChangeCB, NULL, 0x2);
+
     tweak_info info;
     lightningTweakChangeType((const tweak_info&)info);
 
-    xDebugAddFlagTweak("Lightning|\02Flag|Rot Scalar", &gLightningTweakAddInfo.flags, 0x8, NULL, NULL, 0x2);
-    xDebugAddFlagTweak("Lightning|\02Flag|No Fade Out", &gLightningTweakAddInfo.flags, 0x1000, NULL, NULL, 0x2);
-    xDebugAddFlagTweak("Lightning|\02Flag|Arc", &gLightningTweakAddInfo.flags, 0x20, NULL, NULL, 0x2);
-    xDebugAddFlagTweak("Lightning|\02Flag|Vertical Orientation", &gLightningTweakAddInfo.flags, 0x200, NULL, NULL, 0x2);
-    xDebugAddFlagTweak("Lightning|\02Flag|Taper Thickness At End", &gLightningTweakAddInfo.flags, 0x400, NULL, NULL, 0x2);
-    xDebugAddFlagTweak("Lightning|\02Flag|Taper Thickness At Start", &gLightningTweakAddInfo.flags, 0x800, NULL, NULL, 0x2);
+    xDebugAddFlagTweak("Lightning|\02Flag|Rot Scalar", &gLightningTweakAddInfo.flags, 0x8, NULL,
+                       NULL, 0x2);
+    xDebugAddFlagTweak("Lightning|\02Flag|No Fade Out", &gLightningTweakAddInfo.flags, 0x1000, NULL,
+                       NULL, 0x2);
+    xDebugAddFlagTweak("Lightning|\02Flag|Arc", &gLightningTweakAddInfo.flags, 0x20, NULL, NULL,
+                       0x2);
+    xDebugAddFlagTweak("Lightning|\02Flag|Vertical Orientation", &gLightningTweakAddInfo.flags,
+                       0x200, NULL, NULL, 0x2);
+    xDebugAddFlagTweak("Lightning|\02Flag|Taper Thickness At End", &gLightningTweakAddInfo.flags,
+                       0x400, NULL, NULL, 0x2);
+    xDebugAddFlagTweak("Lightning|\02Flag|Taper Thickness At Start", &gLightningTweakAddInfo.flags,
+                       0x800, NULL, NULL, 0x2);
     xDebugAddTweak("Lightning|\02Start|x", &sTweakStart.x, -50.0f, 50.0f, NULL, NULL, 0x2);
     xDebugAddTweak("Lightning|\02Start|y", &sTweakStart.y, -50.0f, 50.0f, NULL, NULL, 0x2);
     xDebugAddTweak("Lightning|\02Start|z", &sTweakStart.z, -50.0f, 50.0f, NULL, NULL, 0x2);
     xDebugAddTweak("Lightning|\03End|x", &sTweakEnd.x, -50.0f, 50.0f, NULL, NULL, 0x2);
     xDebugAddTweak("Lightning|\03End|y", &sTweakEnd.y, -50.0f, 50.0f, NULL, NULL, 0x2);
     xDebugAddTweak("Lightning|\03End|z", &sTweakEnd.z, -50.0f, 50.0f, NULL, NULL, 0x2);
-    xDebugAddTweak("Lightning|\04Color|\01R", &gLightningTweakAddInfo.color.r, 0x0, 0xFF, NULL, NULL, 0x2);
-    xDebugAddTweak("Lightning|\04Color|\02G", &gLightningTweakAddInfo.color.g, 0x0, 0xFF, NULL, NULL, 0x2);
-    xDebugAddTweak("Lightning|\04Color|\03B", &gLightningTweakAddInfo.color.b, 0x0, 0xFF, NULL, NULL, 0x2);
-    xDebugAddTweak("Lightning|\04Color|\04A", &gLightningTweakAddInfo.color.a, 0x0, 0xFF, NULL, NULL, 0x2);
-    xDebugAddTweak("Lightning|Lengths|Rot Radius", &gLightningTweakAddInfo.rot_radius, -1000000000.0f, 1000000000.0f, NULL, NULL, 0x2);
-    xDebugAddTweak("Lightning|Lengths|Arc Height", &gLightningTweakAddInfo.arc_height, -1000000000.0f, 1000000000.0f, NULL, NULL, 0x2);
-    xDebugAddTweak("Lightning|Lengths|Thickness", &gLightningTweakAddInfo.thickness, 0.0f, 100.0f, NULL, NULL, 0x2);
-    xDebugAddTweak("Lightning|Randomness|Rand Radius", &gLightningTweakAddInfo.rand_radius, 0.0f, 1000000000.0f, NULL, NULL, 0x2);
+    xDebugAddTweak("Lightning|\04Color|\01R", &gLightningTweakAddInfo.color.r, 0x0, 0xFF, NULL,
+                   NULL, 0x2);
+    xDebugAddTweak("Lightning|\04Color|\02G", &gLightningTweakAddInfo.color.g, 0x0, 0xFF, NULL,
+                   NULL, 0x2);
+    xDebugAddTweak("Lightning|\04Color|\03B", &gLightningTweakAddInfo.color.b, 0x0, 0xFF, NULL,
+                   NULL, 0x2);
+    xDebugAddTweak("Lightning|\04Color|\04A", &gLightningTweakAddInfo.color.a, 0x0, 0xFF, NULL,
+                   NULL, 0x2);
+    xDebugAddTweak("Lightning|Lengths|Rot Radius", &gLightningTweakAddInfo.rot_radius,
+                   -1000000000.0f, 1000000000.0f, NULL, NULL, 0x2);
+    xDebugAddTweak("Lightning|Lengths|Arc Height", &gLightningTweakAddInfo.arc_height,
+                   -1000000000.0f, 1000000000.0f, NULL, NULL, 0x2);
+    xDebugAddTweak("Lightning|Lengths|Thickness", &gLightningTweakAddInfo.thickness, 0.0f, 100.0f,
+                   NULL, NULL, 0x2);
+    xDebugAddTweak("Lightning|Randomness|Rand Radius", &gLightningTweakAddInfo.rand_radius, 0.0f,
+                   1000000000.0f, NULL, NULL, 0x2);
 }
 
 static zLightning* FindFreeLightning()
@@ -241,10 +277,10 @@ zLightning* zLightningAdd(_tagLightningAdd* add)
     if (new_lightning->type != LYT_TYPE_FUNC)
     {
         new_lightning->legacy.total_points = add->total_points;
-        new_lightning->legacy.end_points = add->end_points;        
+        new_lightning->legacy.end_points = add->end_points;
         new_lightning->legacy.arc_height = add->arc_height;
         new_lightning->legacy.rand_radius = add->rand_radius;
-        
+
         S32 zeusOnStraightPoint = TRUE;
         F32 currot = 0.0f;
 
@@ -304,19 +340,18 @@ zLightning* zLightningAdd(_tagLightningAdd* add)
         S32 j = 0;
         for (i = 0; i < new_lightning->legacy.total_points; i++)
         {
-
             new_lightning[i].legacy.thickness[0] = add->thickness * 0.5f;
 
             if (add->flags & 0x400)
             {
                 new_lightning[i].legacy.thickness[0] *= 1.0f - pos;
             }
-            
+
             if (add->flags & 0x800)
             {
                 new_lightning[i].legacy.thickness[0] *= pos;
             }
-            
+
             if ((add->flags & 0x400) && (add->flags & 0x800))
             {
                 new_lightning[i].legacy.thickness[0] *= 4.0f;
@@ -330,7 +365,8 @@ zLightning* zLightningAdd(_tagLightningAdd* add)
                 }
                 else
                 {
-                    new_lightning[i].legacy.point[0] = add->end[i - (add->total_points - add->end_points)];
+                    new_lightning[i].legacy.point[0] =
+                        add->end[i - (add->total_points - add->end_points)];
                 }
             }
             else
@@ -372,9 +408,12 @@ zLightning* zLightningAdd(_tagLightningAdd* add)
                 else
                 {
                     xVec3Copy(new_lightning[i].legacy.point, &unk_r1_20);
-                    xVec3AddScaled(new_lightning->legacy.point, &new_lightning->legacy.arc_normal, new_lightning->legacy.zeus.normal_offset);
-                    xVec3AddScaled(new_lightning->legacy.point, &arc_orthogonal, -new_lightning->legacy.zeus.back_offset);
-                    xVec3AddScaled(new_lightning->legacy.point, &dir, -new_lightning->legacy.zeus.side_offset);
+                    xVec3AddScaled(new_lightning->legacy.point, &new_lightning->legacy.arc_normal,
+                                   new_lightning->legacy.zeus.normal_offset);
+                    xVec3AddScaled(new_lightning->legacy.point, &arc_orthogonal,
+                                   -new_lightning->legacy.zeus.back_offset);
+                    xVec3AddScaled(new_lightning->legacy.point, &dir,
+                                   -new_lightning->legacy.zeus.side_offset);
 
                     zeusOnStraightPoint = TRUE;
                 }
@@ -387,7 +426,9 @@ zLightning* zLightningAdd(_tagLightningAdd* add)
                 F32 scalar = 4.0f * pos + pos * pos * -4.0f;
                 if (scalar > 0.0f)
                 {
-                    xVec3AddScaled(&new_lightning[j].legacy.base_point[0], &new_lightning->legacy.arc_normal, scalar * new_lightning->legacy.arc_height);
+                    xVec3AddScaled(&new_lightning[j].legacy.base_point[0],
+                                   &new_lightning->legacy.arc_normal,
+                                   scalar * new_lightning->legacy.arc_height);
                 }
             }
 
@@ -443,20 +484,18 @@ static void UpdateLightning(zLightning* l, F32 dt)
 
     if (l->type != LYT_TYPE_FUNC)
     {
-        
-        
         if (l->type == LYT_TYPE_LINE || l->type == LYT_TYPE_ZEUS)
         {
             S32 i;
             F32 full = l->legacy.rand_radius * dt;
             F32 half = 0.5f * full;
-            
+
             for (i = 1; i < l->legacy.total_points - 1; i++)
             {
                 l->legacy.point[i].x = (full * xurand() + -half) + l->legacy.base_point[i].x;
                 l->legacy.point[i].y = (full * xurand() + -half) + l->legacy.base_point[i].y;
                 l->legacy.point[i].z = (full * xurand() + -half) + l->legacy.base_point[i].z;
-                
+
                 if (l->flags & 0x20)
                 {
                     // TODO: Fix float op order and grouping
@@ -470,12 +509,13 @@ static void UpdateLightning(zLightning* l, F32 dt)
         else if (l->type == LYT_TYPE_ROTATING)
         {
             xVec3 dir;
-            xVec3Sub(&dir, &l->legacy.base_point[l->legacy.total_points - 1], &l->legacy.base_point[0]);
+            xVec3Sub(&dir, &l->legacy.base_point[l->legacy.total_points - 1],
+                     &l->legacy.base_point[0]);
             xVec3Normalize(&dir, &dir);
 
             F32 full = l->legacy.rand_radius * dt;
             F32 half = 0.5f * full;
-            
+
             for (S32 i = 1; i < l->legacy.total_points - 1; i++)
             {
                 xMat3x3 mat3;
@@ -486,7 +526,7 @@ static void UpdateLightning(zLightning* l, F32 dt)
 
                 F32 sc2;
             }
-            
+
             F32 sc1;
             // S32 i;
         }
@@ -497,9 +537,10 @@ static void UpdateLightning(zLightning* l, F32 dt)
             info.custom_flags = 0xD00;
 
             U32 rand = xrand();
-            info.pos = l->legacy.point[(rand / l->legacy.total_points) * l->legacy.total_points - rand];
+            info.pos =
+                l->legacy.point[(rand / l->legacy.total_points) * l->legacy.total_points - rand];
             xrand();
-            
+
             xParEmitterEmitCustom(sSparkEmitter, dt, &info);
         }
     }
@@ -572,9 +613,12 @@ void zLightningUpdate(F32 dt)
         picker = 0;
     }
 
-    xVec3Init(&sLFuncVal[picker], 2.0f * (xurand() - 0.5f), 2.0f * (xurand() - 0.5f), 2.0f * (xurand() - 0.5f));
-    xVec3Init(&sLFuncSlope[picker][0], 2.0f * (xurand() - 0.5f), 2.0f * (xurand() - 0.5f), 2.0f * (xurand() - 0.5f));
-    xVec3Init(&sLFuncSlope[picker][1], 2.0f * (xurand() - 0.5f), 2.0f * (xurand() - 0.5f), 2.0f * (xurand() - 0.5f));
+    xVec3Init(&sLFuncVal[picker], 2.0f * (xurand() - 0.5f), 2.0f * (xurand() - 0.5f),
+              2.0f * (xurand() - 0.5f));
+    xVec3Init(&sLFuncSlope[picker][0], 2.0f * (xurand() - 0.5f), 2.0f * (xurand() - 0.5f),
+              2.0f * (xurand() - 0.5f));
+    xVec3Init(&sLFuncSlope[picker][1], 2.0f * (xurand() - 0.5f), 2.0f * (xurand() - 0.5f),
+              2.0f * (xurand() - 0.5f));
 
     sLFuncEnd[picker] = 0.25f * (xurand() * 0.5f) + (picker + 1);
 

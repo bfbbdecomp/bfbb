@@ -1,4 +1,4 @@
-#include "PowerPC_EABI_Support/MetroTRK/trk.h"
+#include "MetroTRK/trk.h"
 
 static void TRK_fill_mem(void* dest, int val, size_t count);
 

@@ -1,10 +1,11 @@
 #ifndef ZNPCGOALVILLAGER_H
 #define ZNPCGOALVILLAGER_H
 
-#include "xSFX.h"
 #include "zNPCGlyph.h"
 #include "zNPCGoalCommon.h"
 #include "zNPCGoalStd.h"
+
+#include "xSFX.h"
 
 struct zNPCGoalCheer : zNPCGoalLoopAnim
 {

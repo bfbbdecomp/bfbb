@@ -1,11 +1,13 @@
 #include "zNPCTypeKingJelly.h"
 
-#include <types.h>
-#include "xMathInlines.h"
-#include "xColor.h"
-#include "zNPCGoalCommon.h"
 #include "zCamera.h"
-#include "string.h"
+#include "zNPCGoalCommon.h"
+
+#include "xColor.h"
+#include "xMathInlines.h"
+
+#include <string.h>
+#include <types.h>
 
 #define f1868 1.0f
 #define f1869 0.0f
@@ -162,7 +164,7 @@ namespace
         void register_tweaks(bool init, xModelAssetParam* ap, U32 apsize, const char*);
     };
 
-    struct sound_data_type 
+    struct sound_data_type
     {
         U32 id[2]; // offset 0x0, size 0x8
         U8 delayed; // offset 0x8, size 0x1
@@ -170,7 +172,7 @@ namespace
         S8 playing; // offset 0xA, size 0x1
         F32 time; // offset 0xC, size 0x4
         U32 handle; // offset 0x10, size 0x4
-        xVec3 * loc; // offset 0x14, size 0x4
+        xVec3* loc; // offset 0x14, size 0x4
     };
 
     static tweak_group tweak;
@@ -184,72 +186,20 @@ namespace
     static zParEmitter* thump_ring_emitter;
     static xParEmitterCustomSettings thump_ring_emitter_settings;
     static xVec3 ring_segments[64];
-    
+
     // TODO: fix this up
     static char* sound_name[11][3] = {
-        {
-            "KJ_pulseupdown",
-            NULL,
-            NULL
-        },
-        {
-            "KJ_grunt",
-            NULL,
-            NULL
-        },
-        {
-            "KJ_Charge",
-            NULL,
-            NULL
-        },
-        {
-            "KJ_Cheer",
-            NULL,
-            NULL
-        },
-        {
-            "KJ_Land1",
-            NULL,
-            NULL
-        },
-        {
-            "KJ_Land2",
-            NULL,
-            NULL
-        },
-        {
-            "KJ_Mov",
-            NULL,
-            NULL
-        },
-        {
-            "KJ_Osc",
-            NULL,
-            NULL
-        },
-        {
-            "KJ_rise",
-            NULL,
-            NULL
-        },
-        {
-            "KJ_Taunt",
-            NULL,
-            NULL
-        },
-        {
-            "KJ_Pulse",
-            NULL,
-            NULL
-        },
+        { "KJ_pulseupdown", NULL, NULL }, { "KJ_grunt", NULL, NULL }, { "KJ_Charge", NULL, NULL },
+        { "KJ_Cheer", NULL, NULL },       { "KJ_Land1", NULL, NULL }, { "KJ_Land2", NULL, NULL },
+        { "KJ_Mov", NULL, NULL },         { "KJ_Osc", NULL, NULL },   { "KJ_rise", NULL, NULL },
+        { "KJ_Taunt", NULL, NULL },       { "KJ_Pulse", NULL, NULL },
     };
 
-    static const U8 sound_flags[11] = { 0x1, 0x0, 0x0, 0x0, 0x0,
-                                        0x0, 0x1, 0x1, 0x0, 0x0, 0x0};
+    static const U8 sound_flags[11] = { 0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x1, 0x1, 0x0, 0x0, 0x0 };
 
     // TODO: Match the data
     static xBinaryCamera boss_cam = {};
-}
+} // namespace
 
 namespace
 {
@@ -269,7 +219,7 @@ namespace
                 sound_data[i].id[j] = xStrHash(sound_name[i][j]);
                 sound_data[i].amount++;
             }
-            
+
             sound_data[i].playing = -1;
         }
     }
@@ -291,18 +241,10 @@ namespace
             sound.playing = (xrand() >> 13) % sound.amount;
         }
 
-        sound.handle = xSndPlay3D(
-            sound.playing,
-            tweak.sound[sound_index].volume,
-            1.0f,
-            tweak.sound[sound_index].priority,
-            0x0,
-            pos,
-            tweak.sound[sound_index].radius_inner,
-            tweak.sound[sound_index].radius_outer,
-            SND_CAT_GAME,
-            0.0f
-        );
+        sound.handle = xSndPlay3D(sound.playing, tweak.sound[sound_index].volume, 1.0f,
+                                  tweak.sound[sound_index].priority, 0x0, pos,
+                                  tweak.sound[sound_index].radius_inner,
+                                  tweak.sound[sound_index].radius_outer, SND_CAT_GAME, 0.0f);
     }
 
     void play_sound(S32 sound_index, const xVec3* pos)
@@ -318,7 +260,7 @@ namespace
         {
             return;
         }
-     
+
         sound.delayed = TRUE;
         sound.time = 0.0f;
     }
@@ -421,7 +363,7 @@ namespace
             }
         }
     }
-    
+
     S32 kill_sound(int)
     {
         return 0; //to do
@@ -1654,17 +1596,15 @@ void zNPCKingJelly::Damage(en_NPC_DAMAGE_TYPE damtype, xBase*, const xVec3*)
     case DMGTYP_SIDE:
     case DMGTYP_BOULDER:
     case DMGTYP_BUBBOWL:
-        if (state == 'NGM5' &&
-            (this->shockstate == SS_RELEASE 
-            || this->shockstate == SS_COOL_DOWN 
-            || this->shockstate == SS_STOP))
+        if (state == 'NGM5' && (this->shockstate == SS_RELEASE ||
+                                this->shockstate == SS_COOL_DOWN || this->shockstate == SS_STOP))
         {
             set_life(this->life - 1);
         }
         break;
-    
+
     case DMGTYP_CRUISEBUBBLE:
-        if (!(state == 'NGM6') && !(state == 'NGM7') )
+        if (!(state == 'NGM6') && !(state == 'NGM7'))
         {
             set_life(this->life - 1);
         }
@@ -1680,7 +1620,7 @@ S32 zNPCKingJelly::max_strikes() const
 void zNPCKingJelly::update_camera(F32 dt)
 {
     zCameraDisableTracking(CO_BOSS);
-    if(!(zCameraIsTrackingDisabled() & ~0x8))
+    if (!(zCameraIsTrackingDisabled() & ~0x8))
     {
         boss_cam.update(dt);
     }
@@ -1689,7 +1629,7 @@ void zNPCKingJelly::update_camera(F32 dt)
 void zNPCKingJelly::set_life(S32 life)
 {
     S32 oldlife = this->life;
-    
+
     this->life = range_limit<S32>(life, 0, tweak.max_life);
     S32 state = this->psy_instinct->GIDOfActive();
     if (!(state == 'NGM6') && !(state == 'NGM7') && !(this->life >= oldlife))
@@ -1706,12 +1646,11 @@ void zNPCKingJelly::set_life(S32 life)
         {
             zEntEvent(this, this, eEventDeath);
         }
-    } 
+    }
     else
     {
         update_round();
     }
-
 }
 
 void zNPCKingJelly::init_child(zNPCKingJelly::child_data& child, zNPCCommon& npc, int wave)

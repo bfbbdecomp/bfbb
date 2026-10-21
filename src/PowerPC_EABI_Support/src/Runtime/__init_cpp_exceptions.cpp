@@ -1,7 +1,7 @@
 #include "types.h"
-#include "PowerPC_EABI_Support/Runtime/NMWException.h"
-#include "PowerPC_EABI_Support/Runtime/__ppc_eabi_linker.h"
-#include "PowerPC_EABI_Support/Runtime/__init_cpp_exceptions.h"
+#include "Runtime/NMWException.h"
+#include "Runtime/__ppc_eabi_linker.h"
+#include "Runtime/__init_cpp_exceptions.h"
 
 static int fragmentID = -2;
 

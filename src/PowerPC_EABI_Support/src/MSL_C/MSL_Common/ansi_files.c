@@ -1,12 +1,11 @@
 #include "types.h"
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/ansi_files.h"
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/critical_regions.h"
+#include "stdio.h"
+#include "other.h"
 
 static char stdin_buff[0x100];
 static char stdout_buff[0x100];
 static char stderr_buff[0x100];
 
-extern void fclose(FILE*);
 extern int __read_console(u32, char*, u32*, void*);
 extern int __write_console(u32, char*, u32*, void*);
 extern int __close_console(u32);

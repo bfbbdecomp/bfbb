@@ -1,15 +1,16 @@
 #ifndef ZNPCTYPEPRAWN_H
 #define ZNPCTYPEPRAWN_H
 
-#include "zNPCTypeSubBoss.h"
+#include "zCamera.h"
+#include "zDiscoFloor.h"
 #include "zNPCGoalCommon.h"
 #include "zNPCGoals.h"
-#include "zDiscoFloor.h"
 #include "zNPCSpawner.h"
+#include "zNPCTypeSubBoss.h"
+
 #include "containers.h"
 #include "xBehaviour.h"
 #include "xSnd.h"
-#include "zCamera.h"
 
 struct sound_data_type
 {

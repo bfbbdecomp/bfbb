@@ -1,6 +1,8 @@
 #include "zNPCTypeBossPlankton.h"
+
 #include "xDebug.h"
 
+#include <string.h>
 #include <types.h>
 
 #define f1585 1.0f

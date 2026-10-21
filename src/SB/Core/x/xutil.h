@@ -2,6 +2,7 @@
 #define XUTIL_H
 
 #include "xMath.h"
+
 #include <types.h>
 
 S32 xUtilStartup();

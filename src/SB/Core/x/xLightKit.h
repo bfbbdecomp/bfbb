@@ -1,9 +1,10 @@
 #ifndef XLIGHTKIT_H
 #define XLIGHTKIT_H
 
-#include <types.h>
-#include <rwcore.h>
 #include <rpworld.h>
+#include <rwcore.h>
+
+#include <types.h>
 
 struct xLightKitLight
 {

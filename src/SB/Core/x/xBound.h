@@ -1,8 +1,6 @@
 #ifndef XBOUND_H
 #define XBOUND_H
 
-#include "xQuickCull.h"
-#include "xMath3.h"
 #include "xCollide.h"
 
 // Size: 0x4C

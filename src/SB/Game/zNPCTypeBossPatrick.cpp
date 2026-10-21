@@ -1,29 +1,30 @@
-#include <types.h>
-#include "string.h"
+#include "zNPCTypeBossPatrick.h"
 
-#include "iModel.h"
+#include "zCamera.h"
+#include "zEntDestructObj.h"
+#include "zEntPlayer.h"
+#include "zEntSimpleObj.h"
+#include "zGlobals.h"
+#include "zGrid.h"
+#include "zLightning.h"
+#include "zNPCGoals.h"
+#include "zNPCTypeRobot.h"
+#include "zParPTank.h"
+#include "zRenderState.h"
 
 #include "xCollide.h"
 #include "xDebug.h"
 #include "xMath.h"
 #include "xMath3.h"
-#include "xstransvc.h"
+#include "xMathInlines.h"
 #include "xSnd.h"
 #include "xVec3.h"
+#include "xstransvc.h"
 
-#include "zCamera.h"
-#include "zEntSimpleObj.h"
-#include "zEntDestructObj.h"
-#include "zGlobals.h"
-#include "zGrid.h"
-#include "zNPCTypeBossPatrick.h"
-#include "zRenderState.h"
-#include "zNPCGoals.h"
-#include "zLightning.h"
-#include "zNPCTypeRobot.h"
-#include "zParPTank.h"
-#include "zEntPlayer.h"
-#include <xMathInlines.h>
+#include "iModel.h"
+
+#include <string.h>
+#include <types.h>
 
 #define ANIM_IDLE01 1
 #define ANIM_IDLE02 2
@@ -66,9 +67,10 @@ static F32 varT;
 static S32 sBone[10] = { 4, 0x13, 0x17, 0x2a, 0x20, 0x22, 0x27, 0x28, 0x2d, 0x2e };
 static S32 sBoundBone[4] = { 6, 7, 8, 9 };
 static F32 sBoundRadius[4] = { 1.0f, 0.9f, 1.0f, 0.5f };
-static xVec3 sBoneOffset[4] = {
-    { -0.2f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.5f }, { 0.2f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }
-};
+static xVec3 sBoneOffset[4] = { { -0.2f, 0.0f, 0.0f },
+                                { 0.0f, 0.0f, 0.5f },
+                                { 0.2f, 0.0f, 0.0f },
+                                { 0.0f, 0.0f, 0.0f } };
 
 static newsfishSound sNFComment[37] = {
     { "FAB1036" }, // 0 Look at that! The robot's made himself dizzy!
@@ -1230,7 +1232,7 @@ void zNPCBPatrick::Process(xScene* xscn, F32 dt)
                     xVec3AddScaled(&breathPos, &parDir, currSize);
 
                     currSize = 0.25f * ((currSize / maxDist) * (this->parList[i + 1]->m_size -
-                                                            this->parList[i]->m_size) +
+                                                                this->parList[i]->m_size) +
                                         this->parList[i]->m_size);
                 }
 
@@ -1264,8 +1266,7 @@ void zNPCBPatrick::Process(xScene* xscn, F32 dt)
 
                 xVec3Sub(&toBreath, &globals.player.ent.bound.sph.center, &breathPos);
 
-                if (xVec3Length2(&toBreath) <
-                    currSize * currSize + globals.player.ent.bound.sph.r)
+                if (xVec3Length2(&toBreath) < currSize * currSize + globals.player.ent.bound.sph.r)
                 {
                     this->frozenTimer = 4.0f;
 
@@ -1344,8 +1345,8 @@ void zNPCBPatrick::Process(xScene* xscn, F32 dt)
                     }
                     else
                     {
-                        this->newsfish->SpeakStart(
-                            sNFComment[NF_SB_FRIGID_RECEPTION].soundID, 0, -1);
+                        this->newsfish->SpeakStart(sNFComment[NF_SB_FRIGID_RECEPTION].soundID, 0,
+                                                   -1);
                         this->nfFlags |= 2;
                     }
                 }
@@ -1601,8 +1602,7 @@ damage: // TODO: fix goto
         }
         else if (touchDamage && !(picker & 0x3000))
         {
-            this->newsfish->SpeakStart(sNFComment[NF_CLOSE_ENCOUNTERS_PAINFUL_KIND].soundID, 0,
-                                       -1);
+            this->newsfish->SpeakStart(sNFComment[NF_CLOSE_ENCOUNTERS_PAINFUL_KIND].soundID, 0, -1);
         }
         else if ((picker & 0x1f) <= 0xa)
         {
@@ -2968,8 +2968,7 @@ S32 zNPCGoalBossPatSpit::Process(en_trantype* trantype, F32 dt, void* updCtxt, x
 
         glob->path.initVel.x = t * (futurePos.x - glob->path.initPos.x);
         glob->path.initVel.z = t * (futurePos.z - glob->path.initPos.z);
-        glob->path.initVel.y =
-            0.5f * glob->path.gravity + t * (futurePos.y - glob->path.initPos.y);
+        glob->path.initVel.y = 0.5f * glob->path.gravity + t * (futurePos.y - glob->path.initPos.y);
 
         leadTime = xVec3Dot(&lowerLipRight, &glob->path.initVel);
         xVec3AddScaled(&glob->path.initVel, &lowerLipRight, -leadTime);
@@ -3394,11 +3393,11 @@ S32 zNPCGoalBossPatSpin::Enter(F32 dt, void* updCtxt)
     xVec3SMul(&this->vel, (xVec3*)&pat->model->Mat->right, 12.0f);
     this->vel.y = 0.0f;
 
-    if (this->vel.x<4.0f&& this->vel.x> -4.0f)
+    if (this->vel.x < 4.0f && this->vel.x > -4.0f)
     {
         this->vel.x = 4.0f;
     }
-    if (this->vel.z<4.0f&& this->vel.z> -4.0f)
+    if (this->vel.z < 4.0f && this->vel.z > -4.0f)
     {
         this->vel.z = 4.0f;
     }
@@ -3676,8 +3675,7 @@ S32 zNPCGoalBossPatSpin::Process(en_trantype* trantype, F32 dt, void* ctxt, xSce
             }
             else if (pat->round == 3 && this->timeInGoal > 10.0f)
             {
-                F32 facing =
-                    xVec3Dot((xVec3*)&pat->frame->mat.pos, (xVec3*)&pat->model->Mat->at);
+                F32 facing = xVec3Dot((xVec3*)&pat->frame->mat.pos, (xVec3*)&pat->model->Mat->at);
 
                 if (pat->frame->mat.pos.x > 0.8f * pat->arenaExtent.x ||
                     pat->frame->mat.pos.x < 0.8f * -pat->arenaExtent.x ||
@@ -4134,9 +4132,8 @@ S32 zNPCGoalBossPatFudge::Process(en_trantype* trantype, F32 dt, void* updCtxt, 
         {
             this->stage = 5;
 
-            this->vomitSndID =
-                xSndPlay3D(xStrHash("b201_rp_fudge_vomit_loop"), 0.5775f, 0.0f, 0, 0, pat, 20.0f,
-                           40.0f, SND_CAT_GAME, 0.0f);
+            this->vomitSndID = xSndPlay3D(xStrHash("b201_rp_fudge_vomit_loop"), 0.5775f, 0.0f, 0, 0,
+                                          pat, 20.0f, 40.0f, SND_CAT_GAME, 0.0f);
 
             this->DoAutoAnim(NPC_GSPOT_START, 0);
             this->timeInGoal = 0.0f;
@@ -4186,8 +4183,7 @@ S32 zNPCGoalBossPatFudge::Process(en_trantype* trantype, F32 dt, void* updCtxt, 
 
             glob->path.initPos.y += xurand() - 0.5f;
 
-            xVec3AddScaled(&glob->path.initPos, (xVec3*)&pat->model->Mat->right,
-                           xurand() - 0.5f);
+            xVec3AddScaled(&glob->path.initPos, (xVec3*)&pat->model->Mat->right, xurand() - 0.5f);
 
             xVec3Copy(&glob->lastPos, &glob->path.initPos);
             xVec3Copy(&glob->path.initVel, (xVec3*)&pat->model->Mat->at);

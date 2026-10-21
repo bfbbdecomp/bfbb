@@ -1,56 +1,57 @@
-#include <types.h>
-#include <string.h>
-#include <xDebug.h>
+#include "zNPCTypeBossSB1.h"
+
+#include "zGlobals.h"
+#include "zGrid.h"
+#include "zNPCGoals.h"
+#include "zThrown.h"
+
+#include "xDebug.h"
+#include "xDraw.h"
+#include "xMathInlines.h"
 
 #include "iMath.h"
 #include "iModel.h"
 
-#include "xDraw.h"
-#include "xMathInlines.h"
-
-#include "zGrid.h"
-#include "zNPCGoals.h"
-#include "zNPCTypeBossSB1.h"
-#include "zThrown.h"
-#include "zGlobals.h"
+#include <string.h>
+#include <types.h>
 
 static xVec3 BossArmTags[8] = { //
-    { 11.507f, 4.523f, 2.53f },
-    {
-        11.635f,
-        4.113f,
-        2.526f,
-    },
-    {
-        11.615f,
-        4.49f,
-        2.034f,
-    },
-    {
-        11.654f,
-        4.172f,
-        2.025f,
-    },
-    {
-        -11.507f,
-        4.523f,
-        2.53f,
-    },
-    {
-        -11.635f,
-        4.113f,
-        2.526f,
-    },
-    {
-        -11.615f,
-        4.49f,
-        2.034f,
-    },
-    {
-        -11.654f,
-        4.172f,
-        2.025f,
-    }
+                                { 11.507f, 4.523f, 2.53f },
+                                {
+                                    11.635f,
+                                    4.113f,
+                                    2.526f,
+                                },
+                                {
+                                    11.615f,
+                                    4.49f,
+                                    2.034f,
+                                },
+                                {
+                                    11.654f,
+                                    4.172f,
+                                    2.025f,
+                                },
+                                {
+                                    -11.507f,
+                                    4.523f,
+                                    2.53f,
+                                },
+                                {
+                                    -11.635f,
+                                    4.113f,
+                                    2.526f,
+                                },
+                                {
+                                    -11.615f,
+                                    4.49f,
+                                    2.034f,
+                                },
+                                {
+                                    -11.654f,
+                                    4.172f,
+                                    2.025f,
+                                }
 };
 
 static xVec3 BossFeetTags[4] = {

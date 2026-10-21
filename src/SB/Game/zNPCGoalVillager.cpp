@@ -1,18 +1,21 @@
-#include <types.h>
+#include "zNPCGoalVillager.h"
+
+#include "zEntPickup.h"
+#include "zGameExtras.h"
+#include "zGlobals.h"
+#include "zGoo.h"
+#include "zNPCGoals.h"
+#include "zNPCTypeVillager.h"
+#include "zSurface.h"
 
 #include "xJaw.h"
 #include "xMath.h"
 #include "xMathInlines.h"
 #include "xutil.h"
-#include "zEntPickup.h"
-#include "zGameExtras.h"
-#include "zGlobals.h"
-#include "zNPCGoalVillager.h"
-#include "zNPCTypeVillager.h"
-#include "zNPCGoals.h"
-#include "zGoo.h"
-#include "zSurface.h"
+
 #include "iMath.h"
+
+#include <types.h>
 
 xFactoryInst* GOALCreate_Villager(S32 who, RyzMemGrow* grow, void*)
 {

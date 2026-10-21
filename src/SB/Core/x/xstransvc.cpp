@@ -1,12 +1,14 @@
 #include "xstransvc.h"
 
-#include <types.h>
-#include <string.h>
-#include <stdio.h>
 #include "xString.h"
-#include "xutil.h"
 #include "xTRC.h"
+#include "xutil.h"
+
 #include "iFile.h"
+
+#include <stdio.h>
+#include <string.h>
+#include <types.h>
 
 static st_STRAN_DATA g_xstdata = {};
 static S32 g_straninit;

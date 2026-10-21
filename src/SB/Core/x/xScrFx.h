@@ -1,9 +1,10 @@
 #ifndef XSCRFX_H
 #define XSCRFX_H
 
+#include "xMath3.h"
+
 #include "iColor.h"
 #include "iScrFX.h"
-#include "xMath3.h"
 
 #include <rwcore.h>
 

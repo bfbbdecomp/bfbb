@@ -1,9 +1,9 @@
 #ifndef ISAVEGAME_H
 #define ISAVEGAME_H
 
-#include <types.h>
-
 #include <dolphin.h>
+
+#include <types.h>
 
 enum en_ISG_IOMODE
 {

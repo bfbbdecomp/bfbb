@@ -1,14 +1,14 @@
 #ifndef ZNPCTYPEBOSSPATRICK_H
 #define ZNPCTYPEBOSSPATRICK_H
 
-#include "zNPCTypeBoss.h"
-#include "zNPCGoalCommon.h"
-#include "zPlatform.h"
 #include "zCutsceneMgr.h"
 #include "zEntPickup.h"
+#include "zNPCGoalCommon.h"
+#include "zNPCTypeBoss.h"
+#include "zNPCTypeVillager.h"
+#include "zPlatform.h"
 
 #include "xCamera.h"
-#include "zNPCTypeVillager.h"
 
 class newsfishSound
 {

@@ -1,10 +1,11 @@
 #ifndef ZLIGHTNING_H
 #define ZLIGHTNING_H
 
-#include "xMath3.h"
-#include "iColor.h"
-
 #include "zFX.h"
+
+#include "xMath3.h"
+
+#include "iColor.h"
 
 struct _tagLightningAdd
 {

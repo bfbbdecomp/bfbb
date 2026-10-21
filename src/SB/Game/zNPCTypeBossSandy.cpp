@@ -1,23 +1,25 @@
-#include "xVec3Inlines.h"
-#include <types.h>
+#include "zNPCTypeBossSandy.h"
 
-#include "xAnim.h"
-#include "xVec3.h"
-#include "xEvent.h"
-#include "xCamera.h"
-#include "xMath3.h"
-#include "xDebug.h"
-#include "xJaw.h"
-
+#include "zCamera.h"
 #include "zEnt.h"
 #include "zFX.h"
 #include "zGlobals.h"
-#include "zNPCSndTable.h"
-#include "zNPCSndLists.h"
-#include "zNPCTypeBossSandy.h"
-#include "xMarkerAsset.h"
-#include "zCamera.h"
 #include "zGrid.h"
+#include "zNPCSndLists.h"
+#include "zNPCSndTable.h"
+
+#include "xAnim.h"
+#include "xCamera.h"
+#include "xDebug.h"
+#include "xEvent.h"
+#include "xJaw.h"
+#include "xMarkerAsset.h"
+#include "xMath3.h"
+#include "xVec3.h"
+#include "xVec3Inlines.h"
+
+#include <string.h>
+#include <types.h>
 
 extern const char bossSandyStrings[];
 
@@ -356,20 +358,25 @@ void zNPCBSandy::Init(xEntAsset* asset)
     this->wireLight[1] = 0;
 
     xDebugAddTweak("NPC|zNPCBSandy|Newsfish", "Speak", &newsfish_cb, 0, 0);
-    xDebugAddSelectTweak("NPC|zNPCBSandy|NewsfishComment", &sCurrNFSound, 0, &sNFSoundValue[0], 0x1e, 0, 0, 0);
+    xDebugAddSelectTweak("NPC|zNPCBSandy|NewsfishComment", &sCurrNFSound, 0, &sNFSoundValue[0],
+                         0x1e, 0, 0, 0);
     xDebugAddTweak("NPC|zNPCBSandy|Shockwave|Do It", "Go", &shockwave_cb, 0, 0);
 
     this->shockwaveGrowthRate = 20.0f;
     this->shockwaveMaxRadius = 10.0f;
 
-    xDebugAddTweak("NPC|zNPCBSandy|Shockwave|GrowthRate", &this->shockwaveGrowthRate, 0.0f, 1000000000.0f, 0, 0, 0);
-    xDebugAddTweak("NPC|zNPCBSandy|Shockwave|MaxRadius", &this->shockwaveMaxRadius, 0.0f, 1000000000.0f, 0, 0, 0);
+    xDebugAddTweak("NPC|zNPCBSandy|Shockwave|GrowthRate", &this->shockwaveGrowthRate, 0.0f,
+                   1000000000.0f, 0, 0, 0);
+    xDebugAddTweak("NPC|zNPCBSandy|Shockwave|MaxRadius", &this->shockwaveMaxRadius, 0.0f,
+                   1000000000.0f, 0, 0, 0);
 
     this->edropShockwaveTime = 2.25f;
     this->edropTurnMinTime = 1.0f;
 
-    xDebugAddTweak("NPC|zNPCBSandy|ElbowDrop|ShockwaveTime", &this->edropShockwaveTime, 0.0f, 1000000000.0f, 0, 0, 0);
-    xDebugAddTweak("NPC|zNPCBSandy|ElbowDrop|TurnTime", &this->edropTurnMinTime, 0.0f, 1000000000.0f, 0, 0, 0);
+    xDebugAddTweak("NPC|zNPCBSandy|ElbowDrop|ShockwaveTime", &this->edropShockwaveTime, 0.0f,
+                   1000000000.0f, 0, 0, 0);
+    xDebugAddTweak("NPC|zNPCBSandy|ElbowDrop|TurnTime", &this->edropTurnMinTime, 0.0f,
+                   1000000000.0f, 0, 0, 0);
 }
 
 void zNPCBSandy::Setup()
@@ -507,20 +514,29 @@ void zNPCBSandy::Reset()
     this->headBoulder->localCenter.y = 0.036f;
     this->headBoulder->localCenter.z = 0.11f;
 
-    xDebugAddTweak("NPC|zNPCBSandy|headBoulder|radius", &this->headBoulder->bound.sph.r, 0.1f, 10.0f, 0, 0, 0);
-    xDebugAddTweak("NPC|zNPCBSandy|headBoulder|center|x", &this->headBoulder->bound.sph.center.x, -10.0f, 10.0f, 0, 0, 0);
-    xDebugAddTweak("NPC|zNPCBSandy|headBoulder|center|y", &this->headBoulder->bound.sph.center.y, -10.0f, 10.0f, 0, 0, 0);
-    xDebugAddTweak("NPC|zNPCBSandy|headBoulder|center|z", &this->headBoulder->bound.sph.center.z, -10.0f, 10.0f, 0, 0, 0);
-    xDebugAddTweak("NPC|zNPCBSandy|headBoulder|localCener|x", &this->headBoulder->localCenter.x, -10.0f, 10.0f, 0, 0, 0);
-    xDebugAddTweak("NPC|zNPCBSandy|headBoulder|localCener|y", &this->headBoulder->localCenter.y, -10.0f, 10.0f, 0, 0, 0);
-    xDebugAddTweak("NPC|zNPCBSandy|headBoulder|localCener|z", &this->headBoulder->localCenter.z, -10.0f, 10.0f, 0, 0, 0);
+    xDebugAddTweak("NPC|zNPCBSandy|headBoulder|radius", &this->headBoulder->bound.sph.r, 0.1f,
+                   10.0f, 0, 0, 0);
+    xDebugAddTweak("NPC|zNPCBSandy|headBoulder|center|x", &this->headBoulder->bound.sph.center.x,
+                   -10.0f, 10.0f, 0, 0, 0);
+    xDebugAddTweak("NPC|zNPCBSandy|headBoulder|center|y", &this->headBoulder->bound.sph.center.y,
+                   -10.0f, 10.0f, 0, 0, 0);
+    xDebugAddTweak("NPC|zNPCBSandy|headBoulder|center|z", &this->headBoulder->bound.sph.center.z,
+                   -10.0f, 10.0f, 0, 0, 0);
+    xDebugAddTweak("NPC|zNPCBSandy|headBoulder|localCener|x", &this->headBoulder->localCenter.x,
+                   -10.0f, 10.0f, 0, 0, 0);
+    xDebugAddTweak("NPC|zNPCBSandy|headBoulder|localCener|y", &this->headBoulder->localCenter.y,
+                   -10.0f, 10.0f, 0, 0, 0);
+    xDebugAddTweak("NPC|zNPCBSandy|headBoulder|localCener|z", &this->headBoulder->localCenter.z,
+                   -10.0f, 10.0f, 0, 0, 0);
 
     this->hangingScoreboard = (xEnt*)zSceneFindObject(xStrHash("SO_SCOREBOARD"));
     this->bustedScoreboard = (xEnt*)zSceneFindObject(xStrHash("SCOREBOARD_BUSTED"));
     this->crashedScoreboard = (xEnt*)zSceneFindObject(xStrHash("SCOREBOARD_HAZARD"));
     this->scoreboardShrap = (zShrapnelAsset*)xSTFindAsset(xStrHash("pdome_scoreboard_shrapnel"), 0);
-    this->sboardSecondShrap = (zShrapnelAsset*)xSTFindAsset(xStrHash("pdome_scoreboard_secondary_shrapnel"), 0);
-    this->sboardThirdShrap = (zShrapnelAsset*)xSTFindAsset(xStrHash("pdome_scoreboard_tertiary_shrapnel"), 0);
+    this->sboardSecondShrap =
+        (zShrapnelAsset*)xSTFindAsset(xStrHash("pdome_scoreboard_secondary_shrapnel"), 0);
+    this->sboardThirdShrap =
+        (zShrapnelAsset*)xSTFindAsset(xStrHash("pdome_scoreboard_tertiary_shrapnel"), 0);
     this->lightRigShrap = (zShrapnelAsset*)xSTFindAsset(xStrHash("pdome_scaffolding_shrapnel"), 0);
     this->lightRig[0] = (xEnt*)zSceneFindObject(xStrHash("SO_LIGHTRIG01"));
     this->lightRig[1] = (xEnt*)zSceneFindObject(xStrHash("SO_LIGHTRIG010"));
@@ -567,7 +583,7 @@ void zNPCBSandy::Reset()
 
     strcmp(this->ropeObject[0][0]->model->Anim->Table->StateList->Name, "Idle01");
     strcpy(objName, "ROPE_0_LO");
-    this-> ropeObjectLo[0] = (xEnt*)zSceneFindObject(xStrHash(objName));
+    this->ropeObjectLo[0] = (xEnt*)zSceneFindObject(xStrHash(objName));
     this->ropeSbDamaged = (xEnt*)zSceneFindObject(xStrHash("ROPE_4_LO_DAMAGED"));
     strcpy(objName, "TURNBUCKLE_OBJ_00");
     this->turnbuckle[0] = (xEnt*)zSceneFindObject(xStrHash(objName));
@@ -765,15 +781,24 @@ void zNPCBSandy::InitFX()
     this->maxLightningWait[0] = 0.0f;
     this->maxLightningWait[1] = 0.0f;
 
-    xMat4x3Copy((xMat4x3*)&this->sparkTransform[0][0], (xMat4x3*)&this->hangingScoreboard->model->Mat);
-    xMat4x3Copy((xMat4x3*)&this->sparkTransform[0][1], (xMat4x3*)&this->hangingScoreboard->model->Mat);
-    xMat4x3Copy((xMat4x3*)&this->sparkTransform[1][0], (xMat4x3*)&this->crashedScoreboard->model->Mat);
-    xVec3SMul((xVec3*)&this->sparkTransform[1][1], (xVec3*)&this->crashedScoreboard->model->Mat, 0.8f);
-    xVec3SMul((xVec3*)&this->sparkTransform[1][1].up, (xVec3*)&this->crashedScoreboard->model->Mat->at, -0.8f);
-    xVec3SMul((xVec3*)&this->sparkTransform[1][1].at, (xVec3*)&this->crashedScoreboard->model->Mat->up, 0.8f);
-    xVec3Copy((xVec3*)&this->sparkTransform[1][1].pos, (xVec3*)&this->crashedScoreboard->model->Mat->pos);
-    xVec3AddScaled((xVec3*)&this->sparkTransform[1][1].pos, (xVec3*)&this->crashedScoreboard->model->Mat->up, 4.5f);
-    xVec3AddScaled((xVec3*)&this->sparkTransform[1][1].pos, (xVec3*)&this->crashedScoreboard->model->Mat->at, 5.0f);
+    xMat4x3Copy((xMat4x3*)&this->sparkTransform[0][0],
+                (xMat4x3*)&this->hangingScoreboard->model->Mat);
+    xMat4x3Copy((xMat4x3*)&this->sparkTransform[0][1],
+                (xMat4x3*)&this->hangingScoreboard->model->Mat);
+    xMat4x3Copy((xMat4x3*)&this->sparkTransform[1][0],
+                (xMat4x3*)&this->crashedScoreboard->model->Mat);
+    xVec3SMul((xVec3*)&this->sparkTransform[1][1], (xVec3*)&this->crashedScoreboard->model->Mat,
+              0.8f);
+    xVec3SMul((xVec3*)&this->sparkTransform[1][1].up,
+              (xVec3*)&this->crashedScoreboard->model->Mat->at, -0.8f);
+    xVec3SMul((xVec3*)&this->sparkTransform[1][1].at,
+              (xVec3*)&this->crashedScoreboard->model->Mat->up, 0.8f);
+    xVec3Copy((xVec3*)&this->sparkTransform[1][1].pos,
+              (xVec3*)&this->crashedScoreboard->model->Mat->pos);
+    xVec3AddScaled((xVec3*)&this->sparkTransform[1][1].pos,
+                   (xVec3*)&this->crashedScoreboard->model->Mat->up, 4.5f);
+    xVec3AddScaled((xVec3*)&this->sparkTransform[1][1].pos,
+                   (xVec3*)&this->crashedScoreboard->model->Mat->at, 5.0f);
     xVec3Init((xVec3*)&this->endPoints[0][0], -2.0f, 2.0f, 0.0f);
     xVec3Init((xVec3*)&this->endPoints[0][1], 2.0f, 2.0f, 0.0f);
 

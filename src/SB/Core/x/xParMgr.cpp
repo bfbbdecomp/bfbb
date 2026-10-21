@@ -1,7 +1,8 @@
-#include "iParMgr.h"
+#include "xParMgr.h"
 
 #include "xPar.h"
-#include "xParMgr.h"
+
+#include "iParMgr.h"
 
 #include <types.h>
 
@@ -39,7 +40,8 @@ void xParMgrUpdate(F32 elapsedTime)
     }
 
     U32 i;
-    for (i = sFrameCount; i >= 1; i--);
+    for (i = sFrameCount; i >= 1; i--)
+        ;
     sFrameCount = i;
 }
 

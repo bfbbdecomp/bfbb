@@ -1,15 +1,15 @@
 #include "xPad.h"
 
-#include "xMathInlines.h"
-
-#include "zMenu.h"
-#include "zScene.h"
 #include "zGame.h"
 #include "zGameExtras.h"
 #include "zGlobals.h"
+#include "zMenu.h"
+#include "zScene.h"
 
-#include <types.h>
+#include "xMathInlines.h"
+
 #include <string.h>
+#include <types.h>
 
 _tagxPad mPad[4];
 

@@ -4,11 +4,12 @@
 #include "xCamera.h"
 #include "xPad.h"
 #include "xUpdateCull.h"
+
 #include "iCamera.h"
 #include "iTime.h"
 
-#include <rwcore.h>
 #include <rpworld.h>
+#include <rwcore.h>
 
 struct xGlobals
 {

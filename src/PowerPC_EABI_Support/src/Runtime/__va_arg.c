@@ -1,5 +1,5 @@
 #include "types.h"
-#include "PowerPC_EABI_Support/Runtime/__va_arg.h"
+#include "Runtime/__va_arg.h"
 
 void* __va_arg(struct va_list* v_list, s32 type)
 {

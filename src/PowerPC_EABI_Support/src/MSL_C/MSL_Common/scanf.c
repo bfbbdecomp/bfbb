@@ -2,7 +2,6 @@
 #include "stdarg.h"
 #include "ctype.h"
 #include "stdio.h"
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/stdio_api.h"
 
 typedef long long intmax_t;
 

@@ -3,8 +3,8 @@
 
 #include "xEnt.h"
 
-#include <rwcore.h>
 #include <rpworld.h>
+#include <rwcore.h>
 
 struct xShadowPoly
 {

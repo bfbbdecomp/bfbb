@@ -1,7 +1,6 @@
 #ifndef IPARMGR_H
 #define IPARMGR_H
 
-#include "xMath3.h"
 #include "xParGroup.h"
 
 #include <rwcore.h>

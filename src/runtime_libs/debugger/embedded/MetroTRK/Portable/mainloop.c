@@ -1,4 +1,4 @@
-#include "PowerPC_EABI_Support/MetroTRK/trk.h"
+#include "MetroTRK/trk.h"
 
 extern TRKEventQueue gTRKEventQueue;
 extern TRKState gTRKState;

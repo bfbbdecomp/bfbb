@@ -1,6 +1,9 @@
 #include "xBehaveMgr.h"
+
 #include "xBehaveGoalSimple.h"
 #include "xutil.h"
+
+#include <string.h>
 
 static S32 g_modinit;
 static xBehaveMgr* g_behavmgr;

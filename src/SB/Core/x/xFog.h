@@ -2,7 +2,6 @@
 #define XFOG_H
 
 #include "xEnt.h"
-#include "xBase.h"
 
 #include <types.h>
 

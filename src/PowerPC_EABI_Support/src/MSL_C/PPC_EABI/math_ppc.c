@@ -1,5 +1,5 @@
 #define MATH_INLINE
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/math_api.h"
+#include "math.h"
 #include "fdlibm.h"
 
 // Generated via math_api.h

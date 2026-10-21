@@ -1,5 +1,5 @@
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/strtoul.h"
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/stdio_api.h"
+#include "stdlib.h"
+#include "stdio.h"
 #include "ctype.h"
 #include "errno.h"
 #include "limits.h"

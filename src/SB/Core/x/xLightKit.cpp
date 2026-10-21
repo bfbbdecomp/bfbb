@@ -1,8 +1,9 @@
 #include "xLightKit.h"
+
 #include "xMath.h"
 
-#include <types.h>
 #include <string.h>
+#include <types.h>
 
 S32 iModelHack_DisablePrelight;
 xLightKit* gLastLightKit;

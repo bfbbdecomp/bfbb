@@ -4,7 +4,6 @@
 // TODO: Get rid of this file, it should use the one from MSL_C instead
 
 #include <math.h>
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/math_api.h"
 #include "types.h"
 
 #ifdef __cplusplus

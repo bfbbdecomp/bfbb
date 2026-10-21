@@ -42,6 +42,6 @@ void zEGenerator_TurnOn(zEGenerator* egen);
 void zEGenerator_TurnOff(zEGenerator* egen);
 void zEGenerator_ToggleOn(zEGenerator* egen);
 S32 zEGeneratorEventCB(xBase* to, xBase* from, U32 toEvent, const F32* toParam,
-                         xBase* toParamWidget);
+                       xBase* toParamWidget);
 
 #endif

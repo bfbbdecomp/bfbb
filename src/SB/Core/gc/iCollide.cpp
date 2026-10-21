@@ -1,11 +1,11 @@
 #include "iCollide.h"
 
-#include <types.h>
-
 #include "xMathInlines.h"
 
 #include <rpcollis.h>
+
 #include <string.h>
+#include <types.h>
 
 static S32 sCollidingJSP = 0;
 static F32 cbath = 0;

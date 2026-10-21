@@ -4,7 +4,6 @@
 #include <algorithm>
 #include <stdio.h>
 #include <stdlib.h>
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/abort_exit.h"
 
 namespace std
 {

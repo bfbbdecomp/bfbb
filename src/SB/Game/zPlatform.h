@@ -2,8 +2,9 @@
 #define ZPLATFORM_H
 
 #include "zEnt.h"
-#include "xEntMotion.h"
+
 #include "xEntDrive.h"
+#include "xEntMotion.h"
 
 enum en_ZPLATFORMTYPE
 {

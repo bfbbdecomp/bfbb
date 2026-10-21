@@ -1,11 +1,12 @@
 #ifndef ZENTPLAYEROOBSTATE_H
 #define ZENTPLAYEROOBSTATE_H
 
-#include "xserializer.h"
-#include "zTalkBox.h"
-#include "zTaskBox.h"
 #include "zCamera.h"
 #include "zCameraTweak.h"
+#include "zTalkBox.h"
+#include "zTaskBox.h"
+
+#include "xserializer.h"
 
 extern bool oob_player_teleported;
 
@@ -90,7 +91,6 @@ namespace oob_state
 
                 virtual void on_signal(U32)
                 {
-
                 }
 
                 virtual void on_stop()
@@ -112,7 +112,7 @@ namespace oob_state
             U8 finished_tutorial;
 
             substate_enum (*updatess[10])(grab_state_type&, xScene&, float&);
-            
+
             grab_state_type();
             virtual void start();
             virtual void stop();
@@ -134,7 +134,8 @@ namespace oob_state
             substate_enum update_starting(xScene& scene, F32& dt);
             static substate_enum supdate_moving_out(grab_state_type& gst, xScene& scene, F32& dt);
             substate_enum update_moving_out(xScene& scene, F32& dt);
-            static substate_enum supdate_start_fade_out(grab_state_type& gst, xScene& scene, F32& dt);
+            static substate_enum supdate_start_fade_out(grab_state_type& gst, xScene& scene,
+                                                        F32& dt);
             substate_enum update_start_fade_out(xScene& scene, F32& dt);
             static substate_enum supdate_fade_out(grab_state_type& gst, xScene& scene, F32& dt);
             substate_enum update_fade_out(xScene& scene, F32& dt);

@@ -1,14 +1,16 @@
-#include <types.h>
-#include "iModel.h"
+#include "zShrapnel.h"
+
+#include "zGlobals.h"
+#include "zLightning.h"
 
 #include "xColor.h"
 #include "xMathInlines.h"
 #include "xSnd.h"
 #include "xstransvc.h"
 
-#include "zGlobals.h"
-#include "zShrapnel.h"
-#include "zLightning.h"
+#include "iModel.h"
+
+#include <types.h>
 
 static xMat4x3 tmpMat;
 static zFrag sFragPool[150];

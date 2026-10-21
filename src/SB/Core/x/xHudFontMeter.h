@@ -1,8 +1,8 @@
 #ifndef XHUDFONTMETER_H
 #define XHUDFONTMETER_H
 
-#include "xHudMeter.h"
 #include "xFont.h"
+#include "xHudMeter.h"
 
 namespace xhud
 {

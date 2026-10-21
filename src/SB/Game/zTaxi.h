@@ -1,11 +1,13 @@
 #ifndef ZTAXI_H
 #define ZTAXI_H
 
-#include <types.h>
-#include "xBase.h"
-#include "xDynAsset.h"
 #include "zEnt.h"
 #include "zTalkBox.h"
+
+#include "xBase.h"
+#include "xDynAsset.h"
+
+#include <types.h>
 
 struct taxi_asset : xDynAsset
 {

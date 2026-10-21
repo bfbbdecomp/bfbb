@@ -2,12 +2,13 @@
 #define _WCHAR_H
 
 #include "types.h"
+#include "stdio.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/wchar_io.h"
+int fwide(FILE* stream, int mode);
 
 #ifdef __cplusplus
 };

@@ -1,21 +1,16 @@
 #include "iSnd.h"
 
-#include "dolphin/ai.h"
-#include "dolphin/os.h"
-#include "dolphin/os/OSAlloc.h"
-#include "dolphin/os/OSCache.h"
-#include "iMemMgr.h"
-#include "iTRC.h"
+#include "xMath.h"
 #include "xSnd.h"
 #include "xstransvc.h"
-#include "xMath.h"
 
-#include <dolphin/ar.h>
-#include <dolphin/ax.h>
-#include <dolphin/dvd/dvd.h>
-#include <dolphin/mix.h>
+#include "iMemMgr.h"
+#include "iTRC.h"
+
+#include <dolphin.h>
 
 #include <stdio.h>
+#include <string.h>
 #include <types.h>
 
 u32 aram_array[40];

@@ -1,7 +1,7 @@
 #ifndef XISECT_H
 #define XISECT_H
 
-#include "xMath3.h"
+#include "xVec3.h"
 
 struct xIsect
 {

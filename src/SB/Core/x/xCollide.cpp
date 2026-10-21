@@ -1,16 +1,20 @@
 #include "xCollide.h"
-#include "xCollideFast.h"
+
+#include "zGrid.h"
 #include "zSurface.h"
-#include "iCollide.h"
-#include "iMath3.h"
-#include "rpcollis.h"
-#include "rpcollbsptree.h"
-#include "rpworld.h"
+
+#include "xCollideFast.h"
 #include "xMathInlines.h"
 #include "xScene.h"
-#include "zGrid.h"
 
-#include <PowerPC_EABI_Support/MSL_C/MSL_Common/cmath>
+#include "iCollide.h"
+#include "iMath3.h"
+
+#include <rpcollbsptree.h>
+#include <rpcollis.h>
+#include <rpworld.h>
+
+#include <cmath>
 #include <types.h>
 
 static S32 sSweptSphereHitFound;

@@ -2,12 +2,13 @@
 #define ZENTPICKUP_H
 
 #include "zEnt.h"
-#include "zPickupTable.h"
 #include "zParEmitter.h"
+#include "zPickupTable.h"
 
 #include "xEntDrive.h"
 #include "xPar.h"
 #include "xShadowSimple.h"
+
 #include "iColor.h"
 
 struct zEntPickup : zEnt
@@ -61,8 +62,7 @@ void zEntPickupInit(void* ent, void* asset);
 void zEntPickupInit(zEntPickup* ent, xEntAsset* asset);
 void zEntPickup_Setup(zEntPickup* p);
 void zEntPickup_Setup();
-S32 zEntPickupEventCB(xBase*, xBase* to, U32 toEvent, const F32* toParam,
-                        xBase* toParamWidget);
+S32 zEntPickupEventCB(xBase*, xBase* to, U32 toEvent, const F32* toParam, xBase* toParamWidget);
 void zEntPickup_FlyToInterface(zEntPickup*, F32);
 void zEntPickup_CheckAllPickupsAgainstPlayer(xScene* sc, F32 dt);
 void zEntPickup_DoPickup(zEntPickup* ent);

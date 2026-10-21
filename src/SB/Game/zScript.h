@@ -1,9 +1,10 @@
 #ifndef ZSCRIPT_H
 #define ZSCRIPT_H
 
-#include <types.h>
 #include "xBase.h"
 #include "xDynAsset.h"
+
+#include <types.h>
 
 struct xScriptEventAsset
 {

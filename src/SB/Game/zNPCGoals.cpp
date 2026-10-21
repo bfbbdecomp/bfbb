@@ -1,17 +1,17 @@
 #include "zNPCGoals.h"
 
-#include "zNPCGoalStd.h"
-#include "zNPCGoalScript.h"
-#include "zNPCGoalVillager.h"
-#include "zNPCGoalRobo.h"
-#include "zNPCGoalTiki.h"
-#include "zNPCGoalDuplotron.h"
 #include "zNPCGoalAmbient.h"
-#include "zNPCGoalSubBoss.h"
-#include "zNPCTypeDutchman.h"
 #include "zNPCGoalBoss.h"
-#include "zNPCTypeBossSB2.h"
+#include "zNPCGoalDuplotron.h"
+#include "zNPCGoalRobo.h"
+#include "zNPCGoalScript.h"
+#include "zNPCGoalStd.h"
+#include "zNPCGoalSubBoss.h"
+#include "zNPCGoalTiki.h"
+#include "zNPCGoalVillager.h"
 #include "zNPCTypeBossPlankton.h"
+#include "zNPCTypeBossSB2.h"
+#include "zNPCTypeDutchman.h"
 
 void zNPCGoals_RegisterTypes(xFactory* fac)
 {

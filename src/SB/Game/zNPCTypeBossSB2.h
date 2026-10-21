@@ -1,10 +1,10 @@
 #ifndef ZNPCTYPEBOSSSB2_H
 #define ZNPCTYPEBOSSSB2_H
 
-#include "zNPCTypeBoss.h"
-#include "zNPCTypeBossPlankton.h"
 #include "zNPCGoalCommon.h"
 #include "zNPCGoals.h"
+#include "zNPCTypeBoss.h"
+#include "zNPCTypeBossPlankton.h"
 
 struct zNPCNewsFish;
 

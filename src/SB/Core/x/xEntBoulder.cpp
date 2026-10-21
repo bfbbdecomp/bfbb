@@ -1,13 +1,4 @@
-#include "xCollide.h"
 #include "xEntBoulder.h"
-#include "xFX.h"
-#include "xGroup.h"
-#include "xMarkerAsset.h"
-#include "xMathInlines.h"
-#include "xMath3.h"
-#include "xNPCBasic.h"
-#include "xShadow.h"
-#include "xVec3.h"
 
 #include "zEntButton.h"
 #include "zEntDestructObj.h"
@@ -18,6 +9,17 @@
 #include "zPlatform.h"
 #include "zSurface.h"
 
+#include "xCollide.h"
+#include "xFX.h"
+#include "xGroup.h"
+#include "xMarkerAsset.h"
+#include "xMath3.h"
+#include "xMathInlines.h"
+#include "xNPCBasic.h"
+#include "xShadow.h"
+#include "xVec3.h"
+
+#include <string.h>
 #include <types.h>
 
 static U32 sBubbleStreakID = 0xDEAD;

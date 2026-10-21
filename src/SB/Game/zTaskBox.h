@@ -1,11 +1,11 @@
 #ifndef ZTASKBOX_H
 #define ZTASKBOX_H
 
-#include "xBase.h"
-#include "xDynAsset.h"
-
 #include "zNPCTypeCommon.h"
 #include "zTalkBox.h"
+
+#include "xBase.h"
+#include "xDynAsset.h"
 
 #include <types.h>
 

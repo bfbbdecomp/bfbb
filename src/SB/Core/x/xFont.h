@@ -1,9 +1,9 @@
 #ifndef XFONT_H
 #define XFONT_H
 
-#include "xMath2.h"
-#include "iColor.h"
 #include "xString.h"
+
+#include "iColor.h"
 
 #include <rwcore.h>
 

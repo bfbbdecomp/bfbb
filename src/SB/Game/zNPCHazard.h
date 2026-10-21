@@ -3,12 +3,12 @@
 
 #include "zLightning.h"
 
-#include "xMath3.h"
 #include "xCollide.h"
+#include "xMath3.h"
 #include "xShadow.h"
 
-#include <rwcore.h>
 #include <rpworld.h>
+#include <rwcore.h>
 
 struct UVAModelInfo
 {
@@ -159,7 +159,8 @@ enum en_haznote
     HAZ_NOTE_FORCE = 0x7fffffff
 };
 
-enum en_hazmodel {
+enum en_hazmodel
+{
     NPC_HAZMDL_BOOMBALL_BUBBLE,
     NPC_HAZMDL_BOOMBALL_SMOKE,
     NPC_HAZMDL_FODBOMB,

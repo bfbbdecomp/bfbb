@@ -1,9 +1,11 @@
-#include "xMath.h"
-#include "xMathInlines.h"
-#include "zGlobals.h"
 #include "zNPCGoalStd.h"
+
+#include "zGlobals.h"
 #include "zNPCGoals.h"
 #include "zNPCSupport.h"
+
+#include "xMath.h"
+#include "xMathInlines.h"
 
 #include <types.h>
 

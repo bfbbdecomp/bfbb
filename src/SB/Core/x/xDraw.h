@@ -1,8 +1,9 @@
 #ifndef XDRAW_H
 #define XDRAW_H
 
-#include "iColor.h"
 #include "xMath3.h"
+
+#include "iColor.h"
 
 void xDrawSetColor(iColor_tag);
 void xDrawSetColor(U8 r, U8 g, U8 b, u8 a);

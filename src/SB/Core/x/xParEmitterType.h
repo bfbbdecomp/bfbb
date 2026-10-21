@@ -1,10 +1,10 @@
 #ifndef XPAREMITTERTYPE_H
 #define XPAREMITTERTYPE_H
 
-#include "xMath3.h"
-#include "xVolume.h"
-#include "xPar.h"
 #include "xEnt.h"
+#include "xMath3.h"
+#include "xPar.h"
+#include "xVolume.h"
 
 struct xPECircle
 {

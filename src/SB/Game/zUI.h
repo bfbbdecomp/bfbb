@@ -3,8 +3,8 @@
 
 #include "zEnt.h"
 
-#include "xMgr.h"
 #include "xIni.h"
+#include "xMgr.h"
 
 struct zUIAsset : xEntAsset
 {
@@ -67,8 +67,7 @@ void zUIRenderAll();
 void zUI_Render(xEnt* ent);
 S32 zUIEventCB(xBase*, xBase* to, U32 toEvent, const F32* toParam, xBase*);
 void zUI_ParseINI(xIniFile* ini);
-S32 zUIPortalEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam,
-                       xBase* toParamWidget);
+S32 zUIPortalEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* toParamWidget);
 void zUI_ScenePortalSetToCurrentLevel(zScene* zsc);
 void zUI_ScenePortalInit(zScene* zsc);
 void zUI_PortalToKrabs(U32 taskNum);

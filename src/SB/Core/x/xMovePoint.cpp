@@ -1,11 +1,11 @@
 #include "xMovePoint.h"
 
-#include "xMathInlines.h"
-#include <types.h>
-
 #include "xMath.h"
-#include "xScene.h"
+#include "xMathInlines.h"
 #include "xMemMgr.h"
+#include "xScene.h"
+
+#include <types.h>
 
 inline F32 xVec3Hdng(xVec3* a, const xVec3* b, const xVec3* c);
 
